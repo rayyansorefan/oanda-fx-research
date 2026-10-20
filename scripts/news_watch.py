@@ -24,6 +24,10 @@ SOURCES = {
     "Fed policy": ("USD", "https://www.federalreserve.gov/feeds/press_monetary.xml"),
     "Fed speeches": ("USD", "https://www.federalreserve.gov/feeds/speeches_and_testimony.xml"),
     "ECB press": ("EUR", "https://www.ecb.europa.eu/rss/press.html"),
+    "BoE news": ("GBP", "https://www.bankofengland.co.uk/rss/news"),
+    "BoE speeches": ("GBP", "https://www.bankofengland.co.uk/rss/speeches"),
+    "BoJ updates": ("JPY", "https://www.boj.or.jp/en/rss/whatsnew.xml"),
+    "SNB monetary policy": ("CHF", "https://www.snb.ch/public/rss/en/mopo"),
     "BoC press": ("CAD", "https://www.bankofcanada.ca/content_type/press-releases/feed/"),
     "RBA press": ("AUD", "https://www.rba.gov.au/rss/rss-cb-media-releases.xml"),
     "BLS inflation": ("USD", "https://www.bls.gov/feed/cpi.rss"),
@@ -101,12 +105,15 @@ def _text(element, tags):
 def parse_rss(xml_bytes, source, assigned):
     root = ET.fromstring(xml_bytes)
     atom = "{http://www.w3.org/2005/Atom}"
-    entries = root.findall(".//item") or root.findall(".//" + atom + "entry")
+    rdf = "{http://purl.org/rss/1.0/}"
+    entries = (root.findall(".//item") or root.findall(".//" + atom + "entry") or
+               root.findall(".//" + rdf + "item"))
     result = []
     for entry in entries[:40]:
-        title = _text(entry, ("title", atom + "title"))
-        date = parse_date(_text(entry, ("pubDate", atom + "published", atom + "updated", "date")))
-        url = _text(entry, ("link", "guid", atom + "id"))
+        title = _text(entry, ("title", atom + "title", rdf + "title"))
+        date = parse_date(_text(entry, ("pubDate", atom + "published", atom + "updated",
+                                      "{http://purl.org/dc/elements/1.1/}date", "date")))
+        url = _text(entry, ("link", "guid", atom + "id", rdf + "link"))
         if not url:
             link_node = entry.find(atom + "link")
             url = link_node.attrib.get("href", "") if link_node is not None else ""
