@@ -39,12 +39,13 @@ def blacked_out(signal, current):
     return False
 
 
-def valid_risk(signal, observed_spread):
+def valid_risk(signal, observed_spread, observed_pip_size=None):
     entry, stop, target = (float(signal[k]) for k in ("planned_entry", "stop", "tp1"))
     long = signal["direction"] == "LONG"
     if not ((stop < entry < target) if long else (target < entry < stop)):
         return False
-    pip = .01 if signal["instrument"].endswith("_JPY") else .0001
+    pip = (float(observed_pip_size) if observed_pip_size is not None
+           else (.01 if signal["instrument"].endswith("_JPY") else .0001))
     spread = observed_spread * pip
     gross = abs(target - entry) / abs(entry - stop)
     estimated = (abs(target - entry) - spread) / (abs(entry - stop) + spread)
@@ -60,7 +61,7 @@ def signal_match(signal, pairdata, state_for_signal, current):
         return None
     if (current - parse_time(quote["time"])).total_seconds() > 300:
         return None
-    if not valid_risk(signal, quote["spread_pips"]):
+    if not valid_risk(signal, quote["spread_pips"], quote.get("pip_size")):
         return None
     # A historical M15 trigger is only a reason to reassess if the latest
     # market remains inside the planned stop/target envelope with reward
@@ -88,7 +89,8 @@ def signal_match(signal, pairdata, state_for_signal, current):
         return None
     last_processed = parse_time(state_for_signal.get("last_processed_bar_close", signal["created_at"]))
     long = signal["direction"] == "LONG"
-    tolerance = 0.02 if signal["instrument"].endswith("_JPY") else 0.0002
+    tolerance = 2 * quote.get("pip_size",
+            0.01 if signal["instrument"].endswith("_JPY") else 0.0001)
     for idx in range(1, len(candles)):
         prev, curr = candles[idx - 1], candles[idx]
         candle_start = parse_time(curr["time"])
@@ -217,7 +219,9 @@ def observed_price_movement(pairdata, signal, item):
         return {"status": "PRICE_REACTION_UNVERIFIABLE"}
     earlier = before[-1]["mid"]["c"]
     later = after[-1]["mid"]["c"]
-    pips = (later - earlier) / (0.01 if signal["instrument"].endswith("_JPY") else 0.0001)
+    pip = pairdata.get("quote", {}).get("pip_size",
+             .01 if signal["instrument"].endswith("_JPY") else .0001)
+    pips = (later - earlier) / pip
     aligned = (pips > 0) if signal["direction"] == "LONG" else (pips < 0)
     return {"status": "OBSERVED_PRICE_MOVEMENT_NOT_CAUSAL",
             "from_bar_time": before[-1]["time"], "to_bar_time": after[-1]["time"],
@@ -276,7 +280,7 @@ def basic_technical_status(pairdata, signal):
     long = signal["direction"] == "LONG"
     distance_to_target = (tp - mark) if long else (mark - tp)
     distance_to_stop = (mark - stop) if long else (stop - mark)
-    pip = 0.01 if signal["instrument"].endswith("_JPY") else 0.0001
+    pip = quote.get("pip_size", 0.01 if signal["instrument"].endswith("_JPY") else 0.0001)
     remaining_rr = (distance_to_target / distance_to_stop) if distance_to_stop > 0 else None
     ema20 = m.get("ema20")
     macd = m.get("macd_12_26_9") or {}
@@ -331,7 +335,7 @@ def watch():
               "news_coverage": news.get("status", "UNAVAILABLE"),
               "data_policy": "Research-only, no orders. Hourly OANDA quote not Pepperstone executable quote.",
               "signals": []}
-    if snapshot.get("status") != "OK":
+    if snapshot.get("status") not in ("OK", "PARTIAL"):
         report["status"] = "OANDA_DATA_UNAVAILABLE"
         save(ASSESSMENT, report)
         return
@@ -347,6 +351,12 @@ def watch():
                "created_at": signal.get("created_at"),
                "expires_at": signal.get("expires_at"),
                "technical_checkpoint": basic_technical_status(pairdata, signal)}
+        # Broader discovery may have only M15/H1, not all required frames.
+        # A pair with quoted prices but absent completed M15 data is never a signal.
+        if not pairdata.get("frames", {}).get("M15", {}).get("recent_completed_candles"):
+            row["status"] = "PAIR_M15_CANDLES_UNAVAILABLE"
+            report["signals"].append(row)
+            continue
         if not signal.get("created_at") or not signal.get("expires_at"):
             row["status"] = "INVALID_SETUP"
             report["signals"].append(row)
