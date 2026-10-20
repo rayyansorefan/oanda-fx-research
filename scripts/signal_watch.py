@@ -189,12 +189,19 @@ def news_check(signal, feed, now):
         return "HIGH_IMPACT_RELEASE_WINDOW", recent[:6], events
     if recent:
         return "NEW_MATERIAL_HEADLINE_REVIEW", recent[:6], []
-    # Never issue a reassuring price-only alert when RSS/calendar coverage is degraded.
-    if feed.get("status") != "OK":
-        return "NEWS_COVERAGE_INCOMPLETE", [], []
+    # The weekly event calendar is a mandatory input. Missing pair-specific
+    # central bank or general market news blocks price-only alerts; optional
+    # BLS-feed HTTP errors still appear in coverage, but do not freeze ALL pairs.
     if coverage.get("calendar_coverage") != "OK":
         return "EVENT_CALENDAR_UNAVAILABLE", [], []
-    return "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES", [], []
+    sources = coverage.get("coverage", {})
+    if sources.get("status") == "UNAVAILABLE":
+        return "NEWS_COVERAGE_INCOMPLETE", [], []
+    if sources.get("status") == "LIMITED":
+        return "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS", [], []
+    if sources.get("status") == "OK" and feed.get("status") == "OK":
+        return "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES", [], []
+    return "NEWS_COVERAGE_INCOMPLETE", [], []
 
 
 def observed_price_movement(pairdata, signal, item):
@@ -357,6 +364,7 @@ def watch():
             continue
         status, headlines, events = news_check(signal, news, current)
         row["news_status"] = status
+        row["news_source_coverage"] = news.get("by_pair", {}).get(pair, {}).get("coverage", {})
         row["relevant_headlines"] = headlines
         row["release_blackouts"] = events
         row["observed_price_reactions"] = [{
@@ -367,7 +375,8 @@ def watch():
             row["status"] = "MANUAL_EVENT_BLACKOUT"
             report["signals"].append(row)
             continue
-        if status != "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES":
+        if status not in ("NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES",
+                          "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS"):
             row["status"] = "REASSESS_NEWS_FIRST" if status in (
                 "HIGH_IMPACT_RELEASE_WINDOW", "NEW_MATERIAL_HEADLINE_REVIEW") else (
                 "NEWS_COVERAGE_NOT_VERIFIED")
@@ -383,6 +392,8 @@ def watch():
             row["status"] = "PRIOR_PRICE_ALERT_SENT"
             report["signals"].append(row)
             continue
+        if status == "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS":
+            row["caution"] = "Some optional news feeds unavailable; calendar and required headline feeds checked. This is NOT an all-clear."
         found = signal_match(signal, pairdata, tracked, current)
         if found:
             route, bar_time, reason = found
