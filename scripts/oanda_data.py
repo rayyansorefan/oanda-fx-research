@@ -4,6 +4,7 @@ import json
 import math
 import os
 import sys
+from advanced_technicals import advanced
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.error import HTTPError, URLError
@@ -137,6 +138,7 @@ def describe(candles):
     last = rows[-1]
     return {
         "completed_at": last["time"],
+        "completed_at_field_note": "OANDA candle opening timestamp; complete=true confirms candle closed",
         "complete_candles_used": len(rows),
         "indicators_from": "OANDA completed midpoint candles, independently calculated",
         "indicators": {
@@ -150,7 +152,8 @@ def describe(candles):
             "r1_previous_bar": 2 * pivot - prior["l"],
             "s1_previous_bar": 2 * pivot - prior["h"]
         },
-        "recent_completed_candles": rows[-12:]
+        "advanced": advanced(rows),
+        "recent_completed_candles": rows[-96:]
     }
 
 
@@ -198,6 +201,23 @@ def collect():
             frames[frame] = describe(response.get("candles", []))
         output["pairs"][pair] = {"quote": quotes[pair], "frames": frames}
     write_json(OUT, output)
+    summary = {
+        "status": output["status"], "collected_at": output["collected_at"],
+        "source": output["source"],
+        "candle_time_note": "Each completed_at is OANDA candle OPEN; bars are complete=true",
+        "pairs": {}
+    }
+    for instrument, row in output["pairs"].items():
+        summary["pairs"][instrument] = {
+            "quote": row["quote"],
+            "frames": {frame: {
+                "completed_at": values["completed_at"],
+                "indicators": values["indicators"],
+                "advanced": values["advanced"],
+                "last_3_completed_candles": values["recent_completed_candles"][-3:]
+            } for frame, values in row["frames"].items()}
+        }
+    write_json(Path("data/summary.json"), summary)
     print("Collected", len(output["pairs"]), "pairs; status=OK; at", output["collected_at"])
 
 
