@@ -138,5 +138,26 @@ class NewsTests(unittest.TestCase):
                 self.assertFalse(repeat["new_material_headlines"])
 
 
+
+    def test_prior_target_touch_invalidates_later_signal(self):
+        began = NOW - timedelta(minutes=30)
+        candles = [{"time": news.iso(began),
+                    "mid": {"h": 1.108, "l": 1.101, "o": 1.102, "c": 1.104}}]
+        idea = signal()
+        self.assertEqual(watch.setup_already_breached({
+            "frames": {"M15": {"recent_completed_candles": candles}}
+        }, idea, NOW), "PLAN_TP1_LEVEL_TOUCHED_ON_M15")
+
+    def test_basic_hourly_status_shows_remaining_reward(self):
+        idea = signal()
+        pair = {"quote": {"bid": 1.101, "ask": 1.1011, "tradeable": True},
+                "frames": {"M15": {"completed_at": "2026-10-21T11:30:00Z",
+                                    "indicators": {"rsi14": 54, "ema20": 1.1009,
+                                                   "adx14": 22, "atr14": 0.0007}},
+                           "H1": {"indicators": {"rsi14": 58, "adx14": 30}}}}
+        record = watch.basic_technical_status(pair, idea)
+        self.assertGreater(record["indicative_distance_to_target_pips"], 0)
+        self.assertGreater(record["indicative_remaining_rr_before_new_spread_adjustment"], 1)
+
 if __name__ == "__main__":
     unittest.main()
