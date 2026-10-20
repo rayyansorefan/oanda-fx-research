@@ -50,6 +50,7 @@ def valid_risk(signal, observed_spread):
 
 
 def signal_match(signal, pairdata, state_for_signal, current):
+    """Examine all newly closed M15 candles since the last hourly run."""
     quote = pairdata["quote"]
     if not quote["tradeable"] or quote["spread_pips"] < 0:
         return None
@@ -59,54 +60,57 @@ def signal_match(signal, pairdata, state_for_signal, current):
         return None
     if not valid_risk(signal, quote["spread_pips"]):
         return None
+    created = parse_time(signal["created_at"])
     candles = pairdata["frames"]["M15"]["recent_completed_candles"]
-    if len(candles) < 3:
+    if len(candles) < 2:
         return None
-    curr, prev = candles[-1], candles[-2]
-    candle_start = parse_time(curr["time"])
-    if current - (candle_start + timedelta(minutes=15)) > timedelta(minutes=23):
-        return None
-    if candle_start + timedelta(minutes=15) > current:
-        return None
-    direction = signal["direction"]
-    long = direction == "LONG"
-    close = curr["mid"]["c"]
-    previous_close = prev["mid"]["c"]
-    tolerance = (0.0002 if not signal["instrument"].endswith("_JPY") else 0.02)
-
-    a = signal.get("alert_a")
-    if a is not None and "A" not in state_for_signal.get("notified", []):
-        level = float(a)
-        pending = state_for_signal.get("breakout_pending")
-        crossed = (previous_close <= level < close) if long else (previous_close >= level > close)
-        if crossed:
-            state_for_signal["breakout_pending"] = curr["time"]
-        elif pending:
-            age = candle_start - parse_time(pending)
-            if timedelta(minutes=0) < age <= timedelta(minutes=60):
-                # Follow-through and retest: price checks the prior breakout level
-                # and the completed candle closes on the intended side.
+    last_processed = parse_time(state_for_signal.get("last_processed_bar_close", signal["created_at"]))
+    long = signal["direction"] == "LONG"
+    tolerance = 0.02 if signal["instrument"].endswith("_JPY") else 0.0002
+    for idx in range(1, len(candles)):
+        prev, curr = candles[idx - 1], candles[idx]
+        candle_start = parse_time(curr["time"])
+        close_time = candle_start + timedelta(minutes=15)
+        if close_time <= created or close_time <= last_processed or close_time > current:
+            continue
+        if current - close_time > timedelta(minutes=75):
+            state_for_signal["last_processed_bar_close"] = close_time.isoformat()
+            continue
+        if blacked_out(signal, close_time):
+            state_for_signal["last_processed_bar_close"] = close_time.isoformat()
+            continue
+        close = curr["mid"]["c"]
+        previous_close = prev["mid"]["c"]
+        a = signal.get("alert_a")
+        if a is not None and "A" not in state_for_signal.get("notified", []):
+            level = float(a)
+            pending = state_for_signal.get("breakout_pending")
+            if pending:
+                age = close_time - parse_time(pending)
                 tested = (curr["mid"]["l"] <= level + tolerance and close > level) if long else (
                     curr["mid"]["h"] >= level - tolerance and close < level)
-                if tested:
-                    return "A", curr["time"], "Breakout M15 close followed by a completed retest candle"
-            if age > timedelta(minutes=60) or (
-                    close < level - tolerance if long else close > level + tolerance):
-                state_for_signal.pop("breakout_pending", None)
-
-    b = signal.get("alert_b")
-    if b is not None and "B" not in state_for_signal.get("notified", []):
-        level = float(b)
-        if long:
+                if timedelta(minutes=0) < age <= timedelta(minutes=60) and tested:
+                    state_for_signal["last_processed_bar_close"] = close_time.isoformat()
+                    return "A", curr["time"], "Completed breakout and later M15 retest"
+                failed = close < level - tolerance if long else close > level + tolerance
+                if age > timedelta(minutes=60) or failed:
+                    state_for_signal.pop("breakout_pending", None)
+            crossed = (previous_close <= level < close) if long else (
+                previous_close >= level > close)
+            if crossed:
+                state_for_signal["breakout_pending"] = close_time.isoformat()
+        b = signal.get("alert_b")
+        if b is not None and "B" not in state_for_signal.get("notified", []):
+            level = float(b)
             rejection = (curr["mid"]["l"] <= level and close > level and
-                         close > curr["mid"]["o"])
-        else:
-            rejection = (curr["mid"]["h"] >= level and close < level and
+                         close > curr["mid"]["o"]) if long else (
+                         curr["mid"]["h"] >= level and close < level and
                          close < curr["mid"]["o"])
-        if rejection:
-            return "B", curr["time"], "Completed M15 rejection and reclaim of alert level"
+            if rejection:
+                state_for_signal["last_processed_bar_close"] = close_time.isoformat()
+                return "B", curr["time"], "Completed M15 rejection and reclaim"
+        state_for_signal["last_processed_bar_close"] = close_time.isoformat()
     return None
-
 
 def notify(signal, route, bar_time, explanation, quote):
     """Create a GitHub issue; no external messaging, no orders, no user credentials."""
@@ -160,9 +164,14 @@ def watch():
             raise ValueError("Invalid signal ID")
         if pair not in snapshot["pairs"] or signal.get("direction") not in ("LONG", "SHORT"):
             raise ValueError("Invalid pair or direction in signals.json")
-        if current > parse_time(signal["expires_at"]) or blacked_out(signal, current):
+        if ("created_at" not in signal or current > parse_time(signal["expires_at"])
+                or blacked_out(signal, current)):
+            continue
+        if current < parse_time(signal["created_at"]):
             continue
         tracked = state["setups"].setdefault(identity, {"notified": []})
+        if tracked.get("notified"):
+            continue  # Alternate routes are mutually exclusive; only one alert per idea.
         found = signal_match(signal, snapshot["pairs"][pair], tracked, current)
         if not found:
             continue
