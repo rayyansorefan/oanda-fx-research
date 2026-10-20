@@ -81,7 +81,7 @@ class NewsTests(unittest.TestCase):
             "by_pair": {"EUR_USD": {
                 "recent_relevant_headlines": [], "near_high_impact_calendar": [],
                 "calendar_coverage": "UNAVAILABLE"}}}, NOW)
-        self.assertEqual(result[0], "NEWS_COVERAGE_INCOMPLETE")
+        self.assertEqual(result[0], "EVENT_CALENDAR_UNAVAILABLE")
 
     def test_new_fed_headline_blocks_even_during_partial_outage(self):
         headline = news.classify(item("Fed monetary policy emergency rate decision"))
@@ -101,7 +101,9 @@ class NewsTests(unittest.TestCase):
             "status": "OK", "collected_at": news.iso(NOW),
             "by_pair": {"EUR_USD": {
                 "recent_relevant_headlines": [headline], "near_high_impact_calendar": [],
-                "calendar_coverage": "OK"}}}, NOW)
+                "calendar_coverage": "OK",
+                "coverage": {"status": "OK", "required_sources": ["Fed policy",
+                              "ECB press", "Global markets aggregation"]}}}}, NOW)
         self.assertEqual(result[0], "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES")
 
     def test_price_movement_classified_only_as_observed(self):
