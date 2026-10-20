@@ -8,6 +8,7 @@ from advanced_technicals import advanced
 from fx_universe import catalog, chunks, is_quote_usable, screen_priority, deep_selection, CORE
 from datetime import datetime, timezone
 from pathlib import Path
+import shutil
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -319,7 +320,6 @@ def collect():
         "instruments": discovered,
         "source": "OANDA account /instruments, NOT a Pepperstone contract list"
     })
-    write_json(OUT, payload)
     summary = {
         "status": payload["status"],
         "collected_at": payload["collected_at"],
@@ -341,6 +341,33 @@ def collect():
             for pair, content in all_data.items()
         }
     }
+    # Keep connected GitHub fetch_file reads well below the GitHub 1MB
+    # contents API threshold. Store full bid/ask OHLC audit only for top
+    # review candidates and already-monitored setups as separate small files.
+    audit_names = set(deep_ok) & (
+        set(sorted(ranking, key=lambda p: (-ranking[p]["research_priority"], p))[:7])
+        | set(monitored))
+    audit_dir = Path("data/pairs")
+    if audit_dir.exists():
+        shutil.rmtree(audit_dir)
+    for pair in sorted(audit_names):
+        write_json(audit_dir / (pair + ".json"), {
+            "status": "OK", "collected_at": payload["collected_at"],
+            "source": payload["source"], "instrument": pair,
+            "quote": payload["pairs"][pair]["quote"],
+            "frames": payload["pairs"][pair]["frames"],
+            "notice": "Research snapshots, not Pepperstone executable quotes"
+        })
+    payload["coverage"]["detailed_audit_pairs"] = sorted(audit_names)
+    payload["coverage"]["detailed_audit_dir"] = "data/pairs/{instrument}.json"
+    summary["coverage"] = payload["coverage"]
+    for pair, item in payload["pairs"].items():
+        for value in item["frames"].values():
+            # Summary retains independently computed advanced technicals.
+            # Latest is a compact timestamped hourly event/price monitor.
+            value["recent_completed_candles"] = value["recent_completed_candles"][-12:]
+            value.pop("advanced", None)
+    write_json(OUT, payload)
     write_json(Path("data/summary.json"), summary)
     print("OANDA account discovered", len(discovered), "FX pairs; screened",
           len(all_data), "M15/H1; deep", len(deep_ok),
@@ -362,5 +389,8 @@ if __name__ == "__main__":
         write_json(OUT, failure)
         write_json(Path("data/summary.json"), failure)
         write_json(Path("data/universe.json"), failure)
+        audit_dir = Path("data/pairs")
+        if audit_dir.exists():
+            shutil.rmtree(audit_dir)
         print("Data unavailable:", code, file=sys.stderr)
         sys.exit(1)
