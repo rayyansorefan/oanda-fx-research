@@ -126,7 +126,7 @@ def compact_candle(candle):
     return out
 
 
-def describe(candles):
+def describe(candles, frame="M15"):
     rows = [compact_candle(x) for x in candles if x.get("complete") is True]
     if len(rows) < 210:
         raise ValueError("INSUFFICIENT_COMPLETED_CANDLES")
@@ -136,6 +136,9 @@ def describe(candles):
     prior = rows[-2]["mid"]
     pivot = (prior["h"] + prior["l"] + prior["c"]) / 3
     last = rows[-1]
+    # Retain enough chronological data for the day's audit without sending
+    # unnecessary multi-day history into the user's four ChatGPT reviews.
+    stored_bars = {"M5": 96, "M15": 96, "H1": 60, "H4": 36, "D": 30}.get(frame, 48)
     return {
         "completed_at": last["time"],
         "completed_at_field_note": "OANDA candle opening timestamp; complete=true confirms candle closed",
@@ -153,7 +156,7 @@ def describe(candles):
             "s1_previous_bar": 2 * pivot - prior["h"]
         },
         "advanced": advanced(rows),
-        "recent_completed_candles": rows[-96:]
+        "recent_completed_candles": rows[-stored_bars:]
     }
 
 
@@ -198,7 +201,7 @@ def collect():
                                {"granularity": frame, "count": 250, "price": "MBA",
                                 "smooth": "false", "dailyAlignment": 17,
                                 "alignmentTimezone": "America/New_York"})
-            frames[frame] = describe(response.get("candles", []))
+            frames[frame] = describe(response.get("candles", []), frame)
         output["pairs"][pair] = {"quote": quotes[pair], "frames": frames}
     write_json(OUT, output)
     summary = {
