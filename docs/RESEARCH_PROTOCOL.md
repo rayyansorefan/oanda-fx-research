@@ -1,6 +1,6 @@
-# Research protocol: four full assessments plus hourly data-only monitoring
+# Research protocol: four full assessments plus hourly **news, macro and price** reassessments
 
-**Purpose:** The research is discretionary guidance for manually placed Pepperstone FX spread bets. Neither the collector nor watcher makes live trades, interprets headlines, checks Pepperstone pricing, or guarantees profit.
+**Purpose:** Discretionary guidance for manually placed Pepperstone FX spread bets. The hourly watcher automatically collects new economic announcements, FX market headlines and a macro calendar and compares them to selected setups. Its headline-based risk categories are heuristic flags, NOT an expert natural-language interpretation or a prediction of economic releases. No orders, Pepperstone access, Floot, paid APIs, or guarantees.
 
 ## Authoritative sources (private repository)
 
@@ -8,7 +8,9 @@
 - **data/latest.json:** actual timestamped OANDA bid/ask/mid OHLC candles; use when auditing chronological price paths, verifying proposed entries, breakout/retests, stop or target touches. Has multiple previous hours of M5 and M15 bars. Do not judge intra-candle sequence from OHLC.
 - **signals.json:** up to three **previously researched** discretionary setup specifications (one instrument/direction per idea), prepared by the scheduled ChatGPT researcher when it has write access. Empty is correct if there are no defensible signals.
 - **data/watch_state.json:** hourly watcher state to avoid duplicate issue alerts. Historical alerts are not filled trades.
-- **GitHub Issues [FX WATCH]:** price-only technical reassessment notifications. Market news and current Pepperstone dealing spread remain unchecked.
+- **data/news_latest.json:** timestamped official central-bank/statistical-release RSS, aggregated market headlines, free third-party economic calendar and per-currency relevance tags. Covers checked sources only, failures transparently shown.
+- **data/hourly_assessment.json:** per-signal hourly news risk, release blackouts, lightweight technical checkpoints, OANDA price movements following detected releases and remaining risk/reward. These are observations, not news causality or human expert reassessments.
+- **GitHub Issues [FX WATCH] and [FX NEWS REVIEW]:** price-pattern and headline/macro risk alerts. No immediate market-order recommendations, and Pepperstone spread remains unchecked.
 
 Read using the connected GitHub plugin, repository **rayyansorefan/oanda-fx-research**. **Do not rely on search snippets, inferred links or the public web as a substitute for the authenticated private data.** Check the snapshot's \`status\`, \`collected_at\`, every quote \`time\` and \`tradeable\`, and the candle's opening time with \`complete=true\`. The historical candle time reported under \`completed_at\` is the OPEN of the last completed bar, not its close. Never call a 33-minute-old hourly sample a current broker quote.
 
@@ -49,7 +51,7 @@ One live idea should look like this, with every numeric and temporal field deriv
 
 **The above is purely a structural schema example containing invented prices; it is NEVER a recommendation or instruction to put a trade on.** The \`created_at\` field must represent the genuine issue time (not retroactive). Use UTC correctly with UK daylight saving. If a scenario is unsupported, omit its \`alert_a\` or \`alert_b\` rather than populating an arbitrary level.
 
-The automated watcher only checks OANDA technical candles from the selected setup. It cannot automatically verify news or Pepperstone's executable price. Its alert is **REASSESS NOW**; not BUY NOW or SELL NOW. It screens historical M15 crossings but refuses if the quote is stale, planned TP1 already reached, planned stop passed, or remaining reward relative to risk inadequate. Hourly execution can be delayed and an old event can be over by the time the issue arrives.
+The hourly watcher now checks relevant freshly published RSS headlines, a public weekly economic calendar, new release blackouts, and OANDA technical/price effects on each already-approved setup. It flags new material news as REASSESS_NEWS_FIRST and conservatively withholds price-only reassurance if feeds fail. It cannot independently authenticate the truth or implications of every headline, check the full content of every source, guarantee 100% global-news coverage, or check Pepperstone's executable price. Its alert is **REASSESS NOW**; not BUY NOW or SELL NOW. It screens historical M15 crossings but refuses if the quote is stale, planned TP1 already reached, planned stop passed, or remaining reward relative to risk inadequate. Hourly execution can be delayed and an old event can be over by the time the issue arrives.
 
 ## Execution and forward learning
 
@@ -61,5 +63,6 @@ Journal prospectively: timestamp, instrument, scenario A or B, planned entry/SL/
 
 - OANDA authenticated live practice-account data retrieval passed its initial test (GitHub Actions run 39486937460, 20 October 2026).
 - The four existing ChatGPT schedules exist, but they previously lacked access to this repo and notifications were disabled; their private GitHub handoff **must be tested in actual scheduled execution**.
-- The hourly GitHub price-only watcher ran with ZERO approved ideas on the initial test, so delivery of a nontrivial trade-triggered GitHub Issue has **not** been validated.
+- The initial hourly GitHub watcher ran with ZERO approved ideas. Automated issue delivery for a true technical or news trigger needs a separate qualified live setup; it has not been proven until an actual such alert is sent.
+- After adding news, verify the revised hourly workflow actually fetches multiple official RSS headlines and economic-calendar data and updates both news_latest.json and hourly_assessment.json, not just OANDA candles. An offline unit test or green setup alone is insufficient.
 - GitHub Actions schedule timing is approximate, best-effort. Billing minutes can run out, even without using ChatGPT message limits.
