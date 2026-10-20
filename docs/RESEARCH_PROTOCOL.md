@@ -4,8 +4,10 @@
 
 ## Authoritative sources (private repository)
 
-- **data/summary.json:** compact latest quotes and the full set of independently calculated indicators by pair/timeframe. Primary input to each scheduled ChatGPT briefing.
-- **data/latest.json:** actual timestamped OANDA bid/ask/mid OHLC candles; use when auditing chronological price paths, verifying proposed entries, breakout/retests, stop or target touches. Has multiple previous hours of M5 and M15 bars. Do not judge intra-candle sequence from OHLC.
+- **data/universe.json:** ALL OANDA-account currency instruments discovered at this run, with precise coverage counts, excluded/failed instruments and Pepperstone broker verification unknowns.
+- **data/summary.json:** latest quotes, screened M15/H1 indicators for every successfully retrieved OANDA FX instrument, ranked research priorities, plus full M5/H4/D1 technicals on bounded shortlist. Priority is not a trade signal or success probability. Primary input to each scheduled ChatGPT briefing.
+- **data/latest.json:** compact OANDA bid/ask/mid market snapshots on all successfully screened pairs, only 12 recent completed bars per available timeframe (adequate for short hourly checks, not a full intraday reconstruction).
+- **data/pairs/{instrument}.json:** full saved time-ordered OHLC for up to 7 top-ranked and any currently watched ideas; check `data/universe.json` for actively collected `detailed_audit_pairs` before reading, to avoid stale shards. Without chronological bars do not claim reliable entry/fill reconstruction. Do not judge within-bar SL/TP ordering from OHLC.
 - **signals.json:** up to three **previously researched** discretionary setup specifications (one instrument/direction per idea), prepared by the scheduled ChatGPT researcher when it has write access. Empty is correct if there are no defensible signals.
 - **data/watch_state.json:** hourly watcher state to avoid duplicate issue alerts. Historical alerts are not filled trades.
 - **data/news_latest.json:** timestamped official central-bank/statistical-release RSS, aggregated market headlines, free third-party economic calendar and per-currency relevance tags. Covers checked sources only, failures transparently shown.
@@ -18,12 +20,12 @@ If authenticated repo read or data validation fails, state DATA UNAVAILABLE and 
 
 ## Four complete reports, UK time
 
-- 07:30: screen eight liquid majors/crosses across D1/H4/H1/M15 (M5 confirmation only). Independently verify economic releases and major breaking news. Rank 0–3 technically and fundamentally supported ideas. For each, A continuation and B pullback alert **only if each is genuinely justified**, exact conditional trigger, stop, TP1/TP2, cost-aware R:R, expiry, macro blackouts, disqualifiers and confidence limitations. Keep unqualified ideas out.
+- 07:30: screen the full available OANDA account FX universe on M15/H1, then analyse strongest filtered candidates and approved ideas on D1/H4/H1/M15 (M5 timing); rank 0-3 actual opportunities across D1/H4/H1/M15 (M5 confirmation only). Independently verify economic releases and major breaking news. Rank 0–3 technically and fundamentally supported ideas. For each, A continuation and B pullback alert **only if each is genuinely justified**, exact conditional trigger, stop, TP1/TP2, cost-aware R:R, expiry, macro blackouts, disqualifiers and confidence limitations. Keep unqualified ideas out.
 - 12:00: preserve immutable 07:30 recommendations, reconstruct candle paths, distinguish alert touching from actually confirmed and realistically executable fills, audit false/missed trades; recheck macro and revise/revoke only forward from the new timestamp.
 - Pre-NYSE (09:00 America/New_York): news actual-vs-consensus, U.S. yields, risk sentiment, USD, bank statements; update opportunity candidates, reject stale/small-R:R entries, and publish any valid additions/replacements in the watchlist.
 - 16:30: audit original and revisions, current performance assumptions and near-term risk, decide KEEP/MODIFY/CANCEL/EXPIRED; retain both winning and losing/unfilled evidence, with no hindsight entry reconstruction as actual P&L.
 
-All reports analyse: price market structure, previous day high/low, H4/H1 trend and M15 candles, independent EMA20/50/200 alignment, RSI14, RSI pivot divergence candidates, MACD(12,26,9), ADX14/+DI/−DI, ATR14, Bollinger20/2, Stochastic14/3, confirmed swing highs/lows, Fibonacci 0.382/0.5/0.618 anchored only to verifiable swings, 20-bar support/resistance, pivots, candles and liquidity. No single indicator decides the trade. Avoid interpreting FX broker tick-volume as consolidated volume. Prioritize directional, regime, entry-time, volatility and macro agreement.
+All reports review the market-wide screen and then apply full deep analysis to the strongest possible Pepperstone-manual-execution candidates. More instruments does NOT increase the recommended trade quota. Reports analyse: price market structure, previous day high/low, H4/H1 trend and M15 candles, independent EMA20/50/200 alignment, RSI14, RSI pivot divergence candidates, MACD(12,26,9), ADX14/+DI/−DI, ATR14, Bollinger20/2, Stochastic14/3, confirmed swing highs/lows, Fibonacci 0.382/0.5/0.618 anchored only to verifiable swings, 20-bar support/resistance, pivots, candles and liquidity. No single indicator decides the trade. Avoid interpreting FX broker tick-volume as consolidated volume. Prioritize directional, regime, entry-time, volatility and macro agreement.
 
 ## Approved watcher handoff
 
@@ -66,3 +68,10 @@ Journal prospectively: timestamp, instrument, scenario A or B, planned entry/SL/
 - The initial hourly GitHub watcher ran with ZERO approved ideas. Automated issue delivery for a true technical or news trigger needs a separate qualified live setup; it has not been proven until an actual such alert is sent.
 - After adding news, verify the revised hourly workflow actually fetches multiple official RSS headlines and economic-calendar data and updates both news_latest.json and hourly_assessment.json, not just OANDA candles. An offline unit test or green setup alone is insufficient.
 - GitHub Actions schedule timing is approximate, best-effort. Billing minutes can run out, even without using ChatGPT message limits.
+
+
+## Full Pepperstone universe — verification gap
+
+Pepperstone UK's website advertises 90+ FX pairs, but a general marketing count is not an authenticated list of symbols in this user's spread-betting account. OANDA's `/accounts/{id}/instruments` returns the user's OANDA-account **currency** instruments only. Different regulated brokers do not necessarily support matching exotics, NDFs or indices. Every scanned OANDA symbol is marked **Pepperstone availability UNVERIFIED** until the actual broker spread-betting instrument catalogue is authenticated. An unsupported symbol must not be recommended as an immediately executable Pepperstone trade. Most quoteable FX pairs are suitable for research screening, but emerging-market currency macro surveillance may have missing official feeds; label **news coverage unavailable** and withhold price-only alerts when necessary. Exotic pip values come from OANDA `pipLocation`, never universal 0.0001 assumptions.
+
+Full deep technical readings are computed and stored for a bounded shortlist so the free hourly run does not inflate cloud minutes, data files or ChatGPT usage. A failure for one exotic pair is marked PARTIAL coverage, not silently interpreted as all 90+ Pepperstone markets passing screening. The four ChatGPT assessments should report exact counts of OANDA-discovered, M15/H1-screened, and deeply analysed pairs, plus exclusions.

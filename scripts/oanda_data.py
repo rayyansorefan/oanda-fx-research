@@ -5,17 +5,20 @@ import math
 import os
 import sys
 from advanced_technicals import advanced
+from fx_universe import catalog, chunks, is_quote_usable, screen_priority, deep_selection, CORE
 from datetime import datetime, timezone
 from pathlib import Path
+import shutil
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 BASE = "https://api-fxpractice.oanda.com"
-PAIRS = ("EUR_USD", "GBP_USD", "USD_JPY", "USD_CAD",
-         "EUR_GBP", "AUD_USD", "USD_CHF", "EUR_JPY")
+# All OANDA account CURRENCY instruments are discovered dynamically every run.
+# Never hardcode the historical 8-pair test universe as an execution limit.
 FRAMES = ("M5", "M15", "H1", "H4", "D")
 OUT = Path("data/latest.json")
+CANDLE_CACHE = {}
 
 
 def now():
@@ -126,7 +129,7 @@ def compact_candle(candle):
     return out
 
 
-def describe(candles, frame="M15"):
+def describe(candles, frame="M15", deep=True):
     rows = [compact_candle(x) for x in candles if x.get("complete") is True]
     if len(rows) < 210:
         raise ValueError("INSUFFICIENT_COMPLETED_CANDLES")
@@ -138,7 +141,8 @@ def describe(candles, frame="M15"):
     last = rows[-1]
     # Retain enough chronological data for the day's audit without sending
     # unnecessary multi-day history into the user's four ChatGPT reviews.
-    stored_bars = {"M5": 96, "M15": 96, "H1": 60, "H4": 36, "D": 30}.get(frame, 48)
+    stored_bars = ({"M5": 96, "M15": 96, "H1": 60, "H4": 36, "D": 30}.get(frame, 48)
+                   if deep else 12)
     return {
         "completed_at": last["time"],
         "completed_at_field_note": "OANDA candle opening timestamp; complete=true confirms candle closed",
@@ -165,6 +169,70 @@ def write_json(path, obj):
     path.write_text(json.dumps(obj, separators=(",", ":"), allow_nan=False) + "\n")
 
 
+def fetch_quote_batch(account_id, instruments, discovered):
+    quotes = {}
+    problems = {}
+    for group in chunks(instruments, 35):
+        try:
+            raw = request("/v3/accounts/" + account_id + "/pricing",
+                          {"instruments": ",".join(group),
+                           "includeHomeConversions": "false",
+                           "includeUnitsAvailable": "false"})
+        except RuntimeError as exc:
+            for pair in group:
+                problems[pair] = "OANDA_PRICING_ERROR_" + str(exc)[:70]
+            continue
+        for record in raw.get("prices", []):
+            pair = record.get("instrument")
+            if pair not in discovered:
+                continue
+            try:
+                bids, asks = record.get("bids", []), record.get("asks", [])
+                if not bids or not asks:
+                    raise ValueError("NO_BID_ASK")
+                bid, ask = float(bids[0]["price"]), float(asks[0]["price"])
+                pip = discovered[pair]["pip_size"]
+                quotes[pair] = {
+                    "time": record["time"], "bid": bid, "ask": ask,
+                    "spread_pips": (ask - bid) / pip,
+                    "pip_size": pip, "tradeable": bool(record.get("tradeable", False))
+                }
+            except (KeyError, ValueError, TypeError):
+                problems[pair] = "INVALID_QUOTE"
+    for pair in instruments:
+        if pair not in quotes and pair not in problems:
+            problems[pair] = "NO_QUOTE_IN_BATCH_RESPONSE"
+    return quotes, problems
+
+
+def fetch_frame(pair, frame, deep=True):
+    response = request("/v3/instruments/" + pair + "/candles",
+                       {"granularity": frame, "count": 250, "price": "MBA",
+                        "smooth": "false", "dailyAlignment": 17,
+                        "alignmentTimezone": "America/New_York"})
+    raw = response.get("candles", [])
+    if not deep:
+        CANDLE_CACHE[(pair, frame)] = raw
+    return describe(raw, frame, deep=deep)
+
+
+def brief_frame(values):
+    return {
+        "completed_at": values["completed_at"],
+        "indicators": values["indicators"],
+        "advanced": values["advanced"],
+        "last_3_completed_candles": values["recent_completed_candles"][-3:]
+    }
+
+
+def currently_monitored_names():
+    try:
+        signals = json.loads(Path("signals.json").read_text()).get("signals", [])
+        return [s["instrument"] for s in signals if isinstance(s, dict) and "instrument" in s]
+    except (OSError, ValueError, TypeError, KeyError):
+        return []
+
+
 def collect():
     account_id = os.environ.get("OANDA_ACCOUNT_ID", "").strip()
     if not account_id:
@@ -172,56 +240,138 @@ def collect():
         if len(accounts) != 1:
             raise RuntimeError("Set OANDA_ACCOUNT_ID secret: expected exactly one account")
         account_id = accounts[0]["id"]
-    prices = request("/v3/accounts/" + account_id + "/pricing",
-                     {"instruments": ",".join(PAIRS), "includeHomeConversions": "false",
-                      "includeUnitsAvailable": "false"})
-    quotes = {}
-    for p in prices.get("prices", []):
-        if p.get("instrument") not in PAIRS:
+    instruments = request("/v3/accounts/" + account_id + "/instruments").get("instruments", [])
+    discovered = catalog(instruments)
+    if not discovered:
+        raise RuntimeError("OANDA_NO_FX_CURRENCIES_DISCOVERED")
+    names = sorted(discovered)
+    quotes, problems = fetch_quote_batch(account_id, names, discovered)
+    valid = [pair for pair in names if pair in quotes and is_quote_usable(quotes[pair])]
+    if not valid:
+        raise RuntimeError("OANDA_NO_USABLE_FX_QUOTES")
+    # Phase 1: scan EVERY usable OANDA account currency pair M15 and H1.
+    # The 250 complete bid/ask/mid candles are used to compute all indicators.
+    # Only 12 recent bars each are persisted for non-finalist pairs.
+    all_data = {}
+    ranking = {}
+    full_failures = dict(problems)
+    for pair in names:
+        if pair not in valid:
+            if pair in quotes and not quotes[pair].get("tradeable"):
+                full_failures[pair] = "OANDA_NON_TRADEABLE_QUOTE"
+            elif pair in quotes:
+                full_failures[pair] = "OANDA_BAD_SPREAD_OR_PRICE"
             continue
-        bids, asks = p.get("bids", []), p.get("asks", [])
-        if not bids or not asks:
+        try:
+            m15 = fetch_frame(pair, "M15", deep=False)
+            h1 = fetch_frame(pair, "H1", deep=False)
+            score = screen_priority(quotes[pair], m15, h1)
+            all_data[pair] = {"quote": quotes[pair], "frames": {"M15": m15, "H1": h1}}
+            if score is not None:
+                ranking[pair] = score
+        except (RuntimeError, ValueError, KeyError, TypeError) as exc:
+            full_failures[pair] = ("SCANNER_" + type(exc).__name__ +
+                                   "_" + str(exc)[:55]).replace("OANDA_HTTP_", "HTTP_")
+    if not all_data:
+        raise RuntimeError("OANDA_NO_FX_TECHNICAL_HISTORY")
+    # Phase 2: deep multi-timeframe analysis only for highest priority and
+    # original majors plus up to three already-approved FX monitoring ideas.
+    monitored = currently_monitored_names()
+    selection = deep_selection(ranking, monitored=monitored, max_extra=18)
+    deep_ok = []
+    for pair in selection:
+        if pair not in all_data:
             continue
-        bid, ask = float(bids[0]["price"]), float(asks[0]["price"])
-        quotes[p["instrument"]] = {
-            "time": p["time"], "bid": bid, "ask": ask,
-            "spread_pips": (ask - bid) / (0.01 if p["instrument"].endswith("_JPY") else 0.0001),
-            "tradeable": bool(p.get("tradeable", False))
-        }
-    if len(quotes) != len(PAIRS):
-        raise RuntimeError("MISSING_PAIRS_IN_PRICING")
-    output = {"status": "OK", "collected_at": now(),
-              "source": "OANDA v20 practice (not Pepperstone executable prices)",
-              "quote_type": "OANDA account-specific bid/ask, best available price",
-              "pairs": {}}
-    for pair in PAIRS:
-        frames = {}
-        for frame in FRAMES:
-            response = request("/v3/instruments/" + pair + "/candles",
-                               {"granularity": frame, "count": 250, "price": "MBA",
-                                "smooth": "false", "dailyAlignment": 17,
-                                "alignmentTimezone": "America/New_York"})
-            frames[frame] = describe(response.get("candles", []), frame)
-        output["pairs"][pair] = {"quote": quotes[pair], "frames": frames}
-    write_json(OUT, output)
-    summary = {
-        "status": output["status"], "collected_at": output["collected_at"],
-        "source": output["source"],
-        "candle_time_note": "Each completed_at is OANDA candle OPEN; bars are complete=true",
-        "pairs": {}
+        frames = all_data[pair]["frames"]
+        try:
+            # Use the first pass's M15 and H1 calculations; no duplicate requests.
+            for frame in ("M5", "H4", "D"):
+                frames[frame] = fetch_frame(pair, frame, deep=True)
+            # Full chronology needed by the prospective setup watcher.
+            frames["M15"] = describe(CANDLE_CACHE[(pair, "M15")], "M15", deep=True)
+            frames["H1"] = describe(CANDLE_CACHE[(pair, "H1")], "H1", deep=True)
+            deep_ok.append(pair)
+        except (RuntimeError, ValueError, KeyError, TypeError) as exc:
+            full_failures[pair] = "DEEP_" + type(exc).__name__ + "_" + str(exc)[:55]
+    # If a known monitored pair is quoted but could not load technical history,
+    # never imply it is being reliably watched.
+    payload = {
+        "status": "OK" if len(all_data) == len(names) and len(deep_ok) == len(selection) else "PARTIAL",
+        "collected_at": now(),
+        "source": "OANDA v20 practice (not Pepperstone executable prices)",
+        "quote_type": "OANDA account-specific bid/ask, best available price",
+        "coverage": {
+            "oanda_account_fx_instruments_discovered": len(discovered),
+            "oanda_pairs_with_usable_live_quotes": len(valid),
+            "oanda_pairs_with_m15_h1_indicators": len(all_data),
+            "pairs_deep_d1_h4_h1_m15_m5": len(deep_ok),
+            "deep_pairs": deep_ok,
+            "pairs_missing_or_partial": full_failures,
+            "oanda_not_pepperstone": "FX pairs found in this OANDA account do NOT prove availability on a UK Pepperstone spread-betting account.",
+            "pepperstone_uk_90plus": "The complete UK Pepperstone spread-bet symbol catalogue has not been authenticated. Do not claim 100% broker coverage.",
+            "unmatched_pepperstone_pairs": "UNKNOWN: cannot infer missing Pepperstone-only symbols from OANDA list."
+        },
+        "pairs": all_data
     }
-    for instrument, row in output["pairs"].items():
-        summary["pairs"][instrument] = {
-            "quote": row["quote"],
-            "frames": {frame: {
-                "completed_at": values["completed_at"],
-                "indicators": values["indicators"],
-                "advanced": values["advanced"],
-                "last_3_completed_candles": values["recent_completed_candles"][-3:]
-            } for frame, values in row["frames"].items()}
+    # Persist lightweight coverage and catalog for audits; no tokens/account IDs.
+    write_json(Path("data/universe.json"), {
+        "collected_at": payload["collected_at"],
+        "coverage": payload["coverage"],
+        "instruments": discovered,
+        "source": "OANDA account /instruments, NOT a Pepperstone contract list"
+    })
+    summary = {
+        "status": payload["status"],
+        "collected_at": payload["collected_at"],
+        "source": payload["source"],
+        "candle_time_note": "Each completed_at is OANDA candle OPEN; bars are complete=true",
+        "coverage": payload["coverage"],
+        "ranked_review_candidates": [
+            {"instrument": pair, **ranking[pair],
+             "pepperstone_spreadbet_account_availability": "UNVERIFIED",
+             "pepperstone_uk_publicly_referenced": discovered[pair]["pepperstone_uk_publicly_referenced"]}
+            for pair in sorted(ranking, key=lambda p: (-ranking[p]["research_priority"], p))[:35]
+        ],
+        "pairs": {
+            pair: {"quote": content["quote"],
+                   "pepperstone_spreadbet_account_availability": "UNVERIFIED",
+                   "deep_analysis_available": pair in deep_ok,
+                   "frames": {frame: brief_frame(values)
+                              for frame, values in content["frames"].items()}}
+            for pair, content in all_data.items()
         }
+    }
+    # Keep connected GitHub fetch_file reads well below the GitHub 1MB
+    # contents API threshold. Store full bid/ask OHLC audit only for top
+    # review candidates and already-monitored setups as separate small files.
+    audit_names = set(deep_ok) & (
+        set(sorted(ranking, key=lambda p: (-ranking[p]["research_priority"], p))[:7])
+        | set(monitored))
+    audit_dir = Path("data/pairs")
+    if audit_dir.exists():
+        shutil.rmtree(audit_dir)
+    for pair in sorted(audit_names):
+        write_json(audit_dir / (pair + ".json"), {
+            "status": "OK", "collected_at": payload["collected_at"],
+            "source": payload["source"], "instrument": pair,
+            "quote": payload["pairs"][pair]["quote"],
+            "frames": payload["pairs"][pair]["frames"],
+            "notice": "Research snapshots, not Pepperstone executable quotes"
+        })
+    payload["coverage"]["detailed_audit_pairs"] = sorted(audit_names)
+    payload["coverage"]["detailed_audit_dir"] = "data/pairs/{instrument}.json"
+    summary["coverage"] = payload["coverage"]
+    for pair, item in payload["pairs"].items():
+        for value in item["frames"].values():
+            # Summary retains independently computed advanced technicals.
+            # Latest is a compact timestamped hourly event/price monitor.
+            value["recent_completed_candles"] = value["recent_completed_candles"][-12:]
+            value.pop("advanced", None)
+    write_json(OUT, payload)
     write_json(Path("data/summary.json"), summary)
-    print("Collected", len(output["pairs"]), "pairs; status=OK; at", output["collected_at"])
+    print("OANDA account discovered", len(discovered), "FX pairs; screened",
+          len(all_data), "M15/H1; deep", len(deep_ok),
+          "; status", payload["status"], "; at", payload["collected_at"])
 
 
 if __name__ == "__main__":
@@ -238,5 +388,9 @@ if __name__ == "__main__":
                    "error": code, "pairs": {}}
         write_json(OUT, failure)
         write_json(Path("data/summary.json"), failure)
+        write_json(Path("data/universe.json"), failure)
+        audit_dir = Path("data/pairs")
+        if audit_dir.exists():
+            shutil.rmtree(audit_dir)
         print("Data unavailable:", code, file=sys.stderr)
         sys.exit(1)
