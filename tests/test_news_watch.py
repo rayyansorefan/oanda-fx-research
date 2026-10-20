@@ -55,6 +55,18 @@ class NewsTests(unittest.TestCase):
         self.assertEqual(len(parsed), 1)
         self.assertEqual(parsed[0]["published_at"], "2026-10-21T11:45:00Z")
 
+
+    def test_rss1_monetary_policy_publication(self):
+        raw = ('<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" '
+               'xmlns="http://purl.org/rss/1.0/" '
+               'xmlns:dc="http://purl.org/dc/elements/1.1/">'
+               '<item><title>Monetary policy decision by the central bank</title>'
+               '<link>https://www.snb.ch/en/test</link>'
+               '<dc:date>2026-10-21T11:55:00Z</dc:date></item></rdf:RDF>')
+        parsed = news.parse_rss(raw.encode(), "SNB monetary policy", "CHF")
+        self.assertEqual(len(parsed), 1)
+        self.assertEqual(parsed[0]["currency_source"], "CHF")
+
     def test_calendar_impact_and_timezone(self):
         raw = [{"date": "2026-10-21T08:30:00-04:00", "country": "USD",
                 "impact": "High", "title": "Employment report", "forecast": "1%", "previous": "2%"}]
