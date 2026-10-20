@@ -172,17 +172,15 @@ def notify(signal, route, bar_time, explanation, quote):
 
 def news_check(signal, feed, now):
     """Return objective news/event risk. No headline sentiment/forecasting."""
-    if feed.get("status") != "OK":
-        return "NEWS_COVERAGE_INCOMPLETE", [], []
     checked = parse_time(feed.get("collected_at", "1900-01-01T00:00:00Z"))
     if now - checked > timedelta(minutes=15):
         return "NEWS_COVERAGE_STALE", [], []
     pair = signal["instrument"]
     coverage = feed.get("by_pair", {}).get(pair)
-    if not isinstance(coverage, dict) or coverage.get("calendar_coverage") != "OK":
-        return "EVENT_CALENDAR_UNAVAILABLE", [], []
+    if not isinstance(coverage, dict):
+        return "NEWS_COVERAGE_INCOMPLETE", [], []
     start = parse_time(signal["created_at"])
-    # New material after approval requires a fresh HUMAN / comprehensive review.
+    # Capture known material news even when other providers fail.
     recent = [item for item in coverage.get("recent_relevant_headlines", [])
               if parse_time(item["published_at"]) > start
               and now - parse_time(item["published_at"]) < timedelta(hours=7)]
@@ -191,6 +189,11 @@ def news_check(signal, feed, now):
         return "HIGH_IMPACT_RELEASE_WINDOW", recent[:6], events
     if recent:
         return "NEW_MATERIAL_HEADLINE_REVIEW", recent[:6], []
+    # Never issue a reassuring price-only alert when RSS/calendar coverage is degraded.
+    if feed.get("status") != "OK":
+        return "NEWS_COVERAGE_INCOMPLETE", [], []
+    if coverage.get("calendar_coverage") != "OK":
+        return "EVENT_CALENDAR_UNAVAILABLE", [], []
     return "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES", [], []
 
 
