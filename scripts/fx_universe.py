@@ -17,10 +17,8 @@ MAJOR = frozenset(("EUR", "USD", "GBP", "AUD", "CAD", "CHF", "NZD", "JPY"))
 # Specific pairs named in Pepperstone UK public educational/markets material,
 # not a complete or account-confirmed list of UK spread-betting instruments.
 PEPPERSTONE_UK_PUBLIC_EXAMPLES = frozenset((
-    "AUD_USD", "EUR_USD", "GBP_USD", "USD_JPY", "USD_CAD", "USD_CHF",
-    "EUR_GBP", "AUD_NZD", "AUD_CHF", "GBP_AUD", "NZD_USD", "EUR_AUD",
-    "GBP_JPY", "EUR_JPY", "NZD_JPY", "GBP_CAD", "CHF_JPY", "AUD_JPY",
-    "USD_TRY", "USD_ZAR", "EUR_TRY", "USD_MXN", "USD_SGD", "USD_THB",
+    "AUD_USD", "EUR_USD", "GBP_USD", "USD_JPY", "USD_CAD",
+    "USD_CHF", "EUR_GBP", "AUD_NZD", "AUD_CHF", "GBP_AUD",
 ))
 EXPLICIT_PEPPERSTONE_NDF_EXAMPLES = frozenset(("USD_BRL", "USD_INR"))
 NAME = re.compile(r"^[A-Z]{3}_[A-Z]{3}$")
