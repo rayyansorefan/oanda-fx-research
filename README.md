@@ -1,6 +1,6 @@
 # OANDA FX Research — Free, read-only bridge
 
-This repository contains a small **market-data collector and price-only alert watcher**, not a trading engine. It never submits orders, reads Pepperstone positions, uses Floot, or consumes ChatGPT API credits.
+This repository contains a small **market-data collector and hourly news/macro/price reassessment watcher**, not a trading engine. It never submits orders, reads Pepperstone positions, uses Floot, or consumes ChatGPT API credits.
 
 ## What it collects
 
@@ -12,9 +12,9 @@ Outputs: **data/summary.json** (lightweight technical research brief) and **data
 
 The repository checks once per weekday hour at **06:27–18:27 UTC** via GitHub Actions. This is 13 planned updates per weekday, not every 15 minutes. Scheduling is best-effort and can run late or fail; GitHub minutes are separate from ChatGPT usage. The existing **four weekday ChatGPT FX briefings** remain the only full analysis reports; there are no new ChatGPT tasks.
 
-Up to three explicitly approved ideas in `signals.json` can be **reassessed hourly** for objective completed-M15 continuation or rejection patterns. If one qualifies, the watcher creates a GitHub Issue with `[FX WATCH]` in the title, saying **reassess now**. It does not automatically deliver a ChatGPT message or know whether Pepperstone would fill. If no ideas are approved, the correct result is **zero** trade alerts.
+Up to three explicitly approved ideas in `signals.json` are **reassessed hourly** against newly completed M15 price patterns AND automatically collected macroeconomic headlines, relevant central-bank news, upcoming calendar events, spreads and remaining risk/reward. If one qualifies, the watcher can create a GitHub Issue with `[FX WATCH]` in the title; relevant new material news creates a separate `[FX NEWS REVIEW]` issue, saying **reassess now — do not enter solely on this alert**. It does not automatically deliver a ChatGPT message or know whether Pepperstone would fill. If no ideas are approved, the correct result is **zero** trade alerts.
 
-An hourly watcher can miss short-lived opportunities. It cannot replace live bid/ask confirmation, predict news outcomes or provide a guaranteed daily number of positions. News and official releases must be checked independently in the four main ChatGPT reports. An issue alert also requires a fresh macro and Pepperstone check before opening a discretionary trade.
+An hourly watcher can miss short-lived opportunities. It cannot replace broker bid/ask confirmation, guarantee coverage of all breaking news, interpret headlines as a human researcher would, predict economic outcomes or provide a guaranteed daily number of positions. The four main ChatGPT reports still do the complete technical, fundamental and primary-source news analysis. An issue alert also requires a fresh macro and Pepperstone check before opening a discretionary trade.
 
 ## First-run checklist
 
@@ -36,3 +36,11 @@ An hourly watcher can miss short-lived opportunities. It cannot replace live bid
 ## Handoff to four full reports
 
 The four existing ChatGPT scheduled reports must use authenticated GitHub connector reads of `data/summary.json` at each run, and `data/latest.json` when reconstructing historical candle paths. They must check both snapshot/quote timestamps, verify scheduled economic news separately, and update `signals.json` through the GitHub connector only if a justified actionable watch idea survives all checks. **No automatic AI sentiment service or additional ChatGPT tasks**. See [research protocol](docs/RESEARCH_PROTOCOL.md). A private GitHub API connection may not be available inside every scheduled run: this handoff requires separate end-to-end verification; otherwise reports must say DATA UNAVAILABLE, WATCHLIST NOT UPDATED.
+
+## Hourly news sources and fail-safe rules
+
+`scripts/news_watch.py` retrieves free official Federal Reserve, ECB, Bank of England, Bank of Canada, Bank of Japan, Reserve Bank of Australia, Swiss National Bank, and BLS feeds, one free third-party market-headline aggregation feed and a weekly public economic calendar. It saves `data/news_latest.json` and records source availability. The watcher writes the combined up-to-three-trades research checkpoint to `data/hourly_assessment.json`. Headlines are unverified news alerts, **not validated economic forecasts**; a third-party calendar is provisional until checked against primary sources at each comprehensive ChatGPT review.
+
+For an approved idea, a recent relevant headline or imminent high-impact event suppresses a price-only recommendation and flags `REASSESS_NEWS_FIRST`. A data gap is **NEWS_COVERAGE_NOT_VERIFIED**; it must not silently be reported as a clear market. Price reactions are measured against completed OANDA candles, but correlation is not evidence that the event *caused* the move. Every proposed real-money trade still requires current Pepperstone quotes, event checks, and independent human judgment.
+
+This is best-effort once per hour; not 24-hour news monitoring, not real-time, and may be delayed by GitHub scheduler or individual feeds. GitHub Issues notifications depend on your account Watch/Notifications settings and have not yet been validated for a genuine approved-signal event.
