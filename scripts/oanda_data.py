@@ -17,6 +17,7 @@ BASE = "https://api-fxpractice.oanda.com"
 # Never hardcode the historical 8-pair test universe as an execution limit.
 FRAMES = ("M5", "M15", "H1", "H4", "D")
 OUT = Path("data/latest.json")
+CANDLE_CACHE = {}
 
 
 def now():
@@ -208,7 +209,10 @@ def fetch_frame(pair, frame, deep=True):
                        {"granularity": frame, "count": 250, "price": "MBA",
                         "smooth": "false", "dailyAlignment": 17,
                         "alignmentTimezone": "America/New_York"})
-    return describe(response.get("candles", []), frame, deep=deep)
+    raw = response.get("candles", [])
+    if not deep:
+        CANDLE_CACHE[(pair, frame)] = raw
+    return describe(raw, frame, deep=deep)
 
 
 def brief_frame(values):
@@ -283,10 +287,8 @@ def collect():
             for frame in ("M5", "H4", "D"):
                 frames[frame] = fetch_frame(pair, frame, deep=True)
             # Full chronology needed by the prospective setup watcher.
-            frames["M15"] = dict(frames["M15"])
-            frames["H1"] = dict(frames["H1"])
-            # The 12 saved bars are sufficient for the hourly 4-candle scan;
-            # sustained review/audit of 24h should use the M5 data.
+            frames["M15"] = describe(CANDLE_CACHE[(pair, "M15")], "M15", deep=True)
+            frames["H1"] = describe(CANDLE_CACHE[(pair, "H1")], "H1", deep=True)
             deep_ok.append(pair)
         except (RuntimeError, ValueError, KeyError, TypeError) as exc:
             full_failures[pair] = "DEEP_" + type(exc).__name__ + "_" + str(exc)[:55]
