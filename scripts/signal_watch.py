@@ -60,6 +60,26 @@ def signal_match(signal, pairdata, state_for_signal, current):
         return None
     if not valid_risk(signal, quote["spread_pips"]):
         return None
+    # A historical M15 trigger is only a reason to reassess if the latest
+    # market remains inside the planned stop/target envelope with reward
+    # still available after the observed OANDA spread.
+    entry = float(signal["planned_entry"])
+    stop = float(signal["stop"])
+    tp1 = float(signal["tp1"])
+    long = signal["direction"] == "LONG"
+    current_executable = quote["ask"] if long else quote["bid"]
+    if long:
+        if current_executable <= stop or current_executable >= tp1:
+            return None
+        reward = tp1 - current_executable
+        risk = current_executable - stop
+    else:
+        if current_executable >= stop or current_executable <= tp1:
+            return None
+        reward = current_executable - tp1
+        risk = stop - current_executable
+    if risk <= 0 or reward / risk < 1.35:
+        return None
     created = parse_time(signal["created_at"])
     candles = pairdata["frames"]["M15"]["recent_completed_candles"]
     if len(candles) < 2:
