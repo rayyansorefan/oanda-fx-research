@@ -231,7 +231,9 @@ if __name__ == "__main__":
                 or code.startswith("Missing ") or code.startswith("Set ")
                 or code.startswith("Invalid ") or code.startswith("Missing candle")):
             code = type(exc).__name__
-        write_json(OUT, {"status": "DATA_UNAVAILABLE", "collected_at": now(),
-                         "error": code, "pairs": {}})
+        failure = {"status": "DATA_UNAVAILABLE", "collected_at": now(),
+                   "error": code, "pairs": {}}
+        write_json(OUT, failure)
+        write_json(Path("data/summary.json"), failure)
         print("Data unavailable:", code, file=sys.stderr)
         sys.exit(1)
