@@ -159,5 +159,39 @@ class NewsTests(unittest.TestCase):
         self.assertGreater(record["indicative_distance_to_target_pips"], 0)
         self.assertGreater(record["indicative_remaining_rr_before_new_spread_adjustment"], 1)
 
+
+    def test_blocked_optional_bls_feed_is_reported_not_hidden(self):
+        feeds = {
+            "Fed policy": {"status": "OK"},
+            "ECB press": {"status": "OK"},
+            "Global markets aggregation": {"status": "OK"},
+            "BLS inflation": {"status": "UNAVAILABLE"},
+        }
+        status = news.coverage_for("EUR_USD", feeds, "OK")
+        self.assertEqual(status["status"], "LIMITED")
+        self.assertIn("BLS inflation", status["other_unavailable"])
+        report = {"status": "PARTIAL", "collected_at": news.iso(NOW),
+                  "by_pair": {"EUR_USD": {
+                      "coverage": status,
+                      "recent_relevant_headlines": [],
+                      "near_high_impact_calendar": [],
+                      "calendar_coverage": "OK"}}}
+        self.assertEqual(watch.news_check(signal(), report, NOW)[0],
+                         "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS")
+
+    def test_missing_essential_source_blocks_watch(self):
+        feeds = {"Fed policy": {"status": "UNAVAILABLE"},
+                 "ECB press": {"status": "OK"},
+                 "Global markets aggregation": {"status": "OK"}}
+        status = news.coverage_for("EUR_USD", feeds, "OK")
+        self.assertEqual(status["status"], "UNAVAILABLE")
+        report = {"status": "PARTIAL", "collected_at": news.iso(NOW),
+                  "by_pair": {"EUR_USD": {"coverage": status,
+                       "recent_relevant_headlines": [], "near_high_impact_calendar": [],
+                       "calendar_coverage": "OK"}}}
+        self.assertEqual(watch.news_check(signal(), report, NOW)[0],
+                         "NEWS_COVERAGE_INCOMPLETE")
+
+
 if __name__ == "__main__":
     unittest.main()
