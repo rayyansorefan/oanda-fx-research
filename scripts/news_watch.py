@@ -190,6 +190,35 @@ def event_impact(pair, events, now, lead=45, lag=45):
     return result
 
 
+
+# Essential pair-specific public announcements plus an independent headline
+# aggregation. Other failed feeds must remain openly reported, not suppress all
+# monitoring as if no functional source exists.
+REQUIRED_FEEDS = {
+    "USD": "Fed policy", "EUR": "ECB press", "GBP": "BoE news",
+    "JPY": "BoJ updates", "CAD": "BoC press",
+    "AUD": "RBA press", "CHF": "SNB monetary policy",
+}
+
+
+def coverage_for(pair, feeds, calendar_status):
+    required = sorted(set([REQUIRED_FEEDS[code] for code in PAIR_CURRENCIES[pair]] +
+                          ["Global markets aggregation"]))
+    missing_essential = [name for name in required
+                         if feeds.get(name, {}).get("status") != "OK"]
+    other_failed = sorted(name for name, record in feeds.items()
+                          if record.get("status") != "OK" and name not in required)
+    status = ("UNAVAILABLE" if calendar_status != "OK" or missing_essential
+              else "LIMITED" if other_failed else "OK")
+    return {"status": status,
+            "required_sources": required,
+            "missing_required": missing_essential,
+            "other_unavailable": other_failed,
+            "note": ("LIMITED means selected official and aggregate sources plus the calendar "
+                     "responded, but not every optional source. Never interpret this as "
+                     "complete global-news or real-time event coverage.")}
+
+
 def load(path, default):
     try:
         return json.loads(path.read_text()) if path.exists() else default
@@ -253,7 +282,8 @@ def collect(fetch=request, now=None):
                 "recent_relevant_headlines": relevance(pair, headlines)[:12],
                 "new_relevant_headlines": relevance(pair, new)[:8],
                 "near_high_impact_calendar": event_impact(pair, events, now),
-                "calendar_coverage": calendar_status
+                "calendar_coverage": calendar_status,
+                "coverage": coverage_for(pair, feeds, calendar_status)
             } for pair in PAIR_CURRENCIES
         }
     }
