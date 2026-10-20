@@ -11,6 +11,8 @@ from urllib.request import Request, urlopen
 SNAPSHOT = Path("data/latest.json")
 SIGNALS = Path("signals.json")
 STATE = Path("data/watch_state.json")
+NEWS = Path("data/news_latest.json")
+ASSESSMENT = Path("data/hourly_assessment.json")
 
 
 def parse_time(value):
@@ -167,40 +169,241 @@ def notify(signal, route, bar_time, explanation, quote):
     print("Review notification:", result.get("html_url", "[URL unavailable]"))
 
 
+
+def news_check(signal, feed, now):
+    """Return objective news/event risk. No headline sentiment/forecasting."""
+    checked = parse_time(feed.get("collected_at", "1900-01-01T00:00:00Z"))
+    if now - checked > timedelta(minutes=15):
+        return "NEWS_COVERAGE_STALE", [], []
+    pair = signal["instrument"]
+    coverage = feed.get("by_pair", {}).get(pair)
+    if not isinstance(coverage, dict):
+        return "NEWS_COVERAGE_INCOMPLETE", [], []
+    start = parse_time(signal["created_at"])
+    # Capture known material news even when other providers fail.
+    recent = [item for item in coverage.get("recent_relevant_headlines", [])
+              if parse_time(item["published_at"]) > start
+              and now - parse_time(item["published_at"]) < timedelta(hours=7)]
+    events = coverage.get("near_high_impact_calendar", [])
+    if events:
+        return "HIGH_IMPACT_RELEASE_WINDOW", recent[:6], events
+    if recent:
+        return "NEW_MATERIAL_HEADLINE_REVIEW", recent[:6], []
+    # Never issue a reassuring price-only alert when RSS/calendar coverage is degraded.
+    if feed.get("status") != "OK":
+        return "NEWS_COVERAGE_INCOMPLETE", [], []
+    if coverage.get("calendar_coverage") != "OK":
+        return "EVENT_CALENDAR_UNAVAILABLE", [], []
+    return "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES", [], []
+
+
+def observed_price_movement(pairdata, signal, item):
+    """Price delta from the last completed M15 close BEFORE headline timestamp.
+    Observed association only: not a claim news CAUSED the price change.
+    """
+    published = parse_time(item["published_at"])
+    candles = pairdata.get("frames", {}).get("M15", {}).get("recent_completed_candles", [])
+    before = [c for c in candles if
+              parse_time(c["time"]) + timedelta(minutes=15) <= published]
+    after = [c for c in candles if parse_time(c["time"]) + timedelta(minutes=15) > published]
+    if not before or not after:
+        return {"status": "PRICE_REACTION_UNVERIFIABLE"}
+    earlier = before[-1]["mid"]["c"]
+    later = after[-1]["mid"]["c"]
+    pips = (later - earlier) / (0.01 if signal["instrument"].endswith("_JPY") else 0.0001)
+    aligned = (pips > 0) if signal["direction"] == "LONG" else (pips < 0)
+    return {"status": "OBSERVED_PRICE_MOVEMENT_NOT_CAUSAL",
+            "from_bar_time": before[-1]["time"], "to_bar_time": after[-1]["time"],
+            "change_pips": round(pips, 2),
+            "vs_planned_direction": "SUPPORTS" if aligned else "OPPOSES" if pips else "FLAT"}
+
+
+def news_alert(signal, status, headlines, events, report):
+    """At most one GitHub risk-review issue per setup per run. No entry orders."""
+    token = os.environ.get("GITHUB_TOKEN")
+    repository = os.environ.get("GITHUB_REPOSITORY", "")
+    if not token or not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repository):
+        raise RuntimeError("GitHub issue notifications unavailable")
+    title = "[FX NEWS REVIEW] " + signal["instrument"] + " " + signal["direction"] + " / " + signal["id"]
+    lines = ["**REASSESSMENT REQUIRED — NO NEW ENTRY AUTHORISED.**",
+             "Status: " + status,
+             "Original setup: " + signal["id"],
+             "Hourly news and technical report: data/hourly_assessment.json",
+             "OANDA prices differ from Pepperstone. News classification is heuristic.",
+             "",
+             "**Newly relevant developments:**"]
+    for item in headlines[:5]:
+        lines.append("- " + item["published_at"] + " | " + item["title"] + " | " + item["url"])
+    if events:
+        lines.append("**High-impact events in blackout window (third-party indicative calendar):**")
+        for event in events[:5]:
+            lines.append("- " + event["time"] + " | " + event["currency"] + " | " + event["title"])
+    for event in report.get("observed_price_reactions", [])[:3]:
+        result = event.get("observation", {})
+        lines.append("Observed M15 price movement (NOT causal): " + str(result))
+    lines.append("**Action:** Fresh comprehensive news evaluation and Pepperstone price/spread "
+                 "verification required. This issue is not a trade recommendation.")
+    request_data = json.dumps({"title": title, "body": "\n".join(lines)}).encode()
+    req = Request("https://api.github.com/repos/" + repository + "/issues",
+                  data=request_data, method="POST",
+                  headers={"Authorization": "Bearer " + token,
+                           "Accept": "application/vnd.github+json",
+                           "Content-Type": "application/json"})
+    with urlopen(req, timeout=20) as response:
+        result = json.load(response)
+    print("NEWS REVIEW ISSUE:", result.get("html_url", "[unavailable]"))
+
+
+def basic_technical_status(pairdata, signal):
+    """Lightweight monitoring of original approved plan, not a new analysis."""
+    m15 = pairdata.get("frames", {}).get("M15", {})
+    h1 = pairdata.get("frames", {}).get("H1", {})
+    m = m15.get("indicators", {})
+    h = h1.get("indicators", {})
+    quote = pairdata.get("quote", {})
+    bid, ask = quote.get("bid"), quote.get("ask")
+    if bid is None or ask is None:
+        return {"status": "NO_QUOTE"}
+    mark = ask if signal["direction"] == "LONG" else bid
+    stop, tp = float(signal["stop"]), float(signal["tp1"])
+    long = signal["direction"] == "LONG"
+    distance_to_target = (tp - mark) if long else (mark - tp)
+    distance_to_stop = (mark - stop) if long else (stop - mark)
+    pip = 0.01 if signal["instrument"].endswith("_JPY") else 0.0001
+    remaining_rr = (distance_to_target / distance_to_stop) if distance_to_stop > 0 else None
+    ema20 = m.get("ema20")
+    macd = m.get("macd_12_26_9") or {}
+    return {
+        "oanda_quote": quote, "price_reference": mark,
+        "indicative_distance_to_target_pips": round(distance_to_target / pip, 2),
+        "indicative_distance_to_stop_pips": round(distance_to_stop / pip, 2),
+        "indicative_remaining_rr_before_new_spread_adjustment": (
+            round(remaining_rr, 2) if remaining_rr is not None else None),
+        "quote_is_tradeable": quote.get("tradeable"),
+        "m15_rsi14": m.get("rsi14"), "m15_macd_histogram": macd.get("histogram"),
+        "m15_adx14": m.get("adx14"), "m15_atr14": m.get("atr14"),
+        "h1_rsi14": h.get("rsi14"), "h1_adx14": h.get("adx14"),
+        "vs_m15_ema20": (
+            "ABOVE" if (bid + ask) / 2 > ema20 else "BELOW") if ema20 is not None else None,
+        "latest_completed_m15_bar_start": m15.get("completed_at"),
+        "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction."
+    }
+
+
+def setup_already_breached(pairdata, signal, now):
+    """Conservatively invalidate once plan's stop or TP1 was touched after creation.
+    OHLC cannot establish same-bar ordering; no executed-trade claim.
+    """
+    stop, tp = float(signal["stop"]), float(signal["tp1"])
+    long = signal["direction"] == "LONG"
+    created = parse_time(signal["created_at"])
+    bars = pairdata.get("frames", {}).get("M15", {}).get("recent_completed_candles", [])
+    for candle in bars:
+        start = parse_time(candle["time"])
+        if start + timedelta(minutes=15) <= created or start >= now:
+            continue
+        # OANDA spread-side OHLC: conservative for a *potential* touch only.
+        mid = candle["mid"]
+        if (mid["l"] <= stop if long else mid["h"] >= stop):
+            return "PLAN_STOP_LEVEL_TOUCHED_ON_M15"
+        if (mid["h"] >= tp if long else mid["l"] <= tp):
+            return "PLAN_TP1_LEVEL_TOUCHED_ON_M15"
+    return None
+
 def watch():
     snapshot = load(SNAPSHOT, {})
-    if snapshot.get("status") != "OK":
-        print("NO VERIFIED SIGNAL: OANDA data unavailable")
-        return
     current = utc_now()
+    news = load(NEWS, {})
     signals = load(SIGNALS, {"signals": []}).get("signals", [])
     if len(signals) > 3:
-        raise ValueError("Maximum of three monitored trade ideas at once")
+        raise ValueError("Maximum three approved FX research ideas")
     state = load(STATE, {"setups": {}})
+    report = {"collected_at": current.isoformat(), "status": "OK",
+              "oanda_collected_at": snapshot.get("collected_at"),
+              "news_collected_at": news.get("collected_at"),
+              "news_coverage": news.get("status", "UNAVAILABLE"),
+              "data_policy": "Research-only, no orders. Hourly OANDA quote not Pepperstone executable quote.",
+              "signals": []}
+    if snapshot.get("status") != "OK":
+        report["status"] = "OANDA_DATA_UNAVAILABLE"
+        save(ASSESSMENT, report)
+        return
     for signal in signals:
         identity = signal.get("id", "")
         pair = signal.get("instrument", "")
         if not re.fullmatch(r"[A-Za-z0-9_-]{1,60}", identity):
             raise ValueError("Invalid signal ID")
-        if pair not in snapshot["pairs"] or signal.get("direction") not in ("LONG", "SHORT"):
-            raise ValueError("Invalid pair or direction in signals.json")
-        if ("created_at" not in signal or current > parse_time(signal["expires_at"])
-                or blacked_out(signal, current)):
+        if pair not in snapshot.get("pairs", {}) or signal.get("direction") not in ("LONG", "SHORT"):
+            raise ValueError("Unknown pair or direction")
+        pairdata = snapshot["pairs"][pair]
+        row = {"id": identity, "pair": pair, "direction": signal["direction"],
+               "created_at": signal.get("created_at"),
+               "expires_at": signal.get("expires_at"),
+               "technical_checkpoint": basic_technical_status(pairdata, signal)}
+        if not signal.get("created_at") or not signal.get("expires_at"):
+            row["status"] = "INVALID_SETUP"
+            report["signals"].append(row)
             continue
-        if current < parse_time(signal["created_at"]):
+        if current < parse_time(signal["created_at"]) or current > parse_time(signal["expires_at"]):
+            row["status"] = "EXPIRED_OR_FUTURE"
+            report["signals"].append(row)
             continue
         tracked = state["setups"].setdefault(identity, {"notified": []})
-        if tracked.get("notified"):
-            continue  # Alternate routes are mutually exclusive; only one alert per idea.
-        found = signal_match(signal, snapshot["pairs"][pair], tracked, current)
-        if not found:
+        breached = setup_already_breached(pairdata, signal, current)
+        if breached:
+            row["status"] = "REASSESS_OR_EXPIRE_PRIOR_PLAN_LEVEL_REACHED"
+            row["reason"] = breached
+            report["signals"].append(row)
             continue
-        route, bar_time, reason = found
-        notify(signal, route, bar_time, reason, snapshot["pairs"][pair]["quote"])
-        tracked["notified"].append(route)
-        tracked["breakout_pending"] = None
+        status, headlines, events = news_check(signal, news, current)
+        row["news_status"] = status
+        row["relevant_headlines"] = headlines
+        row["release_blackouts"] = events
+        row["observed_price_reactions"] = [{
+            "headline": item["title"],
+            "observation": observed_price_movement(pairdata, signal, item)
+        } for item in headlines[:4]]
+        if blacked_out(signal, current):
+            row["status"] = "MANUAL_EVENT_BLACKOUT"
+            report["signals"].append(row)
+            continue
+        if status != "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES":
+            row["status"] = "REASSESS_NEWS_FIRST" if status in (
+                "HIGH_IMPACT_RELEASE_WINDOW", "NEW_MATERIAL_HEADLINE_REVIEW") else (
+                "NEWS_COVERAGE_NOT_VERIFIED")
+            if status in ("HIGH_IMPACT_RELEASE_WINDOW", "NEW_MATERIAL_HEADLINE_REVIEW"):
+                key = status + "|" + (headlines[0]["id"] if headlines else
+                                     events[0]["time"] + events[0]["title"])
+                if key not in tracked.get("news_alerted", []):
+                    news_alert(signal, status, headlines, events, row)
+                    tracked.setdefault("news_alerted", []).append(key)
+            report["signals"].append(row)
+            continue
+        if tracked.get("notified"):
+            row["status"] = "PRIOR_PRICE_ALERT_SENT"
+            report["signals"].append(row)
+            continue
+        found = signal_match(signal, pairdata, tracked, current)
+        if found:
+            route, bar_time, reason = found
+            notify(signal, route, bar_time, reason, pairdata["quote"])
+            tracked.setdefault("notified", []).append(route)
+            tracked["breakout_pending"] = None
+            row["status"] = "PRICE_REASSESSMENT_ALERT_SENT"
+            row["route"] = route
+            row["trigger_bar_open_time"] = bar_time
+        else:
+            row["status"] = "NO_QUALIFIED_PRICE_PATTERN"
+        report["signals"].append(row)
     save(STATE, state)
-    print("Checked", len(signals), "approved ideas; all alerts require manual verification")
+    report["counts"] = {"watchlist": len(signals),
+                        "need_news_review": sum(x.get("status") in (
+                            "REASSESS_NEWS_FIRST", "NEWS_COVERAGE_NOT_VERIFIED")
+                            for x in report["signals"]),
+                        "price_alerts": sum(x.get("status") == "PRICE_REASSESSMENT_ALERT_SENT"
+                                            for x in report["signals"])}
+    save(ASSESSMENT, report)
+    print("Hourly full setup/news watch:", report["counts"], "coverage", report["news_coverage"])
 
 
 if __name__ == "__main__":
