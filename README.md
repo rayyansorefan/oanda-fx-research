@@ -4,13 +4,13 @@ This repository contains a small **market-data collector and price-only alert wa
 
 ## What it collects
 
-The collector uses OANDA practice REST GET requests to retrieve current account-specific bid/ask quotes, plus 250 OANDA bid/ask/mid candles for EUR/USD, GBP/USD, USD/JPY, USD/CAD, EUR/GBP, AUD/USD, USD/CHF and EUR/JPY on M5/M15/H1/H4/D. It excludes unfinished candles and calculates EMA20/50/200, RSI14, MACD12/26/9, ADX/DMI14, ATR14, 20-bar support/resistance and previous-bar pivots from midpoint candles.
+The collector uses OANDA practice REST GET requests to retrieve current account-specific bid/ask quotes, plus 250 OANDA bid/ask/mid candles for EUR/USD, GBP/USD, USD/JPY, USD/CAD, EUR/GBP, AUD/USD, USD/CHF and EUR/JPY on M5/M15/H1/H4/D. It excludes unfinished candles and calculates EMA20/50/200, RSI14, MACD12/26/9, ADX/DMI14, ATR14, Bollinger20/2, Stochastic14/3, confirmed 2/2 swings, market structure, Fibonacci reference levels, RSI divergence candidates, candle anatomy, 20-bar support/resistance and previous-bar pivots from midpoint candles.
 
-Output: **data/latest.json** (private repository). Check `status`, `collected_at`, each quote `time`, candle `completed_at` and source labels. Each OANDA candle's `time` is its *opening* timestamp. OANDA quotes are **not Pepperstone executable quotes**.
+Outputs: **data/summary.json** (lightweight technical research brief) and **data/latest.json** (full intraday audit candles, private repository). The working protocol is **docs/RESEARCH_PROTOCOL.md**. Check `status`, `collected_at`, each quote `time`, candle `completed_at` and source labels. Each OANDA candle's `time` is its *opening* timestamp. OANDA quotes are **not Pepperstone executable quotes**.
 
 ## Schedule — hourly only
 
-The repository checks once per weekday hour at **06:07–18:07 UTC** via GitHub Actions. This is 13 planned updates per weekday, not every 15 minutes. Scheduling is best-effort and can run late or fail; GitHub minutes are separate from ChatGPT usage. The existing **four weekday ChatGPT FX briefings** remain the only full analysis reports; there are no new ChatGPT tasks.
+The repository checks once per weekday hour at **06:27–18:27 UTC** via GitHub Actions. This is 13 planned updates per weekday, not every 15 minutes. Scheduling is best-effort and can run late or fail; GitHub minutes are separate from ChatGPT usage. The existing **four weekday ChatGPT FX briefings** remain the only full analysis reports; there are no new ChatGPT tasks.
 
 Up to three explicitly approved ideas in `signals.json` can be **reassessed hourly** for objective completed-M15 continuation or rejection patterns. If one qualifies, the watcher creates a GitHub Issue with `[FX WATCH]` in the title, saying **reassess now**. It does not automatically deliver a ChatGPT message or know whether Pepperstone would fill. If no ideas are approved, the correct result is **zero** trade alerts.
 
@@ -32,3 +32,7 @@ An hourly watcher can miss short-lived opportunities. It cannot replace live bid
 ## Failures and verification
 
 `python -m unittest discover -s tests -v` runs independent tests without any API key. API errors, missing account secrets, missing quotes, malformed history or insufficient completed bars must fail closed. Any `DATA_UNAVAILABLE` snapshot is not a usable trade signal. Audit the GitHub Actions run history, latest quote and candle timestamps, issue notifications and `data/watch_state.json`. The system does not retain a full professional trading journal or calculate real-world net expectancy; ChatGPT reports must preserve actual unfilled and losing outcomes and mark gaps.
+
+## Handoff to four full reports
+
+The four existing ChatGPT scheduled reports must use authenticated GitHub connector reads of `data/summary.json` at each run, and `data/latest.json` when reconstructing historical candle paths. They must check both snapshot/quote timestamps, verify scheduled economic news separately, and update `signals.json` through the GitHub connector only if a justified actionable watch idea survives all checks. **No automatic AI sentiment service or additional ChatGPT tasks**. See [research protocol](docs/RESEARCH_PROTOCOL.md). A private GitHub API connection may not be available inside every scheduled run: this handoff requires separate end-to-end verification; otherwise reports must say DATA UNAVAILABLE, WATCHLIST NOT UPDATED.

@@ -4,6 +4,7 @@ import json
 import math
 import os
 import sys
+from advanced_technicals import advanced
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.error import HTTPError, URLError
@@ -125,7 +126,7 @@ def compact_candle(candle):
     return out
 
 
-def describe(candles):
+def describe(candles, frame="M15"):
     rows = [compact_candle(x) for x in candles if x.get("complete") is True]
     if len(rows) < 210:
         raise ValueError("INSUFFICIENT_COMPLETED_CANDLES")
@@ -135,8 +136,12 @@ def describe(candles):
     prior = rows[-2]["mid"]
     pivot = (prior["h"] + prior["l"] + prior["c"]) / 3
     last = rows[-1]
+    # Retain enough chronological data for the day's audit without sending
+    # unnecessary multi-day history into the user's four ChatGPT reviews.
+    stored_bars = {"M5": 96, "M15": 96, "H1": 60, "H4": 36, "D": 30}.get(frame, 48)
     return {
         "completed_at": last["time"],
+        "completed_at_field_note": "OANDA candle opening timestamp; complete=true confirms candle closed",
         "complete_candles_used": len(rows),
         "indicators_from": "OANDA completed midpoint candles, independently calculated",
         "indicators": {
@@ -150,7 +155,8 @@ def describe(candles):
             "r1_previous_bar": 2 * pivot - prior["l"],
             "s1_previous_bar": 2 * pivot - prior["h"]
         },
-        "recent_completed_candles": rows[-12:]
+        "advanced": advanced(rows),
+        "recent_completed_candles": rows[-stored_bars:]
     }
 
 
@@ -195,9 +201,26 @@ def collect():
                                {"granularity": frame, "count": 250, "price": "MBA",
                                 "smooth": "false", "dailyAlignment": 17,
                                 "alignmentTimezone": "America/New_York"})
-            frames[frame] = describe(response.get("candles", []))
+            frames[frame] = describe(response.get("candles", []), frame)
         output["pairs"][pair] = {"quote": quotes[pair], "frames": frames}
     write_json(OUT, output)
+    summary = {
+        "status": output["status"], "collected_at": output["collected_at"],
+        "source": output["source"],
+        "candle_time_note": "Each completed_at is OANDA candle OPEN; bars are complete=true",
+        "pairs": {}
+    }
+    for instrument, row in output["pairs"].items():
+        summary["pairs"][instrument] = {
+            "quote": row["quote"],
+            "frames": {frame: {
+                "completed_at": values["completed_at"],
+                "indicators": values["indicators"],
+                "advanced": values["advanced"],
+                "last_3_completed_candles": values["recent_completed_candles"][-3:]
+            } for frame, values in row["frames"].items()}
+        }
+    write_json(Path("data/summary.json"), summary)
     print("Collected", len(output["pairs"]), "pairs; status=OK; at", output["collected_at"])
 
 
@@ -211,7 +234,9 @@ if __name__ == "__main__":
                 or code.startswith("Missing ") or code.startswith("Set ")
                 or code.startswith("Invalid ") or code.startswith("Missing candle")):
             code = type(exc).__name__
-        write_json(OUT, {"status": "DATA_UNAVAILABLE", "collected_at": now(),
-                         "error": code, "pairs": {}})
+        failure = {"status": "DATA_UNAVAILABLE", "collected_at": now(),
+                   "error": code, "pairs": {}}
+        write_json(OUT, failure)
+        write_json(Path("data/summary.json"), failure)
         print("Data unavailable:", code, file=sys.stderr)
         sys.exit(1)
