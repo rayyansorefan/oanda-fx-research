@@ -2,9 +2,9 @@ name: OANDA FX read-only research data
 on:
   workflow_dispatch:
   schedule:
-    # Hourly only, weekdays 06:07–18:07 UTC.
+    # Hourly only, weekdays 06:27–18:27 UTC.
     # Independent of ChatGPT usage. May miss short-lived M15 entry triggers.
-    - cron: '7 6-18 * * 1-5'
+    - cron: '27 6-18 * * 1-5'
 permissions:
   contents: write
   issues: write
