@@ -201,18 +201,39 @@ REQUIRED_FEEDS = {
 }
 
 
+def refresh_pair_universe():
+    """Load all standard FX symbols from the OANDA account instrument catalog.
+    Pepperstone availability cannot be inferred from OANDA account symbols.
+    """
+    global PAIR_CURRENCIES, CURRENCIES
+    catalog_file = load(Path("data/universe.json"), {})
+    instruments = catalog_file.get("instruments", {})
+    if isinstance(instruments, dict) and instruments:
+        pairs = {name: tuple(name.split("_")) for name in instruments
+                 if isinstance(name, str) and len(name) == 7 and name[3] == "_"
+                 and name[:3].isalpha() and name[4:].isalpha()}
+        if pairs:
+            PAIR_CURRENCIES = pairs
+            CURRENCIES = frozenset(code for codes in pairs.values() for code in codes)
+    return PAIR_CURRENCIES
+
+
 def coverage_for(pair, feeds, calendar_status):
-    required = sorted(set([REQUIRED_FEEDS[code] for code in PAIR_CURRENCIES[pair]] +
+    currencies = PAIR_CURRENCIES[pair]
+    unknown_currencies = [code for code in currencies if code not in REQUIRED_FEEDS]
+    required = sorted(set([REQUIRED_FEEDS[code] for code in currencies
+                           if code in REQUIRED_FEEDS] +
                           ["Global markets aggregation"]))
     missing_essential = [name for name in required
                          if feeds.get(name, {}).get("status") != "OK"]
     other_failed = sorted(name for name, record in feeds.items()
                           if record.get("status") != "OK" and name not in required)
     status = ("UNAVAILABLE" if calendar_status != "OK" or missing_essential
-              else "LIMITED" if other_failed else "OK")
+              or unknown_currencies else "LIMITED" if other_failed else "OK")
     return {"status": status,
             "required_sources": required,
             "missing_required": missing_essential,
+            "currencies_without_supported_official_feed": unknown_currencies,
             "other_unavailable": other_failed,
             "note": ("LIMITED means selected official and aggregate sources plus the calendar "
                      "responded, but not every optional source. Never interpret this as "
@@ -233,6 +254,7 @@ def save(path, value):
 
 def collect(fetch=request, now=None):
     now = now or timestamp()
+    refresh_pair_universe()
     state = load(STATE, {"seen": []})
     seen = set(state.get("seen", []))
     feeds = {}
@@ -275,6 +297,7 @@ def collect(fetch=request, now=None):
                      "events": events[:200]},
         "new_material_headlines": new[:35],
         "recent_material_headlines": headlines[:100],
+        "fx_pairs_classified": len(PAIR_CURRENCIES),
         "coverage_note": "Headlines are unverified potential market events, never proof of directional impact; "
                          "coverage is not exhaustive or continuous. A successful feed does not mean there is no other breaking news.",
         "by_pair": {
