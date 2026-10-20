@@ -255,18 +255,60 @@ def news_alert(signal, status, headlines, events, report):
 
 
 def basic_technical_status(pairdata, signal):
-    """Lightweight checkpoint, NOT a re-run of the full 4x/day analysis."""
-    values = pairdata.get("frames", {}).get("M15", {}).get("indicators", {})
-    h1 = pairdata.get("frames", {}).get("H1", {}).get("indicators", {})
+    """Lightweight monitoring of original approved plan, not a new analysis."""
+    m15 = pairdata.get("frames", {}).get("M15", {})
+    h1 = pairdata.get("frames", {}).get("H1", {})
+    m = m15.get("indicators", {})
+    h = h1.get("indicators", {})
     quote = pairdata.get("quote", {})
-    middle = (quote.get("bid", 0) + quote.get("ask", 0)) / 2
-    ema20 = values.get("ema20")
-    regime = values.get("adx14")
-    directional = None if ema20 is None else (
-        "ABOVE_M15_EMA20" if middle > ema20 else "BELOW_M15_EMA20")
-    return {"oanda_quote": quote, "m15_adx14": regime, "m15_rsi14": values.get("rsi14"),
-            "h1_rsi14": h1.get("rsi14"), "relative_to_m15_ema20": directional,
-            "interpretation": "Objective indicators only. Not a full technical or news assessment."}
+    bid, ask = quote.get("bid"), quote.get("ask")
+    if bid is None or ask is None:
+        return {"status": "NO_QUOTE"}
+    mark = ask if signal["direction"] == "LONG" else bid
+    stop, tp = float(signal["stop"]), float(signal["tp1"])
+    long = signal["direction"] == "LONG"
+    distance_to_target = (tp - mark) if long else (mark - tp)
+    distance_to_stop = (mark - stop) if long else (stop - mark)
+    pip = 0.01 if signal["instrument"].endswith("_JPY") else 0.0001
+    remaining_rr = (distance_to_target / distance_to_stop) if distance_to_stop > 0 else None
+    ema20 = m.get("ema20")
+    macd = m.get("macd_12_26_9") or {}
+    return {
+        "oanda_quote": quote, "price_reference": mark,
+        "indicative_distance_to_target_pips": round(distance_to_target / pip, 2),
+        "indicative_distance_to_stop_pips": round(distance_to_stop / pip, 2),
+        "indicative_remaining_rr_before_new_spread_adjustment": (
+            round(remaining_rr, 2) if remaining_rr is not None else None),
+        "quote_is_tradeable": quote.get("tradeable"),
+        "m15_rsi14": m.get("rsi14"), "m15_macd_histogram": macd.get("histogram"),
+        "m15_adx14": m.get("adx14"), "m15_atr14": m.get("atr14"),
+        "h1_rsi14": h.get("rsi14"), "h1_adx14": h.get("adx14"),
+        "vs_m15_ema20": (
+            "ABOVE" if (bid + ask) / 2 > ema20 else "BELOW") if ema20 is not None else None,
+        "latest_completed_m15_bar_start": m15.get("completed_at"),
+        "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction."
+    }
+
+
+def setup_already_breached(pairdata, signal, now):
+    """Conservatively invalidate once plan's stop or TP1 was touched after creation.
+    OHLC cannot establish same-bar ordering; no executed-trade claim.
+    """
+    stop, tp = float(signal["stop"]), float(signal["tp1"])
+    long = signal["direction"] == "LONG"
+    created = parse_time(signal["created_at"])
+    bars = pairdata.get("frames", {}).get("M15", {}).get("recent_completed_candles", [])
+    for candle in bars:
+        start = parse_time(candle["time"])
+        if start + timedelta(minutes=15) <= created or start >= now:
+            continue
+        # OANDA spread-side OHLC: conservative for a *potential* touch only.
+        mid = candle["mid"]
+        if (mid["l"] <= stop if long else mid["h"] >= stop):
+            return "PLAN_STOP_LEVEL_TOUCHED_ON_M15"
+        if (mid["h"] >= tp if long else mid["l"] <= tp):
+            return "PLAN_TP1_LEVEL_TOUCHED_ON_M15"
+    return None
 
 def watch():
     snapshot = load(SNAPSHOT, {})
@@ -307,6 +349,12 @@ def watch():
             report["signals"].append(row)
             continue
         tracked = state["setups"].setdefault(identity, {"notified": []})
+        breached = setup_already_breached(pairdata, signal, current)
+        if breached:
+            row["status"] = "REASSESS_OR_EXPIRE_PRIOR_PLAN_LEVEL_REACHED"
+            row["reason"] = breached
+            report["signals"].append(row)
+            continue
         status, headlines, events = news_check(signal, news, current)
         row["news_status"] = status
         row["relevant_headlines"] = headlines
