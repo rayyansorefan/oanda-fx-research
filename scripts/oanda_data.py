@@ -4,6 +4,7 @@ import json
 import math
 import os
 import sys
+import time
 from advanced_technicals import advanced
 from fx_universe import catalog, chunks, is_quote_usable, screen_priority, deep_selection, CORE
 from datetime import datetime, timezone
@@ -19,6 +20,9 @@ BASE = "https://api-fxpractice.oanda.com"
 FRAMES = ("M5", "M15", "H1", "H4", "D")
 OUT = Path("data/latest.json")
 CANDLE_CACHE = {}
+# Bounded global retry allowance: transient OANDA gateway failures must not
+# turn a six-minute, research-only hourly job into an unbounded API loop.
+TRANSIENT_RETRIES_LEFT = 8
 
 
 def now():
@@ -33,13 +37,20 @@ def request(path, params=None):
     req = Request(url, headers={"Authorization": "Bearer " + token,
                                 "Accept": "application/json",
                                 "Accept-Datetime-Format": "RFC3339"}, method="GET")
-    try:
-        with urlopen(req, timeout=25) as resp:
-            return json.load(resp)
-    except HTTPError as exc:
-        raise RuntimeError("OANDA_HTTP_" + str(exc.code)) from None
-    except (URLError, TimeoutError):
-        raise RuntimeError("OANDA_NETWORK_ERROR") from None
+    global TRANSIENT_RETRIES_LEFT
+    for attempt in range(2):
+        try:
+            with urlopen(req, timeout=15) as resp:
+                return json.load(resp)
+        except HTTPError as exc:
+            if (exc.code in (429, 502, 503, 504) and attempt == 0
+                    and TRANSIENT_RETRIES_LEFT > 0):
+                TRANSIENT_RETRIES_LEFT -= 1
+                time.sleep(0.5)
+                continue
+            raise RuntimeError("OANDA_HTTP_" + str(exc.code)) from None
+        except (URLError, TimeoutError):
+            raise RuntimeError("OANDA_NETWORK_ERROR") from None
 
 
 def ema(values, period):
@@ -255,7 +266,9 @@ def collect():
     all_data = {}
     ranking = {}
     full_failures = dict(problems)
-    for pair in names:
+    # Scan liquid majors first so gateway outages do not disproportionately
+    # hide the instruments needed for the four daily discretionary reviews.
+    for pair in sorted(names, key=lambda item: (item not in CORE, item)):
         if pair not in valid:
             if pair in quotes and not quotes[pair].get("tradeable"):
                 full_failures[pair] = "OANDA_NON_TRADEABLE_QUOTE"
