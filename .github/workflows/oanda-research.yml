@@ -48,13 +48,17 @@ jobs:
         continue-on-error: true
         run: python scripts/news_watch.py
       - name: Reassess approved setups against price AND news/event risk
+        id: watch
         if: steps.collect.outcome == 'success'
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python scripts/signal_watch.py
       - name: Save timestamped snapshot and watcher state
+        id: persist
         if: always()
+        continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -63,6 +67,17 @@ jobs:
             git commit -m "data: update timestamped OANDA research snapshot [skip ci]"
             git push
           fi
-      - name: Fail closed when OANDA or news retrieval crashed
-        if: steps.collect.outcome != 'success' || steps.news.outcome == 'failure'
+      - name: Deliver one hourly GitHub issue confirming actual completion
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SCHEDULE: ${{ github.event.schedule }}
+          FX_COLLECT_OUTCOME: ${{ steps.collect.outcome }}
+          FX_NEWS_OUTCOME: ${{ steps.news.outcome }}
+          FX_WATCH_OUTCOME: ${{ steps.watch.outcome }}
+          FX_PERSIST_OUTCOME: ${{ steps.persist.outcome }}
+        run: python scripts/hourly_delivery.py
+      - name: Fail closed if any research step failed
+        if: steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.watch.outcome != 'success' || steps.persist.outcome != 'success'
         run: exit 1

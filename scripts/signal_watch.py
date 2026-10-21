@@ -160,7 +160,8 @@ def notify(signal, route, bar_time, explanation, quote):
         "positions and risk. OANDA quotes are not Pepperstone quotes. Signals can "
         "reverse or fail after an alert. No orders have been placed.\n"
     )
-    data = json.dumps({"title": title, "body": body}).encode()
+    data = json.dumps({"title": title, "body": body,
+                       "assignees": [repository.split("/")[0]]}).encode()
     req = Request("https://api.github.com/repos/" + repository + "/issues",
                   data=data, method="POST",
                   headers={"Authorization": "Bearer " + token,
@@ -254,7 +255,8 @@ def news_alert(signal, status, headlines, events, report):
         lines.append("Observed M15 price movement (NOT causal): " + str(result))
     lines.append("**Action:** Fresh comprehensive news evaluation and Pepperstone price/spread "
                  "verification required. This issue is not a trade recommendation.")
-    request_data = json.dumps({"title": title, "body": "\n".join(lines)}).encode()
+    request_data = json.dumps({"title": title, "body": "\n".join(lines),
+                               "assignees": [repository.split("/")[0]]}).encode()
     req = Request("https://api.github.com/repos/" + repository + "/issues",
                   data=request_data, method="POST",
                   headers={"Authorization": "Bearer " + token,

@@ -65,3 +65,9 @@ This is best-effort once per hour; not 24-hour news monitoring, not real-time, a
 Pepperstone's UK website advertises 90+ pairs and provides public examples and typical spreads, but does not expose an authenticated programmatic list for this user's spread-betting account. For exact matching, inspect Pepperstone's **Market Watch → Show All** or the broker's **Symbols** list in the user's platform; on MT4/MT5 spread betting accounts symbols may have the `_SB` suffix. Account and platform differences matter. A Pepperstone-only pair which OANDA lacks needs an independent reliable data source; it cannot be accurately analysed using fabricated synthetic candles or a differently quoted instrument. NDFs and currency indices remain separate products, not FX spot pairs.
 
 The collection remains **read-only OANDA GETs**, no Floot, no paid services and no additional ChatGPT tasks. GitHub private-repo Actions minutes remain subject to shared free-tier allowance and must have a $0 cap if desired.
+
+## Hourly check confirmations
+
+Successful hourly GitHub checks create an assigned private issue titled `Update conducted` when there is no meaningful change. It states the count of approved monitored setups, including zero. Significant setup changes use `Action needed` or existing signal/news review issues. Unverified collection or watcher steps send `Update failed`. A missing cron run cannot generate a notice.
+
+The original hourly checks occur at UTC minute 27 on weekdays. Morning fallback data checks and repository-push tests do not create routine confirmations. Notifications rely on the user's GitHub issue notification preferences; this does not affect ChatGPT task notification controls. Scheduled runs can be late or missed.
