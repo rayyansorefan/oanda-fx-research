@@ -86,5 +86,16 @@ class WhatsAppAlertTests(unittest.TestCase):
     def test_alert_keys_repeat_deterministically(self):
         a,b,c=sample()
         self.assertEqual(w.build_events(a,b,c,NOW)[0]["key"],w.build_events(a,b,c,NOW)[0]["key"])
+
+    def test_missing_sender_credentials_are_visible_without_trade_signals(self):
+        from unittest.mock import patch
+        with patch.object(w, "quiet_hours", return_value=False), \
+             patch.object(w, "read", return_value={}), \
+             patch.object(w, "build_events", return_value=[]), \
+             patch.object(w, "emit_status") as report, \
+             patch.dict("os.environ", {}, clear=True):
+            self.assertEqual(w.main(), 0)
+            self.assertEqual(report.call_args.args[0], "NOT_CONFIGURED")
+
 if __name__=="__main__":
     unittest.main()
