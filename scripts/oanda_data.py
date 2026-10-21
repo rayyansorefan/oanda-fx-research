@@ -360,6 +360,14 @@ def collect():
         })
     payload["coverage"]["detailed_audit_pairs"] = sorted(audit_names)
     payload["coverage"]["detailed_audit_dir"] = "data/pairs/{instrument}.json"
+    # This second final manifest is authoritative: the earlier one is written
+    # before detailed audit filenames are selected. Do not leave stale metadata.
+    write_json(Path("data/universe.json"), {
+        "collected_at": payload["collected_at"],
+        "coverage": payload["coverage"],
+        "instruments": discovered,
+        "source": "OANDA account /instruments, NOT a Pepperstone contract list"
+    })
     summary["coverage"] = payload["coverage"]
     for pair, item in payload["pairs"].items():
         for value in item["frames"].values():
