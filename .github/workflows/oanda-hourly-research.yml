@@ -9,9 +9,11 @@ on:
       - 'tests/**'
       - '.github/workflows/oanda-hourly-research.yml'
   schedule:
-    # Hourly only, weekdays 06:43–18:43 UTC. Cron changed to re-register the schedule after zero automatic runs. Full OANDA account FX-universe M15/H1 screening with compact data publication.
+    # Hourly around the clock Monday–Friday UTC plus Sunday 21:43–23:43 UTC for FX reopen. Cron changed to re-register the schedule after zero automatic runs. Full OANDA account FX-universe M15/H1 screening with compact data publication.
     # Independent of ChatGPT usage. May miss short-lived M15 entry triggers.
-    - cron: '43 6-18 * * 1-5'
+    - cron: '43 * * * 1-5'
+    # Sunday reopen: liquid FX market typically resumes late evening UTC.
+    - cron: '43 21-23 * * 0'
     # Independent morning fallback 25 min before 07:30 London in BST/GMT.
     # Two small UTC slots accommodate UK daylight saving; best effort only.
     # GitHub runners are NOT an SLA; delayed or skipped cron still possible.
