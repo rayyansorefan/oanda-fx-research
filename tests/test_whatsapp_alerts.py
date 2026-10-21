@@ -77,7 +77,7 @@ class WhatsAppAlertTests(unittest.TestCase):
             self.assertEqual(channel.run(NOW)["status"],"MISSING_WHATSAPP_CONFIGURATION")
 
     def test_uk_quiet_hours_bst_and_gmt(self):
-        for text in ("2026-10-21T21:59:00Z","2026-10-26T06:59:00Z"):
+        for text in ("2026-10-21T22:00:00Z","2026-10-26T06:59:00Z"):
             self.assertFalse(channel.awake(datetime.fromisoformat(text.replace("Z","+00:00"))))
         self.assertTrue(channel.awake(datetime(2026,10,21,6,0,tzinfo=timezone.utc)))
         self.assertTrue(channel.awake(datetime(2026,10,26,7,0,tzinfo=timezone.utc)))
