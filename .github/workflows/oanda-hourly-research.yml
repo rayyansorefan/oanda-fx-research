@@ -55,6 +55,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python scripts/signal_watch.py
+      - name: Publish sanitized FX research to existing HTML dashboard
+        id: dashboard
+        if: steps.collect.outcome == 'success' && steps.news.outcome == 'success'
+        continue-on-error: true
+        env:
+          FX_DASHBOARD_DEPLOY_TOKEN: ${{ secrets.FX_DASHBOARD_DEPLOY_TOKEN }}
+        run: python scripts/export_public_dashboard.py
       - name: Save timestamped snapshot and watcher state
         id: persist
         if: always()
