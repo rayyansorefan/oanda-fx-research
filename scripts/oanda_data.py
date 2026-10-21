@@ -360,6 +360,14 @@ def collect():
         })
     payload["coverage"]["detailed_audit_pairs"] = sorted(audit_names)
     payload["coverage"]["detailed_audit_dir"] = "data/pairs/{instrument}.json"
+    # Publish the FINAL coverage manifest, after exact deep-shard filenames
+    # have been selected; do not leave a stale pre-selection manifest.
+    write_json(Path("data/universe.json"), {
+        "collected_at": payload["collected_at"],
+        "coverage": payload["coverage"],
+        "instruments": discovered,
+        "source": "OANDA account /instruments, NOT a Pepperstone contract list"
+    })
     summary["coverage"] = payload["coverage"]
     for pair, item in payload["pairs"].items():
         for value in item["frames"].values():
