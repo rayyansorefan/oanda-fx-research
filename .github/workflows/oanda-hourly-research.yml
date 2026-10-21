@@ -57,6 +57,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python scripts/signal_watch.py
+      - name: Send opt-in WhatsApp research signals after validated watcher
+        id: whatsapp
+        if: steps.watch.outcome == 'success'
+        continue-on-error: true
+        env:
+          WHATSAPP_OPT_IN_CONFIRMED: ${{ secrets.WHATSAPP_OPT_IN_CONFIRMED }}
+          WHATSAPP_CLOUD_TOKEN: ${{ secrets.WHATSAPP_CLOUD_TOKEN }}
+          WHATSAPP_PHONE_NUMBER_ID: ${{ secrets.WHATSAPP_PHONE_NUMBER_ID }}
+          WHATSAPP_RECIPIENT_E164: ${{ secrets.WHATSAPP_RECIPIENT_E164 }}
+          WHATSAPP_TEMPLATE_NAME: ${{ secrets.WHATSAPP_TEMPLATE_NAME }}
+          WHATSAPP_TEMPLATE_LANGUAGE: en_GB
+          WHATSAPP_GRAPH_VERSION: v23.0
+        run: python scripts/whatsapp_alerts.py
       - name: Publish sanitized FX research to existing HTML dashboard
         id: dashboard
         if: steps.collect.outcome == 'success' && steps.news.outcome == 'success'
