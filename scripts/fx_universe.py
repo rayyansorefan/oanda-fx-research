@@ -108,7 +108,44 @@ def screen_priority(quote, m15, h1):
     # Relative spread is heavily penalised but NEVER removes chart coverage.
     spread_penalty = min(75.0, cost_fraction * 12.0)
     stretched_penalty = max(0.0, abs(rsi - 50) - 24.0) * 0.4
-    score = round(15 + regime_score + (12 if same_side else 0) -
+    # Ranked technical evidence spans ten selected METHODS rather than 100
+    # correlated votes. None is an independently proven predictive edge.
+    m_adv = m15.get("advanced") or {}
+    h_adv = h1.get("advanced") or {}
+    direction = "LONG" if mid >= ema1 else "SHORT"
+    sign = 1 if direction == "LONG" else -1
+    h_cloud = (h_adv.get("ichimoku_9_26_52") or {}).get("price_vs_visible_cloud")
+    h_supertrend = (h_adv.get("supertrend_10_3") or {}).get("direction")
+    m_breakout = (m_adv.get("donchian_20") or {}).get("close_breakout")
+    macd_hist = (m.get("macd_12_26_9") or {}).get("histogram")
+    direction_ok = {
+        "ema_stack": bool(m.get("ema50") is not None and
+                          h.get("ema50") is not None and
+                          sign * (m["ema20"] - m["ema50"]) > 0 and
+                          sign * (h["ema20"] - h["ema50"]) > 0),
+        "adx_di": bool(adx15 >= 18 and adx1 >= 18 and
+                       sign * ((m.get("plus_di14") or 0) -
+                               (m.get("minus_di14") or 0)) > 0),
+        "macd": bool(macd_hist is not None and sign * macd_hist > 0),
+        "supertrend": h_supertrend == ("UP" if sign == 1 else "DOWN"),
+        "ichimoku": h_cloud == ("ABOVE" if sign == 1 else "BELOW"),
+        "donchian": m_breakout == ("UP" if sign == 1 else "DOWN"),
+    }
+    group_agreement = sum(direction_ok.values())
+    # Two methods legitimately diagnose volatility/range, not direction:
+    # ATR/spread and Bollinger compression are never treated as a buy vote.
+    band = m_adv.get("bollinger_20_2") or {}
+    oscillator = m_adv.get("stochastic_14_3") or {}
+    # Extreme RSI and stoch in a directional trade can signal chasing risk;
+    # they are not an automatic reversal.
+    exhausted = ((rsi >= 77 or oscillator.get("k", 50) >= 93) if sign == 1
+                 else (rsi <= 23 or oscillator.get("k", 50) <= 7))
+    bb_percentile = band.get("bandwidth_percentile_recent")
+    near_compression = bb_percentile is not None and bb_percentile <= 20
+    score = round(15 + regime_score + (12 if same_side else 0) +
+                  min(16, 3.0 * group_agreement) +
+                  (3 if near_compression and m_breakout != "NONE" else 0) -
+                  (8 if exhausted else 0) -
                   spread_penalty - stretched_penalty, 2)
     return {
         "research_priority": score,
@@ -118,6 +155,17 @@ def screen_priority(quote, m15, h1):
         "m15_ema20": ema15, "h1_ema20": ema1,
         "technical_directional_alignment": bool(same_side),
         "research_regime": "TREND" if trending >= ranging else "RANGE",
+        "potential_direction_not_approved": direction,
+        "technical_direction_checks": direction_ok,
+        "technical_checks_agree": group_agreement,
+        "stretched_or_exhausted": bool(exhausted),
+        "bollinger_compression_recent": bool(near_compression),
+        "methods_reviewed": [
+            "EMA20/50/200", "ADX/+DI/-DI", "ATR14 vs spread",
+            "RSI14", "MACD12/26/9", "Bollinger20/2",
+            "Stochastic14/3", "Ichimoku9/26/52",
+            "Supertrend10/3", "Donchian20",
+        ],
         "high_relative_spread": bool(cost_fraction > 1.5),
         "screening_only": True,
         "note": "Review priority only. Cost, multi-frame structure, news and "
