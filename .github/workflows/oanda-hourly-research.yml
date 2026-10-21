@@ -37,6 +37,8 @@ jobs:
           python-version: '3.12'
       - name: Offline safety tests
         run: python -m unittest discover -s tests -v
+      - name: Validate snapshot persistence shell
+        run: bash -n scripts/persist_snapshot.sh
       - name: Fetch OANDA raw data (GET only)
         id: collect
         continue-on-error: true
