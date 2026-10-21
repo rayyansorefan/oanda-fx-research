@@ -1,0 +1,19 @@
+# FX scheduled research recovery trigger
+
+This text file is intentionally included under scripts/ because the existing
+OANDA GitHub Actions workflow runs on pushes to scripts/**.
+
+If an existing scheduled ChatGPT FX assessment finds stale OANDA market data:
+1. GitHub fetch_file this file to read the exact blob SHA.
+2. GitHub update_file to change REQUESTED_AT_UTC below to the actual current
+   UTC timestamp, commit message 'research: request stale FX snapshot'.
+3. GitHub Actions runs the existing read-only OANDA/news collector on push.
+4. Re-read data/summary.json and data/news_latest.json and only use the refresh
+   when the collected_at and actual quotes are verifiably recent.
+5. If the push, GitHub Actions or fresh data fails, say DATA UNAVAILABLE and
+   withhold current executable signals. Never reuse yesterday's quotes.
+
+Do this at most once per assessment, only when stale. It is not a cron
+replacement or guarantee that data arrive before the assessment finishes.
+
+REQUESTED_AT_UTC=UNTESTED
