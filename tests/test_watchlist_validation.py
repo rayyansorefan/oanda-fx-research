@@ -116,5 +116,39 @@ class MonitorGateTests(unittest.TestCase):
             self.assertEqual(saved["counts"]["watchlist"], 2)
 
 
+
+    def test_qualified_price_event_does_not_depend_on_github_issues(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as folder:
+            d = Path(folder)
+            snap, news, signals, state, report = [d / n for n in
+                ("latest.json", "news.json", "signals.json", "state.json", "report.json")]
+            pair = quote()
+            pair["frames"]["M15"]["recent_completed_candles"] = [
+                {"time": (NOW - timedelta(minutes=15)).isoformat(),
+                 "mid": {"o": 1.3378, "h": 1.3382, "l": 1.3375, "c": 1.3379}}
+            ]
+            snap.write_text(json.dumps({"status": "OK", "collected_at": NOW.isoformat(),
+                                        "pairs": {"GBP_USD": pair}}))
+            news.write_text(json.dumps({"status": "OK", "collected_at": NOW.isoformat()}))
+            signals.write_text(json.dumps({"signals": [good()]}))
+            paths = {"SNAPSHOT": snap, "NEWS": news, "SIGNALS": signals,
+                     "STATE": state, "ASSESSMENT": report}
+            with patch.multiple(watch, **paths), \
+                 patch.object(watch, "utc_now", return_value=NOW), \
+                 patch.object(watch, "news_check", return_value=(
+                     "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES", [], [])), \
+                 patch.object(watch, "setup_already_breached", return_value=None), \
+                 patch.object(watch, "signal_match", return_value=(
+                     "A", (NOW-timedelta(minutes=15)).isoformat(), "M15 test event")), \
+                 patch.object(watch, "notify", side_effect=AssertionError("No GitHub Issues")), \
+                 patch.object(watch, "news_alert", side_effect=AssertionError("No GitHub Issues")):
+                watch.watch()
+            data = json.loads(report.read_text())
+            self.assertEqual(data["signals"][0]["status"], "PRICE_REASSESSMENT_ALERT_READY")
+            self.assertEqual(data["counts"]["price_alerts"], 1)
+            saved_state = json.loads(state.read_text())
+            self.assertIn("A", saved_state["setups"][good()["id"]]["notified"])
+
 if __name__ == "__main__":
     unittest.main()
