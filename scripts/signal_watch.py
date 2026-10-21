@@ -52,6 +52,75 @@ def valid_risk(signal, observed_spread, observed_pip_size=None):
     return gross >= 1.5 and estimated >= 1.35
 
 
+def validate_approved_plan(signal, pairdata, current):
+    """Reject malformed/unprofitable planned entries BEFORE any watcher math.
+
+    A ChatGPT research report is not a valid watcher handoff until canonical
+    JSON field names and original unchanged risk gates all pass. Keep failure
+    as an explicit per-idea status instead of crashing the entire hourly run.
+    """
+    if not isinstance(signal, dict):
+        return "SIGNAL_NOT_AN_OBJECT"
+    required = ("id", "instrument", "direction", "created_at", "expires_at",
+                "planned_entry", "stop", "tp1", "max_oanda_spread_pips")
+    missing = [key for key in required if key not in signal]
+    if missing:
+        return "MISSING_FIELDS:" + ",".join(missing)
+    if not re.fullmatch(r"[A-Za-z0-9_-]{1,60}", str(signal["id"])):
+        return "INVALID_ID"
+    if not re.fullmatch(r"[A-Z]{3}_[A-Z]{3}", str(signal["instrument"])):
+        return "INVALID_PAIR"
+    if signal["direction"] not in ("LONG", "SHORT"):
+        return "INVALID_DIRECTION"
+    if not isinstance(pairdata, dict) or not isinstance(pairdata.get("quote"), dict):
+        return "PAIR_QUOTE_UNAVAILABLE"
+    try:
+        start, expire = parse_time(signal["created_at"]), parse_time(signal["expires_at"])
+        if start.tzinfo is None or expire.tzinfo is None or start >= expire:
+            return "INVALID_TIMES"
+        if (expire - start) > timedelta(days=2):
+            return "EXCESSIVE_EXPIRY"
+        for name in ("planned_entry", "stop", "tp1", "max_oanda_spread_pips"):
+            value = float(signal[name])
+            if not 0 < value < float("inf"):
+                return "INVALID_VALUE:" + name
+        allowed_spread = float(signal["max_oanda_spread_pips"])
+        if allowed_spread > 10:
+            return "SPREAD_CAP_TOO_WIDE"
+        quote = pairdata["quote"]
+        if float(quote.get("spread_pips", float("inf"))) < 0:
+            return "INVALID_QUOTE_SPREAD"
+        # Original TP1 risk gate, tested at the maximum permitted OANDA spread,
+        # so an alert does not depend on a temporarily favorable quote.
+        conservative_spread = max(float(quote.get("spread_pips", allowed_spread)),
+                                  allowed_spread)
+        if not valid_risk(signal, conservative_spread, quote.get("pip_size")):
+            return "TP1_RR_BELOW_MINIMUM_AFTER_COSTS"
+        if "tp2" in signal and signal["tp2"] is not None:
+            entry, first, second = (float(signal[k]) for k in
+                                    ("planned_entry", "tp1", "tp2"))
+            if not ((second > first > entry) if signal["direction"] == "LONG"
+                    else (second < first < entry)):
+                return "INVALID_TP2_DIRECTION"
+        if signal.get("alert_a") is None and signal.get("alert_b") is None:
+            return "NO_MONITORABLE_ENTRY_ROUTE"
+        for alert in ("alert_a", "alert_b"):
+            if alert in signal and signal[alert] is not None:
+                if float(signal[alert]) <= 0:
+                    return "INVALID_ALERT_LEVEL"
+        for window in signal.get("event_blackouts_utc", []):
+            if parse_time(window["start"]) >= parse_time(window["end"]):
+                return "INVALID_EVENT_BLACKOUT"
+        quote_time = parse_time(quote["time"])
+        if quote_time.tzinfo is None:
+            return "INVALID_QUOTE_TIMEZONE"
+        if current - quote_time > timedelta(minutes=20):
+            return "STALE_PAIR_QUOTE"
+    except (ValueError, KeyError, TypeError, OverflowError, AttributeError):
+        return "INVALID_NUMERIC_OR_DATETIME_FIELD"
+    return None
+
+
 def signal_match(signal, pairdata, state_for_signal, current):
     """Examine all newly closed M15 candles since the last hourly run."""
     quote = pairdata["quote"]
@@ -342,17 +411,21 @@ def watch():
         save(ASSESSMENT, report)
         return
     for signal in signals:
-        identity = signal.get("id", "")
-        pair = signal.get("instrument", "")
-        if not re.fullmatch(r"[A-Za-z0-9_-]{1,60}", identity):
-            raise ValueError("Invalid signal ID")
-        if pair not in snapshot.get("pairs", {}) or signal.get("direction") not in ("LONG", "SHORT"):
-            raise ValueError("Unknown pair or direction")
-        pairdata = snapshot["pairs"][pair]
-        row = {"id": identity, "pair": pair, "direction": signal["direction"],
-               "created_at": signal.get("created_at"),
-               "expires_at": signal.get("expires_at"),
-               "technical_checkpoint": basic_technical_status(pairdata, signal)}
+        identity = signal.get("id", "") if isinstance(signal, dict) else ""
+        pair = signal.get("instrument", "") if isinstance(signal, dict) else ""
+        pairdata = snapshot.get("pairs", {}).get(pair)
+        row = {"id": identity, "pair": pair,
+               "direction": signal.get("direction") if isinstance(signal, dict) else None,
+               "created_at": signal.get("created_at") if isinstance(signal, dict) else None,
+               "expires_at": signal.get("expires_at") if isinstance(signal, dict) else None}
+        error = validate_approved_plan(signal, pairdata, current)
+        if error is not None:
+            row["status"] = "INVALID_SETUP"
+            row["reason"] = error
+            row["technical_checkpoint"] = {"status": "WITHHELD_UNQUALIFIED_PLAN"}
+            report["signals"].append(row)
+            continue
+        row["technical_checkpoint"] = basic_technical_status(pairdata, signal)
         # Broader discovery may have only M15/H1, not all required frames.
         # A pair with quoted prices but absent completed M15 data is never a signal.
         if not pairdata.get("frames", {}).get("M15", {}).get("recent_completed_candles"):
