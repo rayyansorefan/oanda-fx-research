@@ -68,14 +68,7 @@ jobs:
         id: persist
         if: always()
         continue-on-error: true
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A data/
-          if ! git diff --cached --quiet; then
-            git commit -m "data: update timestamped OANDA research snapshot [skip ci]"
-            git push
-          fi
+        run: bash scripts/persist_snapshot.sh
       # Scheduled research is persisted in data/. User-facing hourly updates are
       # delivered by the separate ChatGPT task, not by GitHub Issues.
       - name: Fail closed if any research step failed
