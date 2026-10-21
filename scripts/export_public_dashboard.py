@@ -186,11 +186,13 @@ def publish(payload: dict, token: str) -> None:
     if not (saved.get("commit") or {}).get("sha"):
         raise ValueError("GitHub did not confirm a commit")
 
+PUBLIC_PAYLOAD_PATH = Path("data/public_dashboard_payload.json")
+
 def main() -> int:
+    # Generate the same strictly whitelisted public feed even when no
+    # cross-repository personal access token exists. The connected ChatGPT
+    # GitHub bridge can then publish it using its existing OAuth permission.
     token = os.environ.get("FX_DASHBOARD_DEPLOY_TOKEN", "").strip()
-    if not token:
-        status("NOT_CONFIGURED", "Add repository-scoped public-site Contents token in private research repo.")
-        return 0
     try:
         summary = load("data/summary.json")
         news = load("data/news_latest.json")
@@ -204,6 +206,18 @@ def main() -> int:
                 if row.get("instrument") == name and row.get("collected_at") == summary.get("collected_at"):
                     detailed[name] = row
         data = build_public_feed(summary, news, signals, watcher, detailed)
+        if not data.get("snapshot_at") or len(data.get("pairs", {})) < 1:
+            raise ValueError("Invalid sanitized payload")
+        PUBLIC_PAYLOAD_PATH.parent.mkdir(parents=True, exist_ok=True)
+        PUBLIC_PAYLOAD_PATH.write_text(
+            json.dumps(data, ensure_ascii=True, separators=(",", ":")) + "\n",
+            encoding="utf-8",
+        )
+        if not token:
+            status("BRIDGE_READY",
+                   "Whitelisted private payload prepared for connected GitHub bridge; public publication not yet confirmed.",
+                   data["snapshot_at"])
+            return 0
         publish(data, token)
         status("PUBLISHED", "Sanitized public dashboard research updated.", data["snapshot_at"])
         return 0
