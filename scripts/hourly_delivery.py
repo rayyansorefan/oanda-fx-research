@@ -14,7 +14,7 @@ from urllib.request import Request, urlopen
 
 ASSESSMENT = Path("data/hourly_assessment.json")
 NEWS = Path("data/news_latest.json")
-HOURLY_CRON = "27 6-18 * * 1-5"
+HOURLY_CRON = "43 6-18 * * 1-5"
 CRITICAL_PLAN_STATES = {
     "REASSESS_OR_EXPIRE_PRIOR_PLAN_LEVEL_REACHED",
     "PAIR_M15_CANDLES_UNAVAILABLE",
