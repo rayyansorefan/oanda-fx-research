@@ -12,6 +12,10 @@ on:
     # Hourly only, weekdays 06:27–18:27 UTC. Full OANDA account FX-universe M15/H1 screening with compact data publication.
     # Independent of ChatGPT usage. May miss short-lived M15 entry triggers.
     - cron: '27 6-18 * * 1-5'
+    # Independent morning fallback 25 min before 07:30 London in BST/GMT.
+    # Two small UTC slots accommodate UK daylight saving; best effort only.
+    # GitHub runners are NOT an SLA; delayed or skipped cron still possible.
+    - cron: '5 6,7 * * 1-5'
 permissions:
   contents: write
   issues: write
