@@ -87,3 +87,32 @@ The ChatGPT full assessments (07:30 / 12:00 / US pre-open / 16:30 UK) must NOT t
 6. GitHub's \`schedule\` event on new private repos is best effort and so far **unverified** here: the 2026-10-21 06:27Z unattended attempt never ran. Push-triggered snapshots work when explicitly requested. Notification preferences for ChatGPT tasks are separate from data collection and must not be reported as fixed merely because OANDA data has refreshed.
 
 The watchlist \`signals.json\` must only be changed with verified justified prospective monitoring plans; do not fill with fabricated placeholder trades to test delivery.
+
+## REQUIRED signals.json schema and non-negotiable admission gate
+
+Scheduled ChatGPT researchers MUST use these exact machine-readable keys. A field named `stop_loss`, `take_profit_1`, `take_profit_2` or `max_spread_pips` is **NOT** an accepted substitute:
+
+```json
+{
+  "schema_version": 1,
+  "signals": [{
+    "id": "immutable-safe-ID",
+    "instrument": "GBP_USD",
+    "direction": "LONG",
+    "created_at": "2026-10-21T08:00:00Z",
+    "expires_at": "2026-10-21T12:00:00Z",
+    "planned_entry": 1.3380,
+    "stop": 1.3350,
+    "tp1": 1.3440,
+    "tp2": 1.3480,
+    "alert_a": 1.3390,
+    "alert_b": null,
+    "max_oanda_spread_pips": 1.3,
+    "event_blackouts_utc": []
+  }]
+}
+```
+
+The numbers above are a **NON-LIVE STRUCTURAL EXAMPLE ONLY**, not a trading signal. Candidate ideas MUST independently satisfy original watcher gates before handoff: (1) correct directional stop/entry/TP1, (2) gross TP1 R:R **at least 1.50**, (3) (TP1 profit minus allowed spread)/(planned stop risk plus allowed spread) **at least 1.35** using the **maximum permitted OANDA spread cap** and correct pipLocation, (4) at least one evidence-justified A/B route, (5) true UTC creation and expiry, (6) checked release blackout windows, (7) no ineligible Pepperstone product or stale data. A task may present a speculative chart thesis but it MUST NOT populate signals.json with a noncompliant idea. Each unqualified idea is invalidated individually with a visible reason; watcher never treats it as approved. Do not weaken the original risk thresholds to manufacture opportunities.
+
+On 2026-10-21 a scheduled ChatGPT report wrote two improperly named ideas (EUR_GBP SHORT and GBP_USD LONG). Both also failed original cost-aware TP1 R:R gates. Exact original terms and calculated rejection reasons are preserved privately in `data/rejected_watchlist_20261021.json`; active list was cleared prospectively rather than retroactively editing history. Zero active ideas means price monitoring of qualified trades cannot yet generate entry alerts.
