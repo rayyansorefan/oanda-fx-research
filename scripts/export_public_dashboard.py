@@ -58,7 +58,7 @@ def safe_quote(q: dict) -> dict:
     return {k: q.get(k) for k in ("time", "bid", "ask", "spread_pips", "pip_size", "tradeable")}
 
 def build_public_feed(summary: dict, news: dict, signals: dict,
-                      watcher: dict, detailed: dict) -> dict:
+                      watcher: dict, detailed: dict, brief_history: dict | None = None) -> dict:
     coverage = summary.get("coverage") or {}
     prices = {}
     for key, source in (summary.get("pairs") or {}).items():
@@ -67,11 +67,26 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         if not key.replace("_", "").isalpha() or "_" not in key:
             continue
         shard = detailed.get(key) or {}
+        lightweight = (brief_history or {}).get(key) or {}
         frames = {}
         for period in ("M5", "M15", "H1", "H4", "D"):
             frame = (shard.get("frames") or {}).get(period) or (source.get("frames") or {}).get(period)
             if frame and (shard or period in ("M15", "H1")):
                 frames[period] = compact_frame(frame, bool(shard))
+                # All 65+ screened instruments must be chart-selectable: expose
+                # the 12 last completed midpoint candles for M15/H1 even when
+                # a pair was not chosen for the full multi-timeframe audit.
+                if not shard and period in ("M15", "H1"):
+                    observations = ((lightweight.get("frames") or {})
+                                    .get(period) or {}).get("recent_completed_candles") or []
+                    frames[period]["candles"] = [
+                        {"t": bar.get("time"),
+                         **{dst: (bar.get("mid") or {}).get(src)
+                            for dst, src in (("o", "o"), ("h", "h"),
+                                             ("l", "l"), ("c", "c"))}}
+                        for bar in observations[-12:]
+                        if isinstance(bar, dict)
+                    ]
         prices[key] = {
             "name": key.replace("_", "/"),
             "quote": safe_quote(source["quote"]),
@@ -196,6 +211,9 @@ def main() -> int:
     try:
         summary = load("data/summary.json")
         news = load("data/news_latest.json")
+        recent = load("data/latest.json")
+        if recent.get("collected_at") != summary.get("collected_at"):
+            raise ValueError("Mismatched OHLC and summary collection timestamps")
         signals = load("signals.json")
         watcher = load("data/hourly_assessment.json")
         detailed = {}
@@ -205,7 +223,8 @@ def main() -> int:
                 row = json.loads(path.read_text(encoding="utf-8"))
                 if row.get("instrument") == name and row.get("collected_at") == summary.get("collected_at"):
                     detailed[name] = row
-        data = build_public_feed(summary, news, signals, watcher, detailed)
+        data = build_public_feed(summary, news, signals, watcher, detailed,
+                                 recent.get("pairs") or {})
         if not data.get("snapshot_at") or len(data.get("pairs", {})) < 1:
             raise ValueError("Invalid sanitized payload")
         PUBLIC_PAYLOAD_PATH.parent.mkdir(parents=True, exist_ok=True)
