@@ -57,6 +57,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python scripts/signal_watch.py
+      - name: Send opt-in private WhatsApp FX alerts (approved Meta template)
+        id: whatsapp
+        if: steps.watch.outcome == 'success'
+        continue-on-error: true
+        env:
+          FX_WA_ACCESS_TOKEN: ${{ secrets.FX_WA_ACCESS_TOKEN }}
+          FX_WA_PHONE_NUMBER_ID: ${{ secrets.FX_WA_PHONE_NUMBER_ID }}
+          FX_WA_RECIPIENT: ${{ secrets.FX_WA_RECIPIENT }}
+          FX_WA_TEMPLATE_NAME: ${{ secrets.FX_WA_TEMPLATE_NAME }}
+        run: python scripts/whatsapp_alerts.py
       - name: Publish sanitized FX research to existing HTML dashboard
         id: dashboard
         if: steps.collect.outcome == 'success' && steps.news.outcome == 'success'
