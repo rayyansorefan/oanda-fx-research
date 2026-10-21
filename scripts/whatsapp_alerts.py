@@ -206,15 +206,17 @@ def main():
     signals=read(SIGNALS,{"signals":[]})
     market=read(MARKET,{})
     events=build_events(report,signals,market,now)
-    if not events:
-        emit_status("NO_ALERTS","No newly verified qualifying alert")
-        return 0
     wanted=("FX_WA_ACCESS_TOKEN","FX_WA_PHONE_NUMBER_ID",
             "FX_WA_RECIPIENT","FX_WA_TEMPLATE_NAME")
     config={x:os.environ.get(x,"") for x in wanted}
     config["FX_WA_LANGUAGE"]=os.environ.get("FX_WA_LANGUAGE","en_GB")
+    # No signals is NOT evidence of WhatsApp delivery readiness. Check the
+    # encrypted sender/recipient/template configuration on every run.
     if not all(config.get(x) for x in wanted):
-        emit_status("NOT_CONFIGURED","Configure private Meta sender, recipient, approved template and token.",pending=len(events))
+        emit_status("NOT_CONFIGURED","Private sender/recipient/approved-template credentials missing; no messages sent.",pending=len(events))
+        return 0
+    if not events:
+        emit_status("NO_ALERTS","Sender configuration present; zero qualified alerts. No delivery test performed.")
         return 0
     state=read(STATE,{"sent_keys":[]})
     sent=set(state.get("sent_keys",[]))
