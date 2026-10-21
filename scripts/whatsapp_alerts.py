@@ -105,7 +105,14 @@ def is_worthy(row, signal, quote, now):
                 return None
             if row.get("route") not in ("A","B") or not row.get("trigger_bar_open_time"):
                 return None
-            if now - (parse_datetime(row["trigger_bar_open_time"])+timedelta(minutes=15)) > timedelta(minutes=75):
+            candle_close = parse_datetime(row["trigger_bar_open_time"]) + timedelta(minutes=15)
+            if candle_close > now or now - candle_close > timedelta(minutes=25):
+                # An old/future M15 close is never an actionable entry alert.
+                return None
+            if row.get("news_status") not in (
+                "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES",
+                "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS",
+            ):
                 return None
         except (ValueError,TypeError,KeyError,OverflowError):
             return None

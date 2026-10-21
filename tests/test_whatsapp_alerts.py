@@ -28,7 +28,8 @@ def sample():
            "spread_pips":0.8,"pip_size":.0001,"bid":1.3002,"ask":1.30028}
     row={"id":"run123","pair":"GBP_USD","direction":"LONG",
          "status":"PRICE_REASSESSMENT_ALERT_SENT","route":"A",
-         "trigger_bar_open_time":iso(NOW-timedelta(minutes=30))}
+         "trigger_bar_open_time":iso(NOW-timedelta(minutes=30)),
+         "news_status":"NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES"}
     rep={"status":"OK","collected_at":iso(NOW-timedelta(minutes=1)),
          "oanda_collected_at":iso(NOW-timedelta(minutes=2)),
          "news_collected_at":iso(NOW-timedelta(minutes=2)),
@@ -83,6 +84,18 @@ class WhatsAppAlertTests(unittest.TestCase):
     def test_no_personal_numbers_embedded_in_status(self):
         a,b,c=sample()
         self.assertNotIn("recipient",w.build_events(a,b,c,NOW)[0]["summary"].lower())
+    def test_unverified_news_blocks_entry_reassessment(self):
+        a,b,c=sample()
+        a["signals"][0]["news_status"]="NEWS_COVERAGE_NOT_VERIFIED"
+        self.assertEqual(w.build_events(a,b,c,NOW),[])
+    def test_old_completed_candle_blocks_reassessment(self):
+        a,b,c=sample()
+        a["signals"][0]["trigger_bar_open_time"]=(NOW-timedelta(minutes=70)).isoformat()
+        self.assertEqual(w.build_events(a,b,c,NOW),[])
+    def test_future_candle_never_promoted(self):
+        a,b,c=sample()
+        a["signals"][0]["trigger_bar_open_time"]=(NOW+timedelta(minutes=5)).isoformat()
+        self.assertEqual(w.build_events(a,b,c,NOW),[])
     def test_alert_keys_repeat_deterministically(self):
         a,b,c=sample()
         self.assertEqual(w.build_events(a,b,c,NOW)[0]["key"],w.build_events(a,b,c,NOW)[0]["key"])
