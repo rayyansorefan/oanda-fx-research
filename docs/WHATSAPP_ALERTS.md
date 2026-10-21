@@ -1,0 +1,20 @@
+# Opt-in WhatsApp research alerts
+
+The GitHub Actions research watcher can send a **conditional FX entry alert** via Meta's official WhatsApp Business Cloud API only when an originally approved signal in private `signals.json` has a fresh, completed M15 A (breakout + retest) or B (pullback/rejection) confirmation.
+
+Alerts contain a currency pair, LONG/SHORT, specific route and completed-bar time, original planned entry, stop, TP1, optional TP2 and expiry in UK time. The original planned entry is **not** an executable Pepperstone quote and is not a market order. A valid M15 trigger is not a guarantee the user can fill at that price. The recipient must check Pepperstone's current bid/ask, spread, price availability, chart change, correlation/exposure, and news before entering manually.
+
+The dispatcher re-checks the immutable original proposal, strict gross R:R >=1.50 and cost-adjusted >=1.35, event blackouts, quote <=5 minutes old, news <=15 minutes, and fresh assessment <=12 minutes. Notifications are suppressed 23:00–07:00 UK, with BST/GMT handled automatically. Alerts are deduplicated by original setup ID, route and M15 candle timestamp in private `data/whatsapp_sent_state.json`, with status in `data/whatsapp_delivery.json`. A Meta API success confirms **acceptance, not handset delivery**. No paid messaging or recipient data is exposed in public HTML.
+
+## Owner-controlled one-time setup
+
+1. Establish a WhatsApp Business Account and obtain a Cloud API **phone-number ID** plus a token authorised for its WhatsApp Business messaging channel.
+2. Obtain explicit opt-in from the recipient/owner at the target WhatsApp number, and set up an approved **utility** (or other applicable) message template according to Meta policies. Do not mark an unapproved template as approved. The template name configured below must be approved and match the parameters.
+3. Create a WhatsApp message **template with exactly eight body text placeholders**, in order: instrument (e.g. GBP/USD), direction (LONG/SHORT), completed-bar confirmation (A/B with UK close time), planned entry, stop, TP1, TP2 or 'none', and plan expiry UK. Example body: `FX research alert: {{1}} {{2}}. Route and confirmation: {{3}}. Planned entry {{4}}, stop {{5}}, TP1 {{6}}, TP2 {{7}}, expires {{8}}. Research only: do not trade without verifying current Pepperstone quote, spread and news; no orders placed.` The actual template must be pre-approved by Meta. It is not an interactive WhatsApp chat.
+4. In PRIVATE GitHub `rayyansorefan/oanda-fx-research` → Settings → Secrets and variables → Actions, configure `WHATSAPP_OPT_IN_CONFIRMED` with value `yes`, `WHATSAPP_CLOUD_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_RECIPIENT_E164` (+country code number), and `WHATSAPP_TEMPLATE_NAME`. Keep all credentials and phone numbers out of this conversation, the public dashboard and commit history.
+5. GitHub OANDA collection and the watcher must themselves run successfully. The WhatsApp step only runs after a successful watcher. A live end-to-end acceptance test requires an approved template, configured secrets and an actual newly confirmed approved M15 pattern; it cannot be simulated by tests. `data/whatsapp_delivery.json` shows `META_ACCEPTED` if Graph accepted, `NO_ELIGIBLE_NEW_SIGNAL` if nothing qualified, or configuration/failure reasons. For confirmed handset delivery/read receipts, add a secured WhatsApp Cloud API webhook receiver and track status callbacks; no such receiver is currently deployed.
+
+## Privacy, operating costs and limitations
+Only specific approved research alerts are sent, not all background prices or the whole private research repository. Meta processes the recipient number and the template message, and fees may apply. API/research limits, cron delays and the 23:00–07:00 quiet period mean a brief intra-hour opportunity may not be captured. The user is targeting 2–4 quality opportunities/day but that is not a guaranteed alert/trade quota.
+
+Offline regression tests: `python -m unittest discover -s tests -v` and GitHub Actions 'Offline safety tests'. The tests mock Meta API; they do not prove real delivery.
