@@ -189,10 +189,100 @@ def structure(rows):
     }
 
 
+
+def donchian(rows, period=20):
+    """Use *previous* period bars; current close cannot set its own breakout boundary."""
+    if len(rows) < period + 1:
+        return None
+    previous = rows[-period - 1:-1]
+    upper = max(x["mid"]["h"] for x in previous)
+    lower = min(x["mid"]["l"] for x in previous)
+    close = rows[-1]["mid"]["c"]
+    return {"period": period, "upper": upper, "lower": lower,
+            "midline": (upper + lower) / 2,
+            "close_breakout": "UP" if close > upper else "DOWN" if close < lower else "NONE",
+            "close_position": (close - lower) / (upper - lower) if upper > lower else None}
+
+
+def ichimoku(rows, conversion=9, base=26, span_b=52, shift=26):
+    """Cloud plotted at the current bar must use span calculations 26 bars OLD.
+
+    Using unshifted leading spans as today's cloud would introduce look-ahead
+    and is a common backtest/visualization error.
+    """
+    if len(rows) < span_b + shift:
+        return None
+    def midpoint(end, size):
+        sample = rows[end - size:end]
+        return (max(x["mid"]["h"] for x in sample) +
+                min(x["mid"]["l"] for x in sample)) / 2
+    n = len(rows)
+    fast = midpoint(n, conversion)
+    slow = midpoint(n, base)
+    cloud_a = (midpoint(n - shift, conversion) + midpoint(n - shift, base)) / 2
+    cloud_b = midpoint(n - shift, span_b)
+    close = rows[-1]["mid"]["c"]
+    return {"conversion9": fast, "base26": slow,
+            "cloud_at_current_a": cloud_a, "cloud_at_current_b": cloud_b,
+            "forward_shift_bars": shift,
+            "price_vs_visible_cloud": "ABOVE" if close > max(cloud_a, cloud_b) else
+                "BELOW" if close < min(cloud_a, cloud_b) else "INSIDE",
+            "conversion_vs_base": "BULLISH" if fast > slow else
+                "BEARISH" if fast < slow else "FLAT"}
+
+
+def supertrend(rows, period=10, multiplier=3.0):
+    """Wilder-smoothed, closed-bar ATR Supertrend; no look-ahead or broker fills.
+
+    Uses prior finalized bands when detecting flips, and recalculates bands
+    using only each bar's historical highs/lows and the previous close.
+    """
+    if len(rows) < period + 2:
+        return None
+    tr = []
+    for i, row in enumerate(rows):
+        high, low = row["mid"]["h"], row["mid"]["l"]
+        if i == 0:
+            tr.append(high - low)
+        else:
+            prev = rows[i - 1]["mid"]["c"]
+            tr.append(max(high - low, abs(high - prev), abs(low - prev)))
+    atr = sum(tr[:period]) / period
+    upper = lower = None
+    direction = "DOWN"
+    line = None
+    flipped_last = False
+    for i in range(period - 1, len(rows)):
+        if i >= period:
+            atr = (atr * (period - 1) + tr[i]) / period
+        hi, lo, close = (rows[i]["mid"][k] for k in ("h", "l", "c"))
+        basis = (hi + lo) / 2
+        raw_upper, raw_lower = basis + multiplier * atr, basis - multiplier * atr
+        if upper is None:
+            upper, lower = raw_upper, raw_lower
+            direction = "UP" if close >= basis else "DOWN"
+            line = lower if direction == "UP" else upper
+            continue
+        last_close = rows[i - 1]["mid"]["c"]
+        updated_upper = raw_upper if raw_upper < upper or last_close > upper else upper
+        updated_lower = raw_lower if raw_lower > lower or last_close < lower else lower
+        new_direction = "UP" if direction == "DOWN" and close > upper else (
+            "DOWN" if direction == "UP" and close < lower else direction)
+        flipped_last = new_direction != direction
+        direction = new_direction
+        upper, lower = updated_upper, updated_lower
+        line = lower if direction == "UP" else upper
+    return {"atr_period": period, "multiplier": multiplier, "direction": direction,
+            "line": line, "flipped_on_last_completed_bar": flipped_last}
+
+
 def advanced(rows):
     return {
         "bollinger_20_2": bollinger(rows),
         "stochastic_14_3": stochastic(rows),
+        "supertrend_10_3": supertrend(rows),
+        "ichimoku_9_26_52": ichimoku(rows),
+        "donchian_20": donchian(rows),
         "structure": structure(rows),
         "volume_context": "OANDA candle volume is broker/tick activity, not consolidated FX volume",
     }

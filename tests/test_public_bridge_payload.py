@@ -27,6 +27,8 @@ class NoPATBridgeTests(unittest.TestCase):
                 "status":"PARTIAL","sources":{},"calendar":{"events":[]},
                 "recent_material_headlines":[]}
             files={"data/summary.json":sample_summary,"data/news_latest.json":sample_news,
+                   "data/latest.json":{"collected_at":sample_summary["collected_at"],
+                                       "pairs":{"EUR_USD":{"frames":{}}}},
                    "signals.json":{"signals":[]},"data/hourly_assessment.json":{}}
             for name,data in files.items():
                 (root/name).write_text(json.dumps(data))

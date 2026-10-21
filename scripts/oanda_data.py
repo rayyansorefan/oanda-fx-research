@@ -287,10 +287,11 @@ def collect():
                                    "_" + str(exc)[:55]).replace("OANDA_HTTP_", "HTTP_")
     if not all_data:
         raise RuntimeError("OANDA_NO_FX_TECHNICAL_HISTORY")
-    # Phase 2: deep multi-timeframe analysis only for highest priority and
-    # original majors plus up to three already-approved FX monitoring ideas.
+    # Phase 2: full D/H4/H1/M15/M5 analysis on twelve strongest candidates,
+    # original majors and approved watchlist. Every other FX pair still has
+    # an independent M15/H1 indicator screen this same hourly collection.
     monitored = currently_monitored_names()
-    selection = deep_selection(ranking, monitored=monitored, max_extra=18)
+    selection = deep_selection(ranking, monitored=monitored, max_extra=12)
     deep_ok = []
     for pair in selection:
         if pair not in all_data:
@@ -354,11 +355,12 @@ def collect():
             for pair, content in all_data.items()
         }
     }
-    # Keep connected GitHub fetch_file reads well below the GitHub 1MB
-    # contents API threshold. Store full bid/ask OHLC audit only for top
-    # review candidates and already-monitored setups as separate small files.
+    # Keep public GitHub feed under the Contents API 1MB threshold. Store
+    # full OHLC for at least the top 12 deeply screened candidates plus any
+    # approved immutable setup being monitored, NOT merely two spread-filtered
+    # names. All 65+ remaining pairs retain M15/H1 indicators each cycle.
     audit_names = set(deep_ok) & (
-        set(sorted(ranking, key=lambda p: (-ranking[p]["research_priority"], p))[:7])
+        set(sorted(ranking, key=lambda p: (-ranking[p]["research_priority"], p))[:12])
         | set(monitored))
     audit_dir = Path("data/pairs")
     if audit_dir.exists():

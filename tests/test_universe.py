@@ -63,7 +63,10 @@ class DiscoveryTests(unittest.TestCase):
         self.assertFalse("trade_direction" in score)
         widened = quote()
         widened["spread_pips"] = 20.0
-        self.assertIsNone(universe.screen_priority(widened, frame(), frame()))
+        widened_report = universe.screen_priority(widened, frame(), frame())
+        self.assertIsNotNone(widened_report)
+        self.assertTrue(widened_report["high_relative_spread"])
+        self.assertLess(widened_report["research_priority"], score["research_priority"])
 
     def test_shortlist_includes_original_core_and_monitored(self):
         screening = {
