@@ -170,7 +170,7 @@ def publish(payload: dict, token: str) -> None:
     if not blob_sha:
         raise ValueError("Destination feed blob SHA not found")
     body = {
-        "message": "data: publish sanitized FX research snapshot [skip ci]",
+        "message": "data: publish sanitized FX research snapshot",
         "sha": blob_sha,
         "branch": "main",
         "content": base64.b64encode(
