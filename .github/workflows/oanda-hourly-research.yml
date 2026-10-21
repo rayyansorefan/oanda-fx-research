@@ -71,10 +71,34 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Capture the exact source snapshot at checkout so an older running
+          # collector can NEVER replace data already published by a newer run.
+          original_summary_blob="$(git rev-parse HEAD:data/summary.json 2>/dev/null || true)"
           git add -A data/
           if ! git diff --cached --quiet; then
             git commit -m "data: update timestamped OANDA research snapshot [skip ci]"
-            git push
+            published=false
+            for attempt in 1 2 3; do
+              git fetch origin main
+              remote_summary_blob="$(git rev-parse origin/main:data/summary.json 2>/dev/null || true)"
+              if [ "$remote_summary_blob" != "$original_summary_blob" ]; then
+                echo '::error::Newer source research published concurrently; refusing to overwrite its data.'
+                exit 1
+              fi
+              # A source-code or workflow merge may have advanced main while
+              # data remained unchanged. Rebase and safely retry that race.
+              git rebase origin/main
+              if git push origin HEAD:main; then
+                published=true
+                break
+              fi
+              echo "::warning::Main changed again; verifying source timestamp before retry $attempt/3"
+              sleep 2
+            done
+            if [ "$published" != true ]; then
+              echo '::error::Could not safely persist OANDA research after bounded retries.'
+              exit 1
+            fi
           fi
       # Scheduled research is persisted in data/. User-facing hourly updates are
       # delivered by the separate ChatGPT task, not by GitHub Issues.
