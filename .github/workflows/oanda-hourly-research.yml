@@ -67,17 +67,8 @@ jobs:
             git commit -m "data: update timestamped OANDA research snapshot [skip ci]"
             git push
           fi
-      - name: Deliver one hourly GitHub issue confirming actual completion
-        if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_SCHEDULE: ${{ github.event.schedule }}
-          FX_COLLECT_OUTCOME: ${{ steps.collect.outcome }}
-          FX_NEWS_OUTCOME: ${{ steps.news.outcome }}
-          FX_WATCH_OUTCOME: ${{ steps.watch.outcome }}
-          FX_PERSIST_OUTCOME: ${{ steps.persist.outcome }}
-        run: python scripts/hourly_delivery.py
+      # Scheduled research is persisted in data/. User-facing hourly updates are
+      # delivered by the separate ChatGPT task, not by GitHub Issues.
       - name: Fail closed if any research step failed
         if: steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.watch.outcome != 'success' || steps.persist.outcome != 'success'
         run: exit 1
