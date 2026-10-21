@@ -469,7 +469,9 @@ def watch():
                 key = status + "|" + (headlines[0]["id"] if headlines else
                                      events[0]["time"] + events[0]["title"])
                 if key not in tracked.get("news_alerted", []):
-                    news_alert(signal, status, headlines, events, row)
+                    # Record the event locally; WhatsApp delivery is handled
+                    # by the separate private, credential-gated sender step.
+                    # A GitHub Issues API failure must never block an alert.
                     tracked.setdefault("news_alerted", []).append(key)
             report["signals"].append(row)
             continue
@@ -482,10 +484,11 @@ def watch():
         found = signal_match(signal, pairdata, tracked, current)
         if found:
             route, bar_time, reason = found
-            notify(signal, route, bar_time, reason, pairdata["quote"])
+            # Immutable research event for the private WhatsApp sender.
+            # Never require a GitHub Issue as a prerequisite for delivery.
             tracked.setdefault("notified", []).append(route)
             tracked["breakout_pending"] = None
-            row["status"] = "PRICE_REASSESSMENT_ALERT_SENT"
+            row["status"] = "PRICE_REASSESSMENT_ALERT_READY"
             row["route"] = route
             row["trigger_bar_open_time"] = bar_time
         else:
@@ -496,7 +499,7 @@ def watch():
                         "need_news_review": sum(x.get("status") in (
                             "REASSESS_NEWS_FIRST", "NEWS_COVERAGE_NOT_VERIFIED")
                             for x in report["signals"]),
-                        "price_alerts": sum(x.get("status") == "PRICE_REASSESSMENT_ALERT_SENT"
+                        "price_alerts": sum(x.get("status") == "PRICE_REASSESSMENT_ALERT_READY"
                                             for x in report["signals"])}
     save(ASSESSMENT, report)
     print("Hourly full setup/news watch:", report["counts"], "coverage", report["news_coverage"])
