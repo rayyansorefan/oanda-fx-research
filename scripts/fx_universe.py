@@ -78,11 +78,11 @@ def is_quote_usable(quote):
 
 
 def screen_priority(quote, m15, h1):
-    """Research-review priority, NOT a profitable-trade probability.
+    """Cost-aware research triage across every quoted instrument, never a trade signal.
 
-    Reward trend strength on two timeframes and adequate volatility relative
-    to the current OANDA spread; penalise very extended RSI and poor pricing.
-    Produces both LONG and SHORT candidates equally. Does not issue entries.
+    Trade admission applies separate prospective entry/stop/TP and broker-spread
+    rules. Spread relative to a *single M15 ATR* is only a screening variable,
+    NOT a hard reason to exclude a pair from chart analysis.
     """
     if not is_quote_usable(quote):
         return None
@@ -93,35 +93,35 @@ def screen_priority(quote, m15, h1):
     if atr <= 0 or spread <= 0:
         return None
     cost_fraction = spread / atr
-    if cost_fraction > 0.65:
-        return None
-    adx15 = m.get("adx14") or 0
-    adx1 = h.get("adx14") or 0
+    adx15, adx1 = m.get("adx14") or 0, h.get("adx14") or 0
     rsi = m.get("rsi14")
-    if rsi is None:
-        return None
     mid = (quote["bid"] + quote["ask"]) / 2
-    ema15 = m.get("ema20")
-    ema1 = h.get("ema20")
-    if ema15 is None or ema1 is None:
+    ema15, ema1 = m.get("ema20"), h.get("ema20")
+    if rsi is None or ema15 is None or ema1 is None:
         return None
-    agreement = (mid - ema15) * (mid - ema1) > 0
-    score = round(
-        0.35 * min(60, adx1) +
-        0.25 * min(60, adx15) +
-        (12 if agreement else 0) +
-        max(0, 25 - cost_fraction * 80) -
-        max(0, abs(rsi - 50) - 22) * 0.45, 2)
+    same_side = (mid - ema15) * (mid - ema1) > 0
+    # Assess opposing regimes without conflating a strong trend with
+    # automatically attractive entries: a trend can be overextended.
+    trending = min(35.0, (adx15 + adx1) / 2)
+    ranging = max(0.0, 24.0 - (adx15 + adx1) / 2)
+    regime_score = max(trending, ranging * 0.75)
+    # Relative spread is heavily penalised but NEVER removes chart coverage.
+    spread_penalty = min(75.0, cost_fraction * 12.0)
+    stretched_penalty = max(0.0, abs(rsi - 50) - 24.0) * 0.4
+    score = round(15 + regime_score + (12 if same_side else 0) -
+                  spread_penalty - stretched_penalty, 2)
     return {
         "research_priority": score,
         "observed_oanda_spread_to_m15_atr": round(cost_fraction, 4),
-        "m15_rsi14": round(rsi, 2),
-        "m15_adx14": round(adx15, 2),
+        "m15_rsi14": round(rsi, 2), "m15_adx14": round(adx15, 2),
         "h1_adx14": round(adx1, 2),
         "m15_ema20": ema15, "h1_ema20": ema1,
-        "technical_directional_alignment": bool(agreement),
+        "technical_directional_alignment": bool(same_side),
+        "research_regime": "TREND" if trending >= ranging else "RANGE",
+        "high_relative_spread": bool(cost_fraction > 1.5),
         "screening_only": True,
-        "note": "Rank for full discretionary research; not a signal or proof of edge.",
+        "note": "Review priority only. Cost, multi-frame structure, news and "
+                "forward risk gates must independently qualify every entry.",
     }
 
 
