@@ -38,6 +38,9 @@ def compact_frame(f: dict, full: bool) -> dict:
             "macd_12_26_9": i.get("macd_12_26_9"),
             "bollinger": advanced.get("bollinger_20_2"),
             "stochastic": advanced.get("stochastic_14_3"),
+            "supertrend": advanced.get("supertrend_10_3"),
+            "ichimoku": advanced.get("ichimoku_9_26_52"),
+            "donchian": advanced.get("donchian_20"),
             "structure": advanced.get("structure"),
         },
     }
