@@ -62,6 +62,7 @@ jobs:
       - name: Publish sanitized FX research to existing HTML dashboard
         id: dashboard
         if: steps.collect.outcome == 'success' && steps.news.outcome == 'success'
+        # Export failure must be reported after persisting diagnostic status.
         continue-on-error: true
         env:
           FX_DASHBOARD_DEPLOY_TOKEN: ${{ secrets.FX_DASHBOARD_DEPLOY_TOKEN }}
@@ -112,6 +113,6 @@ jobs:
           fi
       # Scheduled research is persisted in data/. User-facing hourly updates are
       # delivered by the separate ChatGPT task, not by GitHub Issues.
-      - name: Fail closed if any research step failed
-        if: steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.watch.outcome != 'success' || steps.persist.outcome != 'success'
+      - name: Fail closed if any research or public dashboard step failed
+        if: steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success'
         run: exit 1
