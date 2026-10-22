@@ -57,17 +57,40 @@ class OandaPersistenceRaceTests(unittest.TestCase):
         self.assertIn('"new"',(self.other/"data/summary.json").read_text())
         self.assertIn("revised",(self.other/"app.py").read_text())
 
-    def test_refuses_to_overwrite_concurrent_newer_snapshot(self):
-        (self.worker/"data/summary.json").write_text('{"collected_at":"scanner-1"}\n')
-        (self.other/"data/summary.json").write_text('{"collected_at":"scanner-2"}\n')
+    def test_newer_published_snapshot_safely_supersedes_current_run(self):
+        (self.worker/"data/summary.json").write_text('{"status":"OK","collected_at":"2026-10-22T10:00:00Z"}\n')
+        (self.other/"data/summary.json").write_text('{"status":"OK","collected_at":"2026-10-22T11:00:00Z"}\n')
         git(self.other,"add","data/summary.json")
         git(self.other,"commit","-m","newer scanner published")
         git(self.other,"push","origin","main")
         result=self.persist()
-        self.assertNotEqual(result.returncode,0)
-        self.assertIn("refusing to overwrite",result.stdout+result.stderr)
+        self.assertEqual(result.returncode,0,result.stderr+result.stdout)
+        self.assertIn("safely superseded",result.stdout+result.stderr)
         git(self.other,"pull","--ff-only","origin","main")
-        self.assertIn('"scanner-2"',(self.other/"data/summary.json").read_text())
+        self.assertIn("11:00:00Z",(self.other/"data/summary.json").read_text())
+
+    def test_older_concurrent_snapshot_blocks_overwrite_and_reports_failure(self):
+        (self.worker/"data/summary.json").write_text('{"status":"OK","collected_at":"2026-10-22T11:00:00Z"}\n')
+        (self.other/"data/summary.json").write_text('{"status":"OK","collected_at":"2026-10-22T10:00:00Z"}\n')
+        git(self.other,"add","data/summary.json")
+        git(self.other,"commit","-m","stale competing collector")
+        git(self.other,"push","origin","main")
+        result=self.persist()
+        self.assertNotEqual(result.returncode,0)
+        self.assertIn("refusing overwrite",result.stdout+result.stderr)
+        git(self.other,"pull","--ff-only","origin","main")
+        self.assertIn("10:00:00Z",(self.other/"data/summary.json").read_text())
+
+    def test_malformed_concurrent_snapshot_is_hard_failure(self):
+        (self.worker/"data/summary.json").write_text('{"status":"OK","collected_at":"2026-10-22T11:00:00Z"}\n')
+        (self.other/"data/summary.json").write_text('{"status":"OK","collected_at":"not a time"}\n')
+        git(self.other,"add","data/summary.json")
+        git(self.other,"commit","-m","bad competing collector")
+        git(self.other,"push","origin","main")
+        result=self.persist()
+        self.assertNotEqual(result.returncode,0)
+        git(self.other,"pull","--ff-only","origin","main")
+        self.assertIn("not a time",(self.other/"data/summary.json").read_text())
 
 if __name__=="__main__":
     unittest.main()
