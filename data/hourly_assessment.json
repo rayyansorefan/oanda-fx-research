@@ -1,14 +1,48 @@
 {
-  "collected_at": "2026-10-22T06:31:12.938257+00:00",
+  "collected_at": "2026-10-22T07:59:20.907713+00:00",
   "counts": {
     "need_news_review": 0,
     "price_alerts": 0,
-    "watchlist": 0
+    "watchlist": 1
   },
   "data_policy": "Research-only, no orders. Hourly OANDA quote not Pepperstone executable quote.",
-  "news_collected_at": "2026-10-22T06:31:08Z",
+  "news_collected_at": "2026-10-22T07:59:17Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-10-22T06:31:07Z",
-  "signals": [],
+  "oanda_collected_at": "2026-10-22T07:59:16Z",
+  "signals": [
+    {
+      "created_at": "2026-10-22T06:32:48Z",
+      "direction": "LONG",
+      "expires_at": "2026-10-22T10:30:00Z",
+      "id": "20261022-063248-GBPAUD-L-01",
+      "pair": "GBP_AUD",
+      "reason": "PLAN_STOP_LEVEL_TOUCHED_ON_M15",
+      "status": "REASSESS_OR_EXPIRE_PRIOR_PLAN_LEVEL_REACHED",
+      "technical_checkpoint": {
+        "h1_adx14": 23.73087364306676,
+        "h1_rsi14": 59.42345849688269,
+        "indicative_distance_to_stop_pips": 15.5,
+        "indicative_distance_to_target_pips": 59.5,
+        "indicative_remaining_rr_before_new_spread_adjustment": 3.84,
+        "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
+        "latest_completed_m15_bar_start": "2026-10-22T07:30:00.000000000Z",
+        "m15_adx14": 36.30482618701044,
+        "m15_atr14": 0.0012499531157639527,
+        "m15_macd_histogram": -0.00010924536136711007,
+        "m15_rsi14": 55.234337701965174,
+        "oanda_quote": {
+          "ask": 1.91205,
+          "bid": 1.91154,
+          "pip_size": 0.0001,
+          "spread_pips": 5.1000000000001044,
+          "time": "2026-10-22T07:58:30.503711920Z",
+          "tradeable": true
+        },
+        "price_reference": 1.91205,
+        "quote_is_tradeable": true,
+        "vs_m15_ema20": "ABOVE"
+      }
+    }
+  ],
   "status": "OK"
 }
