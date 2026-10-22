@@ -81,7 +81,15 @@ jobs:
               git fetch origin main
               remote_summary_blob="$(git rev-parse origin/main:data/summary.json 2>/dev/null || true)"
               if [ "$remote_summary_blob" != "$original_summary_blob" ]; then
-                echo '::error::Newer source research published concurrently; refusing to overwrite its data.'
+                # Another run changed the source. A verified newer snapshot
+                # supersedes this one; never replace or falsely fail for it.
+                # Older, malformed or missing data remain hard failures.
+                git show origin/main:data/summary.json > /tmp/remote-summary.json || exit 1
+                if python -c 'import json,datetime,sys; parse=lambda path: json.load(open(path)); local=parse("data/summary.json"); remote=parse("/tmp/remote-summary.json"); iso=lambda row: datetime.datetime.fromisoformat(row["collected_at"].replace("Z","+00:00")); sys.exit(0 if remote.get("status") in ("OK","PARTIAL") and iso(remote)>iso(local) else 1)'; then
+                  echo '::notice::Newer complete FX snapshot already published; obsolete run safely superseded.'
+                  exit 0
+                fi
+                echo '::error::Competing snapshot is not verified newer and valid; refusing overwrite.'
                 exit 1
               fi
               # A source-code or workflow merge may have advanced main while
