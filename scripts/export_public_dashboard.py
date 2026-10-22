@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Publish strictly whitelisted FX research to the public HTML dashboard.
 
-Requires an optional fine-grained GitHub token scoped to the destination repo
+Requires a fine-grained GitHub token scoped to the destination repo
 with Contents read/write. No OANDA account credentials or trading execution.
 """
 from __future__ import annotations
@@ -254,9 +254,8 @@ def publish(payload: dict, token: str) -> str:
 PUBLIC_PAYLOAD_PATH = Path("data/public_dashboard_payload.json")
 
 def main() -> int:
-    # Generate the same strictly whitelisted public feed even when no
-    # cross-repository personal access token exists. The connected ChatGPT
-    # GitHub bridge can then publish it using its existing OAuth permission.
+    # Generate a strictly whitelisted payload. Without an authorised
+    # cross-repository deploy token, fail visibly instead of claiming success.
     token = os.environ.get("FX_DASHBOARD_DEPLOY_TOKEN", "").strip()
     try:
         summary = load("data/summary.json")
