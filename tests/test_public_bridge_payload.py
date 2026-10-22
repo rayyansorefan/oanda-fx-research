@@ -40,11 +40,11 @@ class NoPATBridgeTests(unittest.TestCase):
                      patch.object(exp,"STATUS_PATH",root/"data/public_dashboard_status.json"),\
                      patch.object(exp,"publish") as publisher,\
                      patch.dict(os.environ,{"FX_DASHBOARD_DEPLOY_TOKEN":""}):
-                    self.assertEqual(exp.main(),0)
+                    self.assertEqual(exp.main(),1)
                     publisher.assert_not_called()
                 payload=json.loads((root/"data/public_dashboard_payload.json").read_text())
                 status=json.loads((root/"data/public_dashboard_status.json").read_text())
-                self.assertEqual(status["status"],"BRIDGE_READY")
+                self.assertEqual(status["status"],"NOT_CONFIGURED")
                 self.assertEqual(payload["schema"],1)
                 self.assertEqual(payload["snapshot_at"],sample_summary["collected_at"])
                 self.assertNotIn("HIDDEN_PRIVATE_ACCOUNT",json.dumps(payload))
@@ -68,6 +68,27 @@ class NoPATBridgeTests(unittest.TestCase):
                 self.assertFalse((root/"data/public_dashboard_payload.json").exists())
             finally:
                 os.chdir(old)
+
+class VerifiedPublicationTests(unittest.TestCase):
+    def test_older_payload_cannot_overwrite_newer_public_feed(self):
+        candidate = {"snapshot_at": "2026-10-22T15:00:00Z"}
+        remote = {"snapshot_at": "2026-10-22T16:00:00Z"}
+        with patch.object(exp, "_existing_public_feed", return_value=("sha", remote)), \\
+             patch.object(exp.urllib.request, "urlopen") as put:
+            self.assertEqual(exp.publish(candidate, "dummy-token"), "SUPERSEDED")
+            put.assert_not_called()
+
+    def test_published_commit_requires_exact_remote_readback(self):
+        import io
+        candidate = {"snapshot_at": "2026-10-22T16:00:00Z",
+                     "published_at": "2026-10-22T16:00:05Z", "schema": 1}
+        old = {"snapshot_at": "2026-10-22T15:00:00Z"}
+        saved_response = io.BytesIO(b'{"commit":{"sha":"abc"}}')
+        with patch.object(exp, "_existing_public_feed",
+                          side_effect=[("old-sha", old), ("new-sha", candidate)]), \\
+             patch.object(exp.urllib.request, "urlopen", return_value=saved_response):
+            self.assertEqual(exp.publish(candidate, "dummy-token"), "PUBLISHED")
+
 
 if __name__=="__main__":
     unittest.main()
