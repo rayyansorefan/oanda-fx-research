@@ -69,6 +69,19 @@ class NoPATBridgeTests(unittest.TestCase):
             finally:
                 os.chdir(old)
 
+class GitHubPermissionFailureTests(unittest.TestCase):
+    def test_public_api_rejection_exposes_safe_reason(self):
+        import io
+        import urllib.error
+        url = "https://api.github.com/repos/example/public/contents/docs/fx-feed.json"
+        error = urllib.error.HTTPError(
+            url, 403, "Forbidden", {},
+            io.BytesIO(b'{"message":"Resource not accessible by personal access token"}'))
+        with patch.object(exp.urllib.request, "urlopen", side_effect=error):
+            with self.assertRaisesRegex(RuntimeError, "GitHub public feed GET HTTP 403: Resource not accessible"):
+                exp._existing_public_feed(url, {"Authorization": "Bearer DUMMY_SECRET"})
+
+
 class VerifiedPublicationTests(unittest.TestCase):
     def test_older_payload_cannot_overwrite_newer_public_feed(self):
         candidate = {"snapshot_at": "2026-10-22T15:00:00Z"}
