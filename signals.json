@@ -1,6 +1,26 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-21T15:31:24.972Z",
-  "signals": [],
-  "note": "AUD_USD setup 20261021-130022-AUDUSD-L-01 expired at 2026-10-21T14:15:00Z. The 16:30 UK refresh did not produce demonstrably fresh market data, so trigger/fill/stop/target chronology could not be verified and no replacement setup was admitted. Earlier rejected EUR_GBP and GBP_USD proposals remain archived."
+  "generated_at": "2026-10-22T06:32:48Z",
+  "signals": [
+    {
+      "id": "20261022-063248-GBPAUD-L-01",
+      "instrument": "GBP_AUD",
+      "direction": "LONG",
+      "created_at": "2026-10-22T06:32:48Z",
+      "expires_at": "2026-10-22T10:30:00Z",
+      "planned_entry": 1.913,
+      "stop": 1.9105,
+      "tp1": 1.918,
+      "tp2": 1.9225,
+      "alert_a": 1.9128,
+      "max_oanda_spread_pips": 5.5,
+      "event_blackouts_utc": [
+        {
+          "start": "2026-10-22T08:15:00Z",
+          "end": "2026-10-22T08:45:00Z"
+        }
+      ]
+    }
+  ],
+  "note": "Manual reassessment only. Require a completed M15 close above 1.91280, then a retest/hold of 1.91190-1.91250 before considering 1.91300. Cancel on an M15 close below 1.91050, spread above 5.5 pips, or expiry. OANDA is not an executable Pepperstone quote; verify Pepperstone UK symbol, bid/ask, spread and <=0.25% risk from verified equity before any action."
 }
