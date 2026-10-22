@@ -173,11 +173,26 @@ def status(state: str, details: str = "", snapshot_at: str | None = None) -> Non
     }, indent=2) + "\n", encoding="utf-8")
     print("FX public feed:", state, details[:150])
 
+def _github_error(action: str, exc: urllib.error.HTTPError) -> RuntimeError:
+    """Report GitHub's safe permission explanation, never credentials or headers."""
+    message = ""
+    try:
+        response = json.loads(exc.read(4096).decode("utf-8", errors="replace"))
+        if isinstance(response, dict) and isinstance(response.get("message"), str):
+            message = response["message"][:240]
+    except (ValueError, UnicodeError, OSError):
+        pass
+    return RuntimeError(f"GitHub {action} HTTP {exc.code}: {message or 'No explanation'}")
+
+
 def _existing_public_feed(url: str, headers: dict) -> tuple[str, dict]:
     """Read the actual public-repository file, not an unverified local copy."""
     request = urllib.request.Request(url, headers={**headers, "Cache-Control": "no-cache"})
-    with urllib.request.urlopen(request, timeout=20) as response:
-        current = json.load(response)
+    try:
+        with urllib.request.urlopen(request, timeout=20) as response:
+            current = json.load(response)
+    except urllib.error.HTTPError as exc:
+        raise _github_error("public feed GET", exc) from None
     if current.get("encoding") != "base64" or not current.get("content") or not current.get("sha"):
         raise ValueError("Cannot verify existing public feed before write")
     published = json.loads(base64.b64decode(current["content"]).decode("utf-8"))
@@ -236,7 +251,7 @@ def publish(payload: dict, token: str) -> str:
         except urllib.error.HTTPError as exc:
             if exc.code in (409, 422) and attempt < 3:
                 continue
-            raise
+            raise _github_error("public feed PUT", exc) from None
         if not (saved.get("commit") or {}).get("sha"):
             raise ValueError("GitHub did not confirm a dashboard commit")
         # Verify the committed bytes through an independent Contents GET.
@@ -294,7 +309,7 @@ def main() -> int:
     except urllib.error.HTTPError as e:
         status("FAILED", "GitHub status " + str(e.code))
     except Exception as e:
-        status("FAILED", type(e).__name__ + ": " + str(e)[:100])
+        status("FAILED", type(e).__name__ + ": " + str(e)[:350])
     return 1
 
 if __name__ == "__main__":
