@@ -73,7 +73,7 @@ class VerifiedPublicationTests(unittest.TestCase):
     def test_older_payload_cannot_overwrite_newer_public_feed(self):
         candidate = {"snapshot_at": "2026-10-22T15:00:00Z"}
         remote = {"snapshot_at": "2026-10-22T16:00:00Z"}
-        with patch.object(exp, "_existing_public_feed", return_value=("sha", remote)), \\
+        with patch.object(exp, "_existing_public_feed", return_value=("sha", remote)), \
              patch.object(exp.urllib.request, "urlopen") as put:
             self.assertEqual(exp.publish(candidate, "dummy-token"), "SUPERSEDED")
             put.assert_not_called()
@@ -85,7 +85,7 @@ class VerifiedPublicationTests(unittest.TestCase):
         old = {"snapshot_at": "2026-10-22T15:00:00Z"}
         saved_response = io.BytesIO(b'{"commit":{"sha":"abc"}}')
         with patch.object(exp, "_existing_public_feed",
-                          side_effect=[("old-sha", old), ("new-sha", candidate)]), \\
+                          side_effect=[("old-sha", old), ("new-sha", candidate)]), \
              patch.object(exp.urllib.request, "urlopen", return_value=saved_response):
             self.assertEqual(exp.publish(candidate, "dummy-token"), "PUBLISHED")
 
