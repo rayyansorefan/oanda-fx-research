@@ -173,7 +173,30 @@ def status(state: str, details: str = "", snapshot_at: str | None = None) -> Non
     }, indent=2) + "\n", encoding="utf-8")
     print("FX public feed:", state, details[:150])
 
-def publish(payload: dict, token: str) -> None:
+def _existing_public_feed(url: str, headers: dict) -> tuple[str, dict]:
+    """Read the actual public-repository file, not an unverified local copy."""
+    request = urllib.request.Request(url, headers={**headers, "Cache-Control": "no-cache"})
+    with urllib.request.urlopen(request, timeout=20) as response:
+        current = json.load(response)
+    if current.get("encoding") != "base64" or not current.get("content") or not current.get("sha"):
+        raise ValueError("Cannot verify existing public feed before write")
+    published = json.loads(base64.b64decode(current["content"]).decode("utf-8"))
+    return current["sha"], published
+
+
+def _timestamp(text: str) -> dt.datetime:
+    value = dt.datetime.fromisoformat(text.replace("Z", "+00:00"))
+    if value.tzinfo is None:
+        raise ValueError("FX snapshot timestamps must be timezone-aware")
+    return value.astimezone(dt.timezone.utc)
+
+
+def publish(payload: dict, token: str) -> str:
+    """Safely publish and read back the exact candidate; never overwrite newer data.
+
+    409/422 concurrent-write conflicts are retried after reading the new
+    remote content. A GitHub commit acknowledgement alone is insufficient.
+    """
     url = "https://api.github.com/repos/" + DESTINATION + "/contents/" + TARGET
     headers = {
         "Authorization": "Bearer " + token,
@@ -181,28 +204,52 @@ def publish(payload: dict, token: str) -> None:
         "X-GitHub-Api-Version": "2022-11-28",
         "User-Agent": "fx-research-dashboard-publisher",
     }
-    request = urllib.request.Request(url, headers=headers)
-    with urllib.request.urlopen(request, timeout=15) as response:
-        current = json.load(response)
-    blob_sha = current.get("sha")
-    if not blob_sha:
-        raise ValueError("Destination feed blob SHA not found")
-    body = {
-        "message": "data: publish sanitized FX research snapshot",
-        "sha": blob_sha,
-        "branch": "main",
-        "content": base64.b64encode(
-            (json.dumps(payload, ensure_ascii=True, separators=(",", ":"))+"\n").encode("utf-8")
-        ).decode("ascii"),
-    }
-    update = urllib.request.Request(
-        url, data=json.dumps(body).encode("utf-8"),
-        headers={**headers, "Content-Type": "application/json"}, method="PUT",
-    )
-    with urllib.request.urlopen(update, timeout=25) as response:
-        saved = json.load(response)
-    if not (saved.get("commit") or {}).get("sha"):
-        raise ValueError("GitHub did not confirm a commit")
+    candidate_time = _timestamp(payload["snapshot_at"])
+    encoded = base64.b64encode(
+        (json.dumps(payload, ensure_ascii=True, separators=(",", ":")) + "\n").encode("utf-8")
+    ).decode("ascii")
+    for attempt in range(4):
+        blob_sha, current = _existing_public_feed(url, headers)
+        previous_time = _timestamp(current["snapshot_at"])
+        if previous_time > candidate_time:
+            return "SUPERSEDED"
+        if current == payload:
+            return "ALREADY_CURRENT"
+        # Equal market snapshots can have later independent news/watchlist
+        # changes; an older snapshot must never win against a newer one.
+        if previous_time == candidate_time:
+            old_publication = _timestamp(current.get("published_at", current["snapshot_at"]))
+            new_publication = _timestamp(payload.get("published_at", payload["snapshot_at"]))
+            if old_publication >= new_publication:
+                return "ALREADY_CURRENT"
+        body = {
+            "message": "data: publish sanitized FX research snapshot",
+            "sha": blob_sha, "branch": "main", "content": encoded,
+        }
+        update = urllib.request.Request(
+            url, data=json.dumps(body).encode("utf-8"),
+            headers={**headers, "Content-Type": "application/json"}, method="PUT",
+        )
+        try:
+            with urllib.request.urlopen(update, timeout=30) as response:
+                saved = json.load(response)
+        except urllib.error.HTTPError as exc:
+            if exc.code in (409, 422) and attempt < 3:
+                continue
+            raise
+        if not (saved.get("commit") or {}).get("sha"):
+            raise ValueError("GitHub did not confirm a dashboard commit")
+        # Verify the committed bytes through an independent Contents GET.
+        # GitHub Pages deployment is verified separately by the public workflow.
+        for read_attempt in range(3):
+            _, verified = _existing_public_feed(url, headers)
+            if verified == payload:
+                return "PUBLISHED"
+            import time
+            time.sleep(2)
+        raise ValueError("Public repository readback did not match the candidate payload")
+    raise RuntimeError("Public feed changed repeatedly; bounded retries exhausted")
+
 
 PUBLIC_PAYLOAD_PATH = Path("data/public_dashboard_payload.json")
 
@@ -236,12 +283,14 @@ def main() -> int:
             encoding="utf-8",
         )
         if not token:
-            status("BRIDGE_READY",
-                   "Whitelisted private payload prepared for connected GitHub bridge; public publication not yet confirmed.",
+            status("NOT_CONFIGURED",
+                   "FX_DASHBOARD_DEPLOY_TOKEN missing. Public dashboard NOT updated.",
                    data["snapshot_at"])
-            return 0
-        publish(data, token)
-        status("PUBLISHED", "Sanitized public dashboard research updated.", data["snapshot_at"])
+            return 1
+        outcome = publish(data, token)
+        status(outcome, "Public repository contents readback verified." if outcome == "PUBLISHED"
+               else "Remote feed was already as recent or newer; no older overwrite.",
+               data["snapshot_at"])
         return 0
     except urllib.error.HTTPError as e:
         status("FAILED", "GitHub status " + str(e.code))
