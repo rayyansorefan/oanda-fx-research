@@ -122,6 +122,9 @@ class PublicDashboardFeedTests(unittest.TestCase):
 
     def test_broker_unavailable_gbp_zar_is_absent_from_public_feed(self):
         obj = self.sample()
+        obj["summary"]["coverage"]["oanda_account_fx_instruments_discovered"] = 2
+        obj["summary"]["coverage"]["oanda_pairs_with_usable_live_quotes"] = 2
+        obj["summary"]["coverage"]["oanda_pairs_with_m15_h1_indicators"] = 2
         obj["summary"]["pairs"]["GBP_ZAR"] = {
             "quote": {"time": "2026-10-21T18:59:59Z", "bid": 22.20,
                       "ask": 22.22, "spread_pips": 200, "pip_size": .0001},
