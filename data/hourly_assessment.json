@@ -1,14 +1,67 @@
 {
-  "collected_at": "2026-10-23T11:04:19.779918+00:00",
+  "collected_at": "2026-10-23T11:31:31.053061+00:00",
   "counts": {
     "need_news_review": 0,
     "price_alerts": 0,
-    "watchlist": 0
+    "watchlist": 1
   },
   "data_policy": "Research-only, no orders. Hourly OANDA quote not Pepperstone executable quote.",
-  "news_collected_at": "2026-10-23T11:04:16Z",
+  "news_collected_at": "2026-10-23T11:31:26Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-10-23T11:04:16Z",
-  "signals": [],
+  "oanda_collected_at": "2026-10-23T11:31:26Z",
+  "signals": [
+    {
+      "caution": "Some optional news feeds unavailable; calendar and required headline feeds checked. This is NOT an all-clear.",
+      "created_at": "2026-10-23T11:06:21.348Z",
+      "direction": "SHORT",
+      "expires_at": "2026-10-23T15:30:00Z",
+      "id": "20261023-1200-GBPJPY-S-B01",
+      "news_source_coverage": {
+        "currencies_without_supported_official_feed": [],
+        "missing_required": [],
+        "note": "LIMITED means selected official and aggregate sources plus the calendar responded, but not every optional source. Never interpret this as complete global-news or real-time event coverage.",
+        "other_unavailable": [
+          "BLS employment",
+          "BLS inflation"
+        ],
+        "required_sources": [
+          "BoE news",
+          "BoJ updates",
+          "Global markets aggregation"
+        ],
+        "status": "LIMITED"
+      },
+      "news_status": "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS",
+      "observed_price_reactions": [],
+      "pair": "GBP_JPY",
+      "release_blackouts": [],
+      "relevant_headlines": [],
+      "status": "NO_QUALIFIED_PRICE_PATTERN",
+      "technical_checkpoint": {
+        "h1_adx14": 33.31608303132862,
+        "h1_rsi14": 37.114249586745096,
+        "indicative_distance_to_stop_pips": 25.2,
+        "indicative_distance_to_target_pips": 66.8,
+        "indicative_remaining_rr_before_new_spread_adjustment": 2.65,
+        "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
+        "latest_completed_m15_bar_start": "2026-10-23T11:00:00.000000000Z",
+        "m15_adx14": 26.835197503415777,
+        "m15_atr14": 0.18720779539763224,
+        "m15_macd_histogram": 0.0036793644102305345,
+        "m15_rsi14": 51.237500893163414,
+        "oanda_quote": {
+          "ask": 209.908,
+          "bid": 209.868,
+          "pip_size": 0.01,
+          "spread_pips": 3.999999999999204,
+          "time": "2026-10-23T11:29:33.057335626Z",
+          "tradeable": true
+        },
+        "price_reference": 209.868,
+        "quote_is_tradeable": true,
+        "vs_m15_ema20": "ABOVE"
+      }
+    }
+  ],
   "status": "OK"
 }
