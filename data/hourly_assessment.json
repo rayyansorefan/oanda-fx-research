@@ -1,20 +1,20 @@
 {
-  "collected_at": "2026-10-23T13:03:34.194117+00:00",
+  "collected_at": "2026-10-23T13:51:47.961737+00:00",
   "counts": {
-    "need_news_review": 1,
+    "need_news_review": 0,
     "price_alerts": 0,
     "watchlist": 1
   },
   "data_policy": "Research-only, no orders. Hourly OANDA quote not Pepperstone executable quote.",
-  "news_collected_at": "2026-10-23T13:03:29Z",
+  "news_collected_at": "2026-10-23T13:51:42Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-10-23T13:03:29Z",
+  "oanda_collected_at": "2026-10-23T13:51:42Z",
   "signals": [
     {
-      "created_at": "2026-10-23T11:06:21.348Z",
+      "created_at": "2026-10-23T13:06:00.000Z",
       "direction": "SHORT",
       "expires_at": "2026-10-23T15:30:00Z",
-      "id": "20261023-1200-GBPJPY-S-B01",
+      "id": "20261023-1400-CHFJPY-S-B01",
       "news_source_coverage": {
         "currencies_without_supported_official_feed": [],
         "missing_required": [],
@@ -24,64 +24,39 @@
           "BLS inflation"
         ],
         "required_sources": [
-          "BoE news",
           "BoJ updates",
-          "Global markets aggregation"
+          "Global markets aggregation",
+          "SNB monetary policy"
         ],
         "status": "LIMITED"
       },
-      "news_status": "NEW_MATERIAL_HEADLINE_REVIEW",
-      "observed_price_reactions": [
-        {
-          "headline": "Reserve Bank of India bought $43.26 billion in August forex market - Investing.com UK",
-          "observation": {
-            "change_pips": 0.0,
-            "from_bar_time": "2026-10-23T12:30:00.000000000Z",
-            "status": "OBSERVED_PRICE_MOVEMENT_NOT_CAUSAL",
-            "to_bar_time": "2026-10-23T12:45:00.000000000Z",
-            "vs_planned_direction": "FLAT"
-          }
-        }
-      ],
-      "pair": "GBP_JPY",
+      "news_status": "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS",
+      "observed_price_reactions": [],
+      "pair": "CHF_JPY",
       "release_blackouts": [],
-      "relevant_headlines": [
-        {
-          "currencies": [
-            "GBP"
-          ],
-          "currency_source": "GLOBAL",
-          "global_risk": false,
-          "id": "4f509bd40a5c89e162",
-          "published_at": "2026-10-23T12:58:00Z",
-          "severity": "REVIEW",
-          "source": "Global markets aggregation",
-          "title": "Reserve Bank of India bought $43.26 billion in August forex market - Investing.com UK",
-          "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOMWU4a0U2dHAtaXhqb1hmcnEyNEVBYzUwYXRqaFZTS3hjX2toWFMzek9UV291dE80b2JJSFlhRzF5UzI2anlCcnNveDlfWmpqUmE1WFlMYkRYUHhERmQtRDRRckoyRVlYUldlZ1VISTlEd01aeGdrZ3hoSF9KTEY4V2ZDQ2wxOXR3ZHhuTnBHVVlzaDR5eWdzX28zSFAwZ2Z3elRtRkUxVzlhX2l3M3pCdnVJSVpndzlBOUhyZTJuR21PZmM?oc=5"
-        }
-      ],
-      "status": "REASSESS_NEWS_FIRST",
+      "relevant_headlines": [],
+      "status": "MANUAL_EVENT_BLACKOUT",
       "technical_checkpoint": {
-        "h1_adx14": 32.75051928303971,
-        "h1_rsi14": 31.56586805391619,
-        "indicative_distance_to_stop_pips": 80.2,
-        "indicative_distance_to_target_pips": 11.8,
-        "indicative_remaining_rr_before_new_spread_adjustment": 0.15,
+        "h1_adx14": 38.77929692049248,
+        "h1_rsi14": 24.491813985544695,
+        "indicative_distance_to_stop_pips": 57.2,
+        "indicative_distance_to_target_pips": 34.8,
+        "indicative_remaining_rr_before_new_spread_adjustment": 0.61,
         "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
-        "latest_completed_m15_bar_start": "2026-10-23T12:45:00.000000000Z",
-        "m15_adx14": 28.964058571012373,
-        "m15_atr14": 0.18105968481558996,
-        "m15_macd_histogram": -0.029905531731173038,
-        "m15_rsi14": 32.251415053771595,
+        "latest_completed_m15_bar_start": "2026-10-23T13:30:00.000000000Z",
+        "m15_adx14": 40.77518765762951,
+        "m15_atr14": 0.1446861611523975,
+        "m15_macd_histogram": -0.010231058242224395,
+        "m15_rsi14": 36.34156545262038,
         "oanda_quote": {
-          "ask": 209.36,
-          "bid": 209.318,
+          "ask": 190.168,
+          "bid": 190.128,
           "pip_size": 0.01,
-          "spread_pips": 4.200000000000159,
-          "time": "2026-10-23T13:01:11.357292014Z",
+          "spread_pips": 4.000000000002046,
+          "time": "2026-10-23T13:50:03.101707478Z",
           "tradeable": true
         },
-        "price_reference": 209.318,
+        "price_reference": 190.128,
         "quote_is_tradeable": true,
         "vs_m15_ema20": "BELOW"
       }
