@@ -65,6 +65,42 @@ class PublicDashboardFeedTests(unittest.TestCase):
         summary["pairs"]["EUR_JPY"]["frames"]["H4"]["indicators"]["ema20"] = 180.0
         self.assertEqual(build_research_setups(summary), [])
 
+    def test_forward_continuation_plan_uses_current_venue_indicative_quote(self):
+        from scripts.export_public_dashboard import build_research_setups
+        def ind(ema20, ema50, **kwargs):
+            return {"ema20": ema20, "ema50": ema50, **kwargs}
+        summary = {
+            "ranked_review_candidates": [
+                {"instrument": "SGD_JPY", "research_priority": 72,
+                 "technical_checks_agree": 5, "potential_direction_not_approved": "SHORT"}],
+            "pairs": {"SGD_JPY": {
+                "quote": {"time": "2026-10-23T10:00:00Z",
+                          "bid": 122.720, "ask": 122.730, "pip_size": .01,
+                          "spread_pips": 1.0, "tradeable": True},
+                "frames": {
+                    "M15": {"indicators": ind(122.88, 123.02, atr14=.12,
+                             resistance20=123.06, support20=122.66,
+                             adx14=27, plus_di14=10, minus_di14=28),
+                            "last_3_completed_candles": [
+                             {"mid": {"o": 122.84, "h": 122.86,
+                                      "l": 122.71, "c": 122.73}}]},
+                    "H1": {"indicators": ind(122.95, 123.17, adx14=30,
+                                           plus_di14=11, minus_di14=29)},
+                    "H4": {"indicators": ind(123.15, 123.30)},
+                    "D": {"indicators": ind(123.40, 123.70)},
+                }}}}
+        setups = build_research_setups(summary)
+        self.assertEqual(len(setups), 1)
+        setup = setups[0]
+        self.assertEqual(setup["entry_route"], "MOMENTUM_CONTINUATION")
+        self.assertFalse(setup["approved_entry"])
+        self.assertLess(abs(setup["entry_low"] - 122.72), .03)
+        self.assertTrue(setup["tp1"] < setup["entry_low"] < setup["stop"])
+        # No fresh bearish impulse: fall back to the separate pullback route.
+        summary["pairs"]["SGD_JPY"]["frames"]["M15"]["last_3_completed_candles"][0]["mid"]["c"] = 122.85
+        setups = build_research_setups(summary)
+        self.assertEqual(setups[0]["entry_route"], "EMA20_PULLBACK")
+
     def test_feed_budget_never_drops_research_setups(self):
         from scripts.export_public_dashboard import PUBLIC_MAX_BYTES, fit_public_feed_budget, serialized_size
         long_candle = {"t": "2026-10-23T09:00:00Z", "o": 157.1234567, "h": 157.2345678,
