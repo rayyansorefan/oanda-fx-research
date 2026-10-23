@@ -60,6 +60,94 @@ def compact_frame(f: dict, full: bool) -> dict:
 def safe_quote(q: dict) -> dict:
     return {k: q.get(k) for k in ("time", "bid", "ask", "spread_pips", "pip_size", "tradeable")}
 
+
+def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
+    """Prospective technical planning levels, never approved entry alerts.
+
+    These are derived only from the *current* completed-bar summary.  We do not
+    retrospectively label historical prices as entries and do not issue orders.
+    """
+    pairs = summary.get("pairs") or {}
+    setups = []
+    for candidate in summary.get("ranked_review_candidates") or []:
+        key = candidate.get("instrument")
+        direction = candidate.get("potential_direction_not_approved")
+        if direction not in ("LONG", "SHORT") or candidate.get("technical_checks_agree", 0) < 4:
+            continue
+        source = pairs.get(key) or {}
+        quote, frames = source.get("quote") or {}, source.get("frames") or {}
+        if quote.get("tradeable") is not True:
+            continue
+        try:
+            pip = float(quote["pip_size"])
+            spread = float(quote["spread_pips"]) * pip
+            bid, ask = float(quote["bid"]), float(quote["ask"])
+            m = (frames["M15"]["indicators"])
+            h = (frames["H1"]["indicators"])
+            h4 = (frames["H4"]["indicators"])
+            day = (frames["D"]["indicators"])
+            atr, ema = float(m["atr14"]), float(m["ema20"])
+            high, low = float(m["resistance20"]), float(m["support20"])
+            adx, h1_adx = float(m["adx14"]), float(h["adx14"])
+        except (KeyError, TypeError, ValueError, ZeroDivisionError):
+            continue
+        if not (0 < pip < atr and 0 < spread <= .5 * atr
+                and high > low and bid > 0 and ask > bid
+                and adx >= 20 and h1_adx >= 20):
+            continue
+        trend = []
+        for frame in (m, h, h4, day):
+            try:
+                a, b = float(frame["ema20"]), float(frame["ema50"])
+            except (KeyError, TypeError, ValueError):
+                trend = []
+                break
+            trend.append("LONG" if a > b else "SHORT" if a < b else "NEUTRAL")
+        if len(trend) != 4 or any(t != direction for t in trend):
+            continue
+        if abs(ema - (bid if direction == "SHORT" else ask)) > 2.5 * atr:
+            continue  # Do not publish a stale/chasing pullback zone.
+        entry_low, entry_high = ema - .15 * atr, ema + .15 * atr
+        if direction == "SHORT":
+            stop = max(high + .15 * atr, entry_high + 1.1 * atr)
+            worst_entry = entry_low
+            distance = stop - worst_entry
+            tp1, tp2 = worst_entry - 1.85 * distance, worst_entry - 2.35 * distance
+        else:
+            stop = min(low - .15 * atr, entry_low - 1.1 * atr)
+            worst_entry = entry_high
+            distance = worst_entry - stop
+            tp1, tp2 = worst_entry + 1.85 * distance, worst_entry + 2.35 * distance
+        if not (.8 * atr <= distance <= 4 * atr):
+            continue
+        net_rr = (1.85 * distance - spread) / (distance + spread)
+        if net_rr < 1.35:
+            continue
+        places = 3 if pip >= .01 else 5
+        setups.append({
+            "instrument": key, "direction": direction,
+            "status": "CONDITIONAL_RESEARCH_NOT_TRIGGERED",
+            "model": "M15 EMA20 trend-pullback / rejection",
+            "research_priority": round(float(candidate.get("research_priority") or 0), 2),
+            "technical_checks_agree": candidate["technical_checks_agree"],
+            "timeframes_aligned": ["M15", "H1", "H4", "D"],
+            "entry_low": round(entry_low, places),
+            "entry_high": round(entry_high, places),
+            "stop": round(stop, places),
+            "tp1": round(tp1, places), "tp2": round(tp2, places),
+            "net_rr_estimate": round(net_rr, 2),
+            "source_quote_at": quote.get("time"),
+            "trigger": ("Wait for a completed M15 bearish rejection within the zone."
+                        if direction == "SHORT" else
+                        "Wait for a completed M15 bullish rejection within the zone."),
+            "broker_check": "Verify live Pepperstone spread, exact execution price and account availability.",
+            "news_check": "Check scheduled macro events and official news before entry.",
+            "approved_entry": False,
+        })
+        if len(setups) >= limit:
+            break
+    return setups
+
 def build_public_feed(summary: dict, news: dict, signals: dict,
                       watcher: dict, detailed: dict, brief_history: dict | None = None) -> dict:
     coverage = summary.get("coverage") or {}
@@ -142,6 +230,7 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         ],
         "pairs": prices,
         "signals": clean_signals,
+        "research_setups": build_research_setups(summary),
         "hourly": {
             "at": watcher.get("collected_at"),
             "counts": watcher.get("counts"),
