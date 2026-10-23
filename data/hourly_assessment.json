@@ -1,14 +1,14 @@
 {
-  "collected_at": "2026-10-23T13:51:47.961737+00:00",
+  "collected_at": "2026-10-23T15:20:10.701572+00:00",
   "counts": {
-    "need_news_review": 0,
+    "need_news_review": 1,
     "price_alerts": 0,
     "watchlist": 1
   },
   "data_policy": "Research-only, no orders. Hourly OANDA quote not Pepperstone executable quote.",
-  "news_collected_at": "2026-10-23T13:51:42Z",
+  "news_collected_at": "2026-10-23T15:19:59Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-10-23T13:51:42Z",
+  "oanda_collected_at": "2026-10-23T15:19:58Z",
   "signals": [
     {
       "created_at": "2026-10-23T13:06:00.000Z",
@@ -30,33 +30,78 @@
         ],
         "status": "LIMITED"
       },
-      "news_status": "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS",
-      "observed_price_reactions": [],
+      "news_status": "NEW_MATERIAL_HEADLINE_REVIEW",
+      "observed_price_reactions": [
+        {
+          "headline": "What would a Republican sweep mean for Gold and Treasury yields? - FXStreet",
+          "observation": {
+            "change_pips": -20.7,
+            "from_bar_time": "2026-10-23T13:45:00.000000000Z",
+            "status": "OBSERVED_PRICE_MOVEMENT_NOT_CAUSAL",
+            "to_bar_time": "2026-10-23T15:00:00.000000000Z",
+            "vs_planned_direction": "SUPPORTS"
+          }
+        }
+      ],
       "pair": "CHF_JPY",
       "release_blackouts": [],
-      "relevant_headlines": [],
-      "status": "MANUAL_EVENT_BLACKOUT",
+      "relevant_headlines": [
+        {
+          "currencies": [
+            "AUD",
+            "CAD",
+            "CHF",
+            "CNH",
+            "CZK",
+            "DKK",
+            "EUR",
+            "GBP",
+            "HKD",
+            "HUF",
+            "JPY",
+            "MXN",
+            "NOK",
+            "NZD",
+            "PLN",
+            "SEK",
+            "SGD",
+            "THB",
+            "TRY",
+            "USD",
+            "ZAR"
+          ],
+          "currency_source": "GLOBAL",
+          "global_risk": true,
+          "id": "682ca67debda3d2493",
+          "published_at": "2026-10-23T14:10:08Z",
+          "severity": "REVIEW",
+          "source": "Global markets aggregation",
+          "title": "What would a Republican sweep mean for Gold and Treasury yields? - FXStreet",
+          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOcU43YVVVSVBNU2xQMnd1Nkd2X0t0ZTZrUXdEYmN3YlpRbnNJUmlTR05IVzVrWWRuOEdyenotdE4xX0E2eUFIS1E1WEpyUW1fU3dEc3JMbVNCeGRHOUVOVWdWWXZIMGJYNWh4cjlSZ1JtRUNmWTgtc05TZjYwUk0yN2F4aW9NSklRLXVEbEZLYmtDODhZNUdBdU0wQ25kYzlCVkU3V1M2dzNJSGs2bzFZ?oc=5"
+        }
+      ],
+      "status": "REASSESS_NEWS_FIRST",
       "technical_checkpoint": {
-        "h1_adx14": 38.77929692049248,
-        "h1_rsi14": 24.491813985544695,
-        "indicative_distance_to_stop_pips": 57.2,
-        "indicative_distance_to_target_pips": 34.8,
-        "indicative_remaining_rr_before_new_spread_adjustment": 0.61,
+        "h1_adx14": 42.15288982011898,
+        "h1_rsi14": 26.169661230924405,
+        "indicative_distance_to_stop_pips": 66.4,
+        "indicative_distance_to_target_pips": 25.6,
+        "indicative_remaining_rr_before_new_spread_adjustment": 0.39,
         "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
-        "latest_completed_m15_bar_start": "2026-10-23T13:30:00.000000000Z",
-        "m15_adx14": 40.77518765762951,
-        "m15_atr14": 0.1446861611523975,
-        "m15_macd_histogram": -0.010231058242224395,
-        "m15_rsi14": 36.34156545262038,
+        "latest_completed_m15_bar_start": "2026-10-23T15:00:00.000000000Z",
+        "m15_adx14": 35.115326394254744,
+        "m15_atr14": 0.1471485664649733,
+        "m15_macd_histogram": 0.013593057447927798,
+        "m15_rsi14": 37.05825749111464,
         "oanda_quote": {
-          "ask": 190.168,
-          "bid": 190.128,
+          "ask": 190.075,
+          "bid": 190.036,
           "pip_size": 0.01,
-          "spread_pips": 4.000000000002046,
-          "time": "2026-10-23T13:50:03.101707478Z",
+          "spread_pips": 3.8999999999987267,
+          "time": "2026-10-23T15:18:12.450702689Z",
           "tradeable": true
         },
-        "price_reference": 190.128,
+        "price_reference": 190.036,
         "quote_is_tradeable": true,
         "vs_m15_ema20": "BELOW"
       }
