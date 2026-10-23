@@ -53,13 +53,36 @@ def compact_frame(f: dict, full: bool) -> dict:
                 "h": (bar.get("mid") or {}).get("h"),
                 "l": (bar.get("mid") or {}).get("l"),
                 "c": (bar.get("mid") or {}).get("c"),
-            } for bar in bars[-70:]
+            } for bar in bars[-40:]
         ]
     return obj
 
 def safe_quote(q: dict) -> dict:
     return {k: q.get(k) for k in ("time", "bid", "ask", "spread_pips", "pip_size", "tradeable")}
 
+
+# The hourly ChatGPT health check has a 950 KB JSON ceiling. Keep a
+# deliberate margin for growth in indicator metadata and new chart frames.
+PUBLIC_MAX_BYTES = 930_000
+
+def serialized_size(payload: dict) -> int:
+    return len((json.dumps(payload, ensure_ascii=True, separators=(",", ":")) + "\n").encode("utf-8"))
+
+def fit_public_feed_budget(payload: dict) -> None:
+    """Trim only historical OHLC density, never current quotes or research setups."""
+    if serialized_size(payload) <= PUBLIC_MAX_BYTES:
+        return
+    for cap in (32, 24, 16, 12, 8, 6):
+        for pair in payload.get("pairs", {}).values():
+            if not pair.get("deep"):
+                continue
+            for frame in (pair.get("frames") or {}).values():
+                candles = frame.get("candles")
+                if isinstance(candles, list) and len(candles) > cap:
+                    frame["candles"] = candles[-cap:]
+        if serialized_size(payload) <= PUBLIC_MAX_BYTES:
+            return
+    raise ValueError("Public FX payload remains over 930000 bytes with six candles per detailed frame")
 
 def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
     """Prospective technical planning levels, never approved entry alerts.
@@ -247,6 +270,7 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
     }
     if not result["snapshot_at"] or not prices:
         raise ValueError("No valid source quote collection; refusing to publish.")
+    fit_public_feed_budget(result)
     text = json.dumps(result, ensure_ascii=True, separators=(",", ":"))
     for term in ("OANDA_API_TOKEN", "OANDA_ACCOUNT_ID", "FX_DASHBOARD_DEPLOY_TOKEN"):
         if term in text:
