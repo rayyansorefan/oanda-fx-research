@@ -160,7 +160,7 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         shard = detailed.get(key) or {}
         lightweight = (brief_history or {}).get(key) or {}
         frames = {}
-        for period in ("M5", "M15", "H1", "H4", "D"):
+        for period in ("M1", "M5", "M15", "M30", "H1", "H4", "D", "W", "M"):
             frame = (shard.get("frames") or {}).get(period) or (source.get("frames") or {}).get(period)
             if frame and (shard or period in ("M15", "H1")):
                 frames[period] = compact_frame(frame, bool(shard))
