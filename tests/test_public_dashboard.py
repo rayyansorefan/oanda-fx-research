@@ -65,6 +65,25 @@ class PublicDashboardFeedTests(unittest.TestCase):
         summary["pairs"]["EUR_JPY"]["frames"]["H4"]["indicators"]["ema20"] = 180.0
         self.assertEqual(build_research_setups(summary), [])
 
+    def test_feed_budget_never_drops_research_setups(self):
+        from scripts.export_public_dashboard import PUBLIC_MAX_BYTES, fit_public_feed_budget, serialized_size
+        long_candle = {"t": "2026-10-23T09:00:00Z", "o": 157.1234567, "h": 157.2345678,
+                       "l": 157.0123456, "c": 157.1987654}
+        payload = {"research_setups": [{"instrument": "USD_JPY",
+                                       "status": "CONDITIONAL_RESEARCH_NOT_TRIGGERED"}],
+                   "signals": [],
+                   "pairs": {
+                       str(n): {"deep": True, "frames": {
+                           frame: {"candles": [long_candle.copy() for _ in range(70)]}
+                           for frame in ("M1", "M5", "M15", "M30", "H1", "H4", "D", "W", "M")}}
+                       for n in range(24)}}
+        self.assertGreater(serialized_size(payload), PUBLIC_MAX_BYTES)
+        fit_public_feed_budget(payload)
+        self.assertLessEqual(serialized_size(payload), PUBLIC_MAX_BYTES)
+        self.assertEqual(payload["research_setups"][0]["instrument"], "USD_JPY")
+        self.assertGreaterEqual(min(len(f["candles"]) for p in payload["pairs"].values()
+                                    for f in p["frames"].values()), 6)
+
     def test_refuses_missing_source(self):
         obj = self.sample()
         obj["summary"]["collected_at"] = None
