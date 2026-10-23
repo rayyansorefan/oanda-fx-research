@@ -33,6 +33,38 @@ class PublicDashboardFeedTests(unittest.TestCase):
         self.assertEqual(f["signals"], [])
         self.assertEqual(f["schema"], 1)
         self.assertEqual(f["coverage"]["screened"], 1)
+
+    def test_research_setups_reject_countertrend_and_create_forward_only_plan(self):
+        from scripts.export_public_dashboard import build_research_setups
+        indicators = lambda ema20, ema50, **extra: {"ema20": ema20, "ema50": ema50, **extra}
+        summary = {
+            "ranked_review_candidates": [
+                {"instrument": "EUR_JPY", "research_priority": 73,
+                 "technical_checks_agree": 5, "potential_direction_not_approved": "SHORT"}
+            ],
+            "pairs": {"EUR_JPY": {
+                "quote": {"time": "2026-10-23T08:02:00Z", "bid": 175.74, "ask": 175.77,
+                          "pip_size": 0.01, "spread_pips": 3, "tradeable": True},
+                "frames": {
+                    "M15": {"indicators": indicators(175.91, 175.93,
+                        atr14=.155, resistance20=176.22, support20=175.68, adx14=23)},
+                    "H1": {"indicators": indicators(176.04, 176.52, adx14=42)},
+                    "H4": {"indicators": indicators(176.81, 177.15)},
+                    "D": {"indicators": indicators(177.81, 179.69)}
+                }
+            }}
+        }
+        setups = build_research_setups(summary)
+        self.assertEqual(len(setups), 1)
+        s = setups[0]
+        self.assertEqual(s["direction"], "SHORT")
+        self.assertFalse(s["approved_entry"])
+        self.assertTrue(s["entry_low"] < s["entry_high"] < s["stop"])
+        self.assertTrue(s["tp2"] < s["tp1"] < s["entry_low"])
+        self.assertGreaterEqual(s["net_rr_estimate"], 1.35)
+        summary["pairs"]["EUR_JPY"]["frames"]["H4"]["indicators"]["ema20"] = 180.0
+        self.assertEqual(build_research_setups(summary), [])
+
     def test_refuses_missing_source(self):
         obj = self.sample()
         obj["summary"]["collected_at"] = None
