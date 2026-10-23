@@ -1,18 +1,18 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-23T11:06:21.348Z",
+  "generated_at": "2026-10-23T13:06:00.000Z",
   "signals": [
     {
-      "id": "20261023-1200-GBPJPY-S-B01",
-      "instrument": "GBP_JPY",
+      "id": "20261023-1400-CHFJPY-S-B01",
+      "instrument": "CHF_JPY",
       "direction": "SHORT",
-      "created_at": "2026-10-23T11:06:21.348Z",
+      "created_at": "2026-10-23T13:06:00.000Z",
       "expires_at": "2026-10-23T15:30:00Z",
-      "planned_entry": 209.78,
-      "stop": 210.12,
-      "tp1": 209.2,
-      "tp2": 208.85,
-      "alert_b": 209.82,
+      "planned_entry": 190.38,
+      "stop": 190.7,
+      "tp1": 189.78,
+      "tp2": 189.4,
+      "alert_b": 190.36,
       "max_oanda_spread_pips": 4.5,
       "event_blackouts_utc": [
         {
@@ -22,5 +22,5 @@
       ]
     }
   ],
-  "note": "12:00 UK discretionary research handoff. GBP_JPY SHORT is conditional only: wait for price to trade into the 209.76-209.84 OANDA reference zone and a completed M15 bearish rejection closing at or below 209.78; cancel above 210.12, if spread exceeds 4.5 pips, during the listed blackout, or at expiry. OANDA is not a Pepperstone executable quote. User must verify Pepperstone UK symbol, bid/ask and spread and chooses whether to trade manually. Gross TP1 R:R 1.71; maximum-spread-adjusted TP1 R:R 1.39. No order or fill claimed."
+  "note": "14:00 UK discretionary research handoff. CHF_JPY SHORT is conditional only after the 13:30-14:15 UTC US PMI/UoM blackout: wait for an OANDA-reference pullback into 190.36-190.44 and a completed M15 bearish rejection closing at or below 190.38. Cancel above 190.70, if OANDA spread exceeds 4.5 pips, during the blackout, or at expiry. OANDA is not a Pepperstone executable quote; the user must verify Pepperstone UK symbol, bid/ask, spread and stake and chooses whether to trade manually. Gross TP1 R:R 1.88; maximum-spread-adjusted TP1 R:R 1.52. No order or fill claimed. Prior GBP_JPY 20261023-1200-GBPJPY-S-B01 prospectively completed its rejection trigger at the 11:30 UTC M15 close, but no Pepperstone fill is known; it was removed because the 13:01 UTC quote left inadequate reward for a new entry."
 }
