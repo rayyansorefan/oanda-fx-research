@@ -102,9 +102,9 @@ def validate_approved_plan(signal, pairdata, current):
             if not ((second > first > entry) if signal["direction"] == "LONG"
                     else (second < first < entry)):
                 return "INVALID_TP2_DIRECTION"
-        if signal.get("alert_a") is None and signal.get("alert_b") is None:
+        if all(signal.get(key) is None for key in ("alert_a", "alert_b", "alert_c")):
             return "NO_MONITORABLE_ENTRY_ROUTE"
-        for alert in ("alert_a", "alert_b"):
+        for alert in ("alert_a", "alert_b", "alert_c"):
             if alert in signal and signal[alert] is not None:
                 if float(signal[alert]) <= 0:
                     return "INVALID_ALERT_LEVEL"
@@ -119,6 +119,41 @@ def validate_approved_plan(signal, pairdata, current):
     except (ValueError, KeyError, TypeError, OverflowError, AttributeError):
         return "INVALID_NUMERIC_OR_DATETIME_FIELD"
     return None
+
+
+def momentum_continuation_qualifies(prev, curr, level, long, frames, tolerance):
+    """Conservative completed-bar continuation, not a perfect retest trigger.
+
+    A directional H1+M15 trend and decisive M15 close are required. The
+    current live quote and remaining cost-aware reward are rechecked by
+    signal_match before this may issue a price-only research alert.
+    """
+    try:
+        candle = curr["mid"]
+        lo, hi = float(candle["l"]), float(candle["h"])
+        opening, close = float(candle["o"]), float(candle["c"])
+        prev_close = float(prev["mid"]["c"])
+        span = hi - lo
+        if span <= 0 or abs(close - opening) / span < 0.55:
+            return False
+        pos = (close - lo) / span if long else (hi - close) / span
+        if pos < 0.72:
+            return False
+        crossed = ((prev_close <= level and close > level + tolerance)
+                   if long else (prev_close >= level and close < level - tolerance))
+        if not crossed:
+            return False
+        m15 = frames["M15"]["indicators"]
+        h1 = frames["H1"]["indicators"]
+        if float(m15["adx14"]) < 22 or float(h1["adx14"]) < 20:
+            return False
+        for indicators in (m15, h1):
+            plus, minus = float(indicators["plus_di14"]), float(indicators["minus_di14"])
+            if not (plus > minus if long else minus > plus):
+                return False
+        return True
+    except (KeyError, TypeError, ValueError, ZeroDivisionError):
+        return False
 
 
 def signal_match(signal, pairdata, state_for_signal, current):
@@ -202,6 +237,15 @@ def signal_match(signal, pairdata, state_for_signal, current):
             if rejection:
                 state_for_signal["last_processed_bar_close"] = close_time.isoformat()
                 return "B", curr["time"], "Completed M15 rejection and reclaim"
+        c = signal.get("alert_c")
+        if c is not None and "C" not in state_for_signal.get("notified", []):
+            level = float(c)
+            executable_still_beyond = (
+                current_executable > level if long else current_executable < level)
+            if executable_still_beyond and momentum_continuation_qualifies(
+                    prev, curr, level, long, pairdata["frames"], tolerance):
+                state_for_signal["last_processed_bar_close"] = close_time.isoformat()
+                return "C", curr["time"], "Completed M15 momentum continuation without mandatory retest"
         state_for_signal["last_processed_bar_close"] = close_time.isoformat()
     return None
 
