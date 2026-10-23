@@ -16,6 +16,9 @@ import urllib.request
 DESTINATION = "rayyansorefan/standalone-wallet-paper-agent"
 TARGET = "docs/fx-feed.json"
 STATUS_PATH = Path("data/public_dashboard_status.json")
+# Broker-unavailable instruments must never enter the public research dashboard.
+# Keep them in the internal OANDA research universe; filter at export.
+DASHBOARD_EXCLUDED_INSTRUMENTS = frozenset({"GBP_ZAR"})
 
 def utc_now() -> str:
     return dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
@@ -94,6 +97,8 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
     setups = []
     for candidate in summary.get("ranked_review_candidates") or []:
         key = candidate.get("instrument")
+        if key in DASHBOARD_EXCLUDED_INSTRUMENTS:
+            continue
         direction = candidate.get("potential_direction_not_approved")
         if direction not in ("LONG", "SHORT") or candidate.get("technical_checks_agree", 0) < 4:
             continue
@@ -217,6 +222,8 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
     coverage = summary.get("coverage") or {}
     prices = {}
     for key, source in (summary.get("pairs") or {}).items():
+        if key in DASHBOARD_EXCLUDED_INSTRUMENTS:
+            continue
         if not isinstance(source, dict) or not isinstance(source.get("quote"), dict):
             continue
         if not key.replace("_", "").isalpha() or "_" not in key:
@@ -255,7 +262,8 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         "max_oanda_spread_pips", "event_blackouts_utc",
     )
     clean_signals = [{k: s.get(k) for k in allowed_signal_fields}
-                     for s in raw_signals if isinstance(s, dict)]
+                     for s in raw_signals if isinstance(s, dict)
+                     and s.get("instrument") not in DASHBOARD_EXCLUDED_INSTRUMENTS]
     headlines = [
         {"title": h.get("title"), "source": h.get("source"),
          "url": h.get("url"), "time": h.get("published_at"), "verified": False}
@@ -282,15 +290,17 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         "status": summary.get("status"),
         "news_status": news.get("status"),
         "coverage": {
-            "total": coverage.get("oanda_account_fx_instruments_discovered", 0),
-            "quoted": coverage.get("oanda_pairs_with_usable_live_quotes", 0),
-            "screened": coverage.get("oanda_pairs_with_m15_h1_indicators", 0),
-            "deep": len([x for x in detailed.values() if isinstance(x, dict)]),
+            "total": max(0, (coverage.get("oanda_account_fx_instruments_discovered") or len(prices))
+                         - len(DASHBOARD_EXCLUDED_INSTRUMENTS & set(summary.get("pairs") or {}))),
+            "quoted": len(prices),
+            "screened": sum(bool((p.get("frames") or {}).get("M15") and
+                                  (p.get("frames") or {}).get("H1")) for p in prices.values()),
+            "deep": sum(bool(p.get("deep")) for p in prices.values()),
         },
         "priorities": [
             {"pair": r.get("instrument"), "priority": r.get("research_priority")}
             for r in (summary.get("ranked_review_candidates") or [])
-            if isinstance(r, dict)
+            if isinstance(r, dict) and r.get("instrument") not in DASHBOARD_EXCLUDED_INSTRUMENTS
         ],
         "pairs": prices,
         "signals": clean_signals,
@@ -298,7 +308,9 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         "hourly": {
             "at": watcher.get("collected_at"),
             "counts": watcher.get("counts"),
-            "signals": watcher.get("signals") or [],
+            "signals": [s for s in (watcher.get("signals") or [])
+                        if isinstance(s, dict) and
+                        (s.get("pair") or s.get("instrument")) not in DASHBOARD_EXCLUDED_INSTRUMENTS],
         },
         "sources": source_entries,
         "headlines": headlines,
@@ -312,6 +324,12 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
     if not result["snapshot_at"] or not prices:
         raise ValueError("No valid source quote collection; refusing to publish.")
     fit_public_feed_budget(result)
+    # A future publisher change must not accidentally reintroduce unavailable symbols.
+    for item in result["research_setups"]:
+        if item.get("instrument") in DASHBOARD_EXCLUDED_INSTRUMENTS:
+            raise ValueError("Unavailable broker instrument in public setups")
+    if DASHBOARD_EXCLUDED_INSTRUMENTS & set(result["pairs"]):
+        raise ValueError("Unavailable broker instrument in public pairs")
     text = json.dumps(result, ensure_ascii=True, separators=(",", ":"))
     for term in ("OANDA_API_TOKEN", "OANDA_ACCOUNT_ID", "FX_DASHBOARD_DEPLOY_TOKEN"):
         if term in text:
