@@ -20,6 +20,8 @@ The four main ChatGPT reports should first inspect this inventory and ranked sum
 
 The collector uses OANDA practice REST GET requests to retrieve current account-specific bid/ask quotes, plus 250 OANDA bid/ask/mid candles across every supported OANDA account FX instrument on M15/H1 and additionally on M5/H4/D for shortlisted pairs. It excludes unfinished candles and calculates EMA20/50/200, RSI14, MACD12/26/9, ADX/DMI14, ATR14, Bollinger20/2, Stochastic14/3, confirmed 2/2 swings, market structure, Fibonacci reference levels, RSI divergence candidates, candle anatomy, 20-bar support/resistance and previous-bar pivots from midpoint candles.
 
+For the four highest-ranked major-currency crosses in the deep-analysis selection, the collector also *attempts* **M1, M30, weekly (W), and monthly (M)** context. Long-history frames are optional: missing monthly history or transient API failures are recorded under `coverage.extended_chart_context_gaps`, not silently reported as analysed. This expansion is bounded to preserve hourly reliability and GitHub file-size limits. The other scanned pairs retain the stated M15/H1 or five-frame coverage. No chart level is a guaranteed profitable entry.
+
 Outputs: **data/summary.json** (lightweight technical research brief) and **data/latest.json** (full intraday audit candles, private repository). The working protocol is **docs/RESEARCH_PROTOCOL.md**. Check `status`, `collected_at`, each quote `time`, candle `completed_at` and source labels. Each OANDA candle's `time` is its *opening* timestamp. OANDA quotes are **not Pepperstone executable quotes**.
 
 ## Schedule — hourly only

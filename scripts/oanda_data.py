@@ -6,7 +6,7 @@ import os
 import sys
 import time
 from advanced_technicals import advanced
-from fx_universe import catalog, chunks, is_quote_usable, screen_priority, deep_selection, CORE
+from fx_universe import catalog, chunks, is_quote_usable, screen_priority, deep_selection, CORE, MAJOR
 from datetime import datetime, timezone
 from pathlib import Path
 import shutil
@@ -18,11 +18,27 @@ BASE = "https://api-fxpractice.oanda.com"
 # All OANDA account CURRENCY instruments are discovered dynamically every run.
 # Never hardcode the historical 8-pair test universe as an execution limit.
 FRAMES = ("M5", "M15", "H1", "H4", "D")
+# Extra context for a bounded number of leading liquid major-currency FX pairs.
+# These frames supplement, never replace, the verified five-frame core scan.
+EXTENDED_CHART_FRAMES = ("M1", "M30", "W", "M")
 OUT = Path("data/latest.json")
 CANDLE_CACHE = {}
 # Bounded global retry allowance: transient OANDA gateway failures must not
 # turn a six-minute, research-only hourly job into an unbounded API loop.
 TRANSIENT_RETRIES_LEFT = 8
+
+
+def extended_chart_selection(selection, ranking, maximum=4):
+    """Prioritise major-currency candidate charts; no broker claim.
+
+    The user chooses trades manually at Pepperstone; constituent currencies
+    are a research filter, not an account-specific symbol confirmation.
+    """
+    eligible = (pair for pair in selection
+                if pair in ranking and all(currency in MAJOR for currency in pair.split("_")))
+    return tuple(sorted(eligible,
+                        key=lambda pair: (-ranking[pair]["research_priority"], pair))
+                 [:maximum])
 
 
 def now():
@@ -152,7 +168,7 @@ def describe(candles, frame="M15", deep=True):
     last = rows[-1]
     # Retain enough chronological data for the day's audit without sending
     # unnecessary multi-day history into the user's four ChatGPT reviews.
-    stored_bars = ({"M5": 96, "M15": 96, "H1": 60, "H4": 36, "D": 30}.get(frame, 48)
+    stored_bars = ({"M1": 96, "M5": 96, "M15": 96, "M30": 60, "H1": 60, "H4": 36, "D": 30, "W": 40, "M": 24}.get(frame, 48)
                    if deep else 12)
     return {
         "completed_at": last["time"],
@@ -292,6 +308,8 @@ def collect():
     # an independent M15/H1 indicator screen this same hourly collection.
     monitored = currently_monitored_names()
     selection = deep_selection(ranking, monitored=monitored, max_extra=12)
+    extended_names = set(extended_chart_selection(selection, ranking))
+    extended_gaps = {}
     deep_ok = []
     for pair in selection:
         if pair not in all_data:
@@ -304,6 +322,16 @@ def collect():
             # Full chronology needed by the prospective setup watcher.
             frames["M15"] = describe(CANDLE_CACHE[(pair, "M15")], "M15", deep=True)
             frames["H1"] = describe(CANDLE_CACHE[(pair, "H1")], "H1", deep=True)
+            # M1/M30/W/M give additional entry and long-term regime context.
+            # Monthly data may lack 210 completed bars on newer crosses.
+            # An optional gap must be explicit, not hide the valid core scan.
+            if pair in extended_names:
+                for frame in EXTENDED_CHART_FRAMES:
+                    try:
+                        frames[frame] = fetch_frame(pair, frame, deep=True)
+                    except (RuntimeError, ValueError, KeyError, TypeError) as exc:
+                        extended_gaps.setdefault(pair, {})[frame] = (
+                            type(exc).__name__ + "_" + str(exc)[:55])
             deep_ok.append(pair)
         except (RuntimeError, ValueError, KeyError, TypeError) as exc:
             full_failures[pair] = "DEEP_" + type(exc).__name__ + "_" + str(exc)[:55]
@@ -320,6 +348,12 @@ def collect():
             "oanda_pairs_with_m15_h1_indicators": len(all_data),
             "pairs_deep_d1_h4_h1_m15_m5": len(deep_ok),
             "deep_pairs": deep_ok,
+            "extended_chart_timeframes_requested": list(EXTENDED_CHART_FRAMES),
+            "extended_chart_context_pairs": {
+                pair: [f for f in EXTENDED_CHART_FRAMES
+                       if f in all_data[pair]["frames"]]
+                for pair in sorted(extended_names & set(deep_ok))},
+            "extended_chart_context_gaps": extended_gaps,
             "pairs_missing_or_partial": full_failures,
             "oanda_not_pepperstone": "FX pairs found in this OANDA account do NOT prove availability on a UK Pepperstone spread-betting account.",
             "pepperstone_uk_90plus": "The complete UK Pepperstone spread-bet symbol catalogue has not been authenticated. Do not claim 100% broker coverage.",
@@ -361,7 +395,7 @@ def collect():
     # names. All 65+ remaining pairs retain M15/H1 indicators each cycle.
     audit_names = set(deep_ok) & (
         set(sorted(ranking, key=lambda p: (-ranking[p]["research_priority"], p))[:12])
-        | set(monitored))
+        | set(monitored) | extended_names)
     audit_dir = Path("data/pairs")
     if audit_dir.exists():
         shutil.rmtree(audit_dir)
