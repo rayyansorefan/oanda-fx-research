@@ -120,6 +120,34 @@ class PublicDashboardFeedTests(unittest.TestCase):
         self.assertGreaterEqual(min(len(f["candles"]) for p in payload["pairs"].values()
                                     for f in p["frames"].values()), 6)
 
+    def test_broker_unavailable_gbp_zar_is_absent_from_public_feed(self):
+        obj = self.sample()
+        obj["summary"]["coverage"]["oanda_account_fx_instruments_discovered"] = 2
+        obj["summary"]["coverage"]["oanda_pairs_with_usable_live_quotes"] = 2
+        obj["summary"]["coverage"]["oanda_pairs_with_m15_h1_indicators"] = 2
+        obj["summary"]["pairs"]["GBP_ZAR"] = {
+            "quote": {"time": "2026-10-21T18:59:59Z", "bid": 22.20,
+                      "ask": 22.22, "spread_pips": 200, "pip_size": .0001},
+            "frames": {"M15": {"indicators": {"ema20": 22.2}},
+                       "H1": {"indicators": {"ema20": 22.3}}}
+        }
+        obj["summary"]["ranked_review_candidates"].insert(
+            0, {"instrument": "GBP_ZAR", "research_priority": 99})
+        payload = build_public_feed(
+            obj["summary"], obj["news"],
+            {"signals": [
+                {"instrument": "GBP_ZAR", "direction": "LONG"},
+                {"instrument": "EUR_USD", "direction": "LONG"}]},
+            {"signals": [{"pair": "GBP_ZAR"}, {"pair": "EUR_USD"}]}, {}
+        )
+        self.assertNotIn("GBP_ZAR", payload["pairs"])
+        self.assertTrue(all(p["pair"] != "GBP_ZAR" for p in payload["priorities"]))
+        self.assertTrue(all(p["instrument"] != "GBP_ZAR" for p in payload["signals"]))
+        self.assertTrue(all(s.get("instrument") != "GBP_ZAR" for s in payload["research_setups"]))
+        self.assertTrue(all(s["pair"] != "GBP_ZAR" for s in payload["hourly"]["signals"]))
+        self.assertEqual(payload["coverage"]["quoted"], 1)
+        self.assertEqual(payload["coverage"]["screened"], 1)
+
     def test_refuses_missing_source(self):
         obj = self.sample()
         obj["summary"]["collected_at"] = None
