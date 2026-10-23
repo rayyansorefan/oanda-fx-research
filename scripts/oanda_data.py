@@ -6,7 +6,7 @@ import os
 import sys
 import time
 from advanced_technicals import advanced
-from fx_universe import catalog, chunks, is_quote_usable, screen_priority, deep_selection, CORE, PEPPERSTONE_UK_PUBLIC_EXAMPLES
+from fx_universe import catalog, chunks, is_quote_usable, screen_priority, deep_selection, CORE, MAJOR
 from datetime import datetime, timezone
 from pathlib import Path
 import shutil
@@ -18,7 +18,7 @@ BASE = "https://api-fxpractice.oanda.com"
 # All OANDA account CURRENCY instruments are discovered dynamically every run.
 # Never hardcode the historical 8-pair test universe as an execution limit.
 FRAMES = ("M5", "M15", "H1", "H4", "D")
-# Extra context for a bounded number of leading, publicly broker-referenced FX pairs.
+# Extra context for a bounded number of leading liquid major-currency FX pairs.
 # These frames supplement, never replace, the verified five-frame core scan.
 EXTENDED_CHART_FRAMES = ("M1", "M30", "W", "M")
 OUT = Path("data/latest.json")
@@ -29,13 +29,13 @@ TRANSIENT_RETRIES_LEFT = 8
 
 
 def extended_chart_selection(selection, ranking, maximum=4):
-    """Prioritise liquid/publicly referenced candidate charts; no broker claim.
+    """Prioritise major-currency candidate charts; no broker claim.
 
-    The user chooses trades manually at Pepperstone; public references are
-    merely a bounded research filter, not account-specific availability.
+    The user chooses trades manually at Pepperstone; constituent currencies
+    are a research filter, not an account-specific symbol confirmation.
     """
     eligible = (pair for pair in selection
-                if pair in PEPPERSTONE_UK_PUBLIC_EXAMPLES and pair in ranking)
+                if pair in ranking and all(currency in MAJOR for currency in pair.split("_")))
     return tuple(sorted(eligible,
                         key=lambda pair: (-ranking[pair]["research_priority"], pair))
                  [:maximum])
