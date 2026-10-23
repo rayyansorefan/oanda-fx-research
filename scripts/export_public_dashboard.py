@@ -293,8 +293,10 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
             "total": max(0, (coverage.get("oanda_account_fx_instruments_discovered") or len(prices))
                          - len(DASHBOARD_EXCLUDED_INSTRUMENTS & set(summary.get("pairs") or {}))),
             "quoted": len(prices),
-            "screened": sum(bool((p.get("frames") or {}).get("M15") and
-                                  (p.get("frames") or {}).get("H1")) for p in prices.values()),
+            "screened": max(0, (coverage.get("oanda_pairs_with_m15_h1_indicators") or 0)
+                            - sum(bool(((summary.get("pairs") or {}).get(k) or {}).get("frames", {}).get("M15")
+                                       and ((summary.get("pairs") or {}).get(k) or {}).get("frames", {}).get("H1"))
+                                  for k in DASHBOARD_EXCLUDED_INSTRUMENTS)),
             "deep": sum(bool(p.get("deep")) for p in prices.values()),
         },
         "priorities": [
