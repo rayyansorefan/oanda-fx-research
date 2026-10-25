@@ -1,14 +1,14 @@
 {
-  "collected_at": "2026-10-25T21:14:36.916433+00:00",
+  "collected_at": "2026-10-25T22:18:39.135574+00:00",
   "counts": {
     "need_news_review": 0,
     "price_alerts": 0,
     "watchlist": 1
   },
   "data_policy": "Research-only, no orders. Hourly OANDA quote not Pepperstone executable quote.",
-  "news_collected_at": "2026-10-25T21:14:31Z",
+  "news_collected_at": "2026-10-25T22:18:34Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-10-25T21:14:31Z",
+  "oanda_collected_at": "2026-10-25T22:18:34Z",
   "signals": [
     {
       "created_at": "2026-10-23T15:35:00Z",
@@ -16,10 +16,30 @@
       "expires_at": "2026-10-23T17:30:00Z",
       "id": "20261023-1630-CADCHF-L-B01",
       "pair": "CAD_CHF",
-      "reason": "TP1_RR_BELOW_MINIMUM_AFTER_COSTS",
-      "status": "INVALID_SETUP",
+      "status": "EXPIRED_OR_FUTURE",
       "technical_checkpoint": {
-        "status": "WITHHELD_UNQUALIFIED_PLAN"
+        "h1_adx14": 30.81257280227329,
+        "h1_rsi14": 47.9287249594932,
+        "indicative_distance_to_stop_pips": -0.1,
+        "indicative_distance_to_target_pips": 18.6,
+        "indicative_remaining_rr_before_new_spread_adjustment": null,
+        "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
+        "latest_completed_m15_bar_start": "2026-10-25T22:00:00.000000000Z",
+        "m15_adx14": 30.69268331222267,
+        "m15_atr14": 0.000521497475864001,
+        "m15_macd_histogram": -0.0001423269443107766,
+        "m15_rsi14": 51.1312070742875,
+        "oanda_quote": {
+          "ask": 0.58889,
+          "bid": 0.58867,
+          "pip_size": 0.0001,
+          "spread_pips": 2.1999999999999797,
+          "time": "2026-10-25T22:16:34.841217616Z",
+          "tradeable": true
+        },
+        "price_reference": 0.58889,
+        "quote_is_tradeable": true,
+        "vs_m15_ema20": "ABOVE"
       }
     }
   ],
