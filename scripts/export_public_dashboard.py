@@ -13,6 +13,7 @@ from pathlib import Path
 import urllib.error
 import urllib.request
 from paper_trade_audit import public_view
+from adaptive_research import afternoon_audit
 
 DESTINATION = "rayyansorefan/standalone-wallet-paper-agent"
 TARGET = "docs/fx-feed.json"
@@ -103,6 +104,8 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
         direction = candidate.get("potential_direction_not_approved")
         if direction not in ("LONG", "SHORT") or candidate.get("technical_checks_agree", 0) < 4:
             continue
+        if (candidate.get("adaptive_context") or {}).get("block_new_alert") is True:
+            continue  # Reversal/extension warning: no new prospective entry zones.
         source = pairs.get(key) or {}
         quote, frames = source.get("quote") or {}, source.get("frames") or {}
         if quote.get("tradeable") is not True:
@@ -261,7 +264,7 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
     allowed_signal_fields = (
         "id", "instrument", "direction", "created_at", "expires_at",
         "planned_entry", "stop", "tp1", "tp2", "alert_a", "alert_b",
-        "max_oanda_spread_pips", "event_blackouts_utc",
+        "max_oanda_spread_pips", "event_blackouts_utc", "alert_c",
     )
     clean_signals = [{k: s.get(k) for k in allowed_signal_fields}
                      for s in raw_signals if isinstance(s, dict)
@@ -302,7 +305,8 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
             "deep": sum(bool(p.get("deep")) for p in prices.values()),
         },
         "priorities": [
-            {"pair": r.get("instrument"), "priority": r.get("research_priority")}
+            {"pair": r.get("instrument"), "priority": r.get("research_priority"),
+             "adaptive_status": (r.get("adaptive_context") or {}).get("status") if r.get("adaptive_context") else None}
             for r in (summary.get("ranked_review_candidates") or [])
             if isinstance(r, dict) and r.get("instrument") not in DASHBOARD_EXCLUDED_INSTRUMENTS
         ],
@@ -312,6 +316,7 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         "hourly": {
             "at": watcher.get("collected_at"),
             "counts": watcher.get("counts"),
+            "afternoon_audit": watcher.get("afternoon_audit"),
             "signals": [s for s in (watcher.get("signals") or [])
                         if isinstance(s, dict) and
                         (s.get("pair") or s.get("instrument")) not in DASHBOARD_EXCLUDED_INSTRUMENTS],
@@ -321,6 +326,8 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         "calendar": calendar,
         "learning": {
             "paper_audit": public_view(paper_ledger or {"candidates": {}}),
+            "afternoon_challenger": watcher.get("afternoon_audit") or afternoon_audit(
+                paper_ledger or {"candidates": {}}, summary["collected_at"]),
             "verified_broker_trades": 0,
             "verified_wins": 0,
             "verified_losses": 0,
