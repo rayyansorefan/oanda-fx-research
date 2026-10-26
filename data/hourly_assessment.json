@@ -1,17 +1,16 @@
 {
-  "collected_at": "2026-10-26T07:40:03.750649+00:00",
+  "collected_at": "2026-10-26T09:17:48.244644+00:00",
   "counts": {
-    "need_news_review": 0,
+    "need_news_review": 1,
     "price_alerts": 0,
     "watchlist": 1
   },
   "data_policy": "Research-only, no orders. Hourly OANDA quote not Pepperstone executable quote.",
-  "news_collected_at": "2026-10-26T07:39:59Z",
+  "news_collected_at": "2026-10-26T09:17:43Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-10-26T07:39:59Z",
+  "oanda_collected_at": "2026-10-26T09:17:43Z",
   "signals": [
     {
-      "caution": "Some optional news feeds unavailable; calendar and required headline feeds checked. This is NOT an all-clear.",
       "created_at": "2026-10-26T07:34:21.669Z",
       "direction": "SHORT",
       "expires_at": "2026-10-26T11:30:00Z",
@@ -31,35 +30,80 @@
         ],
         "status": "LIMITED"
       },
-      "news_status": "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS",
-      "observed_price_reactions": [],
+      "news_status": "NEW_MATERIAL_HEADLINE_REVIEW",
+      "observed_price_reactions": [
+        {
+          "headline": "U.S. Treasury yields inch lower as investors look ahead to the Fed's rate decision - CNBC",
+          "observation": {
+            "change_pips": 8.3,
+            "from_bar_time": "2026-10-26T07:30:00.000000000Z",
+            "status": "OBSERVED_PRICE_MOVEMENT_NOT_CAUSAL",
+            "to_bar_time": "2026-10-26T09:00:00.000000000Z",
+            "vs_planned_direction": "OPPOSES"
+          }
+        }
+      ],
       "pair": "EUR_USD",
       "release_blackouts": [],
-      "relevant_headlines": [],
-      "status": "NO_QUALIFIED_PRICE_PATTERN",
+      "relevant_headlines": [
+        {
+          "currencies": [
+            "AUD",
+            "CAD",
+            "CHF",
+            "CNH",
+            "CZK",
+            "DKK",
+            "EUR",
+            "GBP",
+            "HKD",
+            "HUF",
+            "JPY",
+            "MXN",
+            "NOK",
+            "NZD",
+            "PLN",
+            "SEK",
+            "SGD",
+            "THB",
+            "TRY",
+            "USD",
+            "ZAR"
+          ],
+          "currency_source": "GLOBAL",
+          "global_risk": true,
+          "id": "db4b9446470803010a",
+          "published_at": "2026-10-26T07:49:09Z",
+          "severity": "HIGH",
+          "source": "Global markets aggregation",
+          "title": "U.S. Treasury yields inch lower as investors look ahead to the Fed's rate decision - CNBC",
+          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPdnVMeHR0cjdhVXpVQk9hZWdUUkVoMjAwX3g5OG5iWWprMW5XeEJoaC1CaTlDUVZSZ1ZjZnE4SFpsLWlCMXFXWE1lNnRoNzBKU1NqM2J1QmNUSVNhRzB4MUJxdXpMR0dQRUpNeGFOdDJ6Z25fcjA2QmVvczUxQko5RHc0d0tycDdIZGxIaGlqM3Z3OWhKeEhGMUxB0gGfAUFVX3lxTFA4SUxwS3ZmSEZwWmtRM0VkOUtZQUlSN0djS0JYRkxhMnF1VFhpVzdRWU91b1BoTjBhUm5HVkt4OHhMNElOR0JHYXpGTm5Md0NRa0lmTC1MRzNmWlAwb1lzX2hYbWgzSExzS0pZRXNfd01LNktjbVZBYTJwa2t2d0M5NUxqd2ZMVXJIam9lRHJrN09hcmlyVEpUYVptZzM0VQ?oc=5"
+        }
+      ],
+      "status": "REASSESS_NEWS_FIRST",
       "technical_checkpoint": {
-        "h1_adx14": 14.386169241377683,
-        "h1_rsi14": 54.01801040546369,
-        "indicative_distance_to_stop_pips": 15.8,
-        "indicative_distance_to_target_pips": 15.2,
-        "indicative_remaining_rr_before_new_spread_adjustment": 0.96,
+        "h1_adx14": 14.086395348285212,
+        "h1_rsi14": 45.887010699858465,
+        "indicative_distance_to_stop_pips": 10.3,
+        "indicative_distance_to_target_pips": 20.7,
+        "indicative_remaining_rr_before_new_spread_adjustment": 2.01,
         "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
-        "latest_completed_m15_bar_start": "2026-10-26T07:15:00.000000000Z",
-        "m15_adx14": 19.95266542889095,
-        "m15_atr14": 0.0004111804262490683,
-        "m15_macd_histogram": -0.00016437815644669546,
-        "m15_rsi14": 34.80378508242141,
+        "latest_completed_m15_bar_start": "2026-10-26T09:00:00.000000000Z",
+        "m15_adx14": 18.79270377625333,
+        "m15_atr14": 0.00046360096272860294,
+        "m15_macd_histogram": -6.331503279912549e-05,
+        "m15_rsi14": 50.13062706414766,
         "oanda_quote": {
-          "ask": 1.12085,
-          "bid": 1.12077,
+          "ask": 1.1214,
+          "bid": 1.12132,
           "pip_size": 0.0001,
           "spread_pips": 0.7999999999985796,
-          "time": "2026-10-26T07:39:31.189226226Z",
+          "time": "2026-10-26T09:17:15.805934910Z",
           "tradeable": true
         },
-        "price_reference": 1.12077,
+        "price_reference": 1.12132,
         "quote_is_tradeable": true,
-        "vs_m15_ema20": "BELOW"
+        "vs_m15_ema20": "ABOVE"
       }
     }
   ],
