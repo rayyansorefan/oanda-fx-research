@@ -6,6 +6,7 @@ import re
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from strategy_feedback import build_feedback, signal_policy
 from urllib.request import Request, urlopen
 
 SNAPSHOT = Path("data/latest.json")
@@ -13,6 +14,8 @@ SIGNALS = Path("signals.json")
 STATE = Path("data/watch_state.json")
 NEWS = Path("data/news_latest.json")
 ASSESSMENT = Path("data/hourly_assessment.json")
+PAPER_LEDGER = Path("data/paper_trade_ledger.json")
+BROKER_OUTCOMES = Path("data/verified_broker_outcomes.json")
 
 
 def parse_time(value):
@@ -440,6 +443,8 @@ def watch():
     snapshot = load(SNAPSHOT, {})
     current = utc_now()
     news = load(NEWS, {})
+    feedback = build_feedback(load(PAPER_LEDGER, {"candidates": {}}),
+                              load(BROKER_OUTCOMES, {"trades": []}))
     signals = load(SIGNALS, {"signals": []}).get("signals", [])
     if len(signals) > 3:
         raise ValueError("Maximum three approved FX research ideas")
@@ -449,6 +454,9 @@ def watch():
               "news_collected_at": news.get("collected_at"),
               "news_coverage": news.get("status", "UNAVAILABLE"),
               "data_policy": "Research-only, no orders. Hourly OANDA quote not Pepperstone executable quote.",
+              "feedback_summary": {"broker": feedback["broker"],
+                                   "paper_totals": feedback["paper_totals"],
+                                   "threshold": feedback["threshold"]},
               "signals": []}
     if snapshot.get("status") not in ("OK", "PARTIAL"):
         report["status"] = "OANDA_DATA_UNAVAILABLE"
@@ -470,6 +478,7 @@ def watch():
             report["signals"].append(row)
             continue
         row["technical_checkpoint"] = basic_technical_status(pairdata, signal)
+        row["strategy_feedback"] = signal_policy(signal, feedback)
         # Broader discovery may have only M15/H1, not all required frames.
         # A pair with quoted prices but absent completed M15 data is never a signal.
         if not pairdata.get("frames", {}).get("M15", {}).get("recent_completed_candles"):
@@ -525,6 +534,13 @@ def watch():
             continue
         if status == "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS":
             row["caution"] = "Some optional news feeds unavailable; calendar and required headline feeds checked. This is NOT an all-clear."
+        if row["strategy_feedback"]["priority_bias"] < 0:
+            # Suppress new research alerts only after ample pre-registered
+            # negative paper evidence. No observed broker demo win can waive
+            # the stop/spread/news checks or change this risk decision.
+            row["status"] = "SUPPRESSED_BY_ROBUST_NEGATIVE_PAPER_HISTORY"
+            report["signals"].append(row)
+            continue
         found = signal_match(signal, pairdata, tracked, current)
         if found:
             route, bar_time, reason = found
