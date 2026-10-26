@@ -35,6 +35,25 @@ class HourlyCohortTests(unittest.TestCase):
         self.assertTrue(all(not x["result"].get("scored") for x in book["candidates"].values()))
         self.assertEqual(public_view(book)["totals"]["wins"], 0)
 
+    def test_top_three_retained_and_lower_ranked_novelty_prioritised(self):
+        at = "2026-10-26T19:32:00Z"
+        now = dt.datetime.fromisoformat(at.replace("Z", "+00:00"))
+        ranked = [{"instrument": f"EUR_{c}", "potential_direction_not_approved": "SHORT",
+                   "research_priority": 80-i} for i,c in enumerate(
+                       ["USD","GBP","JPY","CAD","CHF","AUD","NZD","SEK"])]
+        quotes = {r["instrument"]:{"quote":{"time":at,"bid":1.1,"ask":1.1001,
+                  "tradeable":True}} for r in ranked}
+        book={"candidates":{}}
+        for r in ranked[3:6]:
+            k="PRIORITY-20261026T183200Z-"+r["instrument"]+"-SHORT"
+            book["candidates"][k]={"plan":{"id":k,"instrument":r["instrument"],
+              "direction":"SHORT","created_at":"2026-10-26T18:32:00Z"}}
+        found=ranked_priority_watches({"collected_at":at,
+          "ranked_review_candidates":ranked},{"collected_at":at,"pairs":quotes},book,now,limit=6)
+        self.assertEqual([x["instrument"] for x in found],
+                         ["EUR_USD","EUR_GBP","EUR_JPY","EUR_NZD","EUR_SEK","EUR_CAD"])
+        self.assertEqual(len(found),6)
+
     def test_same_hour_distinct_main_and_hourly_snapshots_retained(self):
         book = {"candidates": {}}
         ids = []

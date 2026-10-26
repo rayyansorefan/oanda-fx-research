@@ -581,7 +581,22 @@ def ranked_priority_watches(summary, market, book, now, limit=4):
                        "HOURLY_RESEARCH")
     watched = []
     already = (book or {}).get("candidates") or {}
-    for item in (summary.get("ranked_review_candidates") or [])[:limit]:
+    # Preserve the strongest three every pass, then favour newly observed
+    # pair/direction hypotheses from the top twelve. This is diversity in
+    # PAPER research coverage, never a relaxation of live entry quality gates.
+    ranked = (summary.get("ranked_review_candidates") or [])[:12]
+    seen_today = {(row.get("plan") or {}).get("instrument", "") + ":" +
+                  (row.get("plan") or {}).get("direction", "")
+                  for row in already.values()
+                  if str((row.get("plan") or {}).get("created_at", ""))[:10] ==
+                     at.strftime("%Y-%m-%d")}
+    top = ranked[:min(3, limit)]
+    remaining = ranked[len(top):]
+    remaining = sorted(remaining, key=lambda item:
+        (str(item.get("instrument", "")) + ":" +
+         str(item.get("potential_direction_not_approved", ""))) in seen_today)
+    selected = top + remaining[:max(0, limit-len(top))]
+    for item in selected:
         if not isinstance(item, dict):
             continue
         instrument = item.get("instrument")

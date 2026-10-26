@@ -68,16 +68,34 @@ def safe_quote(q: dict) -> dict:
 
 # The hourly ChatGPT health check has a 950 KB JSON ceiling. Keep a
 # deliberate margin for growth in indicator metadata and new chart frames.
-PUBLIC_MAX_BYTES = 930_000
+PUBLIC_MAX_BYTES = 850_000
+PUBLIC_HARD_MAX_BYTES = 930_000
 
 def serialized_size(payload: dict) -> int:
     return len((json.dumps(payload, ensure_ascii=True, separators=(",", ":")) + "\n").encode("utf-8"))
 
 def fit_public_feed_budget(payload: dict) -> None:
-    """Trim only historical OHLC density, never current quotes or research setups."""
+    """Keep current quotes and all published research economics immutable.
+
+    Prefer reducing optional historical candle density before touching paper
+    audit histories. Full observations and histories remain in the private ledger.
+    If the public rolling window must be bounded, disclose exact coverage.
+    """
+    audit = ((payload.get("learning") or {}).get("paper_audit") or {})
+    candidates = audit.get("candidates") or []
+    if not isinstance(candidates, list):
+        raise ValueError("Invalid public paper audit candidates")
+    audit["public_window"] = {
+        "published_candidates": len(candidates),
+        "private_total_candidates": int((audit.get("totals") or {}).get("candidates", len(candidates))),
+        "truncated": int((audit.get("totals") or {}).get("candidates", len(candidates))) > len(candidates),
+        "policy": "Public rolling window may omit older candidates; full history remains private."
+    }
     if serialized_size(payload) <= PUBLIC_MAX_BYTES:
         return
-    for cap in (32, 24, 16, 12, 8, 6):
+    # Preserve at least 24 recent completed candles per deep frame where
+    # possible, and preserve all latest indicator values and quote timestamps.
+    for cap in (48, 40, 32, 24, 16, 12, 8, 6):
         for pair in payload.get("pairs", {}).values():
             if not pair.get("deep"):
                 continue
@@ -87,23 +105,28 @@ def fit_public_feed_budget(payload: dict) -> None:
                     frame["candles"] = candles[-cap:]
         if serialized_size(payload) <= PUBLIC_MAX_BYTES:
             return
-    # New hourly cohorts are stored in full in the PRIVATE append-only ledger.
-    # The public feed is a rolling window; first compact their quote timeline
-    # rather than silently failing publication as the candidate count grows.
-    audit = ((payload.get("learning") or {}).get("paper_audit") or {})
-    for row in audit.get("candidates") or []:
-        tracking = row.get("tracking") or {}
-        if isinstance(tracking.get("history"), list):
-            tracking["history"] = tracking["history"][-3:]
-    if serialized_size(payload) <= PUBLIC_MAX_BYTES:
-        return
-    candidates = audit.get("candidates") or []
-    for cap in (80, 60, 40):
-        if len(candidates) > cap:
-            audit["candidates"] = candidates[-cap:]
+    # Only historical tracking timeline is compacted; never remove candidate
+    # IDs or overwrite original entry/stop/target/created_at fields.
+    for history_cap in (6, 3, 1, 0):
+        for row in candidates:
+            tracking = row.get("tracking") or {}
+            history = tracking.get("history")
+            if isinstance(history, list) and len(history) > history_cap:
+                tracking["history"] = history[-history_cap:] if history_cap else []
         if serialized_size(payload) <= PUBLIC_MAX_BYTES:
             return
-    raise ValueError("Public FX payload remains over 930000 bytes after bounded rolling-window compaction")
+    # Bounded public window must be explicit, never silently claim complete
+    # coverage. Keep latest rows; full historical ledger stays private.
+    for cap in (90, 75, 60, 45, 30):
+        if len(candidates) > cap:
+            audit["candidates"] = candidates[-cap:]
+            audit["public_window"]["truncated"] = True
+            audit["public_window"]["published_candidates"] = len(audit["candidates"])
+        if serialized_size(payload) <= PUBLIC_MAX_BYTES:
+            return
+    if serialized_size(payload) <= PUBLIC_HARD_MAX_BYTES:
+        return
+    raise ValueError("Public FX payload exceeds hard limit after safe compaction; publication refused")
 
 def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
     """Prospective technical planning levels, never approved entry alerts.
