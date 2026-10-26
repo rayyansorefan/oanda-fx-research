@@ -1,7 +1,7 @@
 import datetime as dt
 import unittest
 
-from scripts.paper_trade_audit import replay, update_book, public_view, stamp, directional_pct
+from paper_trade_audit import replay, update_book, public_view, stamp, directional_pct
 
 
 def bar(time, op, high, low, close, spread=.0002):
@@ -68,6 +68,84 @@ class PaperAuditTests(unittest.TestCase):
                     lambda *_:first_two()[:1],market=market)
         self.assertEqual(book["candidates"]["T001"]["tracking"]["state"],"QUOTE_STALE")
         self.assertIsNone(public_view(book)["candidates"][0]["move_pct"])
+
+    def test_expired_and_untriggered_candidate_still_gets_hourly_percentage(self):
+        p = plan()
+        book = {"candidates": {"T001": {
+            "plan": p, "result": {"status": "UNTRIGGERED", "scored": False},
+            "events": []}}, "warnings": []}
+        now = stamp("2026-10-26T10:30:00Z")
+        market = {"pairs": {"EUR_USD": {"quote": {
+            "time": "2026-10-26T10:29:00Z", "bid": 1.0958,
+            "ask": 1.096, "tradeable": True}}}}
+        update_book(book, {"candidates":[]}, {"signals":[]}, now, market=market)
+        public = public_view(book)["candidates"][0]
+        self.assertEqual(public["status"], "UNTRIGGERED")
+        self.assertEqual(public["tracking"]["state"], "HISTORICAL_NO_VERIFIED_ENTRY")
+        self.assertEqual(public["tracking"]["reference_kind"], "ORIGINAL_PLANNED_ENTRY")
+        self.assertEqual(public["move_pct"], 0.36364)
+        self.assertEqual(len(public["tracking"]["history"]), 1)
+        self.assertFalse(public["scored"])
+
+    def test_incomplete_shortlist_with_zone_is_monitored_without_fake_trade(self):
+        p = dict(plan(), id="ZONE", entry_low=1.100, entry_high=1.102)
+        del p["planned_entry"]
+        del p["expires_at"]
+        book = {"candidates": {}}
+        now = stamp("2026-10-26T10:30:00Z")
+        market = {"pairs": {"EUR_USD": {"quote": {
+            "time": "2026-10-26T10:29:00Z", "bid": 1.098,
+            "ask": 1.0982, "tradeable": True}}}}
+        update_book(book, {"candidates": [p]}, {"signals":[]}, now, market=market)
+        row = public_view(book)["candidates"][0]
+        self.assertEqual(row["status"], "UNTESTABLE")
+        self.assertEqual(row["tracking"]["reference_kind"], "ORIGINAL_ZONE_MIDPOINT")
+        self.assertEqual(row["tracking"]["reference_price"], 1.101)
+        self.assertEqual(row["move_pct"], 0.25431)
+        self.assertFalse(row["scored"])
+        self.assertEqual(len(row["tracking"]["history"]), 1)
+
+    def test_shortlist_without_any_original_price_starts_forward_only_baseline(self):
+        p = dict(plan(), id="UNPRICED")
+        for key in ("planned_entry", "stop", "tp1", "expires_at"):
+            del p[key]
+        book = {"candidates": {}}
+        first = {"pairs": {"EUR_USD": {"quote": {
+            "time": "2026-10-26T09:59:00Z", "bid": 1.098,
+            "ask": 1.0982, "tradeable": True}}}}
+        update_book(book, {"candidates": [p]}, {"signals":[]},
+                    stamp("2026-10-26T10:00:00Z"), market=first)
+        row = public_view(book)["candidates"][0]
+        self.assertEqual(row["tracking"]["reference_kind"], "FIRST_OBSERVED_QUOTE")
+        self.assertEqual(row["tracking"]["reference_at"], "2026-10-26T09:59:00Z")
+        self.assertEqual(row["move_pct"], 0)
+        second = {"pairs": {"EUR_USD": {"quote": {
+            "time": "2026-10-26T10:59:00Z", "bid": 1.095,
+            "ask": 1.0952, "tradeable": True}}}}
+        update_book(book, {"candidates":[p]}, {"signals":[]},
+                    stamp("2026-10-26T11:00:00Z"), market=second)
+        row = public_view(book)["candidates"][0]
+        self.assertEqual(row["move_pct"], 0.27317)
+        self.assertEqual(row["tracking"]["reference_price"], 1.0982)
+        self.assertEqual(len(row["tracking"]["history"]), 2)
+        self.assertEqual(row["status"], "UNTESTABLE")
+
+    def test_completed_trade_keeps_frozen_exit_even_as_watch_price_moves(self):
+        p = plan()
+        book = {"candidates": {"T001": {
+            "plan": p, "result": {"status": "WIN_TP1", "scored": True,
+                                  "net_r": 2.0, "exit": 1.09},
+            "events": []}}}
+        market = {"pairs": {"EUR_USD": {"quote": {
+            "time": "2026-10-26T10:29:00Z", "bid": 1.085,
+            "ask": 1.086, "tradeable": True}}}}
+        update_book(book, {"candidates":[]}, {"signals":[]},
+                    stamp("2026-10-26T10:30:00Z"), market=market)
+        row = public_view(book)["candidates"][0]
+        self.assertEqual(row["move_pct"], 0.90909)
+        self.assertEqual(row["tracking"]["move_pct"], 1.27273)
+        self.assertEqual(row["tracking"]["state"], "PAPER_CLOSED")
+        self.assertEqual(len(row["tracking"]["history"]), 1)
 
     def test_win_and_loss_are_prospective(self):
         wins = first_two() + [bar("2026-10-23T10:30:00Z", 1.098,
