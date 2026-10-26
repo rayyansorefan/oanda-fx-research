@@ -463,16 +463,19 @@ def public_view(book):
             "OANDA M15 bid/ask candle PAPER replay; not Pepperstone fills",
             "cost_policy": "OANDA bid/ask spread is reflected; Pepperstone slippage, "
                            "overnight financing, commission and taxes are not verified "
-                           "or deducted. R is a model outcome, not actual net P&L.",
+                           "or deducted. Percentage is currency price movement, not account return.",
             "method": "Confirm M15 rejection or breakout+retest, require later planned-price limit touch; "
                       "first TP1/stop or 96 M15 trading-bar time exit; ambiguous bars not scored.",
             "totals": {"candidates": len(candidates), "scored": len(qualified),
-                       "wins": wins, "losses": losses,
-                       "net_r": round(sum(c["result"]["net_r"] for c in qualified), 3)},
-            "strategy": learned,
+                       "wins": wins, "losses": losses},
+            "strategy": {name: {key: value for key, value in row.items()
+                                if key in ("count", "wins", "distinct_days",
+                                           "distinct_pairs", "paper_priority_bias",
+                                           "eligible_for_reinforcement")}
+                         for name, row in learned.items()},
             "learning_policy": "Advisory paper research bias remains neutral until at "
                                "least 30 distinct scored signals across 10 days/3 pairs "
-                               "and approximate 99% mean-R interval excludes zero. "
+                               "and a conservative outcome confidence check is satisfied. "
                                "Never changes live entry risk gates or guarantees profit.",
             "candidates": [
                 {"id": p["id"], "instrument": p["instrument"], "direction": p["direction"],
@@ -490,14 +493,15 @@ def public_view(book):
                                            ("OPEN", "PENDING_TRIGGER", "TRIGGERED_UNFILLED",
                                             "DATA_GAP", "DATA_UNAVAILABLE") else [])}
                               if c.get("tracking") else None),
-                 "move_pct": (c.get("result", {}).get("exit_move_pct")
+                 "move_pct": (directional_pct(p, c["result"]["exit"])
                               if c.get("result", {}).get("scored") is True
+                              and c.get("result", {}).get("exit") is not None
                               else ((c.get("tracking") or {}).get("move_pct")
                                     if (c.get("tracking") or {}).get("state") in
                                        ("PAPER_OPEN", "NO_VERIFIED_ENTRY") else None)),
                  **{k: v for k, v in c.get("result", {}).items()
                     if k in ("status", "reason", "scored", "route", "triggered_at", "entry_at",
-                             "at", "entry", "exit", "net_r", "mfe_r", "mae_r")}}
+                             "at", "entry", "exit")}}
                 for c in candidates[-90:] for p in [c["plan"]]]}
 
 
