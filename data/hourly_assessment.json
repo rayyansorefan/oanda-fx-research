@@ -1,34 +1,83 @@
 {
-  "collected_at": "2026-10-26T15:33:43.385798+00:00",
+  "collected_at": "2026-10-26T17:08:25.843393+00:00",
   "counts": {
-    "need_news_review": 0,
+    "need_news_review": 1,
     "price_alerts": 0,
     "watchlist": 1
   },
   "data_policy": "Research-only, no orders. Hourly OANDA quote not Pepperstone executable quote.",
   "feedback_summary": {
     "broker": {
-      "closed_count": 5,
+      "closed_count": 6,
+      "execution_lessons": [
+        {
+          "action": "Treat watch-only candidates as NOT APPROVED; require a fresh independently confirmed entry.",
+          "classification": "UNAPPROVED_RESEARCH_WATCH_EXECUTED",
+          "closed_at": "2026-10-26T16:22:59Z",
+          "instrument": "AUD_NZD",
+          "planned_entry_deviation_pips": 4,
+          "research_gate": "FAILED_SPREAD_ADJUSTED_TP1_RR"
+        }
+      ],
       "included_in_strategy_weighting": 0,
-      "net_profit_gbp": 134.19,
+      "loss_count": 1,
+      "net_profit_gbp": 127.19,
+      "pair_observations": {
+        "AUD_NZD": {
+          "closed": 1,
+          "losses": 1,
+          "net_pnl_gbp": -7.0,
+          "unapproved_watch_losses": 1,
+          "wins": 0
+        },
+        "EUR_USD": {
+          "closed": 1,
+          "losses": 0,
+          "net_pnl_gbp": 8.0,
+          "unapproved_watch_losses": 0,
+          "wins": 1
+        },
+        "GBP_JPY": {
+          "closed": 1,
+          "losses": 0,
+          "net_pnl_gbp": 34.16,
+          "unapproved_watch_losses": 0,
+          "wins": 1
+        },
+        "GBP_USD": {
+          "closed": 1,
+          "losses": 0,
+          "net_pnl_gbp": 8.95,
+          "unapproved_watch_losses": 0,
+          "wins": 1
+        },
+        "USD_JPY": {
+          "closed": 2,
+          "losses": 0,
+          "net_pnl_gbp": 83.08,
+          "unapproved_watch_losses": 0,
+          "wins": 2
+        }
+      },
       "policy": "No broker screenshots train strategy weights until independently linked to original immutable signal, trigger, fill and exit.",
       "profitable_count": 5,
-      "unlinked_count": 5
+      "unapproved_watch_stopouts": 1,
+      "unlinked_count": 6,
+      "win_rate_pct": 83.3
     },
     "paper_totals": {
-      "candidates": 26,
+      "candidates": 28,
       "losses": 0,
       "scored": 1,
       "wins": 1
     },
     "threshold": "Paper bias neutral until >=30 scored samples, >=10 days, >=3 pairs and conservative 99% mean-R bound excludes zero. Never relax execution, spread or news gates."
   },
-  "news_collected_at": "2026-10-26T15:33:38Z",
+  "news_collected_at": "2026-10-26T17:08:21Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-10-26T15:33:37Z",
+  "oanda_collected_at": "2026-10-26T17:08:20Z",
   "signals": [
     {
-      "caution": "Some optional news feeds unavailable; calendar and required headline feeds checked. This is NOT an all-clear.",
       "created_at": "2026-10-26T15:31:21.354Z",
       "direction": "SHORT",
       "expires_at": "2026-10-26T19:00:00Z",
@@ -48,14 +97,84 @@
         ],
         "status": "LIMITED"
       },
-      "news_status": "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS",
-      "observed_price_reactions": [],
+      "news_status": "NEW_MATERIAL_HEADLINE_REVIEW",
+      "observed_price_reactions": [
+        {
+          "headline": "Plunging Shilling Forces Uganda to Tap Meager Reserves War Chest - Bloomberg.com",
+          "observation": {
+            "change_pips": 4.7,
+            "from_bar_time": "2026-10-26T15:45:00.000000000Z",
+            "status": "OBSERVED_PRICE_MOVEMENT_NOT_CAUSAL",
+            "to_bar_time": "2026-10-26T16:45:00.000000000Z",
+            "vs_planned_direction": "OPPOSES"
+          }
+        },
+        {
+          "headline": "EUR/USD Update: Euro Weakness Returns Ahead of Central Bank Decisions - FOREX.com",
+          "observation": {
+            "change_pips": 5.5,
+            "from_bar_time": "2026-10-26T15:15:00.000000000Z",
+            "status": "OBSERVED_PRICE_MOVEMENT_NOT_CAUSAL",
+            "to_bar_time": "2026-10-26T16:45:00.000000000Z",
+            "vs_planned_direction": "OPPOSES"
+          }
+        }
+      ],
       "pair": "EUR_USD",
       "release_blackouts": [],
-      "relevant_headlines": [],
-      "status": "NO_QUALIFIED_PRICE_PATTERN",
+      "relevant_headlines": [
+        {
+          "currencies": [
+            "AUD",
+            "CAD",
+            "CHF",
+            "CNH",
+            "CZK",
+            "DKK",
+            "EUR",
+            "GBP",
+            "HKD",
+            "HUF",
+            "JPY",
+            "MXN",
+            "NOK",
+            "NZD",
+            "PLN",
+            "SEK",
+            "SGD",
+            "THB",
+            "TRY",
+            "USD",
+            "ZAR"
+          ],
+          "currency_source": "GLOBAL",
+          "global_risk": true,
+          "id": "77893874a5e409b450",
+          "published_at": "2026-10-26T16:05:50Z",
+          "severity": "HIGH",
+          "source": "Global markets aggregation",
+          "title": "Plunging Shilling Forces Uganda to Tap Meager Reserves War Chest - Bloomberg.com",
+          "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQTXpqbTVHTWZYWnNNQ3BUM0g5MUdWS2hIcldpOHE1eWVFa2dtNFVyTko0cUc4d2ExZkw5b3dHcm1HOVJHUjAtcW52Sy1PX19jQUg5VzJKSmItcGZ5VzRxTEFsQnJIOUpiamxrRXZULURNV18zbHJYb1IyM1BjOE44b2d0ZkZxYXQwSk90d3hma1I3R2NON1oyNVd1UU9KdlpldXoyM1h1UjBTN0wwUkxURWFWR29PczV3WXBuLXVB?oc=5"
+        },
+        {
+          "currencies": [
+            "EUR"
+          ],
+          "currency_source": "GLOBAL",
+          "global_risk": false,
+          "id": "16391d9f1966880366",
+          "published_at": "2026-10-26T15:36:54Z",
+          "severity": "REVIEW",
+          "source": "Global markets aggregation",
+          "title": "EUR/USD Update: Euro Weakness Returns Ahead of Central Bank Decisions - FOREX.com",
+          "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPaEZQVk1rWXVyYmMwWm1PZG9qTzNIcTU5aWVnM29ZUFctVFdjYUlVb2dzZG5pbWp6U3I4X2FvWi1hYjhQSGJ3WS1jbGVVcjAzVnJBRHNCUERfUTNfbXNWcF9YenQ1SXZLWUo5V1VWUXBEN1hkNTB3V3liaFRqNVZRcmxyUGlFcllMVXBocHRTdEp6U0dhSHc1bzJiRURaZERaU3dtS3U3eEo0dzVsSDRVcnFBWXlIUdIBwgFBVV95cUxQdUd3U0tnZWRRdVVBNnU3SDdwMklveDl1NDFpR1UwaHpxc3A4Zm1zSjVteTRiekZmSUQtcFVDejFGODZJYkxDS2JDZ0YzQjdUZE5BVlRVdTU4QmI0amVqODZTUzVJb0NjV1h0Tk03ckRhU0N0cWs1MWhoNVhXbHJwN052eHVJSHJ1V21QWEZ3Njc4MmlURVlHY1FtTFp4Q29xVGFWUHVEMTQxd19KWFREcTl2S0s4dldTRXVTRkhPY3l1UQ?oc=5"
+        }
+      ],
+      "status": "REASSESS_NEWS_FIRST",
       "strategy_feedback": {
-        "broker_observations_not_weighted": 5,
+        "broker_observations_not_weighted": 6,
+        "execution_review": null,
+        "manual_execution_review_required": false,
         "priority_bias": 0,
         "routes": [
           "B"
@@ -67,26 +186,26 @@
         "strategy": "M15_REJECTION"
       },
       "technical_checkpoint": {
-        "h1_adx14": 18.876420937326774,
-        "h1_rsi14": 36.20729166788499,
-        "indicative_distance_to_stop_pips": 24.3,
-        "indicative_distance_to_target_pips": 8.7,
-        "indicative_remaining_rr_before_new_spread_adjustment": 0.36,
+        "h1_adx14": 22.07644844648209,
+        "h1_rsi14": 37.580528106919104,
+        "indicative_distance_to_stop_pips": 18.6,
+        "indicative_distance_to_target_pips": 14.4,
+        "indicative_remaining_rr_before_new_spread_adjustment": 0.77,
         "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
-        "latest_completed_m15_bar_start": "2026-10-26T15:15:00.000000000Z",
-        "m15_adx14": 39.175202162424156,
-        "m15_atr14": 0.0005935478627893841,
-        "m15_macd_histogram": -7.668861858662408e-06,
-        "m15_rsi14": 31.716883168767495,
+        "latest_completed_m15_bar_start": "2026-10-26T16:45:00.000000000Z",
+        "m15_adx14": 38.031200929662134,
+        "m15_atr14": 0.0005313752097303728,
+        "m15_macd_histogram": 0.0001019227286639811,
+        "m15_rsi14": 42.17483265162752,
         "oanda_quote": {
-          "ask": 1.1178,
-          "bid": 1.11772,
+          "ask": 1.11836,
+          "bid": 1.11829,
           "pip_size": 0.0001,
-          "spread_pips": 0.7999999999985796,
-          "time": "2026-10-26T15:32:59.618335269Z",
+          "spread_pips": 0.700000000000145,
+          "time": "2026-10-26T17:07:45.207366986Z",
           "tradeable": true
         },
-        "price_reference": 1.11772,
+        "price_reference": 1.11829,
         "quote_is_tradeable": true,
         "vs_m15_ema20": "BELOW"
       }
