@@ -151,6 +151,34 @@ class PaperAuditTests(unittest.TestCase):
         self.assertNotIn("evidence",exported["candidates"][0])
         self.assertEqual(exported["totals"]["wins"],1)
 
+    def test_same_economic_terms_from_shortlist_and_signal_do_not_conflict(self):
+        p = plan()
+        with_notes = dict(p, source="SCHEDULED_MAIN_ASSESSMENT",
+                          technical_context={"m15_adx":24.5})
+        book = {"candidates": {}, "warnings":[]}
+        update_book(book, {"candidates":[with_notes]},
+                    {"signals":[p]}, stamp("2026-10-23T10:15:00Z"),
+                    lambda *_: first_two()[:1])
+        self.assertNotIn("IMMUTABLE_PLAN_CONFLICT:T001",book["warnings"])
+        self.assertEqual(book["candidates"]["T001"]["plan"]["source"],
+                         "SCHEDULED_MAIN_ASSESSMENT")
+
+    def test_breakout_then_later_retest_route_a(self):
+        p = plan()
+        del p["alert_b"]
+        p["alert_a"] = 1.1
+        p["strategy"] = "M15_BREAKOUT_RETEST"
+        candles = [
+            bar("2026-10-23T10:00:00Z",1.1009,1.1016,1.1002,1.1008),
+            bar("2026-10-23T10:15:00Z",1.1007,1.1008,1.0992,1.0995),
+            bar("2026-10-23T10:30:00Z",1.0996,1.1002,1.0989,1.0994),
+            bar("2026-10-23T10:45:00Z",1.0995,1.1005,1.0990,1.1001),
+            bar("2026-10-23T11:00:00Z",1.0988,1.1000,1.0880,1.0900),
+        ]
+        r=replay(p,candles,stamp("2026-10-23T11:15:00Z"))
+        self.assertEqual(r["status"],"WIN_TP1")
+        self.assertEqual(r["route"],"A")
+
 
 if __name__ == "__main__":
     unittest.main()
