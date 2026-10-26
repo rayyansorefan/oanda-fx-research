@@ -200,6 +200,91 @@ def _r(plan, price):
     return round(sign * (price - entry) / abs(entry - stop), 4)
 
 
+def directional_pct(plan, exit_side_price):
+    """Underlying directional price move %, NOT percent of margin or account equity."""
+    entry = numeric(plan["planned_entry"])
+    sign = 1 if plan["direction"] == "LONG" else -1
+    return round(sign * (numeric(exit_side_price) - entry) / entry * 100, 5)
+
+
+def update_price_tracking(book, market, now, candle_samples=None):
+    """Hourly price progress independent of whether a simulated entry has filled.
+
+    Pending entries show a hypothetical move FROM the original proposed level,
+    never a profit or a position. All quotes are indicative OANDA bid/ask.
+    """
+    candle_samples = candle_samples or {}
+    pairs = (market or {}).get("pairs") or {}
+    for rec in book.get("candidates", {}).values():
+        plan, result = rec["plan"], rec.get("result") or {}
+        if plan.get("planned_entry") is None or validate(plan):
+            continue
+        if result.get("scored") is True and result.get("exit") is not None:
+            result["exit_move_pct"] = directional_pct(plan, result["exit"])
+        stage = result.get("status")
+        if stage in ("WIN_TP1", "LOSS_STOP", "TIME_EXIT", "UNTRIGGERED",
+                     "INVALIDATED_PRE_ENTRY", "AMBIGUOUS_ENTRY_BAR",
+                     "AMBIGUOUS_EXIT_BAR", "UNTESTABLE"):
+            continue
+        history = list(rec.get("tracking", {}).get("history") or [])
+        try:
+            expires = stamp(plan["expires_at"])
+            created = stamp(plan["created_at"])
+            if now > expires and stage != "OPEN":
+                rec["tracking"] = {**rec.get("tracking", {}),
+                                   "state": "EXPIRED_NO_PAPER_ENTRY"}
+                continue
+            close_side = "bid" if plan["direction"] == "LONG" else "ask"
+            for b in candle_samples.get(plan["id"], []):
+                closes = b["t"] + dt.timedelta(minutes=15)
+                if closes.minute != 0 or not created < closes <= now:
+                    continue
+                if closes > expires and stage != "OPEN":
+                    continue
+                history.append({"at": iso(closes),
+                                "price": b[close_side]["c"],
+                                "move_pct": directional_pct(plan, b[close_side]["c"]),
+                                "source": "COMPLETED_M15_CLOSE"})
+            row = pairs.get(plan["instrument"]) or {}
+            quote = row.get("quote") or {}
+            quote_at = stamp(quote["time"])
+            bid, ask = numeric(quote["bid"]), numeric(quote["ask"])
+            if not (0 < bid <= ask and quote.get("tradeable") is True):
+                raise ValueError("Unusable quote")
+            if quote_at > now + dt.timedelta(minutes=5):
+                raise ValueError("Future quote")
+            age = now - quote_at
+            if age > dt.timedelta(minutes=20):
+                unique = {(m["source"], m["at"]): m for m in history}
+                history = sorted(unique.values(), key=lambda m: (m["at"], m["source"]))[-48:]
+                rec["tracking"] = {**rec.get("tracking", {}),
+                                   "state": "QUOTE_STALE", "quote_at": iso(quote_at),
+                                   "history": history}
+                continue
+            price = bid if plan["direction"] == "LONG" else ask
+            mark = {"at": iso(quote_at), "price": price,
+                    "move_pct": directional_pct(plan, price),
+                    "source": "OANDA_LIVE_QUOTE"}
+            history.append(mark)
+            unique = {(m["source"], m["at"]): m for m in history}
+            history = sorted(unique.values(), key=lambda m: (m["at"], m["source"]))[-48:]
+            rec["tracking"] = {
+                "state": "PAPER_OPEN" if stage == "OPEN" else "NO_VERIFIED_ENTRY",
+                "quote_at": iso(quote_at),
+                "bid": bid, "ask": ask, "price": price,
+                "move_pct": mark["move_pct"],
+                "tp1_move_pct": directional_pct(plan, plan["tp1"]),
+                "stop_move_pct": directional_pct(plan, plan["stop"]),
+                "history": history,
+                "source": "OANDA_RESEARCH_QUOTE_NOT_PEPPERSTONE",
+            }
+        except (KeyError, TypeError, ValueError, OverflowError):
+            unique = {(m["source"], m["at"]): m for m in history}
+            history = sorted(unique.values(), key=lambda m: (m["at"], m["source"]))[-48:]
+            rec["tracking"] = {**rec.get("tracking", {}),
+                               "state": "QUOTE_UNAVAILABLE", "history": history}
+
+
 def _mark(plan, bar):
     """Intrabar adverse/favourable excursions on executable exit side."""
     entry, stop = numeric(plan["planned_entry"]), numeric(plan["stop"])
@@ -398,6 +483,18 @@ def public_view(book):
                  "strategy": strategy_name(p),
                  "rationale": str(p.get("original_note", ""))[:170],
                  "technical_context": p.get("technical_context"),
+                 "tracking": ({**{k: v for k, v in (c.get("tracking") or {}).items()
+                                 if k != "history"},
+                               "history": ((c.get("tracking") or {}).get("history", [])[-8:]
+                                           if c.get("result", {}).get("status") in
+                                           ("OPEN", "PENDING_TRIGGER", "TRIGGERED_UNFILLED",
+                                            "DATA_GAP", "DATA_UNAVAILABLE") else [])}
+                              if c.get("tracking") else None),
+                 "move_pct": (c.get("result", {}).get("exit_move_pct")
+                              if c.get("result", {}).get("scored") is True
+                              else ((c.get("tracking") or {}).get("move_pct")
+                                    if (c.get("tracking") or {}).get("state") in
+                                       ("PAPER_OPEN", "NO_VERIFIED_ENTRY") else None)),
                  **{k: v for k, v in c.get("result", {}).items()
                     if k in ("status", "reason", "scored", "route", "triggered_at", "entry_at",
                              "at", "entry", "exit", "net_r", "mfe_r", "mae_r")}}
@@ -412,7 +509,7 @@ def strategy_name(plan):
     return "M15_REJECTION"
 
 
-def update_book(book, seeds, latest, now, fetch=None):
+def update_book(book, seeds, latest, now, fetch=None, market=None):
     rows = book.setdefault("candidates", {})
     messages = book.setdefault("warnings", [])
     for raw in (seeds.get("candidates") or []) + (latest.get("signals") or []):
@@ -452,6 +549,7 @@ def update_book(book, seeds, latest, now, fetch=None):
                             "events": []}
     due = sorted(rows.values(), key=lambda c: c["plan"].get("created_at", ""))
     used = 0
+    candle_samples = {}
     for rec in due:
         plan = rec["plan"]
         issue = validate(plan)
@@ -476,7 +574,9 @@ def update_book(book, seeds, latest, now, fetch=None):
         else:
             used += 1
             try:
-                result = replay(plan, source_bars(plan, now, fetch), now)
+                bars = source_bars(plan, now, fetch)
+                candle_samples[plan["id"]] = bars
+                result = replay(plan, bars, now)
             except (OSError, RuntimeError, ValueError, TimeoutError, KeyError, TypeError) as exc:
                 result = {"status": "DATA_UNAVAILABLE", "reason": type(exc).__name__,
                           "scored": False}
@@ -496,6 +596,8 @@ def update_book(book, seeds, latest, now, fetch=None):
                                   "to": result["status"]})
         rec["result"] = result
         rec["last_checked_at"] = iso(now)
+    if market is not None:
+        update_price_tracking(book, market, now, candle_samples)
     book["schema"] = 1
     book["updated_at"] = iso(now)
     book["simulator_version"] = "paper-m15-a-b-limit-v3"
@@ -506,7 +608,8 @@ def main():
     now = utc_now()
     book = load(OUT, {"candidates": {}, "warnings": []})
     update_book(book, load(PLANS, {"candidates": []}),
-                load(LIVE, {"signals": []}), now)
+                load(LIVE, {"signals": []}), now,
+                market=load(Path("data/latest.json"), {"pairs": {}}))
     save(OUT, book)
     view = public_view(book)
     print("FX PAPER AUDIT", view["totals"], "warnings", book.get("warnings", []))
