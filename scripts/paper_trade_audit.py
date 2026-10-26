@@ -20,7 +20,7 @@ LIVE = Path("signals.json")
 OUT = Path("data/paper_trade_ledger.json")
 API = "https://api-fxpractice.oanda.com"
 MAX_CANDIDATES = 200
-MAX_HISTORY_HOURS = 24
+MAX_HOLD_BARS = 96  # 24 trading hours; pauses through weekend market closure.
 MAX_REMOTE_CALLS = 25
 UTC = dt.timezone.utc
 
@@ -128,7 +128,8 @@ def parse_bars(payload):
 def source_bars(plan, when, fetch=None):
     created = stamp(plan["created_at"])
     expiry = stamp(plan["expires_at"])
-    through = min(when, expiry + dt.timedelta(hours=MAX_HISTORY_HOURS, minutes=30))
+    # A Friday position can legitimately reach its 96th M15 bar on Monday/Tuesday.
+    through = min(when, expiry + dt.timedelta(days=5))
     start = created - dt.timedelta(minutes=30)
     if through <= start:
         return []
@@ -194,13 +195,18 @@ def _mark(plan, bar):
     return (entry - q["l"]) / den, (entry - q["h"]) / den
 
 
+def evidence(bar):
+    """Reproducible private bid/ask bars; omitted from public dashboard exports."""
+    return {"open_at": iso(bar["t"]), "bid": dict(bar["bid"]),
+            "ask": dict(bar["ask"])}
+
+
 def replay(plan, bars, now):
     """Deterministic from first complete M15 bar; no look-ahead or invented fills."""
     err = validate(plan)
     if err:
         return {"status": "UNTESTABLE", "reason": err, "scored": False}
     created, expiry = stamp(plan["created_at"]), stamp(plan["expires_at"])
-    end = min(now, expiry + dt.timedelta(hours=MAX_HISTORY_HOURS))
     valid = [b for b in bars if b["t"] >= created
              and b["t"] + dt.timedelta(minutes=15) <= now]
     # We cannot call an idea untriggered if we have lost the first eligible bars.
@@ -211,13 +217,16 @@ def replay(plan, bars, now):
     entered = None
     mfe = 0.0
     mae = 0.0
+    holding_bars = 0
     previous = None
     for bar in valid:
         close_at = bar["t"] + dt.timedelta(minutes=15)
         if previous and bar["t"] - previous > dt.timedelta(minutes=30):
-            # A market-closed interval is permissible; weekday hour gaps are not.
-            weekday_window = previous.weekday() < 4 and bar["t"].weekday() < 5
-            if weekday_window:
+            # Only long weekend closure is expected; shorter missing live-session
+            # intervals must not quietly turn into "untriggered" or a winner.
+            weekend_closure = (bar["t"]-previous >= dt.timedelta(hours=24)
+                               and previous.weekday() in (4, 5, 6))
+            if not weekend_closure:
                 return {"status": "DATA_GAP", "reason": "Missing live-session M15 history",
                         "scored": False}
         previous = bar["t"]
@@ -233,7 +242,7 @@ def replay(plan, bars, now):
                 triggered = close_at
                 stage = "WAIT_LIMIT"
                 result = {"status": "TRIGGERED_UNFILLED", "triggered_at": iso(triggered),
-                          "scored": False}
+                          "scored": False, "evidence": {"confirmation": evidence(bar)}}
             continue
         if stage == "WAIT_LIMIT":
             if close_at > expiry:
@@ -253,27 +262,33 @@ def replay(plan, bars, now):
             if _tp_hit(plan, bar):
                 return {**result, "status": "AMBIGUOUS_ENTRY_BAR", "entry_at": iso(entered),
                         "reason": "Entry and target inside the same OHLC bar",
+                        "evidence": {**result.get("evidence", {}), "entry": evidence(bar)},
                         "scored": False}
             stage = "OPEN"
             result = {"status": "OPEN", "triggered_at": iso(triggered), "entry_at": iso(entered),
-                      "entry": numeric(plan["planned_entry"]), "scored": False}
+                      "entry": numeric(plan["planned_entry"]), "scored": False,
+                      "evidence": {**result.get("evidence", {}), "entry": evidence(bar)}}
             continue
         if stage == "OPEN":
+            holding_bars += 1
             fav, adverse = _mark(plan, bar)
             mfe, mae = max(mfe, fav), min(mae, adverse)
             stop_hit, tp_hit = _stop_hit(plan, bar), _tp_hit(plan, bar)
             if stop_hit and tp_hit:
                 return {**result, "status": "AMBIGUOUS_EXIT_BAR", "at": iso(close_at),
                         "mfe_r": round(mfe, 3), "mae_r": round(mae, 3),
+                        "evidence": {**result.get("evidence", {}), "exit": evidence(bar)},
                         "reason": "Stop and target both touched one M15 bar", "scored": False}
             if stop_hit or tp_hit:
                 return {**result, "status": "LOSS_STOP" if stop_hit else "WIN_TP1",
                         "at": iso(close_at), "exit": numeric(plan["stop" if stop_hit else "tp1"]),
                         "net_r": -1.0 if stop_hit else _r(plan, numeric(plan["tp1"])),
+                        "evidence": {**result.get("evidence", {}), "exit": evidence(bar)},
                         "mfe_r": round(mfe, 3), "mae_r": round(mae, 3), "scored": True}
-            if close_at >= entered + dt.timedelta(hours=MAX_HISTORY_HOURS):
+            if holding_bars >= MAX_HOLD_BARS:
                 q = bar["bid"] if plan["direction"] == "LONG" else bar["ask"]
                 return {**result, "status": "TIME_EXIT", "at": iso(close_at), "exit": q["c"],
+                        "evidence": {**result.get("evidence", {}), "exit": evidence(bar)},
                         "net_r": _r(plan, q["c"]), "mfe_r": round(mfe, 3),
                         "mae_r": round(mae, 3), "scored": True}
     if stage == "OPEN":
@@ -299,7 +314,7 @@ def public_view(book):
     return {"schema": 1, "updated_at": book.get("updated_at"), "data_basis":
             "OANDA M15 bid/ask candle PAPER replay; not Pepperstone fills",
             "method": "Confirm M15 rejection, require later planned-price limit touch; "
-                      "first TP1/stop or 24h time exit; ambiguous bars not scored.",
+                      "first TP1/stop or 96 M15 trading-bar time exit; ambiguous bars not scored.",
             "totals": {"candidates": len(candidates), "scored": len(qualified),
                        "wins": wins, "losses": losses,
                        "net_r": round(sum(c["result"]["net_r"] for c in qualified), 3)},
@@ -314,7 +329,9 @@ def public_view(book):
                  "strategy": p.get("strategy", "M15_REJECTION"),
                  "rationale": str(p.get("original_note", ""))[:170],
                  "technical_context": p.get("technical_context"),
-                 **c.get("result", {})}
+                 **{k: v for k, v in c.get("result", {}).items()
+                    if k in ("status", "reason", "scored", "triggered_at", "entry_at",
+                             "at", "entry", "exit", "net_r", "mfe_r", "mae_r")}}
                 for c in candidates[-90:] for p in [c["plan"]]]}
 
 
@@ -344,12 +361,15 @@ def update_book(book, seeds, latest, now, fetch=None):
     for rec in due:
         plan = rec["plan"]
         issue = validate(plan)
+        old = rec.get("result", {})
+        terminal = ("LOSS_STOP", "WIN_TP1", "TIME_EXIT", "AMBIGUOUS_EXIT_BAR",
+                    "AMBIGUOUS_ENTRY_BAR", "INVALIDATED_PRE_ENTRY", "UNTRIGGERED")
         if issue:
             result = {"status": "UNTESTABLE", "reason": issue, "scored": False}
-        elif rec["result"]["status"] in ("LOSS_STOP", "WIN_TP1", "TIME_EXIT",
-                                         "AMBIGUOUS_EXIT_BAR", "AMBIGUOUS_ENTRY_BAR",
-                                         "INVALIDATED_PRE_ENTRY", "UNTRIGGERED"):
+        elif old.get("status") in terminal and old.get("evidence"):
             # Terminal records are immutable: market history cannot rewrite them.
+            continue
+        elif old.get("status") in ("UNTRIGGERED", "INVALIDATED_PRE_ENTRY"):
             continue
         elif used >= MAX_REMOTE_CALLS:
             continue
@@ -360,7 +380,17 @@ def update_book(book, seeds, latest, now, fetch=None):
             except (OSError, RuntimeError, ValueError, TimeoutError, KeyError, TypeError) as exc:
                 result = {"status": "DATA_UNAVAILABLE", "reason": type(exc).__name__,
                           "scored": False}
-        old = rec.get("result", {})
+        if old.get("status") in terminal:
+            if (result.get("status") == old.get("status") and
+                    result.get("net_r") == old.get("net_r")):
+                if result.get("evidence"):
+                    old["evidence"] = result["evidence"]
+                    rec["events"].append({"at": iso(now), "to": "EVIDENCE_BACKFILLED"})
+            elif result.get("status") not in ("DATA_UNAVAILABLE", "DATA_GAP"):
+                msg = "TERMINAL_REPLAY_MISMATCH:" + plan["id"]
+                if msg not in messages:
+                    messages.append(msg)
+            continue
         if old.get("status") != result["status"]:
             rec["events"].append({"at": iso(now), "from": old.get("status"),
                                   "to": result["status"]})
@@ -368,7 +398,7 @@ def update_book(book, seeds, latest, now, fetch=None):
         rec["last_checked_at"] = iso(now)
     book["schema"] = 1
     book["updated_at"] = iso(now)
-    book["simulator_version"] = "paper-rejection-limit-v1"
+    book["simulator_version"] = "paper-rejection-limit-v2"
     return book
 
 
