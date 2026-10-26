@@ -1,7 +1,7 @@
 import datetime as dt
 import unittest
 
-from scripts.paper_trade_audit import replay, update_book, public_view, stamp
+from scripts.paper_trade_audit import replay, update_book, public_view, stamp, directional_pct
 
 
 def bar(time, op, high, low, close, spread=.0002):
@@ -26,6 +26,38 @@ def first_two():
 
 
 class PaperAuditTests(unittest.TestCase):
+    def test_percent_is_underlying_price_movement_not_account_return(self):
+        p = {"instrument":"GBP_JPY","direction":"SHORT","planned_entry":209.78}
+        self.assertEqual(directional_pct(p,209.20),0.27648)
+        self.assertEqual(directional_pct(p,210.12),-0.16207)
+
+    def test_hourly_tracking_without_verified_entry_shows_hypothetical_move(self):
+        p=plan()
+        time=stamp("2026-10-23T10:30:00Z")
+        book={"candidates":{},"warnings":[]}
+        market={"pairs":{"EUR_USD":{"quote":{
+            "time":"2026-10-23T10:29:00Z","bid":1.0988,"ask":1.099,
+            "tradeable":True}}}}
+        update_book(book,{"candidates":[p]},{"signals":[]},time,
+                    lambda *_:first_two()[:1],market=market)
+        rec=book["candidates"]["T001"]
+        self.assertEqual(rec["result"]["status"],"TRIGGERED_UNFILLED")
+        self.assertEqual(rec["tracking"]["state"],"NO_VERIFIED_ENTRY")
+        self.assertEqual(rec["tracking"]["move_pct"],0.09091)
+        self.assertEqual(len(public_view(book)["candidates"][0]["tracking"]["history"]),1)
+
+    def test_stale_quote_never_claimed_current(self):
+        p=plan()
+        time=stamp("2026-10-23T10:30:00Z")
+        book={"candidates":{}}
+        market={"pairs":{"EUR_USD":{"quote":{
+            "time":"2026-10-23T09:30:00Z","bid":1.0988,"ask":1.099,
+            "tradeable":True}}}}
+        update_book(book,{"candidates":[p]},{"signals":[]},time,
+                    lambda *_:first_two()[:1],market=market)
+        self.assertEqual(book["candidates"]["T001"]["tracking"]["state"],"QUOTE_STALE")
+        self.assertIsNone(public_view(book)["candidates"][0]["move_pct"])
+
     def test_win_and_loss_are_prospective(self):
         wins = first_two() + [bar("2026-10-23T10:30:00Z", 1.098,
                                    1.101, 1.088, 1.09)]
