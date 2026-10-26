@@ -1,0 +1,264 @@
+{
+  "candidates": {
+    "20261023-1200-GBPJPY-S-B01": {
+      "events": [
+        {
+          "at": "2026-10-26T09:33:47Z",
+          "from": "NOT_EVALUATED",
+          "to": "WIN_TP1"
+        }
+      ],
+      "first_recorded_at": "2026-10-26T09:33:47Z",
+      "last_checked_at": "2026-10-26T09:33:47Z",
+      "plan": {
+        "alert_b": 209.82,
+        "created_at": "2026-10-23T11:06:21.348Z",
+        "direction": "SHORT",
+        "event_blackouts_utc": [
+          {
+            "end": "2026-10-23T14:15:00Z",
+            "start": "2026-10-23T13:30:00Z"
+          }
+        ],
+        "expires_at": "2026-10-23T15:30:00Z",
+        "id": "20261023-1200-GBPJPY-S-B01",
+        "instrument": "GBP_JPY",
+        "max_oanda_spread_pips": 4.5,
+        "original_note": "Original 23 Oct 12:00 UK assessment; completed bearish rejection required.",
+        "planned_entry": 209.78,
+        "source": "GITHUB_FORMAL_SIGNAL",
+        "source_ref": "d98692a78c",
+        "stop": 210.12,
+        "strategy": "M15_REJECTION",
+        "tp1": 209.2,
+        "tp2": 208.85
+      },
+      "result": {
+        "at": "2026-10-23T13:30:00Z",
+        "entry": 209.78,
+        "entry_at": "2026-10-23T11:45:00Z",
+        "exit": 209.2,
+        "mae_r": 0.0,
+        "mfe_r": 1.85,
+        "net_r": 1.7059,
+        "scored": true,
+        "status": "WIN_TP1",
+        "triggered_at": "2026-10-23T11:45:00Z"
+      }
+    },
+    "20261023-1400-CHFJPY-S-B01": {
+      "events": [
+        {
+          "at": "2026-10-26T09:33:47Z",
+          "from": "NOT_EVALUATED",
+          "to": "UNTRIGGERED"
+        }
+      ],
+      "first_recorded_at": "2026-10-26T09:33:47Z",
+      "last_checked_at": "2026-10-26T09:33:47Z",
+      "plan": {
+        "alert_b": 190.36,
+        "created_at": "2026-10-23T13:06:00Z",
+        "direction": "SHORT",
+        "event_blackouts_utc": [
+          {
+            "end": "2026-10-23T14:15:00Z",
+            "start": "2026-10-23T13:30:00Z"
+          }
+        ],
+        "expires_at": "2026-10-23T15:30:00Z",
+        "id": "20261023-1400-CHFJPY-S-B01",
+        "instrument": "CHF_JPY",
+        "max_oanda_spread_pips": 4.5,
+        "original_note": "Original 23 Oct 14:00 UK assessment; after blackout, pullback and M15 bearish rejection required.",
+        "planned_entry": 190.38,
+        "source": "GITHUB_FORMAL_SIGNAL",
+        "source_ref": "634162aea1",
+        "stop": 190.7,
+        "strategy": "M15_REJECTION",
+        "tp1": 189.78,
+        "tp2": 189.4
+      },
+      "result": {
+        "reason": "Expiry without verified entry",
+        "scored": false,
+        "status": "UNTRIGGERED"
+      }
+    },
+    "20261023-1630-CADCHF-L-B01": {
+      "events": [
+        {
+          "at": "2026-10-26T09:33:47Z",
+          "from": "NOT_EVALUATED",
+          "to": "UNTRIGGERED"
+        }
+      ],
+      "first_recorded_at": "2026-10-26T09:33:47Z",
+      "last_checked_at": "2026-10-26T09:33:47Z",
+      "plan": {
+        "alert_b": 0.58945,
+        "created_at": "2026-10-23T15:35:00Z",
+        "direction": "LONG",
+        "event_blackouts_utc": [],
+        "expires_at": "2026-10-23T17:30:00Z",
+        "id": "20261023-1630-CADCHF-L-B01",
+        "instrument": "CAD_CHF",
+        "max_oanda_spread_pips": 1.5,
+        "original_note": "Original 23 Oct 16:30 UK assessment; completed M15 bullish rejection required.",
+        "planned_entry": 0.58945,
+        "source": "GITHUB_FORMAL_SIGNAL",
+        "source_ref": "b9c83f2183",
+        "stop": 0.5889,
+        "strategy": "M15_REJECTION",
+        "tp1": 0.59075,
+        "tp2": 0.5913
+      },
+      "result": {
+        "reason": "Expiry without verified entry",
+        "scored": false,
+        "status": "UNTRIGGERED"
+      }
+    },
+    "20261023-EURAUD-EVENING-RESEARCH": {
+      "events": [
+        {
+          "at": "2026-10-26T09:33:47Z",
+          "from": "NOT_EVALUATED",
+          "to": "UNTESTABLE"
+        }
+      ],
+      "first_recorded_at": "2026-10-26T09:33:47Z",
+      "last_checked_at": "2026-10-26T09:33:47Z",
+      "plan": {
+        "created_at": "2026-10-23T21:22:55Z",
+        "direction": "SHORT",
+        "id": "20261023-EURAUD-EVENING-RESEARCH",
+        "instrument": "EUR_AUD",
+        "original_note": "Directional watch from 23 Oct discussion. No original exact entry trigger or expiry preserved; cannot infer a filled trade.",
+        "source": "FRIDAY_CONVERSATION_SHORTLIST",
+        "stop": 1.59523,
+        "strategy": "UNSPECIFIED_FRIDAY_WATCH",
+        "tp1": 1.58877,
+        "tp2": 1.58763
+      },
+      "result": {
+        "reason": "ORIGINAL_LEVELS_OR_TRIGGER_MISSING",
+        "scored": false,
+        "status": "UNTESTABLE"
+      }
+    },
+    "20261023-EURCAD-EVENING-RESEARCH": {
+      "events": [
+        {
+          "at": "2026-10-26T09:33:47Z",
+          "from": "NOT_EVALUATED",
+          "to": "UNTESTABLE"
+        }
+      ],
+      "first_recorded_at": "2026-10-26T09:33:47Z",
+      "last_checked_at": "2026-10-26T09:33:47Z",
+      "plan": {
+        "created_at": "2026-10-23T21:22:55Z",
+        "direction": "SHORT",
+        "id": "20261023-EURCAD-EVENING-RESEARCH",
+        "instrument": "EUR_CAD",
+        "original_note": "Friday shortlist; reliable original stop, target and expiry not recovered. Explicitly unscored.",
+        "source": "FRIDAY_CONVERSATION_SHORTLIST",
+        "strategy": "UNSPECIFIED_FRIDAY_WATCH"
+      },
+      "result": {
+        "reason": "ORIGINAL_LEVELS_OR_TRIGGER_MISSING",
+        "scored": false,
+        "status": "UNTESTABLE"
+      }
+    },
+    "20261023-EURJPY-MORNING-RESEARCH": {
+      "events": [
+        {
+          "at": "2026-10-26T09:33:47Z",
+          "from": "NOT_EVALUATED",
+          "to": "UNTESTABLE"
+        }
+      ],
+      "first_recorded_at": "2026-10-26T09:33:47Z",
+      "last_checked_at": "2026-10-26T09:33:47Z",
+      "plan": {
+        "created_at": "2026-10-23T09:10:02Z",
+        "direction": "SHORT",
+        "id": "20261023-EURJPY-MORNING-RESEARCH",
+        "instrument": "EUR_JPY",
+        "original_note": "Friday morning watch, original complete executable plan unavailable.",
+        "source": "FRIDAY_CONVERSATION_SHORTLIST",
+        "strategy": "UNSPECIFIED_FRIDAY_WATCH"
+      },
+      "result": {
+        "reason": "ORIGINAL_LEVELS_OR_TRIGGER_MISSING",
+        "scored": false,
+        "status": "UNTESTABLE"
+      }
+    },
+    "20261023-SGDJPY-MORNING-RESEARCH": {
+      "events": [
+        {
+          "at": "2026-10-26T09:33:47Z",
+          "from": "NOT_EVALUATED",
+          "to": "UNTESTABLE"
+        }
+      ],
+      "first_recorded_at": "2026-10-26T09:33:47Z",
+      "last_checked_at": "2026-10-26T09:33:47Z",
+      "plan": {
+        "created_at": "2026-10-23T09:10:02Z",
+        "direction": "SHORT",
+        "id": "20261023-SGDJPY-MORNING-RESEARCH",
+        "instrument": "SGD_JPY",
+        "original_note": "Friday morning watch, original full plan unavailable. Do not treat later decline as a verified entry.",
+        "source": "FRIDAY_CONVERSATION_SHORTLIST",
+        "strategy": "UNSPECIFIED_FRIDAY_WATCH"
+      },
+      "result": {
+        "reason": "ORIGINAL_LEVELS_OR_TRIGGER_MISSING",
+        "scored": false,
+        "status": "UNTESTABLE"
+      }
+    },
+    "20261026-0730-EURUSD-S-B01": {
+      "events": [
+        {
+          "at": "2026-10-26T09:33:47Z",
+          "from": "NOT_EVALUATED",
+          "to": "PENDING_TRIGGER"
+        }
+      ],
+      "first_recorded_at": "2026-10-26T09:33:47Z",
+      "last_checked_at": "2026-10-26T09:33:47Z",
+      "plan": {
+        "alert_b": 1.12135,
+        "created_at": "2026-10-26T07:34:21.669Z",
+        "direction": "SHORT",
+        "event_blackouts_utc": [
+          {
+            "end": "2026-10-26T09:15:00Z",
+            "start": "2026-10-26T08:45:00Z"
+          }
+        ],
+        "expires_at": "2026-10-26T11:30:00Z",
+        "id": "20261026-0730-EURUSD-S-B01",
+        "instrument": "EUR_USD",
+        "max_oanda_spread_pips": 0.9,
+        "planned_entry": 1.1212,
+        "stop": 1.12235,
+        "tp1": 1.11925,
+        "tp2": 1.1185
+      },
+      "result": {
+        "scored": false,
+        "status": "PENDING_TRIGGER"
+      }
+    }
+  },
+  "schema": 1,
+  "simulator_version": "paper-rejection-limit-v1",
+  "updated_at": "2026-10-26T09:33:47Z",
+  "warnings": []
+}
