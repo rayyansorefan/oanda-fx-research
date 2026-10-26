@@ -22,6 +22,28 @@ def build_feedback(book, broker):
     unlinked = sum(row.get("signal_match") != "VERIFIED" or
                    not row.get("signal_id") for row in closed)
     groups = view.get("strategy") or {}
+    # Broker evidence informs execution-quality review, never the paper model's
+    # expectancy or its parameter weights without independently verified linkage.
+    pair_observations = {}
+    for row in closed:
+        instrument = row.get("instrument")
+        if not isinstance(instrument, str):
+            continue
+        group = pair_observations.setdefault(instrument, {
+            "closed": 0, "wins": 0, "losses": 0,
+            "net_pnl_gbp": 0.0, "unapproved_watch_losses": 0})
+        group["closed"] += 1
+        group["wins"] += row["net_pnl_gbp"] > 0
+        group["losses"] += row["net_pnl_gbp"] < 0
+        group["net_pnl_gbp"] += row["net_pnl_gbp"]
+        group["unapproved_watch_losses"] += (
+            row["net_pnl_gbp"] < 0
+            and row.get("entry_classification") == "UNAPPROVED_RESEARCH_WATCH_EXECUTED")
+    for group in pair_observations.values():
+        group["net_pnl_gbp"] = round(group["net_pnl_gbp"], 2)
+    watch_losses = [row for row in closed
+                    if row["net_pnl_gbp"] < 0
+                    and row.get("entry_classification") == "UNAPPROVED_RESEARCH_WATCH_EXECUTED"]
     return {
         "basis": "OANDA bid/ask paper outcomes, separately from manual Pepperstone screenshots",
         "paper_updated_at": view.get("updated_at"),
@@ -30,6 +52,20 @@ def build_feedback(book, broker):
         "broker": {
             "closed_count": len(closed),
             "profitable_count": sum(row["net_pnl_gbp"] > 0 for row in closed),
+            "loss_count": sum(row["net_pnl_gbp"] < 0 for row in closed),
+            "win_rate_pct": round(100 * sum(row["net_pnl_gbp"] > 0 for row in closed) / len(closed), 1) if closed else None,
+            "pair_observations": pair_observations,
+            "unapproved_watch_stopouts": len(watch_losses),
+            "execution_lessons": [
+                {
+                    "instrument": row.get("instrument"),
+                    "closed_at": row.get("closed_at"),
+                    "classification": row.get("entry_classification"),
+                    "planned_entry_deviation_pips": (row.get("execution_review") or {}).get("entry_deviation_pips"),
+                    "research_gate": (row.get("execution_review") or {}).get("original_risk_gate"),
+                    "action": "Treat watch-only candidates as NOT APPROVED; require a fresh independently confirmed entry."
+                } for row in watch_losses[-5:]
+            ],
             "net_profit_gbp": round(sum(row["net_pnl_gbp"] for row in closed), 2),
             "unlinked_count": unlinked,
             "included_in_strategy_weighting": 0,
@@ -58,6 +94,11 @@ def signal_policy(signal, feedback):
     positive = (len(supported) == len(routes) and bool(routes)
                 and all(r.get("paper_priority_bias") == 1 for r in supported))
     bias = -1 if negative else 1 if positive else 0
+    # A known stop-out after executing a non-approved watch is an operational
+    # review flag for the same pair, not proof that the direction is wrong.
+    pair_audit = ((feedback.get("broker") or {}).get("pair_observations") or {}).get(
+        signal.get("instrument"), {})
+    needs_execution_review = pair_audit.get("unapproved_watch_losses", 0) > 0
     return {
         "strategy": str(strategy), "routes": routes, "priority_bias": bias,
         "status": ("HISTORICAL_PAPER_CAUTION" if bias < 0 else
@@ -65,5 +106,11 @@ def signal_policy(signal, feedback):
                    "NEUTRAL_INSUFFICIENT_OR_MIXED_EVIDENCE"),
         "scored_route_samples": {route: r.get("count", 0)
                                  for route, r in records if isinstance(r, dict)},
-        "broker_observations_not_weighted": feedback.get("broker", {}).get("closed_count", 0)
+        "broker_observations_not_weighted": feedback.get("broker", {}).get("closed_count", 0),
+        "manual_execution_review_required": needs_execution_review,
+        "execution_review": (
+            "Recent stop-loss followed execution of a non-approved paper watch on this pair. "
+            "Recheck completed-candle trigger, spread-adjusted reward/risk, and trend conflict; "
+            "do not assume this is a new entry approval."
+            if needs_execution_review else None),
     }

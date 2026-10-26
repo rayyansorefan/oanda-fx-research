@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "as_of": "2026-10-26T13:58:11Z",
-  "provenance": "Manually transcribed, user-supplied Pepperstone closed-position screenshots; never broker-API verified.",
-  "policy": "These are real demo execution observations. A profitable broker trade is NOT a formally simulated signal win unless linked to an immutable original plan with verified trigger and entry. Keep all PENDING outcomes out of parameter-weight learning; use them for execution/cost audits only.",
+  "as_of": "2026-10-26T16:22:59Z",
+  "provenance": "Manually transcribed user-supplied Pepperstone closed-position screenshots; not broker-API verified.",
+  "policy": "Broker screenshots are real demo execution observations, not formal OANDA paper fills. Every unlinked trade stays out of parameter-weight learning. Record rejected-watch execution separately and require independent linkage to an immutable original plan, confirmation, and costs before training. A single loss cannot relax risk/news/spread gates or justify new thresholds.",
   "trades": [
     {
       "key": "2026-10-23-usdjpy-closed-1057",
@@ -90,6 +90,44 @@
       "provenance": "USER_SUPPLIED_PEPPERSTONE_CLOSED_POSITION_SCREENSHOT",
       "related_research_plan_id": "20261026-1200-GBPUSD-S-B01",
       "research_context_only": "Actual short entry 1.33524 was 3.1 pips below planned 1.33555; no evidence the specified completed-M15 trigger occurred, so it is NOT a matched formal signal."
+    },
+    {
+      "key": "2026-10-26-audnzd-stop-1622",
+      "instrument": "AUD_NZD",
+      "direction": "LONG",
+      "status": "CLOSED",
+      "opened_at": "2026-10-26T12:30:52Z",
+      "closed_at": "2026-10-26T16:22:59Z",
+      "entry_price": 1.236,
+      "exit_price": 1.2346,
+      "stop_price": 1.2346,
+      "exit_reason": "STOP_LOSS",
+      "net_pnl_gbp": -7,
+      "size_gbp_per_point": 0.5,
+      "commission_gbp": 0,
+      "swap_fees_gbp": 0,
+      "total_fees_gbp": 0,
+      "account_mode": "USER_REPORTED_PEPPERSTONE_DEMO",
+      "signal_id": null,
+      "signal_match": "PENDING",
+      "related_research_plan_id": "20261026-1200-AUDNZD-L-B01-PAPER",
+      "entry_classification": "UNAPPROVED_RESEARCH_WATCH_EXECUTED",
+      "execution_review": {
+        "approved_signal_at_entry": false,
+        "original_plan_entry": 1.2356,
+        "entry_deviation_pips": 4,
+        "original_research_zone": [
+          1.2355,
+          1.2357
+        ],
+        "entry_above_zone_pips": 3,
+        "original_risk_gate": "FAILED_SPREAD_ADJUSTED_TP1_RR",
+        "longer_timeframe_gate": "D1_H4_CONFLICT",
+        "m15_confirmation": "UNVERIFIED",
+        "lesson": "An unapproved paper watch must never be presented as an entry signal. Verify completed-M15 confirmation, broker spread and spread-adjusted reward/risk before entry. One losing trade does not justify changing strategy weights."
+      },
+      "provenance": "USER_SUPPLIED_PEPPERSTONE_CLOSED_POSITION_SCREENSHOT",
+      "research_context_only": "Broker long at 1.23600 was 4.0 pips above the 1.23560 paper-watch planned entry and above the 1.23550–1.23570 zone. The earlier candidate was NOT promoted to an approved signal: spread-adjusted TP1 RR failed and D1/H4 trends conflicted. No verified completed M15 confirmation; broker outcome remains PENDING immutable signal linkage."
     }
   ]
 }

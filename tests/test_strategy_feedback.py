@@ -26,6 +26,31 @@ class StrategyFeedbackTests(unittest.TestCase):
         self.assertEqual(report["broker"]["included_in_strategy_weighting"], 0)
         self.assertEqual(signal_policy(self.short, report)["priority_bias"], 0)
 
+    def test_unapproved_audnzd_stopout_is_flagged_without_model_weight_changes(self):
+        broker = {"trades": [
+            {"instrument": "AUD_NZD", "status": "CLOSED", "net_pnl_gbp": -7.0,
+             "closed_at": "2026-10-26T16:22:59Z",
+             "entry_classification": "UNAPPROVED_RESEARCH_WATCH_EXECUTED",
+             "execution_review": {"entry_deviation_pips": 4.0,
+                                  "original_risk_gate": "FAILED_SPREAD_ADJUSTED_TP1_RR"},
+             "signal_id": None, "signal_match": "PENDING"},
+            {"instrument": "GBP_USD", "status": "CLOSED", "net_pnl_gbp": 8.95,
+             "signal_id": None, "signal_match": "PENDING"},
+        ]}
+        feedback = build_feedback({"candidates": {}}, broker)
+        self.assertEqual(feedback["broker"]["closed_count"], 2)
+        self.assertEqual(feedback["broker"]["loss_count"], 1)
+        self.assertEqual(feedback["broker"]["net_profit_gbp"], 1.95)
+        self.assertEqual(feedback["broker"]["unapproved_watch_stopouts"], 1)
+        self.assertEqual(feedback["broker"]["pair_observations"]["AUD_NZD"]["unapproved_watch_losses"], 1)
+        self.assertEqual(feedback["broker"]["execution_lessons"][0]["planned_entry_deviation_pips"], 4.0)
+        self.assertEqual(feedback["broker"]["included_in_strategy_weighting"], 0)
+        policy = signal_policy({**self.short, "instrument": "AUD_NZD"}, feedback)
+        self.assertEqual(policy["priority_bias"], 0)
+        self.assertTrue(policy["manual_execution_review_required"])
+        self.assertIn("non-approved paper watch", policy["execution_review"])
+        self.assertFalse(signal_policy(self.short, feedback)["manual_execution_review_required"])
+
     def test_small_positive_sample_cannot_boost_research_alert(self):
         feedback = {"paper_strategy": {"M15_REJECTION / ROUTE_B":
                     {"count": 5, "wins": 5, "paper_priority_bias": 0}}}
