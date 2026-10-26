@@ -58,9 +58,11 @@ def numeric(value):
 
 def validate(plan):
     required = ("id", "instrument", "direction", "created_at", "expires_at",
-                "planned_entry", "stop", "tp1", "alert_b", "max_oanda_spread_pips")
+                "planned_entry", "stop", "tp1", "max_oanda_spread_pips")
     if any(plan.get(k) is None for k in required):
         return "ORIGINAL_LEVELS_OR_TRIGGER_MISSING"
+    if plan.get("alert_b") is None and plan.get("alert_a") is None:
+        return "UNSUPPORTED_OR_MISSING_ORIGINAL_ENTRY_ROUTE"
     try:
         key = plan["instrument"]
         if len(key) != 7 or key[3] != "_" or not key.replace("_", "").isalpha():
@@ -74,7 +76,9 @@ def validate(plan):
             return "INVALID_RISK_GEOMETRY"
         if numeric(plan["max_oanda_spread_pips"]) <= 0:
             return "INVALID_SPREAD_CAP"
-        numeric(plan["alert_b"])
+        for key in ("alert_a", "alert_b"):
+            if plan.get(key) is not None and numeric(plan[key]) <= 0:
+                return "INVALID_ALERT_LEVEL"
     except (TypeError, ValueError, OverflowError, KeyError):
         return "INVALID_PLAN"
     return None
@@ -83,10 +87,18 @@ def validate(plan):
 def frozen(plan):
     """No revisions of prices/time/trigger under the same ID."""
     fields = ("id", "instrument", "direction", "created_at", "expires_at",
-              "planned_entry", "stop", "tp1", "tp2", "alert_b",
+              "planned_entry", "stop", "tp1", "tp2", "alert_a", "alert_b", "alert_c",
               "max_oanda_spread_pips", "event_blackouts_utc", "source",
               "source_ref", "original_note", "strategy", "technical_context")
     return {k: plan[k] for k in fields if k in plan}
+
+
+def economic_terms(plan):
+    """Compare immutable economics, not optional provenance/technical commentary."""
+    names = ("instrument", "direction", "created_at", "expires_at",
+             "planned_entry", "stop", "tp1", "tp2", "alert_a", "alert_b", "alert_c",
+             "max_oanda_spread_pips", "event_blackouts_utc")
+    return {k: plan.get(k, [] if k == "event_blackouts_utc" else None) for k in names}
 
 
 def pip_size(plan):
@@ -151,6 +163,8 @@ def source_bars(plan, when, fetch=None):
 def _eligible_trigger(plan, bar):
     """Completed M15 rejection; a wick or a guessed M5 confirmation is insufficient."""
     mid = bar["mid"]
+    if plan.get("alert_b") is None:
+        return False
     threshold = numeric(plan["alert_b"])
     entry = numeric(plan["planned_entry"])
     long = plan["direction"] == "LONG"
@@ -219,6 +233,8 @@ def replay(plan, bars, now):
     mae = 0.0
     holding_bars = 0
     previous = None
+    previous_close = None
+    breakout_pending = None
     for bar in valid:
         close_at = bar["t"] + dt.timedelta(minutes=15)
         if previous and bar["t"] - previous > dt.timedelta(minutes=30):
@@ -237,11 +253,36 @@ def replay(plan, bars, now):
                 return {"status": "INVALIDATED_PRE_ENTRY", "reason": "Stop touched before confirmation",
                         "scored": False, "at": iso(close_at)}
             if blackout(plan, close_at, bar["t"]):
+                breakout_pending = None
+                previous_close = bar["mid"]["c"]
                 continue
-            if _eligible_trigger(plan, bar):
+            route = "B" if _eligible_trigger(plan, bar) else None
+            if plan.get("alert_a") is not None:
+                a = numeric(plan["alert_a"])
+                tolerance = 2 * pip_size(plan)
+                long = plan["direction"] == "LONG"
+                if breakout_pending is not None:
+                    age = close_at - breakout_pending
+                    tested = (bar["mid"]["l"] <= a + tolerance and bar["mid"]["c"] > a
+                              if long else
+                              bar["mid"]["h"] >= a - tolerance and bar["mid"]["c"] < a)
+                    if dt.timedelta(0) < age <= dt.timedelta(minutes=60) and tested:
+                        route = "A"  # Original watcher evaluates A before B.
+                    if age > dt.timedelta(minutes=60) or (
+                            bar["mid"]["c"] < a - tolerance if long
+                            else bar["mid"]["c"] > a + tolerance):
+                        breakout_pending = None
+                crossed = (previous_close is not None and
+                           (previous_close <= a < bar["mid"]["c"] if long
+                            else previous_close >= a > bar["mid"]["c"]))
+                if crossed:
+                    breakout_pending = close_at
+            previous_close = bar["mid"]["c"]
+            if route:
                 triggered = close_at
                 stage = "WAIT_LIMIT"
                 result = {"status": "TRIGGERED_UNFILLED", "triggered_at": iso(triggered),
+                          "route": route,
                           "scored": False, "evidence": {"confirmation": evidence(bar)}}
             continue
         if stage == "WAIT_LIMIT":
@@ -265,7 +306,7 @@ def replay(plan, bars, now):
                         "evidence": {**result.get("evidence", {}), "entry": evidence(bar)},
                         "scored": False}
             stage = "OPEN"
-            result = {"status": "OPEN", "triggered_at": iso(triggered), "entry_at": iso(entered),
+            result = {**result, "status": "OPEN", "triggered_at": iso(triggered), "entry_at": iso(entered),
                       "entry": numeric(plan["planned_entry"]), "scored": False,
                       "evidence": {**result.get("evidence", {}), "entry": evidence(bar)}}
             continue
@@ -306,14 +347,14 @@ def public_view(book):
     losses = sum(c["result"]["net_r"] < 0 for c in qualified)
     strategy = {}
     for c in qualified:
-        key = c["plan"].get("strategy", "M15_REJECTION")
+        key = strategy_name(c["plan"]) + " / ROUTE_" + str(c["result"].get("route", "UNKNOWN"))
         rec = strategy.setdefault(key, {"count": 0, "wins": 0, "total_r": 0.0})
         rec["count"] += 1
         rec["wins"] += int(c["result"]["net_r"] > 0)
         rec["total_r"] += c["result"]["net_r"]
     return {"schema": 1, "updated_at": book.get("updated_at"), "data_basis":
             "OANDA M15 bid/ask candle PAPER replay; not Pepperstone fills",
-            "method": "Confirm M15 rejection, require later planned-price limit touch; "
+            "method": "Confirm M15 rejection or breakout+retest, require later planned-price limit touch; "
                       "first TP1/stop or 96 M15 trading-bar time exit; ambiguous bars not scored.",
             "totals": {"candidates": len(candidates), "scored": len(qualified),
                        "wins": wins, "losses": losses,
@@ -326,13 +367,21 @@ def public_view(book):
                  "created_at": p["created_at"], "expires_at": p.get("expires_at"),
                  "entry": p.get("planned_entry"), "stop": p.get("stop"), "tp1": p.get("tp1"),
                  "tp2": p.get("tp2"), "source": p.get("source", "LIVE_SIGNAL"),
-                 "strategy": p.get("strategy", "M15_REJECTION"),
+                 "strategy": strategy_name(p),
                  "rationale": str(p.get("original_note", ""))[:170],
                  "technical_context": p.get("technical_context"),
                  **{k: v for k, v in c.get("result", {}).items()
-                    if k in ("status", "reason", "scored", "triggered_at", "entry_at",
+                    if k in ("status", "reason", "scored", "route", "triggered_at", "entry_at",
                              "at", "entry", "exit", "net_r", "mfe_r", "mae_r")}}
                 for c in candidates[-90:] for p in [c["plan"]]]}
+
+
+def strategy_name(plan):
+    if plan.get("strategy"):
+        return plan["strategy"]
+    if plan.get("alert_a") is not None and plan.get("alert_b") is None:
+        return "M15_BREAKOUT_RETEST"
+    return "M15_REJECTION"
 
 
 def update_book(book, seeds, latest, now, fetch=None):
@@ -343,7 +392,7 @@ def update_book(book, seeds, latest, now, fetch=None):
             continue
         plan = frozen(raw)
         if plan["id"] in rows:
-            if rows[plan["id"]]["plan"] != plan:
+            if economic_terms(rows[plan["id"]]["plan"]) != economic_terms(plan):
                 msg = "IMMUTABLE_PLAN_CONFLICT:" + plan["id"]
                 if msg not in messages:
                     messages.append(msg)
@@ -398,7 +447,7 @@ def update_book(book, seeds, latest, now, fetch=None):
         rec["last_checked_at"] = iso(now)
     book["schema"] = 1
     book["updated_at"] = iso(now)
-    book["simulator_version"] = "paper-rejection-limit-v2"
+    book["simulator_version"] = "paper-m15-a-b-limit-v3"
     return book
 
 
