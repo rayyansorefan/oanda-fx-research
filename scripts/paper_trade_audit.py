@@ -238,7 +238,7 @@ def replay(plan, bars, now):
     breakout_pending = None
     for bar in valid:
         close_at = bar["t"] + dt.timedelta(minutes=15)
-        if previous and bar["t"] - previous > dt.timedelta(minutes=30):
+        if previous and bar["t"] - previous > dt.timedelta(minutes=15, seconds=1):
             # Only long weekend closure is expected; shorter missing live-session
             # intervals must not quietly turn into "untriggered" or a winner.
             weekend_closure = (bar["t"]-previous >= dt.timedelta(hours=24)
