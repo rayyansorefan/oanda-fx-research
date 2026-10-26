@@ -1,21 +1,26 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-23T15:35:00Z",
+  "generated_at": "2026-10-26T07:34:21.669Z",
   "signals": [
     {
-      "id": "20261023-1630-CADCHF-L-B01",
-      "instrument": "CAD_CHF",
-      "direction": "LONG",
-      "created_at": "2026-10-23T15:35:00Z",
-      "expires_at": "2026-10-23T17:30:00Z",
-      "planned_entry": 0.58945,
-      "stop": 0.5889,
-      "tp1": 0.59075,
-      "tp2": 0.5913,
-      "alert_b": 0.58945,
-      "max_oanda_spread_pips": 1.5,
-      "event_blackouts_utc": []
+      "id": "20261026-0730-EURUSD-S-B01",
+      "instrument": "EUR_USD",
+      "direction": "SHORT",
+      "created_at": "2026-10-26T07:34:21.669Z",
+      "expires_at": "2026-10-26T11:30:00Z",
+      "planned_entry": 1.1212,
+      "stop": 1.12235,
+      "tp1": 1.11925,
+      "tp2": 1.1185,
+      "alert_b": 1.12135,
+      "max_oanda_spread_pips": 0.9,
+      "event_blackouts_utc": [
+        {
+          "start": "2026-10-26T08:45:00Z",
+          "end": "2026-10-26T09:15:00Z"
+        }
+      ]
     }
   ],
-  "note": "16:30 UK discretionary research handoff. CAD_CHF LONG is conditional only: wait for an OANDA-reference pullback into 0.58935-0.58945 followed by a completed M15 bullish rejection closing at or above 0.58945. Cancel below 0.58890, if OANDA spread exceeds 1.5 pips, if no qualifying completed M15 candle forms by expiry, or if material unscheduled news invalidates the thesis. Gross TP1 R:R 2.36; maximum-spread-adjusted TP1 R:R 1.64. OANDA is not a Pepperstone executable quote; the user must verify Pepperstone UK symbol, current bid/ask, spread and stake, and chooses whether to trade manually. No order or fill claimed. CHF_JPY 20261023-1400-CHFJPY-S-B01 expired unfilled: its required post-blackout 190.36-190.44 pullback was not observed before expiry."
+  "note": "07:30 UK discretionary research handoff. EUR_USD SHORT is conditional only: after any OANDA-reference pullback into 1.12130-1.12155, require a completed M15 bearish rejection closing at or below 1.12120 before reassessing a manual entry. Cancel above 1.12235, if OANDA spread exceeds 0.9 pip, during the 08:45-09:15 UTC German ifo precautionary blackout, if the entry condition is not completed by expiry, or if material news invalidates the thesis. Gross TP1 R:R 1.70; maximum-spread-adjusted TP1 R:R 1.50. The 07:32 UTC snapshot was PARTIAL: 61/68 pairs had M15/H1 indicators and 9 had full deep histories. OANDA is not a Pepperstone executable quote; the user must verify Pepperstone UK symbol, bid/ask, spread and stake and chooses whether to trade manually. Risk must not exceed 0.25% of verified equity. No order or fill claimed. Prior CAD_CHF signal 20261023-1630-CADCHF-L-B01 expired on 23 October and is removed prospectively."
 }
