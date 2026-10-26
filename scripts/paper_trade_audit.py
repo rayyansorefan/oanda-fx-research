@@ -552,6 +552,61 @@ def strategy_name(plan):
     return "M15_REJECTION"
 
 
+def ranked_priority_watches(summary, market, book, now, limit=4):
+    """Freeze first-observed ranked research watches, not approved entries.
+
+    A pair/direction is recorded once per London calendar day. Later price
+    observations retain the original baseline; no paper fill is inferred.
+    """
+    from zoneinfo import ZoneInfo
+
+    snapshot = summary.get("collected_at")
+    if not snapshot or snapshot != (market or {}).get("collected_at"):
+        return []
+    try:
+        at = stamp(snapshot)
+    except (TypeError, ValueError, OverflowError):
+        return []
+    if at > now + dt.timedelta(minutes=5) or now - at > dt.timedelta(minutes=20):
+        return []
+    london_day = at.astimezone(ZoneInfo("Europe/London")).strftime("%Y%m%d")
+    watched = []
+    already = (book or {}).get("candidates") or {}
+    for item in (summary.get("ranked_review_candidates") or [])[:limit]:
+        if not isinstance(item, dict):
+            continue
+        instrument = item.get("instrument")
+        direction = item.get("potential_direction_not_approved")
+        if (not isinstance(instrument, str) or len(instrument) != 7
+                or instrument[3] != "_" or not instrument.replace("_", "").isalpha()
+                or instrument == "GBP_ZAR" or direction not in ("LONG", "SHORT")):
+            continue
+        quote = (((market or {}).get("pairs") or {}).get(instrument) or {}).get("quote") or {}
+        try:
+            qt = stamp(quote["time"])
+            bid, ask = positive_price(quote.get("bid")), positive_price(quote.get("ask"))
+            if (quote.get("tradeable") is not True or bid is None or ask is None
+                    or bid > ask or qt > now + dt.timedelta(minutes=5)
+                    or now - qt > dt.timedelta(minutes=20)):
+                continue
+        except (ValueError, KeyError, TypeError, OverflowError):
+            continue
+        key = "PRIORITY-" + london_day + "-" + instrument + "-" + direction
+        if key in already:
+            continue
+        watched.append({
+            "id": key, "instrument": instrument, "direction": direction,
+            "created_at": iso(at), "source": "AUTOMATED_RESEARCH_PRIORITY",
+            "strategy": "RESEARCH_PRIORITY_WATCH",
+            "original_note": "Top ranked OANDA technical research at first observation. Not an entry recommendation; no broker execution or paper position is implied.",
+            "technical_context": {
+                "first_research_priority": item.get("research_priority"),
+                "first_ranked_at": iso(at),
+            },
+        })
+    return watched
+
+
 def update_book(book, seeds, latest, now, fetch=None, market=None):
     rows = book.setdefault("candidates", {})
     messages = book.setdefault("warnings", [])
@@ -650,9 +705,13 @@ def update_book(book, seeds, latest, now, fetch=None, market=None):
 def main():
     now = utc_now()
     book = load(OUT, {"candidates": {}, "warnings": []})
-    update_book(book, load(PLANS, {"candidates": []}),
-                load(LIVE, {"signals": []}), now,
-                market=load(Path("data/latest.json"), {"pairs": {}}))
+    market = load(Path("data/latest.json"), {"pairs": {}})
+    summary = load(Path("data/summary.json"), {})
+    seeds = load(PLANS, {"candidates": []})
+    # Separate research watches from formal entry plans; never count as wins.
+    seeds["candidates"] = list(seeds.get("candidates") or []) + ranked_priority_watches(
+        summary, market, book, now)
+    update_book(book, seeds, load(LIVE, {"signals": []}), now, market=market)
     save(OUT, book)
     view = public_view(book)
     print("FX PAPER AUDIT", view["totals"], "warnings", book.get("warnings", []))
