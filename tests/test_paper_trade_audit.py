@@ -163,6 +163,22 @@ class PaperAuditTests(unittest.TestCase):
         self.assertEqual(book["candidates"]["T001"]["plan"]["source"],
                          "SCHEDULED_MAIN_ASSESSMENT")
 
+    def test_only_matching_original_source_can_restore_omitted_zone(self):
+        p = plan()
+        p["source"] = "FRIDAY_CONVERSATION_SHORTLIST"
+        p["original_note"] = "Original 23 Oct watch"
+        old = dict(p)
+        full = dict(p, entry_low=1.0990, entry_high=1.1010)
+        book = {"candidates": {"T001": {
+            "plan": old, "result":{"status":"UNTRIGGERED","scored":False},
+            "events":[]}}, "warnings":[]}
+        update_book(book, {"candidates":[full]}, {"signals":[]},
+                    stamp("2026-10-26T09:00:00Z"),lambda *_:[])
+        self.assertEqual(book["candidates"]["T001"]["plan"]["entry_low"],1.0990)
+        self.assertEqual(book["candidates"]["T001"]["plan"]["stop"],1.105)
+        self.assertTrue(any(x["to"]=="ORIGINAL_SOURCE_ZONE_METADATA_RESTORED"
+                            for x in book["candidates"]["T001"]["events"]))
+
     def test_breakout_then_later_retest_route_a(self):
         p = plan()
         del p["alert_b"]
