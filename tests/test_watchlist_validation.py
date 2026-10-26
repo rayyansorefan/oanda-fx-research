@@ -18,8 +18,12 @@ def quote():
         "quote": {"bid": 1.33790, "ask": 1.33800,
                   "spread_pips": 1.0, "pip_size": .0001,
                   "tradeable": True, "time": NOW.isoformat()},
-        "frames": {"M15": {"recent_completed_candles": []},
-                   "H1": {"indicators": {}}}
+        "frames": {"M15": {"recent_completed_candles": [],
+                            "indicators": {"ema20": 1.3378, "atr14": .0008,
+                                           "plus_di14": 27, "minus_di14": 14,
+                                           "macd_12_26_9": {"histogram": .0001}}},
+                   "H1": {"indicators": {"plus_di14": 24, "minus_di14": 12,
+                                         "adx14": 26}}}
     }
 
 
