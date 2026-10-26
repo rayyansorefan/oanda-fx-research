@@ -555,8 +555,9 @@ def strategy_name(plan):
 def ranked_priority_watches(summary, market, book, now, limit=4):
     """Freeze first-observed ranked research watches, not approved entries.
 
-    A pair/direction is recorded once per London calendar day. Later price
-    observations retain the original baseline; no paper fill is inferred.
+    Each distinct collector snapshot creates its own immutable observation,
+    even for the same pair/direction. Later snapshots never rewrite its
+    first reference quote or turn an untriggered watch into a filled trade.
     """
     from zoneinfo import ZoneInfo
 
@@ -569,7 +570,15 @@ def ranked_priority_watches(summary, market, book, now, limit=4):
         return []
     if at > now + dt.timedelta(minutes=5) or now - at > dt.timedelta(minutes=20):
         return []
-    london_day = at.astimezone(ZoneInfo("Europe/London")).strftime("%Y%m%d")
+    london_local = at.astimezone(ZoneInfo("Europe/London"))
+    london_day = london_local.strftime("%Y%m%d")
+    # UTC snapshot identity distinguishes the repeated 01:15 hour at the
+    # October DST transition, and main research snapshots from hourly ones.
+    snapshot_key = at.strftime("%Y%m%dT%H%M%SZ")
+    assessment_kind = ("MAIN_RESEARCH_WINDOW" if
+                       (london_local.hour, london_local.minute // 15 * 15) in
+                       ((7, 30), (12, 0), (14, 0), (16, 30)) else
+                       "HOURLY_RESEARCH")
     watched = []
     already = (book or {}).get("candidates") or {}
     for item in (summary.get("ranked_review_candidates") or [])[:limit]:
@@ -591,17 +600,21 @@ def ranked_priority_watches(summary, market, book, now, limit=4):
                 continue
         except (ValueError, KeyError, TypeError, OverflowError):
             continue
-        key = "PRIORITY-" + london_day + "-" + instrument + "-" + direction
+        key = "PRIORITY-" + snapshot_key + "-" + instrument + "-" + direction
         if key in already:
             continue
         watched.append({
             "id": key, "instrument": instrument, "direction": direction,
             "created_at": iso(at), "source": "AUTOMATED_RESEARCH_PRIORITY",
+            "source_ref": snapshot_key,
             "strategy": "RESEARCH_PRIORITY_WATCH",
             "original_note": "Top ranked OANDA technical research at first observation. Not an entry recommendation; no broker execution or paper position is implied.",
             "technical_context": {
                 "first_research_priority": item.get("research_priority"),
                 "first_ranked_at": iso(at),
+                "assessment_kind": assessment_kind,
+                "assessment_day_uk": london_day,
+                "research_priority_rank": (summary.get("ranked_review_candidates") or []).index(item) + 1,
             },
         })
     return watched
@@ -710,7 +723,7 @@ def main():
     seeds = load(PLANS, {"candidates": []})
     # Separate research watches from formal entry plans; never count as wins.
     seeds["candidates"] = list(seeds.get("candidates") or []) + ranked_priority_watches(
-        summary, market, book, now)
+        summary, market, book, now, limit=6)
     update_book(book, seeds, load(LIVE, {"signals": []}), now, market=market)
     save(OUT, book)
     view = public_view(book)
