@@ -179,6 +179,21 @@ class PaperAuditTests(unittest.TestCase):
         self.assertEqual(r["status"],"WIN_TP1")
         self.assertEqual(r["route"],"A")
 
+    def test_learning_bias_requires_diverse_forward_sample(self):
+        base = stamp("2026-10-01T09:00:00Z")
+        book = {"candidates": {}}
+        for i in range(30):
+            p = dict(plan(), id="S"+str(i), instrument=["EUR_USD","GBP_USD","AUD_USD"][i%3],
+                     created_at=(base+dt.timedelta(days=i//3)).isoformat())
+            book["candidates"][p["id"]] = {"plan": p, "result": {
+                "status": "WIN_TP1", "scored": True, "net_r": 2.0, "route": "B"}}
+        score = public_view(book)["strategy"]["M15_REJECTION / ROUTE_B"]
+        self.assertEqual(score["paper_priority_bias"], 1)
+        self.assertEqual(score["distinct_days"], 10)
+        book["candidates"].pop("S29")
+        score = public_view(book)["strategy"]["M15_REJECTION / ROUTE_B"]
+        self.assertEqual(score["paper_priority_bias"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()
