@@ -87,7 +87,23 @@ def fit_public_feed_budget(payload: dict) -> None:
                     frame["candles"] = candles[-cap:]
         if serialized_size(payload) <= PUBLIC_MAX_BYTES:
             return
-    raise ValueError("Public FX payload remains over 930000 bytes with six candles per detailed frame")
+    # New hourly cohorts are stored in full in the PRIVATE append-only ledger.
+    # The public feed is a rolling window; first compact their quote timeline
+    # rather than silently failing publication as the candidate count grows.
+    audit = ((payload.get("learning") or {}).get("paper_audit") or {})
+    for row in audit.get("candidates") or []:
+        tracking = row.get("tracking") or {}
+        if isinstance(tracking.get("history"), list):
+            tracking["history"] = tracking["history"][-3:]
+    if serialized_size(payload) <= PUBLIC_MAX_BYTES:
+        return
+    candidates = audit.get("candidates") or []
+    for cap in (80, 60, 40):
+        if len(candidates) > cap:
+            audit["candidates"] = candidates[-cap:]
+        if serialized_size(payload) <= PUBLIC_MAX_BYTES:
+            return
+    raise ValueError("Public FX payload remains over 930000 bytes after bounded rolling-window compaction")
 
 def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
     """Prospective technical planning levels, never approved entry alerts.
