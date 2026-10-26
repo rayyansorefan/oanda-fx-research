@@ -7,6 +7,7 @@ on:
     paths:
       - 'scripts/**'
       - 'tests/**'
+      - 'signals.json'
       - '.github/workflows/oanda-hourly-research.yml'
   schedule:
     # Hourly around the clock Monday–Friday UTC plus Sunday 21:43–23:43 UTC for FX reopen. Cron changed to re-register the schedule after zero automatic runs. Full OANDA account FX-universe M15/H1 screening with compact data publication.
