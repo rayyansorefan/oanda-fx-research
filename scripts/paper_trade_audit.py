@@ -19,7 +19,7 @@ PLANS = Path("paper-trade-candidates.json")
 LIVE = Path("signals.json")
 OUT = Path("data/paper_trade_ledger.json")
 API = "https://api-fxpractice.oanda.com"
-MAX_CANDIDATES = 200
+MAX_CANDIDATES = 5000
 MAX_HOLD_BARS = 96  # 24 trading hours; pauses through weekend market closure.
 MAX_REMOTE_CALLS = 25
 UTC = dt.timezone.utc
@@ -349,20 +349,46 @@ def public_view(book):
     strategy = {}
     for c in qualified:
         key = strategy_name(c["plan"]) + " / ROUTE_" + str(c["result"].get("route", "UNKNOWN"))
-        rec = strategy.setdefault(key, {"count": 0, "wins": 0, "total_r": 0.0})
+        rec = strategy.setdefault(key, {"count": 0, "wins": 0, "total_r": 0.0,
+                                         "samples": [], "days": set(), "pairs": set()})
         rec["count"] += 1
         rec["wins"] += int(c["result"]["net_r"] > 0)
         rec["total_r"] += c["result"]["net_r"]
+        rec["samples"].append(c["result"]["net_r"])
+        rec["days"].add(str(c["plan"].get("created_at", ""))[:10])
+        rec["pairs"].add(c["plan"].get("instrument", ""))
+    learned = {}
+    for name, row in strategy.items():
+        count = row["count"]
+        mean = row["total_r"] / count
+        variance = sum((v-mean)**2 for v in row["samples"]) / (count-1) if count > 1 else 0
+        bound = 2.58 * math.sqrt(variance / count) if count > 1 else float("inf")
+        diverse = count >= 30 and len(row["days"]) >= 10 and len(row["pairs"]) >= 3
+        # Bounded research-only ranking suggestion; NEVER relax live entry risk gates.
+        bias = (1 if mean-bound > 0 else -1 if mean+bound < 0 else 0) if diverse else 0
+        learned[name] = {"count": count, "wins": row["wins"],
+                         "total_r": round(row["total_r"], 3),
+                         "mean_r": round(mean, 3),
+                         "distinct_days": len(row["days"]),
+                         "distinct_pairs": len(row["pairs"]),
+                         "lower_99pct_approx_r": round(mean-bound, 3) if math.isfinite(bound) else None,
+                         "paper_priority_bias": bias,
+                         "eligible_for_reinforcement": bias == 1}
     return {"schema": 1, "updated_at": book.get("updated_at"), "data_basis":
             "OANDA M15 bid/ask candle PAPER replay; not Pepperstone fills",
+            "cost_policy": "OANDA bid/ask spread is reflected; Pepperstone slippage, "
+                           "overnight financing, commission and taxes are not verified "
+                           "or deducted. R is a model outcome, not actual net P&L.",
             "method": "Confirm M15 rejection or breakout+retest, require later planned-price limit touch; "
                       "first TP1/stop or 96 M15 trading-bar time exit; ambiguous bars not scored.",
             "totals": {"candidates": len(candidates), "scored": len(qualified),
                        "wins": wins, "losses": losses,
                        "net_r": round(sum(c["result"]["net_r"] for c in qualified), 3)},
-            "strategy": {k: {**v, "total_r": round(v["total_r"], 3),
-                            "eligible_for_reinforcement": v["count"] >= 30 and
-                            v["total_r"] > 0} for k, v in strategy.items()},
+            "strategy": learned,
+            "learning_policy": "Advisory paper research bias remains neutral until at "
+                               "least 30 distinct scored signals across 10 days/3 pairs "
+                               "and approximate 99% mean-R interval excludes zero. "
+                               "Never changes live entry risk gates or guarantees profit.",
             "candidates": [
                 {"id": p["id"], "instrument": p["instrument"], "direction": p["direction"],
                  "created_at": p["created_at"], "expires_at": p.get("expires_at"),
