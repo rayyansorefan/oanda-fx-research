@@ -10,6 +10,7 @@ are NOT fabricated from spot quotations.
 """
 import math
 import re
+from adaptive_research import entry_context
 
 CORE = ("EUR_USD", "GBP_USD", "USD_JPY", "USD_CAD",
         "EUR_GBP", "AUD_USD", "USD_CHF", "EUR_JPY")
@@ -142,11 +143,17 @@ def screen_priority(quote, m15, h1):
                  else (rsi <= 23 or oscillator.get("k", 50) <= 7))
     bb_percentile = band.get("bandwidth_percentile_recent")
     near_compression = bb_percentile is not None and bb_percentile <= 20
+    context = entry_context({"quote": quote, "frames": {"M15": m15, "H1": h1}}, direction)
+    # Prospective warnings reduce research rank; no new trade approval or
+    # changes to the original champion risk/reward thresholds.
+    context_penalty = (14 if context["status"] == "REASSESS_REVERSAL" else
+                       10 if context["status"] == "REASSESS_EXTENDED" else
+                       4 if context["status"] == "CAUTION_MIXED_MOMENTUM" else 0)
     score = round(15 + regime_score + (12 if same_side else 0) +
                   min(16, 3.0 * group_agreement) +
                   (3 if near_compression and m_breakout != "NONE" else 0) -
                   (8 if exhausted else 0) -
-                  spread_penalty - stretched_penalty, 2)
+                  spread_penalty - stretched_penalty - context_penalty, 2)
     return {
         "research_priority": score,
         "observed_oanda_spread_to_m15_atr": round(cost_fraction, 4),
@@ -159,6 +166,8 @@ def screen_priority(quote, m15, h1):
         "technical_direction_checks": direction_ok,
         "technical_checks_agree": group_agreement,
         "stretched_or_exhausted": bool(exhausted),
+        "adaptive_context": context,
+        "adaptive_priority_penalty": context_penalty,
         "bollinger_compression_recent": bool(near_compression),
         "methods_reviewed": [
             "EMA20/50/200", "ADX/+DI/-DI", "ATR14 vs spread",

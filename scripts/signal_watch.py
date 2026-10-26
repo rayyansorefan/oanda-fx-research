@@ -7,6 +7,7 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from strategy_feedback import build_feedback, signal_policy
+from adaptive_research import entry_context, afternoon_audit
 from urllib.request import Request, urlopen
 
 SNAPSHOT = Path("data/latest.json")
@@ -443,7 +444,8 @@ def watch():
     snapshot = load(SNAPSHOT, {})
     current = utc_now()
     news = load(NEWS, {})
-    feedback = build_feedback(load(PAPER_LEDGER, {"candidates": {}}),
+    paper_book = load(PAPER_LEDGER, {"candidates": {}})
+    feedback = build_feedback(paper_book,
                               load(BROKER_OUTCOMES, {"trades": []}))
     signals = load(SIGNALS, {"signals": []}).get("signals", [])
     if len(signals) > 3:
@@ -453,6 +455,7 @@ def watch():
               "oanda_collected_at": snapshot.get("collected_at"),
               "news_collected_at": news.get("collected_at"),
               "news_coverage": news.get("status", "UNAVAILABLE"),
+              "afternoon_audit": afternoon_audit(paper_book, current),
               "data_policy": "Research-only, no orders. Hourly OANDA quote not Pepperstone executable quote.",
               "feedback_summary": {"broker": feedback["broker"],
                                    "paper_totals": feedback["paper_totals"],
@@ -539,6 +542,15 @@ def watch():
             # negative paper evidence. No observed broker demo win can waive
             # the stop/spread/news checks or change this risk decision.
             row["status"] = "SUPPRESSED_BY_ROBUST_NEGATIVE_PAPER_HISTORY"
+            report["signals"].append(row)
+            continue
+        # Fresh technical evidence can invalidate a formerly promising plan.
+        # This is a new-entry reassessment, NEVER a claim an existing trade lost.
+        context = entry_context(pairdata, signal["direction"])
+        row["adaptive_context"] = context
+        if context["block_new_alert"]:
+            row["status"] = context["status"]
+            row["reason"] = context["reason"]
             report["signals"].append(row)
             continue
         found = signal_match(signal, pairdata, tracked, current)
