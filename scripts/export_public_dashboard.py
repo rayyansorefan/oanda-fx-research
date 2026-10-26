@@ -88,8 +88,8 @@ def fit_public_feed_budget(payload: dict) -> None:
     audit["public_window"] = {
         "published_candidates": len(candidates),
         "private_total_candidates": int((audit.get("totals") or {}).get("candidates", len(candidates))),
-        "truncated": False,
-        "policy": "All available candidates unless size budget requires an explicitly labelled rolling window; full history remains private."
+        "truncated": int((audit.get("totals") or {}).get("candidates", len(candidates))) > len(candidates),
+        "policy": "Public rolling window may omit older candidates; full history remains private."
     }
     if serialized_size(payload) <= PUBLIC_MAX_BYTES:
         return
