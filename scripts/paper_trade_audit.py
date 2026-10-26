@@ -87,7 +87,8 @@ def validate(plan):
 def frozen(plan):
     """No revisions of prices/time/trigger under the same ID."""
     fields = ("id", "instrument", "direction", "created_at", "expires_at",
-              "planned_entry", "stop", "tp1", "tp2", "alert_a", "alert_b", "alert_c",
+              "planned_entry", "entry_low", "entry_high", "stop", "tp1", "tp2",
+              "alert_a", "alert_b", "alert_c",
               "max_oanda_spread_pips", "event_blackouts_utc", "source",
               "source_ref", "original_note", "strategy", "technical_context")
     return {k: plan[k] for k in fields if k in plan}
@@ -365,7 +366,8 @@ def public_view(book):
             "candidates": [
                 {"id": p["id"], "instrument": p["instrument"], "direction": p["direction"],
                  "created_at": p["created_at"], "expires_at": p.get("expires_at"),
-                 "entry": p.get("planned_entry"), "stop": p.get("stop"), "tp1": p.get("tp1"),
+                 "entry": p.get("planned_entry"), "entry_low": p.get("entry_low"),
+                 "entry_high": p.get("entry_high"), "stop": p.get("stop"), "tp1": p.get("tp1"),
                  "tp2": p.get("tp2"), "source": p.get("source", "LIVE_SIGNAL"),
                  "strategy": strategy_name(p),
                  "rationale": str(p.get("original_note", ""))[:170],
