@@ -94,6 +94,20 @@ class PaperAuditTests(unittest.TestCase):
         r = replay(plan(), first_two(), stamp("2026-10-23T10:30:00Z"))
         self.assertEqual(r["status"], "OPEN")
 
+    def test_time_exit_after_96_completed_trading_bars(self):
+        base = stamp("2026-10-23T10:30:00Z")
+        data = first_two()+[
+            bar((base+dt.timedelta(minutes=15*i)).isoformat(),
+                1.099,1.101,1.096,1.098) for i in range(96)]
+        r = replay(plan(), data, stamp("2026-10-24T10:30:00Z"))
+        self.assertEqual(r["status"], "TIME_EXIT")
+        self.assertTrue(r["scored"])
+
+    def test_short_friday_intraday_gap_is_not_ignored(self):
+        data=first_two()+[bar("2026-10-23T14:30:00Z",1.099,1.101,1.096,1.098)]
+        r=replay(plan(),data,stamp("2026-10-23T14:45:00Z"))
+        self.assertEqual(r["status"],"DATA_GAP")
+
     def test_triggered_unfilled_is_not_frozen_before_expiry(self):
         p = plan()
         book = {"candidates": {}, "warnings": []}
@@ -121,6 +135,21 @@ class PaperAuditTests(unittest.TestCase):
         self.assertIn("IMMUTABLE_PLAN_CONFLICT:T001",book["warnings"])
         totals = public_view(book)["totals"]
         self.assertEqual((totals["scored"],totals["wins"]), (1,1))
+
+    def test_evidence_is_private_and_legacy_win_can_be_audited(self):
+        p = plan()
+        now = stamp("2026-10-23T10:45:00Z")
+        bars = first_two()+[bar("2026-10-23T10:30:00Z",1.098,1.101,1.088,1.09)]
+        book = {"candidates":{"T001":{"plan":p,"first_recorded_at":"2026-10-23T10:45:00Z",
+                   "result":{"status":"WIN_TP1","net_r":2.0,"scored":True},
+                   "events":[]}},"warnings":[]}
+        update_book(book, {"candidates":[]}, {"signals":[]}, now, lambda *_: bars)
+        self.assertIn("confirmation",book["candidates"]["T001"]["result"]["evidence"])
+        self.assertIn("entry",book["candidates"]["T001"]["result"]["evidence"])
+        self.assertIn("exit",book["candidates"]["T001"]["result"]["evidence"])
+        exported=public_view(book)
+        self.assertNotIn("evidence",exported["candidates"][0])
+        self.assertEqual(exported["totals"]["wins"],1)
 
 
 if __name__ == "__main__":
