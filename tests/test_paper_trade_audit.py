@@ -108,6 +108,11 @@ class PaperAuditTests(unittest.TestCase):
         r=replay(plan(),data,stamp("2026-10-23T14:45:00Z"))
         self.assertEqual(r["status"],"DATA_GAP")
 
+    def test_even_one_missing_m15_bar_is_a_data_gap(self):
+        data=first_two()+[bar("2026-10-23T10:45:00Z",1.099,1.101,1.096,1.098)]
+        r=replay(plan(),data,stamp("2026-10-23T11:00:00Z"))
+        self.assertEqual(r["status"],"DATA_GAP")
+
     def test_triggered_unfilled_is_not_frozen_before_expiry(self):
         p = plan()
         book = {"candidates": {}, "warnings": []}
