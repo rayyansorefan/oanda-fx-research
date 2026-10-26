@@ -357,21 +357,28 @@ class PaperAuditTests(unittest.TestCase):
         self.assertFalse(row["scored"])
         self.assertEqual(row["move_pct"], 0)
         self.assertEqual(row["tracking"]["reference_kind"], "FIRST_OBSERVED_QUOTE")
-        # A later ranking does not create a second trade or reset the baseline.
+        # A later ranking creates a distinct unfilled research observation;
+        # the original baseline remains frozen and neither counts as a trade.
         later = stamp("2026-10-26T11:00:00Z")
         market["collected_at"] = "2026-10-26T11:00:00Z"
         market["pairs"]["GBP_USD"]["quote"].update(
             time="2026-10-26T10:59:45Z", bid=1.0990, ask=1.0992)
         summary["collected_at"] = market["collected_at"]
-        self.assertEqual(ranked_priority_watches(summary, market, book, later), [])
-        update_book(book, {"candidates":[]}, {"signals":[]}, later, market=market)
+        second = ranked_priority_watches(summary, market, book, later)
+        self.assertEqual(len(second), 1)
+        self.assertNotEqual(second[0]["id"], seeds[0]["id"])
+        update_book(book, {"candidates":second}, {"signals":[]}, later, market=market)
         final = public_view(book)
-        self.assertEqual(final["totals"]["candidates"], 1)
+        self.assertEqual(final["totals"]["candidates"], 2)
         self.assertEqual(final["totals"]["scored"], 0)
         self.assertEqual(final["totals"]["wins"], 0)
-        self.assertEqual(final["candidates"][0]["tracking"]["reference_price"],1.1002)
-        self.assertGreater(final["candidates"][0]["move_pct"], 0)
-        self.assertEqual(len(final["candidates"][0]["tracking"]["history"]), 2)
+        original = book["candidates"][seeds[0]["id"]]
+        newest = book["candidates"][second[0]["id"]]
+        self.assertEqual(original["tracking"]["reference_price"], 1.1002)
+        self.assertGreater(original["tracking"]["move_pct"], 0)
+        self.assertEqual(len(original["tracking"]["history"]), 2)
+        self.assertEqual(newest["tracking"]["reference_price"], 1.0992)
+        self.assertFalse(newest["result"]["scored"])
 
     def test_priority_research_rejects_stale_and_mismatched_snapshots(self):
         now = stamp("2026-10-26T10:00:00Z")
