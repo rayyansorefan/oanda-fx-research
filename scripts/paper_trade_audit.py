@@ -424,6 +424,23 @@ def update_book(book, seeds, latest, now, fetch=None):
                 msg = "IMMUTABLE_PLAN_CONFLICT:" + plan["id"]
                 if msg not in messages:
                     messages.append(msg)
+            else:
+                previous_plan = rows[plan["id"]]["plan"]
+                # Repair missing historical *descriptive* zones only when the
+                # immutable original source and commentary match exactly.
+                # Never backfill missing fill/stop/target economics or exits.
+                if (previous_plan.get("source") == plan.get("source")
+                        and previous_plan.get("original_note") == plan.get("original_note")
+                        and previous_plan.get("created_at") == plan.get("created_at")):
+                    repaired = []
+                    for key in ("entry_low", "entry_high"):
+                        if key not in previous_plan and key in plan:
+                            previous_plan[key] = plan[key]
+                            repaired.append(key)
+                    if repaired:
+                        rows[plan["id"]]["events"].append({
+                            "at": iso(now), "to": "ORIGINAL_SOURCE_ZONE_METADATA_RESTORED",
+                            "fields": repaired})
             continue
         if len(rows) >= MAX_CANDIDATES:
             msg = "CANDIDATE_LIMIT_REACHED"
@@ -441,6 +458,12 @@ def update_book(book, seeds, latest, now, fetch=None):
         old = rec.get("result", {})
         terminal = ("LOSS_STOP", "WIN_TP1", "TIME_EXIT", "AMBIGUOUS_EXIT_BAR",
                     "AMBIGUOUS_ENTRY_BAR", "INVALIDATED_PRE_ENTRY", "UNTRIGGERED")
+        if (old.get("status") in ("WIN_TP1", "LOSS_STOP", "TIME_EXIT",
+                                  "AMBIGUOUS_EXIT_BAR", "AMBIGUOUS_ENTRY_BAR")
+                and not old.get("route") and
+                plan.get("alert_b") is not None and plan.get("alert_a") is None):
+            old["route"] = "B"
+            rec["events"].append({"at": iso(now), "to": "ENTRY_ROUTE_FROM_ORIGINAL_PLAN"})
         if issue:
             result = {"status": "UNTESTABLE", "reason": issue, "scored": False}
         elif old.get("status") in terminal and old.get("evidence"):
