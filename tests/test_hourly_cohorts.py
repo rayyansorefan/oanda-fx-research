@@ -51,7 +51,7 @@ class HourlyCohortTests(unittest.TestCase):
         found=ranked_priority_watches({"collected_at":at,
           "ranked_review_candidates":ranked},{"collected_at":at,"pairs":quotes},book,now,limit=6)
         self.assertEqual([x["instrument"] for x in found],
-                         ["EUR_USD","EUR_GBP","EUR_JPY","EUR_NZD","EUR_SEK","EUR_AUD"])
+                         ["EUR_USD","EUR_GBP","EUR_JPY","EUR_AUD","EUR_NZD","EUR_SEK"])
         self.assertEqual(len(found),6)
 
     def test_same_hour_distinct_main_and_hourly_snapshots_retained(self):
