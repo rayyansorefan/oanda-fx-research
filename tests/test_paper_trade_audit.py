@@ -31,6 +31,17 @@ class PaperAuditTests(unittest.TestCase):
         self.assertEqual(directional_pct(p,209.20),0.27648)
         self.assertEqual(directional_pct(p,210.12),-0.16207)
 
+    def test_public_research_uses_percentages_not_r_multiples(self):
+        p=dict(plan())
+        book={"candidates":{"T001":{"plan":p,"result":{
+            "status":"WIN_TP1","scored":True,"net_r":2.0,
+            "exit":1.09,"mfe_r":2.2,"mae_r":-0.4,"route":"B"}}}}
+        public=public_view(book)
+        self.assertEqual(public["candidates"][0]["move_pct"],0.90909)
+        self.assertNotIn("net_r",public["candidates"][0])
+        self.assertNotIn("mfe_r",public["candidates"][0])
+        self.assertNotIn("total_r",public["strategy"]["M15_REJECTION / ROUTE_B"])
+
     def test_hourly_tracking_without_verified_entry_shows_hypothetical_move(self):
         p=plan()
         time=stamp("2026-10-23T10:30:00Z")
