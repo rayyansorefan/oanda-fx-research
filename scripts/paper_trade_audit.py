@@ -56,6 +56,14 @@ def numeric(value):
     return n
 
 
+def positive_price(value):
+    try:
+        number = numeric(value)
+        return number if number > 0 else None
+    except (TypeError, ValueError, OverflowError):
+        return None
+
+
 def validate(plan):
     required = ("id", "instrument", "direction", "created_at", "expires_at",
                 "planned_entry", "stop", "tp1", "max_oanda_spread_pips")
@@ -207,44 +215,46 @@ def directional_pct(plan, exit_side_price):
     return round(sign * (numeric(exit_side_price) - entry) / entry * 100, 5)
 
 
-def update_price_tracking(book, market, now, candle_samples=None):
-    """Hourly price progress independent of whether a simulated entry has filled.
+def research_move_pct(direction, reference, exit_side_price):
+    """Direction-adjusted spot movement, never a simulated trade return."""
+    sign = 1 if direction == "LONG" else -1
+    return round(sign * (numeric(exit_side_price) - numeric(reference)) /
+                 numeric(reference) * 100, 5)
 
-    Pending entries show a hypothetical move FROM the original proposed level,
-    never a profit or a position. All quotes are indicative OANDA bid/ask.
+
+def update_price_tracking(book, market, now, candle_samples=None):
+    """Monitor *every* shortlisted thesis, irrespective of audit eligibility.
+
+    An exact original entry is the reference when available. Otherwise a preserved
+    entry-zone midpoint is research-only; if the original idea had neither, the
+    first *subsequent* observed quote is frozen as the forward monitoring baseline.
+    These spot movements NEVER imply a filled order or reconstruct Friday returns.
     """
     candle_samples = candle_samples or {}
     pairs = (market or {}).get("pairs") or {}
     for rec in book.get("candidates", {}).values():
         plan, result = rec["plan"], rec.get("result") or {}
-        if plan.get("planned_entry") is None or validate(plan):
-            continue
-        if result.get("scored") is True and result.get("exit") is not None:
+        if (result.get("scored") is True and result.get("exit") is not None
+                and positive_price(plan.get("planned_entry")) is not None):
             result["exit_move_pct"] = directional_pct(plan, result["exit"])
         stage = result.get("status")
-        if stage in ("WIN_TP1", "LOSS_STOP", "TIME_EXIT", "UNTRIGGERED",
-                     "INVALIDATED_PRE_ENTRY", "AMBIGUOUS_ENTRY_BAR",
-                     "AMBIGUOUS_EXIT_BAR", "UNTESTABLE"):
-            continue
-        history = list(rec.get("tracking", {}).get("history") or [])
+        prior = rec.get("tracking") or {}
+        history = list(prior.get("history") or [])
+        has_entry = positive_price(plan.get("planned_entry")) is not None
         try:
-            expires = stamp(plan["expires_at"])
-            created = stamp(plan["created_at"])
-            if now > expires and stage != "OPEN":
-                rec["tracking"] = {**rec.get("tracking", {}),
-                                   "state": "EXPIRED_NO_PAPER_ENTRY"}
-                continue
-            close_side = "bid" if plan["direction"] == "LONG" else "ask"
-            for b in candle_samples.get(plan["id"], []):
-                closes = b["t"] + dt.timedelta(minutes=15)
-                if closes.minute != 0 or not created < closes <= now:
-                    continue
-                if closes > expires and stage != "OPEN":
-                    continue
-                history.append({"at": iso(closes),
-                                "price": b[close_side]["c"],
-                                "move_pct": directional_pct(plan, b[close_side]["c"]),
-                                "source": "COMPLETED_M15_CLOSE"})
+            if has_entry and plan.get("created_at") and plan.get("expires_at"):
+                expires, created = stamp(plan["expires_at"]), stamp(plan["created_at"])
+                close_side = "bid" if plan["direction"] == "LONG" else "ask"
+                for b in candle_samples.get(plan["id"], []):
+                    closes = b["t"] + dt.timedelta(minutes=15)
+                    if closes.minute != 0 or not created < closes <= now:
+                        continue
+                    if closes > expires and stage != "OPEN":
+                        continue
+                    history.append({"at": iso(closes),
+                                    "price": b[close_side]["c"],
+                                    "move_pct": directional_pct(plan, b[close_side]["c"]),
+                                    "source": "COMPLETED_M15_CLOSE"})
             row = pairs.get(plan["instrument"]) or {}
             quote = row.get("quote") or {}
             quote_at = stamp(quote["time"])
@@ -254,35 +264,65 @@ def update_price_tracking(book, market, now, candle_samples=None):
             if quote_at > now + dt.timedelta(minutes=5):
                 raise ValueError("Future quote")
             age = now - quote_at
+            history = sorted({(m["source"], m["at"]): m for m in history}.values(),
+                             key=lambda m: (m["at"], m["source"]))[-96:]
             if age > dt.timedelta(minutes=20):
-                unique = {(m["source"], m["at"]): m for m in history}
-                history = sorted(unique.values(), key=lambda m: (m["at"], m["source"]))[-48:]
-                rec["tracking"] = {**rec.get("tracking", {}),
-                                   "state": "QUOTE_STALE", "quote_at": iso(quote_at),
+                rec["tracking"] = {**prior, "state": "QUOTE_STALE",
+                                   "checked_at": iso(now), "quote_at": iso(quote_at),
                                    "history": history}
                 continue
             price = bid if plan["direction"] == "LONG" else ask
+            if has_entry:
+                reference, kind, anchor_at = (numeric(plan["planned_entry"]),
+                                              "ORIGINAL_PLANNED_ENTRY",
+                                              plan["created_at"])
+            elif (positive_price(plan.get("entry_low")) is not None and
+                  positive_price(plan.get("entry_high")) is not None):
+                reference = round((numeric(plan["entry_low"]) +
+                                   numeric(plan["entry_high"])) / 2, 8)
+                kind, anchor_at = "ORIGINAL_ZONE_MIDPOINT", plan["created_at"]
+            elif (positive_price(prior.get("reference_price")) is not None and
+                  prior.get("reference_kind") == "FIRST_OBSERVED_QUOTE"):
+                reference = numeric(prior["reference_price"])
+                kind, anchor_at = "FIRST_OBSERVED_QUOTE", prior["reference_at"]
+            else:
+                reference, kind, anchor_at = price, "FIRST_OBSERVED_QUOTE", iso(quote_at)
             mark = {"at": iso(quote_at), "price": price,
-                    "move_pct": directional_pct(plan, price),
+                    "move_pct": research_move_pct(plan["direction"], reference, price),
                     "source": "OANDA_LIVE_QUOTE"}
             history.append(mark)
-            unique = {(m["source"], m["at"]): m for m in history}
-            history = sorted(unique.values(), key=lambda m: (m["at"], m["source"]))[-48:]
+            history = sorted({(m["source"], m["at"]): m for m in history}.values(),
+                             key=lambda m: (m["at"], m["source"]))[-96:]
+            if result.get("scored") is True:
+                state = "PAPER_CLOSED"
+            elif stage in ("UNTRIGGERED", "INVALIDATED_PRE_ENTRY",
+                           "AMBIGUOUS_ENTRY_BAR", "AMBIGUOUS_EXIT_BAR"):
+                state = "HISTORICAL_NO_VERIFIED_ENTRY"
+            elif not has_entry or stage == "UNTESTABLE":
+                state = "RESEARCH_ONLY"
+            elif (plan.get("expires_at") and
+                  now > stamp(plan["expires_at"]) and stage != "OPEN"):
+                state = "EXPIRED_NO_PAPER_ENTRY"
+            else:
+                state = "PAPER_OPEN" if stage == "OPEN" else "NO_VERIFIED_ENTRY"
             rec["tracking"] = {
-                "state": "PAPER_OPEN" if stage == "OPEN" else "NO_VERIFIED_ENTRY",
-                "quote_at": iso(quote_at),
+                "state": state, "checked_at": iso(now), "quote_at": iso(quote_at),
                 "bid": bid, "ask": ask, "price": price,
                 "move_pct": mark["move_pct"],
-                "tp1_move_pct": directional_pct(plan, plan["tp1"]),
-                "stop_move_pct": directional_pct(plan, plan["stop"]),
+                "reference_price": reference, "reference_kind": kind,
+                "reference_at": anchor_at,
+                "tp1_move_pct": (directional_pct(plan, plan["tp1"])
+                                 if has_entry and plan.get("tp1") is not None else None),
+                "stop_move_pct": (directional_pct(plan, plan["stop"])
+                                  if has_entry and plan.get("stop") is not None else None),
                 "history": history,
                 "source": "OANDA_RESEARCH_QUOTE_NOT_PEPPERSTONE",
             }
-        except (KeyError, TypeError, ValueError, OverflowError):
-            unique = {(m["source"], m["at"]): m for m in history}
-            history = sorted(unique.values(), key=lambda m: (m["at"], m["source"]))[-48:]
-            rec["tracking"] = {**rec.get("tracking", {}),
-                               "state": "QUOTE_UNAVAILABLE", "history": history}
+        except (KeyError, TypeError, ValueError, OverflowError, ZeroDivisionError):
+            history = sorted({(m["source"], m["at"]): m for m in history}.values(),
+                             key=lambda m: (m["at"], m["source"]))[-96:]
+            rec["tracking"] = {**prior, "state": "QUOTE_UNAVAILABLE",
+                               "checked_at": iso(now), "history": history}
 
 
 def _mark(plan, bar):
@@ -488,17 +528,16 @@ def public_view(book):
                  "technical_context": p.get("technical_context"),
                  "tracking": ({**{k: v for k, v in (c.get("tracking") or {}).items()
                                  if k != "history"},
-                               "history": ((c.get("tracking") or {}).get("history", [])[-8:]
-                                           if c.get("result", {}).get("status") in
-                                           ("OPEN", "PENDING_TRIGGER", "TRIGGERED_UNFILLED",
-                                            "DATA_GAP", "DATA_UNAVAILABLE") else [])}
+                               "history": ((c.get("tracking") or {}).get("history", [])[-10:])}
                               if c.get("tracking") else None),
                  "move_pct": (directional_pct(p, c["result"]["exit"])
                               if c.get("result", {}).get("scored") is True
                               and c.get("result", {}).get("exit") is not None
                               else ((c.get("tracking") or {}).get("move_pct")
                                     if (c.get("tracking") or {}).get("state") in
-                                       ("PAPER_OPEN", "NO_VERIFIED_ENTRY") else None)),
+                                       ("PAPER_OPEN", "NO_VERIFIED_ENTRY", "RESEARCH_ONLY",
+                                        "PAPER_CLOSED", "HISTORICAL_NO_VERIFIED_ENTRY",
+                                        "EXPIRED_NO_PAPER_ENTRY") else None)),
                  **{k: v for k, v in c.get("result", {}).items()
                     if k in ("status", "reason", "scored", "route", "triggered_at", "entry_at",
                              "at", "entry", "exit")}}
