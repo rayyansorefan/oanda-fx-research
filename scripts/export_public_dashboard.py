@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 import urllib.error
 import urllib.request
+from paper_trade_audit import public_view
 
 DESTINATION = "rayyansorefan/standalone-wallet-paper-agent"
 TARGET = "docs/fx-feed.json"
@@ -218,7 +219,8 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
     return setups
 
 def build_public_feed(summary: dict, news: dict, signals: dict,
-                      watcher: dict, detailed: dict, brief_history: dict | None = None) -> dict:
+                      watcher: dict, detailed: dict, brief_history: dict | None = None,
+                      paper_ledger: dict | None = None) -> dict:
     coverage = summary.get("coverage") or {}
     prices = {}
     for key, source in (summary.get("pairs") or {}).items():
@@ -317,6 +319,7 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         "sources": source_entries,
         "headlines": headlines,
         "calendar": calendar,
+        "paper_audit": public_view(paper_ledger or {"candidates": {}}),
         "learning": {
             "verified_broker_trades": 0,
             "verified_wins": 0,
@@ -461,8 +464,10 @@ def main() -> int:
                 row = json.loads(path.read_text(encoding="utf-8"))
                 if row.get("instrument") == name and row.get("collected_at") == summary.get("collected_at"):
                     detailed[name] = row
+        paper_path = Path("data/paper_trade_ledger.json")
+        paper = load(str(paper_path)) if paper_path.is_file() else {"candidates": {}}
         data = build_public_feed(summary, news, signals, watcher, detailed,
-                                 recent.get("pairs") or {})
+                                 recent.get("pairs") or {}, paper)
         if not data.get("snapshot_at") or len(data.get("pairs", {})) < 1:
             raise ValueError("Invalid sanitized payload")
         PUBLIC_PAYLOAD_PATH.parent.mkdir(parents=True, exist_ok=True)
