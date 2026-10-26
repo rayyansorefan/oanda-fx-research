@@ -1,7 +1,7 @@
 import datetime as dt
 import unittest
 
-from paper_trade_audit import replay, update_book, public_view, stamp, directional_pct
+from paper_trade_audit import replay, update_book, public_view, stamp, directional_pct, ranked_priority_watches
 
 
 def bar(time, op, high, low, close, spread=.0002):
@@ -335,6 +335,56 @@ class PaperAuditTests(unittest.TestCase):
         book["candidates"].pop("S29")
         score = public_view(book)["strategy"]["M15_REJECTION / ROUTE_B"]
         self.assertEqual(score["paper_priority_bias"], 0)
+
+
+    def test_ranked_research_is_captured_and_monitored_without_fake_paper_wins(self):
+        now = stamp("2026-10-26T10:00:00Z")
+        market = {"collected_at": "2026-10-26T10:00:00Z",
+                  "pairs": {"GBP_USD": {"quote": {"time":"2026-10-26T09:59:45Z",
+                    "bid":1.1000, "ask":1.1002, "tradeable":True}}}}
+        summary = {"collected_at": market["collected_at"],
+                   "ranked_review_candidates": [
+                       {"instrument":"GBP_USD", "potential_direction_not_approved":"SHORT",
+                        "research_priority":68.5}]}
+        book = {"candidates": {}, "warnings": []}
+        seeds = ranked_priority_watches(summary, market, book, now)
+        self.assertEqual(len(seeds), 1)
+        self.assertEqual(seeds[0]["source"], "AUTOMATED_RESEARCH_PRIORITY")
+        self.assertNotIn("planned_entry", seeds[0])
+        update_book(book, {"candidates":seeds}, {"signals":[]}, now, market=market)
+        row = public_view(book)["candidates"][0]
+        self.assertEqual(row["status"], "UNTESTABLE")
+        self.assertFalse(row["scored"])
+        self.assertEqual(row["move_pct"], 0)
+        self.assertEqual(row["tracking"]["reference_kind"], "FIRST_OBSERVED_QUOTE")
+        # A later ranking does not create a second trade or reset the baseline.
+        later = stamp("2026-10-26T11:00:00Z")
+        market["collected_at"] = "2026-10-26T11:00:00Z"
+        market["pairs"]["GBP_USD"]["quote"].update(
+            time="2026-10-26T10:59:45Z", bid=1.0990, ask=1.0992)
+        summary["collected_at"] = market["collected_at"]
+        self.assertEqual(ranked_priority_watches(summary, market, book, later), [])
+        update_book(book, {"candidates":[]}, {"signals":[]}, later, market=market)
+        final = public_view(book)
+        self.assertEqual(final["totals"]["candidates"], 1)
+        self.assertEqual(final["totals"]["scored"], 0)
+        self.assertEqual(final["totals"]["wins"], 0)
+        self.assertEqual(final["candidates"][0]["tracking"]["reference_price"],1.1002)
+        self.assertGreater(final["candidates"][0]["move_pct"], 0)
+        self.assertEqual(len(final["candidates"][0]["tracking"]["history"]), 2)
+
+    def test_priority_research_rejects_stale_and_mismatched_snapshots(self):
+        now = stamp("2026-10-26T10:00:00Z")
+        market = {"collected_at":"2026-10-26T09:00:00Z",
+                  "pairs":{"EUR_USD":{"quote":{"time":"2026-10-26T09:59:00Z",
+                   "bid":1.1,"ask":1.1002,"tradeable":True}}}}
+        summary = {"collected_at":"2026-10-26T10:00:00Z",
+                   "ranked_review_candidates":[{"instrument":"EUR_USD",
+                     "potential_direction_not_approved":"LONG"}]}
+        self.assertEqual(ranked_priority_watches(summary,market,{},now),[])
+        market["collected_at"]=summary["collected_at"]
+        market["pairs"]["EUR_USD"]["quote"]["time"]="2026-10-26T08:00:00Z"
+        self.assertEqual(ranked_priority_watches(summary,market,{},now),[])
 
 
 if __name__ == "__main__":
