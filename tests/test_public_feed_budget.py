@@ -32,6 +32,10 @@ class BudgetTests(unittest.TestCase):
         after=[(x["id"],x["entry"],x["stop"],x["tp1"]) for x in audit["candidates"]]
         self.assertEqual(after,before[-len(after):])
         self.assertEqual(payload["pairs"]["FX_00"]["quote"]["bid"],1.12345)
+        self.assertTrue(all(row["tracking"]["history"] for row in audit["candidates"]),
+                        "Never publish an empty price history for retained candidates")
+        self.assertGreaterEqual(min(len(f["candles"]) for p in payload["pairs"].values()
+                                    for f in p["frames"].values()), 6)
 
     def test_small_feed_does_not_mutate_candidate_history(self):
         p={"pairs":{},"learning":{"paper_audit":{"totals":{"candidates":1},
