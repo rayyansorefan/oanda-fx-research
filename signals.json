@@ -1,26 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-27T14:02:59.064Z",
-  "signals": [
-    {
-      "id": "20261027-1403-EURUSD-S-B03",
-      "instrument": "EUR_USD",
-      "direction": "SHORT",
-      "created_at": "2026-10-27T14:02:59.064Z",
-      "expires_at": "2026-10-27T16:00:00Z",
-      "planned_entry": 1.11495,
-      "stop": 1.11581,
-      "tp1": 1.11314,
-      "tp2": 1.11267,
-      "alert_b": 1.11495,
-      "max_oanda_spread_pips": 0.9,
-      "event_blackouts_utc": [
-        {
-          "start": "2026-10-27T13:45:00Z",
-          "end": "2026-10-27T14:15:00Z"
-        }
-      ]
-    }
-  ],
-  "note": "14:00 UK discretionary research handoff. EUR_USD SHORT route B is a new prospective conditional plan, not a fill and not a relabel of expired 07:30/12:00 plans. After the 13:45-14:15 UTC US-release blackout, require an OANDA-reference pullback into 1.11487-1.11504 and a completed M15 bearish rejection close at or below 1.11490; then require a later executable-price re-touch near 1.11495 before the user alone considers manual entry. Cancel above 1.11581, at 16:00 UTC expiry, if OANDA spread exceeds 0.9 pip, or if release/FOMC news invalidates the thesis. Gross TP1 R:R 2.10; maximum-spread-adjusted TP1 R:R 1.81. Verified 14:00 UTC OANDA snapshot: 68 account instruments discovered/quoted/screened on M15+H1; 17 deep sets, all 12 manifest detailed shards and optional contexts reviewed. OANDA is not a Pepperstone executable quote; verify Pepperstone UK symbol, current bid/ask, spread, stake and risk <=0.25% of verified equity. No order or broker fill claimed."
+  "generated_at": "2026-10-27T16:33:53.799Z",
+  "signals": [],
+  "note": "16:30 UK audit: no current canonical signal. 20261027-1403-EURUSD-S-B03 expired at 16:00 UTC without its required completed M15 rejection and later retouch, so it has been removed from active monitoring while remaining immutable in the paper ledger. The user's separate EUR_USD early-entry test has no verified closing outcome and must not be treated as a new signal or win. GBP_USD is a paper-only pullback watch because H4 conflicts with the D1/H1/M15 bearish case. OANDA is not a Pepperstone executable quote. No order or fill claimed."
 }
