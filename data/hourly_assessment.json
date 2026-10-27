@@ -485,7 +485,7 @@
       }
     ],
     "challenger": "PAPER_ONLY_NOT_VALIDATED",
-    "checked_at": "2026-10-27T07:32:01.064192+00:00",
+    "checked_at": "2026-10-27T07:33:06.463921+00:00",
     "favourable": 24,
     "flat": 0,
     "insufficient": 6,
@@ -495,7 +495,7 @@
     "sample_warning": "Directional movements are NOT filled trades, realised losses, success probabilities or evidence sufficient to change champion parameters.",
     "session_date_uk": "2026-10-26"
   },
-  "collected_at": "2026-10-27T07:32:01.064192+00:00",
+  "collected_at": "2026-10-27T07:33:06.463921+00:00",
   "counts": {
     "need_news_review": 0,
     "price_alerts": 0,
@@ -562,24 +562,50 @@
       "win_rate_pct": 83.3
     },
     "paper_totals": {
-      "candidates": 119,
+      "candidates": 125,
       "losses": 0,
       "scored": 1,
       "wins": 1
     },
     "threshold": "Paper bias neutral until >=30 scored samples, >=10 days, >=3 pairs and conservative 99% mean-R bound excludes zero. Never relax execution, spread or news gates."
   },
-  "news_collected_at": "2026-10-27T07:31:56Z",
+  "news_collected_at": "2026-10-27T07:32:56Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-10-27T07:31:56Z",
+  "oanda_collected_at": "2026-10-27T07:32:56Z",
   "signals": [
     {
-      "created_at": "2026-10-26T15:31:21.354Z",
+      "adaptive_context": {
+        "block_new_alert": false,
+        "m15_ema_distance_atr": 1.08,
+        "reason": "No reversal or overextension warning on the available completed M15/H1 evidence.",
+        "status": "NO_NEW_TECHNICAL_WARNING"
+      },
+      "caution": "Some optional news feeds unavailable; calendar and required headline feeds checked. This is NOT an all-clear.",
+      "created_at": "2026-10-27T07:30:48Z",
       "direction": "SHORT",
-      "expires_at": "2026-10-26T19:00:00Z",
-      "id": "20261026-1531-EURUSD-S-B01",
+      "expires_at": "2026-10-27T11:30:00Z",
+      "id": "20261027-0730-EURUSD-S-B01",
+      "news_source_coverage": {
+        "currencies_without_supported_official_feed": [],
+        "missing_required": [],
+        "note": "LIMITED means selected official and aggregate sources plus the calendar responded, but not every optional source. Never interpret this as complete global-news or real-time event coverage.",
+        "other_unavailable": [
+          "BLS employment",
+          "BLS inflation"
+        ],
+        "required_sources": [
+          "ECB press",
+          "Fed policy",
+          "Global markets aggregation"
+        ],
+        "status": "LIMITED"
+      },
+      "news_status": "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS",
+      "observed_price_reactions": [],
       "pair": "EUR_USD",
-      "status": "EXPIRED_OR_FUTURE",
+      "release_blackouts": [],
+      "relevant_headlines": [],
+      "status": "NO_QUALIFIED_PRICE_PATTERN",
       "strategy_feedback": {
         "broker_observations_not_weighted": 6,
         "execution_review": null,
@@ -597,9 +623,9 @@
       "technical_checkpoint": {
         "h1_adx14": 32.64170340014233,
         "h1_rsi14": 29.990508679600993,
-        "indicative_distance_to_stop_pips": 38.2,
-        "indicative_distance_to_target_pips": -5.2,
-        "indicative_remaining_rr_before_new_spread_adjustment": -0.14,
+        "indicative_distance_to_stop_pips": 16.6,
+        "indicative_distance_to_target_pips": 11.4,
+        "indicative_remaining_rr_before_new_spread_adjustment": 0.69,
         "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
         "latest_completed_m15_bar_start": "2026-10-27T07:15:00.000000000Z",
         "m15_adx14": 27.367586068069844,
@@ -607,14 +633,14 @@
         "m15_macd_histogram": -5.511491825431952e-05,
         "m15_rsi14": 40.94350839899741,
         "oanda_quote": {
-          "ask": 1.11642,
-          "bid": 1.11633,
+          "ask": 1.11632,
+          "bid": 1.11624,
           "pip_size": 0.0001,
-          "spread_pips": 0.8999999999992347,
-          "time": "2026-10-27T07:31:18.509673408Z",
+          "spread_pips": 0.8000000000008001,
+          "time": "2026-10-27T07:32:17.146641936Z",
           "tradeable": true
         },
-        "price_reference": 1.11633,
+        "price_reference": 1.11624,
         "quote_is_tradeable": true,
         "vs_m15_ema20": "BELOW"
       }
