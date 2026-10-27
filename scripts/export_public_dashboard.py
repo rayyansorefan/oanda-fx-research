@@ -174,8 +174,14 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
                 trend = []
                 break
             trend.append("LONG" if a > b else "SHORT" if a < b else "NEUTRAL")
-        if len(trend) != 4 or any(t != direction for t in trend):
-            continue
+        if len(trend) != 4 or trend[0] != direction or trend[1] != direction:
+            continue  # The M15 and H1 directional foundation must agree.
+        aligned_count = sum(t == direction for t in trend)
+        if aligned_count < 3:
+            continue  # One opposing higher frame is watchable, two are not.
+        full_alignment = aligned_count == 4
+        conflicts = [frame for frame, state in zip(("M15", "H1", "H4", "D"), trend)
+                     if state != direction]
         executable = bid if direction == "SHORT" else ask
         distance_in_trend = (ema - executable if direction == "SHORT"
                              else executable - ema)
@@ -202,6 +208,10 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
                                 and abs(executable - close) <= .35 * atr)
             except (KeyError, ValueError, TypeError, ZeroDivisionError):
                 continuation = False
+        # A conflicting higher timeframe is useful for EARLY RESEARCH ONLY.
+        # It must never become the guarded four-frame continuation candidate.
+        if not full_alignment:
+            continuation = False
         # Evaluate both independently: continuation has a shorter entry window.
         for route_continuation in ((True, False) if continuation else (False,)):
             if route_continuation:
@@ -238,7 +248,16 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
                 "entry_route": "MOMENTUM_CONTINUATION" if route_continuation else "EMA20_PULLBACK",
                 "research_priority": round(float(candidate.get("research_priority") or 0), 2),
                 "technical_checks_agree": candidate["technical_checks_agree"],
-                "timeframes_aligned": ["M15", "H1", "H4", "D"],
+                "timeframes_aligned": [
+                    frame for frame, trend_direction in zip(("M15", "H1", "H4", "D"), trend)
+                    if trend_direction == direction],
+                "higher_timeframe_conflicts": conflicts,
+                "research_only_blocker": (
+                    "Higher-timeframe conflict on " + ", ".join(conflicts) +
+                    "; directional watch ONLY; NOT eligible for live/manual signal admission."
+                    if conflicts else
+                    "Await an independently completed entry candle and fresh news/spread review."
+                ),
                 "entry_low": round(entry_low, places),
                 "entry_high": round(entry_high, places),
                 "stop": round(stop, places),

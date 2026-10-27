@@ -63,6 +63,14 @@ class PublicDashboardFeedTests(unittest.TestCase):
         self.assertTrue(s["tp2"] < s["tp1"] < s["entry_low"])
         self.assertGreaterEqual(s["net_rr_estimate"], 1.35)
         summary["pairs"]["EUR_JPY"]["frames"]["H4"]["indicators"]["ema20"] = 180.0
+        watch = build_research_setups(summary)
+        self.assertEqual(len(watch), 1)
+        self.assertEqual(watch[0]["entry_route"], "EMA20_PULLBACK")
+        self.assertEqual(watch[0]["higher_timeframe_conflicts"], ["H4"])
+        self.assertEqual(watch[0]["execution_status"], "WATCH_ONLY_NOT_APPROVED")
+        self.assertIn("NOT eligible", watch[0]["research_only_blocker"])
+        # A second opposing higher frame removes even the research watch.
+        summary["pairs"]["EUR_JPY"]["frames"]["D"]["indicators"]["ema20"] = 180.0
         self.assertEqual(build_research_setups(summary), [])
 
     def test_forward_continuation_plan_uses_current_venue_indicative_quote(self):
