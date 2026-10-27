@@ -3,7 +3,7 @@
   "created_at": "2026-10-27T14:22:00Z",
   "purpose": "Prospective manual early-entry versus conservative conditional confirmation audit; no automation of broker orders",
   "classification": "USER_EXECUTED_EARLY_ENTRY_TEST",
-  "status": "OPEN_AT_SCREENSHOT",
+  "status": "CLOSED_SCREENSHOT_CONFIRMED",
   "instrument": "EUR_USD",
   "direction": "SHORT",
   "broker": "Pepperstone spread betting (user screenshot; account mode not independently verified)",
@@ -46,9 +46,35 @@
       "realised net P&L when user provides close",
       "unfilled missed movement if conditional never triggers"
     ],
-    "result": "PENDING; cannot score wins/losses while open",
-    "policy": "Never retroactively count favorable directional movement as a fill or success. Compare losers, expired and missed entries symmetrically. Do not loosen material news, broker-quote or position-risk protections based on one result."
+    "result": "EARLY_MANUAL_GAIN__STRICT_PLANNED_PRICE_RETOUCH_NOT_OBSERVED_ON_OANDA_BIDS",
+    "policy": "Keep M15 original rule immutable. Prospectively compare completed M5 alternative, all losses, fees, news clearance, and no-fills. One win changes research priority only, not automatic entry approval.",
+    "research_replay": {
+      "source": "Hindsight OANDA completed M5/M15 bid-mid-ask bars collected 2026-10-27T16:35:53Z, not a contemporaneous broker signal",
+      "news_blackout_end": "2026-10-27T14:15:00Z",
+      "manual_entry_after_blackout": true,
+      "first_subsequent_m5_bearish_candle_completed_at": "2026-10-27T14:20:00Z",
+      "m5_close_after_manual_entry_seconds": 11,
+      "m5_bar_open": 1.11518,
+      "m5_bar_close": 1.11494,
+      "m15_bearish_rejection_completed_at": "2026-10-27T14:45:00Z",
+      "m15_bar_open": 1.11506,
+      "m15_bar_close": 1.11472,
+      "max_oanda_bid_after_m15_confirmation_before_expiry": 1.11488,
+      "planned_sell_price": 1.11495,
+      "exact_retouch_observed": false,
+      "broker_retouch_or_conservative_fill": "NOT_VERIFIABLE_FROM_OANDA_BARS",
+      "conclusion": "Manual early entry captured +8.2 pips; original exact entry was not revisited in available post-confirmation OANDA bid bars. This is a promising missed-opportunity example, not a verified alternate rule."
+    }
   },
   "evidence": "USER_SUPPLIED_PEPPERSTONE_OPEN_POSITION_SCREENSHOT_2026-10-27_1422UK",
-  "privacy": "Only transcribed necessary trade facts; screenshot not uploaded; private repository"
+  "privacy": "Only transcribed necessary trade facts; screenshot not uploaded; private repository",
+  "closed_at": "2026-10-27T17:39:30Z",
+  "exit_price": 1.11408,
+  "realised_net_pnl_gbp": 9.02,
+  "commission_gbp": 0,
+  "swap_fees_gbp": 0,
+  "total_fees_gbp": 0,
+  "favourable_move_pips": 8.2,
+  "favourable_price_move_pct": 0.07355,
+  "outcome_evidence": "USER_SUPPLIED_PEPPERSTONE_CLOSED_POSITION_SCREENSHOT_2026-10-27_1739UK"
 }
