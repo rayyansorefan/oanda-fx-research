@@ -541,7 +541,7 @@ def public_view(book):
                  **{k: v for k, v in c.get("result", {}).items()
                     if k in ("status", "reason", "scored", "route", "triggered_at", "entry_at",
                              "at", "entry", "exit")}}
-                for c in candidates[-90:] for p in [c["plan"]]]}
+                for c in candidates for p in [c["plan"]]]}
 
 
 def strategy_name(plan):
