@@ -262,6 +262,58 @@
         "atr_spread": "OANDA spread 1.7 pips; 1.8-pip cap; numerical reward/cost gates pass but regime-quality gate does not",
         "macro": "Bank of Canada decision and MPR 28 Oct 09:45 ET; no same-session high-impact blackout before expiry; paper strategy bias neutral"
       }
+    },
+    {
+      "id": "20261027-0730-EURUSD-S-B01",
+      "instrument": "EUR_USD",
+      "direction": "SHORT",
+      "created_at": "2026-10-27T07:30:48Z",
+      "expires_at": "2026-10-27T11:30:00Z",
+      "planned_entry": 1.11685,
+      "stop": 1.1179,
+      "tp1": 1.1151,
+      "tp2": 1.1142,
+      "alert_b": 1.11685,
+      "max_oanda_spread_pips": 0.9,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-10-27T07:14:22Z",
+      "original_note": "Prospective pullback route only: wait for OANDA-reference price in 1.11665-1.11695, then require a completed M15 bearish rejection close at or below 1.11670. Invalidate above 1.11790, at expiry, if spread exceeds 0.9 pip, or if material news changes the thesis. No broker fill asserted.",
+      "technical_context": {
+        "as_of_utc": "2026-10-27T07:14:22Z",
+        "m15": "RSI14 31.83; ADX14 23.27; -DI 33.07 > +DI 13.44; EMA20<EMA50<EMA200; Supertrend down; below Ichimoku; prior-period Donchian down; ATR14 3.07 pips",
+        "h1": "RSI14 29.99; ADX14 32.64; -DI 31.26 > +DI 9.84; bearish EMA alignment; Supertrend down; below cloud; lower highs/lows",
+        "trend": "D1/H4/H1 bearish structure, but live price was about 3.1 M15 ATR below EMA20 and M5 oversold; pullback rejection required rather than chasing",
+        "atr_spread": "OANDA spread 0.8 pip; admission cap 0.9 pip; gross TP1 RR 1.67 and capped-spread-adjusted TP1 RR 1.46",
+        "macro": "US Consumer Confidence at 14:00 UTC; FOMC decision 28 Oct; ECB 29 Oct; feed coverage partial; paper strategy bias neutral"
+      }
+    },
+    {
+      "id": "20261027-0730-CADJPY-L-B01-PAPER",
+      "instrument": "CAD_JPY",
+      "direction": "LONG",
+      "created_at": "2026-10-27T07:30:48Z",
+      "expires_at": "2026-10-27T11:30:00Z",
+      "planned_entry": 112.46,
+      "stop": 112.35,
+      "tp1": 112.7,
+      "tp2": 112.82,
+      "alert_b": 112.46,
+      "max_oanda_spread_pips": 3,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-10-27T07:14:22Z",
+      "original_note": "Directional paper watch only: wait for an OANDA-reference pullback into 112.43-112.49 and require a completed M15 bullish rejection close at or above 112.48. Not admitted to signals.json because M15 ADX is weak, H4 context conflicts, and Bank of Canada event risk is near. No broker fill asserted.",
+      "technical_context": {
+        "as_of_utc": "2026-10-27T07:14:22Z",
+        "m15": "RSI14 59.8; ADX14 17.8; +DI 25.3 > -DI 14.2; bullish EMA/Supertrend/Ichimoku context but weak trend strength",
+        "h1": "RSI14 64.1; ADX14 20.7; bullish structure",
+        "trend": "Intraday higher highs/lows; H4 Supertrend/downside context conflicts and daily alignment is mixed",
+        "atr_spread": "OANDA observed spread 2.7 pips; paper cap 3.0 pips; numerical reward/cost gates pass but regime-quality gate does not",
+        "macro": "Bank of Canada decision and MPR 28 Oct 13:45 UTC; event proximity and partial news coverage prevent live-watch admission"
+      }
     }
   ]
 }
