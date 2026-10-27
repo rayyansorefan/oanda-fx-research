@@ -485,7 +485,7 @@
       }
     ],
     "challenger": "PAPER_ONLY_NOT_VALIDATED",
-    "checked_at": "2026-10-27T13:13:44.469135+00:00",
+    "checked_at": "2026-10-27T14:00:57.325949+00:00",
     "favourable": 24,
     "flat": 0,
     "insufficient": 6,
@@ -495,7 +495,7 @@
     "sample_warning": "Directional movements are NOT filled trades, realised losses, success probabilities or evidence sufficient to change champion parameters.",
     "session_date_uk": "2026-10-26"
   },
-  "collected_at": "2026-10-27T13:13:44.469135+00:00",
+  "collected_at": "2026-10-27T14:00:57.325949+00:00",
   "counts": {
     "need_news_review": 0,
     "price_alerts": 0,
@@ -562,50 +562,24 @@
       "win_rate_pct": 83.3
     },
     "paper_totals": {
-      "candidates": 180,
+      "candidates": 186,
       "losses": 0,
       "scored": 1,
       "wins": 1
     },
     "threshold": "Paper bias neutral until >=30 scored samples, >=10 days, >=3 pairs and conservative 99% mean-R bound excludes zero. Never relax execution, spread or news gates."
   },
-  "news_collected_at": "2026-10-27T13:13:40Z",
+  "news_collected_at": "2026-10-27T14:00:53Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-10-27T13:13:39Z",
+  "oanda_collected_at": "2026-10-27T14:00:52Z",
   "signals": [
     {
-      "adaptive_context": {
-        "block_new_alert": false,
-        "m15_ema_distance_atr": 0.052,
-        "reason": "Momentum is mixed; require the original completed-candle trigger, not directional bias alone.",
-        "status": "CAUTION_MIXED_MOMENTUM"
-      },
-      "caution": "Some optional news feeds unavailable; calendar and required headline feeds checked. This is NOT an all-clear.",
       "created_at": "2026-10-27T11:59:16.599Z",
       "direction": "SHORT",
       "expires_at": "2026-10-27T13:30:00Z",
       "id": "20261027-1159-EURUSD-S-B02",
-      "news_source_coverage": {
-        "currencies_without_supported_official_feed": [],
-        "missing_required": [],
-        "note": "LIMITED means selected official and aggregate sources plus the calendar responded, but not every optional source. Never interpret this as complete global-news or real-time event coverage.",
-        "other_unavailable": [
-          "BLS employment",
-          "BLS inflation"
-        ],
-        "required_sources": [
-          "ECB press",
-          "Fed policy",
-          "Global markets aggregation"
-        ],
-        "status": "LIMITED"
-      },
-      "news_status": "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS",
-      "observed_price_reactions": [],
       "pair": "EUR_USD",
-      "release_blackouts": [],
-      "relevant_headlines": [],
-      "status": "NO_QUALIFIED_PRICE_PATTERN",
+      "status": "EXPIRED_OR_FUTURE",
       "strategy_feedback": {
         "broker_observations_not_weighted": 6,
         "execution_review": null,
@@ -623,24 +597,24 @@
       "technical_checkpoint": {
         "h1_adx14": 44.5202821151464,
         "h1_rsi14": 35.25774867132304,
-        "indicative_distance_to_stop_pips": 15.9,
-        "indicative_distance_to_target_pips": 30.6,
-        "indicative_remaining_rr_before_new_spread_adjustment": 1.92,
+        "indicative_distance_to_stop_pips": 20.7,
+        "indicative_distance_to_target_pips": 25.8,
+        "indicative_remaining_rr_before_new_spread_adjustment": 1.25,
         "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
-        "latest_completed_m15_bar_start": "2026-10-27T12:45:00.000000000Z",
-        "m15_adx14": 31.36772830078827,
-        "m15_atr14": 0.0005719074912574566,
-        "m15_macd_histogram": 0.00017272100233131432,
-        "m15_rsi14": 49.23120951394064,
+        "latest_completed_m15_bar_start": "2026-10-27T13:30:00.000000000Z",
+        "m15_adx14": 30.480176436549204,
+        "m15_atr14": 0.0005702772450057969,
+        "m15_macd_histogram": 8.533827672637512e-05,
+        "m15_rsi14": 42.85079695690735,
         "oanda_quote": {
-          "ask": 1.11508,
-          "bid": 1.115,
+          "ask": 1.11461,
+          "bid": 1.11452,
           "pip_size": 0.0001,
-          "spread_pips": 0.8000000000008001,
-          "time": "2026-10-27T13:12:57.471659104Z",
+          "spread_pips": 0.9000000000014552,
+          "time": "2026-10-27T13:59:50.366373057Z",
           "tradeable": true
         },
-        "price_reference": 1.115,
+        "price_reference": 1.11452,
         "quote_is_tradeable": true,
         "vs_m15_ema20": "BELOW"
       }
