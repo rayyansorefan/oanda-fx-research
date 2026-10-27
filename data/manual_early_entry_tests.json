@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-27T14:22:00Z",
+  "purpose": "Prospective manual early-entry versus conservative conditional confirmation audit; no automation of broker orders",
+  "classification": "USER_EXECUTED_EARLY_ENTRY_TEST",
+  "status": "OPEN_AT_SCREENSHOT",
+  "instrument": "EUR_USD",
+  "direction": "SHORT",
+  "broker": "Pepperstone spread betting (user screenshot; account mode not independently verified)",
+  "opened_at": "2026-10-27T14:19:49Z",
+  "entry_price": 1.1149,
+  "displayed_position_size_points": 1.1,
+  "stop_price": 1.1155,
+  "tp_price": 1.11331,
+  "observation": {
+    "at": "2026-10-27T14:22:00Z",
+    "at_precision": "minute from device screenshot",
+    "observed_broker_price": 1.11483,
+    "floating_pnl_gbp": 0.66,
+    "estimated_loss_at_stop_gbp": -6.6,
+    "estimated_profit_at_tp_gbp": 17.49,
+    "is_realised": false
+  },
+  "original_conditional_research_plan": {
+    "id": "20261027-1403-EURUSD-S-B03",
+    "issued_at": "2026-10-27T14:02:59.064Z",
+    "entry_price": 1.11495,
+    "stop_price": 1.11581,
+    "tp1": 1.11314,
+    "tp2": 1.11267,
+    "expires_at": "2026-10-27T16:00:00Z",
+    "required_confirmation": "completed M15 bearish rejection close at or below 1.11490 following 1.11487–1.11504 pullback, then later entry retouch; not verified when user entered",
+    "news_blackout_end": "2026-10-27T14:15:00Z"
+  },
+  "comparison": {
+    "question": "Would the earlier manually chosen entry outperform waiting for full confirmation after costs over repeated comparable prospective cases?",
+    "early_entry_arm": "actual screenshot-evidenced broker entry, user-executed only",
+    "conservative_arm": "original immutable plan; only score simulated fill if completed M15 rejection AND later executable-price retouch were prospectively met",
+    "tracked_fields": [
+      "original trigger timestamp",
+      "first valid executable quote",
+      "price and time of any fill",
+      "stop-before-target sequencing",
+      "spread/fees/financing",
+      "favorable and adverse excursions",
+      "realised net P&L when user provides close",
+      "unfilled missed movement if conditional never triggers"
+    ],
+    "result": "PENDING; cannot score wins/losses while open",
+    "policy": "Never retroactively count favorable directional movement as a fill or success. Compare losers, expired and missed entries symmetrically. Do not loosen material news, broker-quote or position-risk protections based on one result."
+  },
+  "evidence": "USER_SUPPLIED_PEPPERSTONE_OPEN_POSITION_SCREENSHOT_2026-10-27_1422UK",
+  "privacy": "Only transcribed necessary trade facts; screenshot not uploaded; private repository"
+}
