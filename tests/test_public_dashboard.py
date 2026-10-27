@@ -90,9 +90,12 @@ class PublicDashboardFeedTests(unittest.TestCase):
                     "D": {"indicators": ind(123.40, 123.70)},
                 }}}}
         setups = build_research_setups(summary)
-        self.assertEqual(len(setups), 1)
+        self.assertEqual(len(setups), 2)
         setup = setups[0]
         self.assertEqual(setup["entry_route"], "MOMENTUM_CONTINUATION")
+        self.assertEqual(setup["execution_status"], "WATCH_ONLY_NOT_APPROVED")
+        self.assertEqual(setups[1]["entry_route"], "EMA20_PULLBACK")
+        self.assertNotEqual(setup["entry_low"], setups[1]["entry_low"])
         self.assertFalse(setup["approved_entry"])
         self.assertLess(abs(setup["entry_low"] - 122.72), .03)
         self.assertTrue(setup["tp1"] < setup["entry_low"] < setup["stop"])

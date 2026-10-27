@@ -202,67 +202,82 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
                                 and abs(executable - close) <= .35 * atr)
             except (KeyError, ValueError, TypeError, ZeroDivisionError):
                 continuation = False
-        if continuation:
-            entry_low, entry_high = executable - .12 * atr, executable + .12 * atr
-            recent_high = max(float(c["mid"]["h"]) for c in recent[-3:])
-            recent_low = min(float(c["mid"]["l"]) for c in recent[-3:])
-        else:
-            if abs(ema - executable) > 2.5 * atr:
-                continue  # Do not offer a stale, extended pullback plan.
-            entry_low, entry_high = ema - .15 * atr, ema + .15 * atr
-        if direction == "SHORT":
-            stop_base = recent_high if continuation else high
-            stop = max(stop_base + .15 * atr, entry_high + 1.1 * atr)
-            worst_entry = entry_low
-            distance = stop - worst_entry
-            tp1, tp2 = worst_entry - 1.85 * distance, worst_entry - 2.35 * distance
-        else:
-            stop_base = recent_low if continuation else low
-            stop = min(stop_base - .15 * atr, entry_low - 1.1 * atr)
-            worst_entry = entry_high
-            distance = worst_entry - stop
-            tp1, tp2 = worst_entry + 1.85 * distance, worst_entry + 2.35 * distance
-        if not (.8 * atr <= distance <= 4 * atr):
-            continue
-        net_rr = (1.85 * distance - spread) / (distance + spread)
-        if net_rr < 1.35:
-            continue
-        places = 3 if pip >= .01 else 5
-        setups.append({
-            "instrument": key, "direction": direction,
-            "status": "CONDITIONAL_RESEARCH_NOT_TRIGGERED",
-            "model": ("M15 impulse / next M5 continuation" if continuation else
-                      "M15 EMA20 trend-pullback / rejection"),
-            "entry_route": "MOMENTUM_CONTINUATION" if continuation else "EMA20_PULLBACK",
-            "research_priority": round(float(candidate.get("research_priority") or 0), 2),
-            "technical_checks_agree": candidate["technical_checks_agree"],
-            "timeframes_aligned": ["M15", "H1", "H4", "D"],
-            "entry_low": round(entry_low, places),
-            "entry_high": round(entry_high, places),
-            "stop": round(stop, places),
-            "tp1": round(tp1, places), "tp2": round(tp2, places),
-            "net_rr_estimate": round(net_rr, 2),
-            "source_quote_at": quote.get("time"),
-            "trigger": (("Wait for a NEW completed M5 candle continuing lower, without "
-                         "a mandatory EMA retest; reconfirm M15/H1 trend and spread."
-                         if direction == "SHORT" else
-                         "Wait for a NEW completed M5 candle continuing higher, without "
-                         "a mandatory EMA retest; reconfirm M15/H1 trend and spread.")
-                        if continuation else
-                        ("Wait for a completed M15 bearish rejection within the zone."
-                         if direction == "SHORT" else
-                         "Wait for a completed M15 bullish rejection within the zone.")),
-            "broker_check": "Verify live Pepperstone spread, exact execution price and account availability.",
-            "news_check": "Check scheduled macro events and official news before entry.",
-            "approved_entry": False,
-        })
-        if len(setups) >= limit:
-            break
+        # Evaluate both independently: continuation has a shorter entry window.
+        for route_continuation in ((True, False) if continuation else (False,)):
+            if route_continuation:
+                entry_low, entry_high = executable - .12 * atr, executable + .12 * atr
+                recent_high = max(float(c["mid"]["h"]) for c in recent[-3:])
+                recent_low = min(float(c["mid"]["l"]) for c in recent[-3:])
+            else:
+                if abs(ema - executable) > 2.5 * atr:
+                    continue
+                entry_low, entry_high = ema - .15 * atr, ema + .15 * atr
+            if direction == "SHORT":
+                stop_base = recent_high if route_continuation else high
+                stop = max(stop_base + .15 * atr, entry_high + 1.1 * atr)
+                worst_entry = entry_low
+                distance = stop - worst_entry
+                tp1, tp2 = worst_entry - 1.85 * distance, worst_entry - 2.35 * distance
+            else:
+                stop_base = recent_low if route_continuation else low
+                stop = min(stop_base - .15 * atr, entry_low - 1.1 * atr)
+                worst_entry = entry_high
+                distance = worst_entry - stop
+                tp1, tp2 = worst_entry + 1.85 * distance, worst_entry + 2.35 * distance
+            if not (.8 * atr <= distance <= 4 * atr):
+                continue
+            net_rr = (1.85 * distance - spread) / (distance + spread)
+            if net_rr < 1.35:
+                continue
+            places = 3 if pip >= .01 else 5
+            setups.append({
+                "instrument": key, "direction": direction,
+                "status": "CONDITIONAL_RESEARCH_NOT_TRIGGERED",
+                "model": ("M15 impulse / next M5 continuation" if route_continuation else
+                          "M15 EMA20 trend-pullback / rejection"),
+                "entry_route": "MOMENTUM_CONTINUATION" if route_continuation else "EMA20_PULLBACK",
+                "research_priority": round(float(candidate.get("research_priority") or 0), 2),
+                "technical_checks_agree": candidate["technical_checks_agree"],
+                "timeframes_aligned": ["M15", "H1", "H4", "D"],
+                "entry_low": round(entry_low, places),
+                "entry_high": round(entry_high, places),
+                "stop": round(stop, places),
+                "tp1": round(tp1, places), "tp2": round(tp2, places),
+                "net_rr_estimate": round(net_rr, 2),
+                "source_quote_at": quote.get("time"),
+                "impulse_m15_started_at": (recent[-1].get("time") if recent and route_continuation else None),
+                "m5_confirmation": "PENDING_NEW_COMPLETED_M5" if route_continuation else "REQUIRES_COMPLETED_M15_REJECTION",
+                "trigger": (("Wait for a NEW completed M5 candle continuing lower, without "
+                             "a mandatory EMA retest; reconfirm M15/H1 trend and spread."
+                             if direction == "SHORT" else
+                             "Wait for a NEW completed M5 candle continuing higher, without "
+                             "a mandatory EMA retest; reconfirm M15/H1 trend and spread.")
+                            if route_continuation else
+                            ("Wait for a completed M15 bearish rejection within the zone."
+                             if direction == "SHORT" else
+                             "Wait for a completed M15 bullish rejection within the zone.")),
+                "broker_check": "Verify live Pepperstone spread, exact execution price and account availability.",
+                "news_check": "Check scheduled macro events and official news before entry.",
+                "approved_entry": False,
+                "execution_status": "WATCH_ONLY_NOT_APPROVED",
+            })
+            if len(setups) >= limit:
+                return setups
     return setups
+
+def _public_opportunity_view(book):
+    # Local import avoids a module-level dependency cycle: the tracker uses
+    # build_research_setups, while the exporter only needs its safe public view.
+    try:
+        from scripts.opportunity_tracker import public_view
+    except ModuleNotFoundError:
+        from opportunity_tracker import public_view
+    return public_view(book)
+
 
 def build_public_feed(summary: dict, news: dict, signals: dict,
                       watcher: dict, detailed: dict, brief_history: dict | None = None,
-                      paper_ledger: dict | None = None) -> dict:
+                      paper_ledger: dict | None = None, opportunity_ledger: dict | None = None) -> dict:
     coverage = summary.get("coverage") or {}
     prices = {}
     for key, source in (summary.get("pairs") or {}).items():
@@ -367,6 +382,7 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
             "paper_audit": public_view(paper_ledger or {"candidates": {}}),
             "afternoon_challenger": watcher.get("afternoon_audit") or afternoon_audit(
                 paper_ledger or {"candidates": {}}, summary["collected_at"]),
+            "opportunity_audit": _public_opportunity_view(opportunity_ledger or {}),
             "verified_broker_trades": 0,
             "verified_wins": 0,
             "verified_losses": 0,
@@ -512,8 +528,10 @@ def main() -> int:
                     detailed[name] = row
         paper_path = Path("data/paper_trade_ledger.json")
         paper = load(str(paper_path)) if paper_path.is_file() else {"candidates": {}}
+        opportunity_path = Path("data/entry_opportunity_ledger.json")
+        opportunity = load(str(opportunity_path)) if opportunity_path.is_file() else {}
         data = build_public_feed(summary, news, signals, watcher, detailed,
-                                 recent.get("pairs") or {}, paper)
+                                 recent.get("pairs") or {}, paper, opportunity)
         if not data.get("snapshot_at") or len(data.get("pairs", {})) < 1:
             raise ValueError("Invalid sanitized payload")
         PUBLIC_PAYLOAD_PATH.parent.mkdir(parents=True, exist_ok=True)
