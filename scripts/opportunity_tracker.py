@@ -195,15 +195,43 @@ def public_view(book, limit=60):
     """Small explicit field allowlist inside existing public learning block."""
     rows = list(((book or {}).get("opportunities") or {}).values())
     rows.sort(key=lambda x: (x.get("first_seen_at") or "", x.get("id") or ""))
+    def flags(row):
+        threshold = number(row.get("meaningful_move_threshold_pct"))
+        best = number(row.get("best_observed_pct"))
+        worst = number(row.get("worst_observed_pct"))
+        favourable = (threshold is not None and threshold > 0
+                      and best is not None and best >= threshold)
+        adverse = (threshold is not None and threshold > 0
+                   and worst is not None and worst <= -threshold)
+        return favourable, adverse
+
     fields = ("id", "instrument", "direction", "route", "first_seen_at",
               "expires_at", "entry_low", "entry_high", "stop", "tp1", "tp2",
               "hypothetical_move_pct", "best_observed_pct", "worst_observed_pct",
-              "tracking_status", "entry_confirmed", "scored", "latest_quote_at")
+              "meaningful_move_threshold_pct", "tracking_status",
+              "entry_confirmed", "scored", "latest_quote_at")
+    favourable = sum(flags(row)[0] for row in rows)
+    adverse = sum(flags(row)[1] for row in rows)
+    both = sum(all(flags(row)) for row in rows)
     return {
         "updated_at": book.get("updated_at"),
         "total_registered": len(rows),
         "routes": book.get("routes") or {},
-        "recent": [{key: row.get(key) for key in fields} for row in rows[-limit:]],
+        "lifecycle_audit": {
+            "forward_watches": len(rows),
+            "ever_meaningful_favourable": favourable,
+            "ever_meaningful_adverse": adverse,
+            "both_favourable_and_adverse": both,
+            "expired_without_verified_fill": sum(
+                row.get("tracking_status") == "EXPIRED_RESEARCH_NO_VERIFIED_FILL"
+                for row in rows),
+            "verified_fills": 0,
+            "interpretation": "Overlapping directional observations, NOT historical wins, executable fills or probabilities; all watch and adverse outcomes retained."
+        },
+        "recent": [{**{key: row.get(key) for key in fields},
+                    "ever_meaningful_favourable": flags(row)[0],
+                    "ever_meaningful_adverse": flags(row)[1]}
+                   for row in rows[-limit:]],
         "disclaimer": "WATCH ONLY. Hypothetical direction is not a filled trade or profit.",
     }
 
