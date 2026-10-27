@@ -345,6 +345,37 @@
         "atr_spread": "OANDA spread 0.9 pip; cap 0.9 pip; gross TP1 RR 2.02 and capped-spread-adjusted TP1 RR 1.85",
         "macro": "US Consumer Confidence at 14:00 UTC; expiry set before the 13:45 UTC blackout. FOMC decision 28 Oct and ECB 29 Oct; repository news coverage partial; M15_REJECTION paper bias neutral/insufficient sample"
       }
+    },
+    {
+      "id": "20261027-1403-EURUSD-S-B03",
+      "instrument": "EUR_USD",
+      "direction": "SHORT",
+      "created_at": "2026-10-27T14:02:59.064Z",
+      "expires_at": "2026-10-27T16:00:00Z",
+      "planned_entry": 1.11495,
+      "stop": 1.11581,
+      "tp1": 1.11314,
+      "tp2": 1.11267,
+      "alert_b": 1.11495,
+      "max_oanda_spread_pips": 0.9,
+      "event_blackouts_utc": [
+        {
+          "start": "2026-10-27T13:45:00Z",
+          "end": "2026-10-27T14:15:00Z"
+        }
+      ],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-10-27T14:00:52Z",
+      "original_note": "Prospective route B only: after the 13:45-14:15 UTC US-release blackout, wait for OANDA-reference price in 1.11487-1.11504 and a completed M15 bearish rejection close at or below 1.11490, then a later executable-price re-touch near 1.11495. Invalidate above 1.11581, at expiry, if spread exceeds 0.9 pip, or if material news changes the thesis. No broker fill asserted.",
+      "technical_context": {
+        "as_of_utc": "2026-10-27T14:00:52Z",
+        "m15": "RSI14 42.85; ADX14 30.48; -DI 25.26 > +DI 13.20; EMA20<EMA50<EMA200; Supertrend down; below Ichimoku; ATR14 5.70 pips; MACD histogram positive countertrend.",
+        "h1": "RSI14 35.26; ADX14 44.52; -DI 31.16 > +DI 8.07; EMA20<EMA50<EMA200; Supertrend down; below cloud.",
+        "trend": "D1/H4/H1/M15 bearish alignment; live price below EMA20 but short-term MACD rebound makes pullback rejection preferable to chasing.",
+        "atr_spread": "OANDA spread 0.9 pip; admission cap 0.9 pip; original gross and capped-spread-adjusted TP1 gates pass.",
+        "macro": "US Consumer Confidence and other 14:00 UTC releases had no verified actual in the 14:00:53 UTC partial feed; blackout through 14:15 UTC. FOMC meeting 27-28 Oct; decision 28 Oct 18:00 UTC. Paper strategy bias neutral/insufficient sample."
+      }
     }
   ]
 }
