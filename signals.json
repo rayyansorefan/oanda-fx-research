@@ -1,21 +1,26 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-27T07:30:48Z",
+  "generated_at": "2026-10-27T11:59:16.599Z",
   "signals": [
     {
-      "id": "20261027-0730-EURUSD-S-B01",
+      "id": "20261027-1159-EURUSD-S-B02",
       "instrument": "EUR_USD",
       "direction": "SHORT",
-      "created_at": "2026-10-27T07:30:48Z",
-      "expires_at": "2026-10-27T11:30:00Z",
-      "planned_entry": 1.11685,
-      "stop": 1.1179,
-      "tp1": 1.1151,
-      "tp2": 1.1142,
-      "alert_b": 1.11685,
+      "created_at": "2026-10-27T11:59:16.599Z",
+      "expires_at": "2026-10-27T13:30:00Z",
+      "planned_entry": 1.11505,
+      "stop": 1.11659,
+      "tp1": 1.11194,
+      "tp2": 1.11112,
+      "alert_b": 1.11505,
       "max_oanda_spread_pips": 0.9,
-      "event_blackouts_utc": []
+      "event_blackouts_utc": [
+        {
+          "start": "2026-10-27T13:45:00Z",
+          "end": "2026-10-27T14:15:00Z"
+        }
+      ]
     }
   ],
-  "note": "07:30 UK discretionary research handoff. EUR_USD SHORT is conditional only: wait for an OANDA-reference pullback into 1.11665-1.11695 and require a completed M15 bearish rejection close at or below 1.11670 before reassessing a manual entry. Cancel above 1.11790, if OANDA spread exceeds 0.9 pip, if the condition is not completed by expiry, or if material news invalidates the thesis. Gross TP1 R:R 1.67; maximum-spread-adjusted TP1 R:R 1.46. The verified 07:14 UTC snapshot was OK: 68/68 quoted pairs screened on M15/H1, 18 deep histories and 12 manifest-authorized detailed shards reviewed. OANDA is not a Pepperstone executable quote; the user must verify Pepperstone UK symbol, bid/ask, spread and stake and chooses whether to trade manually. Risk must not exceed 0.25% of verified equity. No order or fill claimed. The prior 26 Oct EUR_USD signal expired untriggered and has been removed prospectively."
+  "note": "12:00 UK discretionary research handoff. EUR_USD SHORT is a new conditional route B, not a relabel of the expired morning idea: wait for an OANDA-reference pullback into 1.11495-1.11513, require a completed M15 bearish rejection close at or below 1.11505, then require a later executable-price re-touch before considering manual entry. Cancel above 1.11659, if OANDA spread exceeds 0.9 pip, if the condition is not completed by 13:30 UTC, or if material news invalidates the thesis. Gross TP1 R:R 2.02; maximum-spread-adjusted TP1 R:R 1.85. The verified 11:57 UTC snapshot was OK: 68/68 quoted pairs screened on M15/H1, 18 deep histories and 12 manifest-authorized detailed shards reviewed. US Consumer Confidence is due at 14:00 UTC; this idea expires before the 13:45 UTC blackout. OANDA is not a Pepperstone executable quote; the user must verify Pepperstone UK symbol, bid/ask, spread and stake and chooses whether to trade manually. Risk must not exceed 0.25% of verified equity. No order or fill claimed. Morning 20261027-0730-EURUSD-S-B01 expired untriggered and is preserved in the paper ledger."
 }
