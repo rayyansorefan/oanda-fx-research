@@ -51,6 +51,25 @@ class StrategyFeedbackTests(unittest.TestCase):
         self.assertIn("non-approved paper watch", policy["execution_review"])
         self.assertFalse(signal_policy(self.short, feedback)["manual_execution_review_required"])
 
+    def test_manual_early_win_is_a_comparison_not_training(self):
+        trade = {"instrument": "EUR_USD", "status": "CLOSED",
+                 "net_pnl_gbp": 9.02, "entry_classification":
+                 "USER_EXECUTED_EARLY_BEFORE_M15_CONFIRMATION",
+                 "related_research_plan_id": "20261027-1403-EURUSD-S-B03",
+                 "execution_review": {
+                     "standard_planned_price_retouch_observed_in_oanda_bid_bars": False},
+                 "signal_id": None, "signal_match": "PENDING"}
+        feedback = build_feedback({"candidates": {}}, {"trades": [trade]})
+        study = feedback["broker"]["early_entry_study"]
+        self.assertEqual(study["wins"], 1)
+        self.assertEqual(study["net_gbp"], 9.02)
+        self.assertEqual(study["strict_plan_retouch_not_observed"], 1)
+        self.assertEqual(feedback["broker"]["included_in_strategy_weighting"], 0)
+        signal = {"instrument": "EUR_USD", "direction": "SHORT",
+                  "strategy": "M15_REJECTION", "alert_b": 1.11495}
+        self.assertTrue(signal_policy(signal, feedback)["early_entry_study_available"])
+        self.assertEqual(signal_policy(signal, feedback)["priority_bias"], 0)
+
     def test_small_positive_sample_cannot_boost_research_alert(self):
         feedback = {"paper_strategy": {"M15_REJECTION / ROUTE_B":
                     {"count": 5, "wins": 5, "paper_priority_bias": 0}}}
