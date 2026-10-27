@@ -63,6 +63,7 @@ class OpportunityLedgerTests(unittest.TestCase):
         self.assertGreater(row["hypothetical_move_pct"], 0)
         self.assertFalse(row["scored"])  # even when price passed TP, no fill
         self.assertFalse(row["entry_confirmed"])
+        self.assertEqual(tracker.public_view(future)["lifecycle_audit"]["ever_meaningful_favourable"], 1)
 
         with patch.object(tracker, "build_research_setups", return_value=[]):
             expired = tracker.update_ledger(snapshot(
@@ -91,6 +92,10 @@ class OpportunityLedgerTests(unittest.TestCase):
         self.assertEqual(public["total_registered"], 1)
         self.assertIn("Hypothetical", public["disclaimer"])
         self.assertEqual(public["recent"][0]["entry_confirmed"], False)
+        self.assertEqual(public["lifecycle_audit"]["forward_watches"], 1)
+        self.assertEqual(public["lifecycle_audit"]["ever_meaningful_favourable"], 0)
+        self.assertFalse(public["recent"][0]["ever_meaningful_favourable"])
+        self.assertEqual(public["lifecycle_audit"]["verified_fills"], 0)
 
 
 if __name__ == "__main__":
