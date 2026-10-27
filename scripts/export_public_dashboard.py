@@ -265,9 +265,19 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
                 return setups
     return setups
 
+def _public_opportunity_view(book):
+    # Local import avoids a module-level dependency cycle: the tracker uses
+    # build_research_setups, while the exporter only needs its safe public view.
+    try:
+        from scripts.opportunity_tracker import public_view
+    except ModuleNotFoundError:
+        from opportunity_tracker import public_view
+    return public_view(book)
+
+
 def build_public_feed(summary: dict, news: dict, signals: dict,
                       watcher: dict, detailed: dict, brief_history: dict | None = None,
-                      paper_ledger: dict | None = None) -> dict:
+                      paper_ledger: dict | None = None, opportunity_ledger: dict | None = None) -> dict:
     coverage = summary.get("coverage") or {}
     prices = {}
     for key, source in (summary.get("pairs") or {}).items():
@@ -372,6 +382,7 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
             "paper_audit": public_view(paper_ledger or {"candidates": {}}),
             "afternoon_challenger": watcher.get("afternoon_audit") or afternoon_audit(
                 paper_ledger or {"candidates": {}}, summary["collected_at"]),
+            "opportunity_audit": _public_opportunity_view(opportunity_ledger or {}),
             "verified_broker_trades": 0,
             "verified_wins": 0,
             "verified_losses": 0,
@@ -517,8 +528,10 @@ def main() -> int:
                     detailed[name] = row
         paper_path = Path("data/paper_trade_ledger.json")
         paper = load(str(paper_path)) if paper_path.is_file() else {"candidates": {}}
+        opportunity_path = Path("data/entry_opportunity_ledger.json")
+        opportunity = load(str(opportunity_path)) if opportunity_path.is_file() else {}
         data = build_public_feed(summary, news, signals, watcher, detailed,
-                                 recent.get("pairs") or {}, paper)
+                                 recent.get("pairs") or {}, paper, opportunity)
         if not data.get("snapshot_at") or len(data.get("pairs", {})) < 1:
             raise ValueError("Invalid sanitized payload")
         PUBLIC_PAYLOAD_PATH.parent.mkdir(parents=True, exist_ok=True)
