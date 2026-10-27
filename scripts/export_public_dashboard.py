@@ -105,14 +105,28 @@ def fit_public_feed_budget(payload: dict) -> None:
                     frame["candles"] = candles[-cap:]
         if serialized_size(payload) <= PUBLIC_MAX_BYTES:
             return
-    # Only historical tracking timeline is compacted; never remove candidate
-    # IDs or overwrite original entry/stop/target/created_at fields.
-    for history_cap in (6, 3, 1, 0):
+    # Preserve at least one observed price point per candidate: an empty
+    # public timeline breaks the all-candidate tracker and Pages smoke tests.
+    # Never remove frozen candidate economics or replace scored results.
+    for history_cap in (6, 3, 1):
         for row in candidates:
             tracking = row.get("tracking") or {}
             history = tracking.get("history")
             if isinstance(history, list) and len(history) > history_cap:
-                tracking["history"] = history[-history_cap:] if history_cap else []
+                tracking["history"] = history[-history_cap:]
+        if serialized_size(payload) <= PUBLIC_MAX_BYTES:
+            return
+    # Non-deep M15/H1 plots can use a slightly shorter rolling window;
+    # preserve at least six bars, live quote, and the latest indicators.
+    # This is preferable to erasing every candidate's observed timeline.
+    for candle_cap in (11, 10, 8, 6):
+        for pair in payload.get("pairs", {}).values():
+            if pair.get("deep"):
+                continue
+            for frame in (pair.get("frames") or {}).values():
+                candles = frame.get("candles")
+                if isinstance(candles, list) and len(candles) > candle_cap:
+                    frame["candles"] = candles[-candle_cap:]
         if serialized_size(payload) <= PUBLIC_MAX_BYTES:
             return
     # Bounded public window must be explicit, never silently claim complete
