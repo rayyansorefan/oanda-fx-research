@@ -314,6 +314,37 @@
         "atr_spread": "OANDA observed spread 2.7 pips; paper cap 3.0 pips; numerical reward/cost gates pass but regime-quality gate does not",
         "macro": "Bank of Canada decision and MPR 28 Oct 13:45 UTC; event proximity and partial news coverage prevent live-watch admission"
       }
+    },
+    {
+      "id": "20261027-1159-EURUSD-S-B02",
+      "instrument": "EUR_USD",
+      "direction": "SHORT",
+      "created_at": "2026-10-27T11:59:16.599Z",
+      "expires_at": "2026-10-27T13:30:00Z",
+      "planned_entry": 1.11505,
+      "stop": 1.11659,
+      "tp1": 1.11194,
+      "tp2": 1.11112,
+      "alert_b": 1.11505,
+      "max_oanda_spread_pips": 0.9,
+      "event_blackouts_utc": [
+        {
+          "start": "2026-10-27T13:45:00Z",
+          "end": "2026-10-27T14:15:00Z"
+        }
+      ],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-10-27T11:57:14Z",
+      "original_note": "New prospective midday route B, distinct from the expired morning plan: wait for OANDA-reference price in 1.11495-1.11513, then require a completed M15 bearish rejection close at or below 1.11505 and a subsequent executable-price re-touch before considering manual entry. Invalidate above 1.11659, at expiry, if spread exceeds 0.9 pip, or if material news changes the thesis. No broker fill asserted.",
+      "technical_context": {
+        "as_of_utc": "2026-10-27T11:57:14Z",
+        "m15": "RSI14 36.85; ADX14 39.40; -DI 27.03 > +DI 13.95; EMA20<EMA50<EMA200; Supertrend down; below Ichimoku; ATR14 5.75 pips; MACD histogram positive but fading countertrend",
+        "h1": "RSI14 28.99; ADX14 41.37; -DI 36.14 > +DI 6.04; EMA20<EMA50<EMA200; Supertrend and Ichimoku bearish; lower highs/lows",
+        "trend": "D1/H4/H1 bearish structure and H4 prior-20 low break; M5 recovery is weak and price remains below higher-timeframe resistance, so pullback rejection is required rather than a market chase",
+        "atr_spread": "OANDA spread 0.9 pip; cap 0.9 pip; gross TP1 RR 2.02 and capped-spread-adjusted TP1 RR 1.85",
+        "macro": "US Consumer Confidence at 14:00 UTC; expiry set before the 13:45 UTC blackout. FOMC decision 28 Oct and ECB 29 Oct; repository news coverage partial; M15_REJECTION paper bias neutral/insufficient sample"
+      }
     }
   ]
 }
