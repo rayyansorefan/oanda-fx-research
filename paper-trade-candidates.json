@@ -376,6 +376,32 @@
         "atr_spread": "OANDA spread 0.9 pip; admission cap 0.9 pip; original gross and capped-spread-adjusted TP1 gates pass.",
         "macro": "US Consumer Confidence and other 14:00 UTC releases had no verified actual in the 14:00:53 UTC partial feed; blackout through 14:15 UTC. FOMC meeting 27-28 Oct; decision 28 Oct 18:00 UTC. Paper strategy bias neutral/insufficient sample."
       }
+    },
+    {
+      "id": "20261027-1634-GBPUSD-S-B01-PAPER",
+      "instrument": "GBP_USD",
+      "direction": "SHORT",
+      "created_at": "2026-10-27T16:33:53.799Z",
+      "expires_at": "2026-10-27T19:30:00Z",
+      "planned_entry": 1.33211,
+      "stop": 1.33358,
+      "tp1": 1.32907,
+      "tp2": 1.32827,
+      "alert_b": 1.33205,
+      "max_oanda_spread_pips": 1.2,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-10-27T16:14:40Z",
+      "original_note": "Directional paper watch only: wait for an OANDA-reference pullback into 1.33199-1.33223 and a completed M15 bearish rejection close at or below 1.33205, then a later executable-price retouch near 1.33211. Not admitted to signals.json because H4 structure/cloud context conflicts with the D1/H1/M15 bearish case and the current price is already below the zone. Cancel above 1.33358, at expiry, if spread exceeds 1.2 pips, or if material news changes the thesis. No broker fill asserted.",
+      "technical_context": {
+        "as_of_utc": "2026-10-27T16:14:40Z",
+        "m15": "RSI14 39.57; ADX14 21.81; -DI 23.02 > +DI 16.41; EMA20<EMA50<EMA200; below Ichimoku; M15 Supertrend up conflict; ATR14 7.73 pips.",
+        "h1": "RSI14 34.21; ADX14 40.88; -DI 26.50 > +DI 10.64; bearish EMA20/50 pressure; Supertrend down; below cloud.",
+        "trend": "D1/H1/M15 bearish pressure, but H4 EMA/cloud structure conflicts and price is near 1.33071 support; pullback rejection is required and this remains paper-only.",
+        "atr_spread": "OANDA spread 1.0 pip; paper cap 1.2 pips; numerical reward/cost gates pass.",
+        "macro": "FOMC meeting 27-28 Oct with decision 28 Oct 18:00 UTC; repository news feed partial. No same-session high-impact blackout before 19:30 UTC identified. Paper strategy bias neutral after only 2 scored route-B samples."
+      }
     }
   ]
 }
