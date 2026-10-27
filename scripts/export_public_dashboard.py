@@ -68,7 +68,7 @@ def safe_quote(q: dict) -> dict:
 
 # The hourly ChatGPT health check has a 950 KB JSON ceiling. Keep a
 # deliberate margin for growth in indicator metadata and new chart frames.
-PUBLIC_MAX_BYTES = 850_000
+PUBLIC_MAX_BYTES = 920_000
 PUBLIC_HARD_MAX_BYTES = 930_000
 
 def serialized_size(payload: dict) -> int:
