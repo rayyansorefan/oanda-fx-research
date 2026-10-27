@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "as_of": "2026-10-26T16:22:59Z",
+  "as_of": "2026-10-27T17:39:30Z",
   "provenance": "Manually transcribed user-supplied Pepperstone closed-position screenshots; not broker-API verified.",
   "policy": "Broker screenshots are real demo execution observations, not formal OANDA paper fills. Every unlinked trade stays out of parameter-weight learning. Record rejected-watch execution separately and require independent linkage to an immutable original plan, confirmation, and costs before training. A single loss cannot relax risk/news/spread gates or justify new thresholds.",
   "trades": [
@@ -128,6 +128,40 @@
       },
       "provenance": "USER_SUPPLIED_PEPPERSTONE_CLOSED_POSITION_SCREENSHOT",
       "research_context_only": "Broker long at 1.23600 was 4.0 pips above the 1.23560 paper-watch planned entry and above the 1.23550–1.23570 zone. The earlier candidate was NOT promoted to an approved signal: spread-adjusted TP1 RR failed and D1/H4 trends conflicted. No verified completed M15 confirmation; broker outcome remains PENDING immutable signal linkage."
+    },
+    {
+      "key": "2026-10-27-eurusd-closed-1739",
+      "instrument": "EUR_USD",
+      "direction": "SHORT",
+      "status": "CLOSED",
+      "opened_at": "2026-10-27T14:19:49Z",
+      "closed_at": "2026-10-27T17:39:30Z",
+      "entry_price": 1.1149,
+      "exit_price": 1.11408,
+      "net_pnl_gbp": 9.02,
+      "size_gbp_per_point": 1.1,
+      "commission_gbp": 0,
+      "swap_fees_gbp": 0,
+      "total_fees_gbp": 0,
+      "signal_id": null,
+      "signal_match": "PENDING",
+      "related_research_plan_id": "20261027-1403-EURUSD-S-B03",
+      "entry_classification": "USER_EXECUTED_EARLY_BEFORE_M15_CONFIRMATION",
+      "provenance": "USER_SUPPLIED_PEPPERSTONE_CLOSED_POSITION_SCREENSHOT",
+      "execution_review": {
+        "approved_signal_at_entry": false,
+        "original_plan_entry": 1.11495,
+        "original_plan_stop": 1.11581,
+        "original_plan_tp1": 1.11314,
+        "original_plan_expires_at": "2026-10-27T16:00:00Z",
+        "confirmation_status_at_broker_entry": "NOT_YET_COMPLETED",
+        "first_subsequent_m5_close_at": "2026-10-27T14:20:00Z",
+        "m15_bearish_rejection_completed_at": "2026-10-27T14:45:00Z",
+        "maximum_recorded_oanda_bid_after_m15_confirmation_before_expiry": 1.11488,
+        "standard_planned_price_retouch_observed_in_oanda_bid_bars": false,
+        "standard_broker_fill": "UNVERIFIED_NO_PEPPERSTONE_REPLAY",
+        "lesson": "An early discretionary sell made money while standard M15 plus exact retouch was not observed to fill on historical OANDA bids. Shadow-test completed M5 versus M15, including losses, execution costs, no-fills. Never re-label as approved."
+      }
     }
   ]
 }
