@@ -31,7 +31,8 @@ def build_feedback(book, broker):
             continue
         group = pair_observations.setdefault(instrument, {
             "closed": 0, "wins": 0, "losses": 0,
-            "net_pnl_gbp": 0.0, "unapproved_watch_losses": 0})
+            "net_pnl_gbp": 0.0, "unapproved_watch_losses": 0,
+            "early_manual_wins": 0, "early_manual_losses": 0})
         group["closed"] += 1
         group["wins"] += row["net_pnl_gbp"] > 0
         group["losses"] += row["net_pnl_gbp"] < 0
@@ -39,11 +40,16 @@ def build_feedback(book, broker):
         group["unapproved_watch_losses"] += (
             row["net_pnl_gbp"] < 0
             and row.get("entry_classification") == "UNAPPROVED_RESEARCH_WATCH_EXECUTED")
+        early = row.get("entry_classification") == "USER_EXECUTED_EARLY_BEFORE_M15_CONFIRMATION"
+        group["early_manual_wins"] += early and row["net_pnl_gbp"] > 0
+        group["early_manual_losses"] += early and row["net_pnl_gbp"] < 0
     for group in pair_observations.values():
         group["net_pnl_gbp"] = round(group["net_pnl_gbp"], 2)
     watch_losses = [row for row in closed
                     if row["net_pnl_gbp"] < 0
                     and row.get("entry_classification") == "UNAPPROVED_RESEARCH_WATCH_EXECUTED"]
+    early = [row for row in closed if row.get("entry_classification")
+             == "USER_EXECUTED_EARLY_BEFORE_M15_CONFIRMATION"]
     return {
         "basis": "OANDA bid/ask paper outcomes, separately from manual Pepperstone screenshots",
         "paper_updated_at": view.get("updated_at"),
@@ -56,6 +62,22 @@ def build_feedback(book, broker):
             "win_rate_pct": round(100 * sum(row["net_pnl_gbp"] > 0 for row in closed) / len(closed), 1) if closed else None,
             "pair_observations": pair_observations,
             "unapproved_watch_stopouts": len(watch_losses),
+            "early_entry_study": {
+                "closed": len(early),
+                "wins": sum(row["net_pnl_gbp"] > 0 for row in early),
+                "losses": sum(row["net_pnl_gbp"] < 0 for row in early),
+                "net_gbp": round(sum(row["net_pnl_gbp"] for row in early), 2),
+                "strict_plan_retouch_not_observed": sum(
+                    (row.get("execution_review") or {}).get(
+                    "standard_planned_price_retouch_observed_in_oanda_bid_bars") is False
+                    for row in early),
+                "cases": [{"pair": row.get("instrument"),
+                           "plan": row.get("related_research_plan_id"),
+                           "net_gbp": row["net_pnl_gbp"],
+                           "signal_match": row.get("signal_match")}
+                          for row in early[-20:]],
+                "policy": "Compare a completed M5 alternative against the original M15 route prospectively. Count losses, no-fills and costs. Broker screenshots never auto-approve entries."
+            },
             "execution_lessons": [
                 {
                     "instrument": row.get("instrument"),
@@ -108,6 +130,8 @@ def signal_policy(signal, feedback):
                                  for route, r in records if isinstance(r, dict)},
         "broker_observations_not_weighted": feedback.get("broker", {}).get("closed_count", 0),
         "manual_execution_review_required": needs_execution_review,
+        "early_entry_study_available": (pair_audit.get("early_manual_wins", 0) +
+                                         pair_audit.get("early_manual_losses", 0)) > 0,
         "execution_review": (
             "Recent stop-loss followed execution of a non-approved paper watch on this pair. "
             "Recheck completed-candle trigger, spread-adjusted reward/risk, and trend conflict; "
