@@ -191,7 +191,7 @@ def update_ledger(summary, existing=None):
     }
 
 
-def public_view(book, limit=10):
+def public_view(book, limit=60):
     """Small explicit field allowlist inside existing public learning block."""
     rows = list(((book or {}).get("opportunities") or {}).values())
     rows.sort(key=lambda x: (x.get("first_seen_at") or "", x.get("id") or ""))
