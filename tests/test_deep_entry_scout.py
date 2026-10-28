@@ -36,6 +36,9 @@ class DeepScoutTests(unittest.TestCase):
         r=ranked()
         r["potential_direction_not_approved"]="SHORT"
         r["deep_entry_scout_direction"]="LONG"
+        # A reversal warning computed for the OLD short bias is irrelevant
+        # to the separately confirmed long setup and must not veto it.
+        r["adaptive_context"]={"block_new_alert":True}
         plan,reason=qualify("EUR_USD",r,source(),news(),NOW,"EMA20_PULLBACK")
         self.assertIsNone(reason)
         self.assertEqual(plan["direction"],"LONG")
