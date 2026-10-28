@@ -399,7 +399,11 @@ def replay(plan, bars, now):
     mae = 0.0
     holding_bars = 0
     previous = None
-    previous_close = None
+    # Previous close must have completed before the original plan; it cannot
+    # be a post-registration candle observed with hindsight.
+    previous_close = next(
+        (b["mid"]["c"] for b in reversed(bars)
+         if b["t"] + dt.timedelta(minutes=15) <= created), None)
     breakout_pending = None
     for bar in valid:
         close_at = bar["t"] + dt.timedelta(minutes=15)
@@ -443,6 +447,8 @@ def replay(plan, bars, now):
                             else previous_close >= a > bar["mid"]["c"]))
                 if crossed:
                     breakout_pending = close_at
+            if route is None and _eligible_continuation(plan, bar, previous_close):
+                route = "C"
             previous_close = bar["mid"]["c"]
             if route:
                 triggered = close_at
@@ -455,6 +461,49 @@ def replay(plan, bars, now):
             if close_at > expiry:
                 break
             if blackout(plan, close_at, bar["t"]):
+                continue
+            if result.get("route") == "C":
+                # Prospective continuation enters only at the opening quote
+                # of the next completed M15 bar, never inside the trigger bar.
+                if bar["t"] != triggered:
+                    return {**result, "status": "DATA_GAP",
+                            "reason": "Next completed M15 open unavailable",
+                            "scored": False}
+                spread_at_open = (bar["ask"]["o"]-bar["bid"]["o"]) / pip_size(plan)
+                fill = (bar["ask"]["o"] if plan["direction"] == "LONG"
+                        else bar["bid"]["o"])
+                entry = numeric(plan["planned_entry"])
+                stop, tp = numeric(plan["stop"]), numeric(plan["tp1"])
+                long = plan["direction"] == "LONG"
+                level = numeric(plan["alert_c"])
+                atr = numeric((plan.get("technical_context") or {}).get("m15_atr"))
+                if (spread_at_open > numeric(plan["max_oanda_spread_pips"])
+                        or atr is None or abs(fill-entry) > .4*atr
+                        or not ((fill > level and stop < fill < tp) if long
+                                else (fill < level and tp < fill < stop))):
+                    return {**result, "status": "INVALIDATED_PRE_ENTRY",
+                            "reason": "Next-bar executable side, cost or slippage outside frozen plan",
+                            "scored": False}
+                risk = abs(fill-stop)
+                reward = abs(tp-fill)
+                spread_cost = spread_at_open * pip_size(plan)
+                if risk <= 0 or reward / risk < 1.5 or (
+                        reward-spread_cost)/(risk+spread_cost) < 1.35:
+                    return {**result, "status": "INVALIDATED_PRE_ENTRY",
+                            "reason": "Next-bar open failed original gross/net reward gates",
+                            "scored": False}
+                entered = bar["t"]
+                result = {**result, "status": "OPEN", "entry_at": iso(entered),
+                          "entry": fill, "route": "C", "scored": False,
+                          "evidence": {**result.get("evidence", {}),
+                                       "entry": evidence(bar)}}
+                # An M15 bar that touches either exit cannot establish
+                # unambiguous intrabar execution order at the opening quote.
+                if _stop_hit(plan, bar) or _tp_hit(plan, bar):
+                    return {**result, "status": "AMBIGUOUS_ENTRY_BAR",
+                            "reason": "Continuation entry bar touched stop or target",
+                            "scored": False}
+                stage = "OPEN"
                 continue
             close_spread = (bar["ask"]["c"] - bar["bid"]["c"]) / pip_size(plan)
             if close_spread > numeric(plan["max_oanda_spread_pips"]):
@@ -478,7 +527,9 @@ def replay(plan, bars, now):
             continue
         if stage == "OPEN":
             holding_bars += 1
-            fav, adverse = _mark(plan, bar)
+            evaluation = ({**plan, "planned_entry": result["entry"]}
+                          if result.get("route") == "C" else plan)
+            fav, adverse = _mark(evaluation, bar)
             mfe, mae = max(mfe, fav), min(mae, adverse)
             stop_hit, tp_hit = _stop_hit(plan, bar), _tp_hit(plan, bar)
             if stop_hit and tp_hit:
@@ -489,14 +540,14 @@ def replay(plan, bars, now):
             if stop_hit or tp_hit:
                 return {**result, "status": "LOSS_STOP" if stop_hit else "WIN_TP1",
                         "at": iso(close_at), "exit": numeric(plan["stop" if stop_hit else "tp1"]),
-                        "net_r": -1.0 if stop_hit else _r(plan, numeric(plan["tp1"])),
+                        "net_r": -1.0 if stop_hit else _r(evaluation, numeric(plan["tp1"])),
                         "evidence": {**result.get("evidence", {}), "exit": evidence(bar)},
                         "mfe_r": round(mfe, 3), "mae_r": round(mae, 3), "scored": True}
             if holding_bars >= MAX_HOLD_BARS:
                 q = bar["bid"] if plan["direction"] == "LONG" else bar["ask"]
                 return {**result, "status": "TIME_EXIT", "at": iso(close_at), "exit": q["c"],
                         "evidence": {**result.get("evidence", {}), "exit": evidence(bar)},
-                        "net_r": _r(plan, q["c"]), "mfe_r": round(mfe, 3),
+                        "net_r": _r(evaluation, q["c"]), "mfe_r": round(mfe, 3),
                         "mae_r": round(mae, 3), "scored": True}
     if stage == "OPEN":
         return {**result, "mfe_r": round(mfe, 3), "mae_r": round(mae, 3)}
