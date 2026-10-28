@@ -44,6 +44,22 @@ class BudgetTests(unittest.TestCase):
         self.assertEqual(p["learning"]["paper_audit"]["candidates"][0]["tracking"]["history"],[1,2,3])
         self.assertFalse(p["learning"]["paper_audit"]["public_window"]["truncated"])
 
+    def test_full_index_preserves_first_observed_reference(self):
+        p={"pairs":{}, "learning":{"paper_audit":{"totals":{"candidates":2},
+            "candidates":[
+                {"id":"early", "instrument":"CAD_CHF", "direction":"LONG",
+                 "tracking":{"reference_price":0.59012, "quote_at":"2026-10-28T15:00:00Z"}},
+                {"id":"later", "instrument":"CAD_CHF", "direction":"LONG",
+                 "tracking":{"reference_price":0.59091, "quote_at":"2026-10-28T15:50:00Z"}}
+            ]}}}
+        fit_public_feed_budget(p)
+        audit=p["learning"]["paper_audit"]
+        names=audit["candidate_index_fields"]
+        self.assertIn("reference_price", names)
+        idx=names.index("reference_price")
+        self.assertEqual([row[idx] for row in audit["candidate_index"]],
+                         [0.59012, 0.59091])
+
     def test_scored_outcomes_survive_compaction(self):
         payload=self.sample()
         # Force the public rolling window to shrink while keeping an older

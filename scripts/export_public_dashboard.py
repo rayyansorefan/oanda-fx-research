@@ -105,13 +105,14 @@ def fit_public_feed_budget(payload: dict) -> None:
     # hourly cohort grows. UI supports both former dict and new tuple shapes.
     audit["candidate_index_fields"] = [
         "id", "pair", "side", "created_at", "status", "entry",
-        "stop", "tp1", "move_pct", "quote_at"
+        "stop", "tp1", "move_pct", "quote_at", "reference_price"
     ]
     audit["candidate_index"] = [
         [row.get("id"), row.get("instrument"), row.get("direction"),
          row.get("created_at"), row.get("status"), row.get("entry"),
          row.get("stop"), row.get("tp1"), row.get("move_pct"),
-         (row.get("tracking") or {}).get("quote_at")]
+         (row.get("tracking") or {}).get("quote_at"),
+         (row.get("tracking") or {}).get("reference_price")]
         for row in candidates
     ]
     audit["public_window"] = {
