@@ -157,7 +157,18 @@ def fit_public_feed_budget(payload: dict) -> None:
     # coverage. Keep latest rows; full historical ledger stays private.
     for cap in (90, 75, 60, 45, 30):
         if len(candidates) > cap:
-            audit["candidates"] = candidates[-cap:]
+            # Keep ALL genuinely scored paper outcomes visible even when older
+            # than the public rolling window. Remaining space goes to newest
+            # unscored observations; never relabel or recalculate outcomes.
+            scored = [row for row in candidates if row.get("scored") is True
+                      and row.get("status") in ("WIN_TP1", "LOSS_STOP", "TIME_EXIT")]
+            if len(scored) > cap:
+                kept = scored[-cap:]
+            else:
+                identifiers = {row.get("id") for row in scored}
+                recent = [row for row in candidates if row.get("id") not in identifiers]
+                kept = scored + recent[-(cap - len(scored)):] if cap > len(scored) else scored
+            audit["candidates"] = kept
             audit["public_window"]["truncated"] = True
             audit["public_window"]["published_candidates"] = len(audit["candidates"])
         if serialized_size(payload) <= PUBLIC_MAX_BYTES:
