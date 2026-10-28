@@ -63,6 +63,10 @@ class OpportunityLedgerTests(unittest.TestCase):
         self.assertGreater(row["hypothetical_move_pct"], 0)
         self.assertFalse(row["scored"])  # even when price passed TP, no fill
         self.assertFalse(row["entry_confirmed"])
+        original_window = copy.deepcopy(row["in_window_audit"])
+        self.assertEqual(original_window["coverage"], "COMPLETE_FROM_REGISTRATION")
+        self.assertEqual(original_window["samples"], 1)
+        self.assertTrue(original_window["first_favourable_at"])
         self.assertEqual(tracker.public_view(future)["lifecycle_audit"]["ever_meaningful_favourable"], 1)
 
         with patch.object(tracker, "build_research_setups", return_value=[]):
@@ -71,6 +75,25 @@ class OpportunityLedgerTests(unittest.TestCase):
                 bid=1.1139, ask=1.1140), future)
         self.assertEqual(next(iter(expired["opportunities"].values()))[
             "tracking_status"], "EXPIRED_RESEARCH_NO_VERIFIED_FILL")
+        self.assertEqual(next(iter(expired["opportunities"].values()))[
+            "in_window_audit"], original_window)  # After-expiry follow-through cannot rewrite original evidence
+
+    def test_legacy_rolling_history_is_explicitly_incomplete(self):
+        legacy = {
+            "first_seen_at": "2026-10-28T08:00:00Z",
+            "expires_at": "2026-10-28T12:00:00Z",
+            "meaningful_move_threshold_pct": 0.03,
+            "observations": [
+                {"at": "2026-10-28T11:00:00Z", "move_pct": 0.05},
+                {"at": "2026-10-28T13:00:00Z", "move_pct": 0.50},
+            ],
+        }
+        audit = tracker._prepare_in_window(legacy)
+        self.assertEqual(audit["coverage"], "LEGACY_ROLLING_HISTORY_INCOMPLETE")
+        self.assertEqual(audit["samples"], 1)
+        self.assertEqual(audit["best_pct"], 0.05)
+        self.assertTrue(audit["first_favourable_at"])
+        self.assertIsNone(audit["first_adverse_at"])
 
     def test_forward_candle_never_backdates_and_never_claims_a_fill(self):
         setup = [{**plan()[0], "direction": "LONG",
