@@ -202,5 +202,65 @@ class OpportunityLedgerTests(unittest.TestCase):
         self.assertFalse(result["route_study"]["MOMENTUM_CONTINUATION"]["validated_trading_edge"])
 
 
+    def test_late_hourly_review_uses_full_saved_m15_history_without_backdating(self):
+        setup = [{**plan()[0], "direction": "LONG",
+                  "entry_route": "EMA20_PULLBACK",
+                  "entry_low": 1.1159, "entry_high": 1.1161,
+                  "stop": 1.1145, "tp1": 1.1180}]
+        with patch.object(tracker, "build_research_setups", return_value=setup):
+            book = tracker.update_ledger(snapshot(), {})
+        first = next(iter(book["opportunities"].values()))
+        opening = "2026-10-27T09:30:00Z"
+        target = {"time": opening, "mid": {
+            "o": 1.11600, "h": 1.11642, "l": 1.11594, "c": 1.11630}}
+        later = [{"time": f"2026-10-27T10:{minute:02d}:00Z",
+                  "mid": {"o": 1.11625, "h": 1.11660,
+                          "l": 1.11620, "c": 1.11640}}
+                 for minute in (0, 15, 30)]
+        full = snapshot("2026-10-27T10:46:00Z",
+                        "2026-10-27T10:45:30Z", bid=1.1163, ask=1.1164)
+        # Normal summary's last three bars have lost the 09:30 pattern.
+        full["pairs"]["EUR_USD"]["frames"]["M15"]["last_3_completed_candles"] = later
+        latest = copy.deepcopy(full)
+        latest["pairs"]["EUR_USD"]["frames"]["M15"]["recent_completed_candles"] = [
+            target, {"time": "2026-10-27T09:45:00Z",
+                     "mid": {"o": 1.1163, "h": 1.1166, "l": 1.1161, "c": 1.1164}},
+            *later]
+        with patch.object(tracker, "build_research_setups", return_value=[]):
+            future = tracker.update_ledger(full, book, latest=latest)
+        row = next(iter(future["opportunities"].values()))
+        self.assertEqual(row["entry_pattern_status"],
+                         "FORWARD_CANDLE_OBSERVED_PAPER_ONLY")
+        self.assertEqual(row["entry_pattern_at"], "2026-10-27T09:45:00+00:00")
+        self.assertEqual(row["entry_pattern_detected_at"],
+                         "2026-10-27T10:46:00+00:00")
+        self.assertFalse(row["entry_confirmed"])
+        self.assertFalse(row["scored"])
+        self.assertFalse(row["broker_verified"])
+        self.assertEqual(row["first_seen_at"], first["first_seen_at"])
+
+    def test_mismatched_saved_candles_cannot_prove_a_forward_pattern(self):
+        setup = [{**plan()[0], "direction": "LONG",
+                  "entry_route": "EMA20_PULLBACK",
+                  "entry_low": 1.1159, "entry_high": 1.1161,
+                  "stop": 1.1145, "tp1": 1.1180}]
+        with patch.object(tracker, "build_research_setups", return_value=setup):
+            book = tracker.update_ledger(snapshot(), {})
+        full = snapshot("2026-10-27T10:46:00Z", "2026-10-27T10:45:30Z")
+        latest = copy.deepcopy(full)
+        latest["pairs"]["EUR_USD"]["quote"]["time"] = "2026-10-27T10:00:00Z"
+        latest["pairs"]["EUR_USD"]["frames"]["M15"]["recent_completed_candles"] = [
+            {"time": "2026-10-27T09:30:00Z",
+             "mid": {"o": 1.1160, "h": 1.11642,
+                     "l": 1.11594, "c": 1.11630}}]
+        with patch.object(tracker, "build_research_setups", return_value=[]):
+            future = tracker.update_ledger(full, book, latest=latest)
+        row = next(iter(future["opportunities"].values()))
+        self.assertEqual(row["entry_pattern_status"],
+                         "AWAITING_INDEPENDENT_POST_PLAN_CANDLE")
+        self.assertFalse(row["entry_confirmed"])
+
+
+
 if __name__ == "__main__":
     unittest.main()
