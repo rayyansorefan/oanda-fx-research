@@ -59,7 +59,11 @@ def qualify(pair, ranked, source, news, now, route):
     """Return (frozen prospective signal, rejection); never uses future candles."""
     if pair in EXCLUDED or route not in ("EMA20_PULLBACK", "MOMENTUM_CONTINUATION"):
         return None, "UNSUPPORTED_PAIR_OR_ROUTE"
-    direction = ranked.get("potential_direction_not_approved")
+    # Screen rank uses mid-price vs EMA for thematic bias; admission instead
+    # follows the independently aligned M15/H1 EMA+DMI scouting direction.
+    # Four-frame agreement, cost and actual risk geometry are still mandatory.
+    direction = (ranked.get("deep_entry_scout_direction")
+                 or ranked.get("potential_direction_not_approved"))
     if direction not in ("LONG", "SHORT"):
         return None, "NO_RESEARCH_DIRECTION"
     if (ranked.get("adaptive_context") or {}).get("block_new_alert"):
