@@ -85,6 +85,30 @@ def fit_public_feed_budget(payload: dict) -> None:
     candidates = audit.get("candidates") or []
     if not isinstance(candidates, list):
         raise ValueError("Invalid public paper audit candidates")
+    # The front-page paper trade blotter must always show audited scored outcomes,
+    # even if the full rolling public candidate window is capped for file size.
+    # Source rows are paper research only; never include private replay evidence,
+    # broker account identifiers, or monetary results in the public payload.
+    scored_keys = ("id", "instrument", "direction", "created_at", "strategy",
+                   "entry", "stop", "tp1", "status", "route", "triggered_at",
+                   "entry_at", "at", "exit", "move_pct", "scored")
+    audit["featured_scored"] = [
+        {key: row[key] for key in scored_keys if row.get(key) is not None}
+        for row in candidates
+        if row.get("scored") is True and row.get("status") in
+        ("WIN_TP1", "LOSS_STOP", "TIME_EXIT")
+    ][-20:]
+    # Compact full-universe index; the detailed rolling audit remains bounded.
+    # These observations are NOT fills, realised return, or live entry alerts.
+    audit["candidate_index"] = [
+        {"id": row.get("id"), "pair": row.get("instrument"),
+         "side": row.get("direction"), "created_at": row.get("created_at"),
+         "status": row.get("status"), "entry": row.get("entry"),
+         "stop": row.get("stop"), "tp1": row.get("tp1"),
+         "move_pct": row.get("move_pct"),
+         "quote_at": (row.get("tracking") or {}).get("quote_at")}
+        for row in candidates
+    ]
     audit["public_window"] = {
         "published_candidates": len(candidates),
         "private_total_candidates": int((audit.get("totals") or {}).get("candidates", len(candidates))),
