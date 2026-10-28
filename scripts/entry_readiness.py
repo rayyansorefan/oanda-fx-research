@@ -212,8 +212,39 @@ def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
                 snapshot, next_time)
             if preview_reason:
                 reasons.append(_reason("STRUCTURAL_REWARD", preview_reason))
-        if news.get("status") != "OK":
-            reasons.append(_reason("NEWS_PARTIAL", "Macro/news sources are not independently cleared"))
+        # Global PARTIAL frequently reflects unrelated optional feeds (for
+        # example, US data sites while analysing EUR/AUD). Evaluate the pair's
+        # mandatory calendar/official sources and material headlines separately.
+        # LIMITED never means a universal news all-clear, and neither this
+        # diagnostic nor a clean pair check approves a trade.
+        pair_news = (news.get("by_pair") or {}).get(instrument)
+        if not isinstance(pair_news, dict):
+            if news.get("status") != "OK":
+                reasons.append(_reason("NEWS_PARTIAL",
+                                       "No independently verified pair news clearance; global coverage partial"))
+            else:
+                reasons.append(_reason("NEWS_PAIR_NOT_CHECKED",
+                                       "Pair-specific calendar and official-source checks unavailable"))
+        else:
+            coverage = pair_news.get("coverage") or {}
+            if pair_news.get("calendar_coverage") != "OK":
+                reasons.append(_reason("NEWS_CALENDAR_MISSING",
+                                       "Pair-specific economic calendar not independently checked"))
+            if coverage.get("missing_required"):
+                reasons.append(_reason("NEWS_REQUIRED_SOURCE_MISSING",
+                                       "Required official/market sources missing for this pair"))
+            if pair_news.get("near_high_impact_calendar"):
+                reasons.append(_reason("NEWS_EVENT_BLACKOUT",
+                                       "High-impact release near this pair: fresh manual event check required"))
+            if pair_news.get("recent_relevant_headlines"):
+                reasons.append(_reason("NEWS_MATERIAL_REVIEW",
+                                       "Recent relevant market headlines require individual review"))
+            if coverage.get("status") == "LIMITED":
+                reasons.append(_reason("NEWS_OPTIONAL_GAPS",
+                                       "Pair's required feeds checked but optional sources missing; not a news all-clear"))
+            elif coverage.get("status") != "OK":
+                reasons.append(_reason("NEWS_REQUIRED_SOURCE_MISSING",
+                                       "Pair news coverage incomplete or unverified"))
         if qtime is not None and bid is not None and ask is not None and pip:
             distance = ((ask-level) if direction == "SHORT" else (level-bid))/pip if level else None
         else:
