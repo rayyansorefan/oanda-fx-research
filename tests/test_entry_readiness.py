@@ -78,5 +78,36 @@ class EntryReadinessTests(unittest.TestCase):
             "potential_direction_not_approved":"LONG"})
         self.assertFalse(any(x["instrument"]=="GBP_ZAR" for x in entry_diagnostics(s)))
 
+    def test_full_universe_rank_discovers_late_qualifying_research(self):
+        """A pair below the old first-five cutoff must still be audited."""
+        from copy import deepcopy
+        s = self.example()
+        template = deepcopy(s["pairs"]["EUR_USD"])
+        ranks = []
+        for i, name in enumerate(("AUD_USD", "NZD_USD", "GBP_CHF",
+                                  "EUR_NZD", "CAD_CHF", "CHF_JPY")):
+            source = deepcopy(template)
+            # Intentionally conflicting H1: high research priority is NOT
+            # evidence of a safe entry or a reason to exclude better setups.
+            source["frames"]["H1"]["indicators"]["ema20"] = 1.099
+            s["pairs"][name] = source
+            ranks.append({"instrument": name, "research_priority": 95-i,
+                          "potential_direction_not_approved": "LONG",
+                          "adaptive_context": {"block_new_alert": False}})
+        s["pairs"]["USD_CAD"] = deepcopy(template)
+        ranks.append({"instrument": "USD_CAD", "research_priority": 31,
+                      "potential_direction_not_approved": "LONG",
+                      "adaptive_context": {"block_new_alert": False}})
+        ranks.append(s["ranked_review_candidates"][0])
+        s["ranked_review_candidates"] = ranks
+        rows = entry_diagnostics(s, {"status": "PARTIAL"}, limit=4)
+        names = {row["instrument"] for row in rows}
+        self.assertIn("USD_CAD", names)
+        self.assertIn("EUR_USD", names)
+        good = next(row for row in rows if row["instrument"] == "USD_CAD")
+        self.assertEqual(good["frame_alignment"], "4/4")
+        self.assertFalse(good["approved_entry"])
+        self.assertIn("NEWS_PARTIAL", [b["code"] for b in good["blockers"]])
+
 if __name__=="__main__":
     unittest.main()
