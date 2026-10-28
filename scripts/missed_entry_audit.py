@@ -8,6 +8,7 @@ from __future__ import annotations
 import datetime as dt
 import json
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 try:
     from scripts.paper_trade_audit import source_bars, iso
@@ -63,6 +64,36 @@ def outcome(row, candles, now):
         stop < lo < hi < tp if long else tp < lo < hi < stop):
         return {**key, "status": "PAPER_BAD_ORIGINAL_TERMS", "scored": False}
     entry = hi if long else lo
+    # Confirm the original thesis had not ALREADY hit its frozen stop
+    # before the entry-pattern close. Ignore the bar forming when the plan
+    # first appeared; all pre-pattern checks use entirely subsequent bars.
+    first_bar = (created - dt.timedelta(minutes=created.minute % 15,
+                                        seconds=created.second,
+                                        microseconds=created.microsecond)
+                 + dt.timedelta(minutes=15))
+    earlier = sorted((b for b in candles if b.get("t") and
+                      first_bar <= b["t"] < pattern and
+                      b["t"] + dt.timedelta(minutes=15) <= now),
+                     key=lambda b: b["t"])
+    if not earlier or earlier[0]["t"] != first_bar:
+        return {**key, "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+                "reason": "Original post-recording history missing", "scored": False}
+    expected = first_bar
+    for bar in earlier:
+        if bar["t"] != expected:
+            return {**key, "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+                    "reason": "Gap before the confirmed pattern", "scored": False}
+        expected += dt.timedelta(minutes=15)
+        quote = bar["bid"] if long else bar["ask"]
+        if (quote["l"] <= stop if long else quote["h"] >= stop):
+            return {**key, "status": "PAPER_PRE_ENTRY_INVALIDATED",
+                    "invalidated_at": iso(bar["t"]+dt.timedelta(minutes=15)),
+                    "scored": False,
+                    "reason": "Frozen stop breached before pattern confirmation"}
+    if expected != pattern:
+        return {**key, "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+                "reason": "Pre-pattern candles do not reach signal close",
+                "scored": False}
     # Only strictly subsequent complete M15 candles qualify; the pattern
     # candle itself can never be treated as an entry.
     eligible = sorted((b for b in candles if b.get("t") and
@@ -132,6 +163,11 @@ def outcome(row, candles, now):
     if position:
         return {**key, "status": "PAPER_OPEN_UNRESOLVED", "scored": False,
                 "fill_at": iso(filled_at), "paper_entry": entry}
+    if now >= expires and (
+            last is None or last + dt.timedelta(minutes=15) < expires):
+        return {**key, "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+                "reason": "Final pre-expiry M15 candle not yet observed",
+                "scored": False}
     return {**key, "status": ("PAPER_NOT_FILLED_BEFORE_EXPIRY"
                            if now >= expires else "PAPER_WAITING_FOR_ENTRY"),
             "scored": False}
@@ -179,8 +215,11 @@ def audit(book, prior=None, now=None, fetch=None):
             results[item["id"]] = outcome(item, candles, now)
         except (RuntimeError, OSError, ValueError, TimeoutError, TypeError, KeyError):
             pass
+    session_day = now.astimezone(ZoneInfo("Europe/London")).date().isoformat()
     today = [v for v in entries.values() if
-             (v.get("first_seen_at") or "").startswith("2026-10-28")]
+             when(v.get("first_seen_at")) and
+             when(v["first_seen_at"]).astimezone(
+                 ZoneInfo("Europe/London")).date().isoformat() == session_day]
     flagged = [v for v in today if
                v.get("entry_pattern_status") == "FORWARD_CANDLE_OBSERVED_PAPER_ONLY"]
     distinct = {(r.get("instrument"), r.get("direction"), r.get("entry_pattern_at"))
@@ -194,7 +233,7 @@ def audit(book, prior=None, now=None, fetch=None):
         "policy": ("Prospectively logged research patterns; no broker orders. "
                    "M15 bid/ask replay AFTER confirmation with frozen worst entry "
                    "zone and fixed stop/TP. Ambiguity and gaps never count as wins."),
-        "today_uk": "2026-10-28",
+        "today_uk": session_day,
         "today_registered": len(today),
         "today_forward_patterns": len(flagged),
         "today_distinct_pair_pattern_events": len(distinct),
