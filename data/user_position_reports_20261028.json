@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "reported_at_utc": "2026-10-28T08:14:00Z",
+  "timestamp_precision": "minute",
+  "source": "USER_CHAT_MESSAGE_2026-10-28_0814_UK",
+  "source_class": "USER_REPORTED_NOT_BROKER_RECONCILED",
+  "context": "User states three Pepperstone FX spread-betting positions were entered around the morning 07:12 early-opportunity shortlist; instrument/side/entry/close detail remains unreconciled. User's separate 07:33 NZD/CAD quote screenshot was not a proof of fill.",
+  "positions": [
+    {
+      "id": "20261028-MANUAL-REPORT-01",
+      "instrument": null,
+      "direction": null,
+      "approx_opened_at_utc": "2026-10-28T07:14:00Z",
+      "approx_time_note": "User described this trade as placed about an hour before 08:14 UK; time is approximate, NOT confirmed execution time",
+      "state": "SUCCESS_REPORTED_CLOSE_UNKNOWN",
+      "reported_description": "User describes this morning's trade as successful; whether closed, realised gain and fill price not verified.",
+      "realised_pnl_gbp": null,
+      "unrealised_pnl_gbp": null,
+      "broker_fill_verified": false,
+      "signal_match": "UNCONFIRMED"
+    },
+    {
+      "id": "20261028-MANUAL-REPORT-02",
+      "instrument": null,
+      "direction": null,
+      "state": "OPEN_USER_REPORTED_FAVOURABLE",
+      "reported_description": "User reports another position is past halfway toward its intended profit point. Exact target, entry, stake and latest price unverified.",
+      "realised_pnl_gbp": null,
+      "unrealised_pnl_gbp": null,
+      "broker_fill_verified": false,
+      "signal_match": "UNCONFIRMED"
+    },
+    {
+      "id": "20261028-MANUAL-REPORT-03",
+      "instrument": null,
+      "direction": null,
+      "state": "OPEN_USER_REPORTED_FAVOURABLE",
+      "reported_description": "User reports another position showing about £5 profit; treat as user-reported floating profit, NOT realised P&L.",
+      "realised_pnl_gbp": null,
+      "unrealised_pnl_gbp": 5,
+      "unrealised_pnl_approximate": true,
+      "broker_fill_verified": false,
+      "signal_match": "UNCONFIRMED"
+    }
+  ],
+  "learning_note": "Positive provisional evidence that user-selected early opportunities may merit forward comparison. Do not score opens as closed wins or attribute performance to a specific research route until frozen entry setup, broker fill/close and costs are reconciled. Preserve unfavorable cases in matched cohort.",
+  "next_reconciliation": "Map actual three instruments, execution timestamps and entry/stop/target from user trade history to immutable opportunity records, then update closed trades only upon exit evidence."
+}
