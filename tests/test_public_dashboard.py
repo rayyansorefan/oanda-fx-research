@@ -65,8 +65,12 @@ class PublicDashboardFeedTests(unittest.TestCase):
                           "pip_size": 0.01, "spread_pips": 3, "tradeable": True},
                 "frames": {
                     "M15": {"indicators": indicators(175.91, 175.93,
-                        atr14=.155, resistance20=176.22, support20=175.68, adx14=23)},
-                    "H1": {"indicators": indicators(176.04, 176.52, adx14=42)},
+                        atr14=.155, resistance20=176.22, support20=174.95, adx14=23),
+                            "last_3_completed_candles": [
+                                {"mid":{"o":175.95,"h":176.01,"l":175.88,"c":175.90}},
+                                {"mid":{"o":175.90,"h":175.94,"l":175.80,"c":175.87}},
+                                {"mid":{"o":175.87,"h":175.92,"l":175.71,"c":175.75}}]},
+                    "H1": {"indicators": indicators(176.04, 176.52, adx14=42, support20=174.60)},
                     "H4": {"indicators": indicators(176.81, 177.15)},
                     "D": {"indicators": indicators(177.81, 179.69)}
                 }
@@ -105,12 +109,16 @@ class PublicDashboardFeedTests(unittest.TestCase):
                           "spread_pips": 1.0, "tradeable": True},
                 "frames": {
                     "M15": {"indicators": ind(122.88, 123.02, atr14=.12,
-                             resistance20=123.06, support20=122.66,
+                             resistance20=123.06, support20=122.20,
                              adx14=27, plus_di14=10, minus_di14=28),
                             "last_3_completed_candles": [
+                             {"mid": {"o": 122.94, "h": 122.98,
+                                      "l": 122.83, "c": 122.84}},
+                             {"mid": {"o": 122.88, "h": 122.91,
+                                      "l": 122.82, "c": 122.84}},
                              {"mid": {"o": 122.84, "h": 122.86,
                                       "l": 122.71, "c": 122.73}}]},
-                    "H1": {"indicators": ind(122.95, 123.17, adx14=30,
+                    "H1": {"indicators": ind(122.95, 123.17, adx14=30, support20=121.90,
                                            plus_di14=11, minus_di14=29)},
                     "H4": {"indicators": ind(123.15, 123.30)},
                     "D": {"indicators": ind(123.40, 123.70)},
@@ -126,7 +134,7 @@ class PublicDashboardFeedTests(unittest.TestCase):
         self.assertLess(abs(setup["entry_low"] - 122.72), .03)
         self.assertTrue(setup["tp1"] < setup["entry_low"] < setup["stop"])
         # No fresh bearish impulse: fall back to the separate pullback route.
-        summary["pairs"]["SGD_JPY"]["frames"]["M15"]["last_3_completed_candles"][0]["mid"]["c"] = 122.85
+        summary["pairs"]["SGD_JPY"]["frames"]["M15"]["last_3_completed_candles"][-1]["mid"]["c"] = 122.85
         setups = build_research_setups(summary)
         self.assertEqual(setups[0]["entry_route"], "EMA20_PULLBACK")
 
