@@ -1,9 +1,9 @@
 {
   "purpose": "fresh OANDA price and news update when scheduled cron is unavailable",
-  "request": "FX_HOURLY_2015_QUOTE_STALENESS_RECOVERY",
+  "request": "FX_HOURLY_2115_OANDA_HTTP_401_RECOVERY",
   "requested_by": "ChatGPT FX hourly research automation",
   "session_day_utc": "2026-10-28",
-  "sequence": 55,
-  "requested_at_utc": "2026-10-28T20:15:32.074Z",
-  "note": "20:15 UK hourly FX check: 19:12:47 UTC source snapshot is under 70 minutes, but USD_HKD quote timestamp 19:05:24 UTC is now over 70 minutes old and last completed M15 starts 18:45 UTC; 20:07 scheduled collector has not published. Request one current-code OANDA/news collection via existing push-triggered workflow. Preserve original signals, risk rules, history, and no-order controls. NO APPROVED ENTRY until current complete candles, event news and spread/reward gates pass."
+  "sequence": 56,
+  "requested_at_utc": "2026-10-28T21:16:12Z",
+  "note": "21:15 UK hourly FX review: 21:00:12 UTC summary/latest/universe report DATA_UNAVAILABLE OANDA_HTTP_401; last successful sanitized public feed 20:16:40 UTC and no new verified quotes. Request one safe current-code collector retry. Preserve immutable signals, history, risk and no-order controls. Do not approve entries without fresh complete candles and event/news checks."
 }
