@@ -347,6 +347,40 @@ def _public_opportunity_view(book):
         from opportunity_tracker import public_view
     return public_view(book)
 
+def build_entry_gate_summary(summary: dict, news: dict) -> dict:
+    """Count every researched admission blocker, not just the eight desk rows.
+
+    Counts are descriptive research diagnostics and never admit or alter a
+    canonical signal. This exposes systematic bottlenecks for prospective
+    challenger studies without weakening costs, news or execution rules.
+    """
+    count = len(summary.get("ranked_review_candidates") or []) + 3
+    rows = entry_diagnostics(summary, news, limit=max(8, count))
+    hard = {"STALE_QUOTE", "QUOTE_UNUSABLE", "COST_HIGH_OR_UNKNOWN",
+            "FOUNDATION_CONFLICT", "HIGHER_FRAME_CONFLICT", "TREND_STRENGTH",
+            "DMI_CONFLICT", "OVEREXTENDED_OR_REVERSING", "M15_BAR_STALE",
+            "M15_BAR_TIME", "M15_HISTORY", "PRICE_LEVEL_UNAVAILABLE",
+            "STRUCTURAL_REWARD"}
+    blockers = {}
+    no_technical_block = 0
+    priced_research_previews = 0
+    for row in rows:
+        codes = {item.get("code") for item in row.get("blockers") or []
+                 if isinstance(item, dict) and item.get("code")}
+        for code in codes:
+            blockers[code] = blockers.get(code, 0) + 1
+        no_technical_block += int(not bool(codes & hard))
+        priced_research_previews += int(bool(row.get("priced_paper_preview")))
+    return {
+        "as_of": summary.get("collected_at"),
+        "evaluated": len(rows), "technical_or_cost_gate_clear": no_technical_block,
+        "priced_paper_research_previews": priced_research_previews,
+        "blocker_counts": dict(sorted(blockers.items())),
+        "news_status": news.get("status") or "UNKNOWN",
+        "canonical_signals_admitted": False,
+        "note": "Diagnostic counts overlap and do not represent filled trades, win rates or approved signals.",
+    }
+
 
 def build_public_feed(summary: dict, news: dict, signals: dict,
                       watcher: dict, detailed: dict, brief_history: dict | None = None,
@@ -458,6 +492,7 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
             "opportunity_audit": _public_opportunity_view(opportunity_ledger or {}),
             # Explicit research-only failed entry gates, never canonical signals.
             "entry_diagnostics": entry_diagnostics(summary, news, limit=8),
+            "entry_gate_summary": build_entry_gate_summary(summary, news),
             "verified_broker_trades": 0,
             "verified_wins": 0,
             "verified_losses": 0,
