@@ -5,6 +5,7 @@ from scripts.entry_readiness import entry_diagnostics
 class EntryReadinessTests(unittest.TestCase):
     def example(self):
         inds = lambda e20,e50,adx: {
+            "support20":1.0990, "resistance20":1.1036,
             "ema20":e20,"ema50":e50,"adx14":adx,"atr14":0.0008,
             "plus_di14":32,"minus_di14":13,
         }
@@ -51,6 +52,32 @@ class EntryReadinessTests(unittest.TestCase):
         self.assertIn("NEWS_PARTIAL",[v["code"] for v in row["blockers"]])
         self.assertIn("NO_APPROVED_TRIGGER",[v["code"] for v in row["blockers"]])
         self.assertNotIn("MUST_NOT_LEAK",str(report))
+
+    def test_structural_paper_preview_has_frozen_risk_but_never_approves_trade(self):
+        row = entry_diagnostics(self.example(), {"status":"PARTIAL"})[0]
+        preview = row["priced_paper_preview"]
+        self.assertIsNotNone(preview)
+        self.assertEqual(preview["status"], "PRICED_PAPER_RESEARCH_NOT_TRIGGERED")
+        self.assertFalse(preview["approved_entry"])
+        self.assertFalse(preview["broker_verified"])
+        self.assertLess(preview["stop"], preview["entry_zone_low"])
+        self.assertLess(preview["entry_zone_low"], preview["entry_zone_high"])
+        self.assertLess(preview["entry_zone_high"], preview["tp1"])
+        self.assertGreaterEqual(preview["gross_rr_estimate"], 1.50)
+        self.assertGreaterEqual(preview["net_rr_estimate"], 1.35)
+        self.assertTrue(preview["requires_future_completed_m15"])
+        self.assertEqual(preview["next_m15_check_at"], "2026-10-28T15:15:00Z")
+        self.assertEqual(preview["expires_at"], "2026-10-28T15:30:00Z")
+        self.assertIn("NEWS_PARTIAL", [x["code"] for x in row["blockers"]])
+        self.assertIn("NO_APPROVED_TRIGGER", [x["code"] for x in row["blockers"]])
+
+    def test_no_structural_target_or_low_reward_withholds_paper_plan(self):
+        s = self.example()
+        s["pairs"]["EUR_USD"]["frames"]["M15"]["indicators"]["resistance20"] = 1.1012
+        row = entry_diagnostics(s, {"status":"OK"})[0]
+        self.assertIsNone(row["priced_paper_preview"])
+        self.assertIn("STRUCTURAL_REWARD", [x["code"] for x in row["blockers"]])
+        self.assertFalse(row["approved_entry"])
 
     def test_weak_trend_is_explained_and_not_promoted(self):
         s = self.example()
