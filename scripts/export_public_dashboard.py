@@ -14,6 +14,7 @@ import urllib.error
 import urllib.request
 from paper_trade_audit import public_view
 from adaptive_research import afternoon_audit
+from entry_readiness import entry_diagnostics
 
 DESTINATION = "rayyansorefan/standalone-wallet-paper-agent"
 TARGET = "docs/fx-feed.json"
@@ -455,6 +456,8 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
             "afternoon_challenger": watcher.get("afternoon_audit") or afternoon_audit(
                 paper_ledger or {"candidates": {}}, summary["collected_at"]),
             "opportunity_audit": _public_opportunity_view(opportunity_ledger or {}),
+            # Explicit research-only failed entry gates, never canonical signals.
+            "entry_diagnostics": entry_diagnostics(summary, news, limit=8),
             "verified_broker_trades": 0,
             "verified_wins": 0,
             "verified_losses": 0,
