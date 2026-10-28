@@ -358,7 +358,7 @@ def build_entry_gate_summary(summary: dict, news: dict) -> dict:
     count = len(summary.get("ranked_review_candidates") or []) + 3
     rows = entry_diagnostics(summary, news, limit=max(8, count))
     hard = {"STALE_QUOTE", "QUOTE_UNUSABLE", "COST_HIGH_OR_UNKNOWN",
-            "FOUNDATION_CONFLICT", "HIGHER_FRAME_CONFLICT", "TREND_STRENGTH",
+            "FOUNDATION_CONFLICT", "HIGHER_FRAME_CONFLICT", "HIGHER_FRAME_MISSING", "TREND_STRENGTH",
             "DMI_CONFLICT", "OVEREXTENDED_OR_REVERSING", "M15_BAR_STALE",
             "M15_BAR_TIME", "M15_HISTORY", "PRICE_LEVEL_UNAVAILABLE",
             "STRUCTURAL_REWARD"}
