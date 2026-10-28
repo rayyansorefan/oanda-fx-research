@@ -2,7 +2,7 @@
 import unittest
 from scripts.fx_universe import deep_selection, screen_priority
 from scripts.signal_admission import qualify
-from tests.test_signal_admission import source, news, ranked, NOW
+from test_signal_admission import source, news, ranked, NOW
 
 class DeepScoutTests(unittest.TestCase):
     def test_deep_selection_prefers_verified_foundation_even_with_lower_rank(self):
