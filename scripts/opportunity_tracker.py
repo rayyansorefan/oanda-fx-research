@@ -67,6 +67,48 @@ def _move_pct(row, quote):
                  (1 if row["direction"] == "LONG" else -1), 5)
 
 
+
+def _record_in_window(row, audit, observed_at, move):
+    """Preserve original-expiry forward evidence separately from later follow-through."""
+    first, expiry = moment(row.get("first_seen_at")), moment(row.get("expires_at"))
+    at, value = moment(observed_at), number(move)
+    if not first or not expiry or not at or value is None or not first < at <= expiry:
+        return
+    previous = moment(audit.get("last_observed_at"))
+    if previous and at <= previous:
+        return
+    audit["samples"] = int(audit.get("samples") or 0) + 1
+    best, worst = number(audit.get("best_pct")), number(audit.get("worst_pct"))
+    audit["best_pct"] = round(max(best, value) if best is not None else value, 5)
+    audit["worst_pct"] = round(min(worst, value) if worst is not None else value, 5)
+    audit["last_observed_at"] = at.isoformat()
+    threshold = number(row.get("meaningful_move_threshold_pct"))
+    if threshold and threshold > 0:
+        if value >= threshold and not audit.get("first_favourable_at"):
+            audit["first_favourable_at"] = at.isoformat()
+        if value <= -threshold and not audit.get("first_adverse_at"):
+            audit["first_adverse_at"] = at.isoformat()
+
+
+def _prepare_in_window(row):
+    audit = row.get("in_window_audit")
+    if isinstance(audit, dict):
+        return audit
+    # Pre-upgrade records may already have lost original observations because
+    # their per-candidate history retained only the most recent 16 quotes.
+    # Reconstruct what remains, but NEVER call this historical sample complete.
+    audit = {"coverage": "LEGACY_ROLLING_HISTORY_INCOMPLETE", "samples": 0,
+             "best_pct": None, "worst_pct": None,
+             "first_favourable_at": None, "first_adverse_at": None,
+             "last_observed_at": None}
+    row["in_window_audit"] = audit
+    for sample in sorted(row.get("observations") or [],
+                         key=lambda p: p.get("at") or ""):
+        if isinstance(sample, dict):
+            _record_in_window(row, audit, sample.get("at"), sample.get("move_pct"))
+    return audit
+
+
 def _last_m15_close(source, snapshot):
     bars = (((source.get("frames") or {}).get("M15") or {})
             .get("last_3_completed_candles") or [])
@@ -186,6 +228,7 @@ def update_ledger(summary, existing=None, news=None, latest=None):
     # First observe already-registered immutable proposals. Future quotes
     # cannot rewrite their direction, entry region, stop, TP or first_seen.
     for row in rows.values():
+        audit = _prepare_in_window(row)
         source = pairs.get(row.get("instrument")) or {}
         quote = _quote(source, snapshot)
         if not quote:
@@ -228,6 +271,7 @@ def update_ledger(summary, existing=None, news=None, latest=None):
         row["hypothetical_move_pct"] = move
         row["best_observed_pct"] = max(number(row.get("best_observed_pct")) or move, move)
         row["worst_observed_pct"] = min(number(row.get("worst_observed_pct")) or move, move)
+        _record_in_window(row, audit, quote["at"].isoformat(), move)
         observations = row.setdefault("observations", [])
         observations.append({"at": quote["at"].isoformat(), "move_pct": move})
         row["observations"] = observations[-16:]
@@ -294,6 +338,10 @@ def update_ledger(summary, existing=None, news=None, latest=None):
             "entry_pattern_at": None, "entry_pattern_close": None,
             "entry_confirmed": False, "broker_verified": False,
             "scored": False, "observations": [],
+            "in_window_audit": {"coverage": "COMPLETE_FROM_REGISTRATION",
+                                "samples": 0, "best_pct": None, "worst_pct": None,
+                                "first_favourable_at": None, "first_adverse_at": None,
+                                "last_observed_at": None},
         }
 
     # Independently risk-priced structural breakout studies are a separate
@@ -349,6 +397,10 @@ def update_ledger(summary, existing=None, news=None, latest=None):
             "entry_pattern_at": None, "entry_pattern_close": None,
             "entry_confirmed": False, "broker_verified": False,
             "scored": False, "observations": [],
+            "in_window_audit": {"coverage": "COMPLETE_FROM_REGISTRATION",
+                                "samples": 0, "best_pct": None, "worst_pct": None,
+                                "first_favourable_at": None, "first_adverse_at": None,
+                                "last_observed_at": None},
         }
 
     groups = {}
@@ -483,6 +535,18 @@ def public_view(book, limit=60):
             "forward_entry_patterns_observed": sum(
                 row.get("entry_pattern_status") == "FORWARD_CANDLE_OBSERVED_PAPER_ONLY"
                 for row in rows),
+            "in_window_meaningful_favourable": sum(
+                bool((row.get("in_window_audit") or {}).get("first_favourable_at"))
+                for row in rows),
+            "in_window_meaningful_adverse": sum(
+                bool((row.get("in_window_audit") or {}).get("first_adverse_at"))
+                for row in rows),
+            "in_window_complete_from_registration": sum(
+                (row.get("in_window_audit") or {}).get("coverage") == "COMPLETE_FROM_REGISTRATION"
+                for row in rows),
+            "in_window_incomplete_legacy": sum(
+                (row.get("in_window_audit") or {}).get("coverage") ==
+                "LEGACY_ROLLING_HISTORY_INCOMPLETE" for row in rows),
             "interpretation": "Overlapping directional observations, NOT historical wins, executable fills or probabilities; all watch and adverse outcomes retained."
         },
         "recent": [{**{key: row.get(key) for key in fields},
