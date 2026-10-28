@@ -266,7 +266,7 @@ def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
             "previous_m15_break_observed": observed,
             "distance_to_reference_pips": round(distance, 1) if distance is not None else None,
             "priced_paper_preview": research_preview,
-            "blockers": reasons[:8],
+            "blockers": reasons[:12],  # Keep safety/news event blockers visible after technical gates.
         })
     # Choose which *research diagnostics* to display from all evaluated
     # instruments. Do not equate closest to reference with a valid entry.
