@@ -15,12 +15,15 @@ from pathlib import Path
 
 try:
     from scripts.export_public_dashboard import build_research_setups
+    from scripts.entry_readiness import entry_diagnostics
 except ModuleNotFoundError:  # direct execution: python scripts/opportunity_tracker.py
     from export_public_dashboard import build_research_setups
+    from entry_readiness import entry_diagnostics
 
 SUMMARY = Path("data/summary.json")
 LEDGER = Path("data/entry_opportunity_ledger.json")
-ROUTES = ("MOMENTUM_CONTINUATION", "EMA20_PULLBACK")
+NEWS = Path("data/news_latest.json")
+ROUTES = ("MOMENTUM_CONTINUATION", "EMA20_PULLBACK", "M15_STRUCTURAL_BREAK")
 
 
 def moment(value):
@@ -129,6 +132,14 @@ def _forward_entry_pattern(row, source, snapshot):
             ok = (in_zone and (
                 (up and c > o and c >= high and (c-l)/span >= .60) or
                 (down and c < o and c <= low and (h-c)/span >= .60)))
+        elif route == "M15_STRUCTURAL_BREAK":
+            # Fully independent M15 bar, published BEFORE the bar opened.
+            # A later price break near the frozen band is a PAPER PATTERN,
+            # not an order fill, approval or proven edge.
+            ok = in_zone and ((up and c > o and c >= high and
+                               (c-l)/span >= .60) or
+                              (down and c < o and c <= low and
+                               (h-c)/span >= .60))
         elif route == "MOMENTUM_CONTINUATION":
             if i == 0:
                 continue  # no earlier fully observed comparator in this slice
@@ -154,7 +165,7 @@ def _forward_entry_pattern(row, source, snapshot):
             "entry_pattern_timeframe": period}
 
 
-def update_ledger(summary, existing=None):
+def update_ledger(summary, existing=None, news=None):
     snapshot = moment(summary.get("collected_at"))
     if not snapshot:
         raise ValueError("OANDA summary collection time unavailable")
@@ -261,6 +272,61 @@ def update_ledger(summary, existing=None):
             "scored": False, "observations": [],
         }
 
+    # Independently risk-priced structural breakout studies are a separate
+    # challenger route. Record their original entry, swing stop, structural
+    # target and FUTURE M15 trigger before any subsequent candle opens.
+    # No promotion into signals.json; not an approved or executed trade.
+    for diag in entry_diagnostics(summary, news or {"status": "PARTIAL"}, limit=12):
+        preview = diag.get("priced_paper_preview")
+        if not isinstance(preview, dict) or preview.get("approved_entry") is not False:
+            continue
+        pair, direction = diag.get("instrument"), diag.get("direction")
+        source = pairs.get(pair) or {}
+        quote = _quote(source, snapshot)
+        impulse_start = _last_m15_close(source, snapshot)
+        if not quote or not impulse_start or direction not in ("LONG", "SHORT"):
+            continue
+        expire = moment(preview.get("expires_at"))
+        if not expire or expire <= quote["at"]:
+            continue
+        low, high = number(preview.get("entry_zone_low")), number(preview.get("entry_zone_high"))
+        stop, tp1 = number(preview.get("stop")), number(preview.get("tp1"))
+        if None in (low, high, stop, tp1) or not (0 < low < high and stop > 0 and tp1 > 0):
+            continue
+        mid = (quote["bid"] + quote["ask"]) / 2
+        atr = number((((source.get("frames") or {}).get("M15") or {})
+                      .get("indicators") or {}).get("atr14"))
+        if not atr or atr <= 0:
+            continue
+        candle_key = "".join(c for c in impulse_start if c.isdigit())[:12]
+        route = "M15_STRUCTURAL_BREAK"
+        ident = f"{candle_key}-{pair.replace('_', '')}-{direction}-{route}"
+        if ident in rows:
+            continue
+        first_seen = quote["at"]
+        rows[ident] = {
+            "id": ident, "instrument": pair, "direction": direction,
+            "route": route, "first_seen_at": first_seen.isoformat(),
+            "m15_impulse_started_at": impulse_start,
+            "expires_at": expire.isoformat(),
+            "entry_low": low, "entry_high": high,
+            "stop": stop, "tp1": tp1, "tp2": None,
+            "original_trigger": "New completed M15 close beyond frozen prior candle high/low",
+            "entry_plan_class": "PRICED_PAPER_RESEARCH_NOT_TRIGGERED",
+            "reference_mid": round(mid, 6),
+            "meaningful_move_threshold_pct": round(100 * .6 * atr / mid, 5),
+            "latest_quote_at": first_seen.isoformat(),
+            "latest_exit_side": round(
+                quote["bid"] if direction == "LONG" else quote["ask"], 6),
+            "hypothetical_move_pct": None,
+            "best_observed_pct": None, "worst_observed_pct": None,
+            "tracking_status": "WATCH_ONLY_UNTRIGGERED",
+            "entry_pattern_status": "AWAITING_INDEPENDENT_POST_PLAN_CANDLE",
+            "entry_pattern_at": None, "entry_pattern_close": None,
+            "entry_confirmed": False, "broker_verified": False,
+            "scored": False, "observations": [],
+        }
+
     groups = {}
     for row in rows.values():
         group = groups.setdefault(row.get("route"), {
@@ -334,7 +400,8 @@ def public_view(book, limit=60):
 def main():
     summary = json.loads(SUMMARY.read_text(encoding="utf-8"))
     existing = json.loads(LEDGER.read_text(encoding="utf-8")) if LEDGER.exists() else {}
-    book = update_ledger(summary, existing)
+    news = json.loads(NEWS.read_text(encoding="utf-8")) if NEWS.exists() else {"status": "PARTIAL"}
+    book = update_ledger(summary, existing, news)
     LEDGER.parent.mkdir(parents=True, exist_ok=True)
     LEDGER.write_text(json.dumps(book, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print("Forward FX entry opportunities:", book["total_registered"],
