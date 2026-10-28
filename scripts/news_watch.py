@@ -45,6 +45,7 @@ WORDS = {
     "EUR": ("ecb", "european central bank", "eurozone", "euro area", " euro ", "germany", "france"),
     "GBP": ("bank of england", "boe", "sterling", "pound", "britain", " uk ", "united kingdom"),
     "JPY": ("bank of japan", "boj", " japanese yen", "japan"),
+    "NZD": ("rbnz", "reserve bank of new zealand", "new zealand", "kiwi dollar"),
     "CAD": ("bank of canada", "boc", "loonie", "canadian", "canada"),
     "AUD": ("rba", "reserve bank of australia", "australian", "aussie"),
     "CHF": ("snb", "swiss national bank", "swiss franc", "switzerland"),
@@ -141,13 +142,26 @@ def classify(item):
         return None
     is_global = item["currency_source"] == "GLOBAL" and any(term in text for term in (
         "geopolitical", "oil price", "war ", "attack", "missile", "risk-off",
-        "global markets", "treasury yield", "trade war", "opec", "tariff"))
+        "global markets", "trade war", "opec", "tariff",
+        "emergency", "liquidity crisis", "bond market crisis", "treasury market turmoil", "market crash"))
     if is_global:
         related |= CURRENCIES
     if not related:
         return None
-    return dict(item, severity="HIGH" if any(term in text for term in CRITICAL) else "REVIEW",
-                currencies=sorted(related), global_risk=is_global)
+    # Corporate supervisory decisions are not monetary-policy announcements.
+    # Retain them as context; do not silently discard the source observation.
+    corporate = any(word in text for word in ("takeover", "merger", "acquisition"))
+    macro = any(word in text for word in ("monetary policy", "rate decision", "inflation", "emergency", "interest rate", "systemic", "liquidity crisis"))
+    severity = ("CONTEXT" if corporate and not macro and not is_global else
+                "HIGH" if any(term in text for term in CRITICAL) else "REVIEW")
+    return dict(item, severity=severity, currencies=sorted(related), global_risk=is_global,
+                global_macro_context=("treasury yield" in text),
+                classification_version=2)
+
+
+def requires_headline_review(item):
+    # Legacy items without severity remain blocking, never silently cleared.
+    return item.get("severity", "REVIEW") != "CONTEXT"
 
 
 def calendar_events(payload, now):
@@ -287,7 +301,7 @@ def collect(fetch=request, now=None):
         item["id"] = fingerprint
         by_id[fingerprint] = item
     headlines = sorted(by_id.values(), key=lambda x: x["published_at"], reverse=True)[:100]
-    new = [item for item in headlines if item["id"] not in seen
+    new = [item for item in headlines if requires_headline_review(item) and item["id"] not in seen
            and now - parse_date(item["published_at"]) <= timedelta(minutes=90)]
     status = "OK" if calendar_status == "OK" and all(f["status"] == "OK" for f in feeds.values()) else "PARTIAL"
     out = {

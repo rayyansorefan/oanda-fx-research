@@ -9,7 +9,7 @@ import json
 import math
 from collections import Counter
 from pathlib import Path
-from datetime import timedelta
+from datetime import timedelta, datetime, timezone
 try:
     from scripts.signal_admission import qualify, moment, number
     from scripts.paper_trade_audit import source_bars, replay, iso
@@ -22,10 +22,11 @@ POLICIES = ("champion", "challenger_v1")
 TERMINAL = {"WIN_TP1", "LOSS_STOP", "TIME_EXIT", "UNTRIGGERED",
             "INVALIDATED_PRE_ENTRY", "AMBIGUOUS_ENTRY_BAR", "AMBIGUOUS_EXIT_BAR"}
 
-def freeze(summary, news, source_ref=None):
-    now = moment(summary.get("collected_at"))
+def freeze(summary, news, source_ref=None, *, decided_at=None):
+    source_time = moment(summary.get("collected_at"))
+    now = moment(decided_at) if decided_at is not None else source_time
     rows = []
-    if not now or summary.get("status") not in ("OK", "PARTIAL"):
+    if not now or not source_time or now < source_time or summary.get("status") not in ("OK", "PARTIAL"):
         return rows
     for policy in POLICIES:
         admitted = set()
@@ -38,9 +39,10 @@ def freeze(summary, news, source_ref=None):
                 plan, reason = qualify(pair, ranked, (summary.get("pairs") or {}).get(pair) or {},
                                        news, now, route, policy=policy)
                 rows.append({"policy": policy, "source_at": summary["collected_at"],
-                    "source_ref": source_ref, "pair": pair, "route": route,
+                    "source_ref": source_ref, "study_method_version":2, "decision_at":iso(now), "pair": pair, "route": route,
                     "reason": reason, "plan": plan})
                 if plan:
+                    plan["oanda_snapshot_at"] = summary["collected_at"]
                     admitted.add(pair)
                     break
             if len(admitted) >= 3:
@@ -77,18 +79,21 @@ def metrics(records):
             "missed_profitable_entries_verified":0}
     return out
 
-def update(summary, news, book=None, fetch=None):
+def update(summary, news, book=None, fetch=None, *, decided_at=None):
     book = book or {"schema":1, "records":[], "observation_times":[]}
-    now = moment(summary.get("collected_at"))
-    if not now:
-        raise ValueError("Missing study timestamp")
+    source_time = moment(summary.get("collected_at"))
+    now = moment(decided_at) if decided_at is not None else source_time
+    if not now or not source_time or now < source_time:
+        raise ValueError("Missing or backdated study timestamp")
     observation = iso(now)
-    if observation not in book["observation_times"]:
+    seen_sources = set(book.get("source_snapshots") or []) | {r["source_at"] for r in book["records"]}
+    if summary["collected_at"] not in seen_sources:
+        book.setdefault("source_snapshots", []).append(summary["collected_at"])
         book["observation_times"].append(observation)
         existing = {(r["policy"],r["pair"],r["route"],
                      (r.get("plan",{}).get("technical_context") or {}).get("source_bar_time"))
                     for r in book["records"] if r.get("plan")}
-        for row in freeze(summary, news):
+        for row in freeze(summary, news, decided_at=iso(now)):
             plan = row.get("plan")
             key = (row["policy"],row["pair"],row["route"],
                    ((plan or {}).get("technical_context") or {}).get("source_bar_time"))
@@ -114,8 +119,8 @@ def update(summary, news, book=None, fetch=None):
                              "reason":type(exc).__name__}
     book.update(updated_at=observation, metrics=metrics(book["records"]),
         performance_validated=False, promotion_allowed=False,
-        policy={"version":"20261028-v1", "challenger":"M15/H1 EMA+DMI; H1 ADX>=18; H4/D context not compulsory. Same exhaustion, stop, nearest-target, gross>=1.50/net>=1.35, news and spread gates.",
-            "timing":"Actual collector snapshots plus 1 minute manual delay, rounded to next M15 opening; no assumed pattern-close fill.",
+        policy={"version":"20261028-v2", "challenger":"M15/H1 EMA+DMI; H1 ADX>=18; H4/D context not compulsory. Same exhaustion, stop, nearest-target, gross>=1.50/net>=1.35, news and spread gates.",
+            "timing":"Actual study decision times plus 1 minute manual delay, rounded to next M15 opening; no assumed pattern-close fill.",
             "costs":"OANDA ask buys/bid sells and opposite exit side; no second spread deduction in realised returns. Slippage, financing and Pepperstone fills unknown.",
             "drawdown":"Sum of per-trade net R, not portfolio/account drawdown; overlapping correlated trades not a portfolio model.",
             "validation":"Prospective frozen rules; historical development cohorts separate; no automatic promotion. Insufficient data is not zero expected risk."})
@@ -125,7 +130,8 @@ def main():
     path = ROOT/"data/strategy_comparison.json"
     book = json.loads(path.read_text()) if path.exists() else None
     result = update(json.loads((ROOT/"data/summary.json").read_text()),
-                    json.loads((ROOT/"data/news_latest.json").read_text()), book)
+                    json.loads((ROOT/"data/news_latest.json").read_text()), book,
+                    decided_at=datetime.now(timezone.utc).isoformat())
     path.write_text(json.dumps(result,indent=2,sort_keys=True)+"\n")
     print("Paper-only strategy comparison", json.dumps(result["metrics"],sort_keys=True))
 

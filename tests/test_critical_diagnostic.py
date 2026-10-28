@@ -99,7 +99,7 @@ class EmptySignalFreshnessTests(unittest.TestCase):
             (root/'data/summary.json').write_text(json.dumps(summary))
             (root/'data/news_latest.json').write_text(json.dumps(news()))
             (root/'signals.json').write_text(json.dumps({'generated_at':'2020-01-01T00:00:00Z','signals':[]}))
-            with patch.object(admission,'ROOT',root):admission.main()
+            with patch.object(admission,'ROOT',root), patch.object(admission,'decision_now',return_value=NOW):admission.main()
             saved=json.loads((root/'signals.json').read_text())
             self.assertEqual(saved['signals'],[])
             self.assertEqual(saved['generated_at'],NOW.isoformat().replace('+00:00','Z'))

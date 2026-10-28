@@ -478,6 +478,8 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         "id", "instrument", "direction", "created_at", "expires_at",
         "planned_entry", "stop", "tp1", "tp2", "alert_a", "alert_b",
         "max_oanda_spread_pips", "event_blackouts_utc", "alert_c",
+        "entry_route", "gross_rr_at_creation", "net_rr_at_spread_cap",
+        "broker_verified", "manual_broker_check_required", "account_equity_verified",
     )
     clean_signals = [{k: s.get(k) for k in allowed_signal_fields}
                      for s in raw_signals if isinstance(s, dict)

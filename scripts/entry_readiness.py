@@ -246,7 +246,11 @@ def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
             if pair_news.get("near_high_impact_calendar"):
                 reasons.append(_reason("NEWS_EVENT_BLACKOUT",
                                        "High-impact release near this pair: fresh manual event check required"))
-            if pair_news.get("recent_relevant_headlines"):
+            try:
+                from scripts.news_watch import requires_headline_review
+            except ModuleNotFoundError:
+                from news_watch import requires_headline_review
+            if any(requires_headline_review(item) for item in pair_news.get("recent_relevant_headlines") or []):
                 reasons.append(_reason("NEWS_MATERIAL_REVIEW",
                                        "Recent relevant market headlines require individual review"))
             if coverage.get("status") == "LIMITED":

@@ -1,0 +1,335 @@
+{
+  "method": "Counterfactual development diagnostic of corrected headline relevance on original saved titles and timestamps. No new source/news facts are fabricated. These plans were NOT issued historically and do not establish fills, missed profits, or independent performance. Calendar and missing-source coverage unchanged.",
+  "metrics": {
+    "challenger_v1": {
+      "false_breakout_stop_proxy": 0,
+      "filled": 0,
+      "incorrect_rejections_verified": 0,
+      "max_drawdown_r": null,
+      "mean_net_r": null,
+      "missed_profitable_entries_verified": 0,
+      "net_total_r": null,
+      "outcomes": {
+        "NOT_REPLAYED": 1
+      },
+      "rejections": {
+        "ADX_TREND_STRENGTH": 34,
+        "DMI_DIRECTION_CONFLICT": 4,
+        "EVENT_CALENDAR_OR_BLACKOUT": 1,
+        "FOUR_FRAME_TREND_CONFLICT": 44,
+        "INVALID_BID_ASK_OR_SPREAD": 150,
+        "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 38,
+        "NO_DECISIVE_COMPLETED_M15_IMPULSE": 53,
+        "PRIMARY_NEWS_SOURCE_MISSING": 5,
+        "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 4,
+        "RECENT_MATERIAL_HEADLINE_REVIEW": 6,
+        "REVERSAL_OR_EXHAUSTION": 86,
+        "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 60,
+        "UNSUPPORTED_PAIR_OR_ROUTE": 4
+      },
+      "signals_generated": 1,
+      "signals_triggered": 0,
+      "stops": 0,
+      "tp1": 0,
+      "unannualised_mean_over_sd": null
+    },
+    "champion": {
+      "false_breakout_stop_proxy": 0,
+      "filled": 0,
+      "incorrect_rejections_verified": 0,
+      "max_drawdown_r": null,
+      "mean_net_r": null,
+      "missed_profitable_entries_verified": 0,
+      "net_total_r": null,
+      "outcomes": {
+        "NOT_REPLAYED": 1
+      },
+      "rejections": {
+        "ADX_TREND_STRENGTH": 10,
+        "FOUR_FRAME_TREND_CONFLICT": 108,
+        "INVALID_BID_ASK_OR_SPREAD": 150,
+        "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 8,
+        "NO_DECISIVE_COMPLETED_M15_IMPULSE": 14,
+        "PRIMARY_NEWS_SOURCE_MISSING": 1,
+        "RECENT_MATERIAL_HEADLINE_REVIEW": 4,
+        "REQUIRED_FRAME_HISTORY_MISSING:H4": 98,
+        "REVERSAL_OR_EXHAUSTION": 86,
+        "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 6,
+        "UNSUPPORTED_PAIR_OR_ROUTE": 4
+      },
+      "signals_generated": 1,
+      "signals_triggered": 0,
+      "stops": 0,
+      "tp1": 0,
+      "unannualised_mean_over_sd": null
+    }
+  },
+  "performance_validated": false,
+  "snapshots": [
+    {
+      "corrected_news_gate": {
+        "fail": 52,
+        "pass": 18,
+        "unknown": 0
+      },
+      "newly_qualified_hypotheses": [
+        {
+          "historical_not_issued": true,
+          "ideal_pattern_close_replay": {
+            "manual_alert_timing_verified": false,
+            "result": {
+              "detected_at": "2026-10-28T08:00:00Z",
+              "entry_available_at": "2026-10-28T08:00:00Z",
+              "evidence": {
+                "confirmation": {
+                  "ask": {
+                    "c": 175.513,
+                    "h": 175.62,
+                    "l": 175.475,
+                    "o": 175.608
+                  },
+                  "bid": {
+                    "c": 175.486,
+                    "h": 175.592,
+                    "l": 175.449,
+                    "o": 175.578
+                  },
+                  "open_at": "2026-10-28T07:45:00Z"
+                }
+              },
+              "reason": "Expiry without verified entry",
+              "route": "B",
+              "scored": false,
+              "status": "TRIGGERED_UNFILLED",
+              "triggered_at": "2026-10-28T08:00:00Z"
+            },
+            "source_evidence": "data/replay_evidence/EUR_JPY-147cad949e66ef36c0e5a63e24afa80a95a14c4b0e507900215acc638455a488.json"
+          },
+          "pair": "EUR_JPY",
+          "plan": {
+            "account_equity_verified": false,
+            "admission_policy": "champion",
+            "alert_b": 175.593,
+            "broker_verified": false,
+            "created_at": "2026-10-28T07:37:19Z",
+            "direction": "SHORT",
+            "entry_route": "EMA20_PULLBACK",
+            "event_blackouts_utc": [],
+            "expires_at": "2026-10-28T09:07:19Z",
+            "gross_rr_at_creation": 2.617,
+            "id": "AUTO-20261028T0737-EUR_JPY-S-B",
+            "instrument": "EUR_JPY",
+            "manual_broker_check_required": true,
+            "max_equity_risk_fraction": 0.0025,
+            "max_oanda_spread_pips": 2.76,
+            "net_rr_at_spread_cap": 1.616,
+            "oanda_snapshot_at": "2026-10-28T07:37:19Z",
+            "paper_only": true,
+            "planned_entry": 175.593,
+            "research_only": true,
+            "source_quote_at": "2026-10-28T07:36:36.260070410Z",
+            "stop": 175.665,
+            "target_basis": "nearest completed M15/H1/H4/D 20-bar support/resistance",
+            "technical_context": {
+              "admission_policy": "champion",
+              "full_frame_alignment": true,
+              "h1_adx": 32.15229590875142,
+              "h1_minus_di": 32.74801574544169,
+              "h1_plus_di": 13.020468180567596,
+              "m15_adx": 23.382777259860568,
+              "m15_atr": 0.06866139106465508,
+              "m15_minus_di": 27.76123740249705,
+              "m15_plus_di": 23.175144624155074,
+              "momentum_adx_minimum": 20,
+              "source_bar_time": "2026-10-28T07:15:00.000000000Z"
+            },
+            "tp1": 175.404,
+            "trigger_basis": "future completed M15 only"
+          },
+          "policy": "champion",
+          "route": "EMA20_PULLBACK"
+        },
+        {
+          "historical_not_issued": true,
+          "ideal_pattern_close_replay": {
+            "manual_alert_timing_verified": false,
+            "result": {
+              "detected_at": "2026-10-28T08:00:00Z",
+              "entry_available_at": "2026-10-28T08:00:00Z",
+              "evidence": {
+                "confirmation": {
+                  "ask": {
+                    "c": 175.513,
+                    "h": 175.62,
+                    "l": 175.475,
+                    "o": 175.608
+                  },
+                  "bid": {
+                    "c": 175.486,
+                    "h": 175.592,
+                    "l": 175.449,
+                    "o": 175.578
+                  },
+                  "open_at": "2026-10-28T07:45:00Z"
+                }
+              },
+              "reason": "Expiry without verified entry",
+              "route": "B",
+              "scored": false,
+              "status": "TRIGGERED_UNFILLED",
+              "triggered_at": "2026-10-28T08:00:00Z"
+            },
+            "source_evidence": "data/replay_evidence/EUR_JPY-147cad949e66ef36c0e5a63e24afa80a95a14c4b0e507900215acc638455a488.json"
+          },
+          "pair": "EUR_JPY",
+          "plan": {
+            "account_equity_verified": false,
+            "admission_policy": "challenger_v1",
+            "alert_b": 175.593,
+            "broker_verified": false,
+            "created_at": "2026-10-28T07:37:19Z",
+            "direction": "SHORT",
+            "entry_route": "EMA20_PULLBACK",
+            "event_blackouts_utc": [],
+            "expires_at": "2026-10-28T09:07:19Z",
+            "gross_rr_at_creation": 2.617,
+            "id": "AUTO-20261028T0737-EUR_JPY-S-B",
+            "instrument": "EUR_JPY",
+            "manual_broker_check_required": true,
+            "max_equity_risk_fraction": 0.0025,
+            "max_oanda_spread_pips": 2.76,
+            "net_rr_at_spread_cap": 1.616,
+            "oanda_snapshot_at": "2026-10-28T07:37:19Z",
+            "paper_only": true,
+            "planned_entry": 175.593,
+            "research_only": true,
+            "source_quote_at": "2026-10-28T07:36:36.260070410Z",
+            "stop": 175.665,
+            "target_basis": "nearest completed M15/H1/H4/D 20-bar support/resistance",
+            "technical_context": {
+              "admission_policy": "challenger_v1",
+              "full_frame_alignment": false,
+              "h1_adx": 32.15229590875142,
+              "h1_minus_di": 32.74801574544169,
+              "h1_plus_di": 13.020468180567596,
+              "m15_adx": 23.382777259860568,
+              "m15_atr": 0.06866139106465508,
+              "m15_minus_di": 27.76123740249705,
+              "m15_plus_di": 23.175144624155074,
+              "momentum_adx_minimum": 18,
+              "source_bar_time": "2026-10-28T07:15:00.000000000Z"
+            },
+            "tp1": 175.404,
+            "trigger_basis": "future completed M15 only"
+          },
+          "policy": "challenger_v1",
+          "route": "EMA20_PULLBACK"
+        }
+      ],
+      "original_news_gate": {
+        "fail": 70,
+        "pass": 0,
+        "unknown": 0
+      },
+      "source_at": "2026-10-28T07:37:19Z",
+      "source_ref": "38a211c3ce1f1e728fadd972ad848ce6d94ec276"
+    },
+    {
+      "corrected_news_gate": {
+        "fail": 66,
+        "pass": 4,
+        "unknown": 0
+      },
+      "newly_qualified_hypotheses": [],
+      "original_news_gate": {
+        "fail": 70,
+        "pass": 0,
+        "unknown": 0
+      },
+      "source_at": "2026-10-28T12:02:26Z",
+      "source_ref": "dcb47355a311c938eec10be21b30b19b8a4cb3f5"
+    },
+    {
+      "corrected_news_gate": {
+        "fail": 56,
+        "pass": 14,
+        "unknown": 0
+      },
+      "newly_qualified_hypotheses": [],
+      "original_news_gate": {
+        "fail": 70,
+        "pass": 0,
+        "unknown": 0
+      },
+      "source_at": "2026-10-28T13:56:21Z",
+      "source_ref": "0f3c6431dd6c084c6c7fc134af6b8bbb27be5a4b"
+    },
+    {
+      "corrected_news_gate": null,
+      "newly_qualified_hypotheses": [],
+      "original_news_gate": null,
+      "source_at": "2026-10-28T16:30:33Z",
+      "source_ref": "d03fadcb953e377b4f36e97854c2ed34d8167a45"
+    },
+    {
+      "corrected_news_gate": {
+        "fail": 64,
+        "pass": 6,
+        "unknown": 0
+      },
+      "newly_qualified_hypotheses": [],
+      "original_news_gate": {
+        "fail": 70,
+        "pass": 0,
+        "unknown": 0
+      },
+      "source_at": "2026-10-27T07:32:56Z",
+      "source_ref": "911dadb330bed5f1ee445cff4887bc3b84503f54"
+    },
+    {
+      "corrected_news_gate": {
+        "fail": 66,
+        "pass": 4,
+        "unknown": 0
+      },
+      "newly_qualified_hypotheses": [],
+      "original_news_gate": {
+        "fail": 70,
+        "pass": 0,
+        "unknown": 0
+      },
+      "source_at": "2026-10-27T12:02:35Z",
+      "source_ref": "92eaf7a8cf610ce49f1caf37e11a1f1339f50d56"
+    },
+    {
+      "corrected_news_gate": {
+        "fail": 60,
+        "pass": 10,
+        "unknown": 0
+      },
+      "newly_qualified_hypotheses": [],
+      "original_news_gate": {
+        "fail": 70,
+        "pass": 0,
+        "unknown": 0
+      },
+      "source_at": "2026-10-27T14:19:23Z",
+      "source_ref": "1e745a693a320f4b0ff80bf5e088cd916f34e744"
+    },
+    {
+      "corrected_news_gate": {
+        "fail": 58,
+        "pass": 12,
+        "unknown": 0
+      },
+      "newly_qualified_hypotheses": [],
+      "original_news_gate": {
+        "fail": 70,
+        "pass": 0,
+        "unknown": 0
+      },
+      "source_at": "2026-10-27T16:35:53Z",
+      "source_ref": "c5b917df1ebf428f8e5de26582c0c6cb846120b5"
+    }
+  ]
+}

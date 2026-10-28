@@ -10,8 +10,10 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 try:
     from scripts.adaptive_research import entry_context
+    from scripts.news_watch import requires_headline_review
 except ModuleNotFoundError:  # executed directly from scripts/ by GitHub Actions
     from adaptive_research import entry_context
+    from news_watch import requires_headline_review
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_PLANS = 3
@@ -55,7 +57,7 @@ def news_gate(pair, news, now):
     for item in info.get("recent_relevant_headlines") or []:
         published = moment(item.get("published_at"))
         if published and timedelta(0) <= now - published <= timedelta(hours=3):
-            if item.get("severity") in ("REVIEW", "HIGH", "CRITICAL"):
+            if requires_headline_review(item):
                 return "RECENT_MATERIAL_HEADLINE_REVIEW"
     return None
 
@@ -227,12 +229,17 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
         return None, "ROUNDED_NET_REWARD_BELOW_MINIMUM"
     return plan, None
 
-def admit(summary, news, previous, archive=None):
-    now = moment(summary.get("collected_at"))
-    audit = {"source_at": summary.get("collected_at"), "admitted": [],
+def decision_now():
+    return datetime.now(timezone.utc)
+
+def admit(summary, news, previous, archive=None, *, evaluated_at=None):
+    source_time = moment(summary.get("collected_at"))
+    now = moment(evaluated_at) if evaluated_at is not None else source_time
+    audit = {"source_at": summary.get("collected_at"),
+             "evaluated_at": now.isoformat() if now else None, "admitted": [],
              "rejected": {}, "candidate_routes": [],
              "active": 0, "status": "NO_SOURCE"}
-    if not now or summary.get("status") not in ("OK", "PARTIAL"):
+    if not now or not source_time or now < source_time or summary.get("status") not in ("OK", "PARTIAL"):
         return previous, archive or {"signals": []}, audit
     previous = previous if isinstance(previous, dict) else {"schema_version": 1, "signals": []}
     historic = archive if isinstance(archive, dict) else {"signals": []}
@@ -273,6 +280,7 @@ def admit(summary, news, previous, archive=None):
                 continue
             if len(kept) >= MAX_PLANS:
                 break
+            proposal["oanda_snapshot_at"] = summary["collected_at"]
             kept.append(proposal)
             selected.add(pair)
             audit["admitted"].append({"id": proposal["id"], "pair": pair,
@@ -295,7 +303,8 @@ def main():
     archive_path = ROOT / "data/signal_plan_archive.json"
     previous = json.loads(path.read_text()) if path.exists() else {"signals":[]}
     archive = json.loads(archive_path.read_text()) if archive_path.exists() else {"signals":[]}
-    updated, archived, audit = admit(summary, news, previous, archive)
+    updated, archived, audit = admit(summary, news, previous, archive,
+                                    evaluated_at=decision_now().isoformat())
     (ROOT / "data/signal_admission_audit.json").write_text(
         json.dumps(audit, indent=2, sort_keys=True) + "\n")
     if updated != previous:  # Refresh empty-plan timestamp as well; never rewrite individual plan fields.

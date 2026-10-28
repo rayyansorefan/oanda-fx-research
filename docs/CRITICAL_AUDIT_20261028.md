@@ -45,3 +45,17 @@ First repaired collector run 40786885272 completed successfully, source 23:23:08
 The existing public front panel called unapproved models current conditional plans and asserted full alignment even with conflicting D1. Public change 154ae1d only corrects text labels; layout is unchanged. Canonical conditional signals remain in the existing entry-decision section.
 
 A further persistence defect kept `signals.json.generated_at` at 27 October when the signal list remained empty. Persist the new assessment envelope every cycle while preserving each original frozen plan. Regression added.
+
+## Continued diagnosis: news deadlock and decision timestamps
+
+The first-failure audit hid a universal news veto. On all seven usable development snapshots, every screened candidate failed the news gate. At 07:37 on 28 October, technically/economically eligible USD/CHF and EUR/JPY were blocked by headline review, while AUD/NZD had an unsupported official NZD feed. This is not evidence the market had no viable technical setups.
+
+Confirmed classification defects: ordinary Treasury-yield stories were tagged relevant to every currency, and central-bank approval of a corporate takeover was treated as a macro-policy event. Routine Treasury-yield items are now assigned to USD and any other explicitly named jurisdictions; they remain visible as global macro context. Genuine global shocks (attacks, trade war, emergency/liquidity crisis, etc.) remain broad review flags. Supervisory merger/takeover items remain visible as CONTEXT unless the headline also contains monetary-policy, interest-rate or systemic/emergency content. Unknown legacy headline severity still blocks. All calendar blackouts, source failures, spread and reward gates are retained.
+
+`admission_diagnostics.py` evaluates independent gates on unmodified source data, retaining unknown values and overlapping reasons. It never issues or waives a signal. The existing collector now saves this diagnostic every run.
+
+Counterfactual development reclassification yields one EUR/JPY pullback hypothesis per policy at 07:37 on 28 October, versus zero before. It qualifies with original gross/net thresholds. An independent bid/ask replay shows a completed rejection at 08:00 but no subsequent planned-price fill before expiry. This was not an issued historical signal and establishes no missed profit. Source commits and evidence are in `data/news_relevance_development_audit.json`.
+
+A second timestamp defect used earlier quote/collection timestamps as plan/watch creation times. Production admission, watch registration and comparison now record actual decision time separately. Repeating a study on the same snapshot cannot invent an extra observation/poll. Existing immutable histories are unchanged. Historical source-time-only records are not upgraded to verified alert availability.
+
+NZD remains unsupported by the configured official-feed adapter. RBNZ's official release pages exist, but no functioning RSS/HTML adapter was verified in this repair; NZD coverage is still honestly unavailable. No missing-source gate has been waived.

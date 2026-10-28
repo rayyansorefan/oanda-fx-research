@@ -212,10 +212,13 @@ def _forward_entry_pattern(row, source, snapshot):
             "entry_pattern_timeframe": period}
 
 
-def update_ledger(summary, existing=None, news=None, latest=None):
+def update_ledger(summary, existing=None, news=None, latest=None, *, registered_at=None):
     snapshot = moment(summary.get("collected_at"))
     if not snapshot:
         raise ValueError("OANDA summary collection time unavailable")
+    registration = moment(registered_at) if registered_at is not None else snapshot
+    if not registration or registration < snapshot:
+        raise ValueError("Registration must not precede its source snapshot")
     book = existing if isinstance(existing, dict) else {}
     rows = book.get("opportunities") or {}
     if not isinstance(rows, dict):
@@ -263,7 +266,7 @@ def update_ledger(summary, existing=None, news=None, latest=None):
             if pattern:
                 # This is an archived completed-candle observation, NEVER
                 # a current-hour alert or an inferred executable order fill.
-                pattern["entry_pattern_detected_at"] = snapshot.isoformat()
+                pattern["entry_pattern_detected_at"] = registration.isoformat()
                 row.update(pattern)
         row["latest_quote_at"] = quote["at"].isoformat()
         row["latest_exit_side"] = round(
@@ -316,12 +319,13 @@ def update_ledger(summary, existing=None, news=None, latest=None):
         ident = f"{candle_key}-{pair.replace('_', '')}-{direction}-{route}"
         if ident in rows:
             continue
-        first_seen = quote["at"]
+        first_seen = registration
         ttl = timedelta(minutes=90 if route == "MOMENTUM_CONTINUATION" else 240)
         threshold_pct = round(100 * .6 * atr / mid, 5)
         rows[ident] = {
             "id": ident, "instrument": pair, "direction": direction,
             "route": route, "first_seen_at": first_seen.isoformat(),
+            "source_quote_at": quote["at"].isoformat(),
             "m15_impulse_started_at": impulse_start,
             "expires_at": (first_seen + ttl).isoformat(),
             "entry_low": setup["entry_low"], "entry_high": setup["entry_high"],
@@ -375,10 +379,11 @@ def update_ledger(summary, existing=None, news=None, latest=None):
         ident = f"{candle_key}-{pair.replace('_', '')}-{direction}-{route}"
         if ident in rows:
             continue
-        first_seen = quote["at"]
+        first_seen = registration
         rows[ident] = {
             "id": ident, "instrument": pair, "direction": direction,
             "route": route, "first_seen_at": first_seen.isoformat(),
+            "source_quote_at": quote["at"].isoformat(),
             "m15_impulse_started_at": impulse_start,
             "expires_at": expire.isoformat(),
             "entry_low": low, "entry_high": high,
@@ -576,7 +581,8 @@ def main():
                 detail = json.loads(path.read_text())
                 if detail.get("instrument") == name and detail.get("collected_at") == summary.get("collected_at"):
                     latest.setdefault("pairs", {})[name] = detail
-    book = update_ledger(summary, existing, news, latest=latest)
+    book = update_ledger(summary, existing, news, latest=latest,
+                         registered_at=datetime.now(timezone.utc).isoformat())
     LEDGER.parent.mkdir(parents=True, exist_ok=True)
     LEDGER.write_text(json.dumps(book, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print("Forward FX entry opportunities:", book["total_registered"],

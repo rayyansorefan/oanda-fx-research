@@ -7,6 +7,7 @@ import sys
 import math
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from news_watch import requires_headline_review
 from strategy_feedback import build_feedback, signal_policy
 from adaptive_research import entry_context, afternoon_audit
 from urllib.request import Request, urlopen
@@ -312,7 +313,7 @@ def news_check(signal, feed, now):
     start = parse_time(signal["created_at"])
     # Capture known material news even when other providers fail.
     recent = [item for item in coverage.get("recent_relevant_headlines", [])
-              if parse_time(item["published_at"]) > start
+              if requires_headline_review(item) and parse_time(item["published_at"]) > start
               and now - parse_time(item["published_at"]) < timedelta(hours=7)]
     events = coverage.get("near_high_impact_calendar", [])
     if events:
