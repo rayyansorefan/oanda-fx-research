@@ -1,11 +1,15 @@
 """No-network checks for bounded FX chart-timeframe expansion."""
 import sys
 import unittest
+import json
+import os
+import tempfile
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from oanda_data import (FRAMES, EXTENDED_CHART_FRAMES,
-                        extended_chart_selection)
+                        extended_chart_selection, currently_monitored_names)
 
 
 class ChartFrameCoverageTests(unittest.TestCase):
@@ -27,6 +31,36 @@ class ChartFrameCoverageTests(unittest.TestCase):
         self.assertEqual(result, ("USD_JPY", "CHF_JPY", "GBP_USD"))
         self.assertNotIn("HKD_JPY", result)
         self.assertNotIn("USD_HUF", result)
+
+    def test_active_paper_watches_receive_deep_coverage_without_signal_approval(self):
+        current = datetime.now(timezone.utc)
+        active_until = (current + timedelta(hours=2)).isoformat()
+        expired_at = (current - timedelta(hours=2)).isoformat()
+        with tempfile.TemporaryDirectory() as folder:
+            previous = os.getcwd()
+            try:
+                os.chdir(folder)
+                Path("data").mkdir()
+                Path("signals.json").write_text(json.dumps({
+                    "signals": [{"instrument": "EUR_USD"}]}))
+                rows = {
+                    "first": {"instrument": "CAD_CHF", "expires_at": active_until,
+                              "first_seen_at": (current - timedelta(minutes=90)).isoformat()},
+                    "second": {"instrument": "AUD_JPY", "expires_at": active_until,
+                               "first_seen_at": (current - timedelta(minutes=30)).isoformat()},
+                    "third": {"instrument": "AUD_JPY", "expires_at": active_until,
+                              "first_seen_at": (current - timedelta(minutes=15)).isoformat()},
+                    "expired": {"instrument": "NZD_CHF", "expires_at": expired_at,
+                                "first_seen_at": expired_at},
+                    "excluded": {"instrument": "GBP_ZAR", "expires_at": active_until,
+                                 "first_seen_at": current.isoformat()},
+                }
+                Path("data/entry_opportunity_ledger.json").write_text(
+                    json.dumps({"opportunities": rows}))
+                self.assertEqual(currently_monitored_names(),
+                                 ["EUR_USD", "AUD_JPY", "CAD_CHF"])
+            finally:
+                os.chdir(previous)
 
     def test_bounded_and_missing_rankings_never_fabricated(self):
         result = extended_chart_selection(
