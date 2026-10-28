@@ -8,6 +8,7 @@ class EntryReadinessTests(unittest.TestCase):
             "support20":1.0990, "resistance20":1.1036,
             "ema20":e20,"ema50":e50,"adx14":adx,"atr14":0.0008,
             "plus_di14":32,"minus_di14":13,
+            "macd_12_26_9":{"histogram":.0001},
         }
         # Source time 15:02; 14:45 bar independently completed at 15:00.
         return {

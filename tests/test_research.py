@@ -31,6 +31,7 @@ class DataTests(unittest.TestCase):
         n=datetime(2026, 10, 20, 12, 7, tzinfo=timezone.utc)
         sig={"instrument":"EUR_USD", "direction":"LONG",
              "created_at":"2026-10-20T11:00:00Z",
+             "expires_at":"2026-10-20T13:00:00Z",
              "alert_b":1.1000, "planned_entry":1.101,
              "stop":1.098, "tp1":1.107,
              "max_oanda_spread_pips":2}

@@ -59,7 +59,10 @@ def news_gate(pair, news, now):
                 return "RECENT_MATERIAL_HEADLINE_REVIEW"
     return None
 
-def qualify(pair, ranked, source, news, now, route):
+def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
+    if policy not in ("champion", "challenger_v1"):
+        raise ValueError("Unknown admission policy")
+    paper_only = policy != "champion"
     """Return (frozen prospective signal, rejection); never uses future candles."""
     if pair in EXCLUDED or route not in ("EMA20_PULLBACK", "MOMENTUM_CONTINUATION"):
         return None, "UNSUPPORTED_PAIR_OR_ROUTE"
@@ -85,8 +88,10 @@ def qualify(pair, ranked, source, news, now, route):
     if None in (bid, ask, pip, spread_pips) or not (0 < bid < ask and pip > 0 and 0 < spread_pips <= 10):
         return None, "INVALID_BID_ASK_OR_SPREAD"
     indicators = {}
-    for tf in ("M15", "H1", "H4", "D"):
+    for tf in (("M15", "H1") if paper_only else ("M15", "H1", "H4", "D")):
         item = (frames.get(tf) or {}).get("indicators") or {}
+        if trend(item) is None:
+            return None, "REQUIRED_FRAME_HISTORY_MISSING:" + tf
         if trend(item) != direction:
             return None, "FOUR_FRAME_TREND_CONFLICT"
         indicators[tf] = item
@@ -94,7 +99,8 @@ def qualify(pair, ranked, source, news, now, route):
     atr = number(m.get("atr14"))
     if not atr or atr <= 0 or spread_pips * pip > .50 * atr:
         return None, "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY"
-    if any((number(i.get("adx14")) or 0) < 20 for i in (m, h)):
+    if any((number(i.get("adx14")) or 0) < (18 if paper_only else 20)
+           for i in ((h,) if paper_only else (m, h))):
         return None, "ADX_TREND_STRENGTH"
     for i in (m, h):
         plus, minus = number(i.get("plus_di14")), number(i.get("minus_di14"))
@@ -146,14 +152,16 @@ def qualify(pair, ranked, source, news, now, route):
         alert = {"alert_b": level}
     # Swing-based stop, with ATR floor. The target is observed 20-bar
     # support/resistance, not a made-up multiple of the chosen stop.
+    target_indicators = [(frames.get(tf) or {}).get("indicators") or {}
+                         for tf in ("M15", "H1", "H4", "D")]
     if direction == "LONG":
         stop = min(swing_low - .12 * atr, entry - 1.05 * atr)
-        potential = sorted({float(i["resistance20"]) for i in indicators.values()
+        potential = sorted({float(i["resistance20"]) for i in target_indicators
                             if number(i.get("resistance20")) is not None
                             and number(i.get("resistance20")) > entry})
     else:
         stop = max(swing_high + .12 * atr, entry + 1.05 * atr)
-        potential = sorted({float(i["support20"]) for i in indicators.values()
+        potential = sorted({float(i["support20"]) for i in target_indicators
                             if number(i.get("support20")) is not None
                             and number(i.get("support20")) < entry}, reverse=True)
     if not potential:
@@ -188,13 +196,16 @@ def qualify(pair, ranked, source, news, now, route):
         "oanda_snapshot_at": now_utc,
         "source_quote_at": q.get("time"),
         "research_only": True, "broker_verified": False,
+        "paper_only": paper_only, "admission_policy": policy,
         "account_equity_verified": False,
         "max_equity_risk_fraction": .0025,
         "manual_broker_check_required": True,
         "gross_rr_at_creation": round(gross, 3),
         "net_rr_at_spread_cap": round(net, 3),
         "technical_context": {
-            "full_frame_alignment": True,
+            "full_frame_alignment": not paper_only,
+            "admission_policy": policy,
+            "momentum_adx_minimum": 18 if paper_only else 20,
             "m15_adx": number(m.get("adx14")), "h1_adx": number(h.get("adx14")),
             "m15_plus_di": number(m.get("plus_di14")),
             "m15_minus_di": number(m.get("minus_di14")),
@@ -219,7 +230,8 @@ def qualify(pair, ranked, source, news, now, route):
 def admit(summary, news, previous, archive=None):
     now = moment(summary.get("collected_at"))
     audit = {"source_at": summary.get("collected_at"), "admitted": [],
-             "rejected": {}, "active": 0, "status": "NO_SOURCE"}
+             "rejected": {}, "candidate_routes": [],
+             "active": 0, "status": "NO_SOURCE"}
     if not now or summary.get("status") not in ("OK", "PARTIAL"):
         return previous, archive or {"signals": []}, audit
     previous = previous if isinstance(previous, dict) else {"schema_version": 1, "signals": []}
@@ -251,6 +263,10 @@ def admit(summary, news, previous, archive=None):
         data = (summary.get("pairs") or {}).get(pair) or {}
         for route in ("MOMENTUM_CONTINUATION", "EMA20_PULLBACK"):
             proposal, error = qualify(pair, candidate, data, news, now, route)
+            audit["candidate_routes"].append({"pair": pair, "route": route,
+                "direction": candidate.get("deep_entry_scout_direction") or candidate.get("potential_direction_not_approved"),
+                "status": "REJECTED" if error else "QUALIFIED_CONDITIONAL_MANUAL_SIGNAL",
+                "reason": error})
             if error:
                 audit["rejected"].setdefault(error, 0)
                 audit["rejected"][error] += 1

@@ -222,6 +222,9 @@ def deep_selection(screening, monitored=(), max_extra=18):
                         0 if screening[pair].get("deep_entry_scout_eligible") is True else 1,
                         -screening[pair]["research_priority"], pair))
     selected = set(ranked[:max_extra])
+    # Every candidate already meeting preliminary champion gates needs H4/D
+    # verification; an arbitrary top-12 cap must not discard qualifying research.
+    selected |= {pair for pair in ranked if screening[pair].get("deep_entry_scout_eligible") is True}
     selected |= set(CORE) & set(screening)
     selected |= set(monitored) & set(screening)
     return sorted(selected)

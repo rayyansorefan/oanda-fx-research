@@ -567,6 +567,15 @@ def main():
     existing = json.loads(LEDGER.read_text(encoding="utf-8")) if LEDGER.exists() else {}
     news = json.loads(NEWS.read_text(encoding="utf-8")) if NEWS.exists() else {"status": "PARTIAL"}
     latest = json.loads(LATEST.read_text(encoding="utf-8")) if LATEST.exists() else {}
+    # Compact latest.json keeps only 12 M5 bars (one hour). Delayed hourly
+    # collectors must use the matching full archive, not silently lose patterns.
+    if latest.get("collected_at") == summary.get("collected_at"):
+        for name in (summary.get("coverage") or {}).get("detailed_audit_pairs", []):
+            path = SUMMARY.parent / "pairs" / (name + ".json")
+            if path.exists():
+                detail = json.loads(path.read_text())
+                if detail.get("instrument") == name and detail.get("collected_at") == summary.get("collected_at"):
+                    latest.setdefault("pairs", {})[name] = detail
     book = update_ledger(summary, existing, news, latest=latest)
     LEDGER.parent.mkdir(parents=True, exist_ok=True)
     LEDGER.write_text(json.dumps(book, indent=2, sort_keys=True) + "\n", encoding="utf-8")

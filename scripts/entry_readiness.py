@@ -128,7 +128,7 @@ def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
         source = pairs.get(instrument) or {}
         quote, frames = source.get("quote") or {}, source.get("frames") or {}
         ranked = by_key.get(instrument) or {}
-        direction = ranked.get("potential_direction_not_approved")
+        direction = ranked.get("deep_entry_scout_direction") or ranked.get("potential_direction_not_approved")
         if direction not in ("LONG", "SHORT"):
             continue
         qtime = _time(quote.get("time"))
@@ -172,7 +172,11 @@ def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
                 (minus > plus and hm > hp) if direction == "SHORT" else
                 (plus > minus and hp > hm)):
                 reasons.append(_reason("DMI_CONFLICT", "M15/H1 directional movement not jointly aligned"))
-        adaptive = ranked.get("adaptive_context") or {}
+        try:
+            from scripts.adaptive_research import entry_context
+        except ModuleNotFoundError:
+            from adaptive_research import entry_context
+        adaptive = entry_context({"quote": quote, "frames": frames}, direction)
         if adaptive.get("block_new_alert") is True:
             reasons.append(_reason("OVEREXTENDED_OR_REVERSING", str(adaptive.get("reason") or "Adaptive reversal warning")))
         complete_at, next_check_at, level, observed = None, None, None, False

@@ -694,6 +694,15 @@ def main() -> int:
         opportunity = load(str(opportunity_path)) if opportunity_path.is_file() else {}
         data = build_public_feed(summary, news, signals, watcher, detailed,
                                  recent.get("pairs") or {}, paper, opportunity)
+        comparison_path = Path("data/strategy_comparison.json")
+        if comparison_path.exists():
+            comparison = load(str(comparison_path))
+            data.setdefault("learning", {})["strategy_comparison"] = {
+                "updated_at": comparison.get("updated_at"),
+                "metrics": comparison.get("metrics"),
+                "paper_only": True, "performance_validated": False,
+                "promotion_allowed": False}
+            fit_public_feed_budget(data)
         if not data.get("snapshot_at") or len(data.get("pairs", {})) < 1:
             raise ValueError("Invalid sanitized payload")
         PUBLIC_PAYLOAD_PATH.parent.mkdir(parents=True, exist_ok=True)

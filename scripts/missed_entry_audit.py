@@ -175,7 +175,7 @@ def outcome(row, candles, now):
 def audit(book, prior=None, now=None, fetch=None):
     now = now or dt.datetime.now(UTC)
     entries = ((book or {}).get("opportunities") or {})
-    old = (prior or {}).get("results") or {}
+    old = ((prior or {}).get("historical_results") or (prior or {}).get("results") or {}) if (prior or {}).get("replay_method_version") == 2 else {}
     results = dict(old)
     queue = sorted((v for v in entries.values()
                     if v.get("entry_pattern_status") == "FORWARD_CANDLE_OBSERVED_PAPER_ONLY"
@@ -192,6 +192,8 @@ def audit(book, prior=None, now=None, fetch=None):
             else:
                 candles = fetch(item, now)
             value = outcome(item, candles, now)
+            if getattr(candles, "evidence_path", None):
+                value["source_evidence"] = candles.evidence_path
         except (RuntimeError, OSError, ValueError, TimeoutError, TypeError, KeyError) as exc:
             value = {"id": item.get("id"), "status": "PAPER_SOURCE_UNAVAILABLE",
                      "reason": type(exc).__name__, "scored": False,
@@ -213,6 +215,8 @@ def audit(book, prior=None, now=None, fetch=None):
                 "instrument": item["instrument"], "created_at": item["first_seen_at"],
                 "expires_at": item["expires_at"]}, now))
             results[item["id"]] = outcome(item, candles, now)
+            if getattr(candles, "evidence_path", None):
+                results[item["id"]]["source_evidence"] = candles.evidence_path
         except (RuntimeError, OSError, ValueError, TimeoutError, TypeError, KeyError):
             pass
     session_day = now.astimezone(ZoneInfo("Europe/London")).date().isoformat()
@@ -229,7 +233,7 @@ def audit(book, prior=None, now=None, fetch=None):
     for r in score:
         counts[r.get("status")] = counts.get(r.get("status"), 0)+1
     return {
-        "schema": 1, "updated_at": iso(now),
+        "schema": 1, "replay_method_version": 2, "updated_at": iso(now),
         "policy": ("Prospectively logged research patterns; no broker orders. "
                    "M15 bid/ask replay AFTER confirmation with frozen worst entry "
                    "zone and fixed stop/TP. Ambiguity and gaps never count as wins."),
@@ -240,12 +244,33 @@ def audit(book, prior=None, now=None, fetch=None):
         "today_scored_hypothetical_entries": sum(v.get("scored") is True for v in score),
         "today_status_counts": counts,
         "historical_results": results,
+        "latency_audit": latency_audit(flagged, results),
     }
+
+
+def latency_audit(rows, results):
+    """Existing replay is ideal pattern-close timing, never an alert-time fill."""
+    details = []
+    for row in rows:
+        pattern = when(row.get("entry_pattern_at"))
+        detected = when(row.get("entry_pattern_detected_at"))
+        result = results.get(row.get("id"), {})
+        fill = when(result.get("fill_at"))
+        details.append({"id": row.get("id"), "pattern_at": row.get("entry_pattern_at"),
+            "detected_at": row.get("entry_pattern_detected_at"),
+            "detection_delay_minutes": round((detected-pattern).total_seconds()/60, 2) if detected and pattern else None,
+            "fill_precedes_detection": bool(fill and detected and fill < detected),
+            "after_alert_fill_verified": False})
+    return {"method": "Legacy replay assumes pattern-close availability; no actual delivered alert or subsequent manual fill is established.",
+            "verified_profitable_missed_manual_entries": 0, "records": details}
 
 def main():
     ledger = json.loads((ROOT / "data/entry_opportunity_ledger.json").read_text())
     file = ROOT / "data/missed_entry_audit.json"
     previous = json.loads(file.read_text()) if file.exists() else {}
+    legacy = ROOT / "data/missed_entry_audit_legacy_v1.json"
+    if previous and previous.get("replay_method_version") != 2 and not legacy.exists():
+        legacy.write_text(json.dumps(previous, indent=2, sort_keys=True)+"\n")
     result = audit(ledger, previous)
     file.write_text(json.dumps(result, indent=2, sort_keys=True)+"\n")
     print("Missed FX opportunity verification", {

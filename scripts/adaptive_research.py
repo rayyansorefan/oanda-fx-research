@@ -64,7 +64,8 @@ def entry_context(pairdata, direction):
     macd_opposed = sign * histogram < 0
     h1_opposed = sign * (hplus - hminus) < 0 and hadx >= 22
 
-    candles = (frames.get("M15") or {}).get("recent_completed_candles") or []
+    candles = ((frames.get("M15") or {}).get("recent_completed_candles")
+               or (frames.get("M15") or {}).get("last_3_completed_candles") or [])
     # Only use documented completed candles; no current unfinished M15 candle.
     bodies_opposed = False
     if len(candles) >= 2:

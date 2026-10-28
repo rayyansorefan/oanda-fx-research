@@ -43,7 +43,7 @@ def sample(long=True):
     plan = {
         "id": "TEST-C-01", "instrument": "GBP_USD",
         "direction": "LONG" if long else "SHORT",
-        "created_at": (NOW - timedelta(minutes=5)).isoformat(),
+        "created_at": (NOW - timedelta(minutes=35)).isoformat(),
         "expires_at": (NOW + timedelta(hours=3)).isoformat(),
         "planned_entry": entry, "stop": stop, "tp1": tp,
         "alert_c": level, "max_oanda_spread_pips": 1.3,

@@ -431,9 +431,7 @@ def collect():
     # full OHLC for at least the top 12 deeply screened candidates plus any
     # approved immutable setup being monitored, NOT merely two spread-filtered
     # names. All 65+ remaining pairs retain M15/H1 indicators each cycle.
-    audit_names = set(deep_ok) & (
-        set(sorted(ranking, key=lambda p: (-ranking[p]["research_priority"], p))[:12])
-        | set(monitored) | extended_names)
+    audit_names = set(deep_ok)  # Preserve full M5/M15 history for every deep candidate.
     audit_dir = Path("data/pairs")
     if audit_dir.exists():
         shutil.rmtree(audit_dir)

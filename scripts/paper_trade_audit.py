@@ -75,7 +75,7 @@ def validate(plan):
         ctx = plan.get("technical_context") or {}
         needed = ("m15_adx", "h1_adx", "m15_plus_di", "m15_minus_di",
                   "h1_plus_di", "h1_minus_di", "m15_atr")
-        if ctx.get("full_frame_alignment") is not True or any(
+        if (ctx.get("full_frame_alignment") is not True and ctx.get("admission_policy") != "challenger_v1") or any(
                 numeric(ctx.get(x)) is None for x in needed):
             return "CONTINUATION_ORIGINAL_FRAME_EVIDENCE_MISSING"
     try:
@@ -153,6 +153,10 @@ def parse_bars(payload):
     return bars
 
 
+class EvidenceBars(list):
+    """Parsed candles with a credential-free persisted source reference."""
+    pass
+
 def source_bars(plan, when, fetch=None):
     created = stamp(plan["created_at"])
     expiry = stamp(plan["expires_at"])
@@ -173,7 +177,20 @@ def source_bars(plan, when, fetch=None):
                                "Accept": "application/json",
                                "User-Agent": "fx-paper-audit-read-only"}, method="GET")
     with urlopen(request, timeout=15) as response:
-        return parse_bars(json.load(response))
+        payload = json.load(response)
+    bars = parse_bars(payload)
+    # Content-addressed evidence contains market candles only, never credentials.
+    import hashlib
+    raw = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+    digest = hashlib.sha256(raw.encode()).hexdigest()
+    directory = Path("data/replay_evidence")
+    directory.mkdir(parents=True, exist_ok=True)
+    path = directory / (plan["instrument"] + "-" + digest + ".json")
+    if not path.exists():
+        path.write_text(raw + "\n")
+    result = EvidenceBars(bars)
+    result.evidence_path = str(path)
+    return result
 
 
 def _eligible_trigger(plan, bar):
@@ -197,12 +214,13 @@ def _eligible_continuation(plan, bar, previous_close):
         return False
     ctx = plan.get("technical_context") or {}
     long = plan["direction"] == "LONG"
-    if ctx.get("full_frame_alignment") is not True or any(
+    if (ctx.get("full_frame_alignment") is not True and ctx.get("admission_policy") != "challenger_v1") or any(
             numeric(ctx.get(key)) is None for key in
             ("m15_adx", "h1_adx", "m15_plus_di", "m15_minus_di",
              "h1_plus_di", "h1_minus_di")):
         return False
-    if numeric(ctx["m15_adx"]) < 22 or numeric(ctx["h1_adx"]) < 20:
+    minimum = ctx.get("momentum_adx_minimum", 22)
+    if (ctx.get("admission_policy") != "challenger_v1" and numeric(ctx["m15_adx"]) < minimum) or numeric(ctx["h1_adx"]) < (18 if ctx.get("admission_policy") == "challenger_v1" else 20):
         return False
     for prefix in ("m15", "h1"):
         plus, minus = numeric(ctx[prefix+"_plus_di"]), numeric(ctx[prefix+"_minus_di"])
@@ -381,7 +399,7 @@ def evidence(bar):
             "ask": dict(bar["ask"])}
 
 
-def replay(plan, bars, now):
+def replay(plan, bars, now, observation_times=None):
     """Deterministic from first complete M15 bar; no look-ahead or invented fills."""
     err = validate(plan)
     if err:
@@ -405,6 +423,7 @@ def replay(plan, bars, now):
         (b["mid"]["c"] for b in reversed(bars)
          if b["t"] + dt.timedelta(minutes=15) <= created), None)
     breakout_pending = None
+    available = None
     for bar in valid:
         close_at = bar["t"] + dt.timedelta(minutes=15)
         if previous and bar["t"] - previous > dt.timedelta(minutes=15, seconds=1):
@@ -452,12 +471,27 @@ def replay(plan, bars, now):
             previous_close = bar["mid"]["c"]
             if route:
                 triggered = close_at
+                if observation_times is not None:
+                    detected = next((t for t in sorted(observation_times) if t >= close_at), None)
+                    if detected is None or detected >= expiry:
+                        continue
+                    # One minute manual response; use the NEXT complete-bar open.
+                    earliest = detected + dt.timedelta(minutes=1)
+                    available = earliest.replace(minute=earliest.minute//15*15, second=0, microsecond=0)
+                    if available < earliest:
+                        available += dt.timedelta(minutes=15)
                 stage = "WAIT_LIMIT"
                 result = {"status": "TRIGGERED_UNFILLED", "triggered_at": iso(triggered),
                           "route": route,
+                          "detected_at": iso(detected) if observation_times is not None else iso(triggered),
+                          "entry_available_at": iso(available) if available else iso(triggered),
                           "scored": False, "evidence": {"confirmation": evidence(bar)}}
             continue
         if stage == "WAIT_LIMIT":
+            if available and bar["t"] < available:
+                if _stop_hit(plan, bar) or _tp_hit(plan, bar):
+                    return {**result, "status": "INVALIDATED_PRE_ENTRY", "reason": "Exit level reached before observed alert could be acted on", "scored": False}
+                continue
             if close_at > expiry:
                 break
             if blackout(plan, close_at, bar["t"]):
@@ -465,7 +499,7 @@ def replay(plan, bars, now):
             if result.get("route") == "C":
                 # Prospective continuation enters only at the opening quote
                 # of the next completed M15 bar, never inside the trigger bar.
-                if bar["t"] != triggered:
+                if bar["t"] != (available or triggered):
                     return {**result, "status": "DATA_GAP",
                             "reason": "Next completed M15 open unavailable",
                             "scored": False}

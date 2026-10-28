@@ -145,6 +145,8 @@ class NewsTests(unittest.TestCase):
         began = NOW - timedelta(minutes=30)
         candles = [{"time": news.iso(began),
                     "mid": {"h": 1.108, "l": 1.101, "o": 1.102, "c": 1.104}}]
+        candles[0]["bid"] = dict(candles[0]["mid"])
+        candles[0]["ask"] = {k:v+.0001 for k,v in candles[0]["mid"].items()}
         idea = signal()
         self.assertEqual(watch.setup_already_breached({
             "frames": {"M15": {"recent_completed_candles": candles}}

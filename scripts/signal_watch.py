@@ -4,6 +4,7 @@ import json
 import os
 import re
 import sys
+import math
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from strategy_feedback import build_feedback, signal_policy
@@ -46,6 +47,8 @@ def blacked_out(signal, current):
 def valid_risk(signal, observed_spread, observed_pip_size=None):
     entry, stop, target = (float(signal[k]) for k in ("planned_entry", "stop", "tp1"))
     long = signal["direction"] == "LONG"
+    if not all(math.isfinite(x) for x in (entry, stop, target, observed_spread)) or observed_spread < 0:
+        return False
     if not ((stop < entry < target) if long else (target < entry < stop)):
         return False
     pip = (float(observed_pip_size) if observed_pip_size is not None
@@ -125,7 +128,7 @@ def validate_approved_plan(signal, pairdata, current):
     return None
 
 
-def momentum_continuation_qualifies(prev, curr, level, long, frames, tolerance):
+def momentum_continuation_qualifies(prev, curr, level, long, frames, tolerance, context=None):
     """Conservative completed-bar continuation, not a perfect retest trigger.
 
     A directional H1+M15 trend and decisive M15 close are required. The
@@ -147,9 +150,13 @@ def momentum_continuation_qualifies(prev, curr, level, long, frames, tolerance):
                    if long else (prev_close >= level and close < level - tolerance))
         if not crossed:
             return False
-        m15 = frames["M15"]["indicators"]
-        h1 = frames["H1"]["indicators"]
-        if float(m15["adx14"]) < 22 or float(h1["adx14"]) < 20:
+        context = context or {}
+        m15 = ({"adx14": context["m15_adx"], "plus_di14": context["m15_plus_di"], "minus_di14": context["m15_minus_di"]}
+               if context.get("admission_policy") else frames["M15"]["indicators"])
+        h1 = ({"adx14": context["h1_adx"], "plus_di14": context["h1_plus_di"], "minus_di14": context["h1_minus_di"]}
+              if context.get("admission_policy") else frames["H1"]["indicators"])
+        minimum = context.get("momentum_adx_minimum", 22)
+        if float(m15["adx14"]) < minimum or float(h1["adx14"]) < 20:
             return False
         for indicators in (m15, h1):
             plus, minus = float(indicators["plus_di14"]), float(indicators["minus_di14"])
@@ -189,7 +196,8 @@ def signal_match(signal, pairdata, state_for_signal, current):
             return None
         reward = current_executable - tp1
         risk = stop - current_executable
-    if risk <= 0 or reward / risk < 1.35:
+    cost = quote["spread_pips"] * quote.get("pip_size", .01 if signal["instrument"].endswith("_JPY") else .0001)
+    if risk <= 0 or reward / risk < 1.50 or (reward-cost)/(risk+cost) < 1.35:
         return None
     created = parse_time(signal["created_at"])
     candles = pairdata["frames"]["M15"]["recent_completed_candles"]
@@ -203,7 +211,9 @@ def signal_match(signal, pairdata, state_for_signal, current):
         prev, curr = candles[idx - 1], candles[idx]
         candle_start = parse_time(curr["time"])
         close_time = candle_start + timedelta(minutes=15)
-        if close_time <= created or close_time <= last_processed or close_time > current:
+        if candle_start < created or close_time <= last_processed or close_time > current:
+            continue
+        if close_time > parse_time(signal["expires_at"]):
             continue
         if current - close_time > timedelta(minutes=75):
             state_for_signal["last_processed_bar_close"] = close_time.isoformat()
@@ -247,7 +257,7 @@ def signal_match(signal, pairdata, state_for_signal, current):
             executable_still_beyond = (
                 current_executable > level if long else current_executable < level)
             if executable_still_beyond and momentum_continuation_qualifies(
-                    prev, curr, level, long, pairdata["frames"], tolerance):
+                    prev, curr, level, long, pairdata["frames"], tolerance, signal.get("technical_context")):
                 state_for_signal["last_processed_bar_close"] = close_time.isoformat()
                 return "C", curr["time"], "Completed M15 momentum continuation without mandatory retest"
         state_for_signal["last_processed_bar_close"] = close_time.isoformat()
@@ -430,13 +440,15 @@ def setup_already_breached(pairdata, signal, now):
     bars = pairdata.get("frames", {}).get("M15", {}).get("recent_completed_candles", [])
     for candle in bars:
         start = parse_time(candle["time"])
-        if start + timedelta(minutes=15) <= created or start >= now:
+        if start < created or start + timedelta(minutes=15) > now:
             continue
         # OANDA spread-side OHLC: conservative for a *potential* touch only.
-        mid = candle["mid"]
-        if (mid["l"] <= stop if long else mid["h"] >= stop):
+        side = candle.get("bid" if long else "ask")
+        if not side:
+            return "PLAN_EXECUTABLE_SIDE_HISTORY_MISSING"
+        if (side["l"] <= stop if long else side["h"] >= stop):
             return "PLAN_STOP_LEVEL_TOUCHED_ON_M15"
-        if (mid["h"] >= tp if long else mid["l"] <= tp):
+        if (side["h"] >= tp if long else side["l"] <= tp):
             return "PLAN_TP1_LEVEL_TOUCHED_ON_M15"
     return None
 
