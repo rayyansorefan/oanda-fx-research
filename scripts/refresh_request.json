@@ -1,9 +1,9 @@
 {
   "purpose": "fresh OANDA price and news update when scheduled cron is unavailable",
-  "request": "FX_HOURLY_1715_FRESHNESS_RECOVERY",
+  "request": "FX_HOURLY_1815_POST_FOMC_REFRESH",
   "requested_by": "ChatGPT FX hourly research automation",
   "session_day_utc": "2026-10-28",
-  "sequence": 52,
-  "requested_at_utc": "2026-10-28T17:16:37Z",
-  "note": "17:15 UK hourly assessment: 16:30 collector returned OANDA_HTTP_401 DATA_UNAVAILABLE; last valid 16:01 quote >70min. Attempt one current-code refresh, check credentials securely, no orders, preserve all immutable signals and research history."
+  "sequence": 53,
+  "requested_at_utc": "2026-10-28T18:20:40.571Z",
+  "note": "18:15 UK hourly assessment: last complete source 17:18:14 UTC is pre-18:00 FOMC release. Request one current-code post-event OANDA and official-news collection; Fed 18:30 press conference blackout, NO APPROVED ENTRY until refreshed evidence. Preserve original signals, risk gates, and historical candidate tracking; no orders."
 }
