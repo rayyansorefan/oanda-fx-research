@@ -253,11 +253,42 @@ def brief_frame(values):
 
 
 def currently_monitored_names():
+    """Deep-audit active immutable alerts AND up to six current paper watches.
+
+    An empty canonical signal list must not remove five-frame coverage from
+    ongoing prospective research. Inclusion never approves a trade and does
+    not increase the 65+ pair M15/H1 screening universe.
+    """
+    approved = []
     try:
         signals = json.loads(Path("signals.json").read_text()).get("signals", [])
-        return [s["instrument"] for s in signals if isinstance(s, dict) and "instrument" in s]
+        approved = [s["instrument"] for s in signals
+                    if isinstance(s, dict) and isinstance(s.get("instrument"), str)]
     except (OSError, ValueError, TypeError, KeyError):
-        return []
+        pass
+    active = []
+    try:
+        records = json.loads(Path("data/entry_opportunity_ledger.json").read_text())
+        rows = (records.get("opportunities") or {}).values()
+        check_at = datetime.now(timezone.utc)
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            pair, expiry = row.get("instrument"), row.get("expires_at")
+            if (not isinstance(pair, str) or pair == "GBP_ZAR"
+                    or not isinstance(expiry, str)):
+                continue
+            try:
+                expires = datetime.fromisoformat(expiry.replace("Z", "+00:00"))
+                if expires.tzinfo is None or expires <= check_at:
+                    continue
+            except (ValueError, OverflowError):
+                continue
+            active.append((row.get("first_seen_at") or "", pair))
+    except (OSError, ValueError, TypeError, AttributeError):
+        pass
+    newest = [pair for _, pair in sorted(active, reverse=True)]
+    return list(dict.fromkeys(approved + newest[:6]))
 
 
 def collect():
