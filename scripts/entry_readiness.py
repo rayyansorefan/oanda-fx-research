@@ -57,8 +57,13 @@ def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
     for major in ("GBP_USD", "EUR_USD", "USD_JPY"):
         if major in pairs and major not in order:
             order.append(major)
-    selected = list(dict.fromkeys(order[:max(0, limit - 3)] +
-                                 [m for m in ("GBP_USD", "EUR_USD", "USD_JPY") if m in pairs]))
+    # Audit the *entire* ranked/quoted universe before selecting the compact
+    # institutional desk. Previously only the first five plus three majors
+    # were assessed, causing technically closer-to-entry pairs to be skipped.
+    # Missing higher-frame data still fails closed; this changes research
+    # selection, not canonical signal admission or broker execution.
+    core = tuple(m for m in ("GBP_USD", "EUR_USD", "USD_JPY") if m in pairs)
+    selected = list(dict.fromkeys(order + list(core)))
     results = []
     for instrument in selected:
         if instrument == "GBP_ZAR":
@@ -157,4 +162,31 @@ def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
             "distance_to_reference_pips": round(distance, 1) if distance is not None else None,
             "blockers": reasons[:8],
         })
-    return results[:limit]
+    # Choose which *research diagnostics* to display from all evaluated
+    # instruments. Do not equate closest to reference with a valid entry.
+    # Hard risk/technical blockers outrank heuristic priority, while the
+    # original top-three majors retain explicit exception visibility.
+    hard = {
+        "STALE_QUOTE", "QUOTE_UNUSABLE", "COST_HIGH_OR_UNKNOWN",
+        "FOUNDATION_CONFLICT", "HIGHER_FRAME_CONFLICT", "TREND_STRENGTH",
+        "DMI_CONFLICT", "OVEREXTENDED_OR_REVERSING", "M15_BAR_STALE",
+        "M15_BAR_TIME", "M15_HISTORY", "PRICE_LEVEL_UNAVAILABLE",
+    }
+
+    def research_rank(row):
+        blockers = {item["code"] for item in row["blockers"]}
+        distance = _float(row.get("distance_to_reference_pips"))
+        return (
+            sum(code in blockers for code in hard),
+            0 if row.get("frame_alignment") == "4/4" else 1,
+            abs(distance) if distance is not None else float("inf"),
+            -row.get("priority", 0),
+        )
+
+    sorted_rows = sorted(results, key=research_rank)
+    core_rows = [next((r for r in results if r["instrument"] == symbol), None)
+                 for symbol in core]
+    core_rows = [r for r in core_rows if r is not None]
+    remaining = max(0, limit - len(core_rows))
+    top_non_core = [r for r in sorted_rows if r["instrument"] not in core][:remaining]
+    return sorted(top_non_core + core_rows, key=research_rank)[:limit]
