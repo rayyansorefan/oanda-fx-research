@@ -230,7 +230,12 @@ def public_view(book, limit=60):
         },
         "recent": [{**{key: row.get(key) for key in fields},
                     "ever_meaningful_favourable": flags(row)[0],
-                    "ever_meaningful_adverse": flags(row)[1]}
+                    "ever_meaningful_adverse": flags(row)[1],
+                    "observations": [
+                        {"at": item.get("at"), "move_pct": item.get("move_pct")}
+                        for item in (row.get("observations") or [])[-8:]
+                        if isinstance(item, dict) and item.get("at") is not None
+                    ]}
                    for row in rows[-limit:]],
         "disclaimer": "WATCH ONLY. Hypothetical direction is not a filled trade or profit.",
     }
