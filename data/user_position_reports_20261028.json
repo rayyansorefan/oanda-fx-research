@@ -3,46 +3,59 @@
   "reported_at_utc": "2026-10-28T08:14:00Z",
   "timestamp_precision": "minute",
   "source": "USER_CHAT_MESSAGE_2026-10-28_0814_UK",
-  "source_class": "USER_REPORTED_NOT_BROKER_RECONCILED",
-  "context": "User states three Pepperstone FX spread-betting positions were entered around the morning 07:12 early-opportunity shortlist; instrument/side/entry/close detail remains unreconciled. User's separate 07:33 NZD/CAD quote screenshot was not a proof of fill.",
+  "source_class": "MIXED_SCREENSHOT_CONFIRMED_CLOSE_AND_OPEN_PORTFOLIO",
+  "context": "User first described three favourable trades, subsequently evidenced by NZD/JPY closed screenshot 08:12 UK and NZD/CAD and NZD/SGD open demo portfolio screenshot 08:22 UK.",
   "positions": [
     {
       "id": "20261028-MANUAL-REPORT-01",
-      "instrument": null,
-      "direction": null,
-      "approx_opened_at_utc": "2026-10-28T07:14:00Z",
-      "approx_time_note": "User described this trade as placed about an hour before 08:14 UK; time is approximate, NOT confirmed execution time",
-      "state": "SUCCESS_REPORTED_CLOSE_UNKNOWN",
-      "reported_description": "User describes this morning's trade as successful; whether closed, realised gain and fill price not verified.",
-      "realised_pnl_gbp": null,
-      "unrealised_pnl_gbp": null,
-      "broker_fill_verified": false,
-      "signal_match": "UNCONFIRMED"
+      "instrument": "NZD_JPY",
+      "direction": "SHORT",
+      "opened_at": "2026-10-28T07:29:06Z",
+      "closed_at": "2026-10-28T08:11:36Z",
+      "entry_price": 88.657,
+      "exit_price": 88.428,
+      "realised_pnl_gbp": 22.9,
+      "state": "CLOSED_SCREENSHOT_EVIDENCED",
+      "source": "PEPPERSTONE_DEMO_CLOSED_TRADE_SCREENSHOT",
+      "signal_match": "PENDING",
+      "note": "Entry predates scheduled 07:30 brief. Do not count as formally approved research signal."
     },
     {
       "id": "20261028-MANUAL-REPORT-02",
-      "instrument": null,
+      "instrument": "NZD_CAD",
       "direction": null,
-      "state": "OPEN_USER_REPORTED_FAVOURABLE",
-      "reported_description": "User reports another position is past halfway toward its intended profit point. Exact target, entry, stake and latest price unverified.",
+      "state": "OPEN_AT_SCREENSHOT",
+      "observed_at": "2026-10-28T08:22:00Z",
+      "unrealised_pnl_gbp": 4.92,
       "realised_pnl_gbp": null,
-      "unrealised_pnl_gbp": null,
-      "broker_fill_verified": false,
-      "signal_match": "UNCONFIRMED"
+      "source": "PEPPERSTONE_DEMO_PORTFOLIO_SCREENSHOT",
+      "signal_match": "PENDING"
     },
     {
       "id": "20261028-MANUAL-REPORT-03",
-      "instrument": null,
+      "instrument": "NZD_SGD",
       "direction": null,
-      "state": "OPEN_USER_REPORTED_FAVOURABLE",
-      "reported_description": "User reports another position showing about £5 profit; treat as user-reported floating profit, NOT realised P&L.",
+      "state": "OPEN_AT_SCREENSHOT",
+      "observed_at": "2026-10-28T08:22:00Z",
+      "unrealised_pnl_gbp": 7.44,
       "realised_pnl_gbp": null,
-      "unrealised_pnl_gbp": 5,
-      "unrealised_pnl_approximate": true,
-      "broker_fill_verified": false,
-      "signal_match": "UNCONFIRMED"
+      "source": "PEPPERSTONE_DEMO_PORTFOLIO_SCREENSHOT",
+      "signal_match": "PENDING"
     }
   ],
-  "learning_note": "Positive provisional evidence that user-selected early opportunities may merit forward comparison. Do not score opens as closed wins or attribute performance to a specific research route until frozen entry setup, broker fill/close and costs are reconciled. Preserve unfavorable cases in matched cohort.",
-  "next_reconciliation": "Map actual three instruments, execution timestamps and entry/stop/target from user trade history to immutable opportunity records, then update closed trades only upon exit evidence."
+  "learning_note": "One realised profitable NZD/JPY demo short +£22.90 and two open profitable NZD cross positions +£12.36 floating at 08:22; preserve previous losses and original plans. Compare forward-confirmed entry route only when original plan linkage and broker timestamps confirmed. Positive outcomes do not independently validate signal strategy.",
+  "next_reconciliation": "Get close screenshots and executed entry details for NZD/CAD and NZD/SGD; connect all three trades prospectively to original frozen research candidates without retrospective promotion.",
+  "updated_at_utc": "2026-10-28T08:22:00Z",
+  "account_snapshot": {
+    "observed_at": "2026-10-28T08:22:00Z",
+    "equity_gbp": 1171.86,
+    "current_pnl_gbp": 12.36,
+    "used_margin_gbp": 668.55,
+    "free_margin_gbp": 503.31,
+    "open_positions": 2,
+    "account_mode": "PEPPERSTONE_DEMO",
+    "source": "USER_SUPPLIED_PEPPERSTONE_PORTFOLIO_SCREENSHOT_0822_UK",
+    "balance_gbp": null,
+    "balance_note": "Screenshot displays £1,171.86 with margin figures summing to it; treated as equity, not proof of cash balance. Balance is not directly shown."
+  }
 }
