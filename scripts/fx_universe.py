@@ -154,8 +154,29 @@ def screen_priority(quote, m15, h1):
                   (3 if near_compression and m_breakout != "NONE" else 0) -
                   (8 if exhausted else 0) -
                   spread_penalty - stretched_penalty - context_penalty, 2)
+    # Entry-readiness scouting is an independent, non-binding selection
+    # criterion for expensive H4/D/M5 fetches. Research priority can rank an
+    # extended or countertrend idea very highly, so do not let those crowd out
+    # objectively compatible M15/H1 candidates before deep verification.
+    ema_agreement = (
+        m.get("ema50") is not None and h.get("ema50") is not None
+        and (m["ema20"]-m["ema50"]) * (h["ema20"]-h["ema50"]) > 0
+    )
+    chart_direction = (1 if m["ema20"] > m["ema50"] else -1) if ema_agreement else 0
+    dm_agreement = (chart_direction != 0 and all(
+        chart_direction * ((row.get("plus_di14") or 0)
+                           - (row.get("minus_di14") or 0)) > 0
+        for row in (m, h)))
+    preliminary_gate = bool(
+        ema_agreement and dm_agreement and adx15 >= 20 and adx1 >= 20
+        and spread / atr <= .5 and not context["block_new_alert"]
+    )
     return {
         "research_priority": score,
+        "deep_entry_scout_eligible": preliminary_gate,
+        "deep_entry_scout_direction": (
+            "LONG" if chart_direction == 1 else "SHORT"
+            if chart_direction == -1 else None),
         "observed_oanda_spread_to_m15_atr": round(cost_fraction, 4),
         "m15_rsi14": round(rsi, 2), "m15_adx14": round(adx15, 2),
         "h1_adx14": round(adx1, 2),
@@ -188,7 +209,9 @@ def deep_selection(screening, monitored=(), max_extra=18):
     """
     ranked = sorted((pair for pair, data in screening.items()
                      if data.get("research_priority") is not None),
-                    key=lambda pair: (-screening[pair]["research_priority"], pair))
+                    key=lambda pair: (
+                        0 if screening[pair].get("deep_entry_scout_eligible") is True else 1,
+                        -screening[pair]["research_priority"], pair))
     selected = set(ranked[:max_extra])
     selected |= set(CORE) & set(screening)
     selected |= set(monitored) & set(screening)
