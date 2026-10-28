@@ -478,7 +478,7 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         "id", "instrument", "direction", "created_at", "expires_at",
         "planned_entry", "stop", "tp1", "tp2", "alert_a", "alert_b",
         "max_oanda_spread_pips", "event_blackouts_utc", "alert_c",
-        "entry_route", "gross_rr_at_creation", "net_rr_at_spread_cap",
+        "entry_route", "pip_size", "gross_rr_at_creation", "net_rr_at_spread_cap",
         "broker_verified", "manual_broker_check_required", "account_equity_verified",
     )
     clean_signals = [{k: s.get(k) for k in allowed_signal_fields}
@@ -704,6 +704,13 @@ def main() -> int:
                 "metrics": comparison.get("metrics"),
                 "paper_only": True, "performance_validated": False,
                 "promotion_allowed": False}
+            fit_public_feed_budget(data)
+        validation_path = Path("data/forward_validation.json")
+        if validation_path.exists():
+            validation = load(str(validation_path))
+            data.setdefault("learning", {})["forward_validation"] = {
+                k: validation.get(k) for k in ("updated_at", "protocol_id", "status", "holdout_start_at",
+                    "readiness", "coverage", "performance_validated", "automatic_promotion_allowed")}
             fit_public_feed_budget(data)
         if not data.get("snapshot_at") or len(data.get("pairs", {})) < 1:
             raise ValueError("Invalid sanitized payload")

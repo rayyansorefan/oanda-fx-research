@@ -39,7 +39,10 @@ def freeze(summary, news, source_ref=None, *, decided_at=None):
                 plan, reason = qualify(pair, ranked, (summary.get("pairs") or {}).get(pair) or {},
                                        news, now, route, policy=policy)
                 rows.append({"policy": policy, "source_at": summary["collected_at"],
-                    "source_ref": source_ref, "study_method_version":2, "decision_at":iso(now), "pair": pair, "route": route,
+                    "source_ref": source_ref, "study_method_version":2, "decision_at":iso(now),
+                    "common_deep_history_available":all(
+                        ((summary.get("pairs") or {}).get(pair,{}).get("frames",{}).get(tf,{}) or {}).get("indicators")
+                        for tf in ("M15","H1","H4","D")), "pair": pair, "route": route,
                     "reason": reason, "plan": plan})
                 if plan:
                     plan["oanda_snapshot_at"] = summary["collected_at"]

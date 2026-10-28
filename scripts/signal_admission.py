@@ -192,6 +192,7 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
         "id": identifier, "instrument": pair, "direction": direction,
         "created_at": now_utc, "expires_at": deadline,
         "planned_entry": round(entry, decimals), "stop": round(stop, decimals),
+        "pip_size": pip,
         "tp1": round(tp, decimals),
         "max_oanda_spread_pips": round(spread_cap, 3),
         "event_blackouts_utc": [], "entry_route": route,

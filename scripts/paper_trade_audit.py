@@ -105,7 +105,7 @@ def frozen(plan):
               "planned_entry", "entry_low", "entry_high", "stop", "tp1", "tp2",
               "alert_a", "alert_b", "alert_c",
               "max_oanda_spread_pips", "event_blackouts_utc", "source",
-              "source_ref", "original_note", "strategy", "technical_context")
+              "source_ref", "original_note", "strategy", "technical_context", "pip_size")
     return {k: plan[k] for k in fields if k in plan}
 
 
@@ -118,7 +118,11 @@ def economic_terms(plan):
 
 
 def pip_size(plan):
-    return 0.01 if plan["instrument"].endswith("_JPY") else 0.0001
+    if plan.get("pip_size") is not None:
+        value=numeric(plan["pip_size"])
+        if value is None or value<=0:raise ValueError("Invalid frozen pip size")
+        return value
+    return 0.01 if plan["instrument"].endswith("_JPY") else 0.0001  # Legacy convention; source not backfilled.
 
 
 def blackout(plan, when, opened_at=None):

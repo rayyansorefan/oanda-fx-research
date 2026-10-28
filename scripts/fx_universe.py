@@ -180,8 +180,12 @@ def screen_priority(quote, m15, h1):
         ema_agreement and dm_agreement and adx15 >= 20 and adx1 >= 20
         and spread / atr <= .5 and not scout_context["block_new_alert"]
     )
+    paper_gate = bool(ema_agreement and dm_agreement and adx1 >= 18
+                      and spread / atr <= .5 and quote["spread_pips"] <= 10
+                      and not scout_context["block_new_alert"])
     return {
         "research_priority": score,
+        "paper_deep_scout_eligible": paper_gate,
         "deep_entry_scout_eligible": preliminary_gate,
         "deep_entry_scout_direction": (
             "LONG" if chart_direction == 1 else "SHORT"
@@ -224,7 +228,8 @@ def deep_selection(screening, monitored=(), max_extra=18):
     selected = set(ranked[:max_extra])
     # Every candidate already meeting preliminary champion gates needs H4/D
     # verification; an arbitrary top-12 cap must not discard qualifying research.
-    selected |= {pair for pair in ranked if screening[pair].get("deep_entry_scout_eligible") is True}
+    selected |= {pair for pair in ranked if screening[pair].get("deep_entry_scout_eligible") is True
+                 or screening[pair].get("paper_deep_scout_eligible") is True}
     selected |= set(CORE) & set(screening)
     selected |= set(monitored) & set(screening)
     return sorted(selected)
