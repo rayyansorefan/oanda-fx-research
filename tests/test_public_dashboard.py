@@ -1,7 +1,25 @@
 import unittest
-from scripts.export_public_dashboard import build_public_feed
+from unittest.mock import patch
+from scripts.export_public_dashboard import build_public_feed, build_entry_gate_summary
 
 class PublicDashboardFeedTests(unittest.TestCase):
+    def test_full_universe_entry_gate_summary_is_descriptive_only(self):
+        rows = [
+            {"blockers": [{"code": "NEWS_PARTIAL"}, {"code": "TREND_STRENGTH"}],
+             "priced_paper_preview": None},
+            {"blockers": [{"code": "NEWS_PARTIAL"}],
+             "priced_paper_preview": {"approved_entry": False}},
+        ]
+        summary = {"collected_at": "2026-10-28T15:27:10Z",
+                   "ranked_review_candidates": [{"instrument": "EUR_USD"}]}
+        with patch("scripts.export_public_dashboard.entry_diagnostics", return_value=rows) as audit:
+            out = build_entry_gate_summary(summary, {"status": "PARTIAL"})
+        self.assertGreaterEqual(audit.call_args.kwargs["limit"], 8)
+        self.assertEqual(out["evaluated"], 2)
+        self.assertEqual(out["blocker_counts"]["NEWS_PARTIAL"], 2)
+        self.assertEqual(out["technical_or_cost_gate_clear"], 1)
+        self.assertEqual(out["priced_paper_research_previews"], 1)
+        self.assertFalse(out["canonical_signals_admitted"])
     def sample(self):
         return {
             "summary": {
