@@ -366,10 +366,87 @@ def public_view(book, limit=60):
     favourable = sum(flags(row)[0] for row in rows)
     adverse = sum(flags(row)[1] for row in rows)
     both = sum(all(flags(row)) for row in rows)
+    # Compare the actual *prospective* routes, without turning favourable
+    # direction into a filled trade. All denominators include expired and
+    # untestable watches, not merely successful patterns.
+    route_study = {}
+    for row in rows:
+        route = row.get("route")
+        if route not in ROUTES:
+            continue
+        item = route_study.setdefault(route, {
+            "registered": 0, "forward_patterns": 0, "expired_without_pattern": 0,
+            "ever_favourable": 0, "ever_adverse": 0, "both_directions": 0,
+            "observed_pattern_delay_minutes": [],
+        })
+        item["registered"] += 1
+        good, bad = flags(row)
+        item["ever_favourable"] += int(good)
+        item["ever_adverse"] += int(bad)
+        item["both_directions"] += int(good and bad)
+        pattern = row.get("entry_pattern_status") == "FORWARD_CANDLE_OBSERVED_PAPER_ONLY"
+        item["forward_patterns"] += int(pattern)
+        item["expired_without_pattern"] += int(
+            not pattern and row.get("tracking_status") == "EXPIRED_RESEARCH_NO_VERIFIED_FILL")
+        if pattern:
+            first, observed = moment(row.get("first_seen_at")), moment(row.get("entry_pattern_at"))
+            if first and observed and observed >= first:
+                item["observed_pattern_delay_minutes"].append(
+                    round((observed - first).total_seconds() / 60, 2))
+    for item in route_study.values():
+        delays = sorted(item.pop("observed_pattern_delay_minutes"))
+        count = len(delays)
+        item["median_pattern_delay_minutes"] = (
+            round((delays[(count-1)//2] + delays[count//2]) / 2, 2) if count else None)
+        item["validated_trading_edge"] = False
+
+    # Head-to-head only when both immutable routes were registered for the
+    # same completed M15 reference bar, pair and direction. Never compare a
+    # later watch against an earlier market move as though simultaneous.
+    paired = {}
+    for row in rows:
+        if row.get("route") not in ("EMA20_PULLBACK", "MOMENTUM_CONTINUATION"):
+            continue
+        key = (row.get("instrument"), row.get("direction"),
+               row.get("m15_impulse_started_at"))
+        if not all(key):
+            continue
+        paired.setdefault(key, {})[row["route"]] = row
+    head_to_head = {"paired_cohorts": 0, "m5_earlier": 0,
+                    "m15_earlier": 0, "same_time": 0,
+                    "m5_pattern_only": 0, "m15_pattern_only": 0,
+                    "neither_pattern": 0, "paper_only": True}
+    for group in paired.values():
+        if not all(k in group for k in ("EMA20_PULLBACK", "MOMENTUM_CONTINUATION")):
+            continue
+        head_to_head["paired_cohorts"] += 1
+        m5 = moment(group["MOMENTUM_CONTINUATION"].get("entry_pattern_at")) if (
+            group["MOMENTUM_CONTINUATION"].get("entry_pattern_status") ==
+            "FORWARD_CANDLE_OBSERVED_PAPER_ONLY") else None
+        m15 = moment(group["EMA20_PULLBACK"].get("entry_pattern_at")) if (
+            group["EMA20_PULLBACK"].get("entry_pattern_status") ==
+            "FORWARD_CANDLE_OBSERVED_PAPER_ONLY") else None
+        field = ("m5_earlier" if m5 < m15 else "m15_earlier" if m15 < m5 else "same_time") if (
+            m5 and m15) else ("m5_pattern_only" if m5 else
+                             "m15_pattern_only" if m15 else "neither_pattern")
+        head_to_head[field] += 1
+
+    # Compact index of EVERY registered route watch. The rich per-candidate
+    # history may still be a rolling window to meet the 930 KB feed budget.
+    index_fields = ("id", "instrument", "direction", "route",
+                    "entry_low", "entry_high", "stop", "tp1",
+                    "hypothetical_move_pct", "tracking_status")
     return {
         "updated_at": book.get("updated_at"),
         "total_registered": len(rows),
         "routes": book.get("routes") or {},
+        "route_study": route_study,
+        "head_to_head": head_to_head,
+        "candidate_index_fields": list(index_fields),
+        "candidate_index": [[row.get(k) for k in index_fields] for row in rows],
+        "public_window": {"detailed_rows": min(limit, len(rows)),
+                          "total_rows": len(rows),
+                          "truncated": len(rows) > limit},
         "lifecycle_audit": {
             "forward_watches": len(rows),
             "ever_meaningful_favourable": favourable,
