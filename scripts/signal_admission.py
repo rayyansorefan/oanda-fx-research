@@ -180,6 +180,16 @@ def qualify(pair, ranked, source, news, now, route):
         "manual_broker_check_required": True,
         "gross_rr_at_creation": round(gross, 3),
         "net_rr_at_spread_cap": round(net, 3),
+        "technical_context": {
+            "full_frame_alignment": True,
+            "m15_adx": number(m.get("adx14")), "h1_adx": number(h.get("adx14")),
+            "m15_plus_di": number(m.get("plus_di14")),
+            "m15_minus_di": number(m.get("minus_di14")),
+            "h1_plus_di": number(h.get("plus_di14")),
+            "h1_minus_di": number(h.get("minus_di14")),
+            "m15_atr": atr,
+            "source_bar_time": bars[-1].get("time"),
+        },
         "target_basis": "nearest completed M15/H1/H4/D 20-bar support/resistance",
         "trigger_basis": "future completed M15 only",
         **{k: round(v, decimals) for k, v in alert.items()}
