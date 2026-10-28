@@ -8,6 +8,10 @@ import json
 import math
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+try:
+    from scripts.adaptive_research import entry_context
+except ModuleNotFoundError:  # executed directly from scripts/ by GitHub Actions
+    from adaptive_research import entry_context
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_PLANS = 3
@@ -66,9 +70,14 @@ def qualify(pair, ranked, source, news, now, route):
                  or ranked.get("potential_direction_not_approved"))
     if direction not in ("LONG", "SHORT"):
         return None, "NO_RESEARCH_DIRECTION"
-    if (ranked.get("adaptive_context") or {}).get("block_new_alert"):
-        return None, "REVERSAL_OR_EXHAUSTION"
     q, frames = source.get("quote") or {}, source.get("frames") or {}
+    # The thematic research rank can point in the OPPOSITE direction from
+    # the independently aligned EMA/DMI scout. Re-evaluate exhaustion for
+    # the signal's actual intended direction using the current source data.
+    # Otherwise an unrelated old-direction warning silently vetoes it.
+    current_context = entry_context({"quote": q, "frames": frames}, direction)
+    if current_context["block_new_alert"]:
+        return None, "REVERSAL_OR_EXHAUSTION"
     snapshot = moment(q.get("time"))
     if not snapshot or q.get("tradeable") is not True or not timedelta(seconds=-180) <= now-snapshot <= timedelta(minutes=20):
         return None, "STALE_OR_UNTRADEABLE_OANDA_QUOTE"
