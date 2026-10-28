@@ -10,7 +10,8 @@ def source():
     def indicators():
         return {"ema20": 1.1000, "ema50": 1.0995, "ema200": 1.0980,
                 "adx14": 28, "plus_di14": 30, "minus_di14": 12,
-                "atr14": .0008, "resistance20": 1.1035, "support20": 1.0975}
+                "atr14": .0008, "resistance20": 1.1035, "support20": 1.0975,
+                "macd_12_26_9": {"histogram": .00012}}
     bars = [
         {"time":"2026-10-28T09:15:00Z",
          "mid":{"o":1.0996,"h":1.1000,"l":1.0993,"c":1.0998}},
