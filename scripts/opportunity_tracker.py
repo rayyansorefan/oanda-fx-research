@@ -78,6 +78,82 @@ def _last_m15_close(source, snapshot):
     return candle.get("time")
 
 
+def _forward_entry_pattern(row, source, snapshot):
+    """Observe an independent completed post-registration candle, never a fill.
+
+    The entire bar must OPEN after the original watch was recorded: a bar
+    which was already forming at publication could have touched the entry
+    level before we knew about the watch and cannot validate a forward
+    signal. The candidate price path remains research-only.
+    """
+    route = row.get("route")
+    period = "M5" if route == "MOMENTUM_CONTINUATION" else "M15"
+    minutes = 5 if period == "M5" else 15
+    candles = (((source.get("frames") or {}).get(period) or {})
+               .get("last_3_completed_candles") or [])
+    first, expires = moment(row.get("first_seen_at")), moment(row.get("expires_at"))
+    low, high, stop = (number(row.get(k)) for k in ("entry_low", "entry_high", "stop"))
+    if not first or None in (low, high, stop) or low <= 0 or high < low:
+        return None
+    direction = row.get("direction")
+    qualified = []
+    for i, candle in enumerate(candles):
+        opening = moment(candle.get("time"))
+        if not opening:
+            continue
+        ending = opening + timedelta(minutes=minutes)
+        if opening <= first or ending > snapshot + timedelta(seconds=1):
+            continue
+        if expires and ending > expires:
+            continue
+        mid = candle.get("mid") or {}
+        values = [number(mid.get(k)) for k in ("o", "h", "l", "c")]
+        if any(v is None for v in values):
+            continue
+        o, h, l, c = values
+        if not 0 < l <= min(o, c) <= max(o, c) <= h:
+            continue
+        span = h - l
+        if span <= 0:
+            continue
+        in_zone = l <= high and h >= low
+        up, down = direction == "LONG", direction == "SHORT"
+        # If the intrabar high/low crosses the proposed stop, the ordering of
+        # a reversal and an invalidation is unknown; no valid pattern claim.
+        stop_touched = (up and l <= stop) or (down and h >= stop)
+        if stop_touched:
+            continue
+        if route == "EMA20_PULLBACK":
+            # Research rejection: candle tests the frozen band and ends with
+            # a directional body beyond the far edge of that band.
+            ok = (in_zone and (
+                (up and c > o and c >= high and (c-l)/span >= .60) or
+                (down and c < o and c <= low and (h-c)/span >= .60)))
+        elif route == "MOMENTUM_CONTINUATION":
+            if i == 0:
+                continue  # no earlier fully observed comparator in this slice
+            prior = (candles[i-1].get("mid") or {})
+            ph, pl = number(prior.get("h")), number(prior.get("l"))
+            if None in (ph, pl):
+                continue
+            # Strong M5 continuation near the frozen, prospective entry
+            # range; no retrospective impulse fill and no chasing a gap.
+            ok = (in_zone and abs(c-o)/span >= .50 and (
+                (up and c > o and c > ph and (c-l)/span >= .70) or
+                (down and c < o and c < pl and (h-c)/span >= .70)))
+        else:
+            ok = False
+        if ok:
+            qualified.append((ending, c, period))
+    if not qualified:
+        return None
+    ended, close, period = min(qualified, key=lambda x: x[0])
+    return {"entry_pattern_status": "FORWARD_CANDLE_OBSERVED_PAPER_ONLY",
+            "entry_pattern_at": ended.isoformat(),
+            "entry_pattern_close": round(close, 6),
+            "entry_pattern_timeframe": period}
+
+
 def update_ledger(summary, existing=None):
     snapshot = moment(summary.get("collected_at"))
     if not snapshot:
@@ -105,6 +181,12 @@ def update_ledger(summary, existing=None):
         move = _move_pct(row, quote)
         if move is None:
             continue
+        # Inspect the independent forward bar without claiming a fill,
+        # broker executable price, approved alert, or profitable strategy.
+        if row.get("entry_pattern_status") != "FORWARD_CANDLE_OBSERVED_PAPER_ONLY":
+            pattern = _forward_entry_pattern(row, source, snapshot)
+            if pattern:
+                row.update(pattern)
         row["latest_quote_at"] = quote["at"].isoformat()
         row["latest_exit_side"] = round(
             quote["bid"] if row["direction"] == "LONG" else quote["ask"], 6)
@@ -122,6 +204,8 @@ def update_ledger(summary, existing=None):
             threshold = number(row.get("meaningful_move_threshold_pct")) or 0.05
             if move >= threshold:
                 row["tracking_status"] = "FAVOURABLE_MOVE_WITHOUT_VERIFIED_ENTRY"
+            if row.get("entry_pattern_status") == "FORWARD_CANDLE_OBSERVED_PAPER_ONLY":
+                row["tracking_status"] = "FORWARD_PATTERN_OBSERVED_NO_APPROVED_FILL"
 
     # Register only levels which the research engine could see NOW, not
     # retrospectively from completed candles inside a prior hourly interval.
@@ -171,6 +255,8 @@ def update_ledger(summary, existing=None):
             "hypothetical_move_pct": None,
             "best_observed_pct": None, "worst_observed_pct": None,
             "tracking_status": "WATCH_ONLY_UNTRIGGERED",
+            "entry_pattern_status": "AWAITING_INDEPENDENT_POST_PLAN_CANDLE",
+            "entry_pattern_at": None, "entry_pattern_close": None,
             "entry_confirmed": False, "broker_verified": False,
             "scored": False, "observations": [],
         }
@@ -186,7 +272,7 @@ def update_ledger(summary, existing=None):
             group["expired"] += 1
     return {
         "schema": 1, "updated_at": snapshot.isoformat(),
-        "method": "Forward-only OANDA directional observations. No fills, TP/SL scoring, verified edge or account profit.",
+        "method": "Forward-only OANDA directional observations and independently completed entry-pattern checks. Entry patterns are paper research; no fills, TP/SL scoring, verified edge or account profit.",
         "routes": groups, "total_registered": len(rows), "opportunities": rows,
     }
 
@@ -209,7 +295,8 @@ def public_view(book, limit=60):
               "expires_at", "entry_low", "entry_high", "stop", "tp1", "tp2",
               "hypothetical_move_pct", "best_observed_pct", "worst_observed_pct",
               "meaningful_move_threshold_pct", "tracking_status",
-              "entry_confirmed", "scored", "latest_quote_at")
+              "entry_confirmed", "scored", "latest_quote_at",
+              "entry_pattern_status", "entry_pattern_at", "entry_pattern_close")
     favourable = sum(flags(row)[0] for row in rows)
     adverse = sum(flags(row)[1] for row in rows)
     both = sum(all(flags(row)) for row in rows)
@@ -226,6 +313,9 @@ def public_view(book, limit=60):
                 row.get("tracking_status") == "EXPIRED_RESEARCH_NO_VERIFIED_FILL"
                 for row in rows),
             "verified_fills": 0,
+            "forward_entry_patterns_observed": sum(
+                row.get("entry_pattern_status") == "FORWARD_CANDLE_OBSERVED_PAPER_ONLY"
+                for row in rows),
             "interpretation": "Overlapping directional observations, NOT historical wins, executable fills or probabilities; all watch and adverse outcomes retained."
         },
         "recent": [{**{key: row.get(key) for key in fields},
