@@ -287,8 +287,15 @@ def currently_monitored_names():
             active.append((row.get("first_seen_at") or "", pair))
     except (OSError, ValueError, TypeError, AttributeError):
         pass
-    newest = [pair for _, pair in sorted(active, reverse=True)]
-    return list(dict.fromkeys(approved + newest[:6]))
+    chosen = list(dict.fromkeys(approved))
+    extra = 0
+    for _, pair in sorted(active, reverse=True):
+        if pair not in chosen:
+            chosen.append(pair)
+            extra += 1
+            if extra >= 6:
+                break
+    return chosen
 
 
 def collect():
