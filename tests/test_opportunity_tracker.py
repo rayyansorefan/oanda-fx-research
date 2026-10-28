@@ -73,7 +73,8 @@ class OpportunityLedgerTests(unittest.TestCase):
             "tracking_status"], "EXPIRED_RESEARCH_NO_VERIFIED_FILL")
 
     def test_forward_candle_never_backdates_and_never_claims_a_fill(self):
-        setup = [{**plan()[0], "entry_route": "EMA20_PULLBACK",
+        setup = [{**plan()[0], "direction": "LONG",
+                  "entry_route": "EMA20_PULLBACK",
                   "entry_low": 1.1159, "entry_high": 1.1161,
                   "stop": 1.1145, "tp1": 1.1180}]
         with patch.object(tracker, "build_research_setups", return_value=setup):
