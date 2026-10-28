@@ -44,5 +44,29 @@ class BudgetTests(unittest.TestCase):
         self.assertEqual(p["learning"]["paper_audit"]["candidates"][0]["tracking"]["history"],[1,2,3])
         self.assertFalse(p["learning"]["paper_audit"]["public_window"]["truncated"])
 
+    def test_scored_outcomes_survive_compaction(self):
+        payload=self.sample()
+        # Force the public rolling window to shrink while keeping an older
+        # genuine winner and loser whose evidence must remain visible.
+        base=payload["learning"]["paper_audit"]["candidates"]
+        rows=[]
+        for i in range(400):
+            row=dict(base[i % len(base)])
+            row["id"]=str(i)
+            row["narrative"]="x"*2400
+            rows.append(row)
+        rows[0]["scored"]=True
+        rows[0]["status"]="WIN_TP1"
+        rows[1]["scored"]=True
+        rows[1]["status"]="LOSS_STOP"
+        payload["learning"]["paper_audit"]["candidates"]=rows
+        payload["learning"]["paper_audit"]["totals"]={"candidates":400,"scored":2}
+        fit_public_feed_budget(payload)
+        kept=payload["learning"]["paper_audit"]["candidates"]
+        self.assertLess(len(kept),400)
+        self.assertEqual({r["id"] for r in kept if r.get("scored")},{"0","1"})
+        self.assertEqual({r["status"] for r in kept if r.get("scored")},
+                         {"WIN_TP1","LOSS_STOP"})
+        self.assertLessEqual(serialized_size(payload),PUBLIC_MAX_BYTES)
 if __name__=="__main__":
     unittest.main()
