@@ -100,13 +100,17 @@ def fit_public_feed_budget(payload: dict) -> None:
     ][-20:]
     # Compact full-universe index; the detailed rolling audit remains bounded.
     # These observations are NOT fills, realised return, or live entry alerts.
+    # Fixed tuple fields keep ALL registered observations affordable as the
+    # hourly cohort grows. UI supports both former dict and new tuple shapes.
+    audit["candidate_index_fields"] = [
+        "id", "pair", "side", "created_at", "status", "entry",
+        "stop", "tp1", "move_pct", "quote_at"
+    ]
     audit["candidate_index"] = [
-        {"id": row.get("id"), "pair": row.get("instrument"),
-         "side": row.get("direction"), "created_at": row.get("created_at"),
-         "status": row.get("status"), "entry": row.get("entry"),
-         "stop": row.get("stop"), "tp1": row.get("tp1"),
-         "move_pct": row.get("move_pct"),
-         "quote_at": (row.get("tracking") or {}).get("quote_at")}
+        [row.get("id"), row.get("instrument"), row.get("direction"),
+         row.get("created_at"), row.get("status"), row.get("entry"),
+         row.get("stop"), row.get("tp1"), row.get("move_pct"),
+         (row.get("tracking") or {}).get("quote_at")]
         for row in candidates
     ]
     audit["public_window"] = {
