@@ -69,8 +69,15 @@ def validate(plan):
                 "planned_entry", "stop", "tp1", "max_oanda_spread_pips")
     if any(plan.get(k) is None for k in required):
         return "ORIGINAL_LEVELS_OR_TRIGGER_MISSING"
-    if plan.get("alert_b") is None and plan.get("alert_a") is None:
+    if all(plan.get(x) is None for x in ("alert_a", "alert_b", "alert_c")):
         return "UNSUPPORTED_OR_MISSING_ORIGINAL_ENTRY_ROUTE"
+    if plan.get("alert_c") is not None:
+        ctx = plan.get("technical_context") or {}
+        needed = ("m15_adx", "h1_adx", "m15_plus_di", "m15_minus_di",
+                  "h1_plus_di", "h1_minus_di", "m15_atr")
+        if ctx.get("full_frame_alignment") is not True or any(
+                numeric(ctx.get(x)) is None for x in needed):
+            return "CONTINUATION_ORIGINAL_FRAME_EVIDENCE_MISSING"
     try:
         key = plan["instrument"]
         if len(key) != 7 or key[3] != "_" or not key.replace("_", "").isalpha():
@@ -84,7 +91,7 @@ def validate(plan):
             return "INVALID_RISK_GEOMETRY"
         if numeric(plan["max_oanda_spread_pips"]) <= 0:
             return "INVALID_SPREAD_CAP"
-        for key in ("alert_a", "alert_b"):
+        for key in ("alert_a", "alert_b", "alert_c"):
             if plan.get(key) is not None and numeric(plan[key]) <= 0:
                 return "INVALID_ALERT_LEVEL"
     except (TypeError, ValueError, OverflowError, KeyError):
@@ -182,6 +189,39 @@ def _eligible_trigger(plan, bar):
         mid["c"] < mid["o"] and mid["c"] <= entry)
     spread = (bar["ask"]["c"] - bar["bid"]["c"]) / pip_size(plan)
     return touched and direction and spread <= numeric(plan["max_oanda_spread_pips"])
+
+
+def _eligible_continuation(plan, bar, previous_close):
+    """Forward-only completed M15 impulse; frozen original H1/M15 evidence."""
+    if plan.get("alert_c") is None or previous_close is None:
+        return False
+    ctx = plan.get("technical_context") or {}
+    long = plan["direction"] == "LONG"
+    if ctx.get("full_frame_alignment") is not True or any(
+            numeric(ctx.get(key)) is None for key in
+            ("m15_adx", "h1_adx", "m15_plus_di", "m15_minus_di",
+             "h1_plus_di", "h1_minus_di")):
+        return False
+    if numeric(ctx["m15_adx"]) < 22 or numeric(ctx["h1_adx"]) < 20:
+        return False
+    for prefix in ("m15", "h1"):
+        plus, minus = numeric(ctx[prefix+"_plus_di"]), numeric(ctx[prefix+"_minus_di"])
+        if not (plus > minus if long else minus > plus):
+            return False
+    level = numeric(plan["alert_c"])
+    mid = bar["mid"]
+    span = mid["h"] - mid["l"]
+    if span <= 0 or abs(mid["c"]-mid["o"]) / span < .55:
+        return False
+    pos = (mid["c"]-mid["l"]) / span if long else (mid["h"]-mid["c"]) / span
+    if pos < .72:
+        return False
+    tolerance = 2 * pip_size(plan)
+    if not ((previous_close <= level and mid["c"] > level+tolerance)
+            if long else (previous_close >= level and mid["c"] < level-tolerance)):
+        return False
+    spread = (bar["ask"]["c"] - bar["bid"]["c"]) / pip_size(plan)
+    return spread <= numeric(plan["max_oanda_spread_pips"])
 
 
 def _stop_hit(plan, bar):
