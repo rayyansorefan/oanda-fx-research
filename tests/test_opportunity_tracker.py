@@ -170,6 +170,37 @@ class OpportunityLedgerTests(unittest.TestCase):
         self.assertFalse(public["recent"][0]["ever_meaningful_favourable"])
         self.assertEqual(public["lifecycle_audit"]["verified_fills"], 0)
 
+    def test_full_index_and_prospective_head_to_head_keep_every_denominator(self):
+        shared = {"instrument": "EUR_USD", "direction": "LONG",
+                  "first_seen_at": "2026-10-27T09:14:00Z",
+                  "m15_impulse_started_at": "2026-10-27T09:00:00Z",
+                  "entry_low": 1.1159, "entry_high": 1.1161,
+                  "stop": 1.1145, "tp1": 1.1180,
+                  "entry_confirmed": False, "scored": False}
+        m5 = {**shared, "id": "m5", "route": "MOMENTUM_CONTINUATION",
+              "entry_pattern_status": "FORWARD_CANDLE_OBSERVED_PAPER_ONLY",
+              "entry_pattern_at": "2026-10-27T09:20:00Z",
+              "tracking_status": "FORWARD_PATTERN_OBSERVED_NO_APPROVED_FILL"}
+        m15 = {**shared, "id": "m15", "route": "EMA20_PULLBACK",
+               "entry_pattern_status": "FORWARD_CANDLE_OBSERVED_PAPER_ONLY",
+               "entry_pattern_at": "2026-10-27T09:30:00Z",
+               "tracking_status": "FORWARD_PATTERN_OBSERVED_NO_APPROVED_FILL"}
+        expired = {**shared, "id": "late", "route": "EMA20_PULLBACK",
+                   "m15_impulse_started_at": "2026-10-27T10:00:00Z",
+                   "entry_pattern_status": "AWAITING_INDEPENDENT_POST_PLAN_CANDLE",
+                   "entry_pattern_at": None,
+                   "tracking_status": "EXPIRED_RESEARCH_NO_VERIFIED_FILL"}
+        result = tracker.public_view({"opportunities": {
+            "m5": m5, "m15": m15, "late": expired}}, limit=1)
+        self.assertEqual(len(result["recent"]), 1)
+        self.assertEqual(len(result["candidate_index"]), 3)
+        self.assertTrue(result["public_window"]["truncated"])
+        self.assertEqual(result["route_study"]["MOMENTUM_CONTINUATION"]["median_pattern_delay_minutes"], 6)
+        self.assertEqual(result["route_study"]["EMA20_PULLBACK"]["expired_without_pattern"], 1)
+        self.assertEqual(result["head_to_head"]["paired_cohorts"], 1)
+        self.assertEqual(result["head_to_head"]["m5_earlier"], 1)
+        self.assertFalse(result["route_study"]["MOMENTUM_CONTINUATION"]["validated_trading_edge"])
+
 
 if __name__ == "__main__":
     unittest.main()
