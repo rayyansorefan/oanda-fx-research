@@ -1,0 +1,2410 @@
+{
+  "metrics": {
+    "challenger_v1": {
+      "false_breakout_stop_proxy": 0,
+      "filled": 0,
+      "incorrect_rejections_verified": 0,
+      "max_drawdown_r": null,
+      "mean_net_r": null,
+      "missed_profitable_entries_verified": 0,
+      "net_total_r": null,
+      "outcomes": {},
+      "rejections": {
+        "CONTINUATION_PRICE_STRETCHED": 2,
+        "FOUR_FRAME_TREND_CONFLICT": 26,
+        "INVALID_BID_ASK_OR_SPREAD": 42,
+        "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
+        "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
+        "RECENT_MATERIAL_HEADLINE_REVIEW": 2,
+        "REVERSAL_OR_EXHAUSTION": 40,
+        "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 14,
+        "UNSUPPORTED_PAIR_OR_ROUTE": 2
+      },
+      "signals_generated": 0,
+      "signals_triggered": 0,
+      "stops": 0,
+      "tp1": 0,
+      "unannualised_mean_over_sd": null
+    },
+    "champion": {
+      "false_breakout_stop_proxy": 0,
+      "filled": 0,
+      "incorrect_rejections_verified": 0,
+      "max_drawdown_r": null,
+      "mean_net_r": null,
+      "missed_profitable_entries_verified": 0,
+      "net_total_r": null,
+      "outcomes": {},
+      "rejections": {
+        "FOUR_FRAME_TREND_CONFLICT": 32,
+        "INVALID_BID_ASK_OR_SPREAD": 42,
+        "REQUIRED_FRAME_HISTORY_MISSING:H4": 12,
+        "REVERSAL_OR_EXHAUSTION": 40,
+        "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
+        "UNSUPPORTED_PAIR_OR_ROUTE": 2
+      },
+      "signals_generated": 0,
+      "signals_triggered": 0,
+      "stops": 0,
+      "tp1": 0,
+      "unannualised_mean_over_sd": null
+    }
+  },
+  "observation_times": [
+    "2026-10-28T23:23:08Z"
+  ],
+  "performance_validated": false,
+  "policy": {
+    "challenger": "M15/H1 EMA+DMI; H1 ADX>=18; H4/D context not compulsory. Same exhaustion, stop, nearest-target, gross>=1.50/net>=1.35, news and spread gates.",
+    "costs": "OANDA ask buys/bid sells and opposite exit side; no second spread deduction in realised returns. Slippage, financing and Pepperstone fills unknown.",
+    "drawdown": "Sum of per-trade net R, not portfolio/account drawdown; overlapping correlated trades not a portfolio model.",
+    "timing": "Actual collector snapshots plus 1 minute manual delay, rounded to next M15 opening; no assumed pattern-close fill.",
+    "validation": "Prospective frozen rules; historical development cohorts separate; no automatic promotion. Insufficient data is not zero expected risk.",
+    "version": "20261028-v1"
+  },
+  "promotion_allowed": false,
+  "records": [
+    {
+      "pair": "AUD_USD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_USD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_HKD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_HKD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_NOK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_NOK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_USD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_USD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CAD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CAD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_USD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_USD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_HKD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_HKD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CHF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CHF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CHF_HKD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CHF_HKD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_HKD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_HKD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_SEK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_SEK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "HKD_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "HKD_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_CAD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_CAD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_DKK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_DKK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_HKD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_HKD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_ZAR",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_ZAR",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_SGD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_SGD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_THB",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_THB",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_SGD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_SGD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_USD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_USD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_SGD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_SGD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_HKD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_HKD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_MXN",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_MXN",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CNH",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CNH",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "SGD_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "SGD_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_SGD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_SGD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_CHF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_CHF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_SEK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_SEK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_ZAR",
+      "plan": null,
+      "policy": "champion",
+      "reason": "UNSUPPORTED_PAIR_OR_ROUTE",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_ZAR",
+      "plan": null,
+      "policy": "champion",
+      "reason": "UNSUPPORTED_PAIR_OR_ROUTE",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_SGD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_SGD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "SGD_CHF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "SGD_CHF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_CAD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_CAD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_CAD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_CAD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_NZD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_NZD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_PLN",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_PLN",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CZK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CZK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_GBP",
+      "plan": null,
+      "policy": "champion",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_GBP",
+      "plan": null,
+      "policy": "champion",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_CHF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_CHF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_AUD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_AUD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_SGD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_SGD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_AUD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_AUD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_NOK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_NOK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_CAD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_CAD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_CHF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_CHF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_CHF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_CHF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_ZAR",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_ZAR",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_NZD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_NZD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "ZAR_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "ZAR_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_CHF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_CHF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CHF_ZAR",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CHF_ZAR",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_NZD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_NZD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_HUF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_HUF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CHF_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CHF_JPY",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_HKD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_HKD",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_CZK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_CZK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_PLN",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_PLN",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_HUF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_HUF",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_PLN",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_PLN",
+      "plan": null,
+      "policy": "champion",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_DKK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_DKK",
+      "plan": null,
+      "policy": "champion",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_USD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "CONTINUATION_PRICE_STRETCHED",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_USD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_HKD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_HKD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_NOK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_NOK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_USD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_USD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CAD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CAD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_USD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_USD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_HKD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_HKD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CHF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CHF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CHF_HKD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CHF_HKD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_HKD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_HKD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_SEK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_SEK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "HKD_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "HKD_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_CAD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "NO_DECISIVE_COMPLETED_M15_IMPULSE",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_CAD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_DKK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_DKK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_HKD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_HKD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_ZAR",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_ZAR",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_SGD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_SGD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_THB",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_THB",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_SGD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_SGD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_USD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_USD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_SGD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_SGD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_HKD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_HKD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_MXN",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_MXN",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CNH",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CNH",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "SGD_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "SGD_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_SGD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_SGD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_CHF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_CHF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_SEK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_SEK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_ZAR",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "UNSUPPORTED_PAIR_OR_ROUTE",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_ZAR",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "UNSUPPORTED_PAIR_OR_ROUTE",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_SGD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_SGD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "SGD_CHF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "SGD_CHF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_CAD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_CAD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_CAD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_CAD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "CONTINUATION_PRICE_STRETCHED",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_NZD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_NZD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_PLN",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_PLN",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CZK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_CZK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_GBP",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_GBP",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_CHF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_CHF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_AUD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_AUD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_SGD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_SGD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_AUD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_AUD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_NOK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_NOK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_CAD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_CAD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "FOUR_FRAME_TREND_CONFLICT",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_CHF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CAD_CHF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_CHF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "AUD_CHF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_ZAR",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_ZAR",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_NZD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_NZD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "ZAR_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "ZAR_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_CHF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "NZD_CHF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CHF_ZAR",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CHF_ZAR",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_NZD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_NZD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_HUF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_HUF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CHF_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "CHF_JPY",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_HKD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "USD_HKD",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_CZK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_CZK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_PLN",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "GBP_PLN",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_HUF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_HUF",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_PLN",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_PLN",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "INVALID_BID_ASK_OR_SPREAD",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_DKK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "MOMENTUM_CONTINUATION",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    },
+    {
+      "pair": "EUR_DKK",
+      "plan": null,
+      "policy": "challenger_v1",
+      "reason": "REVERSAL_OR_EXHAUSTION",
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-10-28T23:23:08Z",
+      "source_ref": null
+    }
+  ],
+  "schema": 1,
+  "updated_at": "2026-10-28T23:23:08Z"
+}
