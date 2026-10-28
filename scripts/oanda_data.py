@@ -416,7 +416,7 @@ def collect():
             {"instrument": pair, **ranking[pair],
              "pepperstone_spreadbet_account_availability": "UNVERIFIED",
              "pepperstone_uk_publicly_referenced": discovered[pair]["pepperstone_uk_publicly_referenced"]}
-            for pair in sorted(ranking, key=lambda p: (-ranking[p]["research_priority"], p))[:35]
+            for pair in sorted(ranking, key=lambda p: (-ranking[p]["research_priority"], p))
         ],
         "pairs": {
             pair: {"quote": content["quote"],
