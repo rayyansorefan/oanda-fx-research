@@ -1,13 +1,13 @@
 {
   "canonical_first_rejections": {
-    "FOUR_FRAME_TREND_CONFLICT": 26,
-    "INVALID_BID_ASK_OR_SPREAD": 38,
+    "ADX_TREND_STRENGTH": 2,
+    "FOUR_FRAME_TREND_CONFLICT": 28,
+    "INVALID_BID_ASK_OR_SPREAD": 40,
     "REQUIRED_FRAME_HISTORY_MISSING:H4": 16,
-    "REVERSAL_OR_EXHAUSTION": 46,
-    "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
+    "REVERSAL_OR_EXHAUSTION": 42,
     "UNSUPPORTED_PAIR_OR_ROUTE": 2
   },
-  "economically_feasible_route_observations": 5,
+  "economically_feasible_route_observations": 6,
   "feasible_but_not_admitted": [
     {
       "failed": [
@@ -15,6 +15,17 @@
         "news_gate"
       ],
       "pair": "AUD_USD",
+      "route": "EMA20_PULLBACK",
+      "unknown": []
+    },
+    {
+      "failed": [
+        "trend_H1",
+        "trend_H4",
+        "trend_D",
+        "news_gate"
+      ],
+      "pair": "EUR_USD",
       "route": "EMA20_PULLBACK",
       "unknown": []
     },
@@ -86,24 +97,24 @@
       "unknown": 0
     },
     "dmi_H1": {
-      "fail": 16,
-      "pass": 114,
+      "fail": 12,
+      "pass": 118,
       "unknown": 0
     },
     "dmi_M15": {
-      "fail": 32,
-      "pass": 98,
+      "fail": 36,
+      "pass": 94,
       "unknown": 0
     },
     "gross_reward_minimum": {
-      "fail": 58,
-      "pass": 58,
-      "unknown": 14
+      "fail": 59,
+      "pass": 59,
+      "unknown": 12
     },
     "net_reward_minimum": {
-      "fail": 90,
+      "fail": 92,
       "pass": 26,
-      "unknown": 14
+      "unknown": 12
     },
     "news_gate": {
       "fail": 110,
@@ -111,13 +122,13 @@
       "unknown": 0
     },
     "no_reversal_or_exhaustion": {
-      "fail": 46,
-      "pass": 84,
+      "fail": 42,
+      "pass": 88,
       "unknown": 0
     },
     "observed_target_available": {
-      "fail": 14,
-      "pass": 116,
+      "fail": 12,
+      "pass": 118,
       "unknown": 0
     },
     "pair_supported": {
@@ -136,23 +147,23 @@
       "unknown": 0
     },
     "relative_spread_cap": {
-      "fail": 82,
-      "pass": 48,
+      "fail": 80,
+      "pass": 50,
       "unknown": 0
     },
     "route_not_stretched": {
-      "fail": 63,
-      "pass": 67,
+      "fail": 61,
+      "pass": 69,
       "unknown": 0
     },
     "route_pattern": {
-      "fail": 44,
-      "pass": 86,
+      "fail": 43,
+      "pass": 87,
       "unknown": 0
     },
     "structural_stop_range": {
-      "fail": 7,
-      "pass": 123,
+      "fail": 8,
+      "pass": 122,
       "unknown": 0
     },
     "trend_D": {
@@ -161,8 +172,8 @@
       "unknown": 98
     },
     "trend_H1": {
-      "fail": 54,
-      "pass": 76,
+      "fail": 50,
+      "pass": 80,
       "unknown": 0
     },
     "trend_H4": {
@@ -171,8 +182,8 @@
       "unknown": 98
     },
     "trend_M15": {
-      "fail": 4,
-      "pass": 126,
+      "fail": 8,
+      "pass": 122,
       "unknown": 0
     },
     "valid_two_sided_quote": {
@@ -184,102 +195,6 @@
   "method": "Unmodified contemporaneous inputs. Counts overlap and are pair-route observations, not independent trades. Economics do not establish a confirmation, future fill or predictive edge.",
   "row_count": 130,
   "rows": [
-    {
-      "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": false,
-        "net_reward_minimum": false,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": true,
-        "route_not_stretched": false,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": false,
-        "trend_H1": true,
-        "trend_H4": true,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "LONG",
-      "economic_feasibility_only": {
-        "entry_reference": 0.90388,
-        "gross_rr": 1.00179,
-        "nearest_target": 0.90494,
-        "net_rr": 0.61551,
-        "stop_reference": 0.9028218918592157
-      },
-      "failed": [
-        "trend_D",
-        "news_gate",
-        "route_not_stretched",
-        "gross_reward_minimum",
-        "net_reward_minimum"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "AUD_SGD",
-      "route": "MOMENTUM_CONTINUATION",
-      "unknown": []
-    },
-    {
-      "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": true,
-        "net_reward_minimum": false,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": true,
-        "route_not_stretched": true,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": false,
-        "trend_H1": true,
-        "trend_H4": true,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "LONG",
-      "economic_feasibility_only": {
-        "entry_reference": 0.9035672986497936,
-        "gross_rr": 1.84155,
-        "nearest_target": 0.90494,
-        "net_rr": 1.12149,
-        "stop_reference": 0.9028218918592157
-      },
-      "failed": [
-        "trend_D",
-        "news_gate",
-        "net_reward_minimum"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "AUD_SGD",
-      "route": "EMA20_PULLBACK",
-      "unknown": []
-    },
     {
       "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
       "canonical_qualified": false,
@@ -409,10 +324,10 @@
       },
       "direction": "LONG",
       "economic_feasibility_only": {
-        "entry_reference": 0.70556,
-        "gross_rr": 1.07349,
+        "entry_reference": 0.70558,
+        "gross_rr": 1.02719,
         "nearest_target": 0.7065,
-        "net_rr": 0.77111,
+        "net_rr": 0.69981,
         "stop_reference": 0.7046843535388271
       },
       "failed": [
@@ -460,7 +375,7 @@
         "entry_reference": 0.7050952423768986,
         "gross_rr": 2.88507,
         "nearest_target": 0.7065,
-        "net_rr": 1.97241,
+        "net_rr": 1.86874,
         "stop_reference": 0.7046083358416355
       },
       "failed": [
@@ -503,10 +418,10 @@
       },
       "direction": "LONG",
       "economic_feasibility_only": {
-        "entry_reference": 5.53445,
-        "gross_rr": 1.2875,
+        "entry_reference": 5.53464,
+        "gross_rr": 1.22036,
         "nearest_target": 5.54254,
-        "net_rr": 0.97343,
+        "net_rr": 0.92326,
         "stop_reference": 5.528166505695524
       },
       "failed": [
@@ -570,6 +485,104 @@
       "unknown": []
     },
     {
+      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": false,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": false,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": false,
+        "route_not_stretched": false,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": true,
+        "trend_H1": true,
+        "trend_H4": true,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "SHORT",
+      "economic_feasibility_only": {
+        "entry_reference": 9.24999,
+        "gross_rr": 0.5992,
+        "nearest_target": 9.24121,
+        "net_rr": 0.49704,
+        "stop_reference": 9.26464276965441
+      },
+      "failed": [
+        "absolute_spread_cap",
+        "relative_spread_cap",
+        "news_gate",
+        "route_not_stretched",
+        "gross_reward_minimum",
+        "net_reward_minimum"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "USD_NOK",
+      "route": "MOMENTUM_CONTINUATION",
+      "unknown": []
+    },
+    {
+      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": false,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": true,
+        "net_reward_minimum": true,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": false,
+        "route_not_stretched": false,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": true,
+        "trend_H1": true,
+        "trend_H4": true,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "SHORT",
+      "economic_feasibility_only": {
+        "entry_reference": 9.261883898633451,
+        "gross_rr": 2.50616,
+        "nearest_target": 9.24121,
+        "net_rr": 2.12708,
+        "stop_reference": 9.270133133109542
+      },
+      "failed": [
+        "absolute_spread_cap",
+        "relative_spread_cap",
+        "news_gate",
+        "route_not_stretched"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "USD_NOK",
+      "route": "EMA20_PULLBACK",
+      "unknown": []
+    },
+    {
       "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
       "canonical_qualified": false,
       "checks": {
@@ -599,10 +612,10 @@
       },
       "direction": "LONG",
       "economic_feasibility_only": {
-        "entry_reference": 1.11596,
-        "gross_rr": 1.02187,
+        "entry_reference": 1.1159700000000001,
+        "gross_rr": 1.00121,
         "nearest_target": 1.11695,
-        "net_rr": 0.84652,
+        "net_rr": 0.80984,
         "stop_reference": 1.1149911832184494
       },
       "failed": [
@@ -639,7 +652,7 @@
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
         "relative_spread_cap": true,
-        "route_not_stretched": false,
+        "route_not_stretched": true,
         "route_pattern": true,
         "structural_stop_range": true,
         "trend_D": false,
@@ -653,15 +666,14 @@
         "entry_reference": 1.1151939974736518,
         "gross_rr": 2.91624,
         "nearest_target": 1.11695,
-        "net_rr": 2.39719,
+        "net_rr": 2.34183,
         "stop_reference": 1.1145918506350843
       },
       "failed": [
         "trend_H1",
         "trend_H4",
         "trend_D",
-        "news_gate",
-        "route_not_stretched"
+        "news_gate"
       ],
       "news_reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
       "not_a_signal": true,
@@ -773,6 +785,304 @@
       "unknown": []
     },
     {
+      "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": true,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": false,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": true,
+        "route_not_stretched": false,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": false,
+        "trend_H1": false,
+        "trend_H4": false,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "LONG",
+      "economic_feasibility_only": {
+        "entry_reference": 1.3329900000000001,
+        "gross_rr": 0.90032,
+        "nearest_target": 1.33388,
+        "net_rr": 0.61798,
+        "stop_reference": 1.3320014588672442
+      },
+      "failed": [
+        "trend_H1",
+        "trend_H4",
+        "trend_D",
+        "news_gate",
+        "route_not_stretched",
+        "gross_reward_minimum",
+        "net_reward_minimum"
+      ],
+      "news_reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
+      "not_a_signal": true,
+      "pair": "GBP_USD",
+      "route": "MOMENTUM_CONTINUATION",
+      "unknown": []
+    },
+    {
+      "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": true,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": true,
+        "net_reward_minimum": true,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": true,
+        "route_not_stretched": true,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": false,
+        "trend_H1": false,
+        "trend_H4": false,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "LONG",
+      "economic_feasibility_only": {
+        "entry_reference": 1.3321369543070296,
+        "gross_rr": 2.24986,
+        "nearest_target": 1.33388,
+        "net_rr": 1.65803,
+        "stop_reference": 1.3313622193954164
+      },
+      "failed": [
+        "trend_H1",
+        "trend_H4",
+        "trend_D",
+        "news_gate"
+      ],
+      "news_reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
+      "not_a_signal": true,
+      "pair": "GBP_USD",
+      "route": "EMA20_PULLBACK",
+      "unknown": []
+    },
+    {
+      "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": true,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": true,
+        "net_reward_minimum": true,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": true,
+        "route_not_stretched": true,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": false,
+        "trend_H1": false,
+        "trend_H4": false,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "SHORT",
+      "economic_feasibility_only": {
+        "entry_reference": 1.2807,
+        "gross_rr": 5.05257,
+        "nearest_target": 1.27739,
+        "net_rr": 3.47979,
+        "stop_reference": 1.2813551115639428
+      },
+      "failed": [
+        "trend_H1",
+        "trend_H4",
+        "trend_D",
+        "news_gate"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "USD_SGD",
+      "route": "MOMENTUM_CONTINUATION",
+      "unknown": []
+    },
+    {
+      "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": true,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": false,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": true,
+        "route_not_stretched": true,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": false,
+        "trend_H1": false,
+        "trend_H4": false,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "SHORT",
+      "economic_feasibility_only": {
+        "entry_reference": 1.2815016619302588,
+        "gross_rr": 1.41357,
+        "nearest_target": 1.28082,
+        "net_rr": 0.63416,
+        "stop_reference": 1.2819838881147567
+      },
+      "failed": [
+        "trend_H1",
+        "trend_H4",
+        "trend_D",
+        "news_gate",
+        "gross_reward_minimum",
+        "net_reward_minimum"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "USD_SGD",
+      "route": "EMA20_PULLBACK",
+      "unknown": []
+    },
+    {
+      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": false,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": false,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": true,
+        "route_not_stretched": false,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": false,
+        "trend_H1": false,
+        "trend_H4": false,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "LONG",
+      "economic_feasibility_only": {
+        "entry_reference": 8.75496,
+        "gross_rr": 0.99554,
+        "nearest_target": 8.76283,
+        "net_rr": 0.77146,
+        "stop_reference": 8.747054763150915
+      },
+      "failed": [
+        "absolute_spread_cap",
+        "trend_H1",
+        "trend_H4",
+        "trend_D",
+        "news_gate",
+        "route_not_stretched",
+        "gross_reward_minimum",
+        "net_reward_minimum"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "EUR_HKD",
+      "route": "MOMENTUM_CONTINUATION",
+      "unknown": []
+    },
+    {
+      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": false,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": true,
+        "net_reward_minimum": true,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": true,
+        "route_not_stretched": true,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": false,
+        "trend_H1": false,
+        "trend_H4": false,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "LONG",
+      "economic_feasibility_only": {
+        "entry_reference": 8.748914844023409,
+        "gross_rr": 2.97121,
+        "nearest_target": 8.76283,
+        "net_rr": 2.27247,
+        "stop_reference": 8.744231521593905
+      },
+      "failed": [
+        "absolute_spread_cap",
+        "trend_H1",
+        "trend_H4",
+        "trend_D",
+        "news_gate"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "EUR_HKD",
+      "route": "EMA20_PULLBACK",
+      "unknown": []
+    },
+    {
       "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
       "canonical_qualified": false,
       "checks": {
@@ -802,10 +1112,10 @@
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 11.042449999999999,
-        "gross_rr": 0.43981,
+        "entry_reference": 11.041849999999998,
+        "gross_rr": 0.35728,
         "nearest_target": 11.03811,
-        "net_rr": 0.30733,
+        "net_rr": 0.23893,
         "stop_reference": 11.052317857943509
       },
       "failed": [
@@ -868,305 +1178,6 @@
       "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
       "not_a_signal": true,
       "pair": "EUR_SEK",
-      "route": "EMA20_PULLBACK",
-      "unknown": []
-    },
-    {
-      "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": false,
-        "net_reward_minimum": false,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": true,
-        "route_not_stretched": false,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": false,
-        "trend_H1": false,
-        "trend_H4": false,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "LONG",
-      "economic_feasibility_only": {
-        "entry_reference": 1.33298,
-        "gross_rr": 0.91974,
-        "nearest_target": 1.33388,
-        "net_rr": 0.64851,
-        "stop_reference": 1.3320014588672442
-      },
-      "failed": [
-        "trend_H1",
-        "trend_H4",
-        "trend_D",
-        "news_gate",
-        "route_not_stretched",
-        "gross_reward_minimum",
-        "net_reward_minimum"
-      ],
-      "news_reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
-      "not_a_signal": true,
-      "pair": "GBP_USD",
-      "route": "MOMENTUM_CONTINUATION",
-      "unknown": []
-    },
-    {
-      "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": true,
-        "net_reward_minimum": true,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": true,
-        "route_not_stretched": true,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": false,
-        "trend_H1": false,
-        "trend_H4": false,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "LONG",
-      "economic_feasibility_only": {
-        "entry_reference": 1.3321369543070296,
-        "gross_rr": 2.24986,
-        "nearest_target": 1.33388,
-        "net_rr": 1.6907,
-        "stop_reference": 1.3313622193954164
-      },
-      "failed": [
-        "trend_H1",
-        "trend_H4",
-        "trend_D",
-        "news_gate"
-      ],
-      "news_reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
-      "not_a_signal": true,
-      "pair": "GBP_USD",
-      "route": "EMA20_PULLBACK",
-      "unknown": []
-    },
-    {
-      "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": true,
-        "net_reward_minimum": true,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": true,
-        "route_not_stretched": true,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": false,
-        "trend_H1": false,
-        "trend_H4": false,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "SHORT",
-      "economic_feasibility_only": {
-        "entry_reference": 1.28072,
-        "gross_rr": 5.24317,
-        "nearest_target": 1.27739,
-        "net_rr": 3.70853,
-        "stop_reference": 1.2813551115639428
-      },
-      "failed": [
-        "trend_H1",
-        "trend_H4",
-        "trend_D",
-        "news_gate"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "USD_SGD",
-      "route": "MOMENTUM_CONTINUATION",
-      "unknown": []
-    },
-    {
-      "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": false,
-        "net_reward_minimum": false,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": true,
-        "route_not_stretched": true,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": false,
-        "trend_H1": false,
-        "trend_H4": false,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "SHORT",
-      "economic_feasibility_only": {
-        "entry_reference": 1.2815016619302588,
-        "gross_rr": 1.41357,
-        "nearest_target": 1.28082,
-        "net_rr": 0.68869,
-        "stop_reference": 1.2819838881147567
-      },
-      "failed": [
-        "trend_H1",
-        "trend_H4",
-        "trend_D",
-        "news_gate",
-        "gross_reward_minimum",
-        "net_reward_minimum"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "USD_SGD",
-      "route": "EMA20_PULLBACK",
-      "unknown": []
-    },
-    {
-      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": false,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": false,
-        "net_reward_minimum": false,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": true,
-        "route_not_stretched": false,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": false,
-        "trend_H1": false,
-        "trend_H4": false,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "LONG",
-      "economic_feasibility_only": {
-        "entry_reference": 8.75492,
-        "gross_rr": 1.00569,
-        "nearest_target": 8.76283,
-        "net_rr": 0.77945,
-        "stop_reference": 8.747054763150915
-      },
-      "failed": [
-        "absolute_spread_cap",
-        "trend_H1",
-        "trend_H4",
-        "trend_D",
-        "news_gate",
-        "route_not_stretched",
-        "gross_reward_minimum",
-        "net_reward_minimum"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "EUR_HKD",
-      "route": "MOMENTUM_CONTINUATION",
-      "unknown": []
-    },
-    {
-      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": false,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": true,
-        "net_reward_minimum": true,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": true,
-        "route_not_stretched": false,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": false,
-        "trend_H1": false,
-        "trend_H4": false,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "LONG",
-      "economic_feasibility_only": {
-        "entry_reference": 8.748914844023409,
-        "gross_rr": 2.97121,
-        "nearest_target": 8.76283,
-        "net_rr": 2.27247,
-        "stop_reference": 8.744231521593905
-      },
-      "failed": [
-        "absolute_spread_cap",
-        "trend_H1",
-        "trend_H4",
-        "trend_D",
-        "news_gate",
-        "route_not_stretched"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "EUR_HKD",
       "route": "EMA20_PULLBACK",
       "unknown": []
     },
@@ -1270,109 +1281,6 @@
       "pair": "USD_CHF",
       "route": "EMA20_PULLBACK",
       "unknown": []
-    },
-    {
-      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": false,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": false,
-        "net_reward_minimum": false,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": false,
-        "route_not_stretched": false,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": null,
-        "trend_H1": true,
-        "trend_H4": null,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "SHORT",
-      "economic_feasibility_only": {
-        "entry_reference": 9.895690000000002,
-        "gross_rr": 0.40649,
-        "nearest_target": 9.88977,
-        "net_rr": 0.31612,
-        "stop_reference": 9.9102535812274
-      },
-      "failed": [
-        "absolute_spread_cap",
-        "relative_spread_cap",
-        "news_gate",
-        "route_not_stretched",
-        "gross_reward_minimum",
-        "net_reward_minimum"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "USD_SEK",
-      "route": "MOMENTUM_CONTINUATION",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
-    },
-    {
-      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": false,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": true,
-        "net_reward_minimum": true,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": false,
-        "route_not_stretched": true,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": null,
-        "trend_H1": true,
-        "trend_H4": null,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "SHORT",
-      "economic_feasibility_only": {
-        "entry_reference": 9.907453316940373,
-        "gross_rr": 1.83127,
-        "nearest_target": 9.88977,
-        "net_rr": 1.56558,
-        "stop_reference": 9.91710965268012
-      },
-      "failed": [
-        "absolute_spread_cap",
-        "relative_spread_cap",
-        "news_gate"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "USD_SEK",
-      "route": "EMA20_PULLBACK",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
     },
     {
       "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
@@ -1498,27 +1406,27 @@
         "pair_supported": true,
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
-        "relative_spread_cap": true,
+        "relative_spread_cap": false,
         "route_not_stretched": false,
         "route_pattern": true,
         "structural_stop_range": true,
         "trend_D": null,
-        "trend_H1": false,
+        "trend_H1": true,
         "trend_H4": null,
         "trend_M15": true,
         "valid_two_sided_quote": true
       },
-      "direction": "LONG",
+      "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 10.45738,
-        "gross_rr": 0.91099,
-        "nearest_target": 10.46465,
-        "net_rr": 0.69819,
-        "stop_reference": 10.44939968756085
+        "entry_reference": 9.894919999999999,
+        "gross_rr": 0.33586,
+        "nearest_target": 9.88977,
+        "net_rr": 0.25408,
+        "stop_reference": 9.9102535812274
       },
       "failed": [
         "absolute_spread_cap",
-        "trend_H1",
+        "relative_spread_cap",
         "news_gate",
         "route_not_stretched",
         "gross_reward_minimum",
@@ -1526,7 +1434,7 @@
       ],
       "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
       "not_a_signal": true,
-      "pair": "GBP_HKD",
+      "pair": "USD_SEK",
       "route": "MOMENTUM_CONTINUATION",
       "unknown": [
         "trend_H4",
@@ -1551,32 +1459,32 @@
         "pair_supported": true,
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
-        "relative_spread_cap": true,
+        "relative_spread_cap": false,
         "route_not_stretched": true,
         "route_pattern": true,
         "structural_stop_range": true,
         "trend_D": null,
-        "trend_H1": false,
+        "trend_H1": true,
         "trend_H4": null,
         "trend_M15": true,
         "valid_two_sided_quote": true
       },
-      "direction": "LONG",
+      "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 10.450836067227389,
-        "gross_rr": 2.3206,
-        "nearest_target": 10.46465,
-        "net_rr": 1.84301,
-        "stop_reference": 10.444883333384837
+        "entry_reference": 9.907453316940373,
+        "gross_rr": 1.83127,
+        "nearest_target": 9.88977,
+        "net_rr": 1.56558,
+        "stop_reference": 9.91710965268012
       },
       "failed": [
         "absolute_spread_cap",
-        "trend_H1",
+        "relative_spread_cap",
         "news_gate"
       ],
       "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
       "not_a_signal": true,
-      "pair": "GBP_HKD",
+      "pair": "USD_SEK",
       "route": "EMA20_PULLBACK",
       "unknown": [
         "trend_H4",
@@ -1613,7 +1521,7 @@
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 6.69673,
+        "entry_reference": 6.6967300000000005,
         "gross_rr": 0.77956,
         "nearest_target": 6.69156,
         "net_rr": 0.54639,
@@ -1690,6 +1598,109 @@
       ]
     },
     {
+      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": false,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": false,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": true,
+        "route_not_stretched": false,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": false,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "LONG",
+      "economic_feasibility_only": {
+        "entry_reference": 10.457550000000001,
+        "gross_rr": 0.87113,
+        "nearest_target": 10.46465,
+        "net_rr": 0.66664,
+        "stop_reference": 10.44939968756085
+      },
+      "failed": [
+        "absolute_spread_cap",
+        "trend_H1",
+        "news_gate",
+        "route_not_stretched",
+        "gross_reward_minimum",
+        "net_reward_minimum"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "GBP_HKD",
+      "route": "MOMENTUM_CONTINUATION",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": false,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": true,
+        "net_reward_minimum": true,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": true,
+        "route_not_stretched": true,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": false,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "LONG",
+      "economic_feasibility_only": {
+        "entry_reference": 10.450836067227389,
+        "gross_rr": 2.3206,
+        "nearest_target": 10.46465,
+        "net_rr": 1.84301,
+        "stop_reference": 10.444883333384837
+      },
+      "failed": [
+        "absolute_spread_cap",
+        "trend_H1",
+        "news_gate"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "GBP_HKD",
+      "route": "EMA20_PULLBACK",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
       "canonical_first_rejection": "REQUIRED_FRAME_HISTORY_MISSING:H4",
       "canonical_qualified": false,
       "checks": {
@@ -1707,7 +1718,7 @@
         "pair_supported": true,
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
-        "relative_spread_cap": true,
+        "relative_spread_cap": false,
         "route_not_stretched": true,
         "route_pattern": false,
         "structural_stop_range": true,
@@ -1720,6 +1731,7 @@
       "direction": "SHORT",
       "economic_feasibility_only": null,
       "failed": [
+        "relative_spread_cap",
         "adx_M15",
         "adx_H1",
         "route_pattern",
@@ -1754,7 +1766,7 @@
         "pair_supported": true,
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
-        "relative_spread_cap": true,
+        "relative_spread_cap": false,
         "route_not_stretched": true,
         "route_pattern": true,
         "structural_stop_range": true,
@@ -1769,10 +1781,11 @@
         "entry_reference": 1.5612123797649307,
         "gross_rr": 1.80803,
         "nearest_target": 1.56006,
-        "net_rr": 0.82187,
+        "net_rr": 0.78019,
         "stop_reference": 1.561849746284434
       },
       "failed": [
+        "relative_spread_cap",
         "adx_M15",
         "adx_H1",
         "net_reward_minimum"
@@ -1785,106 +1798,6 @@
         "trend_H4",
         "trend_D"
       ]
-    },
-    {
-      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": false,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": false,
-        "net_reward_minimum": false,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": false,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": false,
-        "route_not_stretched": false,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": true,
-        "trend_H1": true,
-        "trend_H4": true,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "SHORT",
-      "economic_feasibility_only": {
-        "entry_reference": 9.24995,
-        "gross_rr": 0.59485,
-        "nearest_target": 9.24121,
-        "net_rr": 0.49322,
-        "stop_reference": 9.26464276965441
-      },
-      "failed": [
-        "absolute_spread_cap",
-        "relative_spread_cap",
-        "no_reversal_or_exhaustion",
-        "news_gate",
-        "route_not_stretched",
-        "gross_reward_minimum",
-        "net_reward_minimum"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "USD_NOK",
-      "route": "MOMENTUM_CONTINUATION",
-      "unknown": []
-    },
-    {
-      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": false,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": true,
-        "net_reward_minimum": true,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": false,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": false,
-        "route_not_stretched": false,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": true,
-        "trend_H1": true,
-        "trend_H4": true,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "SHORT",
-      "economic_feasibility_only": {
-        "entry_reference": 9.261883898633451,
-        "gross_rr": 2.50616,
-        "nearest_target": 9.24121,
-        "net_rr": 2.12708,
-        "stop_reference": 9.270133133109542
-      },
-      "failed": [
-        "absolute_spread_cap",
-        "relative_spread_cap",
-        "no_reversal_or_exhaustion",
-        "news_gate",
-        "route_not_stretched"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "USD_NOK",
-      "route": "EMA20_PULLBACK",
-      "unknown": []
     },
     {
       "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
@@ -1916,10 +1829,10 @@
       },
       "direction": "LONG",
       "economic_feasibility_only": {
-        "entry_reference": 1.7077699999999998,
-        "gross_rr": 0.75875,
+        "entry_reference": 1.7077600000000002,
+        "gross_rr": 0.77353,
         "nearest_target": 1.70868,
-        "net_rr": 0.26244,
+        "net_rr": 0.2789,
         "stop_reference": 1.7065706511288303
       },
       "failed": [
@@ -1972,7 +1885,7 @@
         "entry_reference": 1.707122668377652,
         "gross_rr": 1.99198,
         "nearest_target": 1.70868,
-        "net_rr": 0.86638,
+        "net_rr": 0.88366,
         "stop_reference": 1.7063408657549173
       },
       "failed": [
@@ -1984,6 +1897,109 @@
       "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
       "not_a_signal": true,
       "pair": "GBP_SGD",
+      "route": "EMA20_PULLBACK",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": true,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": false,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": false,
+        "route_not_stretched": false,
+        "route_pattern": false,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": true,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "SHORT",
+      "economic_feasibility_only": {
+        "entry_reference": 33.68600000000001,
+        "gross_rr": 0.06793,
+        "nearest_target": 33.683,
+        "net_rr": -0.33209,
+        "stop_reference": 33.73016289632637
+      },
+      "failed": [
+        "relative_spread_cap",
+        "news_gate",
+        "route_pattern",
+        "route_not_stretched",
+        "gross_reward_minimum",
+        "net_reward_minimum"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "USD_THB",
+      "route": "MOMENTUM_CONTINUATION",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": true,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": true,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": false,
+        "route_not_stretched": true,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": true,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "SHORT",
+      "economic_feasibility_only": {
+        "entry_reference": 33.73229955571066,
+        "gross_rr": 2.60495,
+        "nearest_target": 33.683,
+        "net_rr": 0.50357,
+        "stop_reference": 33.751224898566385
+      },
+      "failed": [
+        "relative_spread_cap",
+        "news_gate",
+        "net_reward_minimum"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "USD_THB",
       "route": "EMA20_PULLBACK",
       "unknown": [
         "trend_H4",
@@ -2020,10 +2036,10 @@
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 16.598489999999998,
-        "gross_rr": 1.07843,
+        "entry_reference": 16.59759,
+        "gross_rr": 0.99011,
         "nearest_target": 16.57662,
-        "net_rr": 0.98075,
+        "net_rr": 0.90038,
         "stop_reference": 16.618769568393517
       },
       "failed": [
@@ -2098,7 +2114,7 @@
       ]
     },
     {
-      "canonical_first_rejection": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
       "canonical_qualified": false,
       "checks": {
         "absolute_spread_cap": true,
@@ -2115,43 +2131,38 @@
         "pair_supported": true,
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
-        "relative_spread_cap": false,
-        "route_not_stretched": false,
-        "route_pattern": false,
+        "relative_spread_cap": true,
+        "route_not_stretched": true,
+        "route_pattern": true,
         "structural_stop_range": true,
-        "trend_D": null,
+        "trend_D": false,
         "trend_H1": true,
-        "trend_H4": null,
+        "trend_H4": true,
         "trend_M15": true,
         "valid_two_sided_quote": true
       },
-      "direction": "SHORT",
+      "direction": "LONG",
       "economic_feasibility_only": {
-        "entry_reference": 33.685,
-        "gross_rr": 0.04428,
-        "nearest_target": 33.683,
-        "net_rr": -0.35183,
-        "stop_reference": 33.73016289632637
+        "entry_reference": 0.9038999999999999,
+        "gross_rr": 0.96465,
+        "nearest_target": 0.90494,
+        "net_rr": 0.56421,
+        "stop_reference": 0.9028218918592157
       },
       "failed": [
-        "relative_spread_cap",
+        "trend_D",
         "news_gate",
-        "route_pattern",
-        "route_not_stretched",
         "gross_reward_minimum",
         "net_reward_minimum"
       ],
       "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
       "not_a_signal": true,
-      "pair": "USD_THB",
+      "pair": "AUD_SGD",
       "route": "MOMENTUM_CONTINUATION",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
+      "unknown": []
     },
     {
-      "canonical_first_rejection": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
       "canonical_qualified": false,
       "checks": {
         "absolute_spread_cap": true,
@@ -2168,37 +2179,34 @@
         "pair_supported": true,
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
-        "relative_spread_cap": false,
+        "relative_spread_cap": true,
         "route_not_stretched": true,
         "route_pattern": true,
         "structural_stop_range": true,
-        "trend_D": null,
+        "trend_D": false,
         "trend_H1": true,
-        "trend_H4": null,
+        "trend_H4": true,
         "trend_M15": true,
         "valid_two_sided_quote": true
       },
-      "direction": "SHORT",
+      "direction": "LONG",
       "economic_feasibility_only": {
-        "entry_reference": 33.73229955571066,
-        "gross_rr": 2.60495,
-        "nearest_target": 33.683,
-        "net_rr": 0.4664,
-        "stop_reference": 33.751224898566385
+        "entry_reference": 0.9035672986497936,
+        "gross_rr": 1.84155,
+        "nearest_target": 0.90494,
+        "net_rr": 1.07372,
+        "stop_reference": 0.9028218918592157
       },
       "failed": [
-        "relative_spread_cap",
+        "trend_D",
         "news_gate",
         "net_reward_minimum"
       ],
       "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
       "not_a_signal": true,
-      "pair": "USD_THB",
+      "pair": "AUD_SGD",
       "route": "EMA20_PULLBACK",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
+      "unknown": []
     },
     {
       "canonical_first_rejection": "REQUIRED_FRAME_HISTORY_MISSING:H4",
@@ -2230,10 +2238,10 @@
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 88.722,
-        "gross_rr": 3.39334,
+        "entry_reference": 88.72099999999999,
+        "gross_rr": 3.35573,
         "nearest_target": 88.329,
-        "net_rr": 2.46451,
+        "net_rr": 2.41452,
         "stop_reference": 88.83781510994434
       },
       "failed": [
@@ -2285,7 +2293,7 @@
         "entry_reference": 88.79180975729743,
         "gross_rr": 1.02088,
         "nearest_target": 88.722,
-        "net_rr": 0.38981,
+        "net_rr": 0.37392,
         "stop_reference": 88.8601919693104
       },
       "failed": [
@@ -2323,7 +2331,7 @@
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
         "relative_spread_cap": true,
-        "route_not_stretched": false,
+        "route_not_stretched": true,
         "route_pattern": false,
         "structural_stop_range": true,
         "trend_D": null,
@@ -2334,10 +2342,10 @@
       },
       "direction": "LONG",
       "economic_feasibility_only": {
-        "entry_reference": 0.5632400000000001,
-        "gross_rr": 0.67661,
+        "entry_reference": 0.56325,
+        "gross_rr": 0.65851,
         "nearest_target": 0.56386,
-        "net_rr": 0.41099,
+        "net_rr": 0.38367,
         "stop_reference": 0.5623236633741915
       },
       "failed": [
@@ -2345,7 +2353,6 @@
         "dmi_H1",
         "news_gate",
         "route_pattern",
-        "route_not_stretched",
         "gross_reward_minimum",
         "net_reward_minimum"
       ],
@@ -2391,7 +2398,7 @@
         "entry_reference": 0.5624554005551261,
         "gross_rr": 2.8494,
         "nearest_target": 0.56386,
-        "net_rr": 1.85154,
+        "net_rr": 1.8031,
         "stop_reference": 0.561962455079302
       },
       "failed": [
@@ -2427,7 +2434,7 @@
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
         "relative_spread_cap": true,
-        "route_not_stretched": false,
+        "route_not_stretched": true,
         "route_pattern": false,
         "structural_stop_range": true,
         "trend_D": null,
@@ -2438,10 +2445,10 @@
       },
       "direction": "LONG",
       "economic_feasibility_only": {
-        "entry_reference": 4.41815,
-        "gross_rr": 0.74072,
+        "entry_reference": 4.41817,
+        "gross_rr": 0.73575,
         "nearest_target": 4.42332,
-        "net_rr": 0.52258,
+        "net_rr": 0.51877,
         "stop_reference": 4.411170321079032
       },
       "failed": [
@@ -2450,7 +2457,6 @@
         "dmi_H1",
         "news_gate",
         "route_pattern",
-        "route_not_stretched",
         "gross_reward_minimum",
         "net_reward_minimum"
       ],
@@ -2716,61 +2722,65 @@
       ]
     },
     {
-      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
+      "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
       "canonical_qualified": false,
       "checks": {
-        "absolute_spread_cap": false,
-        "adx_H1": true,
+        "absolute_spread_cap": true,
+        "adx_H1": false,
         "adx_M15": true,
         "direction_known": true,
         "dmi_H1": true,
         "dmi_M15": true,
-        "gross_reward_minimum": null,
-        "net_reward_minimum": null,
+        "gross_reward_minimum": false,
+        "net_reward_minimum": false,
         "news_gate": false,
-        "no_reversal_or_exhaustion": false,
-        "observed_target_available": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
         "pair_supported": true,
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
-        "relative_spread_cap": false,
+        "relative_spread_cap": true,
         "route_not_stretched": false,
         "route_pattern": false,
         "structural_stop_range": true,
         "trend_D": null,
-        "trend_H1": true,
+        "trend_H1": false,
         "trend_H4": null,
         "trend_M15": true,
         "valid_two_sided_quote": true
       },
       "direction": "SHORT",
-      "economic_feasibility_only": null,
+      "economic_feasibility_only": {
+        "entry_reference": 123.101,
+        "gross_rr": 1.26225,
+        "nearest_target": 122.986,
+        "net_rr": 0.75325,
+        "stop_reference": 123.19210700681836
+      },
       "failed": [
-        "absolute_spread_cap",
-        "relative_spread_cap",
-        "no_reversal_or_exhaustion",
+        "trend_H1",
+        "adx_H1",
         "news_gate",
         "route_pattern",
         "route_not_stretched",
-        "observed_target_available"
+        "gross_reward_minimum",
+        "net_reward_minimum"
       ],
       "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
       "not_a_signal": true,
-      "pair": "USD_CNH",
+      "pair": "SGD_JPY",
       "route": "MOMENTUM_CONTINUATION",
       "unknown": [
         "trend_H4",
-        "trend_D",
-        "gross_reward_minimum",
-        "net_reward_minimum"
+        "trend_D"
       ]
     },
     {
-      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
+      "canonical_first_rejection": "FOUR_FRAME_TREND_CONFLICT",
       "canonical_qualified": false,
       "checks": {
-        "absolute_spread_cap": false,
-        "adx_H1": true,
+        "absolute_spread_cap": true,
+        "adx_H1": false,
         "adx_M15": true,
         "direction_known": true,
         "dmi_H1": true,
@@ -2778,143 +2788,39 @@
         "gross_reward_minimum": true,
         "net_reward_minimum": false,
         "news_gate": false,
-        "no_reversal_or_exhaustion": false,
+        "no_reversal_or_exhaustion": true,
         "observed_target_available": true,
         "pair_supported": true,
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
-        "relative_spread_cap": false,
+        "relative_spread_cap": true,
         "route_not_stretched": false,
         "route_pattern": true,
         "structural_stop_range": true,
         "trend_D": null,
-        "trend_H1": true,
+        "trend_H1": false,
         "trend_H4": null,
         "trend_M15": true,
         "valid_two_sided_quote": true
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 6.661019120266497,
-        "gross_rr": 2.6317,
-        "nearest_target": 6.65885,
-        "net_rr": 0.64089,
-        "stop_reference": 6.661843346523196
+        "entry_reference": 123.19618325863054,
+        "gross_rr": 1.65025,
+        "nearest_target": 123.108,
+        "net_rr": 0.77276,
+        "stop_reference": 123.24961956829118
       },
       "failed": [
-        "absolute_spread_cap",
-        "relative_spread_cap",
-        "no_reversal_or_exhaustion",
+        "trend_H1",
+        "adx_H1",
         "news_gate",
         "route_not_stretched",
         "net_reward_minimum"
       ],
       "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
       "not_a_signal": true,
-      "pair": "USD_CNH",
-      "route": "EMA20_PULLBACK",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
-    },
-    {
-      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": false,
-        "adx_H1": false,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": true,
-        "net_reward_minimum": true,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": true,
-        "route_not_stretched": true,
-        "route_pattern": false,
-        "structural_stop_range": true,
-        "trend_D": null,
-        "trend_H1": false,
-        "trend_H4": null,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "SHORT",
-      "economic_feasibility_only": {
-        "entry_reference": 18.6314,
-        "gross_rr": 1.67676,
-        "nearest_target": 18.59297,
-        "net_rr": 1.56486,
-        "stop_reference": 18.654319139327406
-      },
-      "failed": [
-        "absolute_spread_cap",
-        "trend_H1",
-        "adx_H1",
-        "news_gate",
-        "route_pattern"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "USD_MXN",
-      "route": "MOMENTUM_CONTINUATION",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
-    },
-    {
-      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": false,
-        "adx_H1": false,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": true,
-        "net_reward_minimum": true,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": true,
-        "route_not_stretched": true,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": null,
-        "trend_H1": false,
-        "trend_H4": null,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "SHORT",
-      "economic_feasibility_only": {
-        "entry_reference": 18.642516983263803,
-        "gross_rr": 3.01335,
-        "nearest_target": 18.59297,
-        "net_rr": 2.78326,
-        "stop_reference": 18.658959452378625
-      },
-      "failed": [
-        "absolute_spread_cap",
-        "trend_H1",
-        "adx_H1",
-        "news_gate"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "USD_MXN",
+      "pair": "SGD_JPY",
       "route": "EMA20_PULLBACK",
       "unknown": [
         "trend_H4",
@@ -3019,6 +2925,109 @@
       "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
       "not_a_signal": true,
       "pair": "EUR_SGD",
+      "route": "EMA20_PULLBACK",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": false,
+        "adx_H1": false,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": true,
+        "net_reward_minimum": true,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": true,
+        "route_not_stretched": true,
+        "route_pattern": false,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": false,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "SHORT",
+      "economic_feasibility_only": {
+        "entry_reference": 18.63037,
+        "gross_rr": 1.56164,
+        "nearest_target": 18.59297,
+        "net_rr": 1.45897,
+        "stop_reference": 18.654319139327406
+      },
+      "failed": [
+        "absolute_spread_cap",
+        "trend_H1",
+        "adx_H1",
+        "news_gate",
+        "route_pattern"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "USD_MXN",
+      "route": "MOMENTUM_CONTINUATION",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": false,
+        "adx_H1": false,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": true,
+        "net_reward_minimum": true,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": true,
+        "route_not_stretched": true,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": false,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "SHORT",
+      "economic_feasibility_only": {
+        "entry_reference": 18.642516983263803,
+        "gross_rr": 3.01335,
+        "nearest_target": 18.59297,
+        "net_rr": 2.78326,
+        "stop_reference": 18.658959452378625
+      },
+      "failed": [
+        "absolute_spread_cap",
+        "trend_H1",
+        "adx_H1",
+        "news_gate"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "USD_MXN",
       "route": "EMA20_PULLBACK",
       "unknown": [
         "trend_H4",
@@ -3143,8 +3152,8 @@
         "pair_supported": true,
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
-        "relative_spread_cap": false,
-        "route_not_stretched": true,
+        "relative_spread_cap": true,
+        "route_not_stretched": false,
         "route_pattern": true,
         "structural_stop_range": true,
         "trend_D": null,
@@ -3155,17 +3164,17 @@
       },
       "direction": "LONG",
       "economic_feasibility_only": {
-        "entry_reference": 0.58423,
-        "gross_rr": 0.69219,
+        "entry_reference": 0.58422,
+        "gross_rr": 0.71041,
         "nearest_target": 0.58488,
-        "net_rr": 0.4006,
+        "net_rr": 0.42766,
         "stop_reference": 0.583290955547013
       },
       "failed": [
-        "relative_spread_cap",
         "adx_M15",
         "dmi_M15",
         "no_reversal_or_exhaustion",
+        "route_not_stretched",
         "gross_reward_minimum",
         "net_reward_minimum"
       ],
@@ -3196,7 +3205,7 @@
         "pair_supported": true,
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
-        "relative_spread_cap": false,
+        "relative_spread_cap": true,
         "route_not_stretched": true,
         "route_pattern": true,
         "structural_stop_range": true,
@@ -3211,11 +3220,10 @@
         "entry_reference": 0.5840164482681889,
         "gross_rr": 1.1903,
         "nearest_target": 0.58488,
-        "net_rr": 0.72536,
+        "net_rr": 0.74718,
         "stop_reference": 0.583290955547013
       },
       "failed": [
-        "relative_spread_cap",
         "adx_M15",
         "dmi_M15",
         "no_reversal_or_exhaustion",
@@ -3225,6 +3233,210 @@
       "news_reason": null,
       "not_a_signal": true,
       "pair": "AUD_CHF",
+      "route": "EMA20_PULLBACK",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": false,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": null,
+        "net_reward_minimum": null,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": false,
+        "observed_target_available": false,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": false,
+        "route_not_stretched": false,
+        "route_pattern": false,
+        "structural_stop_range": false,
+        "trend_D": null,
+        "trend_H1": true,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "SHORT",
+      "economic_feasibility_only": null,
+      "failed": [
+        "absolute_spread_cap",
+        "relative_spread_cap",
+        "no_reversal_or_exhaustion",
+        "news_gate",
+        "route_pattern",
+        "route_not_stretched",
+        "structural_stop_range",
+        "observed_target_available"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "USD_CNH",
+      "route": "MOMENTUM_CONTINUATION",
+      "unknown": [
+        "trend_H4",
+        "trend_D",
+        "gross_reward_minimum",
+        "net_reward_minimum"
+      ]
+    },
+    {
+      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": false,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": true,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": false,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": false,
+        "route_not_stretched": false,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": true,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "SHORT",
+      "economic_feasibility_only": {
+        "entry_reference": 6.661019120266497,
+        "gross_rr": 2.6317,
+        "nearest_target": 6.65885,
+        "net_rr": 0.64089,
+        "stop_reference": 6.661843346523196
+      },
+      "failed": [
+        "absolute_spread_cap",
+        "relative_spread_cap",
+        "no_reversal_or_exhaustion",
+        "news_gate",
+        "route_not_stretched",
+        "net_reward_minimum"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "USD_CNH",
+      "route": "EMA20_PULLBACK",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": true,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": false,
+        "net_reward_minimum": false,
+        "news_gate": true,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": false,
+        "route_not_stretched": true,
+        "route_pattern": false,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": true,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "SHORT",
+      "economic_feasibility_only": {
+        "entry_reference": 1.8886,
+        "gross_rr": 0.60021,
+        "nearest_target": 1.88749,
+        "net_rr": 0.15494,
+        "stop_reference": 1.8904493641832
+      },
+      "failed": [
+        "relative_spread_cap",
+        "route_pattern",
+        "gross_reward_minimum",
+        "net_reward_minimum"
+      ],
+      "news_reason": null,
+      "not_a_signal": true,
+      "pair": "GBP_AUD",
+      "route": "MOMENTUM_CONTINUATION",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "REQUIRED_FRAME_HISTORY_MISSING:H4",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": true,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": true,
+        "gross_reward_minimum": true,
+        "net_reward_minimum": false,
+        "news_gate": true,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": false,
+        "route_not_stretched": true,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": true,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "SHORT",
+      "economic_feasibility_only": {
+        "entry_reference": 1.8893061861514653,
+        "gross_rr": 1.58872,
+        "nearest_target": 1.88749,
+        "net_rr": 0.59433,
+        "stop_reference": 1.8904493641832
+      },
+      "failed": [
+        "relative_spread_cap",
+        "net_reward_minimum"
+      ],
+      "news_reason": null,
+      "not_a_signal": true,
+      "pair": "GBP_AUD",
       "route": "EMA20_PULLBACK",
       "unknown": [
         "trend_H4",
@@ -3261,10 +3473,10 @@
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 157.70900000000003,
-        "gross_rr": 0.45503,
+        "entry_reference": 157.70700000000002,
+        "gross_rr": 0.43135,
         "nearest_target": 157.654,
-        "net_rr": 0.2628,
+        "net_rr": 0.22498,
         "stop_reference": 157.82987116291145
       },
       "failed": [
@@ -3316,7 +3528,7 @@
         "entry_reference": 157.8746037221396,
         "gross_rr": 1.61629,
         "nearest_target": 157.735,
-        "net_rr": 1.15683,
+        "net_rr": 1.1105,
         "stop_reference": 157.96097639761476
       },
       "failed": [
@@ -3443,106 +3655,6 @@
       ]
     },
     {
-      "canonical_first_rejection": "REQUIRED_FRAME_HISTORY_MISSING:H4",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": false,
-        "net_reward_minimum": false,
-        "news_gate": true,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": false,
-        "route_not_stretched": true,
-        "route_pattern": false,
-        "structural_stop_range": true,
-        "trend_D": null,
-        "trend_H1": true,
-        "trend_H4": null,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "SHORT",
-      "economic_feasibility_only": {
-        "entry_reference": 1.8885600000000002,
-        "gross_rr": 0.56633,
-        "nearest_target": 1.88749,
-        "net_rr": 0.11743,
-        "stop_reference": 1.8904493641832
-      },
-      "failed": [
-        "relative_spread_cap",
-        "route_pattern",
-        "gross_reward_minimum",
-        "net_reward_minimum"
-      ],
-      "news_reason": null,
-      "not_a_signal": true,
-      "pair": "GBP_AUD",
-      "route": "MOMENTUM_CONTINUATION",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
-    },
-    {
-      "canonical_first_rejection": "REQUIRED_FRAME_HISTORY_MISSING:H4",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": true,
-        "gross_reward_minimum": true,
-        "net_reward_minimum": false,
-        "news_gate": true,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": false,
-        "route_not_stretched": true,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": null,
-        "trend_H1": true,
-        "trend_H4": null,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "SHORT",
-      "economic_feasibility_only": {
-        "entry_reference": 1.8893061861514653,
-        "gross_rr": 1.58872,
-        "nearest_target": 1.88749,
-        "net_rr": 0.55578,
-        "stop_reference": 1.8904493641832
-      },
-      "failed": [
-        "relative_spread_cap",
-        "net_reward_minimum"
-      ],
-      "news_reason": null,
-      "not_a_signal": true,
-      "pair": "GBP_AUD",
-      "route": "EMA20_PULLBACK",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
-    },
-    {
       "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
       "canonical_qualified": false,
       "checks": {
@@ -3572,10 +3684,10 @@
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 10.320810000000002,
-        "gross_rr": 0.13103,
+        "entry_reference": 10.320720000000001,
+        "gross_rr": 0.12244,
         "nearest_target": 10.31927,
-        "net_rr": 0.04234,
+        "net_rr": 0.03504,
         "stop_reference": 10.3325626841226
       },
       "failed": [
@@ -3682,10 +3794,10 @@
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 0.9231699999999999,
-        "gross_rr": 0.16946,
+        "entry_reference": 0.92316,
+        "gross_rr": 0.14998,
         "nearest_target": 0.92307,
-        "net_rr": -0.17015,
+        "net_rr": -0.19107,
         "stop_reference": 0.9237600967799595
       },
       "failed": [
@@ -3739,7 +3851,7 @@
         "entry_reference": 0.9237045488373102,
         "gross_rr": 1.80862,
         "nearest_target": 0.92307,
-        "net_rr": 0.66355,
+        "net_rr": 0.63186,
         "stop_reference": 0.9240553956619562
       },
       "failed": [
@@ -3787,10 +3899,10 @@
       },
       "direction": "LONG",
       "economic_feasibility_only": {
-        "entry_reference": 1.9837900000000002,
-        "gross_rr": 0.85079,
+        "entry_reference": 1.9837699999999998,
+        "gross_rr": 0.86761,
         "nearest_target": 1.98568,
-        "net_rr": 0.304,
+        "net_rr": 0.32203,
         "stop_reference": 1.9815685389922155
       },
       "failed": [
@@ -3846,7 +3958,7 @@
         "entry_reference": 1.9827929256100587,
         "gross_rr": 2.33245,
         "nearest_target": 1.98568,
-        "net_rr": 0.90148,
+        "net_rr": 0.92186,
         "stop_reference": 1.9815551417919441
       },
       "failed": [
@@ -3885,7 +3997,7 @@
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
         "relative_spread_cap": false,
-        "route_not_stretched": true,
+        "route_not_stretched": false,
         "route_pattern": false,
         "structural_stop_range": true,
         "trend_D": null,
@@ -3902,6 +4014,7 @@
         "adx_M15",
         "dmi_H1",
         "route_pattern",
+        "route_not_stretched",
         "observed_target_available"
       ],
       "news_reason": null,
@@ -3948,7 +4061,7 @@
         "entry_reference": 0.9870720608544393,
         "gross_rr": 1.99373,
         "nearest_target": 0.98594,
-        "net_rr": 0.886,
+        "net_rr": 0.91037,
         "stop_reference": 0.9876398726656104
       },
       "failed": [
@@ -4048,7 +4161,7 @@
         "entry_reference": 0.5916706535787885,
         "gross_rr": 1.51542,
         "nearest_target": 0.59212,
-        "net_rr": 0.44823,
+        "net_rr": 0.48131,
         "stop_reference": 0.591374137295126
       },
       "failed": [
@@ -4095,10 +4208,10 @@
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 0.64591,
-        "gross_rr": 0.21012,
+        "entry_reference": 0.64592,
+        "gross_rr": 0.23905,
         "nearest_target": 0.64582,
-        "net_rr": -0.19866,
+        "net_rr": -0.17111,
         "stop_reference": 0.6463383197115977
       },
       "failed": [
@@ -4153,7 +4266,7 @@
         "entry_reference": 0.6463426744123768,
         "gross_rr": 1.55884,
         "nearest_target": 0.64582,
-        "net_rr": 0.54925,
+        "net_rr": 0.58211,
         "stop_reference": 0.6466779718888572
       },
       "failed": [
@@ -4191,7 +4304,7 @@
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
         "relative_spread_cap": false,
-        "route_not_stretched": true,
+        "route_not_stretched": false,
         "route_pattern": false,
         "structural_stop_range": true,
         "trend_D": null,
@@ -4215,6 +4328,7 @@
         "no_reversal_or_exhaustion",
         "news_gate",
         "route_pattern",
+        "route_not_stretched",
         "gross_reward_minimum",
         "net_reward_minimum"
       ],
@@ -4298,6 +4412,113 @@
         "pair_supported": true,
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
+        "relative_spread_cap": true,
+        "route_not_stretched": true,
+        "route_pattern": false,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": true,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "LONG",
+      "economic_feasibility_only": {
+        "entry_reference": 1.25381,
+        "gross_rr": 0.96941,
+        "nearest_target": 1.25502,
+        "net_rr": 0.56554,
+        "stop_reference": 1.2525618181464377
+      },
+      "failed": [
+        "adx_M15",
+        "dmi_M15",
+        "no_reversal_or_exhaustion",
+        "news_gate",
+        "route_pattern",
+        "gross_reward_minimum",
+        "net_reward_minimum"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "AUD_NZD",
+      "route": "MOMENTUM_CONTINUATION",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": true,
+        "adx_H1": true,
+        "adx_M15": false,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": false,
+        "gross_reward_minimum": false,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": false,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": true,
+        "route_not_stretched": true,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": true,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "LONG",
+      "economic_feasibility_only": {
+        "entry_reference": 1.2535708926023208,
+        "gross_rr": 1.43608,
+        "nearest_target": 1.25502,
+        "net_rr": 0.84677,
+        "stop_reference": 1.2525618181464377
+      },
+      "failed": [
+        "adx_M15",
+        "dmi_M15",
+        "no_reversal_or_exhaustion",
+        "news_gate",
+        "gross_reward_minimum",
+        "net_reward_minimum"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "AUD_NZD",
+      "route": "EMA20_PULLBACK",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": true,
+        "adx_H1": true,
+        "adx_M15": false,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": false,
+        "gross_reward_minimum": false,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": false,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
         "relative_spread_cap": false,
         "route_not_stretched": true,
         "route_pattern": false,
@@ -4310,10 +4531,10 @@
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 0.78659,
-        "gross_rr": 0.01089,
+        "entry_reference": 0.7865800000000001,
+        "gross_rr": 0.0,
         "nearest_target": 0.78658,
-        "net_rr": -0.25846,
+        "net_rr": -0.27098,
         "stop_reference": 0.7875081530310071
       },
       "failed": [
@@ -4368,7 +4589,7 @@
         "entry_reference": 0.7873821422676919,
         "gross_rr": 1.21096,
         "nearest_target": 0.78666,
-        "net_rr": 0.41797,
+        "net_rr": 0.40064,
         "stop_reference": 0.7879784812890033
       },
       "failed": [
@@ -4383,113 +4604,6 @@
       "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
       "not_a_signal": true,
       "pair": "NZD_CAD",
-      "route": "EMA20_PULLBACK",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
-    },
-    {
-      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": true,
-        "adx_M15": false,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": false,
-        "gross_reward_minimum": false,
-        "net_reward_minimum": false,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": false,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": true,
-        "route_not_stretched": true,
-        "route_pattern": false,
-        "structural_stop_range": true,
-        "trend_D": null,
-        "trend_H1": true,
-        "trend_H4": null,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "LONG",
-      "economic_feasibility_only": {
-        "entry_reference": 1.25382,
-        "gross_rr": 0.95376,
-        "nearest_target": 1.25502,
-        "net_rr": 0.54439,
-        "stop_reference": 1.2525618181464377
-      },
-      "failed": [
-        "adx_M15",
-        "dmi_M15",
-        "no_reversal_or_exhaustion",
-        "news_gate",
-        "route_pattern",
-        "gross_reward_minimum",
-        "net_reward_minimum"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "AUD_NZD",
-      "route": "MOMENTUM_CONTINUATION",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
-    },
-    {
-      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": true,
-        "adx_M15": false,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": false,
-        "gross_reward_minimum": false,
-        "net_reward_minimum": false,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": false,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": true,
-        "route_not_stretched": true,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": null,
-        "trend_H1": true,
-        "trend_H4": null,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "LONG",
-      "economic_feasibility_only": {
-        "entry_reference": 1.2535708926023208,
-        "gross_rr": 1.43608,
-        "nearest_target": 1.25502,
-        "net_rr": 0.83095,
-        "stop_reference": 1.2525618181464377
-      },
-      "failed": [
-        "adx_M15",
-        "dmi_M15",
-        "no_reversal_or_exhaustion",
-        "news_gate",
-        "gross_reward_minimum",
-        "net_reward_minimum"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "AUD_NZD",
       "route": "EMA20_PULLBACK",
       "unknown": [
         "trend_H4",
@@ -4526,10 +4640,10 @@
       },
       "direction": "LONG",
       "economic_feasibility_only": {
-        "entry_reference": 176.10500000000002,
-        "gross_rr": 1.39673,
+        "entry_reference": 176.107,
+        "gross_rr": 1.36904,
         "nearest_target": 176.344,
-        "net_rr": 1.02862,
+        "net_rr": 0.98637,
         "stop_reference": 175.9338865181538
       },
       "failed": [
@@ -4579,7 +4693,7 @@
         "entry_reference": 176.062850900469,
         "gross_rr": 2.18005,
         "nearest_target": 176.344,
-        "net_rr": 1.56298,
+        "net_rr": 1.52666,
         "stop_reference": 175.9338865181538
       },
       "failed": [
@@ -4594,112 +4708,102 @@
       "unknown": []
     },
     {
-      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
+      "canonical_first_rejection": "ADX_TREND_STRENGTH",
       "canonical_qualified": false,
       "checks": {
         "absolute_spread_cap": true,
         "adx_H1": false,
-        "adx_M15": true,
+        "adx_M15": false,
         "direction_known": true,
-        "dmi_H1": true,
+        "dmi_H1": false,
         "dmi_M15": true,
         "gross_reward_minimum": false,
         "net_reward_minimum": false,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": false,
+        "news_gate": true,
+        "no_reversal_or_exhaustion": true,
         "observed_target_available": true,
         "pair_supported": true,
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
         "relative_spread_cap": true,
-        "route_not_stretched": false,
+        "route_not_stretched": true,
         "route_pattern": false,
         "structural_stop_range": true,
-        "trend_D": null,
-        "trend_H1": false,
-        "trend_H4": null,
+        "trend_D": true,
+        "trend_H1": true,
+        "trend_H4": true,
         "trend_M15": true,
         "valid_two_sided_quote": true
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 123.103,
-        "gross_rr": 1.31303,
-        "nearest_target": 122.986,
-        "net_rr": 0.81982,
-        "stop_reference": 123.19210700681836
+        "entry_reference": 0.83697,
+        "gross_rr": 0.78987,
+        "nearest_target": 0.83672,
+        "net_rr": 0.3488,
+        "stop_reference": 0.8372865092809901
       },
       "failed": [
-        "trend_H1",
+        "adx_M15",
         "adx_H1",
-        "no_reversal_or_exhaustion",
-        "news_gate",
+        "dmi_H1",
         "route_pattern",
-        "route_not_stretched",
         "gross_reward_minimum",
         "net_reward_minimum"
       ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "news_reason": null,
       "not_a_signal": true,
-      "pair": "SGD_JPY",
+      "pair": "EUR_GBP",
       "route": "MOMENTUM_CONTINUATION",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
+      "unknown": []
     },
     {
-      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
+      "canonical_first_rejection": "ADX_TREND_STRENGTH",
       "canonical_qualified": false,
       "checks": {
         "absolute_spread_cap": true,
         "adx_H1": false,
-        "adx_M15": true,
+        "adx_M15": false,
         "direction_known": true,
-        "dmi_H1": true,
+        "dmi_H1": false,
         "dmi_M15": true,
         "gross_reward_minimum": true,
         "net_reward_minimum": false,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": false,
+        "news_gate": true,
+        "no_reversal_or_exhaustion": true,
         "observed_target_available": true,
         "pair_supported": true,
         "quote_timely_tradeable": true,
         "recent_completed_history": true,
         "relative_spread_cap": true,
-        "route_not_stretched": false,
+        "route_not_stretched": true,
         "route_pattern": true,
         "structural_stop_range": true,
-        "trend_D": null,
-        "trend_H1": false,
-        "trend_H4": null,
+        "trend_D": true,
+        "trend_H1": true,
+        "trend_H4": true,
         "trend_M15": true,
         "valid_two_sided_quote": true
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 123.19618325863054,
-        "gross_rr": 1.65025,
-        "nearest_target": 123.108,
-        "net_rr": 0.82532,
-        "stop_reference": 123.24961956829118
+        "entry_reference": 0.8371633235486089,
+        "gross_rr": 1.91124,
+        "nearest_target": 0.83672,
+        "net_rr": 1.01302,
+        "stop_reference": 0.837395279757272
       },
       "failed": [
-        "trend_H1",
+        "adx_M15",
         "adx_H1",
-        "no_reversal_or_exhaustion",
-        "news_gate",
-        "route_not_stretched",
+        "dmi_H1",
         "net_reward_minimum"
       ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "news_reason": null,
       "not_a_signal": true,
-      "pair": "SGD_JPY",
+      "pair": "EUR_GBP",
       "route": "EMA20_PULLBACK",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
+      "unknown": []
     },
     {
       "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
@@ -4803,106 +4907,6 @@
       ]
     },
     {
-      "canonical_first_rejection": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": false,
-        "adx_M15": false,
-        "direction_known": true,
-        "dmi_H1": false,
-        "dmi_M15": true,
-        "gross_reward_minimum": false,
-        "net_reward_minimum": false,
-        "news_gate": true,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": false,
-        "route_not_stretched": true,
-        "route_pattern": false,
-        "structural_stop_range": true,
-        "trend_D": true,
-        "trend_H1": true,
-        "trend_H4": true,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "SHORT",
-      "economic_feasibility_only": {
-        "entry_reference": 0.8369300000000001,
-        "gross_rr": 0.58904,
-        "nearest_target": 0.83672,
-        "net_rr": 0.11956,
-        "stop_reference": 0.8372865092809901
-      },
-      "failed": [
-        "relative_spread_cap",
-        "adx_M15",
-        "adx_H1",
-        "dmi_H1",
-        "route_pattern",
-        "gross_reward_minimum",
-        "net_reward_minimum"
-      ],
-      "news_reason": null,
-      "not_a_signal": true,
-      "pair": "EUR_GBP",
-      "route": "MOMENTUM_CONTINUATION",
-      "unknown": []
-    },
-    {
-      "canonical_first_rejection": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": false,
-        "adx_M15": false,
-        "direction_known": true,
-        "dmi_H1": false,
-        "dmi_M15": true,
-        "gross_reward_minimum": true,
-        "net_reward_minimum": false,
-        "news_gate": true,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": false,
-        "route_not_stretched": true,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": true,
-        "trend_H1": true,
-        "trend_H4": true,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "SHORT",
-      "economic_feasibility_only": {
-        "entry_reference": 0.8371633235486089,
-        "gross_rr": 1.91124,
-        "nearest_target": 0.83672,
-        "net_rr": 0.77027,
-        "stop_reference": 0.837395279757272
-      },
-      "failed": [
-        "relative_spread_cap",
-        "adx_M15",
-        "adx_H1",
-        "dmi_H1",
-        "net_reward_minimum"
-      ],
-      "news_reason": null,
-      "not_a_signal": true,
-      "pair": "EUR_GBP",
-      "route": "EMA20_PULLBACK",
-      "unknown": []
-    },
-    {
       "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
       "canonical_qualified": false,
       "checks": {
@@ -4932,10 +4936,10 @@
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 3.94142,
-        "gross_rr": 0.06476,
+        "entry_reference": 3.9415199999999997,
+        "gross_rr": 0.07722,
         "nearest_target": 3.94086,
-        "net_rr": -0.04561,
+        "net_rr": -0.03561,
         "stop_reference": 3.9500675322525542
       },
       "failed": [
@@ -5039,10 +5043,10 @@
       },
       "direction": "LONG",
       "economic_feasibility_only": {
-        "entry_reference": 111.33900000000001,
-        "gross_rr": 1.01363,
+        "entry_reference": 111.34,
+        "gross_rr": 1.00148,
         "nearest_target": 111.506,
-        "net_rr": 0.71445,
+        "net_rr": 0.69561,
         "stop_reference": 111.17424509245319
       },
       "failed": [
@@ -5095,7 +5099,7 @@
         "entry_reference": 111.31627931645828,
         "gross_rr": 1.33574,
         "nearest_target": 111.506,
-        "net_rr": 0.94254,
+        "net_rr": 0.92955,
         "stop_reference": 111.17424509245319
       },
       "failed": [
@@ -5144,10 +5148,10 @@
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 0.7205,
-        "gross_rr": 0.71632,
+        "entry_reference": 0.72049,
+        "gross_rr": 0.69464,
         "nearest_target": 0.71994,
-        "net_rr": 0.26849,
+        "net_rr": 0.24322,
         "stop_reference": 0.7212817722955497
       },
       "failed": [
@@ -5201,7 +5205,7 @@
         "entry_reference": 0.7207532765768674,
         "gross_rr": 1.50465,
         "nearest_target": 0.71994,
-        "net_rr": 0.65802,
+        "net_rr": 0.63499,
         "stop_reference": 0.7212937841629274
       },
       "failed": [
@@ -5250,10 +5254,10 @@
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 1.5813199999999998,
-        "gross_rr": 0.90187,
+        "entry_reference": 1.58131,
+        "gross_rr": 0.88695,
         "nearest_target": 1.58018,
-        "net_rr": 0.43265,
+        "net_rr": 0.41453,
         "stop_reference": 1.5825840345868083
       },
       "failed": [
@@ -5303,7 +5307,7 @@
         "entry_reference": 1.581660116916219,
         "gross_rr": 1.602,
         "nearest_target": 1.58018,
-        "net_rr": 0.79685,
+        "net_rr": 0.78153,
         "stop_reference": 1.5825840345868083
       },
       "failed": [
@@ -5348,10 +5352,10 @@
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 22.11257,
-        "gross_rr": 0.25083,
+        "entry_reference": 22.11305,
+        "gross_rr": 0.27099,
         "nearest_target": 22.10498,
-        "net_rr": 0.21082,
+        "net_rr": 0.2297,
         "stop_reference": 22.142829367315066
       },
       "failed": [
@@ -5560,10 +5564,10 @@
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 18.51472,
-        "gross_rr": 0.57059,
+        "entry_reference": 18.514830000000003,
+        "gross_rr": 0.57799,
         "nearest_target": 18.50134,
-        "net_rr": 0.50635,
+        "net_rr": 0.51316,
         "stop_reference": 18.538169353652584
       },
       "failed": [
@@ -5629,6 +5633,110 @@
       "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
       "not_a_signal": true,
       "pair": "EUR_ZAR",
+      "route": "EMA20_PULLBACK",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": true,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": false,
+        "gross_reward_minimum": false,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": false,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": true,
+        "route_not_stretched": true,
+        "route_pattern": false,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": true,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "LONG",
+      "economic_feasibility_only": {
+        "entry_reference": 210.34499999999997,
+        "gross_rr": 1.46308,
+        "nearest_target": 210.62,
+        "net_rr": 0.98857,
+        "stop_reference": 210.1570398950484
+      },
+      "failed": [
+        "dmi_M15",
+        "no_reversal_or_exhaustion",
+        "news_gate",
+        "route_pattern",
+        "gross_reward_minimum",
+        "net_reward_minimum"
+      ],
+      "news_reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
+      "not_a_signal": true,
+      "pair": "GBP_JPY",
+      "route": "MOMENTUM_CONTINUATION",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": true,
+        "adx_H1": true,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": false,
+        "gross_reward_minimum": true,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": false,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": true,
+        "route_not_stretched": true,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": true,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "LONG",
+      "economic_feasibility_only": {
+        "entry_reference": 210.3100103887826,
+        "gross_rr": 2.02647,
+        "nearest_target": 210.62,
+        "net_rr": 1.3403,
+        "stop_reference": 210.1570398950484
+      },
+      "failed": [
+        "dmi_M15",
+        "no_reversal_or_exhaustion",
+        "news_gate",
+        "net_reward_minimum"
+      ],
+      "news_reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
+      "not_a_signal": true,
+      "pair": "GBP_JPY",
       "route": "EMA20_PULLBACK",
       "unknown": [
         "trend_H4",
@@ -5737,110 +5845,6 @@
       "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
       "canonical_qualified": false,
       "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": false,
-        "gross_reward_minimum": false,
-        "net_reward_minimum": false,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": false,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": true,
-        "route_not_stretched": true,
-        "route_pattern": false,
-        "structural_stop_range": true,
-        "trend_D": null,
-        "trend_H1": true,
-        "trend_H4": null,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "LONG",
-      "economic_feasibility_only": {
-        "entry_reference": 210.34999999999997,
-        "gross_rr": 1.39925,
-        "nearest_target": 210.62,
-        "net_rr": 0.9008,
-        "stop_reference": 210.1570398950484
-      },
-      "failed": [
-        "dmi_M15",
-        "no_reversal_or_exhaustion",
-        "news_gate",
-        "route_pattern",
-        "gross_reward_minimum",
-        "net_reward_minimum"
-      ],
-      "news_reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
-      "not_a_signal": true,
-      "pair": "GBP_JPY",
-      "route": "MOMENTUM_CONTINUATION",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
-    },
-    {
-      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": true,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": false,
-        "gross_reward_minimum": true,
-        "net_reward_minimum": false,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": false,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": true,
-        "route_not_stretched": true,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": null,
-        "trend_H1": true,
-        "trend_H4": null,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "LONG",
-      "economic_feasibility_only": {
-        "entry_reference": 210.3100103887826,
-        "gross_rr": 2.02647,
-        "nearest_target": 210.62,
-        "net_rr": 1.2742,
-        "stop_reference": 210.1570398950484
-      },
-      "failed": [
-        "dmi_M15",
-        "no_reversal_or_exhaustion",
-        "news_gate",
-        "net_reward_minimum"
-      ],
-      "news_reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
-      "not_a_signal": true,
-      "pair": "GBP_JPY",
-      "route": "EMA20_PULLBACK",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
-    },
-    {
-      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
-      "canonical_qualified": false,
-      "checks": {
         "absolute_spread_cap": false,
         "adx_H1": true,
         "adx_M15": false,
@@ -5867,10 +5871,10 @@
       },
       "direction": "LONG",
       "economic_feasibility_only": {
-        "entry_reference": 2.3697200000000005,
-        "gross_rr": 0.41719,
+        "entry_reference": 2.3698,
+        "gross_rr": 0.38004,
         "nearest_target": 2.37096,
-        "net_rr": 0.06042,
+        "net_rr": 0.03948,
         "stop_reference": 2.3667477274109805
       },
       "failed": [
@@ -5978,10 +5982,10 @@
       },
       "direction": "SHORT",
       "economic_feasibility_only": {
-        "entry_reference": 1.1026699999999998,
-        "gross_rr": 0.01347,
-        "nearest_target": 1.10266,
-        "net_rr": -0.32233,
+        "entry_reference": 1.10265,
+        "gross_rr": 0.66871,
+        "nearest_target": 1.10214,
+        "net_rr": 0.10315,
         "stop_reference": 1.103412658276929
       },
       "failed": [
@@ -6038,7 +6042,7 @@
         "entry_reference": 1.1033853631446395,
         "gross_rr": 1.57428,
         "nearest_target": 1.10266,
-        "net_rr": 0.4312,
+        "net_rr": 0.39256,
         "stop_reference": 1.1038461230677687
       },
       "failed": [
@@ -6053,116 +6057,6 @@
       "news_reason": null,
       "not_a_signal": true,
       "pair": "GBP_CHF",
-      "route": "EMA20_PULLBACK",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
-    },
-    {
-      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": false,
-        "adx_M15": false,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": false,
-        "gross_reward_minimum": false,
-        "net_reward_minimum": false,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": false,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": false,
-        "route_not_stretched": true,
-        "route_pattern": false,
-        "structural_stop_range": true,
-        "trend_D": null,
-        "trend_H1": true,
-        "trend_H4": null,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "LONG",
-      "economic_feasibility_only": {
-        "entry_reference": 190.67,
-        "gross_rr": 0.76953,
-        "nearest_target": 190.779,
-        "net_rr": 0.2808,
-        "stop_reference": 190.52835591199093
-      },
-      "failed": [
-        "relative_spread_cap",
-        "adx_M15",
-        "dmi_M15",
-        "adx_H1",
-        "no_reversal_or_exhaustion",
-        "news_gate",
-        "route_pattern",
-        "gross_reward_minimum",
-        "net_reward_minimum"
-      ],
-      "news_reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
-      "not_a_signal": true,
-      "pair": "CHF_JPY",
-      "route": "MOMENTUM_CONTINUATION",
-      "unknown": [
-        "trend_H4",
-        "trend_D"
-      ]
-    },
-    {
-      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": true,
-        "adx_H1": false,
-        "adx_M15": false,
-        "direction_known": true,
-        "dmi_H1": true,
-        "dmi_M15": false,
-        "gross_reward_minimum": true,
-        "net_reward_minimum": false,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": false,
-        "observed_target_available": true,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": false,
-        "route_not_stretched": true,
-        "route_pattern": true,
-        "structural_stop_range": true,
-        "trend_D": null,
-        "trend_H1": true,
-        "trend_H4": null,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "LONG",
-      "economic_feasibility_only": {
-        "entry_reference": 190.60416356772006,
-        "gross_rr": 2.07187,
-        "nearest_target": 190.779,
-        "net_rr": 0.87251,
-        "stop_reference": 190.5197777976405
-      },
-      "failed": [
-        "relative_spread_cap",
-        "adx_M15",
-        "dmi_M15",
-        "adx_H1",
-        "no_reversal_or_exhaustion",
-        "news_gate",
-        "net_reward_minimum"
-      ],
-      "news_reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
-      "not_a_signal": true,
-      "pair": "CHF_JPY",
       "route": "EMA20_PULLBACK",
       "unknown": [
         "trend_H4",
@@ -6276,6 +6170,116 @@
       "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
       "not_a_signal": true,
       "pair": "USD_HKD",
+      "route": "EMA20_PULLBACK",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": true,
+        "adx_H1": false,
+        "adx_M15": false,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": false,
+        "gross_reward_minimum": false,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": false,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": false,
+        "route_not_stretched": true,
+        "route_pattern": false,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": true,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "LONG",
+      "economic_feasibility_only": {
+        "entry_reference": 190.671,
+        "gross_rr": 0.75713,
+        "nearest_target": 190.779,
+        "net_rr": 0.26688,
+        "stop_reference": 190.52835591199093
+      },
+      "failed": [
+        "relative_spread_cap",
+        "adx_M15",
+        "dmi_M15",
+        "adx_H1",
+        "no_reversal_or_exhaustion",
+        "news_gate",
+        "route_pattern",
+        "gross_reward_minimum",
+        "net_reward_minimum"
+      ],
+      "news_reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
+      "not_a_signal": true,
+      "pair": "CHF_JPY",
+      "route": "MOMENTUM_CONTINUATION",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "REVERSAL_OR_EXHAUSTION",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": true,
+        "adx_H1": false,
+        "adx_M15": false,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": false,
+        "gross_reward_minimum": true,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": false,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": false,
+        "route_not_stretched": true,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": true,
+        "trend_H4": null,
+        "trend_M15": true,
+        "valid_two_sided_quote": true
+      },
+      "direction": "LONG",
+      "economic_feasibility_only": {
+        "entry_reference": 190.60416356772006,
+        "gross_rr": 2.07187,
+        "nearest_target": 190.779,
+        "net_rr": 0.85708,
+        "stop_reference": 190.5197777976405
+      },
+      "failed": [
+        "relative_spread_cap",
+        "adx_M15",
+        "dmi_M15",
+        "adx_H1",
+        "no_reversal_or_exhaustion",
+        "news_gate",
+        "net_reward_minimum"
+      ],
+      "news_reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
+      "not_a_signal": true,
+      "pair": "CHF_JPY",
       "route": "EMA20_PULLBACK",
       "unknown": [
         "trend_H4",
@@ -6495,6 +6499,118 @@
         "adx_H1": false,
         "adx_M15": true,
         "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": false,
+        "gross_reward_minimum": false,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": false,
+        "route_not_stretched": false,
+        "route_pattern": true,
+        "structural_stop_range": false,
+        "trend_D": null,
+        "trend_H1": true,
+        "trend_H4": null,
+        "trend_M15": false,
+        "valid_two_sided_quote": true
+      },
+      "direction": "LONG",
+      "economic_feasibility_only": {
+        "entry_reference": 4.40876,
+        "gross_rr": 0.30122,
+        "nearest_target": 4.4106,
+        "net_rr": 0.11817,
+        "stop_reference": 4.402651466209885
+      },
+      "failed": [
+        "absolute_spread_cap",
+        "relative_spread_cap",
+        "trend_M15",
+        "dmi_M15",
+        "adx_H1",
+        "news_gate",
+        "route_not_stretched",
+        "structural_stop_range",
+        "gross_reward_minimum",
+        "net_reward_minimum"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "EUR_PLN",
+      "route": "MOMENTUM_CONTINUATION",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": false,
+        "adx_H1": false,
+        "adx_M15": true,
+        "direction_known": true,
+        "dmi_H1": true,
+        "dmi_M15": false,
+        "gross_reward_minimum": true,
+        "net_reward_minimum": false,
+        "news_gate": false,
+        "no_reversal_or_exhaustion": true,
+        "observed_target_available": true,
+        "pair_supported": true,
+        "quote_timely_tradeable": true,
+        "recent_completed_history": true,
+        "relative_spread_cap": false,
+        "route_not_stretched": false,
+        "route_pattern": true,
+        "structural_stop_range": true,
+        "trend_D": null,
+        "trend_H1": true,
+        "trend_H4": null,
+        "trend_M15": false,
+        "valid_two_sided_quote": true
+      },
+      "direction": "LONG",
+      "economic_feasibility_only": {
+        "entry_reference": 4.402852222649713,
+        "gross_rr": 2.11421,
+        "nearest_target": 4.4056,
+        "net_rr": 0.76001,
+        "stop_reference": 4.401552551986206
+      },
+      "failed": [
+        "absolute_spread_cap",
+        "relative_spread_cap",
+        "trend_M15",
+        "dmi_M15",
+        "adx_H1",
+        "news_gate",
+        "route_not_stretched",
+        "net_reward_minimum"
+      ],
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "not_a_signal": true,
+      "pair": "EUR_PLN",
+      "route": "EMA20_PULLBACK",
+      "unknown": [
+        "trend_H4",
+        "trend_D"
+      ]
+    },
+    {
+      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
+      "canonical_qualified": false,
+      "checks": {
+        "absolute_spread_cap": false,
+        "adx_H1": false,
+        "adx_M15": true,
+        "direction_known": true,
         "dmi_H1": false,
         "dmi_M15": true,
         "gross_reward_minimum": null,
@@ -6601,64 +6717,11 @@
       "checks": {
         "absolute_spread_cap": false,
         "adx_H1": false,
-        "adx_M15": true,
+        "adx_M15": false,
         "direction_known": true,
-        "dmi_H1": false,
-        "dmi_M15": true,
-        "gross_reward_minimum": null,
-        "net_reward_minimum": null,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": false,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": false,
-        "route_not_stretched": false,
-        "route_pattern": false,
-        "structural_stop_range": false,
-        "trend_D": null,
-        "trend_H1": false,
-        "trend_H4": null,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "SHORT",
-      "economic_feasibility_only": null,
-      "failed": [
-        "absolute_spread_cap",
-        "relative_spread_cap",
-        "trend_H1",
-        "adx_H1",
-        "dmi_H1",
-        "news_gate",
-        "route_pattern",
-        "route_not_stretched",
-        "structural_stop_range",
-        "observed_target_available"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "EUR_PLN",
-      "route": "MOMENTUM_CONTINUATION",
-      "unknown": [
-        "trend_H4",
-        "trend_D",
-        "gross_reward_minimum",
-        "net_reward_minimum"
-      ]
-    },
-    {
-      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": false,
-        "adx_H1": false,
-        "adx_M15": true,
-        "direction_known": true,
-        "dmi_H1": false,
-        "dmi_M15": true,
-        "gross_reward_minimum": true,
+        "dmi_H1": true,
+        "dmi_M15": false,
+        "gross_reward_minimum": false,
         "net_reward_minimum": false,
         "news_gate": false,
         "no_reversal_or_exhaustion": true,
@@ -6668,36 +6731,40 @@
         "recent_completed_history": true,
         "relative_spread_cap": false,
         "route_not_stretched": false,
-        "route_pattern": true,
-        "structural_stop_range": true,
+        "route_pattern": false,
+        "structural_stop_range": false,
         "trend_D": null,
-        "trend_H1": false,
+        "trend_H1": true,
         "trend_H4": null,
-        "trend_M15": true,
+        "trend_M15": false,
         "valid_two_sided_quote": true
       },
-      "direction": "SHORT",
+      "direction": "LONG",
       "economic_feasibility_only": {
-        "entry_reference": 4.402852222649713,
-        "gross_rr": 1.85308,
-        "nearest_target": 4.39982,
-        "net_rr": 0.77086,
-        "stop_reference": 4.404488533790116
+        "entry_reference": 5.2689699999999995,
+        "gross_rr": 0.17436,
+        "nearest_target": 5.2707,
+        "net_rr": 0.06684,
+        "stop_reference": 5.259048113092261
       },
       "failed": [
         "absolute_spread_cap",
         "relative_spread_cap",
-        "trend_H1",
+        "trend_M15",
+        "adx_M15",
+        "dmi_M15",
         "adx_H1",
-        "dmi_H1",
         "news_gate",
+        "route_pattern",
         "route_not_stretched",
+        "structural_stop_range",
+        "gross_reward_minimum",
         "net_reward_minimum"
       ],
       "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
       "not_a_signal": true,
-      "pair": "EUR_PLN",
-      "route": "EMA20_PULLBACK",
+      "pair": "GBP_PLN",
+      "route": "MOMENTUM_CONTINUATION",
       "unknown": [
         "trend_H4",
         "trend_D"
@@ -6711,63 +6778,9 @@
         "adx_H1": false,
         "adx_M15": false,
         "direction_known": true,
-        "dmi_H1": false,
-        "dmi_M15": true,
-        "gross_reward_minimum": null,
-        "net_reward_minimum": null,
-        "news_gate": false,
-        "no_reversal_or_exhaustion": true,
-        "observed_target_available": false,
-        "pair_supported": true,
-        "quote_timely_tradeable": true,
-        "recent_completed_history": true,
-        "relative_spread_cap": false,
-        "route_not_stretched": false,
-        "route_pattern": false,
-        "structural_stop_range": false,
-        "trend_D": null,
-        "trend_H1": false,
-        "trend_H4": null,
-        "trend_M15": true,
-        "valid_two_sided_quote": true
-      },
-      "direction": "SHORT",
-      "economic_feasibility_only": null,
-      "failed": [
-        "absolute_spread_cap",
-        "relative_spread_cap",
-        "trend_H1",
-        "adx_M15",
-        "adx_H1",
-        "dmi_H1",
-        "news_gate",
-        "route_pattern",
-        "route_not_stretched",
-        "structural_stop_range",
-        "observed_target_available"
-      ],
-      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
-      "not_a_signal": true,
-      "pair": "GBP_PLN",
-      "route": "MOMENTUM_CONTINUATION",
-      "unknown": [
-        "trend_H4",
-        "trend_D",
-        "gross_reward_minimum",
-        "net_reward_minimum"
-      ]
-    },
-    {
-      "canonical_first_rejection": "INVALID_BID_ASK_OR_SPREAD",
-      "canonical_qualified": false,
-      "checks": {
-        "absolute_spread_cap": false,
-        "adx_H1": false,
-        "adx_M15": false,
-        "direction_known": true,
-        "dmi_H1": false,
-        "dmi_M15": true,
-        "gross_reward_minimum": false,
+        "dmi_H1": true,
+        "dmi_M15": false,
+        "gross_reward_minimum": true,
         "net_reward_minimum": false,
         "news_gate": false,
         "no_reversal_or_exhaustion": true,
@@ -6780,29 +6793,28 @@
         "route_pattern": true,
         "structural_stop_range": true,
         "trend_D": null,
-        "trend_H1": false,
+        "trend_H1": true,
         "trend_H4": null,
-        "trend_M15": true,
+        "trend_M15": false,
         "valid_two_sided_quote": true
       },
-      "direction": "SHORT",
+      "direction": "LONG",
       "economic_feasibility_only": {
         "entry_reference": 5.259539582664563,
-        "gross_rr": 1.485,
-        "nearest_target": 5.25569,
-        "net_rr": 0.79325,
-        "stop_reference": 5.2621318869077385
+        "gross_rr": 1.86951,
+        "nearest_target": 5.26366,
+        "net_rr": 0.97391,
+        "stop_reference": 5.257335572221847
       },
       "failed": [
         "absolute_spread_cap",
         "relative_spread_cap",
-        "trend_H1",
+        "trend_M15",
         "adx_M15",
+        "dmi_M15",
         "adx_H1",
-        "dmi_H1",
         "news_gate",
         "route_not_stretched",
-        "gross_reward_minimum",
         "net_reward_minimum"
       ],
       "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
@@ -6921,6 +6933,6 @@
       ]
     }
   ],
-  "source_at": "2026-10-28T23:37:35Z",
+  "source_at": "2026-10-28T23:39:07Z",
   "status": "DIAGNOSTICS_ONLY"
 }
