@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "reported_at_utc": "2026-10-28T08:14:00Z",
-  "timestamp_precision": "minute",
-  "source": "USER_CHAT_MESSAGE_2026-10-28_0814_UK",
+  "reported_at_utc": "2026-10-28T09:39:00Z",
+  "timestamp_precision": "minute_from_phone_screenshot_time; closure_time_to_second",
+  "source": "USER_CHAT_REPORTS_AND_PEPPERSTONE_DEMO_SCREENSHOTS_THROUGH_0939_UK",
   "source_class": "MIXED_SCREENSHOT_CONFIRMED_CLOSE_AND_OPEN_PORTFOLIO",
-  "context": "User first described three favourable trades, subsequently evidenced by NZD/JPY closed screenshot 08:12 UK and NZD/CAD and NZD/SGD open demo portfolio screenshot 08:22 UK.",
+  "context": "Latest 09:39 screenshot confirms NZD/JPY +£22.90 08:11 close and GBP/USD −£5.61 stop-out 09:10; NZD/CAD and NZD/SGD are only known to have been open and profitable at the earlier 08:22 snapshot. At 11:22 UK, latest demo account screenshot shows £1,174.53 and zero open positions/orders; the two earlier open NZD cross trades' final closure P/Ls are unknown.",
   "positions": [
     {
       "id": "20261028-MANUAL-REPORT-01",
@@ -41,11 +41,27 @@
       "realised_pnl_gbp": null,
       "source": "PEPPERSTONE_DEMO_PORTFOLIO_SCREENSHOT",
       "signal_match": "PENDING"
+    },
+    {
+      "id": "20261028-MANUAL-REPORT-04",
+      "instrument": "GBP_USD",
+      "direction": "SHORT",
+      "state": "CLOSED_SCREENSHOT_EVIDENCED",
+      "closed_at": "2026-10-28T09:10:52Z",
+      "entry_price": 1.3292,
+      "exit_price": 1.32971,
+      "exit_reason": "STOP_LOSS",
+      "realised_pnl_gbp": -5.61,
+      "size_gbp_per_point": 1.1,
+      "broker_position_id": "708325272",
+      "source": "PEPPERSTONE_DEMO_CLOSED_HISTORY_SCREENSHOT_0939_UK_AND_PRIOR_USER_ENTRY_REPORT",
+      "signal_match": "PENDING",
+      "note": "Exact opening time unknown; earlier open report gave entry 1.32920. Research entry unapproved; loss ~0.48% of previously reported £1,174.10 equity versus 0.25% guideline."
     }
   ],
-  "learning_note": "One realised profitable NZD/JPY demo short +£22.90 and two open profitable NZD cross positions +£12.36 floating at 08:22; preserve previous losses and original plans. Compare forward-confirmed entry route only when original plan linkage and broker timestamps confirmed. Positive outcomes do not independently validate signal strategy.",
-  "next_reconciliation": "Get close screenshots and executed entry details for NZD/CAD and NZD/SGD; connect all three trades prospectively to original frozen research candidates without retrospective promotion.",
-  "updated_at_utc": "2026-10-28T08:22:00Z",
+  "learning_note": "Positive NZD/JPY outcome is queued for hypothesis review; stopped-out GBP/USD entry flags M15 confirmation and 0.25% equity risk discipline. Both retain PENDING strategy linkage; do not reinforce parameter weights on screenshot outcomes, and preserve earlier losses and frozen plans.",
+  "next_reconciliation": "Positions now shown empty at 11:22; obtain the NZD/CAD and NZD/SGD close-history rows, with executed exits and realised net P/L. Independently audit source signals, confirmation, spread and fees.",
+  "updated_at_utc": "2026-10-28T11:22:00Z",
   "account_snapshot": {
     "observed_at": "2026-10-28T08:22:00Z",
     "equity_gbp": 1171.86,
@@ -57,5 +73,16 @@
     "source": "USER_SUPPLIED_PEPPERSTONE_PORTFOLIO_SCREENSHOT_0822_UK",
     "balance_gbp": null,
     "balance_note": "Screenshot displays £1,171.86 with margin figures summing to it; treated as equity, not proof of cash balance. Balance is not directly shown."
+  },
+  "latest_bank_snapshot": {
+    "observed_at": "2026-10-28T11:22:00Z",
+    "observed_time_precision": "minute",
+    "amount_gbp": 1174.53,
+    "displayed_value_label": "DEMO_1_ACCOUNT_CARD_VALUE",
+    "account_mode": "PEPPERSTONE_DEMO_SPREAD_BET",
+    "open_positions": 0,
+    "open_orders": 0,
+    "source": "USER_SUPPLIED_PEPPERSTONE_DEMO_HOME_SCREENSHOT_2026-10-28_1122_UK",
+    "note": "User identifies displayed £1,174.53 as latest bank. Home screen shows no open orders or positions. It does not itemise closing P&L of NZD/CAD or NZD/SGD, deposits, fees or the exact meaning of the card figure; do not retrospectively invent individual realised outcomes."
   }
 }

@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "as_of": "2026-10-27T17:39:30Z",
+  "as_of": "2026-10-28T09:10:52Z",
   "provenance": "Manually transcribed user-supplied Pepperstone closed-position screenshots; not broker-API verified.",
-  "policy": "Broker screenshots are real demo execution observations, not formal OANDA paper fills. Every unlinked trade stays out of parameter-weight learning. Record rejected-watch execution separately and require independent linkage to an immutable original plan, confirmation, and costs before training. A single loss cannot relax risk/news/spread gates or justify new thresholds.",
+  "policy": "Pepperstone screenshot outcomes remain execution observations, not formally matched OANDA paper fills. Profitable observations create positive review hypotheses (including early NZD/JPY short), while stopped-out discretionary entries trigger confirmation/risk review. Preserve all wins and losses. Only immutable prospective setup linkage, confirmed trigger/fill and sufficiently sized cost-adjusted OANDA paper evidence can alter strategy weights. Never auto-reinforce simply because a screenshot is profitable.",
   "trades": [
     {
       "key": "2026-10-23-usdjpy-closed-1057",
@@ -162,6 +162,65 @@
         "standard_broker_fill": "UNVERIFIED_NO_PEPPERSTONE_REPLAY",
         "lesson": "An early discretionary sell made money while standard M15 plus exact retouch was not observed to fill on historical OANDA bids. Shadow-test completed M5 versus M15, including losses, execution costs, no-fills. Never re-label as approved."
       }
+    },
+    {
+      "key": "2026-10-28-nzdjpy-closed-0811",
+      "instrument": "NZD_JPY",
+      "direction": "SHORT",
+      "status": "CLOSED",
+      "opened_at": "2026-10-28T07:29:06Z",
+      "closed_at": "2026-10-28T08:11:36Z",
+      "entry_price": 88.657,
+      "exit_price": 88.428,
+      "net_pnl_gbp": 22.9,
+      "size_gbp_per_point": 1,
+      "account_mode": "PEPPERSTONE_DEMO",
+      "signal_id": null,
+      "signal_match": "PENDING",
+      "entry_classification": "USER_DISCRETIONARY_ENTRY_APPROVAL_UNCONFIRMED",
+      "provenance": "USER_SUPPLIED_PEPPERSTONE_CLOSED_POSITION_SCREENSHOT_2026-10-28_0812_UK",
+      "research_context_only": "Entry occurred before scheduled 07:30 brief; profit is encouraging execution evidence, not a verified signal success. Test a frozen prospective NZD/JPY short setup before any strategy weighting."
+    },
+    {
+      "key": "2026-10-28-gbpusd-stop-0910",
+      "instrument": "GBP_USD",
+      "direction": "SHORT",
+      "status": "CLOSED",
+      "closed_at": "2026-10-28T09:10:52Z",
+      "entry_price": 1.3292,
+      "exit_price": 1.32971,
+      "exit_reason": "STOP_LOSS",
+      "net_pnl_gbp": -5.61,
+      "size_gbp_per_point": 1.1,
+      "broker_position_id": "708325272",
+      "account_mode": "PEPPERSTONE_DEMO",
+      "signal_id": null,
+      "signal_match": "PENDING",
+      "entry_classification": "USER_DISCRETIONARY_BEFORE_M15_CONFIRMATION",
+      "provenance": "USER_SUPPLIED_PEPPERSTONE_CLOSED_HISTORY_SCREENSHOT_2026-10-28_0939_UK; prior user-supplied open-position entry 1.32920",
+      "evidence_note": "Stop-out status, close time, £1.10/pt, P&L and position ID are visible in close screenshot. Entry price and exit price reconciled from earlier conversation, not directly visible in this screenshot. Exact opening time, initial stop order, fees and spread unverified.",
+      "execution_review": {
+        "approved_signal_at_entry": false,
+        "completed_m15_confirmation_at_entry": false,
+        "actual_entry_before_research_approval": true,
+        "reference_equity_gbp": 1174.1,
+        "realised_loss_pct_of_reference_equity": 0.48,
+        "target_max_risk_pct": 0.25,
+        "risk_above_target": true,
+        "entry_vs_exit_pips": -5.1,
+        "lesson": "Short was entered before completed bearish M15 confirmation while M5 rebound remained bullish; the stop loss worked as a hard loss cap but trade risk was about 0.48% of reported equity vs the 0.25% guidance. Tighten execution discipline and trade-size checks; do not relax entry gates or infer strategy failure from one discretionary stop-out."
+      }
     }
-  ]
+  ],
+  "latest_bank_snapshot": {
+    "observed_at": "2026-10-28T11:22:00Z",
+    "observed_time_precision": "minute",
+    "amount_gbp": 1174.53,
+    "displayed_value_label": "DEMO_1_ACCOUNT_CARD_VALUE",
+    "account_mode": "PEPPERSTONE_DEMO_SPREAD_BET",
+    "open_positions": 0,
+    "open_orders": 0,
+    "source": "USER_SUPPLIED_PEPPERSTONE_DEMO_HOME_SCREENSHOT_2026-10-28_1122_UK",
+    "note": "User identifies displayed £1,174.53 as latest bank. Home screen shows no open orders or positions. It does not itemise closing P&L of NZD/CAD or NZD/SGD, deposits, fees or the exact meaning of the card figure; do not retrospectively invent individual realised outcomes."
+  }
 }

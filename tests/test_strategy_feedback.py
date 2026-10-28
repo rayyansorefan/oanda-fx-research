@@ -70,6 +70,31 @@ class StrategyFeedbackTests(unittest.TestCase):
         self.assertTrue(signal_policy(signal, feedback)["early_entry_study_available"])
         self.assertEqual(signal_policy(signal, feedback)["priority_bias"], 0)
 
+    def test_profitable_broker_observation_is_reviewed_but_never_auto_reinforced(self):
+        broker = {"trades": [
+            {"key": "nzd-win", "instrument": "NZD_JPY", "status": "CLOSED",
+             "net_pnl_gbp": 22.90, "signal_match": "PENDING", "signal_id": None},
+            {"key": "gbp-stop", "instrument": "GBP_USD", "status": "CLOSED",
+             "net_pnl_gbp": -5.61, "exit_reason": "STOP_LOSS",
+             "entry_classification": "USER_DISCRETIONARY_BEFORE_M15_CONFIRMATION",
+             "execution_review": {"risk_above_target": True},
+             "signal_match": "PENDING", "signal_id": None}
+        ]}
+        feedback = build_feedback({"candidates": {}}, broker)
+        self.assertEqual(feedback["broker"]["closed_count"], 2)
+        self.assertEqual(feedback["broker"]["net_profit_gbp"], 17.29)
+        self.assertEqual(feedback["broker"]["included_in_strategy_weighting"], 0)
+        self.assertEqual(feedback["broker"]["confirmed_strategy_wins_from_broker_screenshots"], 0)
+        self.assertEqual(feedback["broker"]["positive_review_queue"][0]["net_gbp"], 22.9)
+        nzd = signal_policy({"instrument": "NZD_JPY", "direction": "SHORT",
+                             "strategy": "M15_REJECTION", "alert_b": 88.6}, feedback)
+        self.assertTrue(nzd["positive_broker_pattern_review_available"])
+        self.assertEqual(nzd["priority_bias"], 0)
+        gbp = signal_policy(self.short, feedback)
+        self.assertTrue(gbp["manual_execution_review_required"])
+        self.assertIn("risk budget", gbp["execution_review"])
+        self.assertEqual(gbp["priority_bias"], 0)
+
     def test_small_positive_sample_cannot_boost_research_alert(self):
         feedback = {"paper_strategy": {"M15_REJECTION / ROUTE_B":
                     {"count": 5, "wins": 5, "paper_priority_bias": 0}}}

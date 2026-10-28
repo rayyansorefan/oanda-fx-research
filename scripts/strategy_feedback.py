@@ -32,7 +32,9 @@ def build_feedback(book, broker):
         group = pair_observations.setdefault(instrument, {
             "closed": 0, "wins": 0, "losses": 0,
             "net_pnl_gbp": 0.0, "unapproved_watch_losses": 0,
-            "early_manual_wins": 0, "early_manual_losses": 0})
+            "early_manual_wins": 0, "early_manual_losses": 0,
+            "unconfirmed_entry_stopouts": 0, "risk_budget_breaches": 0,
+            "positive_review_wins": 0})
         group["closed"] += 1
         group["wins"] += row["net_pnl_gbp"] > 0
         group["losses"] += row["net_pnl_gbp"] < 0
@@ -43,6 +45,15 @@ def build_feedback(book, broker):
         early = row.get("entry_classification") == "USER_EXECUTED_EARLY_BEFORE_M15_CONFIRMATION"
         group["early_manual_wins"] += early and row["net_pnl_gbp"] > 0
         group["early_manual_losses"] += early and row["net_pnl_gbp"] < 0
+        group["unconfirmed_entry_stopouts"] += (
+            row["net_pnl_gbp"] < 0 and
+            row.get("entry_classification") == "USER_DISCRETIONARY_BEFORE_M15_CONFIRMATION"
+            and row.get("exit_reason") == "STOP_LOSS")
+        group["risk_budget_breaches"] += (
+            (row.get("execution_review") or {}).get("risk_above_target") is True)
+        group["positive_review_wins"] += (
+            row["net_pnl_gbp"] > 0 and
+            (row.get("signal_match") != "VERIFIED" or not row.get("signal_id")))
     for group in pair_observations.values():
         group["net_pnl_gbp"] = round(group["net_pnl_gbp"], 2)
     watch_losses = [row for row in closed
@@ -50,6 +61,16 @@ def build_feedback(book, broker):
                     and row.get("entry_classification") == "UNAPPROVED_RESEARCH_WATCH_EXECUTED"]
     early = [row for row in closed if row.get("entry_classification")
              == "USER_EXECUTED_EARLY_BEFORE_M15_CONFIRMATION"]
+    # Broker wins are useful positive hypotheses for investigation; none
+    # are scored as successful research strategies until signal lineage is audited.
+    positive_reviews = [
+        {"trade_key": row.get("key"), "instrument": row.get("instrument"),
+         "net_gbp": row["net_pnl_gbp"], "signal_match": row.get("signal_match"),
+         "weight_change": 0,
+         "next_step": "Compare frozen prospective route against losses, costs, missed entries and no-fills."}
+        for row in closed if row["net_pnl_gbp"] > 0
+        and (row.get("signal_match") != "VERIFIED" or not row.get("signal_id"))
+    ]
     return {
         "basis": "OANDA bid/ask paper outcomes, separately from manual Pepperstone screenshots",
         "paper_updated_at": view.get("updated_at"),
@@ -61,6 +82,8 @@ def build_feedback(book, broker):
             "loss_count": sum(row["net_pnl_gbp"] < 0 for row in closed),
             "win_rate_pct": round(100 * sum(row["net_pnl_gbp"] > 0 for row in closed) / len(closed), 1) if closed else None,
             "pair_observations": pair_observations,
+            "positive_review_queue": positive_reviews[-20:],
+            "confirmed_strategy_wins_from_broker_screenshots": 0,
             "unapproved_watch_stopouts": len(watch_losses),
             "early_entry_study": {
                 "closed": len(early),
@@ -120,7 +143,10 @@ def signal_policy(signal, feedback):
     # review flag for the same pair, not proof that the direction is wrong.
     pair_audit = ((feedback.get("broker") or {}).get("pair_observations") or {}).get(
         signal.get("instrument"), {})
-    needs_execution_review = pair_audit.get("unapproved_watch_losses", 0) > 0
+    watch_review = pair_audit.get("unapproved_watch_losses", 0) > 0
+    early_stop_review = pair_audit.get("unconfirmed_entry_stopouts", 0) > 0
+    budget_review = pair_audit.get("risk_budget_breaches", 0) > 0
+    needs_execution_review = watch_review or early_stop_review or budget_review
     return {
         "strategy": str(strategy), "routes": routes, "priority_bias": bias,
         "status": ("HISTORICAL_PAPER_CAUTION" if bias < 0 else
@@ -130,11 +156,17 @@ def signal_policy(signal, feedback):
                                  for route, r in records if isinstance(r, dict)},
         "broker_observations_not_weighted": feedback.get("broker", {}).get("closed_count", 0),
         "manual_execution_review_required": needs_execution_review,
+        "positive_broker_pattern_review_available": pair_audit.get("positive_review_wins", 0) > 0,
+        "broker_positive_wins_not_weighted": pair_audit.get("positive_review_wins", 0),
         "early_entry_study_available": (pair_audit.get("early_manual_wins", 0) +
                                          pair_audit.get("early_manual_losses", 0)) > 0,
         "execution_review": (
             "Recent stop-loss followed execution of a non-approved paper watch on this pair. "
             "Recheck completed-candle trigger, spread-adjusted reward/risk, and trend conflict; "
             "do not assume this is a new entry approval."
+            if watch_review else
+            "A discretionary early entry stopped out or exceeded the risk budget. "
+            "Require completed M15 confirmation, fresh spread/news check and <=0.25% "
+            "risk against verified equity; do not turn a research watch into approval."
             if needs_execution_review else None),
     }
