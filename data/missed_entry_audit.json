@@ -1,0 +1,111 @@
+{
+  "historical_results": {
+    "202610281230-CADCHF-LONG-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "LONG",
+      "id": "202610281230-CADCHF-LONG-EMA20_PULLBACK",
+      "instrument": "CAD_CHF",
+      "invalidated_at": "2026-10-28T13:45:00Z",
+      "pattern_at": "2026-10-28T15:15:00+00:00",
+      "reason": "Frozen stop breached before pattern confirmation",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "status": "PAPER_PRE_ENTRY_INVALIDATED",
+      "trade_executed": false
+    },
+    "202610281530-USDMXN-LONG-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "LONG",
+      "fill_at": "2026-10-28T18:30:00Z",
+      "id": "202610281530-USDMXN-LONG-EMA20_PULLBACK",
+      "instrument": "USD_MXN",
+      "pattern_at": "2026-10-28T18:15:00+00:00",
+      "reason": "Fill and exit level appear in same OHLC bar",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "status": "PAPER_AMBIGUOUS_FILL_BAR",
+      "trade_executed": false
+    },
+    "202610281545-CADCHF-LONG-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "LONG",
+      "fill_at": "2026-10-28T18:30:00Z",
+      "id": "202610281545-CADCHF-LONG-EMA20_PULLBACK",
+      "instrument": "CAD_CHF",
+      "paper_entry": 0.5912,
+      "pattern_at": "2026-10-28T18:15:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "status": "PAPER_OPEN_UNRESOLVED",
+      "trade_executed": false
+    },
+    "202610281545-USDMXN-LONG-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "LONG",
+      "fill_at": "2026-10-28T18:30:00Z",
+      "id": "202610281545-USDMXN-LONG-EMA20_PULLBACK",
+      "instrument": "USD_MXN",
+      "pattern_at": "2026-10-28T18:15:00+00:00",
+      "reason": "Fill and exit level appear in same OHLC bar",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "status": "PAPER_AMBIGUOUS_FILL_BAR",
+      "trade_executed": false
+    },
+    "202610281700-AUDJPY-LONG-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "LONG",
+      "id": "202610281700-AUDJPY-LONG-EMA20_PULLBACK",
+      "instrument": "AUD_JPY",
+      "pattern_at": "2026-10-28T21:00:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "status": "PAPER_NOT_FILLED_BEFORE_EXPIRY",
+      "trade_executed": false
+    },
+    "202610281845-AUDJPY-LONG-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "LONG",
+      "exit_at": "2026-10-28T22:45:00Z",
+      "fill_at": "2026-10-28T21:45:00Z",
+      "id": "202610281845-AUDJPY-LONG-EMA20_PULLBACK",
+      "instrument": "AUD_JPY",
+      "paper_entry": 111.343,
+      "paper_exit": 111.206,
+      "pattern_at": "2026-10-28T21:30:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": true,
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.12304
+    },
+    "202610282000-USDNOK-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202610282000-USDNOK-SHORT-EMA20_PULLBACK",
+      "instrument": "USD_NOK",
+      "invalidated_at": "2026-10-28T22:00:00Z",
+      "pattern_at": "2026-10-28T22:45:00+00:00",
+      "reason": "Frozen stop breached before pattern confirmation",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "status": "PAPER_PRE_ENTRY_INVALIDATED",
+      "trade_executed": false
+    }
+  },
+  "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
+  "schema": 1,
+  "today_distinct_pair_pattern_events": 6,
+  "today_forward_patterns": 7,
+  "today_registered": 77,
+  "today_scored_hypothetical_entries": 1,
+  "today_status_counts": {
+    "PAPER_AMBIGUOUS_FILL_BAR": 2,
+    "PAPER_NOT_FILLED_BEFORE_EXPIRY": 1,
+    "PAPER_OPEN_UNRESOLVED": 1,
+    "PAPER_PRE_ENTRY_INVALIDATED": 2,
+    "PAPER_STOP_AFTER_FILL": 1
+  },
+  "today_uk": "2026-10-28",
+  "updated_at": "2026-10-28T23:10:15Z"
+}
