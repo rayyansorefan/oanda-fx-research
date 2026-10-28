@@ -72,6 +72,78 @@ class OpportunityLedgerTests(unittest.TestCase):
         self.assertEqual(next(iter(expired["opportunities"].values()))[
             "tracking_status"], "EXPIRED_RESEARCH_NO_VERIFIED_FILL")
 
+    def test_forward_candle_never_backdates_and_never_claims_a_fill(self):
+        setup = [{**plan()[0], "entry_route": "EMA20_PULLBACK",
+                  "entry_low": 1.1159, "entry_high": 1.1161,
+                  "stop": 1.1145, "tp1": 1.1180}]
+        with patch.object(tracker, "build_research_setups", return_value=setup):
+            book = tracker.update_ledger(snapshot(), {})
+        row = next(iter(book["opportunities"].values()))
+        self.assertEqual(row["entry_pattern_status"],
+                         "AWAITING_INDEPENDENT_POST_PLAN_CANDLE")
+        # This candle closes AFTER the idea, but started BEFORE it:
+        # using it as a trigger would be look-ahead contamination.
+        old = snapshot("2026-10-27T09:20:00Z", "2026-10-27T09:19:00Z")
+        old["pairs"]["EUR_USD"]["frames"]["M15"]["last_3_completed_candles"] = [{
+            "time": "2026-10-27T09:00:00Z",
+            "mid": {"o": 1.1160, "h": 1.1166, "l": 1.1159, "c": 1.1164}}]
+        with patch.object(tracker, "build_research_setups", return_value=[]):
+            book = tracker.update_ledger(old, book)
+        self.assertEqual(row["entry_pattern_status"],
+                         "AWAITING_INDEPENDENT_POST_PLAN_CANDLE")
+        future = snapshot("2026-10-27T09:46:00Z", "2026-10-27T09:45:30Z")
+        future["pairs"]["EUR_USD"]["frames"]["M15"]["last_3_completed_candles"] = [
+            {"time": "2026-10-27T09:00:00Z",
+             "mid": {"o": 1.1160, "h": 1.1166, "l": 1.1159, "c": 1.1164}},
+            {"time": "2026-10-27T09:15:00Z",
+             "mid": {"o": 1.11600, "h": 1.11642, "l": 1.11594, "c": 1.11630}},
+            {"time": "2026-10-27T09:30:00Z",
+             "mid": {"o": 1.1162, "h": 1.11655, "l": 1.1162, "c": 1.11640}}
+        ]
+        with patch.object(tracker, "build_research_setups", return_value=[]):
+            book = tracker.update_ledger(future, book)
+        row = next(iter(book["opportunities"].values()))
+        self.assertEqual(row["entry_pattern_status"],
+                         "FORWARD_CANDLE_OBSERVED_PAPER_ONLY")
+        self.assertEqual(row["entry_pattern_at"], "2026-10-27T09:30:00+00:00")
+        self.assertEqual(row["entry_pattern_close"], 1.1163)
+        self.assertFalse(row["entry_confirmed"])
+        self.assertFalse(row["scored"])
+        self.assertEqual(row["tracking_status"],
+                         "FORWARD_PATTERN_OBSERVED_NO_APPROVED_FILL")
+        self.assertEqual(tracker.public_view(book)["recent"][0][
+            "entry_pattern_at"], row["entry_pattern_at"])
+        self.assertEqual(tracker.public_view(book)["lifecycle_audit"][
+            "forward_entry_patterns_observed"], 1)
+
+    def test_invalidation_inside_bar_does_not_count_as_entry_pattern(self):
+        row = {"first_seen_at": Q0, "expires_at": "2026-10-27T10:00:00Z",
+               "direction": "LONG", "route": "EMA20_PULLBACK",
+               "entry_low": 1.1159, "entry_high": 1.1161, "stop": 1.1150}
+        sample = {"frames": {"M15": {"last_3_completed_candles": [
+            {"time": "2026-10-27T09:15:00Z",
+             "mid": {"o": 1.1160, "h": 1.1166, "l": 1.1149, "c": 1.1164}}
+        ]}}}
+        self.assertIsNone(tracker._forward_entry_pattern(
+            row, sample, tracker.moment("2026-10-27T09:31:00Z")))
+
+    def test_prospective_m5_continuation_is_paper_only(self):
+        row = {"first_seen_at": Q0, "expires_at": "2026-10-27T10:00:00Z",
+               "direction": "SHORT", "route": "MOMENTUM_CONTINUATION",
+               "entry_low": 1.1159, "entry_high": 1.1161, "stop": 1.1175}
+        sample = {"frames": {"M5": {"last_3_completed_candles": [
+            {"time": "2026-10-27T09:10:00Z",
+             "mid": {"o": 1.11630, "h": 1.11645, "l": 1.11620, "c": 1.11628}},
+            {"time": "2026-10-27T09:15:00Z",
+             "mid": {"o": 1.11630, "h": 1.11631, "l": 1.11580, "c": 1.11585}}
+        ]}}}
+        observed = tracker._forward_entry_pattern(
+            row, sample, tracker.moment("2026-10-27T09:21:00Z"))
+        self.assertEqual(observed["entry_pattern_status"],
+                         "FORWARD_CANDLE_OBSERVED_PAPER_ONLY")
+        self.assertEqual(observed["entry_pattern_timeframe"], "M5")
+        self.assertEqual(observed["entry_pattern_at"], "2026-10-27T09:20:00+00:00")
+
     def test_stale_quote_and_old_m15_do_not_create_early_signal(self):
         with patch.object(tracker, "build_research_setups", return_value=plan()):
             self.assertEqual(tracker.update_ledger(
