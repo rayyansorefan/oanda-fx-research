@@ -1,9 +1,9 @@
 {
   "purpose": "fresh OANDA price and news update when scheduled cron is unavailable",
-  "request": "2026-10-28T10:14:30Z UK 10:15 hourly FX assessment refresh: private OANDA summary/news last collected 2026-10-28T08:23:13Z (111 minutes old), exceeding 70-minute limit. Refresh full 68-pair M15/H1 screen, top-ranked+GBPUSD deep D1/H4/H1/M15/M5, bid/ask quote and source timestamps, GBPUSD post-09:10 stop-out structure, UK 12:30 Budget and Fed 18:00 events, canonical signal watcher, candidate paper and opportunity ledgers, sanitized dashboard. No orders or relaxation of risk/news/expiry gates.",
+  "request": "2026-10-28T11:20:37Z UK 11:15 hourly FX assessment: 10:15:27Z OANDA/news snapshot is 65 minutes old and 11:07 scheduled collector has not run; proactively refresh before 70-minute cutoff. Screen all 68 usable pairs M15/H1, fully research top 12 + core/GBPUSD on D1/H4/H1/M15/M5, verify original immutable signals.json, fresh completed M15 breakout/retest and M5 continuation, 28 Oct GBPUSD discretionary 09:10:52 stop-out risk, news/UK Budget 12:30, BoC 13:45, FOMC 18:00, candidate paper/opportunity ledgers, sanitized public dashboard. No orders, no risk relaxation.",
   "requested_by": "ChatGPT hourly FX research",
   "session_day_utc": "2026-10-28",
-  "sequence": 47,
-  "requested_at_utc": "2026-10-28T10:14:30Z",
-  "note": "Collector trigger is an authorised GitHub write, OANDA data retrieval GET-only; verify completed Actions and saved source/news timestamps before any fresh signal/dashboard claim. No orders, credentials or private position data."
+  "sequence": 48,
+  "requested_at_utc": "2026-10-28T11:20:37Z",
+  "note": "Authorised GitHub refresh trigger write; market data OANDA GET-only. Verify actual completed Actions, source/news timestamps and Pages deployment. Never publish private broker/account details."
 }
