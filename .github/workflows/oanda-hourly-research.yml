@@ -96,7 +96,8 @@ jobs:
           # Capture the exact source snapshot at checkout so an older running
           # collector can NEVER replace data already published by a newer run.
           original_summary_blob="$(git rev-parse HEAD:data/summary.json 2>/dev/null || true)"
-          git add -A data/ signals.json
+          git add -A data/
+          if [ -f signals.json ]; then git add -- signals.json; fi
           if ! git diff --cached --quiet; then
             git commit -m "data: update timestamped OANDA research snapshot [skip ci]"
             published=false
