@@ -179,6 +179,38 @@ def fit_public_feed_budget(payload: dict) -> None:
             audit["public_window"]["published_candidates"] = len(audit["candidates"])
         if serialized_size(payload) <= PUBLIC_MAX_BYTES:
             return
+    if serialized_size(payload) <= PUBLIC_MAX_BYTES:
+        return
+    # Preserve every registered ID in candidate_index while reducing duplicated
+    # optional rich excerpts. The complete per-watch histories stay private.
+    # A larger deep-research universe must not prevent the public dashboard
+    # from publishing fresh prices and genuine approved signals.
+    opportunity = ((payload.get("learning") or {}).get("opportunity_audit") or {})
+    recent = opportunity.get("recent")
+    if isinstance(recent, list):
+        for cap in (40, 24, 12):
+            if len(recent) > cap:
+                opportunity["recent"] = recent[-cap:]
+                window = opportunity.setdefault("public_window", {})
+                window["detailed_rows"] = len(opportunity["recent"])
+                window["truncated"] = len(opportunity["recent"]) < int(
+                    window.get("total_rows") or len(recent))
+            if serialized_size(payload) <= PUBLIC_MAX_BYTES:
+                return
+    # Hourly and learning sections both carry a full afternoon excerpt; a
+    # concise recent window is enough on the public page. Exact full records
+    # are retained in private hourly_assessment.json and paper ledgers.
+    for cap in (12, 6, 0):
+        for section in ((payload.get("hourly") or {}).get("afternoon_audit"),
+                        ((payload.get("learning") or {}).get("afternoon_challenger"))):
+            if not isinstance(section, dict):
+                continue
+            entries = section.get("candidates")
+            if isinstance(entries, list) and len(entries) > cap:
+                section["candidates"] = entries[-cap:] if cap else []
+                section["public_candidates_truncated"] = True
+        if serialized_size(payload) <= PUBLIC_MAX_BYTES:
+            return
     if serialized_size(payload) <= PUBLIC_HARD_MAX_BYTES:
         return
     raise ValueError("Public FX payload exceeds hard limit after safe compaction; publication refused")
