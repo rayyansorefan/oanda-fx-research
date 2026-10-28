@@ -167,9 +167,18 @@ def screen_priority(quote, m15, h1):
         chart_direction * ((row.get("plus_di14") or 0)
                            - (row.get("minus_di14") or 0)) > 0
         for row in (m, h)))
+    # The legacy rank's direction is based on price versus H1 EMA20. It may
+    # oppose the independently observed M15/H1 EMA-stack trend. Never apply
+    # the LEGACY direction's reversal warning to the ENTRY scouting direction.
+    scout_direction = (
+        "LONG" if chart_direction == 1 else
+        "SHORT" if chart_direction == -1 else None)
+    scout_context = (entry_context(
+        {"quote": quote, "frames": {"M15": m15, "H1": h1}},
+        scout_direction) if scout_direction else {"block_new_alert": True})
     preliminary_gate = bool(
         ema_agreement and dm_agreement and adx15 >= 20 and adx1 >= 20
-        and spread / atr <= .5 and not context["block_new_alert"]
+        and spread / atr <= .5 and not scout_context["block_new_alert"]
     )
     return {
         "research_priority": score,
