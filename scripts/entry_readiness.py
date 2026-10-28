@@ -151,7 +151,13 @@ def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
         agreed = sum(value == direction for value in frames_seen.values())
         if frames_seen["M15"] != direction or frames_seen["H1"] != direction:
             reasons.append(_reason("FOUNDATION_CONFLICT", "M15/H1 EMA trends do not align with the research direction"))
-        if agreed < 4:
+        missing_frames = [tf for tf, state in frames_seen.items() if state == "UNKNOWN"]
+        if missing_frames:
+            reasons.append(_reason(
+                "HIGHER_FRAME_MISSING",
+                "Not audited on " + ", ".join(missing_frames) +
+                "; missing history is NOT evidence of an opposing trend"))
+        elif agreed < 4:
             reasons.append(_reason("HIGHER_FRAME_CONFLICT", str(agreed)+"/4 full-frame alignment (M15, H1, H4, D)"))
         m15_i = m15.get("indicators") or {}
         h1_i = (frames.get("H1") or {}).get("indicators") or {}
@@ -200,7 +206,7 @@ def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
         # PAPER hypothesis, never promotion into signals.json.
         research_preview = None
         hard_codes = {"STALE_QUOTE", "QUOTE_UNUSABLE", "COST_HIGH_OR_UNKNOWN",
-                      "FOUNDATION_CONFLICT", "HIGHER_FRAME_CONFLICT",
+                      "FOUNDATION_CONFLICT", "HIGHER_FRAME_CONFLICT", "HIGHER_FRAME_MISSING",
                       "TREND_STRENGTH", "DMI_CONFLICT",
                       "OVEREXTENDED_OR_REVERSING", "M15_BAR_STALE",
                       "M15_BAR_TIME", "M15_HISTORY", "PRICE_LEVEL_UNAVAILABLE"}
@@ -274,7 +280,7 @@ def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
     # original top-three majors retain explicit exception visibility.
     hard = {
         "STALE_QUOTE", "QUOTE_UNUSABLE", "COST_HIGH_OR_UNKNOWN",
-        "FOUNDATION_CONFLICT", "HIGHER_FRAME_CONFLICT", "TREND_STRENGTH",
+        "FOUNDATION_CONFLICT", "HIGHER_FRAME_CONFLICT", "HIGHER_FRAME_MISSING", "TREND_STRENGTH",
         "DMI_CONFLICT", "OVEREXTENDED_OR_REVERSING", "M15_BAR_STALE",
         "M15_BAR_TIME", "M15_HISTORY", "PRICE_LEVEL_UNAVAILABLE",
     }
