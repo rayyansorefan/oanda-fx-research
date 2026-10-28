@@ -298,7 +298,7 @@ def main():
     updated, archived, audit = admit(summary, news, previous, archive)
     (ROOT / "data/signal_admission_audit.json").write_text(
         json.dumps(audit, indent=2, sort_keys=True) + "\n")
-    if updated.get("signals") != previous.get("signals"):
+    if updated != previous:  # Refresh empty-plan timestamp as well; never rewrite individual plan fields.
         path.write_text(json.dumps(updated, indent=2) + "\n")
     if archived.get("signals") != archive.get("signals"):
         archive_path.write_text(json.dumps(archived, indent=2) + "\n")

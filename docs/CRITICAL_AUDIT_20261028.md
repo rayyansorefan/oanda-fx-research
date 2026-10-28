@@ -37,3 +37,11 @@ Paper-only challenger V1 tests M15/H1 alignment and H1 ADX >=18 instead of manda
 `strategy_comparison.py` freezes both arms prospectively and replays bid/ask chronology against actual observed collector times, a one-minute manual delay and the next fully subsequent M15 open. Same-source-bar plans are deduplicated. Only 07:00–23:00 London observations can support a simulated manual response. Missing/ambiguous data is unscored. Net R uses spread-side fills/exits; financing, Pepperstone execution, slippage and correlated portfolio risk remain unmodelled. Drawdown in this study is per-trade R, not account equity drawdown.
 
 Remaining strategies (reversals, M5 entries, breakout/retest variants) have no adequate independent validation and are not enabled as approved signals. No stake is inferred without verified account equity. No broker execution APIs, new schedules, paid services or dashboard HTML changes were introduced.
+
+## Post-deployment verification
+
+First repaired collector run 40786885272 completed successfully, source 23:23:08 UTC. Archive-backed pattern detection recovered older patterns previously omitted from compact histories. Updated 28 October totals: 79 registered records, 18 pattern records, 15 distinct events. Raw response hashes and all 18 replay statuses were independently recomputed locally: nine hypothetical stops, two pre-entry invalidations, two ambiguous fill records, three unfilled, two unresolved, zero TP1 wins. Distinct-event status groups: see `data/independent_replay_verification.json`. These are not 18 independent executed trades and many were detected hours late.
+
+The existing public front panel called unapproved models current conditional plans and asserted full alignment even with conflicting D1. Public change 154ae1d only corrects text labels; layout is unchanged. Canonical conditional signals remain in the existing entry-decision section.
+
+A further persistence defect kept `signals.json.generated_at` at 27 October when the signal list remained empty. Persist the new assessment envelope every cycle while preserving each original frozen plan. Regression added.

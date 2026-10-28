@@ -88,4 +88,20 @@ class CriticalDiagnosticTests(unittest.TestCase):
         self.assertEqual(r['historical_results']['x'],prior['historical_results']['x'])
         self.assertEqual(r['latency_audit']['verified_profitable_missed_manual_entries'],0)
 
+class EmptySignalFreshnessTests(unittest.TestCase):
+    def test_no_signal_still_persists_current_assessment_timestamp(self):
+        import json,tempfile
+        from unittest.mock import patch
+        from scripts import signal_admission as admission
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);(root/'data').mkdir()
+            summary={'status':'OK','collected_at':NOW.isoformat(),'pairs':{},'ranked_review_candidates':[]}
+            (root/'data/summary.json').write_text(json.dumps(summary))
+            (root/'data/news_latest.json').write_text(json.dumps(news()))
+            (root/'signals.json').write_text(json.dumps({'generated_at':'2020-01-01T00:00:00Z','signals':[]}))
+            with patch.object(admission,'ROOT',root):admission.main()
+            saved=json.loads((root/'signals.json').read_text())
+            self.assertEqual(saved['signals'],[])
+            self.assertEqual(saved['generated_at'],NOW.isoformat().replace('+00:00','Z'))
+
 if __name__=='__main__': unittest.main()
