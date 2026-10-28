@@ -40,6 +40,63 @@ def _reason(code, detail):
     return {"code": code, "detail": detail}
 
 
+def _priced_breakout_research(direction, level, prev, last, indicators, atr, spread_pips, pip, now, next_bar):
+    """Only a prospective structural M15 paper plan, never a canonical signal.
+
+    Entry requires a FUTURE completed candle after this snapshot, followed by
+    a new risk/spread/news review. No retroactive fills and no fixed win odds.
+    """
+    if not (direction in ("LONG", "SHORT") and level and atr and atr > 0
+            and pip and pip > 0 and spread_pips and spread_pips > 0
+            and isinstance(prev, dict) and isinstance(last, dict)
+            and next_bar is not None):
+        return None, "Insufficient completed structure, ATR or spread"
+    old, new = prev.get("mid") or {}, last.get("mid") or {}
+    highs = [_float(old.get("h")), _float(new.get("h"))]
+    lows = [_float(old.get("l")), _float(new.get("l"))]
+    target = _float(indicators.get("resistance20" if direction == "LONG" else "support20"))
+    if any(x is None for x in highs + lows) or target is None:
+        return None, "No independent M15 swing/target structure to justify a target"
+    spread = spread_pips * pip
+    buffer = max(spread * 1.15, atr * 0.07)
+    if buffer >= atr * .23:
+        return None, "Spread is too large for a non-chasing M15 reference entry zone"
+    if direction == "LONG":
+        low, high = level + buffer, level + atr * .23
+        stop = min(lows) - .12 * atr
+        worst_entry = high
+        risk, reward = worst_entry - stop, target - worst_entry
+    else:
+        low, high = level - atr * .23, level - buffer
+        stop = max(highs) + .12 * atr
+        worst_entry = low
+        risk, reward = stop - worst_entry, worst_entry - target
+    if risk <= 0 or reward <= 0 or not low < high:
+        return None, "Next structural stop or target is on the wrong side of entry"
+    gross = reward / risk
+    net = (reward - spread) / (risk + spread)
+    if gross < 1.50 or net < 1.35:
+        return None, "Nearest M15 structural target fails the existing spread-adjusted reward threshold"
+    decimals = 3 if pip >= .01 else 5
+    return {
+        "status": "PRICED_PAPER_RESEARCH_NOT_TRIGGERED",
+        "approved_entry": False, "broker_verified": False,
+        "entry_zone_low": round(low, decimals),
+        "entry_zone_high": round(high, decimals),
+        "stop": round(stop, decimals), "tp1": round(target, decimals),
+        "structural_target": "M15 resistance20" if direction == "LONG" else "M15 support20",
+        "gross_rr_estimate": round(gross, 2),
+        "net_rr_estimate": round(net, 2),
+        "oanda_spread_pips": round(spread_pips, 2),
+        "reference_level": round(level, decimals),
+        "requires_future_completed_m15": True,
+        "next_m15_check_at": next_bar.isoformat().replace("+00:00", "Z"),
+        "expires_at": (next_bar + timedelta(minutes=15)).isoformat().replace("+00:00", "Z"),
+        "source_snapshot_at": now.isoformat().replace("+00:00", "Z"),
+        "disclaimer": "PAPER-ONLY structural feasibility; no verified entry, fill, cost clearance or proven edge.",
+    }, None
+
+
 def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
     """Inspect top current candidates + core majors using only completed bars.
 
@@ -138,6 +195,23 @@ def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
             reasons.append(_reason("PRICE_LEVEL_UNAVAILABLE", "No legitimate prior M15 candle level"))
         else:
             reasons.append(_reason("NO_APPROVED_TRIGGER", "A completed move beyond this reference alone is NOT a canonical entry"))
+        # Compute fully priced structural feasibility only when the actual
+        # trend, spread and candle evidence have passed. This is a challenger
+        # PAPER hypothesis, never promotion into signals.json.
+        research_preview = None
+        hard_codes = {"STALE_QUOTE", "QUOTE_UNUSABLE", "COST_HIGH_OR_UNKNOWN",
+                      "FOUNDATION_CONFLICT", "HIGHER_FRAME_CONFLICT",
+                      "TREND_STRENGTH", "DMI_CONFLICT",
+                      "OVEREXTENDED_OR_REVERSING", "M15_BAR_STALE",
+                      "M15_BAR_TIME", "M15_HISTORY", "PRICE_LEVEL_UNAVAILABLE"}
+        if level is not None and next_check_at and not any(
+                item["code"] in hard_codes for item in reasons):
+            next_time = _time(next_check_at)
+            research_preview, preview_reason = _priced_breakout_research(
+                direction, level, prev, last, m15_i, atr, spread, pip,
+                snapshot, next_time)
+            if preview_reason:
+                reasons.append(_reason("STRUCTURAL_REWARD", preview_reason))
         if news.get("status") != "OK":
             reasons.append(_reason("NEWS_PARTIAL", "Macro/news sources are not independently cleared"))
         if qtime is not None and bid is not None and ask is not None and pip:
@@ -160,6 +234,7 @@ def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
             "next_m15_check_at": next_check_at,
             "previous_m15_break_observed": observed,
             "distance_to_reference_pips": round(distance, 1) if distance is not None else None,
+            "priced_paper_preview": research_preview,
             "blockers": reasons[:8],
         })
     # Choose which *research diagnostics* to display from all evaluated
