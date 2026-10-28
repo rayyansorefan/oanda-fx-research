@@ -273,6 +273,16 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
         distance_in_trend = (ema - executable if direction == "SHORT"
                              else executable - ema)
         recent = frames["M15"].get("last_3_completed_candles") or []
+        # A prospective entry must have an independently completed swing.
+        # Do not use the much more distant 20-bar channel extreme as a
+        # mandatory pullback stop when closer completed M15 structure exists.
+        if len(recent) < 3:
+            continue
+        try:
+            recent_high = max(float(c["mid"]["h"]) for c in recent[-3:])
+            recent_low = min(float(c["mid"]["l"]) for c in recent[-3:])
+        except (KeyError, TypeError, ValueError):
+            continue
         continuation = False
         # An additional *prospective* route: a strong already-completed M15
         # impulse may justify monitoring the next M5 continuation. A perfect
@@ -303,28 +313,34 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
         for route_continuation in ((True, False) if continuation else (False,)):
             if route_continuation:
                 entry_low, entry_high = executable - .12 * atr, executable + .12 * atr
-                recent_high = max(float(c["mid"]["h"]) for c in recent[-3:])
-                recent_low = min(float(c["mid"]["l"]) for c in recent[-3:])
+                # Use the same frozen completed swing for both routes.
             else:
                 if abs(ema - executable) > 2.5 * atr:
                     continue
                 entry_low, entry_high = ema - .15 * atr, ema + .15 * atr
             if direction == "SHORT":
-                stop_base = recent_high if route_continuation else high
-                stop = max(stop_base + .15 * atr, entry_high + 1.1 * atr)
+                stop = max(recent_high + .15 * atr, entry_high + 1.1 * atr)
                 worst_entry = entry_low
                 distance = stop - worst_entry
-                tp1, tp2 = worst_entry - 1.85 * distance, worst_entry - 2.35 * distance
+                # Nearest genuine completed support must justify the reward.
+                targets = sorted({
+                    float(f["support20"]) for f in (m, h, h4, day)
+                    if f.get("support20") is not None and float(f["support20"]) < worst_entry
+                }, reverse=True)
             else:
-                stop_base = recent_low if route_continuation else low
-                stop = min(stop_base - .15 * atr, entry_low - 1.1 * atr)
+                stop = min(recent_low - .15 * atr, entry_low - 1.1 * atr)
                 worst_entry = entry_high
                 distance = worst_entry - stop
-                tp1, tp2 = worst_entry + 1.85 * distance, worst_entry + 2.35 * distance
-            if not (.8 * atr <= distance <= 4 * atr):
+                targets = sorted({
+                    float(f["resistance20"]) for f in (m, h, h4, day)
+                    if f.get("resistance20") is not None and float(f["resistance20"]) > worst_entry
+                })
+            if not targets or not (.8 * atr <= distance <= 4 * atr):
                 continue
-            net_rr = (1.85 * distance - spread) / (distance + spread)
-            if net_rr < 1.35:
+            tp1, tp2 = targets[0], targets[1] if len(targets) > 1 else None
+            gross_rr = abs(tp1 - worst_entry) / distance
+            net_rr = (abs(tp1 - worst_entry) - spread) / (distance + spread)
+            if gross_rr < 1.50 or net_rr < 1.35:
                 continue
             places = 3 if pip >= .01 else 5
             setups.append({
@@ -348,7 +364,10 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
                 "entry_low": round(entry_low, places),
                 "entry_high": round(entry_high, places),
                 "stop": round(stop, places),
-                "tp1": round(tp1, places), "tp2": round(tp2, places),
+                "tp1": round(tp1, places),
+                "tp2": round(tp2, places) if tp2 is not None else None,
+                "target_basis": "nearest completed M15/H1/H4/D 20-bar support/resistance",
+                "stop_basis": "last three completed M15 swing plus volatility floor",
                 "net_rr_estimate": round(net_rr, 2),
                 "source_quote_at": quote.get("time"),
                 "impulse_m15_started_at": (recent[-1].get("time") if recent and route_continuation else None),
