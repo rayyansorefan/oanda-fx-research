@@ -97,6 +97,17 @@ class EntryReadinessTests(unittest.TestCase):
         self.assertIsNone(row["reference_m15_level"])
         self.assertFalse(row["approved_entry"])
 
+    def test_missing_higher_frames_are_not_reported_as_opposing_trends(self):
+        sample = self.example()
+        del sample["pairs"]["EUR_USD"]["frames"]["H4"]
+        del sample["pairs"]["EUR_USD"]["frames"]["D"]
+        row = entry_diagnostics(sample, {"status": "OK"})[0]
+        codes = [item["code"] for item in row["blockers"]]
+        self.assertIn("HIGHER_FRAME_MISSING", codes)
+        self.assertNotIn("HIGHER_FRAME_CONFLICT", codes)
+        self.assertIsNone(row["priced_paper_preview"])
+        self.assertFalse(row["approved_entry"])
+
     def test_excluded_pair_not_shown(self):
         s=self.example()
         s["pairs"]["GBP_ZAR"]=s["pairs"]["EUR_USD"]
