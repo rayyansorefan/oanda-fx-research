@@ -3,7 +3,7 @@
 
 This is an opportunity audit, NOT a trade or an order simulator. A favourable
 price move without an independent entry fill is never a scored win. New setups
-are first registered at the actual OANDA snapshot that observed them, and
+are registered at actual analysis time, separately from the earlier quote, and
 older candles cannot be retrospectively registered as an early opportunity.
 """
 from __future__ import annotations
@@ -332,7 +332,7 @@ def update_ledger(summary, existing=None, news=None, latest=None, *, registered_
             "stop": setup["stop"], "tp1": setup["tp1"], "tp2": setup.get("tp2"),
             "reference_mid": round(mid, 6),
             "meaningful_move_threshold_pct": threshold_pct,
-            "latest_quote_at": first_seen.isoformat(),
+            "latest_quote_at": quote["at"].isoformat(),
             "latest_exit_side": round(
                 quote["bid"] if direction == "LONG" else quote["ask"], 6),
             "hypothetical_move_pct": None,
@@ -392,7 +392,7 @@ def update_ledger(summary, existing=None, news=None, latest=None, *, registered_
             "entry_plan_class": "PRICED_PAPER_RESEARCH_NOT_TRIGGERED",
             "reference_mid": round(mid, 6),
             "meaningful_move_threshold_pct": round(100 * .6 * atr / mid, 5),
-            "latest_quote_at": first_seen.isoformat(),
+            "latest_quote_at": quote["at"].isoformat(),
             "latest_exit_side": round(
                 quote["bid"] if direction == "LONG" else quote["ask"], 6),
             "hypothetical_move_pct": None,

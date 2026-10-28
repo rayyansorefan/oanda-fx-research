@@ -91,6 +91,7 @@ class DecisionChronologyTests(unittest.TestCase):
         row=next(iter(book['opportunities'].values()))
         self.assertEqual(row['first_seen_at'],'2026-10-27T09:16:00+00:00')
         self.assertEqual(row['source_quote_at'],'2026-10-27T09:13:00+00:00')
+        self.assertEqual(row['latest_quote_at'],row['source_quote_at'])
         self.assertFalse(row['entry_confirmed'])
 
     def test_full_gate_audit_exposes_hidden_news_veto_after_trend_failure(self):
