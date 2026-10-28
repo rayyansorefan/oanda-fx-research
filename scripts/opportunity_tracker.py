@@ -22,6 +22,7 @@ except ModuleNotFoundError:  # direct execution: python scripts/opportunity_trac
 
 SUMMARY = Path("data/summary.json")
 LEDGER = Path("data/entry_opportunity_ledger.json")
+LATEST = Path("data/latest.json")
 NEWS = Path("data/news_latest.json")
 ROUTES = ("MOMENTUM_CONTINUATION", "EMA20_PULLBACK", "M15_STRUCTURAL_BREAK")
 
@@ -92,8 +93,12 @@ def _forward_entry_pattern(row, source, snapshot):
     route = row.get("route")
     period = "M5" if route == "MOMENTUM_CONTINUATION" else "M15"
     minutes = 5 if period == "M5" else 15
-    candles = (((source.get("frames") or {}).get(period) or {})
-               .get("last_3_completed_candles") or [])
+    frame = ((source.get("frames") or {}).get(period) or {})
+    # The summary retains only three bars. Use independently saved OANDA
+    # completed-bar history when available so late hourly runs do not silently
+    # omit prospective M15/M5 confirmations between collection cycles.
+    candles = (frame.get("recent_completed_candles") or
+               frame.get("last_3_completed_candles") or [])
     first, expires = moment(row.get("first_seen_at")), moment(row.get("expires_at"))
     low, high, stop = (number(row.get(k)) for k in ("entry_low", "entry_high", "stop"))
     if not first or None in (low, high, stop) or low <= 0 or high < low:
@@ -165,7 +170,7 @@ def _forward_entry_pattern(row, source, snapshot):
             "entry_pattern_timeframe": period}
 
 
-def update_ledger(summary, existing=None, news=None):
+def update_ledger(summary, existing=None, news=None, latest=None):
     snapshot = moment(summary.get("collected_at"))
     if not snapshot:
         raise ValueError("OANDA summary collection time unavailable")
@@ -174,6 +179,9 @@ def update_ledger(summary, existing=None, news=None):
     if not isinstance(rows, dict):
         raise ValueError("Malformed opportunity ledger")
     pairs = summary.get("pairs") or {}
+    # Never combine bars collected at a different time with the summary quote.
+    latest_pairs = ((latest or {}).get("pairs") or {}) if (
+        (latest or {}).get("collected_at") == summary.get("collected_at")) else {}
 
     # First observe already-registered immutable proposals. Future quotes
     # cannot rewrite their direction, entry region, stop, TP or first_seen.
@@ -195,8 +203,24 @@ def update_ledger(summary, existing=None, news=None):
         # Inspect the independent forward bar without claiming a fill,
         # broker executable price, approved alert, or profitable strategy.
         if row.get("entry_pattern_status") != "FORWARD_CANDLE_OBSERVED_PAPER_ONLY":
-            pattern = _forward_entry_pattern(row, source, snapshot)
+            pattern_source = source
+            archived = latest_pairs.get(row.get("instrument")) or {}
+            full_quote = archived.get("quote") or {}
+            if full_quote.get("time") == (source.get("quote") or {}).get("time"):
+                period = ("M5" if row.get("route") == "MOMENTUM_CONTINUATION"
+                          else "M15")
+                extra = (((archived.get("frames") or {}).get(period) or {})
+                         .get("recent_completed_candles") or [])
+                if extra:
+                    frames = source.get("frames") or {}
+                    pattern_source = {**source, "frames": {**frames, period: {
+                        **(frames.get(period) or {}),
+                        "recent_completed_candles": extra}}}
+            pattern = _forward_entry_pattern(row, pattern_source, snapshot)
             if pattern:
+                # This is an archived completed-candle observation, NEVER
+                # a current-hour alert or an inferred executable order fill.
+                pattern["entry_pattern_detected_at"] = snapshot.isoformat()
                 row.update(pattern)
         row["latest_quote_at"] = quote["at"].isoformat()
         row["latest_exit_side"] = round(
@@ -478,7 +502,8 @@ def main():
     summary = json.loads(SUMMARY.read_text(encoding="utf-8"))
     existing = json.loads(LEDGER.read_text(encoding="utf-8")) if LEDGER.exists() else {}
     news = json.loads(NEWS.read_text(encoding="utf-8")) if NEWS.exists() else {"status": "PARTIAL"}
-    book = update_ledger(summary, existing, news)
+    latest = json.loads(LATEST.read_text(encoding="utf-8")) if LATEST.exists() else {}
+    book = update_ledger(summary, existing, news, latest=latest)
     LEDGER.parent.mkdir(parents=True, exist_ok=True)
     LEDGER.write_text(json.dumps(book, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print("Forward FX entry opportunities:", book["total_registered"],
