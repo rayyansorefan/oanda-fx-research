@@ -456,6 +456,73 @@
         "macro": "RBNZ held OCR at 2.75% on 28 Oct by 4-3 vote; news feed partial. FOMC decision at 18:00 UTC is after this watch expires.",
         "incomplete_fields": "planned_entry and precise alert_b unavailable until a prospective completed M15 rejection; do not score or promote."
       }
+    },
+    {
+      "id": "20261028T1200-AUDNZD-L-EMA20-PAPER",
+      "instrument": "AUD_NZD",
+      "direction": "LONG",
+      "created_at": "2026-10-28T12:00:39.937Z",
+      "expires_at": "2026-10-28T15:57:11.723318Z",
+      "planned_entry": null,
+      "entry_zone": [
+        1.25396,
+        1.25424
+      ],
+      "stop": 1.25126,
+      "tp1": 1.25975,
+      "tp2": 1.26124,
+      "alert_b": null,
+      "max_oanda_spread_pips": 2.8,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-10-28T11:57:45Z",
+      "original_note": "Midday paper-only EMA20 pullback watch. Frozen OANDA zone 1.25396-1.25424; require a newly completed M15 bullish rejection inside the zone, then define a later exact entry. No qualifying rejection had completed at assessment, so planned_entry and alert_b remain null. No broker fill or live approval asserted.",
+      "technical_context": {
+        "as_of_utc": "2026-10-28T11:57:45Z",
+        "m15": "ADX14 32.62; RSI14 56.33; +DI dominant; EMA20>EMA50>EMA200; Supertrend/Ichimoku bullish; MACD histogram negative pullback.",
+        "h1": "ADX14 52.51; RSI14 77.84; +DI dominant; bullish EMA/Supertrend/cloud but overbought.",
+        "trend": "D1/H4/H1/M15 model alignment, though H1/H4 are stretched and completed M15 rejection is absent.",
+        "atr_spread": "OANDA spread 2.8 pips; engine capped-spread-adjusted TP1 estimate 1.61; Pepperstone quote unavailable.",
+        "macro": "RBNZ held OCR 2.75% by 4-3 on 28 Oct; headline risk remains. FOMC 18:00 UTC is after expiry.",
+        "incomplete_fields": "planned_entry and precise alert_b unavailable until a prospective completed M15 rejection; do not score or promote."
+      }
+    },
+    {
+      "id": "20261028T1200-NZDCAD-S-EMA20-PAPER",
+      "instrument": "NZD_CAD",
+      "direction": "SHORT",
+      "created_at": "2026-10-28T12:00:39.937Z",
+      "expires_at": "2026-10-28T15:57:13.023721Z",
+      "planned_entry": null,
+      "entry_zone": [
+        0.78787,
+        0.78806
+      ],
+      "stop": 0.79007,
+      "tp1": 0.7838,
+      "tp2": 0.7827,
+      "alert_b": null,
+      "max_oanda_spread_pips": 2.5,
+      "event_blackouts_utc": [
+        {
+          "start": "2026-10-28T13:30:00Z",
+          "end": "2026-10-28T14:15:00Z"
+        }
+      ],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-10-28T11:57:45Z",
+      "original_note": "Midday paper-only EMA20 pullback watch. Frozen OANDA zone 0.78787-0.78806; require a newly completed M15 bearish rejection inside the zone and reassess after the Bank of Canada blackout. No qualifying rejection had completed and current price was below the zone, so planned_entry and alert_b remain null. No broker fill or live approval asserted.",
+      "technical_context": {
+        "as_of_utc": "2026-10-28T11:57:45Z",
+        "m15": "ADX14 37.69; RSI14 38.15; bearish EMA/DMI/Supertrend/cloud, but MACD momentum is mixed.",
+        "h1": "ADX14 45.93; bearish higher-timeframe trend.",
+        "trend": "D1/H4/H1/M15 model alignment; price has already moved below the pullback zone, so no chase.",
+        "atr_spread": "OANDA spread 2.5 pips; engine capped-spread-adjusted TP1 estimate 1.56; Pepperstone quote unavailable.",
+        "macro": "Bank of Canada decision/MPR at 13:45 UTC; mandatory 13:30-14:15 UTC blackout and full reassessment after release.",
+        "incomplete_fields": "planned_entry and precise alert_b unavailable until a prospective completed M15 rejection; do not score or promote."
+      }
     }
   ]
 }
