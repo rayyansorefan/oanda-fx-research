@@ -121,4 +121,22 @@ class ForwardValidationTests(unittest.TestCase):
         a=v.bootstrap_days([1,2,3],200);b=v.bootstrap_days([1,2,3],200)
         self.assertEqual(a,b);self.assertGreater(a['lower_95pct_r'],0)
 
+    def test_post_start_without_samples_reports_collecting_not_success(self):
+        out=v.evaluate(protocol(),{'records':[]},{},'locked',NOW)
+        self.assertEqual(out['status'],'COLLECTING_HOLDOUT')
+        self.assertEqual(out['pass_fail_decision'],'NOT_YET_VALIDATED')
+        self.assertFalse(out['independent_review_completed'])
+
+    def test_fast_detector_event_is_never_a_delivery_receipt(self):
+        fast={'events':{'X|C|2026-10-29T09:15:00Z':{
+            'plan_id':'X','pair':'EUR_USD','route':'C',
+            'first_detected_at':'2026-10-29T09:32:00Z',
+            'trigger_closed_at':'2026-10-29T09:30:00Z'}}}
+        ledger=v.merge_fast_events({'events':{}},fast)
+        event=next(iter(ledger['events'].values()))
+        self.assertEqual(event['kind'],'TRIGGER_DETECTED')
+        self.assertIsNone(event['verified_user_delivery_at'])
+        self.assertFalse(v.delivered_before_entry(row(),ledger,NOW))
+        self.assertEqual(ledger,v.merge_fast_events(ledger,fast))
+
 if __name__=='__main__':unittest.main()
