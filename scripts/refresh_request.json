@@ -1,9 +1,9 @@
 {
   "purpose": "fresh OANDA price and news update when scheduled cron is unavailable",
-  "request": "FX_20261029_1400_US_PREOPEN_FULL_ASSESSMENT",
-  "requested_by": "ChatGPT FX US pre-open research automation",
+  "request": "FX_20261029_1615_HOURLY_STALE_RECOVERY",
+  "requested_by": "ChatGPT FX hourly research automation",
   "session_day_utc": "2026-10-29",
-  "sequence": 67,
-  "requested_at_utc": "2026-10-29T13:58:41.246Z",
-  "note": "14:00 UK full FX pre-open assessment: request one current-main collector refresh because the latest verified 13:06 UTC snapshot exceeds the protocol's 25-minute full-brief threshold. Refresh OANDA quotes/completed candles, post-US GDP/PCE and ECB decision news, signal readiness, opportunity ledger and dashboard payload. No orders; preserve immutable plans, risk gates and concurrent research."
+  "sequence": 68,
+  "requested_at_utc": "2026-10-29T16:12:07.962Z",
+  "note": "16:15 UK hourly assessment: source OANDA/summary at 14:12:33 UTC exceeds 70-minute freshness gate. Run current main collector for fresh OANDA quotes, completed M15/H1 and deep frames, independent event/news checks, canonical signal readiness, paper/opportunity ledgers and sanitized dashboard payload. No orders, no changes to risk gates or immutable historical plans."
 }
