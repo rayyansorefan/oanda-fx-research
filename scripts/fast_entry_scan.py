@@ -15,6 +15,7 @@ import oanda_data as market
 import news_watch as news_source
 import signal_admission as admission
 import signal_watch as watcher
+import strategy_comparison as comparison
 from fx_universe import is_quote_usable, screen_priority
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -174,6 +175,15 @@ def perform(now=None):
         fast_summary, fresh_news, previous,
         read(ROOT / "data/signal_plan_archive.json", {"signals": []}),
         evaluated_at=decision.isoformat())
+    # Both frozen policies are observed at the same decision time. Costly
+    # historical replay stays in the hourly job; no fast run invents a fill.
+    def defer_replay(*_args):
+        raise OSError("Replay deferred to hourly audited data collection")
+    study_path = ROOT / "data/strategy_comparison.json"
+    study = comparison.update(
+        fast_summary, fresh_news, read(study_path, None),
+        fetch=defer_replay, decided_at=decision.isoformat())
+    write(study_path, study)
     # Plans are immutable after creation; the hourly engine subsequently shares
     # these same canonical plans and safety gates.
     if updated != previous:
