@@ -137,6 +137,17 @@ class EntryPipelineRepairs(unittest.TestCase):
         self.assertEqual(out[0]['collected_at'],args[0]['collected_at'])
         self.assertEqual(args[2]['signals'][0]['id'],'OLD')
 
+    def test_fast_refresh_retains_hourly_m5_and_extended_history(self):
+        args=list(self.fast_inputs())
+        older={'completed_at':'2026-10-28T09:55:00Z','recent_completed_candles':[{'time':'original'}]}
+        args[3]['pairs']['EUR_USD']['frames']['M5']=deepcopy(older)
+        args[4]['EUR_USD']={'frames':{'M5':deepcopy(older),'W':deepcopy(older)}}
+        out=exporter.select_entry_observation(*args,NOW)
+        self.assertEqual(out[3]['pairs']['EUR_USD']['frames']['M5'],older)
+        self.assertEqual(out[4]['EUR_USD']['frames']['M5'],older)
+        self.assertEqual(out[4]['EUR_USD']['frames']['W'],older)
+        self.assertEqual(out[4]['EUR_USD']['frames']['M15'],args[5]['pairs']['EUR_USD']['frames']['M15'])
+
     def test_stale_or_mismatched_fast_stream_cannot_override_current_signal(self):
         for change in ('stale','mismatch','future'):
             args=list(self.fast_inputs())

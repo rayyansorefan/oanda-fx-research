@@ -1,0 +1,28 @@
+{
+  "bootstrap_resamples": 10000,
+  "common_universe": "All screened OANDA account currency pairs receive M5/M15/H1/H4/D collection, with explicit per-timeframe gaps. Both study arms require identical complete M15/H1/H4/D context. Fast checks remain bounded to active plans and leading candidates; omitted pairs never gain observation timestamps.",
+  "cost_method": "Executable-side OANDA bid/ask fills and exits; no double spread subtraction. Adverse stop gaps and 0/0.25/0.5 pip per-side stress. Financing crossing NY 17:00 and actual Pepperstone costs remain unknown unless evidenced.",
+  "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
+  "development_cutoff": "2026-10-29T07:59:59+00:00",
+  "holdout_start_at": "2026-10-29T08:00:00+00:00",
+  "id": "FX-OOS-20261029-v6",
+  "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
+  "minimum_independent_scored_pair_days_per_arm": 100,
+  "minimum_scored_days_per_arm": 20,
+  "monitoring_method": "Fast shortlist only in 07-09 and 13-15 Europe/London weekdays, four checks/hour at :02/:17/:32/:47, GitHub best effort. Existing hourly and four comprehensive weekday assessments unchanged. No entry detected between checks is assumed actionable.",
+  "no_orders": true,
+  "policies": [
+    "champion",
+    "challenger_v1"
+  ],
+  "promotion_policy": "No automatic promotion or live threshold relaxation. V6 supersedes v5 before its 08:00 UTC start to repair full-universe export size, persistence after export failure, safe replay deferral and frozen future event windows. Prior protocol versions, study records and delivery events remain archived. No earlier observation counts as v6 performance evidence. Actual delivery, complete cost scenarios and sufficient untouched results plus independent review are required.",
+  "registered_at": "2026-10-29T07:53:43.692702+00:00",
+  "require_pair_specific_observations": true,
+  "rule_sha256": "3717ad870b0769a2beefe886ca5cca21a62d6c0c8a17993ae872891f54e6575e",
+  "slippage_pips_per_side": [
+    0,
+    0.25,
+    0.5
+  ],
+  "supersedes_protocol_sha256": "66da6b2036b74d4ba6d65800574af6e2954760627996a861f79e4d4ba209a2fd"
+}

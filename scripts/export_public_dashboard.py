@@ -743,9 +743,18 @@ def select_entry_observation(summary, news, watcher, recent, detailed,
     for pair, row in (fast_snapshot.get("pairs") or {}).items():
         if pair not in (summary.get("pairs") or {}):
             continue
-        summary["pairs"][pair].update(deepcopy(row))
-        recent.setdefault("pairs", {})[pair] = deepcopy(row)
-        detailed[pair] = {"instrument": pair, "collected_at": source, **deepcopy(row)}
+        # Fast scans refresh M15/H1/H4/D; retain the separately timestamped
+        # hourly M5/extended charts instead of deleting those frames.
+        refreshed = deepcopy(row)
+        summary_frames = {**summary["pairs"][pair].get("frames", {}), **refreshed.get("frames", {})}
+        summary["pairs"][pair].update(refreshed)
+        summary["pairs"][pair]["frames"] = summary_frames
+        original_recent = recent.setdefault("pairs", {}).get(pair, {})
+        recent["pairs"][pair] = {**deepcopy(original_recent), **refreshed,
+            "frames": {**deepcopy(original_recent.get("frames", {})), **deepcopy(refreshed.get("frames", {}))}}
+        original_detail = detailed.get(pair) or original_recent
+        detailed[pair] = {"instrument": pair, "collected_at": source, **refreshed,
+            "frames": {**deepcopy(original_detail.get("frames", {})), **deepcopy(refreshed.get("frames", {}))}}
     watcher = deepcopy(fast_assessment)
     watcher["observation_stream"] = "FAST_SHORTLIST"
     return summary, fast_news, watcher, recent, detailed

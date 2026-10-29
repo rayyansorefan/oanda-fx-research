@@ -22,7 +22,7 @@ The saved comparison had five pre-07:00 plans: two triggered-unfilled, two inval
 
 ## Verification and limits
 
-253 offline tests passed locally, including a 68-pair collector integration, missing-frame/final-price failures, archive persistence, stale/mismatched fast-stream rejection, pair-specific timing, missing-cost handling and version migration. Actual collector output, public deployment and rendered dashboard still require post-commit checks; local tests do not prove those stages or strategy profitability.
+254 offline tests passed locally, including a 68-pair collector integration, missing-frame/final-price failures, archive persistence, stale/mismatched fast-stream rejection, pair-specific timing, missing-cost handling and version migration. Actual collector output, public deployment and rendered dashboard still require post-commit checks; local tests do not prove those stages or strategy profitability.
 
 No orders, live broker execution API, assumed equity, new schedules or paid services were introduced. Hourly/four weekday assessments, notification quiet hours and gross 1.50/net 1.35 gates are preserved. The existing fast workflow gains a deployment trigger; its cron windows remain unchanged. GitHub scheduling is best effort. Actual phone/provider receipt remains unverified.
 
@@ -33,3 +33,7 @@ The first real collector completed all 68 full core charts at 07:49:23 UTC. Expo
 The first fast scan also reached export, but its workflow skipped persistence on export failure. The repaired existing fast workflow now persists even on failure, then reports failure explicitly. Replay deferral also preserves prior open/pending evidence rather than overwriting it with SOURCE_UNAVAILABLE. Known future high-impact event windows overlapping the plan life are now frozen into both live research and paper plans using the existing 45-minute buffers. Earlier immutable plans are untouched.
 
 V5 was superseded before its holdout began. V6 retains the same 08:00 UTC start and all prior protocol locks/events. Full post-follow-up collector/fast/public-render verification is required before deployment is described as verified.
+
+## Rendered verification and final overlay regression
+
+The public deployment at commit 2f433f3 passed after updating its exact schema allowlists for fast monitoring and disclosed compaction (no layout change). Browser inspection verified 67/67 displayed pairs with deep coverage (GBP/ZAR excluded), 07:55 source data and the first completed fast scan. That inspection exposed deletion of the older M5/extended frames on pairs refreshed by the four-frame fast scanner. The overlay now merges frames, retaining their original candle clocks; a dedicated regression verifies M5/W preservation. V7 registers a new untouched 08:15 UTC boundary and preserves v6 and all earlier records.
