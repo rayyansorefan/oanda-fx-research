@@ -1,0 +1,53 @@
+name: FX fast shortlisted entry research (read-only)
+on:
+  workflow_dispatch:
+  schedule:
+    # Only two high-interest UK market windows to protect private Actions quota.
+    # GitHub cron is best effort; a 15-minute expression is not a latency SLA.
+    - cron: '2,17,32,47 7-8,13-14 * * 1-5'
+      timezone: Europe/London
+permissions:
+  contents: write
+concurrency:
+  # Serialize with the existing hourly pipeline; never race the immutable plan ledger.
+  group: oanda-research-snapshot
+  cancel-in-progress: false
+jobs:
+  fast-shortlist:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Test fast research safety and event chronology
+        run: python -m unittest discover -s tests -p 'test_fast_entry_scan.py' -v
+      - name: Refresh shortlist, primary news and prospective paper comparison
+        id: fast
+        env:
+          OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
+          OANDA_ACCOUNT_ID: ${{ secrets.OANDA_ACCOUNT_ID }}
+        run: python scripts/fast_entry_scan.py
+      - name: Audit validation and actual delivery evidence (no simulated receipt)
+        id: validate
+        run: python scripts/forward_validation.py
+      - name: Update public FX feed with timestamped fast results
+        id: dashboard
+        env:
+          FX_DASHBOARD_DEPLOY_TOKEN: ${{ secrets.FX_DASHBOARD_DEPLOY_TOKEN }}
+        run: python scripts/export_public_dashboard.py
+      - name: Persist immutable plans, paper cohorts, and research observations
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- data/ signals.json
+          if [ -f data/signal_plan_archive.json ]; then git add -- data/signal_plan_archive.json; fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "data: persist timestamped fast FX research [skip ci]"
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
