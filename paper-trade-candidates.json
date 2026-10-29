@@ -557,6 +557,36 @@
         "macro": "US GDP/PCE due 12:30 UK and ECB decision 13:15 UK; news coverage partial",
         "completeness": "INCOMPLETE_NO_EXACT_TRIGGER_LEVELS"
       }
+    },
+    {
+      "id": "20261029-1401-EURUSD-S-RESEARCH",
+      "instrument": "EUR_USD",
+      "direction": "SHORT",
+      "created_at": "2026-10-29T14:01:11.152Z",
+      "expires_at": "2026-10-29T16:30:00Z",
+      "planned_entry": null,
+      "stop": null,
+      "tp1": null,
+      "max_oanda_spread_pips": null,
+      "event_blackouts_utc": [
+        {
+          "start": "2026-10-29T13:15:00Z",
+          "end": "2026-10-29T14:30:00Z"
+        }
+      ],
+      "strategy": "RESEARCH_PRIORITY_WATCH",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-10-29T13:59:23Z",
+      "original_note": "Incomplete directional paper watch only. D1/H4/H1/M15 structure is bearish and the observed OANDA spread is low, but price is close to support and no completed qualifying pullback/rejection or continuation trigger exists during the live ECB press conference. No exact entry/stop/TP is defined; do not infer a fill or live approval.",
+      "technical_context": {
+        "as_of_utc": "2026-10-29T13:59:23Z",
+        "m15": "RSI14 34.6; ADX14 18.0; bearish EMA/structure context but weak trend strength near support",
+        "h1": "RSI14 42.0; ADX14 20.0; bearish higher-timeframe structure",
+        "trend": "D1/H4/H1/M15 bearish; M5 mixed and price near 1.11224 support",
+        "atr_spread": "OANDA bid/ask 1.11355/1.11362; observed spread 0.7 pip; no cost-valid exact plan without a new trigger",
+        "macro": "US Q3 GDP 3.4% annualized and September PCE 3.6% y/y support USD; ECB held deposit rate at 2.50% and press conference was ongoing",
+        "completeness": "INCOMPLETE_NO_EXACT_TRIGGER_LEVELS"
+      }
     }
   ]
 }
