@@ -77,6 +77,30 @@ def record_events(book,signals,watcher,publication,now):
     book['updated_at']=now.isoformat()
     return book
 
+def merge_fast_events(book, fast):
+    """Import detection clocks, never manufacture a user-delivery receipt."""
+    events = book.setdefault('events', {})
+    for key, item in (fast.get('events') or {}).items():
+        if not isinstance(item, dict) or not item.get('first_detected_at'):
+            continue
+        name = 'FAST_TRIGGER:' + key
+        events.setdefault(name, {
+            'id': name, 'plan_id': item.get('plan_id'),
+            'kind': 'TRIGGER_DETECTED',
+            'source_at': item.get('source_snapshot_at'),
+            'plan_created_at': item.get('plan_created_at'),
+            'trigger_closed_at': item.get('trigger_closed_at'),
+            'detected_at': item.get('first_detected_at'),
+            'verified_user_delivery_at': None,
+            'delivery_status': 'NOT_MEASURED',
+            'verification_kind': None,
+            'verification_source_reference': None,
+            'route': item.get('route'),
+            'trigger_bar_open_time': item.get('trigger_bar_open_time'),
+        })
+    return book
+
+
 def observe_public(book,feed,observed_at):
     """An observed serving time is an upper bound, not a push delivery receipt."""
     for event in book.get('events',{}).values():
@@ -203,7 +227,25 @@ def evaluate(protocol,study,ledger,current_hash,now):
         'minimum_scored_days':all(a['distinct_scored_days']>=protocol['minimum_scored_days_per_arm'] for a in arms.values()),
         'actual_delivery_evidence':delivery_ready,'broker_cost_evidence':costs_ready,
         'statistical_improvement_established':bool(paired and paired['lower_95pct_r']>0)}
-    return {'updated_at':now.isoformat(),'status':('PROTOCOL_CHANGED' if not unchanged else 'HOLDOUT_NOT_STARTED' if now<start else 'INSUFFICIENT_VALIDATION_EVIDENCE'),
+    if not unchanged:
+        status = 'PROTOCOL_CHANGED'
+    elif now < start:
+        status = 'HOLDOUT_NOT_STARTED'
+    elif not enough:
+        status = 'COLLECTING_HOLDOUT'
+    elif not delivery_ready or not costs_ready:
+        status = 'REQUIRED_DELIVERY_OR_BROKER_COST_EVIDENCE_MISSING'
+    elif not paired:
+        status = 'COMPARISON_UNAVAILABLE'
+    elif paired['lower_95pct_r'] <= 0:
+        status = 'NO_DEMONSTRATED_CHALLENGER_IMPROVEMENT'
+    else:
+        status = 'PASS_CANDIDATE_REQUIRES_INDEPENDENT_REVIEW'
+    return {'updated_at':now.isoformat(),'status':status,
+        'pass_fail_decision':('REVIEW_ELIGIBLE' if all(readiness.values()) else
+                              'NO_DEMONSTRATED_IMPROVEMENT' if enough and paired and
+                              paired['lower_95pct_r'] <= 0 else 'NOT_YET_VALIDATED'),
+        'independent_review_completed':False,
         'protocol_id':protocol['id'],'holdout_start_at':protocol['holdout_start_at'],
         'readiness':readiness,'arms':arms,'excluded':dict(excluded),
         'paired_day_comparison':paired,'evidence_ready_for_independent_review':all(readiness.values()),
@@ -228,6 +270,7 @@ def main():
     except Exception as exc:book['public_check_status']='UNAVAILABLE:'+type(exc).__name__
     book=record_events(book,read('signals.json',{}),read('data/hourly_assessment.json',{}),
                        read('data/public_dashboard_status.json',{}),now)
+    book=merge_fast_events(book,read('data/fast_entry_events.json',{}))
     (ROOT/'data/signal_delivery_audit.json').write_text(json.dumps(book,indent=2,sort_keys=True)+'\n')
     report=evaluate(protocol,read('data/strategy_comparison.json',{}),book,digest_rules(),now)
     report['coverage']=coverage(read('data/summary.json',{}),read('data/signal_admission_audit.json',{}))
