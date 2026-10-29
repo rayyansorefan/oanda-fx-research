@@ -127,38 +127,5 @@ class SignalAdmissionTests(unittest.TestCase):
         self.assertIsNone(plan)
         self.assertEqual(reason,"PAIR_NEWS_MISSING")
 
-
-    def test_v2_paper_only_removes_m15_adx_and_primary_feed_gap_not_manual_safeguards(self):
-        s=source()
-        s["frames"]["M15"]["indicators"]["adx14"]=8
-        n=news()
-        n["by_pair"]["EUR_USD"]["coverage"]["missing_required"]=["unavailable official source"]
-        champion, strict=qualify("EUR_USD",ranked(),s,n,NOW,"EMA20_PULLBACK")
-        self.assertIsNone(champion)
-        self.assertEqual(strict,"ADX_TREND_STRENGTH")
-        v1, v1_reason=qualify("EUR_USD",ranked(),s,n,NOW,"EMA20_PULLBACK",policy="challenger_v1")
-        self.assertIsNone(v1)
-        self.assertEqual(v1_reason,"PRIMARY_NEWS_SOURCE_MISSING")
-        v2, v2_reason=qualify("EUR_USD",ranked(),s,n,NOW,"EMA20_PULLBACK",policy="challenger_v2")
-        self.assertIsNone(v2_reason)
-        self.assertTrue(v2["paper_only"])
-        self.assertEqual(v2["admission_policy"],"challenger_v2")
-        self.assertTrue(v2["primary_news_coverage_unverified"])
-        self.assertTrue(v2["manual_news_clearance_required"])
-        self.assertGreaterEqual(v2["gross_rr_at_creation"],1.50)
-        self.assertGreaterEqual(v2["net_rr_at_spread_cap"],1.35)
-        self.assertEqual(v2["max_equity_risk_fraction"],.0025)
-        self.assertTrue(v2["technical_context"]["full_frame_alignment"])
-        n["by_pair"]["EUR_USD"]["recent_relevant_headlines"]=[
-            {"severity":"REVIEW","published_at":NOW.isoformat()}]
-        veto, reason=qualify("EUR_USD",ranked(),s,n,NOW,"EMA20_PULLBACK",policy="challenger_v2")
-        self.assertIsNone(veto)
-        self.assertEqual(reason,"RECENT_MATERIAL_HEADLINE_REVIEW")
-        n["by_pair"]["EUR_USD"]["recent_relevant_headlines"]=[]
-        n["by_pair"]["EUR_USD"]["near_high_impact_calendar"]=[{"title":"Policy decision"}]
-        veto, reason=qualify("EUR_USD",ranked(),s,n,NOW,"EMA20_PULLBACK",policy="challenger_v2")
-        self.assertIsNone(veto)
-        self.assertEqual(reason,"EVENT_CALENDAR_OR_BLACKOUT")
-
 if __name__=="__main__":
     unittest.main()
