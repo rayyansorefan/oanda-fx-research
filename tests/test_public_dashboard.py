@@ -20,6 +20,44 @@ class PublicDashboardFeedTests(unittest.TestCase):
         self.assertEqual(out["technical_or_cost_gate_clear"], 1)
         self.assertEqual(out["priced_paper_research_previews"], 1)
         self.assertFalse(out["canonical_signals_admitted"])
+    def test_current_scouts_remain_visible_without_invented_entry_levels(self):
+        from scripts.export_public_dashboard import build_current_scouts
+        obj = self.sample()
+        summary = obj["summary"]
+        summary["ranked_review_candidates"][0].update({
+            "research_priority": 64.06, "potential_direction_not_approved": "LONG"})
+        summary["pairs"]["EUR_USD"]["quote"]["tradeable"] = True
+        checks = [{
+            "instrument": "EUR_USD", "direction": "LONG",
+            "reference_m15_level": 1.1012,
+            "reference_rule": "NEXT COMPLETED M15 CLOSE ABOVE PRIOR HIGH",
+            "next_m15_check_at": "2026-10-21T19:15:00Z",
+            "frame_alignment": "2/4", "priced_paper_preview": None,
+            "blockers": [
+                {"code": "TREND_STRENGTH", "detail": "Weak M15 trend"},
+                {"code": "NO_APPROVED_TRIGGER", "detail": "No approved entry"},
+                {"code": "NEWS_EVENT_BLACKOUT", "detail": "High-impact event"},
+            ],
+        }]
+        with patch("scripts.export_public_dashboard.entry_diagnostics", return_value=checks):
+            scouts = build_current_scouts(summary, obj["news"])
+        self.assertEqual(len(scouts), 1)
+        self.assertEqual(scouts[0]["score_100"], 64.1)
+        self.assertEqual(scouts[0]["status"], "CURRENT_SCOUT_NOT_PRICED")
+        self.assertIsNone(scouts[0]["plan"])
+        self.assertFalse(scouts[0]["approved_entry"])
+        self.assertIn("NEWS_EVENT_BLACKOUT", [x["code"] for x in scouts[0]["blockers"]])
+        self.assertNotIn("NO_APPROVED_TRIGGER", [x["code"] for x in scouts[0]["blockers"]])
+        checks[0]["priced_paper_preview"] = {
+            "approved_entry": False, "entry_zone_low": 1.1013,
+            "entry_zone_high": 1.1014, "stop": 1.099, "tp1": 1.106,
+            "net_rr_estimate": 1.5}
+        with patch("scripts.export_public_dashboard.entry_diagnostics", return_value=checks):
+            priced = build_current_scouts(summary, obj["news"])
+        self.assertEqual(priced[0]["plan"]["stop"], 1.099)
+        self.assertEqual(priced[0]["status"], "PAPER_PRICED_NOT_TRIGGERED")
+        self.assertFalse(priced[0]["approved_entry"])
+
     def sample(self):
         return {
             "summary": {
