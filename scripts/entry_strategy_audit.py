@@ -27,6 +27,9 @@ ABLATIONS = {
     "without_daily_ema_paper": frozenset({"trend_D"}),
     "without_reversal_veto_paper": frozenset({"no_reversal_or_exhaustion"}),
     "without_news_gate_diagnostic_only": frozenset({"news_gate"}),
+    # Prospective paper study of the ACTUAL joint bottleneck: never an alert.
+    # Only unsupported primary feeds, never material headline/event vetoes.
+    "paper_without_m15_adx_and_missing_primary_feed": frozenset({"adx_M15", "news_gate"}),
     "without_nearest_target_economics_diagnostic_only":
         frozenset({"gross_reward_minimum", "net_reward_minimum"}),
 }
@@ -49,20 +52,34 @@ def gate_analysis(raw):
     out = {}
     for name, relaxed in ABLATIONS.items():
         eligible = []
+        paper_examples = []
         unknown = 0
         for r in rows:
             checks = r.get("checks") or {}
             remaining = [v for k, v in checks.items() if k not in relaxed]
+            if name == "paper_without_m15_adx_and_missing_primary_feed":
+                # Missing sources are UNKNOWN, not permission to bypass known
+                # adverse headlines, events, or any economic hard gate.
+                if checks.get("news_gate") is False and r.get("news_reason") != "PRIMARY_NEWS_SOURCE_MISSING":
+                    remaining.append(False)
             if not remaining or any(v is None for v in remaining):
                 unknown += 1
                 continue
             if all(v is True for v in remaining):
                 eligible.append(r["pair"] + "|" + r["route"])
+                if name == "paper_without_m15_adx_and_missing_primary_feed":
+                    paper_examples.append({
+                        "pair": r["pair"], "direction": r.get("direction"), "route": r["route"],
+                        "economics_at_observation": r.get("economic_feasibility_only"),
+                        "news_status": "SOURCE_UNVERIFIED" if checks.get("news_gate") is False else "RESEARCH_CLEAR",
+                        "status": "PAPER_ONLY_NOT_A_FUTURE_TRIGGER_OR_MANUAL_ENTRY",
+                    })
         out[name] = {
             "counterfactual_pair_routes": len(set(eligible)),
             "unverifiable": unknown,
             "approval_allowed": name == "champion_all_gates",
             "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
+            **({"paper_watch_examples": paper_examples} if name == "paper_without_m15_adx_and_missing_primary_feed" else {}),
         }
     isolated = {}
     for key in sorted({key for row in rows for key in (row.get("checks") or {})}):
@@ -81,7 +98,8 @@ def gate_analysis(raw):
                      for key in sorted(isolated)},
         "limitations": [
             "The same market snapshot does not measure predictive value or profitability.",
-            "Ablations that waive the news check or minimum reward/risk are diagnostic only and never yield alerts.",
+            "Ablations that waive news checks or minimum reward/risk are diagnostic only and never yield alerts.",
+            "The combined M15-ADX/unsupported-primary-feed paper hypothesis keeps all other technical and reward/risk gates; it cannot verify the missing source or support a manual fill.",
             "Pair-route observations share prices and currency exposure; they are not independent trade outcomes.",
         ],
     }
