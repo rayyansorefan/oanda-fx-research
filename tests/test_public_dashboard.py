@@ -157,6 +157,32 @@ class PublicDashboardFeedTests(unittest.TestCase):
         self.assertGreaterEqual(min(len(f["candles"]) for p in payload["pairs"].values()
                                     for f in p["frames"].values()), 6)
 
+    def test_repeated_feed_budget_preserves_full_candidate_index(self):
+        from scripts.export_public_dashboard import fit_public_feed_budget
+        candidates = [
+            {"id": f"watch-{n}", "instrument": "EUR_USD", "direction": "LONG",
+             "created_at": "2026-10-29T00:00:00Z", "status": "UNTESTABLE",
+             "entry": 1.10, "stop": 1.09, "tp1": 1.12,
+             "tracking": {"quote_at": "2026-10-29T00:15:00Z",
+                          "reference_price": 1.10}}
+            for n in range(120)
+        ]
+        payload = {"learning": {"paper_audit": {
+            "totals": {"candidates": len(candidates)}, "candidates": candidates}},
+            "pairs": {}, "research_setups": [], "signals": []}
+        fit_public_feed_budget(payload)
+        audit = payload["learning"]["paper_audit"]
+        self.assertEqual(len(audit["candidate_index"]), 120)
+        self.assertEqual({row[0] for row in audit["candidate_index"]},
+                         {f"watch-{n}" for n in range(120)})
+        # A later size-budget pass sees only the capped detailed window.
+        # It must NOT overwrite the original complete cohort index.
+        audit["candidates"] = audit["candidates"][-30:]
+        fit_public_feed_budget(payload)
+        self.assertEqual(len(audit["candidate_index"]), 120)
+        self.assertEqual(audit["public_window"]["private_total_candidates"], 120)
+        self.assertTrue(audit["public_window"]["truncated"])
+
     def test_broker_unavailable_gbp_zar_is_absent_from_public_feed(self):
         obj = self.sample()
         obj["summary"]["coverage"]["oanda_account_fx_instruments_discovered"] = 2
