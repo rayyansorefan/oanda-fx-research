@@ -478,6 +478,71 @@ def build_entry_gate_summary(summary: dict, news: dict) -> dict:
     }
 
 
+
+def build_current_scouts(summary: dict, news: dict, limit: int = 10) -> list[dict]:
+    """Refresh a visible *research* shortlist even when no full setup prices.
+
+    Scouts are not ledger watches, recommendations, trading signals or fills.
+    Only the independent entry diagnostic may supply a priced paper plan.
+    No stop or target is invented when technical/cost checks reject pricing.
+    """
+    ranked = [x for x in (summary.get("ranked_review_candidates") or [])
+              if isinstance(x, dict)]
+    checks = entry_diagnostics(summary, news, limit=max(8, len(ranked) + 3))
+    by_pair = {x.get("instrument"): x for x in checks}
+    scouts = []
+    for item in ranked:
+        pair = item.get("instrument")
+        if pair in DASHBOARD_EXCLUDED_INSTRUMENTS:
+            continue
+        diag = by_pair.get(pair)
+        if not diag or diag.get("direction") not in ("LONG", "SHORT"):
+            continue
+        quote = ((summary.get("pairs") or {}).get(pair) or {}).get("quote") or {}
+        if not quote.get("time") or quote.get("tradeable") is not True:
+            continue
+        try:
+            priority = float(item.get("research_priority") or 0)
+        except (TypeError, ValueError):
+            continue
+        preview = diag.get("priced_paper_preview")
+        priced = isinstance(preview, dict) and preview.get("approved_entry") is False
+        plan_fields = ("entry_zone_low", "entry_zone_high", "stop", "tp1",
+                       "net_rr_estimate", "expires_at", "next_m15_check_at")
+        blockers = [x for x in (diag.get("blockers") or [])
+                    if isinstance(x, dict) and x.get("code") != "NO_APPROVED_TRIGGER"]
+        # Show the most material technical/cost checks AND pair-specific news,
+        # rather than presenting a clipped list that conceals event risk.
+        relevant = blockers[:2]
+        relevant.extend(x for x in blockers if str(x.get("code", "")).startswith("NEWS_"))
+        unique = []
+        for item_block in relevant:
+            if item_block.get("code") not in {x.get("code") for x in unique}:
+                unique.append({"code": item_block.get("code"),
+                               "detail": item_block.get("detail")})
+        scouts.append({
+            "instrument": pair, "direction": diag["direction"],
+            "source_quote_at": quote["time"],
+            "source_snapshot_at": summary.get("collected_at"),
+            "priority_score": round(priority, 2),
+            "score_100": round(max(0.0, min(100.0, priority)), 1),
+            "reference_level": diag.get("reference_m15_level"),
+            "reference_rule": diag.get("reference_rule"),
+            "next_m15_check_at": diag.get("next_m15_check_at"),
+            "frame_alignment": diag.get("frame_alignment"),
+            "blockers": unique[:5],
+            "plan": ({key: preview.get(key) for key in plan_fields}
+                     if priced else None),
+            "status": ("PAPER_PRICED_NOT_TRIGGERED" if priced
+                       else "CURRENT_SCOUT_NOT_PRICED"),
+            "approved_entry": False, "broker_verified": False,
+            "validated_edge": False,
+        })
+        if len(scouts) >= limit:
+            break
+    return scouts
+
+
 def build_public_feed(summary: dict, news: dict, signals: dict,
                       watcher: dict, detailed: dict, brief_history: dict | None = None,
                       paper_ledger: dict | None = None, opportunity_ledger: dict | None = None) -> dict:
@@ -590,6 +655,7 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
             "afternoon_challenger": watcher.get("afternoon_audit") or afternoon_audit(
                 paper_ledger or {"candidates": {}}, summary["collected_at"]),
             "opportunity_audit": _public_opportunity_view(opportunity_ledger or {}),
+            "current_scouts": build_current_scouts(summary, news),
             # Explicit research-only failed entry gates, never canonical signals.
             "entry_diagnostics": entry_diagnostics(summary, news, limit=8),
             "entry_gate_summary": build_entry_gate_summary(summary, news),
