@@ -411,7 +411,7 @@
       "pattern_at": "2026-10-28T18:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/CAD_CHF-74a9d42d817a9fb880fd3860ef1733c5ad14691ae0e9de55dde88c076123a703.json",
+      "source_evidence": "data/replay_evidence/CAD_CHF-987ef0185601a36b2d6ec6ed246e54b956ce63802751b3c00704910306c70645.json",
       "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     },
@@ -487,16 +487,19 @@
     "202610282100-AUDUSD-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
+      "exit_at": "2026-10-29T12:00:00Z",
       "fill_at": "2026-10-29T00:15:00Z",
       "id": "202610282100-AUDUSD-LONG-EMA20_PULLBACK",
       "instrument": "AUD_USD",
       "paper_entry": 0.70501,
+      "paper_exit": 0.70284,
       "pattern_at": "2026-10-28T23:30:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_USD-e402c1e3716e6192257580795e62149cbfff960eed2cd3ee4b1eb597168941ac.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/AUD_USD-09c6715f2a0aef6f5f654066f34d0d2037a3aea0abb5080dcf19d315c98ded2c.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.3078
     },
     "202610282200-EURAUD-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
@@ -770,5 +773,5 @@
     "PAPER_STOP_AFTER_FILL": 6
   },
   "today_uk": "2026-10-29",
-  "updated_at": "2026-10-29T12:01:38Z"
+  "updated_at": "2026-10-29T13:06:33Z"
 }
