@@ -50,20 +50,22 @@ def news_gate(pair, news, now):
     coverage = info.get("coverage") or {}
     if info.get("calendar_coverage") != "OK" or info.get("near_high_impact_calendar"):
         return "EVENT_CALENDAR_OR_BLACKOUT"
-    if coverage.get("missing_required") or coverage.get("currencies_without_supported_official_feed"):
-        return "PRIMARY_NEWS_SOURCE_MISSING"
-    if coverage.get("status") not in ("OK", "LIMITED"):
-        return "NEWS_COVERAGE_NOT_VERIFIED"
     # Material headlines require independent review, not heuristic clearance.
+    # Check them BEFORE feed-coverage gaps, so a paper-source-gap exception
+    # can never accidentally suppress genuine adverse-event headlines.
     for item in info.get("recent_relevant_headlines") or []:
         published = moment(item.get("published_at"))
         if published and timedelta(0) <= now - published <= timedelta(hours=3):
             if requires_headline_review(item):
                 return "RECENT_MATERIAL_HEADLINE_REVIEW"
+    if coverage.get("missing_required") or coverage.get("currencies_without_supported_official_feed"):
+        return "PRIMARY_NEWS_SOURCE_MISSING"
+    if coverage.get("status") not in ("OK", "LIMITED"):
+        return "NEWS_COVERAGE_NOT_VERIFIED"
     return None
 
 def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
-    if policy not in ("champion", "challenger_v1"):
+    if policy not in ("champion", "challenger_v1", "challenger_v2"):
         raise ValueError("Unknown admission policy")
     paper_only = policy != "champion"
     """Return (frozen prospective signal, rejection); never uses future candles."""
@@ -91,7 +93,7 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
     if None in (bid, ask, pip, spread_pips) or not (0 < bid < ask and pip > 0 and 0 < spread_pips <= 10):
         return None, "INVALID_BID_ASK_OR_SPREAD"
     indicators = {}
-    for tf in (("M15", "H1") if paper_only else ("M15", "H1", "H4", "D")):
+    for tf in (("M15", "H1") if policy == "challenger_v1" else ("M15", "H1", "H4", "D")):
         item = (frames.get(tf) or {}).get("indicators") or {}
         if trend(item) is None:
             return None, "REQUIRED_FRAME_HISTORY_MISSING:" + tf
@@ -102,8 +104,8 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
     atr = number(m.get("atr14"))
     if not atr or atr <= 0 or spread_pips * pip > .50 * atr:
         return None, "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY"
-    if any((number(i.get("adx14")) or 0) < (18 if paper_only else 20)
-           for i in ((h,) if paper_only else (m, h))):
+    if any((number(i.get("adx14")) or 0) < (18 if policy == "challenger_v1" else 20)
+           for i in ((h,) if policy in ("challenger_v1", "challenger_v2") else (m, h))):
         return None, "ADX_TREND_STRENGTH"
     for i in (m, h):
         plus, minus = number(i.get("plus_di14")), number(i.get("minus_di14"))
@@ -180,7 +182,13 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
     if gross < 1.50 or net < 1.35:
         return None, "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE"
     reason = news_gate(pair, news, now)
-    if reason:
+    # Pre-registered V2 PAPER ABLATION: a missing official headline feed is
+    # unknown coverage, not an evidenced harmful headline. All known event
+    # blackouts, material headlines and stale/invalid calendar blocks remain.
+    # Such plans cannot become manual signals; they must be independently
+    # news-cleared before any later human consideration.
+    unverified_feed = policy == "challenger_v2" and reason == "PRIMARY_NEWS_SOURCE_MISSING"
+    if reason and not unverified_feed:
         return None, reason
     # Freeze levels while the trigger remains in the future. The separate
     # hourly watcher verifies actual later completed bars, spread and news.
@@ -213,15 +221,18 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
         "source_quote_at": q.get("time"),
         "research_only": True, "broker_verified": False,
         "paper_only": paper_only, "admission_policy": policy,
+        "primary_news_coverage_unverified": unverified_feed,
+        "manual_news_clearance_required": True,
         "account_equity_verified": False,
         "max_equity_risk_fraction": .0025,
         "manual_broker_check_required": True,
         "gross_rr_at_creation": round(gross, 3),
         "net_rr_at_spread_cap": round(net, 3),
         "technical_context": {
-            "full_frame_alignment": not paper_only,
+            "full_frame_alignment": policy != "challenger_v1",
             "admission_policy": policy,
-            "momentum_adx_minimum": 18 if paper_only else 20,
+            "momentum_adx_minimum": 18 if policy == "challenger_v1" else 20,
+            "m15_adx_waived_for_paper_v2": policy == "challenger_v2",
             "m15_adx": number(m.get("adx14")), "h1_adx": number(h.get("adx14")),
             "m15_plus_di": number(m.get("plus_di14")),
             "m15_minus_di": number(m.get("minus_di14")),
