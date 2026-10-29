@@ -478,6 +478,66 @@ def build_entry_gate_summary(summary: dict, news: dict) -> dict:
     }
 
 
+def build_current_scouts(summary: dict, news: dict, research_setups: list[dict],
+                         limit: int = 10) -> list[dict]:
+    """Publish aligned research detail for the exact top-ranked scout cards.
+
+    A research-priority row is never an admitted or broker-verified signal.
+    A missing/failed economic preview must remain explicitly unapproved.
+    """
+    ranked = [r for r in (summary.get("ranked_review_candidates") or [])
+              if isinstance(r, dict) and r.get("instrument") not in DASHBOARD_EXCLUDED_INSTRUMENTS]
+    all_rows = entry_diagnostics(summary, news, limit=max(limit, len(ranked) + 3))
+    diagnostics = {r.get("instrument"): r for r in all_rows}
+    by_setup = {r.get("instrument"): r for r in research_setups
+                if isinstance(r, dict) and r.get("approved_entry") is False}
+    pairs = summary.get("pairs") or {}
+    output = []
+    for row in ranked[:limit]:
+        key = row.get("instrument")
+        source = pairs.get(key) or {}
+        quote = source.get("quote") or {}
+        diag = diagnostics.get(key) or {}
+        direction = (diag.get("direction") or row.get("deep_entry_scout_direction")
+                     or row.get("potential_direction_not_approved"))
+        if direction not in ("LONG", "SHORT"):
+            direction = None
+        item = {
+            "instrument": key,
+            "priority_score": row.get("research_priority"),
+            "direction": direction,
+            "source_quote_at": quote.get("time"),
+            "reference_level": diag.get("reference_m15_level"),
+            "reference_rule": diag.get("reference_rule") or
+                              "M15/H1 direction and future candle confirmation required",
+            "next_m15_check_at": diag.get("next_m15_check_at"),
+            "blockers": diag.get("blockers") or [
+                {"code": "DIRECTION_UNCONFIRMED",
+                 "detail": "No verified directional M15 entry diagnostic for this scout"}],
+        }
+        plan = diag.get("priced_paper_preview")
+        if not plan:
+            s = by_setup.get(key)
+            if s:
+                plan = {
+                    "status": "PROSPECTIVE_PAPER_RESEARCH_NOT_TRIGGERED",
+                    "approved_entry": False,
+                    "entry_zone_low": s.get("entry_low"),
+                    "entry_zone_high": s.get("entry_high"),
+                    "stop": s.get("stop"),
+                    "tp1": s.get("tp1"),
+                    "tp2": s.get("tp2"),
+                    "net_rr_estimate": s.get("net_rr_estimate"),
+                    "source_quote_at": s.get("source_quote_at"),
+                    "trigger_rule": s.get("trigger"),
+                    "entry_route": s.get("entry_route"),
+                }
+        if plan:
+            item["plan"] = plan
+        output.append(item)
+    return output
+
+
 def build_public_feed(summary: dict, news: dict, signals: dict,
                       watcher: dict, detailed: dict, brief_history: dict | None = None,
                       paper_ledger: dict | None = None, opportunity_ledger: dict | None = None) -> dict:
@@ -546,6 +606,7 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         {"name": key, "status": v.get("status"), "checked_at": v.get("checked_at")}
         for key, v in (news.get("sources") or {}).items() if isinstance(v, dict)
     ]
+    research_setups = build_research_setups(summary)
     result = {
         "schema": 1,
         "snapshot_at": summary.get("collected_at"),
@@ -571,7 +632,7 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         ],
         "pairs": prices,
         "signals": clean_signals,
-        "research_setups": build_research_setups(summary),
+        "research_setups": research_setups,
         "hourly": {
             "at": watcher.get("collected_at"),
             "source_at": watcher.get("oanda_collected_at"),
@@ -592,6 +653,7 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
             "opportunity_audit": _public_opportunity_view(opportunity_ledger or {}),
             # Explicit research-only failed entry gates, never canonical signals.
             "entry_diagnostics": entry_diagnostics(summary, news, limit=8),
+            "current_scouts": build_current_scouts(summary, news, research_setups),
             "entry_gate_summary": build_entry_gate_summary(summary, news),
             "verified_broker_trades": 0,
             "verified_wins": 0,
