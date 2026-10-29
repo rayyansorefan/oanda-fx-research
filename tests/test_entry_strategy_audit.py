@@ -42,6 +42,30 @@ class GateAuditTests(unittest.TestCase):
         self.assertEqual(result["failures"]["news_gate"], 2)
 
 
+
+    def test_joint_paper_relaxation_ignores_only_missing_primary_source_not_known_risk(self):
+        safe = {"adx_M15": False, "news_gate": False,
+                "net_reward_minimum": True, "gross_reward_minimum": True,
+                "relative_spread_cap": True, "trend_D": True}
+        rows = [
+            {"pair":"NZD_CHF","direction":"SHORT","route":"MOMENTUM_CONTINUATION",
+             "checks":safe,"news_reason":"PRIMARY_NEWS_SOURCE_MISSING",
+             "economic_feasibility_only":{"entry_reference":0.46486,"net_rr":1.62}},
+            {"pair":"EUR_USD","direction":"LONG","route":"MOMENTUM_CONTINUATION",
+             "checks":safe,"news_reason":"RECENT_MATERIAL_HEADLINE_REVIEW"},
+            {"pair":"AUD_CAD","direction":"LONG","route":"EMA20_PULLBACK",
+             "checks":{**safe,"net_reward_minimum":False},
+             "news_reason":"PRIMARY_NEWS_SOURCE_MISSING"},
+        ]
+        result = gate_analysis({"source_at":"2026-10-29T08:39:56Z","rows":rows})
+        arm=result["counterfactual_arms"]["paper_without_m15_adx_and_missing_primary_feed"]
+        self.assertEqual(arm["counterfactual_pair_routes"],1)
+        self.assertFalse(arm["approval_allowed"])
+        self.assertEqual(arm["paper_watch_examples"][0]["pair"],"NZD_CHF")
+        self.assertEqual(arm["paper_watch_examples"][0]["news_status"],"SOURCE_UNVERIFIED")
+        self.assertEqual(arm["paper_watch_examples"][0]["status"],
+                         "PAPER_ONLY_NOT_A_FUTURE_TRIGGER_OR_MANUAL_ENTRY")
+
 class ProspectiveValidationTests(unittest.TestCase):
     def setUp(self):
         self.days = ("2026-10-30", "2026-11-02")
