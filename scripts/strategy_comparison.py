@@ -18,7 +18,7 @@ except ModuleNotFoundError:
     from paper_trade_audit import source_bars, replay, iso
 
 ROOT = Path(__file__).resolve().parents[1]
-POLICIES = ("champion", "challenger_v1")
+POLICIES = ("champion", "challenger_v1", "challenger_v2")
 TERMINAL = {"WIN_TP1", "LOSS_STOP", "TIME_EXIT", "UNTRIGGERED",
             "INVALIDATED_PRE_ENTRY", "AMBIGUOUS_ENTRY_BAR", "AMBIGUOUS_EXIT_BAR"}
 
@@ -39,7 +39,7 @@ def freeze(summary, news, source_ref=None, *, decided_at=None):
                 plan, reason = qualify(pair, ranked, (summary.get("pairs") or {}).get(pair) or {},
                                        news, now, route, policy=policy)
                 rows.append({"policy": policy, "source_at": summary["collected_at"],
-                    "source_ref": source_ref, "study_method_version":3, "observation_scope":"PAIR_SPECIFIC", "decision_at":iso(now),
+                    "source_ref": source_ref, "study_method_version":(4 if policy == "challenger_v2" else 3), "observation_scope":"PAIR_SPECIFIC", "decision_at":iso(now),
                     "common_deep_history_available":all(
                         ((summary.get("pairs") or {}).get(pair,{}).get("frames",{}).get(tf,{}) or {}).get("indicators")
                         for tf in ("M15","H1","H4","D")), "pair": pair, "route": route,
@@ -131,7 +131,8 @@ def update(summary, news, book=None, fetch=None, *, decided_at=None, replay_pend
                              "reason":type(exc).__name__}
     book.update(updated_at=observation, metrics=metrics(book["records"]),
         performance_validated=False, promotion_allowed=False,
-        policy={"version":"20261028-v2", "challenger":"M15/H1 EMA+DMI; H1 ADX>=18; H4/D context not compulsory. Same exhaustion, stop, nearest-target, gross>=1.50/net>=1.35, news and spread gates.",
+        policy={"version":"20261028-v2", "challenger":"V1: M15/H1 EMA+DMI; H1 ADX>=18; H4/D optional; same economic and news gates.",
+            "challenger_v2":"New prospective paper-only arm: D/H4/H1/M15 EMA+DMI alignment, H1 ADX>=20 but no M15 ADX veto, and only official-primary-feed gaps flagged as unverified rather than vetoed; genuine high-impact calendars/material headlines, spread limits, nearest structure TP, gross>=1.50/net>=1.35 all retained. V2 starts with its first genuinely new forward snapshot; never retrofits v1.",
             "timing":"Actual study decision times plus 1 minute manual delay, rounded to next M15 opening; no assumed pattern-close fill.",
             "costs":"OANDA ask buys/bid sells and opposite exit side; no second spread deduction in realised returns. Slippage, financing and Pepperstone fills unknown.",
             "drawdown":"Sum of per-trade net R, not portfolio/account drawdown; overlapping correlated trades not a portfolio model.",
