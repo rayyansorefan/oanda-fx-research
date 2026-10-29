@@ -29,6 +29,12 @@
 - NZD/CHF SHORT momentum route showed a **diagnostic** net RR around 1.62, but **M15 ADX and primary news source** failed; it is **WATCH/REJECTED**, never an entry instruction.
 - Potential ratings shown on unpriced watches are technical heuristics, not win probabilities or admissible trade plans.
 
+## Alert schedule investigation (additional source check at 08:48 UK)
+
+- Public rendered dashboard explicitly said **last fast check 08:13 UK** while advertising 15-minute checks in its 07:00–09:00 window. Consequently checks around 08:17/08:32/08:47 were **not evidenced delivered** by 08:48. A successful 08:12 fast workflow run was triggered by a **push**, not by a verified schedule. This is an **unresolved actual timing gap**; do not infer unseen scans.
+- The private Actions recent-run record also showed the 07:00 scheduled hourly workflow **failed**, followed by successful push-triggered repairs. The fast workflow cron syntax includes an IANA time zone, which [GitHub officially supports](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax). GitHub [warns](https://docs.github.com/en/actions/how-tos/troubleshoot-workflows) that scheduled jobs may be delayed or dropped; a declared cron alone is not delivery proof.
+- No additional schedule or claim of a sub-15-minute alert SLA was made. A durable fix needs future observed scheduled executions plus timestamped user delivery/receipt and executable pricing; until then **timing improvement remains unverified**.
+
 ## Deployment and boundaries
 
 - Private commits: `947be5d` independent assessor; `9fa54fe` regression tests; `f8969b1` existing hourly integration. GitHub Actions workflow `40843709979` completed successfully. No additional schedule.
