@@ -8,10 +8,8 @@
       },
       "distinct_scored_days": 0,
       "independent_scored_pair_days": 0,
-      "outcomes": {
-        "INVALIDATED_PRE_ENTRY": 1
-      },
-      "prospective_plans": 1,
+      "outcomes": {},
+      "prospective_plans": 0,
       "verified_user_deliveries": 0
     },
     "champion": {
@@ -34,43 +32,42 @@
     "distinct_evaluated_pairs": 65,
     "distinct_pairs_by_rejection": {
       "ADX_TREND_STRENGTH": 2,
-      "FOUR_FRAME_TREND_CONFLICT": 21,
-      "INVALID_BID_ASK_OR_SPREAD": 19,
+      "FOUR_FRAME_TREND_CONFLICT": 20,
+      "INVALID_BID_ASK_OR_SPREAD": 20,
       "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 2,
       "NO_DECISIVE_COMPLETED_M15_IMPULSE": 2,
-      "REVERSAL_OR_EXHAUSTION": 20,
+      "REVERSAL_OR_EXHAUSTION": 19,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 1,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
     "paper_prequalified": [
+      "AUD_CAD",
       "AUD_CHF",
-      "CAD_HKD",
-      "CAD_SGD",
       "EUR_CHF",
       "EUR_GBP",
-      "GBP_AUD",
-      "GBP_NZD",
-      "USD_CAD"
+      "GBP_AUD"
     ],
     "paper_prequalified_missing_deep": [],
     "quoted_pairs": 65,
     "route_evaluations": 130,
     "route_rejections": {
       "ADX_TREND_STRENGTH": 4,
-      "FOUR_FRAME_TREND_CONFLICT": 42,
-      "INVALID_BID_ASK_OR_SPREAD": 38,
+      "FOUR_FRAME_TREND_CONFLICT": 40,
+      "INVALID_BID_ASK_OR_SPREAD": 40,
       "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 2,
       "NO_DECISIVE_COMPLETED_M15_IMPULSE": 2,
-      "REVERSAL_OR_EXHAUSTION": 40,
+      "REVERSAL_OR_EXHAUSTION": 38,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-10-29T16:27:30Z",
+    "source_at": "2026-10-29T17:06:03Z",
     "strict_prequalified": [
+      "AUD_CAD",
       "AUD_CHF",
       "EUR_GBP",
       "EUR_SEK",
       "GBP_AUD",
-      "GBP_NZD",
       "USD_MXN",
       "USD_SEK"
     ],
@@ -79,25 +76,25 @@
   "delivery_events_recorded": 1,
   "evidence_ready_for_independent_review": false,
   "excluded": {
-    "DEVELOPMENT_OR_LEGACY_TIMING": 5
+    "DEVELOPMENT_OR_LEGACY_TIMING": 7
   },
-  "holdout_start_at": "2026-10-29T08:30:00Z",
+  "holdout_start_at": "2026-10-29T17:15:00Z",
   "independent_review_completed": false,
   "interpretation": "No rule relaxation or profitability claim. Historical replay, public availability and actual user delivery are different evidence. Missing delivery/broker costs and unestablished statistical improvement block validation.",
   "paired_day_comparison": null,
   "pass_fail_decision": "NOT_YET_VALIDATED",
   "performance_validated": false,
-  "protocol_id": "FX-OOS-20261029-v8",
+  "protocol_id": "FX-OOS-20261029-v9",
   "readiness": {
     "actual_delivery_evidence": false,
     "broker_cost_evidence": false,
     "complete_cost_scenarios": false,
-    "holdout_started": true,
+    "holdout_started": false,
     "minimum_independent_samples": false,
     "minimum_scored_days": false,
     "rules_unchanged": true,
     "statistical_improvement_established": false
   },
-  "status": "COLLECTING_HOLDOUT",
-  "updated_at": "2026-10-29T16:27:36.903340+00:00"
+  "status": "HOLDOUT_NOT_STARTED",
+  "updated_at": "2026-10-29T17:06:12.992134+00:00"
 }
