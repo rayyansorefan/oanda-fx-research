@@ -713,13 +713,15 @@
     "202610291645-EURSEK-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "SHORT",
+      "fill_at": "2026-10-29T21:00:00Z",
       "id": "202610291645-EURSEK-SHORT-EMA20_PULLBACK",
       "instrument": "EUR_SEK",
       "pattern_at": "2026-10-29T19:30:00+00:00",
+      "reason": "Fill and exit level appear in same OHLC bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_SEK-d2e9cf1aada093b9e7a8943a63f01f269aa69e2c2e7a649eb200ef0b97b92976.json",
-      "status": "PAPER_WAITING_FOR_ENTRY",
+      "source_evidence": "data/replay_evidence/EUR_SEK-8fce6e6f5d6a39282e69bcbb64b7062c4cd257783e68a992e32221f43381548c.json",
+      "status": "PAPER_AMBIGUOUS_FILL_BAR",
       "trade_executed": false
     }
   },
@@ -793,9 +795,9 @@
   "today_registered": 11,
   "today_scored_hypothetical_entries": 6,
   "today_status_counts": {
-    "PAPER_STOP_AFTER_FILL": 6,
-    "PAPER_WAITING_FOR_ENTRY": 1
+    "PAPER_AMBIGUOUS_FILL_BAR": 1,
+    "PAPER_STOP_AFTER_FILL": 6
   },
   "today_uk": "2026-10-29",
-  "updated_at": "2026-10-29T20:15:59Z"
+  "updated_at": "2026-10-29T22:17:55Z"
 }
