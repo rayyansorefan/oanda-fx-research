@@ -8,9 +8,12 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+# Existing research modules support both scripts/ execution and unittest imports.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 import oanda_data as market
 import news_watch as news_source
 import signal_admission as admission
