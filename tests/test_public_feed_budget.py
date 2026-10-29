@@ -84,5 +84,42 @@ class BudgetTests(unittest.TestCase):
         self.assertEqual({r["status"] for r in kept if r.get("scored")},
                          {"WIN_TP1","LOSS_STOP"})
         self.assertLessEqual(serialized_size(payload),PUBLIC_MAX_BYTES)
+    def test_full_index_survives_optional_swing_compaction(self):
+        payload = self.sample()
+        original = payload["learning"]["paper_audit"]["candidates"]
+        # Grow the complete cohort and duplicate optional swing evidence to
+        # exercise the final compaction stage without touching trade economics.
+        payload["learning"]["paper_audit"]["candidates"] = [
+            dict(original[i % len(original)], id=f"full-{i}")
+            for i in range(660)
+        ]
+        payload["learning"]["paper_audit"]["totals"]["candidates"] = 660
+        for pair in payload["pairs"].values():
+            for frame in pair["frames"].values():
+                frame.setdefault("indicators", {})["structure"] = {
+                    "highs": "HIGHER", "lows": "HIGHER",
+                    "confirmed_swings": {
+                        "recent_highs": [{"time": f"2026-10-29T{i:02d}:00:00Z",
+                                          "price": 1.12 + i * .001} for i in range(20)],
+                        "recent_lows": [{"time": f"2026-10-29T{i:02d}:00:00Z",
+                                         "price": 1.10 + i * .001} for i in range(20)]
+                    }
+                }
+        # Represent other required public content that cannot be dropped.
+        payload["headlines"] = [{"headline": "X" * 680_000}]
+        fit_public_feed_budget(payload)
+        audit = payload["learning"]["paper_audit"]
+        self.assertEqual(len(audit["candidate_index"]), 660)
+        self.assertEqual({row[0] for row in audit["candidate_index"]},
+                         {f"full-{i}" for i in range(660)})
+        self.assertLessEqual(serialized_size(payload), PUBLIC_MAX_BYTES)
+        for pair in payload["pairs"].values():
+            for frame in pair["frames"].values():
+                structure = frame["indicators"]["structure"]
+                self.assertEqual(structure["highs"], "HIGHER")
+                self.assertEqual(structure["lows"], "HIGHER")
+                self.assertLessEqual(len(structure["confirmed_swings"]["recent_highs"]), 2)
+                self.assertLessEqual(len(structure["confirmed_swings"]["recent_lows"]), 2)
+
 if __name__=="__main__":
     unittest.main()
