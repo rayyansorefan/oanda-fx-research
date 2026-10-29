@@ -3,9 +3,9 @@
   "common_universe": "All screened OANDA account currency pairs receive M5/M15/H1/H4/D collection, with explicit per-timeframe gaps. Both study arms require identical complete M15/H1/H4/D context. Fast checks remain bounded to active plans and leading candidates; omitted pairs never gain observation timestamps.",
   "cost_method": "Executable-side OANDA bid/ask fills and exits; no double spread subtraction. Adverse stop gaps and 0/0.25/0.5 pip per-side stress. Financing crossing NY 17:00 and actual Pepperstone costs remain unknown unless evidenced.",
   "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
-  "development_cutoff": "2026-10-29T08:29:59Z",
-  "holdout_start_at": "2026-10-29T08:30:00Z",
-  "id": "FX-OOS-20261029-v8",
+  "development_cutoff": "2026-10-29T17:14:59Z",
+  "holdout_start_at": "2026-10-29T17:15:00Z",
+  "id": "FX-OOS-20261029-v9",
   "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
   "minimum_independent_scored_pair_days_per_arm": 100,
   "minimum_scored_days_per_arm": 20,
@@ -15,14 +15,14 @@
     "champion",
     "challenger_v1"
   ],
-  "promotion_policy": "No automatic promotion or threshold relaxation. V8 supersedes v7 before its holdout begins: real gateway delays exhausted the serial collector job. Core chart requests now use at most four concurrent GET tasks and a 210-second collection budget, with explicit gaps and failed final quotes marked partial. Untouched observations start 08:30 UTC. All prior protocols, records and receipts are retained; actual delivery, complete costs and sufficient independent forward evidence remain required.",
-  "registered_at": "2026-10-29T08:11:55.615422+00:00",
+  "promotion_policy": "No automatic promotion or threshold relaxation. V9 starts at a new untouched 17:15 UTC boundary because the public dashboard exporter now publishes aligned current scout diagnostics and provisional research pricing, while the pricing UI fixes conservative spread estimates. Existing admission, execution and risk thresholds are unchanged. V8 protocol and all prior prospective records, outcomes and delivery evidence remain archived and cannot be counted as V9 holdout. Sufficient forward evidence, verified user receipt, complete costs and independent review remain required.",
+  "registered_at": "2026-10-29T17:05:25.255Z",
   "require_pair_specific_observations": true,
-  "rule_sha256": "249206ffaf7c293b866f6e94bdeb82e79b67fe6c311bcadff075670094a71848",
+  "rule_sha256": "28b689423aecd6b48a8b5b5595543712bb82d4d103ae669a30d30406e8809e2c",
   "slippage_pips_per_side": [
     0,
     0.25,
     0.5
   ],
-  "supersedes_protocol_sha256": "b36b31728bc1ffb0a1c56d2d85e404084eba01f4725dab8481db3d78e03c1e27"
+  "supersedes_protocol_sha256": "4226a339e3121e689fb908e345bdd1b0af321d85b34562b665a8d80f695e6501"
 }
