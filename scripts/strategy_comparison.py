@@ -82,7 +82,7 @@ def metrics(records):
             "missed_profitable_entries_verified":0}
     return out
 
-def update(summary, news, book=None, fetch=None, *, decided_at=None):
+def update(summary, news, book=None, fetch=None, *, decided_at=None, replay_pending=True):
     book = book or {"schema":1, "records":[], "observation_times":[]}
     source_time = moment(summary.get("collected_at"))
     now = moment(decided_at) if decided_at is not None else source_time
@@ -116,7 +116,7 @@ def update(summary, news, book=None, fetch=None, *, decided_at=None):
     # Resolve older paired cohorts first; never fabricate a no-fill on source failure.
     pending = [r for r in book["records"] if r.get("plan") and
                (r.get("result") or {}).get("status") not in TERMINAL]
-    for row in pending[:12]:
+    for row in (pending[:12] if replay_pending else []):
         try:
             bars = (fetch(row["plan"],now) if fetch else source_bars(row["plan"],now))
             pair_times = book.get("pair_observation_times", {}).get(row["pair"], [])

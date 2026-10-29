@@ -31,6 +31,26 @@ class EntryPipelineRepairs(unittest.TestCase):
         # This is the main() persistence condition which previously stayed false.
         self.assertNotEqual(archived.get('signals'),archive.get('signals'))
 
+    def test_known_future_high_impact_window_is_frozen_for_watcher_and_paper_replay(self):
+        n=news();n['calendar']={'events':[
+            {'currency':'USD','impact':'High','time':(NOW+timedelta(minutes=80)).isoformat(),'title':'GDP'},
+            {'currency':'JPY','impact':'High','time':(NOW+timedelta(minutes=80)).isoformat(),'title':'Unrelated'}]}
+        plan,error=admission.qualify('EUR_USD',ranked(),source(),n,NOW,'EMA20_PULLBACK')
+        self.assertIsNone(error)
+        self.assertEqual(len(plan['event_blackouts_utc']),1)
+        self.assertEqual(admission.moment(plan['event_blackouts_utc'][0]['start']),NOW+timedelta(minutes=35))
+
+    def test_fast_replay_deferral_does_not_erase_existing_audited_state(self):
+        s={'status':'OK','collected_at':NOW.isoformat(),'ranked_review_candidates':[ranked()],
+           'pairs':{'EUR_USD':source()}}
+        book=comparison.update(s,news(),fetch=lambda *a:[])
+        for r in book['records']:
+            if r.get('plan'):r['result']={'status':'OPEN','triggered_at':NOW.isoformat(),'entry':1.1}
+        before=[deepcopy(r['result']) for r in book['records'] if r.get('plan')]
+        s['collected_at']=(NOW+timedelta(seconds=5)).isoformat()
+        result=comparison.update(s,news(),book,replay_pending=False)
+        self.assertEqual([r['result'] for r in result['records'] if r.get('plan')],before)
+
     def collect_fixture(self, failed_quote=False, failed_frame=False):
         names = [f'{a}_{b}' for a in ('EUR','USD','GBP','AUD','CAD','CHF','NZD','JPY','SGD')
                  for b in ('EUR','USD','GBP','AUD','CAD','CHF','NZD','JPY','SGD') if a!=b][:68]

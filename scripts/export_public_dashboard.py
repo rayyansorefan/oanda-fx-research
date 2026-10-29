@@ -237,6 +237,24 @@ def fit_public_feed_budget(payload: dict) -> None:
                         swings[key] = history[-swing_cap:] if swing_cap else []
         if serialized_size(payload) <= PUBLIC_MAX_BYTES:
             return
+    # Full-universe core charts can exceed the single-file ceiling even at
+    # six bars/frame. Drop only unused rich pattern excerpts and repeated
+    # static method metadata; preserve every displayed indicator, quote,
+    # candle and frozen plan. Full pattern evidence remains private.
+    payload.setdefault("public_compaction", {})["optional_pattern_details_omitted"] = True
+    for pair in payload.get("pairs", {}).values():
+        for frame in (pair.get("frames") or {}).values():
+            indicators = frame.get("indicators") or {}
+            structure = indicators.get("structure") or {}
+            for key in ("last_candle", "fibonacci", "rsi_divergence_candidates"):
+                structure.pop(key, None)
+            for key in ("bollinger", "stochastic", "supertrend", "ichimoku", "donchian"):
+                item = indicators.get(key)
+                if isinstance(item, dict):
+                    for field in ("period", "std_deviations", "smoothing", "atr_period", "multiplier", "forward_shift_bars"):
+                        item.pop(field, None)
+    if serialized_size(payload) <= PUBLIC_MAX_BYTES:
+        return
     if serialized_size(payload) <= PUBLIC_HARD_MAX_BYTES:
         return
     raise ValueError("Public FX payload exceeds hard limit after safe compaction; publication refused")

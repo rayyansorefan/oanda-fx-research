@@ -180,12 +180,10 @@ def perform(now=None):
         evaluated_at=decision.isoformat())
     # Both frozen policies are observed at the same decision time. Costly
     # historical replay stays in the hourly job; no fast run invents a fill.
-    def defer_replay(*_args):
-        raise OSError("Replay deferred to hourly audited data collection")
     study_path = ROOT / "data/strategy_comparison.json"
     study = comparison.update(
         fast_summary, fresh_news, read(study_path, None),
-        fetch=defer_replay, decided_at=decision.isoformat())
+        decided_at=decision.isoformat(), replay_pending=False)
     write(study_path, study)
     # Plans are immutable after creation; the hourly engine subsequently shares
     # these same canonical plans and safety gates.

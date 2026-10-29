@@ -37,6 +37,32 @@ class BudgetTests(unittest.TestCase):
         self.assertGreaterEqual(min(len(f["candles"]) for p in payload["pairs"].values()
                                     for f in p["frames"].values()), 6)
 
+    def test_full_core_universe_keeps_charts_indicators_and_complete_candidate_index(self):
+        from copy import deepcopy
+        payload=self.sample()
+        base=deepcopy(payload["pairs"]["FX_00"]["frames"]["M15"])
+        base["indicators"].update({"adx14":25,"rsi14":55,
+            "structure":{"confirmed_swings":{"highs":"HIGHER","lows":"HIGHER"},
+                         "last_candle":{"unused_rich_details":"x"*1200},
+                         "fibonacci":{"note":"x"*800}},
+            "bollinger":{"period":20,"bandwidth_percentile_recent":50}})
+        payload["pairs"]={f"FX_{i:02d}":{"deep":True,"quote":{"bid":1.1,"ask":1.1001},
+            "frames":{tf:deepcopy(base) for tf in ("M5","M15","H1","H4","D")}} for i in range(68)}
+        candidates=payload["learning"]["paper_audit"]["candidates"]
+        payload["learning"]["paper_audit"]["candidates"]=[dict(deepcopy(candidates[i%70]),id=str(i)) for i in range(700)]
+        payload["learning"]["paper_audit"]["totals"]["candidates"]=700
+        fit_public_feed_budget(payload)
+        self.assertLessEqual(serialized_size(payload),PUBLIC_MAX_BYTES)
+        self.assertEqual(len(payload["learning"]["paper_audit"]["candidate_index"]),700)
+        self.assertTrue(payload["public_compaction"]["optional_pattern_details_omitted"])
+        for row in payload["pairs"].values():
+            self.assertEqual(len(row["frames"]),5)
+            for frame in row["frames"].values():
+                self.assertGreaterEqual(len(frame["candles"]),6)
+                self.assertEqual(frame["indicators"]["adx14"],25)
+                self.assertEqual(frame["indicators"]["bollinger"]["bandwidth_percentile_recent"],50)
+                self.assertEqual(frame["indicators"]["structure"]["confirmed_swings"]["highs"],"HIGHER")
+
     def test_small_feed_does_not_mutate_candidate_history(self):
         p={"pairs":{},"learning":{"paper_audit":{"totals":{"candidates":1},
             "candidates":[{"id":"1","tracking":{"history":[1,2,3]}}]}}}

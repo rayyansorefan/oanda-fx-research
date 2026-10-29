@@ -35,19 +35,26 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_fast_entry_scan.py' -v
       - name: Refresh shortlist, primary news and prospective paper comparison
         id: fast
+        continue-on-error: true
         env:
           OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
           OANDA_ACCOUNT_ID: ${{ secrets.OANDA_ACCOUNT_ID }}
         run: python scripts/fast_entry_scan.py
       - name: Audit validation and actual delivery evidence (no simulated receipt)
         id: validate
+        if: steps.fast.outcome == 'success'
+        continue-on-error: true
         run: python scripts/forward_validation.py
       - name: Update public FX feed with timestamped fast results
         id: dashboard
+        if: steps.fast.outcome == 'success' && steps.validate.outcome == 'success'
+        continue-on-error: true
         env:
           FX_DASHBOARD_DEPLOY_TOKEN: ${{ secrets.FX_DASHBOARD_DEPLOY_TOKEN }}
         run: python scripts/export_public_dashboard.py
       - name: Persist immutable plans, paper cohorts, and research observations
+        id: persist
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -58,3 +65,6 @@ jobs:
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
+      - name: Fail visibly after preserving observations
+        if: steps.fast.outcome != 'success' || steps.validate.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success'
+        run: exit 1

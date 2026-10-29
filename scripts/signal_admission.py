@@ -189,6 +189,18 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
     deadline = (now + timedelta(minutes=90)).isoformat().replace("+00:00", "Z")
     identifier = "AUTO-" + now.strftime("%Y%m%dT%H%M") + "-" + pair + "-" + (
         "L" if direction == "LONG" else "S") + ("-C" if route == "MOMENTUM_CONTINUATION" else "-B")
+    # Freeze all KNOWN relevant high-impact windows overlapping plan life,
+    # including windows that start after today's admission check. Replay and
+    # watcher must share the same future-event restrictions.
+    windows = []
+    for event in (news.get("calendar") or {}).get("events") or []:
+        at = moment(event.get("time"))
+        if (at and event.get("currency") in pair.split("_")
+                and "high" in str(event.get("impact", "")).lower()):
+            start, end = at - timedelta(minutes=45), at + timedelta(minutes=45)
+            if end >= now and start <= now + timedelta(minutes=90):
+                windows.append({"start": start.isoformat(), "end": end.isoformat(),
+                                "title": event.get("title"), "currency": event.get("currency")})
     plan = {
         "id": identifier, "instrument": pair, "direction": direction,
         "created_at": now_utc, "expires_at": deadline,
@@ -196,7 +208,7 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
         "pip_size": pip,
         "tp1": round(tp, decimals),
         "max_oanda_spread_pips": round(spread_cap, 3),
-        "event_blackouts_utc": [], "entry_route": route,
+        "event_blackouts_utc": windows, "entry_route": route,
         "oanda_snapshot_at": now_utc,
         "source_quote_at": q.get("time"),
         "research_only": True, "broker_verified": False,
