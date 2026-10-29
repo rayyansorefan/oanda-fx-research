@@ -107,7 +107,7 @@ def fit_public_feed_budget(payload: dict) -> None:
         "id", "pair", "side", "created_at", "status", "entry",
         "stop", "tp1", "move_pct", "quote_at", "reference_price"
     ]
-    audit["candidate_index"] = [
+    fresh_index = [
         [row.get("id"), row.get("instrument"), row.get("direction"),
          row.get("created_at"), row.get("status"), row.get("entry"),
          row.get("stop"), row.get("tp1"), row.get("move_pct"),
@@ -115,6 +115,15 @@ def fit_public_feed_budget(payload: dict) -> None:
          (row.get("tracking") or {}).get("reference_price")]
         for row in candidates
     ]
+    # fit_public_feed_budget is called repeatedly as comparison/validation
+    # sections are appended. By then audit["candidates"] may have been capped
+    # to 30 to meet the public size budget. Do not rebuild the full index from
+    # that rolling window and silently discard hundreds of registered IDs.
+    previous_index = audit.get("candidate_index")
+    audit["candidate_index"] = (
+        previous_index if isinstance(previous_index, list)
+        and len(previous_index) > len(fresh_index) else fresh_index
+    )
     audit["public_window"] = {
         "published_candidates": len(candidates),
         "private_total_candidates": int((audit.get("totals") or {}).get("candidates", len(candidates))),
@@ -736,6 +745,10 @@ def main() -> int:
                 "research_only": True, "manual_pepperstone_check_required": True,
             }
             fit_public_feed_budget(data)
+        paper_audit = (data.get("learning") or {}).get("paper_audit") or {}
+        expected_index = int((paper_audit.get("totals") or {}).get("candidates", 0))
+        if len(paper_audit.get("candidate_index") or []) != expected_index:
+            raise ValueError("Public candidate index is incomplete; refusing misleading feed")
         if not data.get("snapshot_at") or len(data.get("pairs", {})) < 1:
             raise ValueError("Invalid sanitized payload")
         PUBLIC_PAYLOAD_PATH.parent.mkdir(parents=True, exist_ok=True)
