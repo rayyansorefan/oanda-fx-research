@@ -220,6 +220,23 @@ def fit_public_feed_budget(payload: dict) -> None:
                 section["public_candidates_truncated"] = True
         if serialized_size(payload) <= PUBLIC_MAX_BYTES:
             return
+    # When a larger deep-chart universe and a growing complete candidate index
+    # exceed the limit, shrink only duplicated historical swing coordinates.
+    # Keep the structure classifications (HH/HL/LH/LL), all current indicator
+    # values, all price candles, quotes, frozen trade economics, and every ID.
+    # The complete swing evidence remains in private data/pairs/*.json.
+    for swing_cap in (2, 0):
+        for pair in payload.get("pairs", {}).values():
+            for frame in (pair.get("frames") or {}).values():
+                indicators = frame.get("indicators") or {}
+                structure = indicators.get("structure") or {}
+                swings = structure.get("confirmed_swings") or {}
+                for key in ("recent_highs", "recent_lows"):
+                    history = swings.get(key)
+                    if isinstance(history, list) and len(history) > swing_cap:
+                        swings[key] = history[-swing_cap:] if swing_cap else []
+        if serialized_size(payload) <= PUBLIC_MAX_BYTES:
+            return
     if serialized_size(payload) <= PUBLIC_HARD_MAX_BYTES:
         return
     raise ValueError("Public FX payload exceeds hard limit after safe compaction; publication refused")
