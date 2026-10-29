@@ -1,0 +1,26 @@
+name: FX entry safety regression
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - 'tests/**'
+      - 'validation_protocol.json'
+      - '.github/workflows/oanda-fast-entry.yml'
+      - '.github/workflows/fx-entry-regression.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Run offline FX research tests
+        run: python -m unittest discover -s tests -v
+      - name: Verify registered future-study digest
+        run: python -c "import json; from scripts import forward_validation as v; p=json.load(open('validation_protocol.json')); assert p['rule_sha256']==v.digest_rules(), 'Protocol rules changed without relocking'"
