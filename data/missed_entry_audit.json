@@ -404,16 +404,19 @@
     "202610281545-CADCHF-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
+      "exit_at": "2026-10-29T18:30:00Z",
       "fill_at": "2026-10-28T18:30:00Z",
       "id": "202610281545-CADCHF-LONG-EMA20_PULLBACK",
       "instrument": "CAD_CHF",
       "paper_entry": 0.5912,
+      "paper_exit": 0.59104,
       "pattern_at": "2026-10-28T18:15:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/CAD_CHF-3ba9fcf72cdb05fce0904144efab094e3942252adc801f71b3680c18fe191847.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/CAD_CHF-ad92b0494b036855b5b31c725ec38fc1ba37438cf511c818810d39a79220dc54.json",
+      "status": "PAPER_TIME_EXIT",
+      "trade_executed": false,
+      "underlying_move_pct": -0.02706
     },
     "202610281545-USDMXN-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
@@ -706,6 +709,18 @@
       "status": "PAPER_STOP_AFTER_FILL",
       "trade_executed": false,
       "underlying_move_pct": -0.08933
+    },
+    "202610291645-EURSEK-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202610291645-EURSEK-SHORT-EMA20_PULLBACK",
+      "instrument": "EUR_SEK",
+      "pattern_at": "2026-10-29T19:30:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/EUR_SEK-d2e9cf1aada093b9e7a8943a63f01f269aa69e2c2e7a649eb200ef0b97b92976.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
+      "trade_executed": false
     }
   },
   "latency_audit": {
@@ -758,6 +773,14 @@
         "fill_precedes_detection": false,
         "id": "202610290030-AUDUSD-LONG-EMA20_PULLBACK",
         "pattern_at": "2026-10-29T01:15:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-10-29T20:15:59.200073+00:00",
+        "detection_delay_minutes": 45.99,
+        "fill_precedes_detection": false,
+        "id": "202610291645-EURSEK-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-10-29T19:30:00+00:00"
       }
     ],
     "verified_profitable_missed_manual_entries": 0
@@ -765,13 +788,14 @@
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 2,
-  "today_forward_patterns": 6,
+  "today_distinct_pair_pattern_events": 3,
+  "today_forward_patterns": 7,
   "today_registered": 11,
   "today_scored_hypothetical_entries": 6,
   "today_status_counts": {
-    "PAPER_STOP_AFTER_FILL": 6
+    "PAPER_STOP_AFTER_FILL": 6,
+    "PAPER_WAITING_FOR_ENTRY": 1
   },
   "today_uk": "2026-10-29",
-  "updated_at": "2026-10-29T18:17:11Z"
+  "updated_at": "2026-10-29T20:15:59Z"
 }
