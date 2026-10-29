@@ -469,7 +469,7 @@ def watch():
               "news_collected_at": news.get("collected_at"),
               "news_coverage": news.get("status", "UNAVAILABLE"),
               "afternoon_audit": afternoon_audit(paper_book, current),
-              "data_policy": "Research-only, no orders. Hourly OANDA quote not Pepperstone executable quote.",
+              "data_policy": "Research-only, no orders. OANDA quotes are not Pepperstone executable prices; prepared alerts are not confirmed deliveries.",
               "feedback_summary": {"broker": feedback["broker"],
                                    "paper_totals": feedback["paper_totals"],
                                    "threshold": feedback["threshold"]},
@@ -544,8 +544,8 @@ def watch():
                     tracked.setdefault("news_alerted", []).append(key)
             report["signals"].append(row)
             continue
-        if tracked.get("notified"):
-            row["status"] = "PRIOR_PRICE_ALERT_SENT"
+        if tracked.get("notified") or tracked.get("prepared_routes"):
+            row["status"] = "PRIOR_PRICE_TRIGGER_RECORDED_DELIVERY_UNVERIFIED"
             report["signals"].append(row)
             continue
         if status == "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS":
@@ -571,11 +571,13 @@ def watch():
             route, bar_time, reason = found
             # Immutable research event for the private WhatsApp sender.
             # Never require a GitHub Issue as a prerequisite for delivery.
-            tracked.setdefault("notified", []).append(route)
+            tracked.setdefault("prepared_routes", []).append(route)
             tracked["breakout_pending"] = None
             row["status"] = "PRICE_REASSESSMENT_ALERT_READY"
             row["route"] = route
             row["trigger_bar_open_time"] = bar_time
+            row["delivery_status"] = "NOT_VERIFIED"
+            row["user_delivery_verified"] = False
         else:
             row["status"] = "NO_QUALIFIED_PRICE_PATTERN"
         report["signals"].append(row)

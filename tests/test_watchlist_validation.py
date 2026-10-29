@@ -152,7 +152,10 @@ class MonitorGateTests(unittest.TestCase):
             self.assertEqual(data["signals"][0]["status"], "PRICE_REASSESSMENT_ALERT_READY")
             self.assertEqual(data["counts"]["price_alerts"], 1)
             saved_state = json.loads(state.read_text())
-            self.assertIn("A", saved_state["setups"][good()["id"]]["notified"])
+            self.assertIn("A", saved_state["setups"][good()["id"]]["prepared_routes"])
+            self.assertEqual(saved_state["setups"][good()["id"]].get("notified", []), [])
+            self.assertEqual(data["signals"][0]["delivery_status"], "NOT_VERIFIED")
+            self.assertFalse(data["signals"][0]["user_delivery_verified"])
 
 if __name__ == "__main__":
     unittest.main()

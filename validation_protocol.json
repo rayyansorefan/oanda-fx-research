@@ -1,11 +1,11 @@
 {
   "bootstrap_resamples": 10000,
-  "common_universe": "Both arms require the same observed M15/H1/H4/D history for the scored comparison. Broader paper preliminaries receive deep collection; no live gates relaxed.",
+  "common_universe": "Both arms require current completed M15/H1/H4/D history. Hourly screens all OANDA account FX; bounded fast checks refresh active and leading preliminary shortlist in two UK market windows. Omitted pairs and missing history are explicitly recorded. No live gates relaxed.",
   "cost_method": "Executable-side OANDA bid/ask fills and exits; no double spread subtraction. Adverse stop gaps and 0/0.25/0.5 pip per-side stress. Financing crossing NY 17:00 and actual Pepperstone costs remain unknown unless evidenced.",
-  "delivery_method": "Separate plan creation, completed trigger, detection, repository readback, first observed public serving and provider/user receipt. A public readback is not a ChatGPT push receipt. No delivery inferred from timestamps or tests.",
+  "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
   "development_cutoff": "2026-10-29T06:59:59Z",
   "holdout_start_at": "2026-10-29T07:00:00Z",
-  "id": "FX-OOS-20261029-v1",
+  "id": "FX-OOS-20261029-v2",
   "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
   "minimum_independent_scored_pair_days_per_arm": 100,
   "minimum_scored_days_per_arm": 20,
@@ -14,12 +14,13 @@
     "champion",
     "challenger_v1"
   ],
-  "promotion_policy": "No automatic promotion. Protocol changes invalidate the OOS study; sufficient sample, verified timely delivery, costs, and positive day-cluster improvement are minimum conditions for independent review.",
-  "registered_at": "2026-10-28T23:54:54.602173+00:00",
-  "rule_sha256": "e7f25f8fa5d00857dbd918c27c8d60014e6b254c952bdb44dfa07f5e3aabe70f",
+  "promotion_policy": "Explicit pass/fail-or-insufficient-evidence assessment; automatic promotion prohibited. Sufficient untouched samples, actual delivery and broker costs, positive day-cluster improvement, and separate independent review required.",
+  "registered_at": "2026-10-29T00:31:33Z",
+  "rule_sha256": "975cd4de889c6ad5c84714ccc0998fafa37929139be4edb2633519922da5be3a",
   "slippage_pips_per_side": [
     0,
     0.25,
     0.5
-  ]
+  ],
+  "monitoring_method": "Fast shortlist only in 07-09 and 13-15 Europe/London weekdays, four checks/hour at :02/:17/:32/:47, GitHub best effort. Existing hourly and four comprehensive weekday assessments unchanged. No entry detected between checks is assumed actionable."
 }
