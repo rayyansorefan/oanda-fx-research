@@ -1,4 +1,5 @@
 import unittest
+import json
 from copy import deepcopy
 from datetime import datetime,timedelta,timezone
 from scripts import forward_validation as v
@@ -138,5 +139,10 @@ class ForwardValidationTests(unittest.TestCase):
         self.assertIsNone(event['verified_user_delivery_at'])
         self.assertFalse(v.delivered_before_entry(row(),ledger,NOW))
         self.assertEqual(ledger,v.merge_fast_events(ledger,fast))
+
+    def test_live_rule_digest_matches_registered_holdout(self):
+        registered=json.loads((v.ROOT/'validation_protocol.json').read_text())
+        self.assertEqual(registered['rule_sha256'],v.digest_rules())
+
 
 if __name__=='__main__':unittest.main()
