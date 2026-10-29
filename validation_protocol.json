@@ -3,9 +3,9 @@
   "common_universe": "All screened OANDA account currency pairs receive M5/M15/H1/H4/D collection, with explicit per-timeframe gaps. Both study arms require identical complete M15/H1/H4/D context. Fast checks remain bounded to active plans and leading candidates; omitted pairs never gain observation timestamps.",
   "cost_method": "Executable-side OANDA bid/ask fills and exits; no double spread subtraction. Adverse stop gaps and 0/0.25/0.5 pip per-side stress. Financing crossing NY 17:00 and actual Pepperstone costs remain unknown unless evidenced.",
   "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
-  "development_cutoff": "2026-10-29T08:14:59Z",
-  "holdout_start_at": "2026-10-29T08:15:00Z",
-  "id": "FX-OOS-20261029-v7",
+  "development_cutoff": "2026-10-29T08:29:59Z",
+  "holdout_start_at": "2026-10-29T08:30:00Z",
+  "id": "FX-OOS-20261029-v8",
   "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
   "minimum_independent_scored_pair_days_per_arm": 100,
   "minimum_scored_days_per_arm": 20,
@@ -15,14 +15,14 @@
     "champion",
     "challenger_v1"
   ],
-  "promotion_policy": "No automatic promotion or threshold relaxation. V7 supersedes v6 to preserve hourly M5/extended frames when merging a newer four-frame fast observation. Previous protocols, immutable plans, study records and delivery events remain preserved. New untouched observations begin 08:15 UTC. Actual user delivery, complete costs, sufficient forward evidence and independent review are required.",
-  "registered_at": "2026-10-29T07:58:44.946900+00:00",
+  "promotion_policy": "No automatic promotion or threshold relaxation. V8 supersedes v7 before its holdout begins: real gateway delays exhausted the serial collector job. Core chart requests now use at most four concurrent GET tasks and a 210-second collection budget, with explicit gaps and failed final quotes marked partial. Untouched observations start 08:30 UTC. All prior protocols, records and receipts are retained; actual delivery, complete costs and sufficient independent forward evidence remain required.",
+  "registered_at": "2026-10-29T08:11:55.615422+00:00",
   "require_pair_specific_observations": true,
-  "rule_sha256": "c831ad1b355c3267b24feb93f63f2f0ae1dd4157c8005bf3e9a4ae3b8f44a4a6",
+  "rule_sha256": "249206ffaf7c293b866f6e94bdeb82e79b67fe6c311bcadff075670094a71848",
   "slippage_pips_per_side": [
     0,
     0.25,
     0.5
   ],
-  "supersedes_protocol_sha256": "d83b9daeb64d397c17d5a9d5d8f863e3002c7a770466347c3451584af9aad895"
+  "supersedes_protocol_sha256": "b36b31728bc1ffb0a1c56d2d85e404084eba01f4725dab8481db3d78e03c1e27"
 }

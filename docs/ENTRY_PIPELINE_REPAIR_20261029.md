@@ -22,7 +22,7 @@ The saved comparison had five pre-07:00 plans: two triggered-unfilled, two inval
 
 ## Verification and limits
 
-254 offline tests passed locally, including a 68-pair collector integration, missing-frame/final-price failures, archive persistence, stale/mismatched fast-stream rejection, pair-specific timing, missing-cost handling and version migration. Actual collector output, public deployment and rendered dashboard still require post-commit checks; local tests do not prove those stages or strategy profitability.
+257 offline tests passed locally, including a 68-pair collector integration, missing-frame/final-price failures, archive persistence, stale/mismatched fast-stream rejection, pair-specific timing, missing-cost handling and version migration. Actual collector output, public deployment and rendered dashboard still require post-commit checks; local tests do not prove those stages or strategy profitability.
 
 No orders, live broker execution API, assumed equity, new schedules or paid services were introduced. Hourly/four weekday assessments, notification quiet hours and gross 1.50/net 1.35 gates are preserved. The existing fast workflow gains a deployment trigger; its cron windows remain unchanged. GitHub scheduling is best effort. Actual phone/provider receipt remains unverified.
 
@@ -37,3 +37,9 @@ V5 was superseded before its holdout began. V6 retains the same 08:00 UTC start 
 ## Rendered verification and final overlay regression
 
 The public deployment at commit 2f433f3 passed after updating its exact schema allowlists for fast monitoring and disclosed compaction (no layout change). Browser inspection verified 67/67 displayed pairs with deep coverage (GBP/ZAR excluded), 07:55 source data and the first completed fast scan. That inspection exposed deletion of the older M5/extended frames on pairs refreshed by the four-frame fast scanner. The overlay now merges frames, retaining their original candle clocks; a dedicated regression verifies M5/W preservation. V7 registers a new untouched 08:15 UTC boundary and preserves v6 and all earlier records.
+
+## OANDA delay and bounded-collector repair
+
+Final fast run 40838987501 and public deployment 40839027963 succeeded, with M5 chart controls verified in the rendered page. Collector run 40838987508 first failed on an OANDA 504; its retry exhausted the six-minute job timeout during serial chart requests. This is an operational limitation, not proof that no trading opportunity existed. Core chart collection now uses at most four simultaneous GET tasks, one atomic shared retry budget and a 210-second collection deadline. Queued requests stop at the deadline and each timeframe checks it between calls. Gaps are explicit; failed final quote refresh marks PARTIAL and cannot remain tradeable. Three additional regressions exercise the concurrency cap, expired budget and quote-only failure.
+
+V8 is registered before the v7 holdout begins, with an untouched 08:30 UTC boundary. The original EUR/AUD canonical plan is recovered exactly (all fields independently compared) from commits c00c287 and e3d4e1f into the expiry archive. This is historical plan preservation, not a new entry or fill. Further collector/public verification follows this repair; profitability remains unvalidated.

@@ -5,6 +5,8 @@ import math
 import os
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from threading import Lock
 from advanced_technicals import advanced
 from fx_universe import catalog, chunks, is_quote_usable, screen_priority, deep_selection, CORE, MAJOR
 from datetime import datetime, timezone
@@ -26,6 +28,9 @@ CANDLE_CACHE = {}
 # Bounded global retry allowance: transient OANDA gateway failures must not
 # turn a six-minute, research-only hourly job into an unbounded API loop.
 TRANSIENT_RETRIES_LEFT = 8
+RETRY_LOCK = Lock()
+COLLECTION_BUDGET_SECONDS = 210
+MAX_CHART_WORKERS = 4
 
 
 def extended_chart_selection(selection, ranking, maximum=4):
@@ -45,6 +50,41 @@ def now():
     return datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
 
 
+def take_retry():
+    global TRANSIENT_RETRIES_LEFT
+    with RETRY_LOCK:
+        if TRANSIENT_RETRIES_LEFT <= 0:
+            return False
+        TRANSIENT_RETRIES_LEFT -= 1
+        return True
+
+
+def require_time(deadline):
+    if time.monotonic() >= deadline:
+        raise RuntimeError("OANDA_COLLECTION_TIME_BUDGET_EXHAUSTED")
+
+
+def bounded_charts(items, operation, deadline):
+    """At most four read-only chart tasks; queued work stops at the deadline.
+
+    Each operation checks the deadline between network calls. An in-flight
+    request keeps its existing 15-second timeout and bounded single retry.
+    """
+    def run(item):
+        require_time(deadline)
+        return operation(item)
+    results = []
+    with ThreadPoolExecutor(max_workers=MAX_CHART_WORKERS) as pool:
+        pending = {pool.submit(run, item): item for item in items}
+        for future in as_completed(pending):
+            pair = pending[future]
+            try:
+                results.append((pair, future.result(), None))
+            except (RuntimeError, ValueError, KeyError, TypeError) as exc:
+                results.append((pair, None, type(exc).__name__ + "_" + str(exc)[:80]))
+    return results
+
+
 def request(path, params=None):
     token = os.environ.get("OANDA_API_TOKEN", "").strip()
     if not token:
@@ -60,8 +100,7 @@ def request(path, params=None):
                 return json.load(resp)
         except HTTPError as exc:
             if (exc.code in (429, 502, 503, 504) and attempt == 0
-                    and TRANSIENT_RETRIES_LEFT > 0):
-                TRANSIENT_RETRIES_LEFT -= 1
+                    and take_retry()):
                 time.sleep(0.5)
                 continue
             raise RuntimeError("OANDA_HTTP_" + str(exc.code)) from None
@@ -299,6 +338,7 @@ def currently_monitored_names():
 
 
 def collect():
+    deadline = time.monotonic() + COLLECTION_BUDGET_SECONDS
     account_id = os.environ.get("OANDA_ACCOUNT_ID", "").strip()
     if not account_id:
         accounts = request("/v3/accounts").get("accounts", [])
@@ -322,23 +362,25 @@ def collect():
     full_failures = dict(problems)
     # Scan liquid majors first so gateway outages do not disproportionately
     # hide the instruments needed for the four daily discretionary reviews.
-    for pair in sorted(names, key=lambda item: (item not in CORE, item)):
+    scan_names = sorted(valid, key=lambda item: (item not in CORE, item))
+    for pair in names:
         if pair not in valid:
-            if pair in quotes and not quotes[pair].get("tradeable"):
-                full_failures[pair] = "OANDA_NON_TRADEABLE_QUOTE"
-            elif pair in quotes:
-                full_failures[pair] = "OANDA_BAD_SPREAD_OR_PRICE"
-            continue
-        try:
-            m15 = fetch_frame(pair, "M15", deep=False)
-            h1 = fetch_frame(pair, "H1", deep=False)
-            score = screen_priority(quotes[pair], m15, h1)
-            all_data[pair] = {"quote": quotes[pair], "frames": {"M15": m15, "H1": h1}}
+            full_failures[pair] = ("OANDA_NON_TRADEABLE_QUOTE" if pair in quotes and not quotes[pair].get("tradeable")
+                                   else "OANDA_BAD_SPREAD_OR_PRICE")
+    def scan_pair(pair):
+        require_time(deadline)
+        m15 = fetch_frame(pair, "M15", deep=False)
+        require_time(deadline)
+        h1 = fetch_frame(pair, "H1", deep=False)
+        return {"quote": quotes[pair], "frames": {"M15": m15, "H1": h1}}, screen_priority(quotes[pair], m15, h1)
+    for pair, result, error in bounded_charts(scan_names, scan_pair, deadline):
+        if error:
+            full_failures[pair] = "SCANNER_" + error
+        else:
+            content, score = result
+            all_data[pair] = content
             if score is not None:
                 ranking[pair] = score
-        except (RuntimeError, ValueError, KeyError, TypeError) as exc:
-            full_failures[pair] = ("SCANNER_" + type(exc).__name__ +
-                                   "_" + str(exc)[:55]).replace("OANDA_HTTP_", "HTTP_")
     if not all_data:
         raise RuntimeError("OANDA_NO_FX_TECHNICAL_HISTORY")
     # Phase 2: full D/H4/H1/M15/M5 evidence for EVERY screened pair.
@@ -348,31 +390,38 @@ def collect():
     extended_names = set(extended_chart_selection(selection, ranking))
     extended_gaps = {}
     deep_ok = []
-    for pair in selection:
-        if pair not in all_data:
-            continue
+    def deepen_pair(pair):
         frames = all_data[pair]["frames"]
-        # Each timeframe failure is isolated so an unavailable M5 feed cannot
-        # prevent H4/D collection needed by admission and the paired study.
         gaps = {}
         for frame in ("M5", "H4", "D"):
             try:
+                require_time(deadline)
                 frames[frame] = fetch_frame(pair, frame, deep=True)
             except (RuntimeError, ValueError, KeyError, TypeError) as exc:
-                gaps[frame] = type(exc).__name__ + "_" + str(exc)[:55]
+                gaps[frame] = type(exc).__name__ + "_" + str(exc)[:80]
         frames["M15"] = describe(CANDLE_CACHE[(pair, "M15")], "M15", deep=True)
         frames["H1"] = describe(CANDLE_CACHE[(pair, "H1")], "H1", deep=True)
+        extras = {}
         if pair in extended_names:
             for frame in EXTENDED_CHART_FRAMES:
                 try:
+                    require_time(deadline)
                     frames[frame] = fetch_frame(pair, frame, deep=True)
                 except (RuntimeError, ValueError, KeyError, TypeError) as exc:
-                    extended_gaps.setdefault(pair, {})[frame] = (
-                        type(exc).__name__ + "_" + str(exc)[:55])
+                    extras[frame] = type(exc).__name__ + "_" + str(exc)[:80]
+        return gaps, extras
+    for pair, result, error in bounded_charts(selection, deepen_pair, deadline):
+        if error:
+            full_failures[pair] = "DEEP_" + error
+            continue
+        gaps, extras = result
+        if extras:
+            extended_gaps[pair] = extras
         if not gaps:
             deep_ok.append(pair)
         else:
             full_failures[pair] = "DEEP_" + json.dumps(gaps, sort_keys=True)
+    deep_ok.sort()
     # Refresh pricing after chart collection: entry decisions must not use the
     # quote fetched before hundreds of history requests. A failed refresh is
     # explicit and cannot silently retain a stale tradeable quote.
@@ -389,7 +438,7 @@ def collect():
     # If a known monitored pair is quoted but could not load technical history,
     # never imply it is being reliably watched.
     payload = {
-        "status": "OK" if len(all_data) == len(names) and len(deep_ok) == len(selection) else "PARTIAL",
+        "status": "OK" if len(all_data) == len(names) and len(deep_ok) == len(selection) and not full_failures else "PARTIAL",
         "collected_at": now(),
         "source": "OANDA v20 practice (not Pepperstone executable prices)",
         "quote_type": "OANDA account-specific bid/ask, best available price",
@@ -399,6 +448,9 @@ def collect():
             "oanda_pairs_with_m15_h1_indicators": len(all_data),
             "pairs_deep_d1_h4_h1_m15_m5": len(deep_ok),
             "deep_pairs": deep_ok,
+            "chart_request_concurrency": MAX_CHART_WORKERS,
+            "collection_budget_seconds": COLLECTION_BUDGET_SECONDS,
+            "collection_budget_exhausted": time.monotonic() >= deadline,
             "extended_chart_timeframes_requested": list(EXTENDED_CHART_FRAMES),
             "extended_chart_context_pairs": {
                 pair: [f for f in EXTENDED_CHART_FRAMES

@@ -93,6 +93,35 @@ class EntryPipelineRepairs(unittest.TestCase):
             self.assertTrue(set(('M5','M15','H1','H4','D'))<=set(summary['pairs'][pair]['frames']))
             self.assertEqual(summary['pairs'][pair]['quote']['time'],NOW.isoformat())
 
+    def test_failed_final_quote_alone_marks_partial_coverage(self):
+        saved,names=self.collect_fixture(failed_quote=True)
+        summary=saved['data/summary.json']
+        self.assertEqual(summary['status'],'PARTIAL')
+        self.assertFalse(summary['pairs'][names[-1]]['quote']['tradeable'])
+
+    def test_expired_collection_budget_never_starts_a_queued_network_operation(self):
+        calls=[]
+        with patch.object(market.time,'monotonic',return_value=11):
+            results=market.bounded_charts(['A','B'],lambda item:calls.append(item),deadline=10)
+        self.assertEqual(calls,[])
+        self.assertEqual(len(results),2)
+        self.assertTrue(all('TIME_BUDGET_EXHAUSTED' in error for _,_,error in results))
+
+    def test_concurrent_chart_requests_remain_bounded_and_keep_each_pairs_result(self):
+        from threading import Barrier,Lock
+        barrier=Barrier(4);lock=Lock();active=0;maximum=0
+        def operation(item):
+            nonlocal active,maximum
+            with lock:
+                active+=1;maximum=max(maximum,active)
+            barrier.wait(timeout=2)
+            with lock:active-=1
+            return item*2
+        rows=market.bounded_charts(list(range(8)),operation,market.time.monotonic()+5)
+        self.assertEqual(maximum,4)
+        self.assertEqual(sorted((pair,result) for pair,result,error in rows),[(i,i*2) for i in range(8)])
+        self.assertTrue(all(error is None for _,_,error in rows))
+
     def test_history_gap_is_reported_and_final_quote_failure_cannot_remain_tradeable(self):
         saved,names=self.collect_fixture(failed_quote=True,failed_frame=True)
         summary=saved['data/summary.json']
