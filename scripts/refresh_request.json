@@ -1,9 +1,9 @@
 {
   "purpose": "fresh OANDA price and news update when scheduled cron is unavailable",
-  "request": "FX_20261029_PRE_HOLDOUT_VALIDATION_RECHECK",
+  "request": "FX_20261029_0319_HOURLY_STALE_SNAPSHOT_RECOVERY",
   "requested_by": "ChatGPT FX hourly research automation",
   "session_day_utc": "2026-10-29",
-  "sequence": 58,
-  "requested_at_utc": "2026-10-29T01:22:29.089Z",
-  "note": "One safe current-main collector refresh after repaired all-candidate public index and pre-holdout validation lock. Verify all 648+ candidate IDs survive publication, feed size and source timestamps, immutable signals and locked validation readiness. No trading orders, no relaxation of risk gates."
+  "sequence": 59,
+  "requested_at_utc": "2026-10-29T03:19:28Z",
+  "note": "03:15 UK overnight FX health pass: latest verified OANDA summary/news/public feed 01:23:19 UTC, 116 minutes old (>70m hourly source limit, >90m public-feed limit). Trigger one current-main collector refresh and verify new run success, fresh summary/news, immutable signals and synchronized whitelisted public feed; preserve all original risk gates and quiet hours."
 }
