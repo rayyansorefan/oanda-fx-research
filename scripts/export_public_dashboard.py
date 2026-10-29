@@ -712,6 +712,30 @@ def main() -> int:
                 k: validation.get(k) for k in ("updated_at", "protocol_id", "status", "holdout_start_at",
                     "readiness", "coverage", "performance_validated", "automatic_promotion_allowed")}
             fit_public_feed_budget(data)
+        # Fast research is a separate, bounded observation stream. It never
+        # substitutes for a verified ChatGPT delivery or broker fill.
+        fast_path = Path("data/fast_entry_audit.json")
+        if fast_path.exists():
+            fast = load(str(fast_path))
+            fast_time = fast.get("checked_at")
+            freshness = "STALE"
+            if fast_time:
+                try:
+                    age = dt.datetime.now(dt.timezone.utc) - _timestamp(fast_time)
+                    freshness = "CURRENT" if dt.timedelta(0) <= age <= dt.timedelta(minutes=40) else "STALE"
+                except (ValueError, TypeError):
+                    pass
+            data["fast_entry_monitor"] = {
+                "checked_at": fast_time, "freshness": freshness,
+                "status": fast.get("status"),
+                "analysed": fast.get("analysed", 0),
+                "actionable_count": fast.get("actionable_count", 0) if freshness == "CURRENT" else 0,
+                "observations": (fast.get("observations") or [])[:3] if freshness == "CURRENT" else [],
+                "omitted_count": len(fast.get("omitted_due_to_cap") or []),
+                "user_delivery_verified": False,
+                "research_only": True, "manual_pepperstone_check_required": True,
+            }
+            fit_public_feed_budget(data)
         if not data.get("snapshot_at") or len(data.get("pairs", {})) < 1:
             raise ValueError("Invalid sanitized payload")
         PUBLIC_PAYLOAD_PATH.parent.mkdir(parents=True, exist_ok=True)
