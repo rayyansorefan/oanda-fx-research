@@ -5,7 +5,7 @@
   "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
   "development_cutoff": "2026-10-29T06:59:59Z",
   "holdout_start_at": "2026-10-29T07:00:00Z",
-  "id": "FX-OOS-20261029-v3",
+  "id": "FX-OOS-20261029-v4",
   "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
   "minimum_independent_scored_pair_days_per_arm": 100,
   "minimum_scored_days_per_arm": 20,
@@ -14,9 +14,9 @@
     "champion",
     "challenger_v1"
   ],
-  "promotion_policy": "Explicit pass/fail-or-insufficient-evidence assessment; automatic promotion prohibited. Sufficient untouched samples, actual delivery and broker costs, positive day-cluster improvement, and separate independent review required. Locked digest re-registered before the 07:00Z holdout because exporter index completeness changed; trading admission thresholds unchanged.",
-  "registered_at": "2026-10-29T01:20:05Z",
-  "rule_sha256": "fbe4b381f60466fe2aa00ac8e41073e0d8086825ad16ac537138a9b9bd142745",
+  "promotion_policy": "Explicit pass/fail-or-insufficient-evidence assessment; automatic promotion prohibited. Sufficient untouched samples, actual delivery and broker costs, positive day-cluster improvement, and separate independent review required. v4 re-registered before 07:00Z holdout solely for public-feed optional swing-history compaction, preserving all trade admission/risk thresholds and complete candidate IDs.",
+  "registered_at": "2026-10-29T03:24:00.575Z",
+  "rule_sha256": "5c72a61d3a7bd54ae844ba27f06b11d041c0e503bfcb0fa188fb6539c8aef1ad",
   "slippage_pips_per_side": [
     0,
     0.25,
