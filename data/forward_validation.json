@@ -28,46 +28,38 @@
   "automatic_promotion_allowed": false,
   "coverage": {
     "count_note": "Rejection categories overlap; route counts and per-reason pair counts must not be summed into independent trades.",
-    "deep_pairs": 20,
-    "distinct_evaluated_pairs": 65,
+    "deep_pairs": 19,
+    "distinct_evaluated_pairs": 68,
     "distinct_pairs_by_rejection": {
       "ADX_TREND_STRENGTH": 5,
-      "FOUR_FRAME_TREND_CONFLICT": 9,
-      "INVALID_BID_ASK_OR_SPREAD": 14,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
-      "REQUIRED_FRAME_HISTORY_MISSING:H4": 7,
-      "REVERSAL_OR_EXHAUSTION": 24,
+      "FOUR_FRAME_TREND_CONFLICT": 7,
+      "INVALID_BID_ASK_OR_SPREAD": 12,
+      "REQUIRED_FRAME_HISTORY_MISSING:H4": 5,
+      "REVERSAL_OR_EXHAUSTION": 34,
       "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 4,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
     "paper_prequalified": [
-      "AUD_CHF",
-      "AUD_NZD",
-      "EUR_AUD",
       "EUR_USD",
-      "NZD_JPY",
-      "NZD_USD"
+      "GBP_USD",
+      "NZD_USD",
+      "USD_CHF"
     ],
     "paper_prequalified_missing_deep": [],
-    "quoted_pairs": 65,
-    "route_evaluations": 130,
+    "quoted_pairs": 68,
+    "route_evaluations": 136,
     "route_rejections": {
       "ADX_TREND_STRENGTH": 10,
-      "FOUR_FRAME_TREND_CONFLICT": 18,
-      "INVALID_BID_ASK_OR_SPREAD": 28,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
-      "REQUIRED_FRAME_HISTORY_MISSING:H4": 14,
-      "REVERSAL_OR_EXHAUSTION": 48,
+      "FOUR_FRAME_TREND_CONFLICT": 14,
+      "INVALID_BID_ASK_OR_SPREAD": 24,
+      "REQUIRED_FRAME_HISTORY_MISSING:H4": 10,
+      "REVERSAL_OR_EXHAUSTION": 68,
       "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 8,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-10-29T06:21:41Z",
-    "strict_prequalified": [
-      "AUD_NZD"
-    ],
+    "source_at": "2026-10-29T07:13:13Z",
+    "strict_prequalified": [],
     "strict_prequalified_missing_deep": []
   },
   "delivery_events_recorded": 1,
@@ -85,12 +77,12 @@
   "readiness": {
     "actual_delivery_evidence": false,
     "broker_cost_evidence": false,
-    "holdout_started": false,
+    "holdout_started": true,
     "minimum_independent_samples": false,
     "minimum_scored_days": false,
     "rules_unchanged": true,
     "statistical_improvement_established": false
   },
-  "status": "HOLDOUT_NOT_STARTED",
-  "updated_at": "2026-10-29T06:21:49.472462+00:00"
+  "status": "COLLECTING_HOLDOUT",
+  "updated_at": "2026-10-29T07:13:18.970207+00:00"
 }
