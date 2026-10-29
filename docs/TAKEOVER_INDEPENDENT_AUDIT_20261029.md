@@ -1,0 +1,37 @@
+# Independent FX takeover audit — 29 October 2026 (08:39 UTC snapshot)
+
+**Scope:** read-only/manual FX research. This audit does not authorise orders, change the champion entry rules, waive news or reward/risk safeguards, or establish a profitable strategy.
+
+## Trace, evidence, consequence, action
+
+| Code/function | Evidence actually inspected | Consequence | Correction / open item |
+|---|---|---|---|
+| `scripts/oanda_data.py` collector, `fx_universe.screen_priority` | 68 OANDA pairs with core D/H4/H1/M15/M5 chart data; 67 display after GBP/ZAR exclusion. Rank is directional; stretched EUR/SEK was still conspicuous. | Rank can describe an already extended move, not a future fill. | Prospective dashboard potential score no longer includes subsequent hypothetical price movement (public commits `06ba7ca` and `870c61a`). Future predictive value remains unproved. |
+| `signal_admission.qualify` and full gate audit | 136 pair-route checks: 130 news failures; 115/132 assessable net-RR failures; 104 M15-ADX; 90 reversal/exhaustion; 42 daily trend. Reasons overlap, so individual totals are not separate excluded trades. | Joint filter lockout; cannot infer either that relaxing one is safe or that markets offered nothing. | `scripts/entry_strategy_audit.py` persists isolated gate failures and one-gate counterfactuals without promoting signals. All five tested single-gate removals still yield zero fully qualifying pair-routes at 08:39. Predictive ablation effectiveness awaits chronological forward fills. |
+| `signal_admission.news_gate`, `news_watch.coverage_for` | News failures split into 94 primary-source gaps and 36 material-headline reviews at 08:39. | Unsupported feeds can veto otherwise interesting watches; genuinely material events are also present. | Diagnostic separation now persisted. Safeguards preserved; no source gap represented as actual adverse news or waived automatically. |
+| `signal_admission.qualify` nearest observed target, gross/net RR | 97 gross-RR failures, 115 net-RR failures among 132 assessable routes. USD/CAD earlier diagnostic net RR near 1.00; not qualified. | Nearby target and spread economics may dominate rejections. | Diagnostic-only target-economics ablation records counts; champion floors (gross 1.50, net 1.35) unchanged. Whether nearest structure and spread deductions are too conservative must be measured on bid/ask forward data. No claimed correction to possible double-counting. |
+| `signal_watch.signal_match` and `fast_entry_scan.perform` | Watcher checks completed M15 patterns; scanner selects up to eight pairs, GitHub Actions best-effort runs; no independently verified direct-user delivery event. | Confirmations can be discovered too late; actual manual receipt and executable-price availability remain unproved. | Existing timestamps and fast records retained. Do not claim <15 min delivery SLA or missed-profit fills. True notification receipt logging remains unresolved; do not add schedules. |
+| `strategy_comparison.update`, `forward_validation.evaluate` | 4,738 earlier records explicitly excluded from registered untouched holdout beginning 2026-10-29 08:30Z; champion and challenger each create zero plans and zero scored fills on first common eligible day. Legacy validation hardcodes `performance_validated=False` and historically demanded champion fill quotas inconsistent with abstention. | Deployment success was confused with trading success; older protocol cannot meaningfully assess zero-trade champion. | Separate independent `entry_strategy_audit` assessment now emits PASS/FAIL/INSUFFICIENT_EVIDENCE, common eligible days and champion abstention, no mandatory champion fills; retains protocol v8 start/date and historical cohort. Outcome: **INSUFFICIENT_EVIDENCE** (1 eligible day, 0 scored fills), not a pass. |
+| `paper_trade_audit.replay`, `missed_entry_audit`, independent replay | 18 record rows from 15 overlapping events, including nine hypothetical stops, two ambiguous, three no-fill, two open, two invalidated. Not broker receipts or verified manually achievable wins. | A rising price or replayed confirmation candle is not a realised entry. | Retain unknowns, deduplicate exposure by day, and require forward executable-side fills after alert/manual delay. Zero verified profitable missed entries in available record; this is not proof none occurred. |
+| `export_public_dashboard.publish`, Pages rendering | Existing hourly workflow `40843709979` succeeded (261 Python tests), persisted gate and validation JSON, exported feed; public dashboard latest feed 08:39:56Z and dashboard Pages workflow `40844328362` succeeded. | UI can be correct even when strategy cannot admit trades. | Today's monitored trades/watches now display setup ratings; unpriced watches show a clearly limited technical-only rating. No layout redesign. |
+
+## Existing cohort and independent assessment
+
+- Protocol: `FX-OOS-20261029-v8`. Registered holdout starts `2026-10-29T08:30:00Z` and is **not** rolled forward due to subsequent UI/research-code changes.
+- Latest `data/entry_strategy_validation.json`: `INSUFFICIENT_EVIDENCE`; 1 common eligible observation day / 67 eligible pair-days; **0 champion and 0 challenger plans/fills**; 4,738 pre-holdout records excluded. Champion abstention explicitly recorded.
+- Required evidence for an eventual pass: at least 20 common eligible days, at least 100 independent challenger currency-exposure scored days, price/fee and delivery proof, cost sensitivity, and independent review attested. These are evidence floors, **not** trade quotas or promise of advantage. No automatic promotion.
+- Broker financing / exact Pepperstone charges, confirmed delivery/receipt, sub-hour detection-to-manual-fill timing, missing price bars, ambiguous candles and correlated exposure must be independently verified, not made into zero-cost wins.
+- Untouched chronology: no retrospective re-dating; any substantive strategy change needs its own pre-registered cohort, with prior cohorts preserved.
+
+## Latest 08:39 UTC manual decision
+
+- **WAIT**: no `QUALIFIED CONDITIONAL MANUAL SIGNAL` with future trigger, entry, stop, TP1, expiry and minimum executable-side net RR.
+- NZD/CHF SHORT momentum route showed a **diagnostic** net RR around 1.62, but **M15 ADX and primary news source** failed; it is **WATCH/REJECTED**, never an entry instruction.
+- Potential ratings shown on unpriced watches are technical heuristics, not win probabilities or admissible trade plans.
+
+## Deployment and boundaries
+
+- Private commits: `947be5d` independent assessor; `9fa54fe` regression tests; `f8969b1` existing hourly integration. GitHub Actions workflow `40843709979` completed successfully. No additional schedule.
+- Public commits: `0b86a6e`, `0d70e01` initial today-card ratings/tests; `c4d397a`, `ce43939` technical watch scores/tests; `06ba7ca`, `870c61a` avoid hindsight in setup score and test. Pages deployment `40844328362` completed successfully.
+- **CODE REPAIRED** for diagnostics, validator, and rating UI. **TESTS PASSED**. **DEPLOYMENT VERIFIED**. **TRADING PERFORMANCE VALIDATED: NO**.
+- Remaining research work: fair chronological champion-vs-EMA-pullback/continuation-breakout/breakout-retest tests after available manual-response windows and realistic spread; determine value of individual gates and nearest-structure target; robust alert-delivery receipt and faster detection. No profitable result or new manually actionable signal may be assumed from the current dataset.
