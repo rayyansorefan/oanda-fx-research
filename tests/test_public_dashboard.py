@@ -138,6 +138,39 @@ class PublicDashboardFeedTests(unittest.TestCase):
         setups = build_research_setups(summary)
         self.assertEqual(setups[0]["entry_route"], "EMA20_PULLBACK")
 
+    def test_current_scouts_match_priority_and_reuse_prospective_pricing(self):
+        from scripts.export_public_dashboard import build_current_scouts
+        ranked = [
+            {"instrument": "GBP_AUD", "research_priority": 82,
+             "potential_direction_not_approved": "LONG"},
+            {"instrument": "EUR_SEK", "research_priority": 78,
+             "potential_direction_not_approved": "SHORT"},
+        ]
+        summary = {"ranked_review_candidates": ranked, "pairs": {
+            "GBP_AUD": {"quote": {"time": "2026-10-29T16:00:00Z"}},
+            "EUR_SEK": {"quote": {"time": "2026-10-29T16:00:00Z"}},
+        }}
+        reverse_diagnostics = [
+            {"instrument": "EUR_SEK", "direction": "SHORT",
+             "reference_m15_level": 11.003,
+             "blockers": [{"code": "STRUCTURAL_REWARD", "detail": "Insufficient net R:R"}]},
+            {"instrument": "GBP_AUD", "direction": "LONG", "blockers": []},
+        ]
+        research = [{"instrument": "GBP_AUD", "approved_entry": False,
+                     "entry_low": 1.8978, "entry_high": 1.89825,
+                     "stop": 1.89617, "tp1": 1.90294,
+                     "net_rr_estimate": 1.65, "trigger": "New M15 rejection"}]
+        with patch("scripts.export_public_dashboard.entry_diagnostics",
+                   return_value=reverse_diagnostics) as mocked:
+            scouts = build_current_scouts(summary, {}, research)
+        self.assertEqual([s["instrument"] for s in scouts], ["GBP_AUD", "EUR_SEK"])
+        self.assertEqual(scouts[0]["plan"]["entry_zone_low"], 1.8978)
+        self.assertEqual(scouts[0]["plan"]["net_rr_estimate"], 1.65)
+        self.assertIs(scouts[0]["plan"]["approved_entry"], False)
+        self.assertEqual(scouts[1]["blockers"][0]["code"], "STRUCTURAL_REWARD")
+        self.assertNotIn("plan", scouts[1])
+        self.assertGreaterEqual(mocked.call_args.kwargs["limit"], 2)
+
     def test_feed_budget_never_drops_research_setups(self):
         from scripts.export_public_dashboard import PUBLIC_MAX_BYTES, fit_public_feed_budget, serialized_size
         long_candle = {"t": "2026-10-23T09:00:00Z", "o": 157.1234567, "h": 157.2345678,
