@@ -2266,7 +2266,7 @@
       }
     ],
     "challenger": "PAPER_ONLY_NOT_VALIDATED",
-    "checked_at": "2026-10-29T01:23:29.615425+00:00",
+    "checked_at": "2026-10-29T03:21:48.788270+00:00",
     "favourable": 128,
     "flat": 0,
     "insufficient": 0,
@@ -2276,11 +2276,11 @@
     "sample_warning": "Directional movements are NOT filled trades, realised losses, success probabilities or evidence sufficient to change champion parameters.",
     "session_date_uk": "2026-10-28"
   },
-  "collected_at": "2026-10-29T01:23:29.615425+00:00",
+  "collected_at": "2026-10-29T03:21:48.788270+00:00",
   "counts": {
     "need_news_review": 0,
     "price_alerts": 0,
-    "watchlist": 0
+    "watchlist": 1
   },
   "data_policy": "Research-only, no orders. OANDA quotes are not Pepperstone executable prices; prepared alerts are not confirmed deliveries.",
   "feedback_summary": {
@@ -2455,16 +2455,92 @@
       "win_rate_pct": 77.8
     },
     "paper_totals": {
-      "candidates": 654,
+      "candidates": 660,
       "losses": 1,
       "scored": 2,
       "wins": 1
     },
     "threshold": "Paper bias neutral until >=30 scored samples, >=10 days, >=3 pairs and conservative 99% mean-R bound excludes zero. Never relax execution, spread or news gates."
   },
-  "news_collected_at": "2026-10-29T01:23:19Z",
+  "news_collected_at": "2026-10-29T03:21:39Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-10-29T01:23:19Z",
-  "signals": [],
+  "oanda_collected_at": "2026-10-29T03:21:39Z",
+  "signals": [
+    {
+      "adaptive_context": {
+        "block_new_alert": false,
+        "m15_ema_distance_atr": -0.392,
+        "reason": "Momentum is mixed; require the original completed-candle trigger, not directional bias alone.",
+        "status": "CAUTION_MIXED_MOMENTUM"
+      },
+      "caution": "Some optional news feeds unavailable; calendar and required headline feeds checked. This is NOT an all-clear.",
+      "created_at": "2026-10-29T03:21:48.286130Z",
+      "direction": "SHORT",
+      "expires_at": "2026-10-29T04:51:48.286130Z",
+      "id": "AUTO-20261029T0321-EUR_AUD-S-B",
+      "news_source_coverage": {
+        "currencies_without_supported_official_feed": [],
+        "missing_required": [],
+        "note": "LIMITED means selected official and aggregate sources plus the calendar responded, but not every optional source. Never interpret this as complete global-news or real-time event coverage.",
+        "other_unavailable": [
+          "BLS employment",
+          "BLS inflation"
+        ],
+        "required_sources": [
+          "ECB press",
+          "Global markets aggregation",
+          "RBA press"
+        ],
+        "status": "LIMITED"
+      },
+      "news_status": "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS",
+      "observed_price_reactions": [],
+      "pair": "EUR_AUD",
+      "release_blackouts": [],
+      "relevant_headlines": [],
+      "status": "NO_QUALIFIED_PRICE_PATTERN",
+      "strategy_feedback": {
+        "broker_observations_not_weighted": 9,
+        "broker_positive_wins_not_weighted": 0,
+        "early_entry_study_available": false,
+        "execution_review": null,
+        "manual_execution_review_required": false,
+        "positive_broker_pattern_review_available": false,
+        "priority_bias": 0,
+        "routes": [
+          "B"
+        ],
+        "scored_route_samples": {
+          "B": 2
+        },
+        "status": "NEUTRAL_INSUFFICIENT_OR_MIXED_EVIDENCE",
+        "strategy": "M15_REJECTION"
+      },
+      "technical_checkpoint": {
+        "h1_adx14": 36.96609457209098,
+        "h1_rsi14": 36.23714946471632,
+        "indicative_distance_to_stop_pips": 8.1,
+        "indicative_distance_to_target_pips": 28.3,
+        "indicative_remaining_rr_before_new_spread_adjustment": 3.49,
+        "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
+        "latest_completed_m15_bar_start": "2026-10-29T03:00:00.000000000Z",
+        "m15_adx14": 24.59355872166933,
+        "m15_atr14": 0.0009608528972629896,
+        "m15_macd_histogram": 0.00010156338828377134,
+        "m15_rsi14": 50.33040286501435,
+        "oanda_quote": {
+          "ask": 1.581,
+          "bid": 1.58064,
+          "pip_size": 0.0001,
+          "spread_pips": 3.5999999999991594,
+          "time": "2026-10-29T03:20:03.789466793Z",
+          "tradeable": true
+        },
+        "price_reference": 1.58064,
+        "quote_is_tradeable": true,
+        "vs_m15_ema20": "ABOVE"
+      }
+    }
+  ],
   "status": "OK"
 }

@@ -44,7 +44,7 @@
       "pattern_at": "2026-10-28T03:45:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_AUD-014134678336daff846a8d45a6db4bd566c792aaaf75f018f902f1926663fef1.json",
+      "source_evidence": "data/replay_evidence/EUR_AUD-ebba71ab13b4efe4a9afabbfb52505306ad4b985262dc8c47957179a90dcea7f.json",
       "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     },
@@ -70,7 +70,7 @@
       "pattern_at": "2026-10-28T03:45:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/GBP_AUD-36916115709fdf113785ec8f1c95d40cf63c960a48c63a8822af107398d2144d.json",
+      "source_evidence": "data/replay_evidence/GBP_AUD-9f8edc930f245b47051536225c678a766b568fca98ed833c1dc961c701e83b76.json",
       "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     },
@@ -146,6 +146,18 @@
       "route": "EMA20_PULLBACK",
       "scored": false,
       "source_evidence": "data/replay_evidence/NZD_HKD-8d49734ecf097d6a3b42138a5c8009e40b3bfa0431d00b5804e4497713907195.json",
+      "status": "PAPER_NOT_FILLED_BEFORE_EXPIRY",
+      "trade_executed": false
+    },
+    "202610280645-NZDJPY-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202610280645-NZDJPY-SHORT-EMA20_PULLBACK",
+      "instrument": "NZD_JPY",
+      "pattern_at": "2026-10-28T07:45:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/NZD_JPY-9555977e9c0ebc4e425ba88b9ae72c846774da68768863bccb041f74e4a55fea.json",
       "status": "PAPER_NOT_FILLED_BEFORE_EXPIRY",
       "trade_executed": false
     },
@@ -309,6 +321,23 @@
       "trade_executed": false,
       "underlying_move_pct": -0.2376
     },
+    "202610281145-NZDCAD-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "exit_at": "2026-10-28T13:45:00Z",
+      "fill_at": "2026-10-28T12:30:00Z",
+      "id": "202610281145-NZDCAD-SHORT-EMA20_PULLBACK",
+      "instrument": "NZD_CAD",
+      "paper_entry": 0.7878,
+      "paper_exit": 0.79006,
+      "pattern_at": "2026-10-28T12:30:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": true,
+      "source_evidence": "data/replay_evidence/NZD_CAD-2a2f0c2ffeb6797849f93adf31f962220370985b7c33f91084c8d9eaf5effe2e.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.28687
+    },
     "202610281230-CADCHF-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
@@ -347,7 +376,7 @@
       "pattern_at": "2026-10-28T18:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/CAD_CHF-c2592b47194629e41e33b9416ec49f733eaee23e04249c3a73c4c65b5a1f6ca1.json",
+      "source_evidence": "data/replay_evidence/CAD_CHF-096164297aa2d749941ccb8d4d361abfd32aae9e7ec5934286dd2c1a6ed2beeb.json",
       "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     },
@@ -430,7 +459,7 @@
       "pattern_at": "2026-10-28T23:30:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_USD-c5d9df84e51e5e33e845dbb8db330b556f3ad9ddd1e66e6922ffd4cd66b96b7c.json",
+      "source_evidence": "data/replay_evidence/AUD_USD-c9c3a32a74ff06d3c01106124c0a60391b559e05922f55eb55a79a643d04ac02.json",
       "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     },
@@ -442,37 +471,43 @@
       "pattern_at": "2026-10-29T00:00:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_AUD-289d4d82c2ba413d5d6eac40997f37a4ee44598e0f3cbcd701b092408de9c18b.json",
-      "status": "PAPER_WAITING_FOR_ENTRY",
+      "source_evidence": "data/replay_evidence/EUR_AUD-ed0e02e99ce2f727ac894bddf0380be11683fb3e13df76ed7f4693bf6496539f.json",
+      "status": "PAPER_NOT_FILLED_BEFORE_EXPIRY",
       "trade_executed": false
     },
     "202610282245-AUDHKD-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
+      "exit_at": "2026-10-29T01:15:00Z",
       "fill_at": "2026-10-29T00:15:00Z",
       "id": "202610282245-AUDHKD-LONG-EMA20_PULLBACK",
       "instrument": "AUD_HKD",
       "paper_entry": 5.53211,
+      "paper_exit": 5.54254,
       "pattern_at": "2026-10-28T23:30:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_HKD-1f55e00ba8f4b2fbe18bab9f1d91896625b56f7bd466fbdf83a543dfccbf3e39.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/AUD_HKD-087ff59e15a1bd123f9ceedce4e0a117b7213f75b038e2d2bf2e99d8f1427068.json",
+      "status": "PAPER_TP1_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": 0.18854
     },
     "202610282245-AUDUSD-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
+      "exit_at": "2026-10-29T01:15:00Z",
       "fill_at": "2026-10-29T00:15:00Z",
       "id": "202610282245-AUDUSD-LONG-EMA20_PULLBACK",
       "instrument": "AUD_USD",
       "paper_entry": 0.70515,
+      "paper_exit": 0.7065,
       "pattern_at": "2026-10-28T23:30:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_USD-cff18a774fb3afd5ee60ee8d3a9cf4623b00f7cf55f97a8e488d785b3e353778.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/AUD_USD-18cd661f05a0f63c58089874951e3e1a14c8dea3b7d3ca390a2713a490a9c789.json",
+      "status": "PAPER_TP1_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": 0.19145
     },
     "202610282300-AUDHKD-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
@@ -482,23 +517,26 @@
       "pattern_at": "2026-10-29T01:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_HKD-a55816de28273e9ffb87848b0a28f773bc595995dbefdce8567d6dbf6d046628.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/AUD_HKD-516d605c1b2ed2a2715bb674bf05075ed528fb6259fd713317c5934c70d65394.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
       "trade_executed": false
     },
     "202610282300-AUDUSD-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
+      "exit_at": "2026-10-29T01:15:00Z",
       "fill_at": "2026-10-29T00:45:00Z",
       "id": "202610282300-AUDUSD-LONG-EMA20_PULLBACK",
       "instrument": "AUD_USD",
       "paper_entry": 0.70514,
+      "paper_exit": 0.7065,
       "pattern_at": "2026-10-29T00:45:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_USD-b4e7f0672b15ddd26d314538da60ea8cc383eec7c22a80ea40ffa64312808a50.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/AUD_USD-0c9ed3117865c8a4f779f9a661a34947ac85352be0c81fb1d410bc2f78c072e1.json",
+      "status": "PAPER_TP1_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": 0.19287
     },
     "202610282315-AUDHKD-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
@@ -508,23 +546,26 @@
       "pattern_at": "2026-10-29T01:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_HKD-9851a360136144caf225835a41b32eb6a74a1dca9a47916b7d78ddc1a92c55df.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/AUD_HKD-bf921f89f03893cc6181fbc83565cd1d60515df438df7b822304a1f6b0b1e676.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
       "trade_executed": false
     },
     "202610282315-AUDUSD-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
+      "exit_at": "2026-10-29T01:15:00Z",
       "fill_at": "2026-10-29T00:45:00Z",
       "id": "202610282315-AUDUSD-LONG-EMA20_PULLBACK",
       "instrument": "AUD_USD",
       "paper_entry": 0.70516,
+      "paper_exit": 0.7065,
       "pattern_at": "2026-10-29T00:45:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_USD-bb5e86d63f326c2c33aba3f41cc0655b499299eb6982c6944eb157966927a0c3.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/AUD_USD-55f85211e0d9da0789af24571617ffe16c124bca03a32eb79094a799a5455bca.json",
+      "status": "PAPER_TP1_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": 0.19003
     },
     "202610282330-AUDHKD-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
@@ -534,8 +575,8 @@
       "pattern_at": "2026-10-29T01:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_HKD-1a3a0f3a30b5b78620ea4d72f618b0a7116a901d691c738d68f7920312d65d91.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/AUD_HKD-15d6177cfc258655ba5f45947c6bb0981db42671554337f6d955852e362ba874.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
       "trade_executed": false
     },
     "202610282330-AUDUSD-LONG-EMA20_PULLBACK": {
@@ -546,8 +587,8 @@
       "pattern_at": "2026-10-29T01:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_USD-e3ff180cf73ec075c96f4b51bc4d1906913ed833bd82cac9904a6a2719c2a912.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/AUD_USD-ff184dd9e6a0cf5fc8275b6384fc128dc314acdc9ea9e31cf35dc4b19fa41b99.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
       "trade_executed": false
     },
     "202610290015-AUDHKD-LONG-EMA20_PULLBACK": {
@@ -558,8 +599,8 @@
       "pattern_at": "2026-10-29T01:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_HKD-f529d8b3744bfe893750d213953b9fc226ed8961af318f403d173b1a41e48d40.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/AUD_HKD-3047aa56cfb5f5f829bbd40b0b38adc2068554446a2fbb312f325c94109d7bfd.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
       "trade_executed": false
     },
     "202610290015-AUDUSD-LONG-EMA20_PULLBACK": {
@@ -570,8 +611,8 @@
       "pattern_at": "2026-10-29T01:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_USD-567b7bbf07363ac938d461e724effa723b66ff2a2cc763fb6eded99b802ced8a.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/AUD_USD-578b7dc91e0d9d5981a44d6f7789dc16b8635fc66be4cdae0ad36c9ebcaa9c99.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
       "trade_executed": false
     },
     "202610290030-AUDHKD-LONG-EMA20_PULLBACK": {
@@ -582,8 +623,8 @@
       "pattern_at": "2026-10-29T01:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_HKD-288f659407ffe0d680a9ce9df8e1421265f9cee3b8f3cad4cd8c06aa03f0f97f.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/AUD_HKD-53d81fe0d1b12a580d0476151400778422af7bc2407f8d73f828decd38927f55.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
       "trade_executed": false
     },
     "202610290030-AUDUSD-LONG-EMA20_PULLBACK": {
@@ -661,8 +702,9 @@
   "today_registered": 6,
   "today_scored_hypothetical_entries": 0,
   "today_status_counts": {
-    "PAPER_NO_CONTIGUOUS_CANDLES": 6
+    "PAPER_NO_CONTIGUOUS_CANDLES": 1,
+    "PAPER_WAITING_FOR_ENTRY": 5
   },
   "today_uk": "2026-10-29",
-  "updated_at": "2026-10-29T01:23:26Z"
+  "updated_at": "2026-10-29T03:21:45Z"
 }

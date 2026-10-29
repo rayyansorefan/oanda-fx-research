@@ -1,6 +1,48 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-29T01:23:29.377431Z",
-  "signals": [],
+  "generated_at": "2026-10-29T03:21:48.286130Z",
+  "signals": [
+    {
+      "id": "AUTO-20261029T0321-EUR_AUD-S-B",
+      "instrument": "EUR_AUD",
+      "direction": "SHORT",
+      "created_at": "2026-10-29T03:21:48.286130Z",
+      "expires_at": "2026-10-29T04:51:48.286130Z",
+      "planned_entry": 1.58044,
+      "stop": 1.58145,
+      "pip_size": 0.0001,
+      "tp1": 1.57781,
+      "max_oanda_spread_pips": 4.14,
+      "event_blackouts_utc": [],
+      "entry_route": "EMA20_PULLBACK",
+      "oanda_snapshot_at": "2026-10-29T03:21:39Z",
+      "source_quote_at": "2026-10-29T03:20:03.789466793Z",
+      "research_only": true,
+      "broker_verified": false,
+      "paper_only": false,
+      "admission_policy": "champion",
+      "account_equity_verified": false,
+      "max_equity_risk_fraction": 0.0025,
+      "manual_broker_check_required": true,
+      "gross_rr_at_creation": 2.61,
+      "net_rr_at_spread_cap": 1.56,
+      "technical_context": {
+        "full_frame_alignment": true,
+        "admission_policy": "champion",
+        "momentum_adx_minimum": 20,
+        "m15_adx": 24.59355872166933,
+        "h1_adx": 36.96609457209098,
+        "m15_plus_di": 20.41099894933247,
+        "m15_minus_di": 26.471970210983525,
+        "h1_plus_di": 15.477171627337443,
+        "h1_minus_di": 28.70771993778429,
+        "m15_atr": 0.0009608528972629896,
+        "source_bar_time": "2026-10-29T03:00:00.000000000Z"
+      },
+      "target_basis": "nearest completed M15/H1/H4/D 20-bar support/resistance",
+      "trigger_basis": "future completed M15 only",
+      "alert_b": 1.58044
+    }
+  ],
   "note": "Conditional OANDA manual-research plans only. Never broker-verified or executable. Requires future completed trigger, renewed news/spread review and verified account risk <=0.25%. No orders."
 }

@@ -28,36 +28,70 @@
   "automatic_promotion_allowed": false,
   "coverage": {
     "count_note": "Rejection categories overlap; route counts and per-reason pair counts must not be summed into independent trades.",
-    "deep_pairs": 19,
+    "deep_pairs": 24,
     "distinct_evaluated_pairs": 65,
     "distinct_pairs_by_rejection": {
-      "FOUR_FRAME_TREND_CONFLICT": 10,
-      "INVALID_BID_ASK_OR_SPREAD": 14,
-      "REQUIRED_FRAME_HISTORY_MISSING:H4": 3,
-      "REVERSAL_OR_EXHAUSTION": 37,
+      "ADX_TREND_STRENGTH": 5,
+      "FOUR_FRAME_TREND_CONFLICT": 21,
+      "INVALID_BID_ASK_OR_SPREAD": 21,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 2,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 3,
+      "REQUIRED_FRAME_HISTORY_MISSING:H4": 6,
+      "REVERSAL_OR_EXHAUSTION": 7,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 1,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
     "paper_prequalified": [
-      "GBP_JPY"
+      "AUD_CHF",
+      "AUD_HKD",
+      "AUD_JPY",
+      "AUD_NZD",
+      "AUD_SGD",
+      "AUD_USD",
+      "CAD_JPY",
+      "EUR_AUD",
+      "EUR_CAD",
+      "EUR_NZD",
+      "GBP_AUD",
+      "NZD_CAD",
+      "NZD_CHF",
+      "NZD_JPY",
+      "NZD_SGD",
+      "USD_CAD"
     ],
     "paper_prequalified_missing_deep": [],
     "quoted_pairs": 65,
     "route_evaluations": 130,
     "route_rejections": {
-      "FOUR_FRAME_TREND_CONFLICT": 20,
-      "INVALID_BID_ASK_OR_SPREAD": 28,
-      "REQUIRED_FRAME_HISTORY_MISSING:H4": 6,
-      "REVERSAL_OR_EXHAUSTION": 74,
+      "ADX_TREND_STRENGTH": 10,
+      "FOUR_FRAME_TREND_CONFLICT": 42,
+      "INVALID_BID_ASK_OR_SPREAD": 42,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 2,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 3,
+      "REQUIRED_FRAME_HISTORY_MISSING:H4": 12,
+      "REVERSAL_OR_EXHAUSTION": 14,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-10-29T01:23:19Z",
-    "strict_prequalified": [],
+    "source_at": "2026-10-29T03:21:39Z",
+    "strict_prequalified": [
+      "AUD_HKD",
+      "AUD_NZD",
+      "AUD_SGD",
+      "AUD_USD",
+      "CAD_HKD",
+      "EUR_AUD",
+      "EUR_CAD",
+      "USD_CAD"
+    ],
     "strict_prequalified_missing_deep": []
   },
-  "delivery_events_recorded": 0,
+  "delivery_events_recorded": 1,
   "evidence_ready_for_independent_review": false,
-  "excluded": {},
+  "excluded": {
+    "DEVELOPMENT_OR_LEGACY_TIMING": 2
+  },
   "holdout_start_at": "2026-10-29T07:00:00Z",
   "independent_review_completed": false,
   "interpretation": "No rule relaxation or profitability claim. Historical replay, public availability and actual user delivery are different evidence. Missing delivery/broker costs and unestablished statistical improvement block validation.",
@@ -75,5 +109,5 @@
     "statistical_improvement_established": false
   },
   "status": "HOLDOUT_NOT_STARTED",
-  "updated_at": "2026-10-29T01:23:29.798688+00:00"
+  "updated_at": "2026-10-29T03:21:48.904038+00:00"
 }
