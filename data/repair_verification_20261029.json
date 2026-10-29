@@ -1,0 +1,82 @@
+{
+  "verified_source_at": "2026-10-29T08:13:14Z",
+  "code_commits": [
+    "18dfbd384470518289f01b66ea347ac06cbb58e0",
+    "948b1b81eac767845b5ebefa7d851ae9cec81f83",
+    "5c2abbec61051a6867aa38c577b96a3074ecf1a9",
+    "164bdc7470beba8847d9584c0055969392408dda"
+  ],
+  "public_schema_commit": "2f433f3494c4fe9a22b178f26ace8e4bf068337d",
+  "statuses": {
+    "identified_code_defects_repaired": true,
+    "regression_tests_passed": true,
+    "deployment_verified": true,
+    "trading_performance_validated": false
+  },
+  "tests": {
+    "backend": 257,
+    "dashboard": 15,
+    "functional_dashboard_smoke": "PASSED"
+  },
+  "workflows": {
+    "collector": {
+      "id": 40840519987,
+      "status": "success"
+    },
+    "fast_scan": {
+      "id": 40840520259,
+      "status": "success"
+    },
+    "public_pages": {
+      "id": 40840665450,
+      "status": "success"
+    }
+  },
+  "coverage": {
+    "oanda_quoted": 68,
+    "complete_core_charts": 68,
+    "public_displayed": 67,
+    "public_deep": 67,
+    "excluded_public_pair": "GBP_ZAR",
+    "last_fast_pairs_checked": 8
+  },
+  "approved_conditional_plans": 0,
+  "triggered_alerts": 0,
+  "forward_study": {
+    "protocol": "FX-OOS-20261029-v8",
+    "holdout_start_at": "2026-10-29T08:30:00Z",
+    "champion_scored": 0,
+    "challenger_scored": 0,
+    "performance_validated": false
+  },
+  "known_limitations": [
+    "No demonstrated independent forward strategy improvement.",
+    "Actual user receipt and Pepperstone transaction costs remain unverified.",
+    "Fast scan covers a bounded shortlist in two existing UK windows; GitHub scheduling is best effort.",
+    "OANDA 504s caused a failed run and a timed-out retry; a later bounded collector completed successfully. Vendor availability is not guaranteed.",
+    "ADX/four-frame filter predictive value is still unvalidated."
+  ],
+  "historical_verification": {
+    "distinct_event_status_groups": {
+      "PAPER_AMBIGUOUS_FILL_BAR": 1,
+      "PAPER_NOT_FILLED_BEFORE_EXPIRY": 2,
+      "PAPER_NOT_FILLED_BEFORE_EXPIRY/PAPER_STOP_AFTER_FILL": 1,
+      "PAPER_OPEN_UNRESOLVED": 2,
+      "PAPER_PRE_ENTRY_INVALIDATED": 2,
+      "PAPER_STOP_AFTER_FILL": 7
+    },
+    "distinct_events": 15,
+    "hashes_verified": true,
+    "profitable_entries_verified": 0,
+    "records_independently_replayed": 18,
+    "source_snapshot": "2026-10-28T23:23:14Z",
+    "statuses": {
+      "PAPER_AMBIGUOUS_FILL_BAR": 2,
+      "PAPER_NOT_FILLED_BEFORE_EXPIRY": 3,
+      "PAPER_OPEN_UNRESOLVED": 2,
+      "PAPER_PRE_ENTRY_INVALIDATED": 2,
+      "PAPER_STOP_AFTER_FILL": 9
+    },
+    "warning": "Ideal pattern-close replay, not proof of timely alerts or manual entry availability. Stop records and ambiguous records overlap repeated research plans; do not treat 18 records as 18 independent trades."
+  }
+}
