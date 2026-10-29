@@ -523,6 +523,40 @@
         "macro": "Bank of Canada decision/MPR at 13:45 UTC; mandatory 13:30-14:15 UTC blackout and full reassessment after release.",
         "incomplete_fields": "planned_entry and precise alert_b unavailable until a prospective completed M15 rejection; do not score or promote."
       }
+    },
+    {
+      "id": "20261029-1200-GBPNZD-L-RESEARCH",
+      "instrument": "GBP_NZD",
+      "direction": "LONG",
+      "created_at": "2026-10-29T12:00:47.326Z",
+      "expires_at": "2026-10-29T13:15:00Z",
+      "planned_entry": null,
+      "stop": null,
+      "tp1": null,
+      "max_oanda_spread_pips": null,
+      "event_blackouts_utc": [
+        {
+          "start": "2026-10-29T12:15:00Z",
+          "end": "2026-10-29T12:45:00Z"
+        },
+        {
+          "start": "2026-10-29T13:00:00Z",
+          "end": "2026-10-29T13:45:00Z"
+        }
+      ],
+      "strategy": "RESEARCH_PRIORITY_WATCH",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-10-29T11:58:58Z",
+      "original_note": "Incomplete directional paper watch only. D1/H4/H1/M15 bias is bullish, but current price is close to 2.37422 resistance, the observed OANDA spread is 7.9 pips, and no completed qualifying pullback/rejection trigger or cost-valid entry/stop/TP plan exists. Do not infer a fill or live approval.",
+      "technical_context": {
+        "as_of_utc": "2026-10-29T11:58:58Z",
+        "m15": "RSI14 58.7; ADX14 15.1; +DI 30.1 > -DI 20.8; price above EMA20/50/200 but weak trend strength",
+        "h1": "RSI14 64.4; ADX14 36.6; +DI 28.0 > -DI 11.0; bullish structure",
+        "trend": "D1/H4/H1/M15 directional alignment bullish; M5 bullish but price near local resistance",
+        "atr_spread": "M15 ATR about 13.4 pips; OANDA spread 7.9 pips, too costly for a defensible exact plan at current location",
+        "macro": "US GDP/PCE due 12:30 UK and ECB decision 13:15 UK; news coverage partial",
+        "completeness": "INCOMPLETE_NO_EXACT_TRIGGER_LEVELS"
+      }
     }
   ]
 }
