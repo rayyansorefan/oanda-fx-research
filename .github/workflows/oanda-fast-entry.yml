@@ -1,6 +1,13 @@
 name: FX fast shortlisted entry research (read-only)
 on:
   workflow_dispatch:
+  # Run the existing fast pipeline once when its code is deployed.
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/fast_entry_scan.py'
+      - 'tests/test_fast_entry_scan.py'
+      - '.github/workflows/oanda-fast-entry.yml'
   schedule:
     # Only two high-interest UK market windows to protect private Actions quota.
     # GitHub cron is best effort; a 15-minute expression is not a latency SLA.

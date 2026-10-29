@@ -57,7 +57,7 @@ def record_events(book,signals,watcher,publication,now):
     for plan in signals.get('signals') or []:
         key='PLAN:'+plan['id']
         events.setdefault(key,{'id':key,'plan_id':plan['id'],'kind':'CONDITIONAL_PLAN',
-            'source_at':source,'plan_created_at':plan.get('created_at'),
+            'source_at':plan.get('oanda_snapshot_at',source),'plan_created_at':plan.get('created_at'),
             'trigger_closed_at':None,'detected_at':None,'verified_user_delivery_at':None,
             'delivery_status':'NOT_MEASURED'})
     for row in watcher.get('signals') or []:
@@ -105,7 +105,8 @@ def merge_fast_events(book, fast):
 def observe_public(book,feed,observed_at):
     """An observed serving time is an upper bound, not a push delivery receipt."""
     for event in book.get('events',{}).values():
-        if event.get('source_at')!=feed.get('snapshot_at'):continue
+        expected_source = (feed.get('hourly') or {}).get('source_at')
+        if event.get('source_at') not in (feed.get('snapshot_at'), expected_source):continue
         if event['kind']=='CONDITIONAL_PLAN':
             present=any(s.get('id')==event['plan_id'] for s in feed.get('signals') or [])
         else:
@@ -186,6 +187,8 @@ def evaluate(protocol,study,ledger,current_hash,now):
         decision=moment(row.get('decision_at'))
         if not decision or decision<start or not moment(plan.get('created_at')) or moment(plan['created_at'])<start:
             excluded['DEVELOPMENT_OR_LEGACY_TIMING']+=1;continue
+        if row.get('observation_scope') != 'PAIR_SPECIFIC' and protocol.get('require_pair_specific_observations'):
+            excluded['UNSCOPED_OBSERVATION_TIMING']+=1;continue
         if not row.get('common_deep_history_available'):
             excluded['INCOMPLETE_COMMON_UNIVERSE']+=1;continue
         if not unchanged:
@@ -211,7 +214,10 @@ def evaluate(protocol,study,ledger,current_hash,now):
     paired=None
     enough=all(a['independent_scored_pair_days']>=protocol['minimum_independent_scored_pair_days_per_arm']
                and a['distinct_scored_days']>=protocol['minimum_scored_days_per_arm'] for a in arms.values())
-    if enough:
+    stress_complete = bool(independent) and all(
+        (stress_result(r['plan'], r['result'], max(protocol['slippage_pips_per_side'])) or {}).get('net_r') is not None
+        for r in independent.values())
+    if enough and stress_complete:
         daily=defaultdict(lambda:defaultdict(float))
         for (arm,pair,day),row in independent.items():
             stress=stress_result(row['plan'],row['result'],max(protocol['slippage_pips_per_side']))
@@ -227,6 +233,7 @@ def evaluate(protocol,study,ledger,current_hash,now):
         'minimum_independent_samples':all(a['independent_scored_pair_days']>=protocol['minimum_independent_scored_pair_days_per_arm'] for a in arms.values()),
         'minimum_scored_days':all(a['distinct_scored_days']>=protocol['minimum_scored_days_per_arm'] for a in arms.values()),
         'actual_delivery_evidence':delivery_ready,'broker_cost_evidence':costs_ready,
+        'complete_cost_scenarios':stress_complete,
         'statistical_improvement_established':bool(paired and paired['lower_95pct_r']>0)}
     if not unchanged:
         status = 'PROTOCOL_CHANGED'
@@ -258,10 +265,22 @@ def read(name,default):
     path=ROOT/name
     return json.loads(path.read_text()) if path.exists() else default
 
+def lock_protocol(book, protocol, now):
+    """Explicit version migration; retain old lock and every event/receipt."""
+    old_lock = book.get('locked_protocol_sha256')
+    if (old_lock and old_lock != protocol_digest(protocol)
+            and old_lock == protocol.get('supersedes_protocol_sha256')):
+        book.setdefault('prior_protocol_locks', []).append({
+            'sha256': old_lock, 'superseded_at': now.isoformat(),
+            'replacement_protocol_id': protocol['id']})
+        book['locked_protocol_sha256'] = protocol_digest(protocol)
+    book.setdefault('locked_protocol_sha256',protocol_digest(protocol))
+    return book
+
 def main():
     now=datetime.now(timezone.utc);protocol=read('validation_protocol.json',{})
     book=read('data/signal_delivery_audit.json',{'schema':1,'events':{}})
-    book.setdefault('locked_protocol_sha256',protocol_digest(protocol))
+    lock_protocol(book, protocol, now)
     # Check the already deployed snapshot before recording a newly collected one.
     try:
         req=Request(PUBLIC_FEED,headers={'User-Agent':'FX-forward-validation-read-only'})

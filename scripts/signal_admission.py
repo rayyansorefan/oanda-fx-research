@@ -6,6 +6,7 @@ BEFORE their M15 entry candle. Never retroactively labels a fill or a win.
 from __future__ import annotations
 import json
 import math
+from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 try:
@@ -243,7 +244,7 @@ def admit(summary, news, previous, archive=None, *, evaluated_at=None):
     if not now or not source_time or now < source_time or summary.get("status") not in ("OK", "PARTIAL"):
         return previous, archive or {"signals": []}, audit
     previous = previous if isinstance(previous, dict) else {"schema_version": 1, "signals": []}
-    historic = archive if isinstance(archive, dict) else {"signals": []}
+    historic = deepcopy(archive) if isinstance(archive, dict) else {"signals": []}
     already = list(previous.get("signals") or [])
     kept = []
     for item in already:

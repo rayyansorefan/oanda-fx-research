@@ -341,11 +341,10 @@ def collect():
                                    "_" + str(exc)[:55]).replace("OANDA_HTTP_", "HTTP_")
     if not all_data:
         raise RuntimeError("OANDA_NO_FX_TECHNICAL_HISTORY")
-    # Phase 2: full D/H4/H1/M15/M5 analysis on twelve strongest candidates,
-    # original majors and approved watchlist. Every other FX pair still has
-    # an independent M15/H1 indicator screen this same hourly collection.
+    # Phase 2: full D/H4/H1/M15/M5 evidence for EVERY screened pair.
+    # Do not use the strategy being tested to decide whose context is observable.
     monitored = currently_monitored_names()
-    selection = deep_selection(ranking, monitored=monitored, max_extra=12)
+    selection = sorted(all_data)  # Complete core chart coverage, independent of rank/filter outcome.
     extended_names = set(extended_chart_selection(selection, ranking))
     extended_gaps = {}
     deep_ok = []
@@ -353,26 +352,40 @@ def collect():
         if pair not in all_data:
             continue
         frames = all_data[pair]["frames"]
-        try:
-            # Use the first pass's M15 and H1 calculations; no duplicate requests.
-            for frame in ("M5", "H4", "D"):
+        # Each timeframe failure is isolated so an unavailable M5 feed cannot
+        # prevent H4/D collection needed by admission and the paired study.
+        gaps = {}
+        for frame in ("M5", "H4", "D"):
+            try:
                 frames[frame] = fetch_frame(pair, frame, deep=True)
-            # Full chronology needed by the prospective setup watcher.
-            frames["M15"] = describe(CANDLE_CACHE[(pair, "M15")], "M15", deep=True)
-            frames["H1"] = describe(CANDLE_CACHE[(pair, "H1")], "H1", deep=True)
-            # M1/M30/W/M give additional entry and long-term regime context.
-            # Monthly data may lack 210 completed bars on newer crosses.
-            # An optional gap must be explicit, not hide the valid core scan.
-            if pair in extended_names:
-                for frame in EXTENDED_CHART_FRAMES:
-                    try:
-                        frames[frame] = fetch_frame(pair, frame, deep=True)
-                    except (RuntimeError, ValueError, KeyError, TypeError) as exc:
-                        extended_gaps.setdefault(pair, {})[frame] = (
-                            type(exc).__name__ + "_" + str(exc)[:55])
+            except (RuntimeError, ValueError, KeyError, TypeError) as exc:
+                gaps[frame] = type(exc).__name__ + "_" + str(exc)[:55]
+        frames["M15"] = describe(CANDLE_CACHE[(pair, "M15")], "M15", deep=True)
+        frames["H1"] = describe(CANDLE_CACHE[(pair, "H1")], "H1", deep=True)
+        if pair in extended_names:
+            for frame in EXTENDED_CHART_FRAMES:
+                try:
+                    frames[frame] = fetch_frame(pair, frame, deep=True)
+                except (RuntimeError, ValueError, KeyError, TypeError) as exc:
+                    extended_gaps.setdefault(pair, {})[frame] = (
+                        type(exc).__name__ + "_" + str(exc)[:55])
+        if not gaps:
             deep_ok.append(pair)
-        except (RuntimeError, ValueError, KeyError, TypeError) as exc:
-            full_failures[pair] = "DEEP_" + type(exc).__name__ + "_" + str(exc)[:55]
+        else:
+            full_failures[pair] = "DEEP_" + json.dumps(gaps, sort_keys=True)
+    # Refresh pricing after chart collection: entry decisions must not use the
+    # quote fetched before hundreds of history requests. A failed refresh is
+    # explicit and cannot silently retain a stale tradeable quote.
+    refreshed, refresh_problems = fetch_quote_batch(account_id, sorted(all_data), discovered)
+    for pair, content in all_data.items():
+        if pair in refreshed and is_quote_usable(refreshed[pair]):
+            content["quote"] = refreshed[pair]
+            updated_rank = screen_priority(content["quote"], content["frames"]["M15"], content["frames"]["H1"])
+            if updated_rank is not None:
+                ranking[pair] = updated_rank
+        else:
+            content["quote"]["tradeable"] = False
+            full_failures[pair] = refresh_problems.get(pair, "FINAL_QUOTE_REFRESH_FAILED")
     # If a known monitored pair is quoted but could not load technical history,
     # never imply it is being reliably watched.
     payload = {

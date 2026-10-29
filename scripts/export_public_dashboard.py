@@ -556,6 +556,8 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         "research_setups": build_research_setups(summary),
         "hourly": {
             "at": watcher.get("collected_at"),
+            "source_at": watcher.get("oanda_collected_at"),
+            "observation_stream": watcher.get("observation_stream", "HOURLY_UNIVERSE"),
             "counts": watcher.get("counts"),
             "afternoon_audit": watcher.get("afternoon_audit"),
             "signals": [s for s in (watcher.get("signals") or [])
@@ -697,6 +699,40 @@ def publish(payload: dict, token: str) -> str:
 
 PUBLIC_PAYLOAD_PATH = Path("data/public_dashboard_payload.json")
 
+def select_entry_observation(summary, news, watcher, recent, detailed,
+                             fast_snapshot, fast_news, fast_assessment, now):
+    """Use a coherent newer fast check in the canonical signal display.
+
+    Keep the all-universe collection clock unchanged. Pair quote/bar clocks and
+    the separate entry-check clock show exactly which evidence was refreshed.
+    A stale, mismatched or future fast stream never supersedes the hourly one.
+    """
+    from copy import deepcopy
+    try:
+        checked = _timestamp(fast_assessment["collected_at"])
+        source = fast_snapshot["collected_at"]
+        if (fast_snapshot.get("status") not in ("OK", "PARTIAL")
+                or fast_assessment.get("status") != "OK"
+                or fast_assessment.get("oanda_collected_at") != source
+                or fast_assessment.get("news_collected_at") != fast_news.get("collected_at")
+                or not dt.timedelta(0) <= now - checked <= dt.timedelta(minutes=20)
+                or checked < _timestamp(watcher["collected_at"])
+                or _timestamp(source) < _timestamp(summary["collected_at"])):
+            return summary, news, watcher, recent, detailed
+    except (KeyError, TypeError, ValueError):
+        return summary, news, watcher, recent, detailed
+    summary, recent, detailed = deepcopy((summary, recent, detailed))
+    for pair, row in (fast_snapshot.get("pairs") or {}).items():
+        if pair not in (summary.get("pairs") or {}):
+            continue
+        summary["pairs"][pair].update(deepcopy(row))
+        recent.setdefault("pairs", {})[pair] = deepcopy(row)
+        detailed[pair] = {"instrument": pair, "collected_at": source, **deepcopy(row)}
+    watcher = deepcopy(fast_assessment)
+    watcher["observation_stream"] = "FAST_SHORTLIST"
+    return summary, fast_news, watcher, recent, detailed
+
+
 def main() -> int:
     # Generate a strictly whitelisted payload. Without an authorised
     # cross-repository deploy token, fail visibly instead of claiming success.
@@ -720,6 +756,12 @@ def main() -> int:
         paper = load(str(paper_path)) if paper_path.is_file() else {"candidates": {}}
         opportunity_path = Path("data/entry_opportunity_ledger.json")
         opportunity = load(str(opportunity_path)) if opportunity_path.is_file() else {}
+        summary, news, watcher, recent, detailed = select_entry_observation(
+            summary, news, watcher, recent, detailed,
+            load("data/fast_latest.json") if Path("data/fast_latest.json").exists() else {},
+            load("data/fast_news_latest.json") if Path("data/fast_news_latest.json").exists() else {},
+            load("data/fast_entry_assessment.json") if Path("data/fast_entry_assessment.json").exists() else {},
+            dt.datetime.now(dt.timezone.utc))
         data = build_public_feed(summary, news, signals, watcher, detailed,
                                  recent.get("pairs") or {}, paper, opportunity)
         comparison_path = Path("data/strategy_comparison.json")

@@ -1,0 +1,26 @@
+{
+  "bootstrap_resamples": 10000,
+  "common_universe": "Both arms require current completed M15/H1/H4/D history. Hourly screens all OANDA account FX; bounded fast checks refresh active and leading preliminary shortlist in two UK market windows. Omitted pairs and missing history are explicitly recorded. No live gates relaxed.",
+  "cost_method": "Executable-side OANDA bid/ask fills and exits; no double spread subtraction. Adverse stop gaps and 0/0.25/0.5 pip per-side stress. Financing crossing NY 17:00 and actual Pepperstone costs remain unknown unless evidenced.",
+  "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
+  "development_cutoff": "2026-10-29T06:59:59Z",
+  "holdout_start_at": "2026-10-29T07:00:00Z",
+  "id": "FX-OOS-20261029-v4",
+  "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
+  "minimum_independent_scored_pair_days_per_arm": 100,
+  "minimum_scored_days_per_arm": 20,
+  "monitoring_method": "Fast shortlist only in 07-09 and 13-15 Europe/London weekdays, four checks/hour at :02/:17/:32/:47, GitHub best effort. Existing hourly and four comprehensive weekday assessments unchanged. No entry detected between checks is assumed actionable.",
+  "no_orders": true,
+  "policies": [
+    "champion",
+    "challenger_v1"
+  ],
+  "promotion_policy": "Explicit pass/fail-or-insufficient-evidence assessment; automatic promotion prohibited. Sufficient untouched samples, actual delivery and broker costs, positive day-cluster improvement, and separate independent review required. v4 re-registered before 07:00Z holdout solely for public-feed optional swing-history compaction, preserving all trade admission/risk thresholds and complete candidate IDs.",
+  "registered_at": "2026-10-29T03:24:00.575Z",
+  "rule_sha256": "5c72a61d3a7bd54ae844ba27f06b11d041c0e503bfcb0fa188fb6539c8aef1ad",
+  "slippage_pips_per_side": [
+    0,
+    0.25,
+    0.5
+  ]
+}

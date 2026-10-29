@@ -39,7 +39,7 @@ def freeze(summary, news, source_ref=None, *, decided_at=None):
                 plan, reason = qualify(pair, ranked, (summary.get("pairs") or {}).get(pair) or {},
                                        news, now, route, policy=policy)
                 rows.append({"policy": policy, "source_at": summary["collected_at"],
-                    "source_ref": source_ref, "study_method_version":2, "decision_at":iso(now),
+                    "source_ref": source_ref, "study_method_version":3, "observation_scope":"PAIR_SPECIFIC", "decision_at":iso(now),
                     "common_deep_history_available":all(
                         ((summary.get("pairs") or {}).get(pair,{}).get("frames",{}).get(tf,{}) or {}).get("indicators")
                         for tf in ("M15","H1","H4","D")), "pair": pair, "route": route,
@@ -93,6 +93,11 @@ def update(summary, news, book=None, fetch=None, *, decided_at=None):
     if summary["collected_at"] not in seen_sources:
         book.setdefault("source_snapshots", []).append(summary["collected_at"])
         book["observation_times"].append(observation)
+        # A fast scan of EUR/USD is NOT an observation of an omitted pair.
+        for pair in summary.get("pairs") or {}:
+            times = book.setdefault("pair_observation_times", {}).setdefault(pair, [])
+            if observation not in times:
+                times.append(observation)
         existing = {(r["policy"],r["pair"],r["route"],
                      (r.get("plan",{}).get("technical_context") or {}).get("source_bar_time"))
                     for r in book["records"] if r.get("plan")}
@@ -114,7 +119,11 @@ def update(summary, news, book=None, fetch=None, *, decided_at=None):
     for row in pending[:12]:
         try:
             bars = (fetch(row["plan"],now) if fetch else source_bars(row["plan"],now))
-            row["result"] = replay(row["plan"], bars, now, observation_times=observations)
+            pair_times = book.get("pair_observation_times", {}).get(row["pair"], [])
+            scoped = [moment(t) for t in pair_times
+                      if moment(t) and 7 <= moment(t).astimezone(ZoneInfo("Europe/London")).hour < 23]
+            row["result"] = replay(row["plan"], bars, now,
+                observation_times=scoped if row.get("observation_scope") == "PAIR_SPECIFIC" else observations)
             if getattr(bars,"evidence_path",None):
                 row["result"]["source_evidence"] = bars.evidence_path
         except (OSError, RuntimeError, ValueError, KeyError, TypeError) as exc:
