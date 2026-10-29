@@ -1,9 +1,9 @@
 {
   "purpose": "fresh OANDA price and news update when scheduled cron is unavailable",
-  "request": "FX_20261029_0514_HOURLY_STALE_SNAPSHOT_RECOVERY",
+  "request": "FX_20261029_0621_HOURLY_STALE_QUOTE_RECOVERY",
   "requested_by": "ChatGPT FX hourly research automation",
   "session_day_utc": "2026-10-29",
-  "sequence": 60,
-  "requested_at_utc": "2026-10-29T05:14:11Z",
-  "note": "05:15 UK overnight FX health: last verified OANDA summary/news/private and public feed 03:24:47 UTC, approximately 110 minutes old (>70m quote and >90m public-feed limits). Request one current-main collector refresh; verify actual new successful run, fresh summary/news, current immutable signals expiry, all-candidate monitoring, and sanitized public feed synchronization. No orders; retain quiet hours and existing risk limits."
+  "sequence": 61,
+  "requested_at_utc": "2026-10-29T06:20:59Z",
+  "note": "06:15 UK overnight FX health: oldest OANDA pair quote exceeded 70 minutes while collector snapshot 05:15:42 UTC remained under 70 minutes. Request one current-main collector refresh; verify fresh summary/news and quote times, preserve immutable signals and candidate ledger, synchronize sanitized public dashboard only after successful readback. Quiet hours; no orders."
 }
