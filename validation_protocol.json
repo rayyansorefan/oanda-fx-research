@@ -3,9 +3,9 @@
   "common_universe": "All screened OANDA account currency pairs receive M5/M15/H1/H4/D collection, with explicit per-timeframe gaps. Both study arms require identical complete M15/H1/H4/D context. Fast checks remain bounded to active plans and leading candidates; omitted pairs never gain observation timestamps.",
   "cost_method": "Executable-side OANDA bid/ask fills and exits; no double spread subtraction. Adverse stop gaps and 0/0.25/0.5 pip per-side stress. Financing crossing NY 17:00 and actual Pepperstone costs remain unknown unless evidenced.",
   "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
-  "development_cutoff": "2026-10-30T08:29:59Z",
-  "holdout_start_at": "2026-10-30T08:30:00Z",
-  "id": "FX-OOS-20261030-v11",
+  "development_cutoff": "2026-10-30T08:59:59Z",
+  "holdout_start_at": "2026-10-30T09:00:00Z",
+  "id": "FX-OOS-20261030-v12",
   "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
   "minimum_independent_scored_pair_days_per_arm": 100,
   "minimum_scored_days_per_arm": 20,
@@ -15,14 +15,14 @@
     "champion",
     "challenger_v1"
   ],
-  "promotion_policy": "V11 starts a new untouched 2026-10-30 08:30 UTC prospective holdout with conditional paper retest research, explicit early/breakout/retest dashboard states, and independently timestamped fast scan entry diagnostics. V10 was re-registered before its holdout started because its initial rule lock predates the fast-clock repair; V10 and all previous protocols, observations and deliveries remain archived. No champion automatic promotion, altered canonical admission, proven trade edge, retrospective fills, or fabricated Pepperstone verification. Require scored forward evidence, real user receipt, broker costs and independent review.",
-  "registered_at": "2026-10-30T08:24:06.974Z",
+  "promotion_policy": "V12 is prospectively registered after the 08:30 v11 boundary; v11 and all prior events remain archived and are excluded from the v12 scored holdout. Champion conditional manual research now permits strong M15/H1/H4 continuation despite sole opposing D EMA only with M15/H1 ADX at least 25, DMI margin at least 8 and aligned M15 MACD; prospective impulse body 0.48 and directional close 0.68, limited quote/EMA extension <=1.85 ATR. New frozen thresholds are checked by the watcher. Structural nearest TP, gross >=1.50 and net >=1.35 at capped costs, news/blackout, fresh executable-side OANDA quote, <0.25% equity risk and new completed candle remain required. No automatic orders, no guaranteed trades, no profitability claim, no algorithmic promotion without independent forward review.",
+  "registered_at": "2026-10-30T08:35:41.513Z",
   "require_pair_specific_observations": true,
-  "rule_sha256": "8bc5fbf8e5943792c5db09a7870cd6270e9fa6093abd103f4a14c50c23724680",
+  "rule_sha256": "15c6fd0ea5b83c0d0b2e794b043968479c5d9595b81565d355f22436512a5c11",
   "slippage_pips_per_side": [
     0,
     0.25,
     0.5
   ],
-  "supersedes_protocol_sha256": "d6df2c49ab530697c917cc2876aae4a844ebc57ca0a3a2e697cb04375226fd04"
+  "supersedes_protocol_sha256": "3a10de6613bf5c89e7da29291048a59745d356aef4a7eb035cfa253b8029ab97"
 }
