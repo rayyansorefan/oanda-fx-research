@@ -9,7 +9,7 @@
       "distinct_scored_days": 0,
       "independent_scored_pair_days": 0,
       "outcomes": {
-        "PENDING_TRIGGER": 1,
+        "INVALIDATED_PRE_ENTRY": 1,
         "UNTRIGGERED": 1
       },
       "prospective_plans": 2,
@@ -34,28 +34,62 @@
     "deep_pairs": 65,
     "distinct_evaluated_pairs": 65,
     "distinct_pairs_by_rejection": {
-      "FOUR_FRAME_TREND_CONFLICT": 8,
-      "INVALID_BID_ASK_OR_SPREAD": 9,
-      "REVERSAL_OR_EXHAUSTION": 46,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 1,
+      "ADX_TREND_STRENGTH": 2,
+      "FOUR_FRAME_TREND_CONFLICT": 20,
+      "INVALID_BID_ASK_OR_SPREAD": 16,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
+      "REVERSAL_OR_EXHAUSTION": 25,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
     "paper_prequalified": [
-      "EUR_SGD"
+      "AUD_CAD",
+      "AUD_CHF",
+      "AUD_JPY",
+      "CAD_CHF",
+      "CHF_JPY",
+      "EUR_AUD",
+      "EUR_SGD",
+      "EUR_USD",
+      "GBP_AUD",
+      "GBP_USD",
+      "NZD_CHF",
+      "NZD_JPY",
+      "SGD_CHF",
+      "USD_JPY"
     ],
     "paper_prequalified_missing_deep": [],
     "quoted_pairs": 65,
     "route_evaluations": 130,
     "route_rejections": {
-      "FOUR_FRAME_TREND_CONFLICT": 16,
-      "INVALID_BID_ASK_OR_SPREAD": 18,
-      "REVERSAL_OR_EXHAUSTION": 92,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
+      "ADX_TREND_STRENGTH": 4,
+      "FOUR_FRAME_TREND_CONFLICT": 40,
+      "INVALID_BID_ASK_OR_SPREAD": 32,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
+      "REVERSAL_OR_EXHAUSTION": 50,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-10-30T00:54:12Z",
-    "strict_prequalified": [],
+    "source_at": "2026-10-30T02:13:15Z",
+    "strict_prequalified": [
+      "AUD_CHF",
+      "AUD_JPY",
+      "CAD_CHF",
+      "CHF_JPY",
+      "EUR_AUD",
+      "EUR_HKD",
+      "EUR_SGD",
+      "EUR_USD",
+      "GBP_AUD",
+      "GBP_HKD",
+      "GBP_USD",
+      "HKD_JPY",
+      "NZD_CHF",
+      "SGD_CHF",
+      "USD_DKK",
+      "USD_SEK"
+    ],
     "strict_prequalified_missing_deep": []
   },
   "delivery_events_recorded": 1,
@@ -81,5 +115,5 @@
     "statistical_improvement_established": false
   },
   "status": "COLLECTING_HOLDOUT",
-  "updated_at": "2026-10-30T00:54:19.821444+00:00"
+  "updated_at": "2026-10-30T02:13:22.257249+00:00"
 }
