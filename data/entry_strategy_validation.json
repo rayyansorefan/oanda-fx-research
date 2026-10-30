@@ -1,19 +1,20 @@
 {
   "arms": {
     "challenger_v1": {
-      "abstaining_common_days": 1,
-      "eligible_pair_days": 64,
+      "abstaining_common_days": 2,
+      "eligible_pair_days": 128,
       "outcomes": {
-        "DATA_GAP": 1
+        "DATA_GAP": 1,
+        "UNTRIGGERED": 1
       },
-      "plans_created": 1,
+      "plans_created": 2,
       "scored_unique_currency_exposure_days": 0,
       "stress_cost_unverifiable": 0,
       "sum_net_r_stressed": null
     },
     "champion": {
-      "abstaining_common_days": 1,
-      "eligible_pair_days": 64,
+      "abstaining_common_days": 2,
+      "eligible_pair_days": 128,
       "outcomes": {},
       "plans_created": 0,
       "scored_unique_currency_exposure_days": 0,
@@ -23,9 +24,9 @@
   },
   "automatic_promotion_allowed": false,
   "caution": "Research-only counterfactual portfolio proxy. Missing broker costs or receipts prevent demonstrated manual achievability. No orders or parameter promotion.",
-  "cohort_sha256": "c4d15dd81ce54e2b8315c0593835064faaa5055871127876d1989f98d8b7f837",
-  "common_eligible_observation_days": 1,
-  "common_eligible_pair_days": 64,
+  "cohort_sha256": "e592cf06e7cbab377b44298403d579cc8c252264cf1328c571ada3b20277be09",
+  "common_eligible_observation_days": 2,
+  "common_eligible_pair_days": 128,
   "decision": "INSUFFICIENT_EVIDENCE",
   "earliest_common_day": "2026-10-29",
   "evidence": {
@@ -38,7 +39,13 @@
   "excluded": {
     "BEFORE_REGISTERED_HOLDOUT": 9054
   },
-  "paired_day_cluster_interval": null,
+  "paired_day_cluster_interval": {
+    "lower_95pct_r": 0.0,
+    "mean_improvement_r": 0.0,
+    "method": "Pre-registered day-cluster bootstrap; abstention contributes zero; overlapping pair exposures are clustered by day.",
+    "paired_days": 2,
+    "upper_95pct_r": 0.0
+  },
   "protocol_id": "FX-OOS-20261029-v9",
   "reason": "Registered observation-day or challenger sample floor not reached",
   "registered_holdout_start_unchanged": "2026-10-29T17:15:00Z",
@@ -48,5 +55,5 @@
     "common_days": 20
   },
   "trading_performance_validated": false,
-  "updated_at": "2026-10-29T22:17:57.055630+00:00"
+  "updated_at": "2026-10-30T00:16:33.603132+00:00"
 }
