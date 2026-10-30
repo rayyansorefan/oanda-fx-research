@@ -1,9 +1,9 @@
 {
   "purpose": "fresh OANDA price and news update when scheduled cron is unavailable",
-  "request": "FX_20261030_1357_US_PREOPEN_FULL_ASSESSMENT",
-  "requested_by": "ChatGPT FX US pre-open research automation",
+  "request": "FX_20261030_1615_HOURLY_FRESHNESS_RECOVERY",
+  "requested_by": "ChatGPT FX hourly research automation",
   "session_day_utc": "2026-10-30",
-  "sequence": 78,
-  "requested_at_utc": "2026-10-30T13:57:05.000Z",
-  "note": "US pre-open full-assessment recovery: last saved OANDA snapshot 2026-10-30T12:59:35Z exceeds the protocol 25-minute freshness threshold. Run current-code collector once; verify saved summary/news and canonical admission/readiness before any manual conditional alert. No broker orders."
+  "sequence": 79,
+  "requested_at_utc": "2026-10-30T16:14:18.000Z",
+  "note": "Market open; saved OANDA/news 2026-10-30T14:04:45Z are ~130 minutes old. Run current main collector once for fresh OANDA/news, canonical admission, paper tracking, and sanitized dashboard export. No broker orders. Verify saved timestamps and feed before alerts."
 }
