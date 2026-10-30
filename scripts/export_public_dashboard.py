@@ -367,7 +367,8 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
                     continue
                 entry_low, entry_high = ema - .15 * atr, ema + .15 * atr
             if direction == "SHORT":
-                stop = max(recent_high + .15 * atr, entry_high + 1.1 * atr)
+                stop = (recent_high + .10 * atr if extended_retest else
+                        max(recent_high + .15 * atr, entry_high + 1.1 * atr))
                 worst_entry = entry_low
                 distance = stop - worst_entry
                 # Nearest genuine completed support must justify the reward.
@@ -376,7 +377,8 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
                     if f.get("support20") is not None and float(f["support20"]) < worst_entry
                 }, reverse=True)
             else:
-                stop = min(recent_low - .15 * atr, entry_low - 1.1 * atr)
+                stop = (recent_low - .10 * atr if extended_retest else
+                        min(recent_low - .15 * atr, entry_low - 1.1 * atr))
                 worst_entry = entry_high
                 distance = worst_entry - stop
                 targets = sorted({
@@ -419,10 +421,15 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
                 "tp1": round(tp1, places),
                 "tp2": round(tp2, places) if tp2 is not None else None,
                 "target_basis": "nearest completed M15/H1/H4/D 20-bar support/resistance",
-                "stop_basis": "last three completed M15 swing plus volatility floor",
+                "stop_basis": ("last three completed M15 swing plus 0.10 ATR retest invalidation"
+                               if extended_retest else
+                               "last three completed M15 swing plus volatility floor"),
                 "requires_future_retest": extended_retest,
                 "net_rr_estimate": round(net_rr, 2),
                 "source_quote_at": quote.get("time"),
+                "expires_at": ((dt.datetime.fromisoformat(quote["time"].replace("Z","+00:00"))
+                                + dt.timedelta(minutes=60 if extended_retest else 90))
+                               .isoformat().replace("+00:00","Z") if quote.get("time") else None),
                 "impulse_m15_started_at": (recent[-1].get("time") if recent and route_continuation else None),
                 "m5_confirmation": "PENDING_NEW_COMPLETED_M5" if route_continuation else "REQUIRES_COMPLETED_M15_REJECTION",
                 "trigger": (("Wait for a NEW completed M5 candle continuing lower, without "
@@ -541,6 +548,7 @@ def build_current_scouts(summary: dict, news: dict, research_setups: list[dict],
                     "tp2": s.get("tp2"),
                     "net_rr_estimate": s.get("net_rr_estimate"),
                     "source_quote_at": s.get("source_quote_at"),
+                    "expires_at": s.get("expires_at"),
                     "trigger_rule": s.get("trigger"),
                     "entry_route": s.get("entry_route"),
                     "requires_future_retest": s.get("requires_future_retest") is True,
