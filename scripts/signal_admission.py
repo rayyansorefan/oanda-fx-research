@@ -82,7 +82,13 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
     # the signal's actual intended direction using the current source data.
     # Otherwise an unrelated old-direction warning silently vetoes it.
     current_context = entry_context({"quote": q, "frames": frames}, direction)
-    if current_context["block_new_alert"]:
+    extension = number(current_context.get("m15_ema_distance_atr"))
+    moderate_extension = (
+        route == "MOMENTUM_CONTINUATION"
+        and current_context.get("status") == "REASSESS_EXTENDED"
+        and extension is not None and 1.55 < extension <= 1.85
+    )
+    if current_context["block_new_alert"] and not moderate_extension:
         return None, "REVERSAL_OR_EXHAUSTION"
     snapshot = moment(q.get("time"))
     if not snapshot or q.get("tradeable") is not True or not timedelta(seconds=-180) <= now-snapshot <= timedelta(minutes=20):
@@ -95,10 +101,35 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
         item = (frames.get(tf) or {}).get("indicators") or {}
         if trend(item) is None:
             return None, "REQUIRED_FRAME_HISTORY_MISSING:" + tf
-        if trend(item) != direction:
-            return None, "FOUR_FRAME_TREND_CONFLICT"
         indicators[tf] = item
     m, h = indicators["M15"], indicators["H1"]
+    if trend(m) != direction or trend(h) != direction:
+        return None, "FOUR_FRAME_TREND_CONFLICT"
+    daily_conflict = (not paper_only and trend(indicators["D"]) != direction)
+    # The *only* relaxed higher-frame case is a continuation with M15/H1/H4
+    # aligned, D opposed, independently strong momentum, and intact risk/news.
+    # Two opposed/missing higher frames remain disqualifying.
+    strong_three_frame = (
+        daily_conflict and route == "MOMENTUM_CONTINUATION"
+        and trend(indicators["H4"]) == direction
+        and all((number(i.get("adx14")) or 0) >= 25 for i in (m, h))
+        and all(
+            (number(i.get("plus_di14")) is not None
+             and number(i.get("minus_di14")) is not None
+             and (number(i["plus_di14"]) - number(i["minus_di14"])) *
+                 (1 if direction == "LONG" else -1) >= 8)
+            for i in (m, h))
+        and (number((m.get("macd_12_26_9") or {}).get("histogram")) or 0) *
+            (1 if direction == "LONG" else -1) > 0
+    )
+    if (not paper_only and trend(indicators["H4"]) != direction) or (
+            daily_conflict and not strong_three_frame):
+        return None, "FOUR_FRAME_TREND_CONFLICT"
+    # Moderately extended plans are not permission to chase; later watcher
+    # must separately check live risk economics and a NEW completed M15 bar.
+    if moderate_extension and not (strong_three_frame or (
+            not paper_only and trend(indicators["D"]) == direction)):
+        return None, "REVERSAL_OR_EXHAUSTION"
     atr = number(m.get("atr14"))
     if not atr or atr <= 0 or spread_pips * pip > .50 * atr:
         return None, "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY"
@@ -137,11 +168,15 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
         body = abs(close - opening)
         close_strength = ((close - low) / span if direction == "LONG" else
                           (high - close) / span) if span > 0 else 0
-        if span <= 0 or body / span < .55 or close_strength < .72:
+        # Only qualifying champion momentum plans use the slightly earlier
+        # 48% / 68% impulse; their frozen thresholds follow into the watcher.
+        minimum_body = .48 if not paper_only else .55
+        minimum_close = .68 if not paper_only else .72
+        if span <= 0 or body / span < minimum_body or close_strength < minimum_close:
             return None, "NO_DECISIVE_COMPLETED_M15_IMPULSE"
         if not (close > opening if direction == "LONG" else close < opening):
             return None, "IMPULSE_DIRECTION_CONFLICT"
-        if abs(live_side - close) > .40 * atr:
+        if abs(live_side - close) > (.55 if not paper_only else .40) * atr:
             return None, "CONTINUATION_PRICE_STRETCHED"
         if direction == "LONG":
             level = high + pip
@@ -219,7 +254,14 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
         "gross_rr_at_creation": round(gross, 3),
         "net_rr_at_spread_cap": round(net, 3),
         "technical_context": {
-            "full_frame_alignment": not paper_only,
+            "full_frame_alignment": not paper_only and not daily_conflict,
+            "timeframes_aligned": [tf for tf in ("M15", "H1", "H4", "D")
+                                   if trend((frames.get(tf) or {}).get("indicators") or {}) == direction],
+            "daily_frame_conflict": daily_conflict,
+            "conditional_daily_exception": strong_three_frame,
+            "extension_exception": moderate_extension,
+            "continuation_min_body": (.48 if not paper_only else .55),
+            "continuation_min_close": (.68 if not paper_only else .72),
             "admission_policy": policy,
             "momentum_adx_minimum": 18 if paper_only else 20,
             "m15_adx": number(m.get("adx14")), "h1_adx": number(h.get("adx14")),
@@ -232,6 +274,7 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
         },
         "target_basis": "nearest completed M15/H1/H4/D 20-bar support/resistance",
         "trigger_basis": "future completed M15 only",
+        "decision_status": "CONDITIONAL_PENDING_NEW_M15_TRIGGER",
         **{k: round(v, decimals) for k, v in alert.items()}
     }
     # Reject rounding artefacts instead of hiding lower reward or bad direction.
