@@ -274,8 +274,9 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
         direction = candidate.get("potential_direction_not_approved")
         if direction not in ("LONG", "SHORT") or candidate.get("technical_checks_agree", 0) < 4:
             continue
-        if (candidate.get("adaptive_context") or {}).get("block_new_alert") is True:
-            continue  # Reversal/extension warning: no new prospective entry zones.
+        adaptive_block = (candidate.get("adaptive_context") or {}).get("block_new_alert") is True
+        # Only FUTURE retests are researched after moderate extension.
+        # Canonical admission and continuation remain unchanged.
         source = pairs.get(key) or {}
         quote, frames = source.get("quote") or {}, source.get("frames") or {}
         if quote.get("tradeable") is not True:
@@ -316,6 +317,9 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
         executable = bid if direction == "SHORT" else ask
         distance_in_trend = (ema - executable if direction == "SHORT"
                              else executable - ema)
+        extended_retest = adaptive_block and 1.55 < distance_in_trend / atr <= 2.5
+        if adaptive_block and not extended_retest:
+            continue  # Severe extension or other reversal warnings: no plan.
         recent = frames["M15"].get("last_3_completed_candles") or []
         # A prospective entry must have an independently completed swing.
         # Do not use the much more distant 20-bar channel extreme as a
@@ -331,7 +335,7 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
         # An additional *prospective* route: a strong already-completed M15
         # impulse may justify monitoring the next M5 continuation. A perfect
         # EMA20 retest is not mandatory; do not chase extended impulses.
-        if .35 * atr <= distance_in_trend <= 1.5 * atr and recent:
+        if not adaptive_block and .35 * atr <= distance_in_trend <= 1.5 * atr and recent:
             try:
                 bar = recent[-1]["mid"]
                 opening, close = float(bar["o"]), float(bar["c"])
@@ -389,8 +393,10 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
             places = 3 if pip >= .01 else 5
             setups.append({
                 "instrument": key, "direction": direction,
-                "status": "CONDITIONAL_RESEARCH_NOT_TRIGGERED",
+                "status": ("EXTENDED_RETEST_PAPER_NOT_TRIGGERED" if extended_retest
+                           else "CONDITIONAL_RESEARCH_NOT_TRIGGERED"),
                 "model": ("M15 impulse / next M5 continuation" if route_continuation else
+                          "Extended impulse · next M15 EMA20 retest" if extended_retest else
                           "M15 EMA20 trend-pullback / rejection"),
                 "entry_route": "MOMENTUM_CONTINUATION" if route_continuation else "EMA20_PULLBACK",
                 "research_priority": round(float(candidate.get("research_priority") or 0), 2),
@@ -400,6 +406,8 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
                     if trend_direction == direction],
                 "higher_timeframe_conflicts": conflicts,
                 "research_only_blocker": (
+                    ("Previous impulse extended; ONLY a new M15 retest, no momentum chase. "
+                     if extended_retest else "") +
                     "Higher-timeframe conflict on " + ", ".join(conflicts) +
                     "; directional watch ONLY; NOT eligible for live/manual signal admission."
                     if conflicts else
@@ -412,6 +420,7 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
                 "tp2": round(tp2, places) if tp2 is not None else None,
                 "target_basis": "nearest completed M15/H1/H4/D 20-bar support/resistance",
                 "stop_basis": "last three completed M15 swing plus volatility floor",
+                "requires_future_retest": extended_retest,
                 "net_rr_estimate": round(net_rr, 2),
                 "source_quote_at": quote.get("time"),
                 "impulse_m15_started_at": (recent[-1].get("time") if recent and route_continuation else None),
@@ -424,7 +433,9 @@ def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
                             if route_continuation else
                             ("Wait for a completed M15 bearish rejection within the zone."
                              if direction == "SHORT" else
-                             "Wait for a completed M15 bullish rejection within the zone.")),
+                             "Wait for a completed M15 bullish rejection within the zone.")) +
+                            (" Retest mandatory after extension; do not chase the old impulse."
+                             if extended_retest else ""),
                 "broker_check": "Verify live Pepperstone spread, exact execution price and account availability.",
                 "news_check": "Check scheduled macro events and official news before entry.",
                 "approved_entry": False,
@@ -511,6 +522,7 @@ def build_current_scouts(summary: dict, news: dict, research_setups: list[dict],
             "reference_rule": diag.get("reference_rule") or
                               "M15/H1 direction and future candle confirmation required",
             "next_m15_check_at": diag.get("next_m15_check_at"),
+            "previous_m15_break_observed": diag.get("previous_m15_break_observed") is True,
             "blockers": diag.get("blockers") or [
                 {"code": "DIRECTION_UNCONFIRMED",
                  "detail": "No verified directional M15 entry diagnostic for this scout"}],
@@ -531,7 +543,29 @@ def build_current_scouts(summary: dict, news: dict, research_setups: list[dict],
                     "source_quote_at": s.get("source_quote_at"),
                     "trigger_rule": s.get("trigger"),
                     "entry_route": s.get("entry_route"),
+                    "requires_future_retest": s.get("requires_future_retest") is True,
                 }
+        blockers = {b.get("code") for b in item["blockers"] if isinstance(b, dict)}
+        if {"STALE_QUOTE", "QUOTE_UNUSABLE", "COST_HIGH_OR_UNKNOWN"} & blockers:
+            phase, action = ("DATA_OR_COST_BLOCKED",
+                             "DO NOT ENTER · stale/unusable price or spread; wait for a new quote")
+        elif plan and plan.get("requires_future_retest"):
+            phase, action = ("EXTENDED_WAIT_RETEST",
+                             "WAIT FOR NEW M15 EMA20 RETEST · earlier breakout is not a current entry")
+        elif "OVEREXTENDED_OR_REVERSING" in blockers:
+            phase, action = ("EXTENDED_WAIT_RETEST",
+                             "DO NOT CHASE · wait for independently completed retest and reprice")
+        elif item["previous_m15_break_observed"]:
+            phase, action = ("BREAKOUT_OBSERVED_REVIEW",
+                             "BREAKOUT OBSERVED · not a retrospective fill; reassess next new candle")
+        elif plan:
+            phase, action = ("EARLY_CONDITIONAL_WATCH",
+                             "EARLY PAPER SETUP · require future trigger plus broker/news review")
+        else:
+            phase, action = ("UNPRICED_WATCH",
+                             "NO PRICED SETUP · structural stop, target and reward/risk not established")
+        item["entry_phase"] = phase
+        item["next_action"] = action
         if plan:
             item["plan"] = plan
         output.append(item)
