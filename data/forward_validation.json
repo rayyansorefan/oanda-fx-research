@@ -9,8 +9,7 @@
       "distinct_scored_days": 0,
       "independent_scored_pair_days": 0,
       "outcomes": {
-        "DATA_GAP": 1,
-        "INVALIDATED_PRE_ENTRY": 1,
+        "INVALIDATED_PRE_ENTRY": 2,
         "UNTRIGGERED": 1
       },
       "prospective_plans": 3,
@@ -32,54 +31,50 @@
   "automatic_promotion_allowed": false,
   "coverage": {
     "count_note": "Rejection categories overlap; route counts and per-reason pair counts must not be summed into independent trades.",
-    "deep_pairs": 65,
-    "distinct_evaluated_pairs": 65,
+    "deep_pairs": 68,
+    "distinct_evaluated_pairs": 68,
     "distinct_pairs_by_rejection": {
-      "ADX_TREND_STRENGTH": 1,
+      "ADX_TREND_STRENGTH": 2,
       "EVENT_CALENDAR_OR_BLACKOUT": 1,
-      "FOUR_FRAME_TREND_CONFLICT": 15,
-      "INVALID_BID_ASK_OR_SPREAD": 16,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 2,
-      "REVERSAL_OR_EXHAUSTION": 28,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
+      "FOUR_FRAME_TREND_CONFLICT": 19,
+      "INVALID_BID_ASK_OR_SPREAD": 10,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
+      "REVERSAL_OR_EXHAUSTION": 34,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 1,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
     "paper_prequalified": [
+      "AUD_CAD",
       "AUD_CHF",
       "AUD_JPY",
-      "CAD_HKD",
-      "EUR_CHF",
+      "AUD_SGD",
+      "EUR_AUD",
+      "GBP_AUD",
       "GBP_USD",
-      "NZD_JPY",
-      "USD_CAD",
-      "USD_CHF",
+      "NZD_SGD",
       "USD_JPY"
     ],
     "paper_prequalified_missing_deep": [],
-    "quoted_pairs": 65,
-    "route_evaluations": 130,
+    "quoted_pairs": 68,
+    "route_evaluations": 136,
     "route_rejections": {
-      "ADX_TREND_STRENGTH": 2,
+      "ADX_TREND_STRENGTH": 4,
       "EVENT_CALENDAR_OR_BLACKOUT": 1,
-      "FOUR_FRAME_TREND_CONFLICT": 30,
-      "INVALID_BID_ASK_OR_SPREAD": 32,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 2,
-      "REVERSAL_OR_EXHAUSTION": 56,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 4,
+      "FOUR_FRAME_TREND_CONFLICT": 38,
+      "INVALID_BID_ASK_OR_SPREAD": 20,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
+      "REVERSAL_OR_EXHAUSTION": 68,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-10-30T05:15:19Z",
+    "source_at": "2026-10-30T07:03:26Z",
     "strict_prequalified": [
       "AUD_CHF",
-      "CHF_HKD",
-      "EUR_CHF",
+      "GBP_AUD",
       "GBP_HKD",
       "GBP_USD",
       "HKD_JPY",
-      "USD_CHF",
       "USD_JPY"
     ],
     "strict_prequalified_missing_deep": []
@@ -107,5 +102,5 @@
     "statistical_improvement_established": false
   },
   "status": "COLLECTING_HOLDOUT",
-  "updated_at": "2026-10-30T05:15:28.168840+00:00"
+  "updated_at": "2026-10-30T07:03:33.419483+00:00"
 }
