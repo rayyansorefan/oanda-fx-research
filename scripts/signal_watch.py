@@ -141,11 +141,18 @@ def momentum_continuation_qualifies(prev, curr, level, long, frames, tolerance, 
         lo, hi = float(candle["l"]), float(candle["h"])
         opening, close = float(candle["o"]), float(candle["c"])
         prev_close = float(prev["mid"]["c"])
+        context = context or {}
         span = hi - lo
-        if span <= 0 or abs(close - opening) / span < 0.55:
+        body_min = float(context.get("continuation_min_body", .55))
+        close_min = float(context.get("continuation_min_close", .72))
+        # Only honour frozen admission-time thresholds; no mutable watcher
+        # threshold may upgrade an older canonical plan.
+        if body_min < .48 or close_min < .68:
+            return False
+        if span <= 0 or abs(close - opening) / span < body_min:
             return False
         pos = (close - lo) / span if long else (hi - close) / span
-        if pos < 0.72:
+        if pos < close_min:
             return False
         crossed = ((prev_close <= level and close > level + tolerance)
                    if long else (prev_close >= level and close < level - tolerance))
@@ -561,7 +568,15 @@ def watch():
         # This is a new-entry reassessment, NEVER a claim an existing trade lost.
         context = entry_context(pairdata, signal["direction"])
         row["adaptive_context"] = context
-        if context["block_new_alert"]:
+        bounded_extension = (
+            signal.get("entry_route") == "MOMENTUM_CONTINUATION"
+            and context.get("status") == "REASSESS_EXTENDED"
+            and isinstance(signal.get("technical_context"), dict)
+            and (signal["technical_context"].get("continuation_min_body") == .48)
+            and context.get("m15_ema_distance_atr") is not None
+            and 1.55 < context["m15_ema_distance_atr"] <= 1.85
+        )
+        if context["block_new_alert"] and not bounded_extension:
             row["status"] = context["status"]
             row["reason"] = context["reason"]
             report["signals"].append(row)
