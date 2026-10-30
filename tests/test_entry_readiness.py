@@ -72,6 +72,20 @@ class EntryReadinessTests(unittest.TestCase):
         self.assertIn("NEWS_PARTIAL", [x["code"] for x in row["blockers"]])
         self.assertIn("NO_APPROVED_TRIGGER", [x["code"] for x in row["blockers"]])
 
+    def test_pair_specific_fast_clock_prevents_false_future_quote_rejection(self):
+        s = self.example()
+        # The hourly source stays 15:02, but a validated fast refresh at 15:20
+        # carries a newer quote and completed M15 candle. It must not be
+        # classified as a future market price relative to the hourly clock.
+        s["entry_observation_at"] = "2026-10-28T15:20:00Z"
+        s["pairs"]["EUR_USD"]["quote"]["time"] = "2026-10-28T15:19:30Z"
+        row = entry_diagnostics(s, {"status": "PARTIAL"})[0]
+        self.assertNotIn("STALE_QUOTE", [v["code"] for v in row["blockers"]])
+        self.assertFalse(row["approved_entry"])
+        del s["entry_observation_at"]
+        row = entry_diagnostics(s, {"status": "PARTIAL"})[0]
+        self.assertIn("STALE_QUOTE", [v["code"] for v in row["blockers"]])
+
     def test_no_structural_target_or_low_reward_withholds_paper_plan(self):
         s = self.example()
         s["pairs"]["EUR_USD"]["frames"]["M15"]["indicators"]["resistance20"] = 1.1012
