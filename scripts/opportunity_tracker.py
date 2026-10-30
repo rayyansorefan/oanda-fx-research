@@ -321,13 +321,22 @@ def update_ledger(summary, existing=None, news=None, latest=None, *, registered_
             continue
         first_seen = registration
         ttl = timedelta(minutes=90 if route == "MOMENTUM_CONTINUATION" else 240)
+        expiry = first_seen + ttl
+        if setup.get("requires_future_retest") is True:
+            # Extended-impulse retests have their own 60-minute source-bound
+            # validity. Do not count subsequent four-hour drift as evidence
+            # for a research hypothesis that already expired.
+            source_expiry = moment(setup.get("expires_at"))
+            if source_expiry is None or source_expiry <= first_seen:
+                continue
+            expiry = min(expiry, source_expiry)
         threshold_pct = round(100 * .6 * atr / mid, 5)
         rows[ident] = {
             "id": ident, "instrument": pair, "direction": direction,
             "route": route, "first_seen_at": first_seen.isoformat(),
             "source_quote_at": quote["at"].isoformat(),
             "m15_impulse_started_at": impulse_start,
-            "expires_at": (first_seen + ttl).isoformat(),
+            "expires_at": expiry.isoformat(),
             "entry_low": setup["entry_low"], "entry_high": setup["entry_high"],
             "stop": setup["stop"], "tp1": setup["tp1"], "tp2": setup.get("tp2"),
             "reference_mid": round(mid, 6),
