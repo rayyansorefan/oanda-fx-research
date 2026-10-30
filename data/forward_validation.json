@@ -31,12 +31,13 @@
     "deep_pairs": 68,
     "distinct_evaluated_pairs": 68,
     "distinct_pairs_by_rejection": {
-      "ADX_TREND_STRENGTH": 3,
+      "ADX_TREND_STRENGTH": 2,
       "FOUR_FRAME_TREND_CONFLICT": 11,
-      "INVALID_BID_ASK_OR_SPREAD": 7,
+      "INVALID_BID_ASK_OR_SPREAD": 9,
       "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
       "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
-      "REVERSAL_OR_EXHAUSTION": 45,
+      "REVERSAL_OR_EXHAUSTION": 43,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 1,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
@@ -47,7 +48,6 @@
       "EUR_GBP",
       "EUR_NZD",
       "GBP_CAD",
-      "GBP_NZD",
       "USD_CAD",
       "USD_SGD"
     ],
@@ -55,15 +55,16 @@
     "quoted_pairs": 68,
     "route_evaluations": 136,
     "route_rejections": {
-      "ADX_TREND_STRENGTH": 6,
+      "ADX_TREND_STRENGTH": 4,
       "FOUR_FRAME_TREND_CONFLICT": 22,
-      "INVALID_BID_ASK_OR_SPREAD": 14,
+      "INVALID_BID_ASK_OR_SPREAD": 18,
       "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
       "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
-      "REVERSAL_OR_EXHAUSTION": 90,
+      "REVERSAL_OR_EXHAUSTION": 86,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-10-30T08:23:05Z",
+    "source_at": "2026-10-30T08:24:36Z",
     "strict_prequalified": [
       "EUR_GBP",
       "GBP_CAD",
@@ -83,7 +84,7 @@
   "paired_day_comparison": null,
   "pass_fail_decision": "NOT_YET_VALIDATED",
   "performance_validated": false,
-  "protocol_id": "FX-OOS-20261030-v10",
+  "protocol_id": "FX-OOS-20261030-v11",
   "readiness": {
     "actual_delivery_evidence": false,
     "broker_cost_evidence": false,
@@ -91,9 +92,9 @@
     "holdout_started": false,
     "minimum_independent_samples": false,
     "minimum_scored_days": false,
-    "rules_unchanged": false,
+    "rules_unchanged": true,
     "statistical_improvement_established": false
   },
-  "status": "PROTOCOL_CHANGED",
-  "updated_at": "2026-10-30T08:23:12.944062+00:00"
+  "status": "HOLDOUT_NOT_STARTED",
+  "updated_at": "2026-10-30T08:24:42.317884+00:00"
 }
