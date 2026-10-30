@@ -741,6 +741,20 @@
       "trade_executed": false,
       "underlying_move_pct": -0.15801
     },
+    "202610300445-CHFHKD-LONG-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "LONG",
+      "id": "202610300445-CHFHKD-LONG-EMA20_PULLBACK",
+      "instrument": "CHF_HKD",
+      "invalidated_at": "2026-10-30T05:45:00Z",
+      "pattern_at": "2026-10-30T08:15:00+00:00",
+      "reason": "Frozen stop breached before pattern confirmation",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/CHF_HKD-41153c43e6844807e4b37d6af0d50480d4476d6f7c746178efe98a0be602419f.json",
+      "status": "PAPER_PRE_ENTRY_INVALIDATED",
+      "trade_executed": false
+    },
     "202610300445-GBPUSD-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
@@ -752,6 +766,34 @@
       "route": "EMA20_PULLBACK",
       "scored": false,
       "source_evidence": "data/replay_evidence/GBP_USD-aecf0e929ad5dc5518086b651a4ee9a045feaa3e511c63637674b966a4582c31.json",
+      "status": "PAPER_PRE_ENTRY_INVALIDATED",
+      "trade_executed": false
+    },
+    "202610300445-USDCHF-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202610300445-USDCHF-SHORT-EMA20_PULLBACK",
+      "instrument": "USD_CHF",
+      "invalidated_at": "2026-10-30T05:45:00Z",
+      "pattern_at": "2026-10-30T08:15:00+00:00",
+      "reason": "Frozen stop breached before pattern confirmation",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/USD_CHF-96b02d1a5bbb7918ef4ef26634932ef11dc4134d8e408a3406876ed20cfe7e44.json",
+      "status": "PAPER_PRE_ENTRY_INVALIDATED",
+      "trade_executed": false
+    },
+    "202610300445-USDJPY-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202610300445-USDJPY-SHORT-EMA20_PULLBACK",
+      "instrument": "USD_JPY",
+      "invalidated_at": "2026-10-30T05:45:00Z",
+      "pattern_at": "2026-10-30T08:15:00+00:00",
+      "reason": "Frozen stop breached before pattern confirmation",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/USD_JPY-e58316fe9a3381ac6b49dcf9e7441ef87fbd371a78004454586b4eb50a41e677.json",
       "status": "PAPER_PRE_ENTRY_INVALIDATED",
       "trade_executed": false
     }
@@ -769,11 +811,35 @@
       },
       {
         "after_alert_fill_verified": false,
+        "detected_at": "2026-10-30T08:19:21.198749+00:00",
+        "detection_delay_minutes": 4.35,
+        "fill_precedes_detection": false,
+        "id": "202610300445-CHFHKD-LONG-EMA20_PULLBACK",
+        "pattern_at": "2026-10-30T08:15:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
         "detected_at": "2026-10-30T07:03:32.120513+00:00",
         "detection_delay_minutes": 3.54,
         "fill_precedes_detection": false,
         "id": "202610300445-GBPUSD-LONG-EMA20_PULLBACK",
         "pattern_at": "2026-10-30T07:00:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-10-30T08:19:21.198749+00:00",
+        "detection_delay_minutes": 4.35,
+        "fill_precedes_detection": false,
+        "id": "202610300445-USDCHF-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-10-30T08:15:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-10-30T08:19:21.198749+00:00",
+        "detection_delay_minutes": 4.35,
+        "fill_precedes_detection": false,
+        "id": "202610300445-USDJPY-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-10-30T08:15:00+00:00"
       }
     ],
     "verified_profitable_missed_manual_entries": 0
@@ -781,14 +847,14 @@
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 2,
-  "today_forward_patterns": 2,
+  "today_distinct_pair_pattern_events": 5,
+  "today_forward_patterns": 5,
   "today_registered": 7,
   "today_scored_hypothetical_entries": 1,
   "today_status_counts": {
-    "PAPER_PRE_ENTRY_INVALIDATED": 1,
+    "PAPER_PRE_ENTRY_INVALIDATED": 4,
     "PAPER_STOP_AFTER_FILL": 1
   },
   "today_uk": "2026-10-30",
-  "updated_at": "2026-10-30T07:37:43Z"
+  "updated_at": "2026-10-30T08:19:21Z"
 }
