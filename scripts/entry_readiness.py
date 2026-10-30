@@ -104,7 +104,10 @@ def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
     Outbound fields deliberately exclude broker/account or client identifiers.
     """
     news = news or {}
-    snapshot = _time(summary.get("collected_at"))
+    # Validated fast scans can refresh specific pairs between hourly universe
+    # snapshots. Use their independently verified entry-observation clock for
+    # completed-bar freshness, never re-date the hourly universe itself.
+    snapshot = _time(summary.get("entry_observation_at") or summary.get("collected_at"))
     if snapshot is None:
         return []
     pairs = summary.get("pairs") or {}
