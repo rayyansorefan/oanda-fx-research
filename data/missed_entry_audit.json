@@ -769,6 +769,20 @@
       "status": "PAPER_PRE_ENTRY_INVALIDATED",
       "trade_executed": false
     },
+    "202610300445-HKDJPY-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202610300445-HKDJPY-SHORT-EMA20_PULLBACK",
+      "instrument": "HKD_JPY",
+      "invalidated_at": "2026-10-30T05:45:00Z",
+      "pattern_at": "2026-10-30T08:30:00+00:00",
+      "reason": "Frozen stop breached before pattern confirmation",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/HKD_JPY-1527a525fdb282a110c93bb3db16c9a3bc0fe1100793270244b73e611e8d58c2.json",
+      "status": "PAPER_PRE_ENTRY_INVALIDATED",
+      "trade_executed": false
+    },
     "202610300445-USDCHF-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "SHORT",
@@ -827,6 +841,14 @@
       },
       {
         "after_alert_fill_verified": false,
+        "detected_at": "2026-10-30T08:36:27.152840+00:00",
+        "detection_delay_minutes": 6.45,
+        "fill_precedes_detection": false,
+        "id": "202610300445-HKDJPY-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-10-30T08:30:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
         "detected_at": "2026-10-30T08:19:21.198749+00:00",
         "detection_delay_minutes": 4.35,
         "fill_precedes_detection": false,
@@ -847,14 +869,14 @@
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 5,
-  "today_forward_patterns": 5,
+  "today_distinct_pair_pattern_events": 6,
+  "today_forward_patterns": 6,
   "today_registered": 7,
   "today_scored_hypothetical_entries": 1,
   "today_status_counts": {
-    "PAPER_PRE_ENTRY_INVALIDATED": 4,
+    "PAPER_PRE_ENTRY_INVALIDATED": 5,
     "PAPER_STOP_AFTER_FILL": 1
   },
   "today_uk": "2026-10-30",
-  "updated_at": "2026-10-30T08:27:31Z"
+  "updated_at": "2026-10-30T08:36:27Z"
 }
