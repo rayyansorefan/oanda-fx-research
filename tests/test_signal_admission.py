@@ -95,6 +95,61 @@ class SignalAdmissionTests(unittest.TestCase):
         self.assertIsNone(plan)
         self.assertEqual(reason,"RECENT_COMPLETED_M15_MISSING")
 
+    def test_early_three_frame_momentum_admitted_but_not_as_retroactive_trade(self):
+        s = source()
+        s["quote"]["bid"] = 1.10045
+        s["quote"]["ask"] = 1.10055
+        s["frames"]["D"]["indicators"]["ema20"] = 1.0980
+        s["frames"]["D"]["indicators"]["ema50"] = 1.0995  # Daily disagrees
+        s["frames"]["M15"]["last_3_completed_candles"][-1]["mid"] = {
+            "o": 1.10010, "h": 1.10068, "l": 1.09985, "c": 1.10053}
+        plan, why = qualify("EUR_USD",ranked(),s,news(),NOW,
+                            "MOMENTUM_CONTINUATION")
+        self.assertIsNone(why)
+        self.assertTrue(plan["technical_context"]["conditional_daily_exception"])
+        self.assertFalse(plan["technical_context"]["full_frame_alignment"])
+        self.assertEqual(plan["technical_context"]["continuation_min_body"], .48)
+        self.assertEqual(plan["technical_context"]["continuation_min_close"], .68)
+        self.assertTrue(plan["planned_entry"] < plan["tp1"])
+        self.assertGreaterEqual(plan["net_rr_at_spread_cap"], 1.35)
+        self.assertFalse(plan["broker_verified"])
+        self.assertEqual(plan["decision_status"], "CONDITIONAL_PENDING_NEW_M15_TRIGGER")
+        self.assertIn("alert_c", plan)
+        # The same daily conflict cannot open the less stringent pullback route.
+        pullback, why = qualify("EUR_USD",ranked(),s,news(),NOW,"EMA20_PULLBACK")
+        self.assertIsNone(pullback)
+        self.assertEqual(why, "FOUR_FRAME_TREND_CONFLICT")
+
+        weakened = deepcopy(s)
+        weakened["frames"]["H1"]["indicators"]["adx14"] = 20
+        plan, why = qualify("EUR_USD",ranked(),weakened,news(),NOW,
+                            "MOMENTUM_CONTINUATION")
+        self.assertIsNone(plan)
+        self.assertEqual(why,"FOUR_FRAME_TREND_CONFLICT")
+
+        countertrend = deepcopy(s)
+        countertrend["frames"]["H4"]["indicators"]["ema20"] = 1.0980
+        countertrend["frames"]["H4"]["indicators"]["ema50"] = 1.0995
+        plan, why = qualify("EUR_USD",ranked(),countertrend,news(),NOW,
+                            "MOMENTUM_CONTINUATION")
+        self.assertIsNone(plan)
+        self.assertEqual(why,"FOUR_FRAME_TREND_CONFLICT")
+
+        thin = deepcopy(s)
+        thin["frames"]["M15"]["indicators"]["resistance20"] = 1.1010
+        thin["frames"]["H1"]["indicators"]["resistance20"] = 1.1010
+        thin["frames"]["H4"]["indicators"]["resistance20"] = 1.1010
+        thin["frames"]["D"]["indicators"]["resistance20"] = 1.1010
+        plan, why = qualify("EUR_USD",ranked(),thin,news(),NOW,
+                            "MOMENTUM_CONTINUATION")
+        self.assertIsNone(plan)
+        self.assertEqual(why,"NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE")
+
+        unverified, why = qualify("EUR_USD",ranked(),s,{"status":"PARTIAL"},
+                                NOW,"MOMENTUM_CONTINUATION")
+        self.assertIsNone(unverified)
+        self.assertEqual(why,"NEWS_NOT_VERIFIED")
+
     def test_existing_original_immutable_and_expiry_archived(self):
         summary={"status":"OK","collected_at":NOW.isoformat(),
                  "ranked_review_candidates":[ranked()],
