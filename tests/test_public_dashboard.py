@@ -95,6 +95,56 @@ class PublicDashboardFeedTests(unittest.TestCase):
         summary["pairs"]["EUR_JPY"]["frames"]["D"]["indicators"]["ema20"] = 180.0
         self.assertEqual(build_research_setups(summary), [])
 
+    def test_extended_gbp_usd_buy_has_forward_retest_not_chase(self):
+        """An extension veto can still publish a new conditional retest research plan."""
+        from scripts.export_public_dashboard import build_research_setups, build_current_scouts
+        i = lambda e20, e50, **extra: {"ema20": e20, "ema50": e50, **extra}
+        bar = lambda o, h, l, c: {"mid": {"o": o, "h": h, "l": l, "c": c}}
+        summary = {
+            "collected_at": "2026-10-30T07:37:38Z",
+            "ranked_review_candidates": [{
+                "instrument": "GBP_USD", "research_priority": 61.08,
+                "technical_checks_agree": 5,
+                "potential_direction_not_approved": "LONG",
+                "adaptive_context": {"block_new_alert": True, "reason": "extended"}}
+            ],
+            "pairs": {"GBP_USD": {
+                "quote": {"time": "2026-10-30T07:37:37Z", "bid": 1.34051,
+                          "ask": 1.34065, "pip_size": .0001,
+                          "spread_pips": 1.4, "tradeable": True},
+                "frames": {
+                    "M15": {"indicators": i(1.33939, 1.33845, atr14=.00068,
+                        support20=1.33803, resistance20=1.34120, adx14=25),
+                        "last_3_completed_candles": [
+                            bar(1.33934, 1.33956, 1.33890, 1.33944),
+                            bar(1.33946, 1.34021, 1.33932, 1.34009),
+                            bar(1.34010, 1.34120, 1.34004, 1.34116)]},
+                    "H1": {"indicators": i(1.33727, 1.33497, adx14=36,
+                                           resistance20=1.34074)},
+                    "H4": {"indicators": i(1.33600, 1.33450, resistance20=1.34300)},
+                    "D": {"indicators": i(1.33100, 1.33200, resistance20=1.34700)}
+                }
+            }}
+        }
+        plans = build_research_setups(summary)
+        self.assertEqual(len(plans), 1)
+        p = plans[0]
+        self.assertEqual(p["status"], "EXTENDED_RETEST_PAPER_NOT_TRIGGERED")
+        self.assertEqual(p["entry_route"], "EMA20_PULLBACK")
+        self.assertTrue(p["requires_future_retest"])
+        self.assertFalse(p["approved_entry"])
+        self.assertLess(p["stop"], p["entry_low"])
+        self.assertLess(p["entry_high"], p["tp1"])
+        self.assertGreaterEqual(p["net_rr_estimate"], 1.35)
+        self.assertEqual(p["expires_at"], "2026-10-30T08:37:37Z")
+        self.assertIn("Retest mandatory", p["trigger"])
+        # No fake approval when no independent target / serious stretch.
+        summary["pairs"]["GBP_USD"]["frames"]["H1"]["indicators"]["resistance20"] = 1.33955
+        summary["pairs"]["GBP_USD"]["frames"]["M15"]["indicators"]["resistance20"] = 1.33956
+        self.assertEqual(build_research_setups(summary), [])
+        summary["pairs"]["GBP_USD"]["quote"]["ask"] = 1.3425
+        self.assertEqual(build_research_setups(summary), [])
+
     def test_forward_continuation_plan_uses_current_venue_indicative_quote(self):
         from scripts.export_public_dashboard import build_research_setups
         def ind(ema20, ema50, **kwargs):
