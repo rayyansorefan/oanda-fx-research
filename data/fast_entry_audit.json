@@ -6,15 +6,15 @@
     "candidate_routes": [
       {
         "direction": "SHORT",
-        "pair": "AUD_CHF",
-        "reason": "REVERSAL_OR_EXHAUSTION",
+        "pair": "USD_CHF",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
         "route": "MOMENTUM_CONTINUATION",
         "status": "REJECTED"
       },
       {
         "direction": "SHORT",
-        "pair": "AUD_CHF",
-        "reason": "REVERSAL_OR_EXHAUSTION",
+        "pair": "USD_CHF",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
         "route": "EMA20_PULLBACK",
         "status": "REJECTED"
       },
@@ -34,28 +34,14 @@
       },
       {
         "direction": "SHORT",
-        "pair": "USD_CHF",
-        "reason": "FOUR_FRAME_TREND_CONFLICT",
-        "route": "MOMENTUM_CONTINUATION",
-        "status": "REJECTED"
-      },
-      {
-        "direction": "SHORT",
-        "pair": "USD_CHF",
-        "reason": "FOUR_FRAME_TREND_CONFLICT",
-        "route": "EMA20_PULLBACK",
-        "status": "REJECTED"
-      },
-      {
-        "direction": "LONG",
-        "pair": "EUR_AUD",
+        "pair": "AUD_CHF",
         "reason": "REVERSAL_OR_EXHAUSTION",
         "route": "MOMENTUM_CONTINUATION",
         "status": "REJECTED"
       },
       {
-        "direction": "LONG",
-        "pair": "EUR_AUD",
+        "direction": "SHORT",
+        "pair": "AUD_CHF",
         "reason": "REVERSAL_OR_EXHAUSTION",
         "route": "EMA20_PULLBACK",
         "status": "REJECTED"
@@ -75,15 +61,15 @@
         "status": "REJECTED"
       },
       {
-        "direction": "SHORT",
-        "pair": "AUD_JPY",
+        "direction": "LONG",
+        "pair": "EUR_AUD",
         "reason": "REVERSAL_OR_EXHAUSTION",
         "route": "MOMENTUM_CONTINUATION",
         "status": "REJECTED"
       },
       {
-        "direction": "SHORT",
-        "pair": "AUD_JPY",
+        "direction": "LONG",
+        "pair": "EUR_AUD",
         "reason": "REVERSAL_OR_EXHAUSTION",
         "route": "EMA20_PULLBACK",
         "status": "REJECTED"
@@ -98,6 +84,20 @@
       {
         "direction": "SHORT",
         "pair": "USD_CAD",
+        "reason": "REVERSAL_OR_EXHAUSTION",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "AUD_JPY",
+        "reason": "REVERSAL_OR_EXHAUSTION",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "AUD_JPY",
         "reason": "REVERSAL_OR_EXHAUSTION",
         "route": "EMA20_PULLBACK",
         "status": "REJECTED"
@@ -117,18 +117,18 @@
         "status": "REJECTED"
       }
     ],
-    "evaluated_at": "2026-10-30T08:14:49.696349+00:00",
+    "evaluated_at": "2026-10-30T08:16:25.095702+00:00",
     "rejected": {
       "ADX_TREND_STRENGTH": 4,
       "FOUR_FRAME_TREND_CONFLICT": 4,
       "REVERSAL_OR_EXHAUSTION": 8
     },
-    "source_at": "2026-10-30T08:14:49.696349+00:00",
+    "source_at": "2026-10-30T08:16:25.095702+00:00",
     "status": "NO_QUALIFIED_CONDITIONAL_PLAN"
   },
   "analysed": 8,
   "candidate_count": 8,
-  "checked_at": "2026-10-30T08:14:49.859068+00:00",
+  "checked_at": "2026-10-30T08:16:25.186945+00:00",
   "manual_pepperstone_check_required": true,
   "observations": [],
   "omitted_due_to_cap": [
@@ -194,7 +194,7 @@
   ],
   "problems": {},
   "research_only": true,
-  "source_at": "2026-10-30T08:14:49.696349+00:00",
+  "source_at": "2026-10-30T08:16:25.095702+00:00",
   "status": "FAST_RESEARCH_CHECK_COMPLETE",
   "user_delivery_verified": false
 }
