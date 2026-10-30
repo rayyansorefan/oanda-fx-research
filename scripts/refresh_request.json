@@ -1,9 +1,9 @@
 {
   "purpose": "fresh OANDA price and news update when scheduled cron is unavailable",
-  "request": "FX_20261030_2114_HOURLY_FRESHNESS_RECOVERY",
+  "request": "FX_20261030_2217_HOURLY_FRESHNESS_RECOVERY",
   "requested_by": "ChatGPT FX hourly research automation",
   "session_day_utc": "2026-10-30",
-  "sequence": 81,
-  "requested_at_utc": "2026-10-30T21:14:11Z",
-  "note": "Market open; last saved OANDA/news source 2026-10-30T19:19:32Z is 114m39s old at 21:14:11 UTC. Request one current-main collector refresh for canonical admission, complete quotes/news, forward-only ledgers and sanitized dashboard export. No orders. Require fresh saved timestamps and read-back before any alert."
+  "sequence": 82,
+  "requested_at_utc": "2026-10-30T22:17:40Z",
+  "note": "Market open; latest saved OANDA quotes remain 2026-10-30T19:19:32Z (188m08s old). Last collector saved DATA_UNAVAILABLE at 21:14:50Z with OANDA_NO_USABLE_FX_QUOTES. Request one current-main collector refresh; verify newly saved actual bid/ask quote times, news, canonical signal admission and sanitized dashboard before any entry. No orders."
 }
