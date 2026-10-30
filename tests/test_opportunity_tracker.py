@@ -78,6 +78,34 @@ class OpportunityLedgerTests(unittest.TestCase):
         self.assertEqual(next(iter(expired["opportunities"].values()))[
             "in_window_audit"], original_window)  # After-expiry follow-through cannot rewrite original evidence
 
+    def test_extended_retest_expires_on_source_clock_not_four_hours_later(self):
+        setup = [{**plan()[0], "direction": "LONG",
+                  "entry_route": "EMA20_PULLBACK",
+                  "entry_low": 1.1159, "entry_high": 1.1161,
+                  "stop": 1.1145, "tp1": 1.118,
+                  "requires_future_retest": True,
+                  "expires_at": "2026-10-27T09:30:00Z"}]
+        with patch.object(tracker, "build_research_setups", return_value=setup):
+            registered = tracker.update_ledger(snapshot(), {})
+        self.assertEqual(registered["total_registered"], 1)
+        row = next(iter(registered["opportunities"].values()))
+        self.assertEqual(row["expires_at"], "2026-10-27T09:30:00+00:00")
+        self.assertFalse(row["scored"])
+        with patch.object(tracker, "build_research_setups", return_value=[]):
+            after = tracker.update_ledger(snapshot(
+                "2026-10-27T10:14:00Z", "2026-10-27T10:13:00Z",
+                bid=1.1190, ask=1.1191), registered)
+        expired = next(iter(after["opportunities"].values()))
+        self.assertEqual(expired["tracking_status"],
+                         "EXPIRED_RESEARCH_NO_VERIFIED_FILL")
+        self.assertEqual(expired["in_window_audit"]["samples"], 0)
+        # A scanner delayed beyond the original source expiry must not
+        # register a retroactive opportunity in the first place.
+        with patch.object(tracker, "build_research_setups", return_value=setup):
+            late = tracker.update_ledger(snapshot(
+                "2026-10-27T09:40:00Z", "2026-10-27T09:39:00Z"), {})
+        self.assertEqual(late["total_registered"], 0)
+
     def test_legacy_rolling_history_is_explicitly_incomplete(self):
         legacy = {
             "first_seen_at": "2026-10-28T08:00:00Z",
