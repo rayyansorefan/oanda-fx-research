@@ -1,0 +1,28 @@
+{
+  "bootstrap_resamples": 10000,
+  "common_universe": "All screened OANDA account currency pairs receive M5/M15/H1/H4/D collection, with explicit per-timeframe gaps. Both study arms require identical complete M15/H1/H4/D context. Fast checks remain bounded to active plans and leading candidates; omitted pairs never gain observation timestamps.",
+  "cost_method": "Executable-side OANDA bid/ask fills and exits; no double spread subtraction. Adverse stop gaps and 0/0.25/0.5 pip per-side stress. Financing crossing NY 17:00 and actual Pepperstone costs remain unknown unless evidenced.",
+  "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
+  "development_cutoff": "2026-10-30T08:29:59Z",
+  "holdout_start_at": "2026-10-30T08:30:00Z",
+  "id": "FX-OOS-20261030-v10",
+  "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
+  "minimum_independent_scored_pair_days_per_arm": 100,
+  "minimum_scored_days_per_arm": 20,
+  "monitoring_method": "Fast shortlist only in 07-09 and 13-15 Europe/London weekdays, four checks/hour at :02/:17/:32/:47, GitHub best effort. Existing hourly and four comprehensive weekday assessments unchanged. No entry detected between checks is assumed actionable.",
+  "no_orders": true,
+  "policies": [
+    "champion",
+    "challenger_v1"
+  ],
+  "promotion_policy": "V10 starts a prospective untouched 2026-10-30 08:30 UTC holdout after adding conditional extended-impulse RETEST paper research and an early-entry dashboard phase and a corrected separately timestamped fast-scan candle/repricing clock. V9 and prior cohorts remain archived and must not be counted as V10 outcomes. Canonical champion signal admission and broker safeguards are unchanged; provisional retest plans are research-only and require new future completed M15 retest, priced target/stop economics, fresh news, spread, and manual Pepperstone verification. No automatic promotion, no invented historical fills, no profitability claims; independently verified out-of-sample evidence and independent review still required.",
+  "registered_at": "2026-10-30T08:18:46.311Z",
+  "require_pair_specific_observations": true,
+  "rule_sha256": "8bc5fbf8e5943792c5db09a7870cd6270e9fa6093abd103f4a14c50c23724680",
+  "slippage_pips_per_side": [
+    0,
+    0.25,
+    0.5
+  ],
+  "supersedes_protocol_sha256": "96e9865ae1730214738b59da211951857ea32c92cf83868c0ffc4e10b7c34fec"
+}
