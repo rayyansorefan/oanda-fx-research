@@ -643,6 +643,36 @@
         "macro": "US Employment Cost Index due 12:30 UK, after this watch expires; official BLS calendar verified",
         "completeness": "INCOMPLETE_NO_VERIFIED_POST_PATTERN_FILL_OR_EXACT_ENTRY"
       }
+    },
+    {
+      "id": "20261030-1630-EURCAD-S-EMA20-PAPER",
+      "instrument": "EUR_CAD",
+      "direction": "SHORT",
+      "created_at": "2026-10-30T16:30:20Z",
+      "expires_at": "2026-10-30T17:45:39.815853Z",
+      "planned_entry": 1.55852,
+      "entry_low": 1.55852,
+      "entry_high": 1.55886,
+      "stop": 1.56014,
+      "tp1": 1.5553,
+      "tp2": 1.55524,
+      "alert_b": 1.55852,
+      "max_oanda_spread_pips": null,
+      "observed_oanda_spread_pips": 2.5,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-10-30T16:15:40Z",
+      "status": "INCOMPLETE_WATCH_ONLY_UNTRIGGERED",
+      "original_note": "Prospective paper-only EUR/CAD short: wait for price inside 1.55852–1.55886 and a newly completed M15 bearish rejection; invalidate at 1.56014 or expiry. No approved live entry or broker fill. Current dashboard expiry 17:45:39Z is retained conservatively; the opportunity ledger independently shows a longer monitoring expiry. Maximum admissible OANDA spread was not explicitly frozen, so the candidate remains incomplete and unapproved.",
+      "technical_context": {
+        "as_of_utc": "2026-10-30T16:15:40Z",
+        "m15": "RSI14 41.89; ADX14 39.29; -DI 26.38 > +DI 16.94; EMA20<EMA50<EMA200; Supertrend down; below Ichimoku; ATR14 11.56 pips.",
+        "h1": "RSI14 37.12; ADX14 25.13; -DI 34.43 > +DI 14.66; EMA20<EMA50<EMA200; Supertrend down; below Ichimoku; ATR14 17.72 pips.",
+        "trend": "D1/H4/H1/M15 bearish alignment, but D1 oversold and price near support; M5 rebound conflicts, so a new completed M15 rejection is mandatory.",
+        "atr_spread": "OANDA spread 2.5 pips at assessment; dashboard estimated cost-aware reward/risk 1.59, but no immutable maximum spread cap was emitted.",
+        "macro": "News coverage PARTIAL; BLS feeds unavailable in collector, ECB/BoC official feeds checked, and event risk must be rechecked before any entry."
+      }
     }
   ]
 }
