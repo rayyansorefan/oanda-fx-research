@@ -844,6 +844,9 @@ def select_entry_observation(summary, news, watcher, recent, detailed,
     except (KeyError, TypeError, ValueError):
         return summary, news, watcher, recent, detailed
     summary, recent, detailed = deepcopy((summary, recent, detailed))
+    # Keep the all-universe snapshot clock immutable; the separate clock is
+    # only authorised after matching fresh fast quote/news/assessment evidence.
+    summary["entry_observation_at"] = source
     for pair, row in (fast_snapshot.get("pairs") or {}).items():
         if pair not in (summary.get("pairs") or {}):
             continue
