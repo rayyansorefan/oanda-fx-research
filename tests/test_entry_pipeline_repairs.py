@@ -164,6 +164,7 @@ class EntryPipelineRepairs(unittest.TestCase):
         self.assertEqual(out[2]['signals'][0]['id'],'NEW')
         self.assertEqual(out[2]['observation_stream'],'FAST_SHORTLIST')
         self.assertEqual(out[0]['collected_at'],args[0]['collected_at'])
+        self.assertEqual(out[0]['entry_observation_at'],args[5]['collected_at'])
         self.assertEqual(args[2]['signals'][0]['id'],'OLD')
 
     def test_fast_refresh_retains_hourly_m5_and_extended_history(self):
