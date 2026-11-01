@@ -1,10 +1,10 @@
 {
   "arms": {
     "challenger_v1": {
-      "abstaining_common_days": 1,
-      "eligible_pair_days": 67,
+      "abstaining_common_days": 2,
+      "eligible_pair_days": 131,
       "outcomes": {
-        "DATA_GAP": 1
+        "INVALIDATED_PRE_ENTRY": 1
       },
       "plans_created": 1,
       "scored_unique_currency_exposure_days": 0,
@@ -12,8 +12,8 @@
       "sum_net_r_stressed": null
     },
     "champion": {
-      "abstaining_common_days": 1,
-      "eligible_pair_days": 67,
+      "abstaining_common_days": 2,
+      "eligible_pair_days": 131,
       "outcomes": {},
       "plans_created": 0,
       "scored_unique_currency_exposure_days": 0,
@@ -23,9 +23,9 @@
   },
   "automatic_promotion_allowed": false,
   "caution": "Research-only counterfactual portfolio proxy. Missing broker costs or receipts prevent demonstrated manual achievability. No orders or parameter promotion.",
-  "cohort_sha256": "46fac20e7037a2fc63105d5abb69656d796ff2fad26c4a11c263a1273fc26fd3",
-  "common_eligible_observation_days": 1,
-  "common_eligible_pair_days": 67,
+  "cohort_sha256": "497d7a3a2b5c153ae8b94c3e8bfccbd1743d5c65d1994cbb1b243139a64d9640",
+  "common_eligible_observation_days": 2,
+  "common_eligible_pair_days": 131,
   "decision": "INSUFFICIENT_EVIDENCE",
   "earliest_common_day": "2026-10-30",
   "evidence": {
@@ -38,7 +38,13 @@
   "excluded": {
     "BEFORE_REGISTERED_HOLDOUT": 13582
   },
-  "paired_day_cluster_interval": null,
+  "paired_day_cluster_interval": {
+    "lower_95pct_r": 0.0,
+    "mean_improvement_r": 0.0,
+    "method": "Pre-registered day-cluster bootstrap; abstention contributes zero; overlapping pair exposures are clustered by day.",
+    "paired_days": 2,
+    "upper_95pct_r": 0.0
+  },
   "protocol_id": "FX-OOS-20261030-v12",
   "reason": "Registered observation-day or challenger sample floor not reached",
   "registered_holdout_start_unchanged": "2026-10-30T09:00:00Z",
@@ -48,5 +54,5 @@
     "common_days": 20
   },
   "trading_performance_validated": false,
-  "updated_at": "2026-10-30T19:19:39.628317+00:00"
+  "updated_at": "2026-11-01T22:14:30.568509+00:00"
 }
