@@ -132,9 +132,9 @@ def validate_approved_plan(signal, pairdata, current):
 def momentum_continuation_qualifies(prev, curr, level, long, frames, tolerance, context=None):
     """Conservative completed-bar continuation, not a perfect retest trigger.
 
-    A directional H1+M15 trend and decisive M15 close are required. The
-    current live quote and remaining cost-aware reward are rechecked by
-    signal_match before this may issue a price-only research alert.
+    A directional H1+M15 trend and decisive completed trigger close are
+    required. M5 continuation uses both frozen admission evidence and
+    fresh M15/H1 indicators; cost and quote are checked by signal_match.
     """
     try:
         candle = curr["mid"]
@@ -170,13 +170,26 @@ def momentum_continuation_qualifies(prev, curr, level, long, frames, tolerance, 
             plus, minus = float(indicators["plus_di14"]), float(indicators["minus_di14"])
             if not (plus > minus if long else minus > plus):
                 return False
+        if context.get("trigger_timeframe") == "M5":
+            # Unlike a 15-minute historical checkpoint, an earlier M5 entry
+            # must also retain currently observed M15 and H1 direction.
+            for tf in ("M15", "H1"):
+                fresh = frames[tf]["indicators"]
+                ema20, ema50 = float(fresh["ema20"]), float(fresh["ema50"])
+                plus, minus = float(fresh["plus_di14"]), float(fresh["minus_di14"])
+                if not (ema20 > ema50 if long else ema20 < ema50):
+                    return False
+                if not (plus > minus if long else minus > plus):
+                    return False
+                if float(fresh["adx14"]) < 20:
+                    return False
         return True
     except (KeyError, TypeError, ValueError, ZeroDivisionError):
         return False
 
 
 def signal_match(signal, pairdata, state_for_signal, current):
-    """Examine all newly closed M15 candles since the last hourly run."""
+    """Examine only post-admission completed M5 or legacy M15 candles."""
     quote = pairdata["quote"]
     if not quote["tradeable"] or quote["spread_pips"] < 0:
         return None
@@ -208,7 +221,13 @@ def signal_match(signal, pairdata, state_for_signal, current):
     if risk <= 0 or reward / risk < 1.50 or (reward-cost)/(risk+cost) < 1.35:
         return None
     created = parse_time(signal["created_at"])
-    candles = pairdata["frames"]["M15"]["recent_completed_candles"]
+    timeframe = signal.get("trigger_timeframe", "M15")
+    if timeframe not in ("M5", "M15"):
+        return None
+    if timeframe == "M5" and signal.get("entry_route") != "MOMENTUM_CONTINUATION":
+        return None
+    minutes = 5 if timeframe == "M5" else 15
+    candles = (pairdata.get("frames", {}).get(timeframe) or {}).get("recent_completed_candles") or []
     if len(candles) < 2:
         return None
     last_processed = parse_time(state_for_signal.get("last_processed_bar_close", signal["created_at"]))
@@ -218,12 +237,12 @@ def signal_match(signal, pairdata, state_for_signal, current):
     for idx in range(1, len(candles)):
         prev, curr = candles[idx - 1], candles[idx]
         candle_start = parse_time(curr["time"])
-        close_time = candle_start + timedelta(minutes=15)
+        close_time = candle_start + timedelta(minutes=minutes)
         if candle_start < created or close_time <= last_processed or close_time > current:
             continue
         if close_time > parse_time(signal["expires_at"]):
             continue
-        if current - close_time > timedelta(minutes=75):
+        if current - close_time > timedelta(minutes=30 if timeframe == "M5" else 75):
             state_for_signal["last_processed_bar_close"] = close_time.isoformat()
             continue
         if blacked_out(signal, close_time):
@@ -267,7 +286,9 @@ def signal_match(signal, pairdata, state_for_signal, current):
             if executable_still_beyond and momentum_continuation_qualifies(
                     prev, curr, level, long, pairdata["frames"], tolerance, signal.get("technical_context")):
                 state_for_signal["last_processed_bar_close"] = close_time.isoformat()
-                return "C", curr["time"], "Completed M15 momentum continuation without mandatory retest"
+                return "C", curr["time"], ("Completed M5 continuation past frozen M15 impulse"
+                                            if timeframe == "M5" else
+                                            "Completed M15 momentum continuation without mandatory retest")
         state_for_signal["last_processed_bar_close"] = close_time.isoformat()
     return None
 
@@ -445,19 +466,25 @@ def setup_already_breached(pairdata, signal, now):
     stop, tp = float(signal["stop"]), float(signal["tp1"])
     long = signal["direction"] == "LONG"
     created = parse_time(signal["created_at"])
-    bars = pairdata.get("frames", {}).get("M15", {}).get("recent_completed_candles", [])
+    tf = signal.get("trigger_timeframe", "M15")
+    if tf not in ("M5", "M15"):
+        return "INVALID_TRIGGER_TIMEFRAME"
+    minutes = 5 if tf == "M5" else 15
+    bars = pairdata.get("frames", {}).get(tf, {}).get("recent_completed_candles", [])
+    if tf == "M5" and not bars:
+        return "PLAN_M5_EXECUTABLE_HISTORY_MISSING"
     for candle in bars:
         start = parse_time(candle["time"])
-        if start < created or start + timedelta(minutes=15) > now:
+        if start < created or start + timedelta(minutes=minutes) > now:
             continue
         # OANDA spread-side OHLC: conservative for a *potential* touch only.
         side = candle.get("bid" if long else "ask")
         if not side:
             return "PLAN_EXECUTABLE_SIDE_HISTORY_MISSING"
         if (side["l"] <= stop if long else side["h"] >= stop):
-            return "PLAN_STOP_LEVEL_TOUCHED_ON_M15"
+            return "PLAN_STOP_LEVEL_TOUCHED_AFTER_CREATION"
         if (side["h"] >= tp if long else side["l"] <= tp):
-            return "PLAN_TP1_LEVEL_TOUCHED_ON_M15"
+            return "PLAN_TP1_LEVEL_TOUCHED_AFTER_CREATION"
     return None
 
 def watch():
@@ -506,6 +533,11 @@ def watch():
         # A pair with quoted prices but absent completed M15 data is never a signal.
         if not pairdata.get("frames", {}).get("M15", {}).get("recent_completed_candles"):
             row["status"] = "PAIR_M15_CANDLES_UNAVAILABLE"
+            report["signals"].append(row)
+            continue
+        if (signal.get("trigger_timeframe") == "M5"
+                and not pairdata.get("frames", {}).get("M5", {}).get("recent_completed_candles")):
+            row["status"] = "PAIR_M5_CANDLES_UNAVAILABLE"
             report["signals"].append(row)
             continue
         if not signal.get("created_at") or not signal.get("expires_at"):
@@ -572,9 +604,10 @@ def watch():
             signal.get("entry_route") == "MOMENTUM_CONTINUATION"
             and context.get("status") == "REASSESS_EXTENDED"
             and isinstance(signal.get("technical_context"), dict)
-            and (signal["technical_context"].get("continuation_min_body") == .48)
+            and (signal["technical_context"].get("extension_exception") is True)
             and context.get("m15_ema_distance_atr") is not None
-            and 1.55 < context["m15_ema_distance_atr"] <= 1.85
+            and 1.55 < context["m15_ema_distance_atr"] <=
+                signal["technical_context"].get("extension_cap_atr", 1.85)
         )
         if context["block_new_alert"] and not bounded_extension:
             row["status"] = context["status"]
