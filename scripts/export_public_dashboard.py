@@ -257,6 +257,27 @@ def fit_public_feed_budget(payload: dict) -> None:
         return
     if serialized_size(payload) <= PUBLIC_HARD_MAX_BYTES:
         return
+    # Last-resort chart-density fallback for a growing, fully covered FX
+    # universe.  Previously a modest increase from 64 to 68 deep charts
+    # prevented publication of *all* fresh quotes and admitted plans.
+    # Keep every pair, quote, frame, indicator, plan and candidate ID.
+    # Shorten higher-frame display candles before M5/M15/H1 entry charts;
+    # complete research OHLC remains in the private per-pair shards.
+    for entry_cap, context_cap in ((6, 3), (4, 2), (3, 1)):
+        for pair in payload.get("pairs", {}).values():
+            if not pair.get("deep"):
+                continue
+            for timeframe, frame in (pair.get("frames") or {}).items():
+                candles = frame.get("candles")
+                cap = entry_cap if timeframe in ("M5", "M15", "H1") else context_cap
+                if isinstance(candles, list) and len(candles) > cap:
+                    frame["candles"] = candles[-cap:]
+        if serialized_size(payload) <= PUBLIC_MAX_BYTES:
+            payload.setdefault("public_compaction", {})["reduced_chart_history"] = True
+            return
+    if serialized_size(payload) <= PUBLIC_HARD_MAX_BYTES:
+        payload.setdefault("public_compaction", {})["reduced_chart_history"] = True
+        return
     raise ValueError("Public FX payload exceeds hard limit after safe compaction; publication refused")
 
 def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
