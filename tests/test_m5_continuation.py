@@ -45,7 +45,9 @@ def market():
             "frames":{"M5":{"recent_completed_candles":bars()},
                       "M15":{"indicators":ind,
                              "recent_completed_candles":bars()},
-                      "H1":{"indicators":dict(ind)}}}
+                      "H1":{"indicators":dict(ind)},
+                      "H4":{"indicators":dict(ind)},
+                      "D":{"indicators":dict(ind)}}}
 
 class M5ContinuationTests(unittest.TestCase):
     def test_future_completed_m5_can_trigger_without_next_m15(self):
@@ -80,7 +82,7 @@ class M5ContinuationTests(unittest.TestCase):
         m["frames"]["M5"]["recent_completed_candles"][-1]["bid"]["l"] = 1.0980
         self.assertEqual(setup_already_breached(
             m, plan(), datetime(2026,11,2,10,11,tzinfo=timezone.utc)),
-            "PLAN_STOP_LEVEL_TOUCHED_AFTER_CREATION")
+            "PLAN_STOP_LEVEL_TOUCHED_ON_M5")
 
     def test_missing_m5_executable_candle_fails_closed(self):
         m = market()
