@@ -286,6 +286,8 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
             "conditional_weak_h4_exception": weak_h4_exception,
             "extension_exception": moderate_extension,
             "extension_cap_atr": 2.0 if not paper_only else 1.85,
+            "trigger_timeframe": ("M5" if route == "MOMENTUM_CONTINUATION"
+                                  and not paper_only else "M15"),
             "continuation_min_body": (.50 if not paper_only else .55),
             "continuation_min_close": (.70 if not paper_only else .72),
             "admission_policy": policy,
