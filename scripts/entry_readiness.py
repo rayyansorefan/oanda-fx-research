@@ -258,8 +258,8 @@ def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
             # current-news veto on every ranked scout card.
             if any(
                 requires_headline_review(item)
-                and (published := _time(item.get("published_at"))) is not None
-                and timedelta(0) <= snapshot - published <= timedelta(hours=3)
+                and ((published := _time(item.get("published_at"))) is None
+                     or timedelta(0) <= snapshot - published <= timedelta(hours=3))
                 for item in pair_news.get("recent_relevant_headlines") or []
                 if isinstance(item, dict)
             ):
