@@ -15,6 +15,7 @@ import urllib.request
 from paper_trade_audit import public_view
 from adaptive_research import afternoon_audit
 from entry_readiness import entry_diagnostics
+from signal_admission import news_gate, moment as admission_moment
 
 DESTINATION = "rayyansorefan/standalone-wallet-paper-agent"
 TARGET = "docs/fx-feed.json"
@@ -670,6 +671,26 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         for key, v in (news.get("sources") or {}).items() if isinstance(v, dict)
     ]
     research_setups = build_research_setups(summary)
+    # The published dashboard must use the SAME pair-specific news decision as
+    # the canonical strategy. Global PARTIAL may mean unrelated optional feeds
+    # failed; it must not contradict a cleared EUR/USD or AUD/CAD plan.
+    observed_at = admission_moment(summary.get("entry_observation_at")
+                                   or summary.get("collected_at"))
+    news_pairs = {
+        s.get("instrument") for s in clean_signals
+        if isinstance(s, dict) and s.get("instrument")
+    }
+    news_pairs.update(
+        s.get("instrument") for s in (summary.get("ranked_review_candidates") or [])[:12]
+        if isinstance(s, dict) and s.get("instrument")
+    )
+    news_clearance = {}
+    for pair in sorted(news_pairs - DASHBOARD_EXCLUDED_INSTRUMENTS):
+        reason = news_gate(pair, news, observed_at) if observed_at else "NEWS_NOT_VERIFIED"
+        news_clearance[pair] = {
+            "status": "CLEAR" if reason is None else "BLOCKED",
+            "reason": reason,
+        }
     result = {
         "schema": 1,
         "snapshot_at": summary.get("collected_at"),
@@ -677,6 +698,7 @@ def build_public_feed(summary: dict, news: dict, signals: dict,
         "published_at": utc_now(),
         "status": summary.get("status"),
         "news_status": news.get("status"),
+        "news_clearance": news_clearance,
         "coverage": {
             "total": max(0, (coverage.get("oanda_account_fx_instruments_discovered") or len(prices))
                          - len(DASHBOARD_EXCLUDED_INSTRUMENTS & set(summary.get("pairs") or {}))),
