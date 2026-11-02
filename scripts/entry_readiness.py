@@ -253,9 +253,18 @@ def entry_diagnostics(summary: dict, news: dict | None = None, limit: int = 8):
                 from scripts.news_watch import requires_headline_review
             except ModuleNotFoundError:
                 from news_watch import requires_headline_review
-            if any(requires_headline_review(item) for item in pair_news.get("recent_relevant_headlines") or []):
+            # Mirror canonical admission's three-hour *material* news window.
+            # A historical market recap must not appear as a perpetual
+            # current-news veto on every ranked scout card.
+            if any(
+                requires_headline_review(item)
+                and ((published := _time(item.get("published_at"))) is None
+                     or timedelta(0) <= snapshot - published <= timedelta(hours=3))
+                for item in pair_news.get("recent_relevant_headlines") or []
+                if isinstance(item, dict)
+            ):
                 reasons.append(_reason("NEWS_MATERIAL_REVIEW",
-                                       "Recent relevant market headlines require individual review"))
+                                       "Relevant new event within the last three hours requires review"))
             if coverage.get("status") == "LIMITED":
                 reasons.append(_reason("NEWS_OPTIONAL_GAPS",
                                        "Pair's required feeds checked but optional sources missing; not a news all-clear"))

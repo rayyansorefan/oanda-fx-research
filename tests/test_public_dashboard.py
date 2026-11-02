@@ -308,5 +308,23 @@ class PublicDashboardFeedTests(unittest.TestCase):
         self.assertEqual(f["signals"][0]["stop"],1.09)
         self.assertNotIn("SHOULD_NEVER_LEAK",str(f))
 
+    def test_global_partial_news_does_not_override_pair_cleared_canonical_gate(self):
+        from test_signal_admission import NOW, source, ranked, news
+        market = {"status":"OK", "collected_at":NOW.isoformat(),
+                  "coverage":{}, "ranked_review_candidates":[ranked()],
+                  "pairs":{"EUR_USD":source()}}
+        headlines = news()
+        self.assertEqual(headlines["status"],"PARTIAL")
+        output = build_public_feed(market, headlines, {"signals":[]},
+                                   {"signals":[]}, {})
+        self.assertEqual(output["news_status"], "PARTIAL")
+        self.assertEqual(output["news_clearance"]["EUR_USD"]["status"], "CLEAR")
+        headlines["by_pair"]["EUR_USD"]["coverage"]["missing_required"]=["Fed policy"]
+        blocked = build_public_feed(market, headlines, {"signals":[]},
+                                    {"signals":[]}, {})
+        self.assertEqual(blocked["news_clearance"]["EUR_USD"]["status"], "BLOCKED")
+        self.assertEqual(blocked["news_clearance"]["EUR_USD"]["reason"],
+                         "PRIMARY_NEWS_SOURCE_MISSING")
+
 if __name__ == "__main__":
     unittest.main()

@@ -3,9 +3,9 @@
   "common_universe": "All screened OANDA account currency pairs receive M5/M15/H1/H4/D collection, with explicit per-timeframe gaps. Both study arms require identical complete M15/H1/H4/D context. Fast checks remain bounded to active plans and leading candidates; omitted pairs never gain observation timestamps.",
   "cost_method": "Executable-side OANDA bid/ask fills and exits; no double spread subtraction. Adverse stop gaps and 0/0.25/0.5 pip per-side stress. Financing crossing NY 17:00 and actual Pepperstone costs remain unknown unless evidenced.",
   "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
-  "development_cutoff": "2026-11-02T09:14:59.000Z",
-  "holdout_start_at": "2026-11-02T09:15:00.000Z",
-  "id": "FX-OOS-20261102-v14",
+  "development_cutoff": "2026-11-02T09:29:59Z",
+  "holdout_start_at": "2026-11-02T09:30:00Z",
+  "id": "FX-OOS-20261102-v15",
   "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
   "minimum_independent_scored_pair_days_per_arm": 100,
   "minimum_scored_days_per_arm": 20,
@@ -15,14 +15,14 @@
     "champion",
     "challenger_v1"
   ],
-  "promotion_policy": "V14 is prospectively registered after V13. Historical V12/V13 and pre-registration observations are archived, never relabelled as post-change evidence. Champion retains 1.50 gross and 1.35 net R:R, nearest structural TP, verified spread, pair-specific news and event blackouts, maximum 0.25% risk subject to verified equity, manual Pepperstone verification and no orders. New future-completed M5 continuation of an existing decisive completed M15 impulse replaces a redundant second M15 wait; the watcher independently rechecks current M15/H1 EMA, DMI and ADX, current quote, cost and remaining reward. Only with strong M15/H1 ADX>=25, aligned DMI>=8 and M15 MACD may extension between 1.55 and 2.0 ATR be accepted, or weak (ADX<18) opposing H4 if aligned D, M15 and H1. No two opposing higher frames. Legacy immutable plans keep M15 rules. Challenger remains paper-only, and no performance edge or delivery is claimed; actual forward outcome and receipt verification still required.",
-  "registered_at": "2026-11-02T08:24:57.305Z",
+  "promotion_policy": "V15 begins a new prospective cohort after V14, preserving all prior recorded events and delivery evidence. Align public GREEN gating with the canonical pair-specific required official sources, calendar and material-headline checks; unrelated optional global feed outages remain disclosed but do not veto cleared pairs. Ordinary aggregate 'Forex Today' commentary without a specific material announcement is context, not an automatic high-impact event, while actual policy, shock, release, missing required sources, high-impact calendars, spreads, net R:R, completed candles and original risk conditions continue to gate admission. Entry ranking and price plans remain independent of historical profitable-move claims. No performance improvement or broker trade asserted.",
+  "registered_at": "2026-11-02T09:00:09.074Z",
   "require_pair_specific_observations": true,
-  "rule_sha256": "8bc43b868b9305691bd2a6fa1a1573b824bff8a6e8d7c6e3c98631b439fee52b",
+  "rule_sha256": "094b3b11966d22ca57fbee9c2ccbc69afb93caed3e707ddf48253684ee25e458",
   "slippage_pips_per_side": [
     0,
     0.25,
     0.5
   ],
-  "supersedes_protocol_sha256": "3d7ff1e282547f4bf323c8eb2edc8cf210ac5df4e8f22f7781a628b27ac7a6e4"
+  "supersedes_protocol_sha256": "4e6e26781504c71d98a6009020e47d82c98e57f9f50c2e5ba83c20012e7a537c"
 }

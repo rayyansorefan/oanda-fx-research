@@ -152,7 +152,22 @@ def classify(item):
     # Retain them as context; do not silently discard the source observation.
     corporate = any(word in text for word in ("takeover", "merger", "acquisition"))
     macro = any(word in text for word in ("monetary policy", "rate decision", "inflation", "emergency", "interest rate", "systemic", "liquidity crisis"))
-    severity = ("CONTEXT" if corporate and not macro and not is_global else
+    # A generic market-roundup title is not a fresh macro announcement.
+    # Keep it in research context, but do not cause a blanket hard veto.
+    # Actual policy announcements, geopolitical shocks and releases remain
+    # HIGH/REVIEW regardless of how a publisher formats the headline.
+    routine_commentary = (
+        item["currency_source"] == "GLOBAL"
+        and any(label in text for label in (
+            " forex today:", " market wrap:", " currency markets today:",
+            " market recap:", " daily forex outlook:"))
+        and not any(term in text for term in CRITICAL)
+        and not any(term in text for term in (
+            "unexpected", "surprise decision", "rate hike", "rate cut",
+            "intervention", "emergency meeting", "actual release"))
+    )
+    severity = ("CONTEXT" if routine_commentary or
+                (corporate and not macro and not is_global) else
                 "HIGH" if any(term in text for term in CRITICAL) else "REVIEW")
     return dict(item, severity=severity, currencies=sorted(related), global_risk=is_global,
                 global_macro_context=("treasury yield" in text),
