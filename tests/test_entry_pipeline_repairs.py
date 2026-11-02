@@ -167,14 +167,16 @@ class EntryPipelineRepairs(unittest.TestCase):
         self.assertEqual(out[0]['entry_observation_at'],args[5]['collected_at'])
         self.assertEqual(args[2]['signals'][0]['id'],'OLD')
 
-    def test_fast_refresh_retains_hourly_m5_and_extended_history(self):
+    def test_fast_refresh_uses_new_m5_and_preserves_extended_history(self):
         args=list(self.fast_inputs())
         older={'completed_at':'2026-10-28T09:55:00Z','recent_completed_candles':[{'time':'original'}]}
         args[3]['pairs']['EUR_USD']['frames']['M5']=deepcopy(older)
         args[4]['EUR_USD']={'frames':{'M5':deepcopy(older),'W':deepcopy(older)}}
         out=exporter.select_entry_observation(*args,NOW)
-        self.assertEqual(out[3]['pairs']['EUR_USD']['frames']['M5'],older)
-        self.assertEqual(out[4]['EUR_USD']['frames']['M5'],older)
+        self.assertEqual(out[3]['pairs']['EUR_USD']['frames']['M5'],
+                         args[5]['pairs']['EUR_USD']['frames']['M5'])
+        self.assertEqual(out[4]['EUR_USD']['frames']['M5'],
+                         args[5]['pairs']['EUR_USD']['frames']['M5'])
         self.assertEqual(out[4]['EUR_USD']['frames']['W'],older)
         self.assertEqual(out[4]['EUR_USD']['frames']['M15'],args[5]['pairs']['EUR_USD']['frames']['M15'])
 

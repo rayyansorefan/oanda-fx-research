@@ -20,10 +20,18 @@ def source():
         {"time":"2026-10-28T09:45:00Z",
          "mid":{"o":1.0999,"h":1.1002,"l":1.0996,"c":1.1000}},
     ]
+    m5 = [
+        {"time":"2026-10-28T09:50:00Z",
+         "mid":{"o":1.0998,"h":1.1002,"l":1.0997,"c":1.1000}},
+        {"time":"2026-10-28T09:55:00Z",
+         "mid":{"o":1.1000,"h":1.1003,"l":1.0999,"c":1.1001}},
+    ]
     return {"quote":{"time":"2026-10-28T10:04:00Z", "bid":1.1000,
                      "ask":1.1001, "pip_size":.0001,
                      "spread_pips":1.0, "tradeable":True},
-            "frames":{"M15":{"indicators":indicators(),
+            "frames":{"M5":{"indicators":indicators(),
+                            "recent_completed_candles":m5},
+                      "M15":{"indicators":indicators(),
                              "last_3_completed_candles":bars},
                       "H1":{"indicators":indicators()},
                       "H4":{"indicators":indicators()},
@@ -89,6 +97,8 @@ class SignalAdmissionTests(unittest.TestCase):
         self.assertIsNone(reason)
         self.assertIn("alert_c",plan)
         self.assertEqual(plan["entry_route"],"MOMENTUM_CONTINUATION")
+        self.assertEqual(plan["trigger_timeframe"], "M5")
+        self.assertEqual(plan["decision_status"], "CONDITIONAL_PENDING_NEW_M5_TRIGGER")
         self.assertGreater(plan["planned_entry"],plan["alert_c"])
         s["frames"]["M15"]["last_3_completed_candles"][-1]["time"]="2026-10-28T10:00:00Z"
         plan,reason=qualify("EUR_USD",ranked(),s,news(),NOW,"MOMENTUM_CONTINUATION")
@@ -108,12 +118,12 @@ class SignalAdmissionTests(unittest.TestCase):
         self.assertIsNone(why)
         self.assertTrue(plan["technical_context"]["conditional_daily_exception"])
         self.assertFalse(plan["technical_context"]["full_frame_alignment"])
-        self.assertEqual(plan["technical_context"]["continuation_min_body"], .48)
-        self.assertEqual(plan["technical_context"]["continuation_min_close"], .68)
+        self.assertEqual(plan["technical_context"]["continuation_min_body"], .50)
+        self.assertEqual(plan["technical_context"]["continuation_min_close"], .70)
         self.assertTrue(plan["planned_entry"] < plan["tp1"])
         self.assertGreaterEqual(plan["net_rr_at_spread_cap"], 1.35)
         self.assertFalse(plan["broker_verified"])
-        self.assertEqual(plan["decision_status"], "CONDITIONAL_PENDING_NEW_M15_TRIGGER")
+        self.assertEqual(plan["decision_status"], "CONDITIONAL_PENDING_NEW_M5_TRIGGER")
         self.assertIn("alert_c", plan)
         # The same daily conflict cannot open the less stringent pullback route.
         pullback, why = qualify("EUR_USD",ranked(),s,news(),NOW,"EMA20_PULLBACK")
@@ -149,6 +159,51 @@ class SignalAdmissionTests(unittest.TestCase):
                                 NOW,"MOMENTUM_CONTINUATION")
         self.assertIsNone(unverified)
         self.assertEqual(why,"NEWS_NOT_VERIFIED")
+
+    def test_missing_m5_data_blocks_fast_entry_instead_of_faking_confirmation(self):
+        s = source()
+        s["quote"].update(bid=1.10045, ask=1.10055)
+        s["frames"]["M15"]["last_3_completed_candles"][-1]["mid"] = {
+            "o": 1.0998, "h": 1.10057, "l": 1.09975, "c": 1.10052}
+        del s["frames"]["M5"]
+        plan, why = qualify("EUR_USD", ranked(), s, news(), NOW,
+                            "MOMENTUM_CONTINUATION")
+        self.assertIsNone(plan)
+        self.assertEqual(why, "RECENT_COMPLETED_M5_MISSING")
+
+    def test_weak_h4_opposition_allows_strong_momentum_but_not_strong_h4_trend(self):
+        s = source()
+        s["quote"].update(bid=1.10045, ask=1.10055)
+        s["frames"]["M15"]["last_3_completed_candles"][-1]["mid"] = {
+            "o": 1.0998, "h": 1.10057, "l": 1.09975, "c": 1.10052}
+        s["frames"]["H4"]["indicators"].update(ema20=1.0980, ema50=1.0995, adx14=17)
+        plan, why = qualify("EUR_USD", ranked(), s, news(), NOW,
+                            "MOMENTUM_CONTINUATION")
+        self.assertIsNone(why)
+        self.assertTrue(plan["technical_context"]["conditional_weak_h4_exception"])
+        s["frames"]["H4"]["indicators"]["adx14"] = 24
+        plan, why = qualify("EUR_USD", ranked(), s, news(), NOW,
+                            "MOMENTUM_CONTINUATION")
+        self.assertIsNone(plan)
+        self.assertEqual(why, "FOUR_FRAME_TREND_CONFLICT")
+
+    def test_bounded_extended_momentum_requires_strong_evidence_and_target(self):
+        s = source()
+        s["quote"].update(bid=1.10148, ask=1.10158)
+        s["frames"]["M15"]["last_3_completed_candles"][-1]["mid"] = {
+            "o": 1.1000, "h": 1.10163, "l": 1.0999, "c": 1.10154}
+        for tf in ("M15", "H1", "H4", "D"):
+            s["frames"][tf]["indicators"]["resistance20"] = 1.1080
+        plan, why = qualify("EUR_USD", ranked(), s, news(), NOW,
+                            "MOMENTUM_CONTINUATION")
+        self.assertIsNone(why)
+        self.assertTrue(plan["technical_context"]["extension_exception"])
+        self.assertEqual(plan["technical_context"]["extension_cap_atr"], 2.0)
+        s["frames"]["H1"]["indicators"]["adx14"] = 21
+        plan, why = qualify("EUR_USD", ranked(), s, news(), NOW,
+                            "MOMENTUM_CONTINUATION")
+        self.assertIsNone(plan)
+        self.assertEqual(why, "REVERSAL_OR_EXHAUSTION")
 
     def test_existing_original_immutable_and_expiry_archived(self):
         summary={"status":"OK","collected_at":NOW.isoformat(),

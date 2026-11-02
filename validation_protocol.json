@@ -3,9 +3,9 @@
   "common_universe": "All screened OANDA account currency pairs receive M5/M15/H1/H4/D collection, with explicit per-timeframe gaps. Both study arms require identical complete M15/H1/H4/D context. Fast checks remain bounded to active plans and leading candidates; omitted pairs never gain observation timestamps.",
   "cost_method": "Executable-side OANDA bid/ask fills and exits; no double spread subtraction. Adverse stop gaps and 0/0.25/0.5 pip per-side stress. Financing crossing NY 17:00 and actual Pepperstone costs remain unknown unless evidenced.",
   "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
-  "development_cutoff": "2026-11-02T07:59:59Z",
-  "holdout_start_at": "2026-11-02T08:00:00Z",
-  "id": "FX-OOS-20261102-v13",
+  "development_cutoff": "2026-11-02T09:14:59.000Z",
+  "holdout_start_at": "2026-11-02T09:15:00.000Z",
+  "id": "FX-OOS-20261102-v14",
   "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
   "minimum_independent_scored_pair_days_per_arm": 100,
   "minimum_scored_days_per_arm": 20,
@@ -15,14 +15,14 @@
     "champion",
     "challenger_v1"
   ],
-  "promotion_policy": "V12 is prospectively registered after the 08:30 v11 boundary; v11 and all prior events remain archived and are excluded from the v12 scored holdout. Champion conditional manual research now permits strong M15/H1/H4 continuation despite sole opposing D EMA only with M15/H1 ADX at least 25, DMI margin at least 8 and aligned M15 MACD; prospective impulse body 0.48 and directional close 0.68, limited quote/EMA extension <=1.85 ATR. New frozen thresholds are checked by the watcher. Structural nearest TP, gross >=1.50 and net >=1.35 at capped costs, news/blackout, fresh executable-side OANDA quote, <0.25% equity risk and new completed candle remain required. No automatic orders, no guaranteed trades, no profitability claim, no algorithmic promotion without independent forward review. V13 starts a new prospectively locked cohort because the exporter participates in the rule fingerprint. The 2 November change is *publication-size compaction only*; entry/admission/exit, spreads, news gates, risk and champion/challenger comparison are unchanged. Existing V12 events remain archived and cannot be silently reclassified as V13 scored results.",
-  "registered_at": "2026-11-02T07:40:04Z",
+  "promotion_policy": "V14 is prospectively registered after V13. Historical V12/V13 and pre-registration observations are archived, never relabelled as post-change evidence. Champion retains 1.50 gross and 1.35 net R:R, nearest structural TP, verified spread, pair-specific news and event blackouts, maximum 0.25% risk subject to verified equity, manual Pepperstone verification and no orders. New future-completed M5 continuation of an existing decisive completed M15 impulse replaces a redundant second M15 wait; the watcher independently rechecks current M15/H1 EMA, DMI and ADX, current quote, cost and remaining reward. Only with strong M15/H1 ADX>=25, aligned DMI>=8 and M15 MACD may extension between 1.55 and 2.0 ATR be accepted, or weak (ADX<18) opposing H4 if aligned D, M15 and H1. No two opposing higher frames. Legacy immutable plans keep M15 rules. Challenger remains paper-only, and no performance edge or delivery is claimed; actual forward outcome and receipt verification still required.",
+  "registered_at": "2026-11-02T08:24:57.305Z",
   "require_pair_specific_observations": true,
-  "rule_sha256": "9af756cad05c93a934f9ac3c27320201dcbaaf8af4bcda625015ff03e19f567f",
+  "rule_sha256": "8bc43b868b9305691bd2a6fa1a1573b824bff8a6e8d7c6e3c98631b439fee52b",
   "slippage_pips_per_side": [
     0,
     0.25,
     0.5
   ],
-  "supersedes_protocol_sha256": "4356d3e2c4555ce4ed8bd31bc36ba22a846e61fc1e6262dc0d5ec867ddf2ef50"
+  "supersedes_protocol_sha256": "c7cd5962602fa747097c627e5e8bdc2b3f7fc23b6bd20ef118c18d97aa14dcb3"
 }

@@ -77,7 +77,10 @@ def record_events(book, assessment, plans):
             "direction": row.get("direction"), "route": row.get("route"),
             "plan_created_at": source.get("created_at"),
             "trigger_bar_open_time": row.get("trigger_bar_open_time"),
-            "trigger_closed_at": (opened + timedelta(minutes=15)).isoformat() if opened else None,
+            "trigger_closed_at": (opened + timedelta(minutes=(
+                5 if source.get("trigger_timeframe") == "M5" else 15))).isoformat()
+                if opened else None,
+            "trigger_timeframe": source.get("trigger_timeframe", "M15"),
             "first_detected_at": assessment.get("collected_at"),
             "source_snapshot_at": assessment.get("oanda_collected_at"),
             "entry": source.get("planned_entry"), "stop": source.get("stop"),
@@ -147,7 +150,7 @@ def perform(now=None):
             continue
         try:
             frames = {tf: market.fetch_frame(pair, tf, deep=True)
-                      for tf in ("M15", "H1", "H4", "D")}
+                      for tf in ("M5", "M15", "H1", "H4", "D")}
             frames["M15"]["last_3_completed_candles"] = frames["M15"]["recent_completed_candles"][-3:]
             # A complete entry-check chart includes completed M15 candles.
             rank = screen_priority(quote, frames["M15"], frames["H1"])

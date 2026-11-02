@@ -86,7 +86,7 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
     moderate_extension = (
         route == "MOMENTUM_CONTINUATION"
         and current_context.get("status") == "REASSESS_EXTENDED"
-        and extension is not None and 1.55 < extension <= 1.85
+        and extension is not None and 1.55 < extension <= 2.0
     )
     if current_context["block_new_alert"] and not moderate_extension:
         return None, "REVERSAL_OR_EXHAUSTION"
@@ -106,29 +106,43 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
     if trend(m) != direction or trend(h) != direction:
         return None, "FOUR_FRAME_TREND_CONFLICT"
     daily_conflict = (not paper_only and trend(indicators["D"]) != direction)
+    # Three-frame momentum exceptions require independent trend strength,
+    # directional DMI and aligned MACD; neither waives cost or news checks.
+    strong_core = (
+        route == "MOMENTUM_CONTINUATION"
+        and all((number(i.get("adx14")) or 0) >= 25 for i in (m, h))
+        and all(
+            number(i.get("plus_di14")) is not None
+            and number(i.get("minus_di14")) is not None
+            and (number(i["plus_di14"]) - number(i["minus_di14"])) *
+                (1 if direction == "LONG" else -1) >= 8
+            for i in (m, h))
+        and (number((m.get("macd_12_26_9") or {}).get("histogram")) or 0) *
+            (1 if direction == "LONG" else -1) > 0
+    )
+    # An opposing H4 is permissible only when its ADX shows a weak
+    # trend, the daily trend supports direction and M15/H1 are strong.
+    weak_h4_exception = (
+        not paper_only and strong_core and not daily_conflict
+        and trend(indicators["H4"]) != direction
+        and 0 < (number(indicators["H4"].get("adx14")) or 0) < 18
+    )
     # The *only* relaxed higher-frame case is a continuation with M15/H1/H4
     # aligned, D opposed, independently strong momentum, and intact risk/news.
     # Two opposed/missing higher frames remain disqualifying.
     strong_three_frame = (
         daily_conflict and route == "MOMENTUM_CONTINUATION"
         and trend(indicators["H4"]) == direction
-        and all((number(i.get("adx14")) or 0) >= 25 for i in (m, h))
-        and all(
-            (number(i.get("plus_di14")) is not None
-             and number(i.get("minus_di14")) is not None
-             and (number(i["plus_di14"]) - number(i["minus_di14"])) *
-                 (1 if direction == "LONG" else -1) >= 8)
-            for i in (m, h))
-        and (number((m.get("macd_12_26_9") or {}).get("histogram")) or 0) *
-            (1 if direction == "LONG" else -1) > 0
+        and strong_core
     )
-    if (not paper_only and trend(indicators["H4"]) != direction) or (
+    if (not paper_only and trend(indicators["H4"]) != direction
+            and not weak_h4_exception) or (
             daily_conflict and not strong_three_frame):
         return None, "FOUR_FRAME_TREND_CONFLICT"
     # Moderately extended plans are not permission to chase; later watcher
     # must separately check live risk economics and a NEW completed M15 bar.
-    if moderate_extension and not (strong_three_frame or (
-            not paper_only and trend(indicators["D"]) == direction)):
+    if moderate_extension and not (strong_core and
+            (strong_three_frame or (not paper_only and not daily_conflict))):
         return None, "REVERSAL_OR_EXHAUSTION"
     atr = number(m.get("atr14"))
     if not atr or atr <= 0 or spread_pips * pip > .50 * atr:
@@ -164,6 +178,15 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
     if abs(live_side - ema) > 1.5 * atr and route == "EMA20_PULLBACK":
         return None, "PULLBACK_PRICE_TOO_FAR_FROM_ZONE"
     if route == "MOMENTUM_CONTINUATION":
+        # Champion continuation is now observed by a *future* completed M5
+        # candle; admission must have real, fresh M5 data available.
+        if not paper_only:
+            f5 = (frames.get("M5") or {})
+            m5_bars = f5.get("recent_completed_candles") or f5.get("last_3_completed_candles") or []
+            m5_open = moment(m5_bars[-1].get("time")) if len(m5_bars) >= 2 else None
+            if (m5_open is None or m5_open + timedelta(minutes=5) > now
+                    or now - (m5_open + timedelta(minutes=5)) > timedelta(minutes=15)):
+                return None, "RECENT_COMPLETED_M5_MISSING"
         span = high - low
         body = abs(close - opening)
         close_strength = ((close - low) / span if direction == "LONG" else
@@ -218,7 +241,8 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
     if reason:
         return None, reason
     # Freeze levels while the trigger remains in the future. The separate
-    # hourly watcher verifies actual later completed bars, spread and news.
+    # fast/hourly watcher verifies actual later completed M5 bars for new
+    # champion continuations, with the original completed M15 impulse fixed.
     decimals = 3 if pip >= .01 else 5
     now_utc = now.isoformat().replace("+00:00", "Z")
     deadline = (now + timedelta(minutes=90)).isoformat().replace("+00:00", "Z")
@@ -259,9 +283,13 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
                                    if trend((frames.get(tf) or {}).get("indicators") or {}) == direction],
             "daily_frame_conflict": daily_conflict,
             "conditional_daily_exception": strong_three_frame,
+            "conditional_weak_h4_exception": weak_h4_exception,
             "extension_exception": moderate_extension,
-            "continuation_min_body": (.48 if not paper_only else .55),
-            "continuation_min_close": (.68 if not paper_only else .72),
+            "extension_cap_atr": 2.0 if not paper_only else 1.85,
+            "trigger_timeframe": ("M5" if route == "MOMENTUM_CONTINUATION"
+                                  and not paper_only else "M15"),
+            "continuation_min_body": (.50 if not paper_only else .55),
+            "continuation_min_close": (.70 if not paper_only else .72),
             "admission_policy": policy,
             "momentum_adx_minimum": 18 if paper_only else 20,
             "m15_adx": number(m.get("adx14")), "h1_adx": number(h.get("adx14")),
@@ -273,8 +301,14 @@ def qualify(pair, ranked, source, news, now, route, *, policy="champion"):
             "source_bar_time": bars[-1].get("time"),
         },
         "target_basis": "nearest completed M15/H1/H4/D 20-bar support/resistance",
-        "trigger_basis": "future completed M15 only",
-        "decision_status": "CONDITIONAL_PENDING_NEW_M15_TRIGGER",
+        "trigger_timeframe": ("M5" if route == "MOMENTUM_CONTINUATION"
+                              and not paper_only else "M15"),
+        "trigger_basis": ("new completed M5 breakout past frozen completed M15 impulse"
+                          if route == "MOMENTUM_CONTINUATION" and not paper_only
+                          else "future completed M15 only"),
+        "decision_status": ("CONDITIONAL_PENDING_NEW_M5_TRIGGER"
+                             if route == "MOMENTUM_CONTINUATION" and not paper_only
+                             else "CONDITIONAL_PENDING_NEW_M15_TRIGGER"),
         **{k: round(v, decimals) for k, v in alert.items()}
     }
     # Reject rounding artefacts instead of hiding lower reward or bad direction.
