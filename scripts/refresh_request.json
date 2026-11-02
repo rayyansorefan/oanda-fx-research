@@ -1,9 +1,9 @@
 {
   "purpose": "fresh OANDA price and news update when scheduled cron is unavailable",
-  "request": "FX_20261102_1815_HOURLY_STALE_RECOVERY",
+  "request": "FX_20261102_2015_HOURLY_STALE_RECOVERY",
   "requested_by": "ChatGPT FX hourly research automation",
   "session_day_utc": "2026-11-02",
-  "sequence": 94,
-  "requested_at_utc": "2026-11-02T18:14:30Z",
-  "note": "18:15 UK hourly check: OANDA 16:31:17Z source is ~103 minutes old (>70 min), canonical signals.json empty, private/public dashboard feed has disallowed top-level news_clearance and fast_entry_monitor. Request exactly one collector refresh on current main; verify new summary/news and admission audit before any entry. Manual research only, no orders."
+  "sequence": 95,
+  "requested_at_utc": "2026-11-02T20:15:24Z",
+  "note": "20:15 UK hourly check: last OANDA and news snapshot 18:15:57/58Z (~119 min stale, exceeds 70 min); canonical signals.json empty; public and private feed have unapproved top-level fields. Request one current-main collector refresh, verify resulting saved summary/news/admission before any entry. No orders."
 }
