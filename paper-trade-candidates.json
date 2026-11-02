@@ -760,6 +760,37 @@
         "macro": "US ISM Manufacturing PMI due 15:00 UK after this watch expiry; SEK-specific official coverage is limited.",
         "incomplete_fields": "planned_entry, precise alert_b, immutable max_oanda_spread_pips and current M5 history unavailable."
       }
+    },
+    {
+      "id": "20261102-1410-EURTRY-L-EMA20-PAPER",
+      "instrument": "EUR_TRY",
+      "direction": "LONG",
+      "created_at": "2026-11-02T14:10:42Z",
+      "expires_at": "2026-11-02T18:08:19.076097Z",
+      "planned_entry": null,
+      "entry_zone": [
+        56.05209,
+        56.06537
+      ],
+      "stop": 56.00338,
+      "tp1": 56.19224,
+      "tp2": null,
+      "alert_b": null,
+      "max_oanda_spread_pips": null,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-02T14:08:11.778435533Z",
+      "status": "INCOMPLETE_WATCH_ONLY_UNTRIGGERED",
+      "original_note": "Prospective paper-only EUR/TRY long EMA20 pullback watch. Frozen OANDA zone 56.05209-56.06537; require a newly completed M15 bullish rejection in the zone. The last completed M15 candle was bearish, OANDA spread was 162.3 pips, TRY official-news coverage and an immutable maximum spread cap are unavailable, and Pepperstone UK symbol/executable pricing is unverified. No approved entry or broker fill.",
+      "technical_context": {
+        "as_of_utc": "2026-11-02T14:08:11.778435533Z",
+        "m15": "RSI14 54.58; ADX14 30.74; +DI 29.59 > -DI 13.43; price above EMA20/50/200 and visible cloud, Supertrend up, but MACD histogram negative and last completed M15 candle bearish.",
+        "h1": "RSI14 65.07; ADX14 24.61; +DI 42.10 > -DI 21.19; EMA20>EMA50>EMA200, cloud/Supertrend bullish; HH/HL structure.",
+        "trend": "D1/H4/H1/M15 broadly bullish, but D1 Supertrend remains down, H4 ADX is only 11.97 and M5 momentum is mixed.",
+        "atr_spread": "OANDA bid/ask 56.06636/56.08259; observed spread 162.3 pips versus M15 ATR about 442.8 pips; no immutable spread cap.",
+        "macro": "Repository news coverage PARTIAL; no supported official TRY feed. US ISM Manufacturing PMI at 15:00 UK is a global volatility risk."
+      }
     }
   ]
 }
