@@ -838,7 +838,7 @@
       "pattern_at": "2026-11-02T13:45:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_SEK-1cd2e7a6613b1f670e5c31a7ba14ac5fa5b14c13581f717de90e66e6f7f6e485.json",
+      "source_evidence": "data/replay_evidence/USD_SEK-17504d0c3b2dbbc4fcb84ae9cafb609f1f45132726f41b73ee885279320c3061.json",
       "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     },
@@ -852,7 +852,7 @@
       "pattern_at": "2026-11-02T12:30:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/GBP_USD-9c04575e911cd2f654e2b30388d654c556c26fbbf50b3f84e7934868b614fe05.json",
+      "source_evidence": "data/replay_evidence/GBP_USD-76d031b309f012ac210ccc604d0e44c672a39f2c67a054328269ab953aa1027d.json",
       "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     },
@@ -866,21 +866,38 @@
       "pattern_at": "2026-11-02T13:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_SEK-877bbc851e9a1497e968119d1d0c88d907f2db43159e452b38c256e7f1ce01af.json",
+      "source_evidence": "data/replay_evidence/USD_SEK-d20fc207b229faffad1a11d2760bf0750bf9c6e81109e760e58503fe2a5e46e7.json",
       "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     },
     "202611021300-USDSEK-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "SHORT",
+      "exit_at": "2026-11-02T14:00:00Z",
       "fill_at": "2026-11-02T13:45:00Z",
       "id": "202611021300-USDSEK-SHORT-EMA20_PULLBACK",
       "instrument": "USD_SEK",
       "paper_entry": 9.75989,
+      "paper_exit": 9.77213,
       "pattern_at": "2026-11-02T13:45:00+00:00",
       "route": "EMA20_PULLBACK",
+      "scored": true,
+      "source_evidence": "data/replay_evidence/USD_SEK-a209ac424a9c4b017e0ddb2fc91b579e576b2c905932ec1d6161581ed60183bd.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.12541
+    },
+    "202611021345-EURTRY-LONG-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "LONG",
+      "fill_at": "2026-11-02T14:30:00Z",
+      "id": "202611021345-EURTRY-LONG-EMA20_PULLBACK",
+      "instrument": "EUR_TRY",
+      "paper_entry": 56.06537,
+      "pattern_at": "2026-11-02T14:30:00+00:00",
+      "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_SEK-8544cc812372c54e6e8b3c6a7fb160b4e2081a6aad939a0d973f469df04af2a9.json",
+      "source_evidence": "data/replay_evidence/EUR_TRY-3b911cb6402d87c123f14ff2a05f2d65f08fd84027e0ee545593ea865fa37ff7.json",
       "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     }
@@ -919,6 +936,14 @@
         "fill_precedes_detection": true,
         "id": "202611021300-USDSEK-SHORT-EMA20_PULLBACK",
         "pattern_at": "2026-11-02T13:45:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-02T15:20:41.202874+00:00",
+        "detection_delay_minutes": 50.69,
+        "fill_precedes_detection": true,
+        "id": "202611021345-EURTRY-LONG-EMA20_PULLBACK",
+        "pattern_at": "2026-11-02T14:30:00+00:00"
       }
     ],
     "verified_profitable_missed_manual_entries": 0
@@ -926,13 +951,14 @@
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 3,
-  "today_forward_patterns": 4,
+  "today_distinct_pair_pattern_events": 4,
+  "today_forward_patterns": 5,
   "today_registered": 11,
-  "today_scored_hypothetical_entries": 0,
+  "today_scored_hypothetical_entries": 1,
   "today_status_counts": {
-    "PAPER_OPEN_UNRESOLVED": 4
+    "PAPER_OPEN_UNRESOLVED": 4,
+    "PAPER_STOP_AFTER_FILL": 1
   },
   "today_uk": "2026-11-02",
-  "updated_at": "2026-11-02T14:11:53Z"
+  "updated_at": "2026-11-02T15:20:41Z"
 }
