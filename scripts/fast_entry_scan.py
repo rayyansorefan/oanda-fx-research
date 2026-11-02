@@ -54,7 +54,7 @@ def choose_pairs(summary, plans, limit=MAX_PAIRS, *, cursor=0, with_rotation=Fal
     rows = {r.get("instrument"): r for r in summary.get("ranked_review_candidates", [])
             if isinstance(r, dict) and r.get("instrument") not in (None, "GBP_ZAR")}
     active = [p.get("instrument") for p in plans.get("signals", [])
-              if isinstance(p, dict) and p.get("instrument") in rows]
+              if isinstance(p, dict) and p.get("instrument") not in (None, "GBP_ZAR")]
     ranked = sorted(rows, key=lambda p: (-(rows[p].get("research_priority") or 0), p))
     prelim = [p for p in ranked if rows[p].get("deep_entry_scout_eligible")
               or rows[p].get("paper_deep_scout_eligible")]
