@@ -29,6 +29,7 @@ FAST_ASSESSMENT = ROOT / "data/fast_entry_assessment.json"
 FAST_AUDIT = ROOT / "data/fast_entry_audit.json"
 FAST_EVENTS = ROOT / "data/fast_entry_events.json"
 FAST_HISTORY = ROOT / "data/fast_entry_history.json"
+FAST_CURSOR = ROOT / "data/fast_entry_cursor.json"
 MAX_PAIRS = 8
 MAX_SOURCE_AGE = timedelta(minutes=90)
 
@@ -42,22 +43,33 @@ def write(path, value):
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n")
 
 
-def choose_pairs(summary, plans, limit=MAX_PAIRS):
-    """First monitor frozen plans, then preliminary qualifiers, then rank.
+def choose_pairs(summary, plans, limit=MAX_PAIRS, *, cursor=0, with_rotation=False):
+    """Always monitor frozen plans; rotate the remaining bounded observation slots.
 
-    The cap and omissions are explicit. No pair becomes an approved trade merely
-    because it is shortlisted, and an unsupported GBP/ZAR is always excluded.
+    Previously the same top-eight list was selected indefinitely and the other
+    quoted instruments never received fast observations. The hourly collector
+    still screens every quoted pair. Rotation is an observation policy, never
+    permission to bypass admission, news, costs, or minimum reward/risk.
     """
     rows = {r.get("instrument"): r for r in summary.get("ranked_review_candidates", [])
-            if isinstance(r, dict) and r.get("instrument") != "GBP_ZAR"}
+            if isinstance(r, dict) and r.get("instrument") not in (None, "GBP_ZAR")}
     active = [p.get("instrument") for p in plans.get("signals", [])
-              if isinstance(p, dict) and p.get("instrument") != "GBP_ZAR"]
+              if isinstance(p, dict) and p.get("instrument") not in (None, "GBP_ZAR")]
     ranked = sorted(rows, key=lambda p: (-(rows[p].get("research_priority") or 0), p))
     prelim = [p for p in ranked if rows[p].get("deep_entry_scout_eligible")
               or rows[p].get("paper_deep_scout_eligible")]
-    ordered = list(dict.fromkeys(active + prelim + ranked))
-    chosen = [p for p in ordered if p][:limit]
-    return chosen, [p for p in ordered if p and p not in chosen]
+    priority = list(dict.fromkeys(active + prelim))[:min(limit, max(3, len(active)))]
+    remaining = [p for p in ranked if p not in priority]
+    capacity = max(0, limit - len(priority))
+    offset = max(0, int(cursor)) % len(remaining) if remaining else 0
+    rotation = remaining[offset:] + remaining[:offset]
+    rotated = rotation[:capacity]
+    chosen = priority + rotated
+    omitted = [p for p in list(dict.fromkeys(active + prelim + ranked))
+               if p not in chosen]
+    if with_rotation:
+        return chosen, omitted, len(rotated)
+    return chosen, omitted
 
 
 def record_events(book, assessment, plans):
@@ -125,7 +137,10 @@ def perform(now=None):
         write(FAST_AUDIT, result)
         return result
 
-    pairs, omitted = choose_pairs(summary, previous)
+    rotation_state = read(FAST_CURSOR, {"next_offset": 0})
+    cursor = max(0, int(rotation_state.get("next_offset", 0)))
+    pairs, omitted, rotated_count = choose_pairs(
+        summary, previous, cursor=cursor, with_rotation=True)
     discovered = universe.get("instruments") or {}
     pairs = [p for p in pairs if p in discovered]
     if not pairs:
@@ -219,7 +234,12 @@ def perform(now=None):
                                       for x in observations),
               "user_delivery_verified": False,
               "research_only": True, "manual_pepperstone_check_required": True}
+    record["rotation"] = {"cursor_before": cursor, "slots_advanced": rotated_count,
+                          "cursor_after": cursor + rotated_count,
+                          "claim_of_complete_fast_coverage": False}
     write(FAST_AUDIT, record)
+    write(FAST_CURSOR, {"next_offset": cursor + rotated_count,
+                        "updated_at": record["checked_at"]})
     history = read(FAST_HISTORY, {"observations": []})
     history.setdefault("observations", []).append({
         "at": record["checked_at"], "pairs": list(live), "omitted": omitted,

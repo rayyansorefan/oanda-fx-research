@@ -3,26 +3,25 @@
   "common_universe": "All screened OANDA account currency pairs receive M5/M15/H1/H4/D collection, with explicit per-timeframe gaps. Both study arms require identical complete M15/H1/H4/D context. Fast checks remain bounded to active plans and leading candidates; omitted pairs never gain observation timestamps.",
   "cost_method": "Executable-side OANDA bid/ask fills and exits; no double spread subtraction. Adverse stop gaps and 0/0.25/0.5 pip per-side stress. Financing crossing NY 17:00 and actual Pepperstone costs remain unknown unless evidenced.",
   "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
-  "development_cutoff": "2026-11-02T09:44:59Z",
-  "holdout_start_at": "2026-11-02T09:45:00Z",
-  "id": "FX-OOS-20261102-v16",
+  "development_cutoff": "2026-11-02T23:59:59Z",
+  "holdout_start_at": "2026-11-03T00:00:00Z",
+  "id": "FX-OOS-20261102-v17",
   "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
   "minimum_independent_scored_pair_days_per_arm": 100,
   "minimum_scored_days_per_arm": 20,
-  "monitoring_method": "Fast shortlist only in 07-09 and 13-15 Europe/London weekdays, four checks/hour at :02/:17/:32/:47, GitHub best effort. Existing hourly and four comprehensive weekday assessments unchanged. No entry detected between checks is assumed actionable.",
+  "monitoring_method": "Fast shortlist remains best-effort at :02/:17/:32/:47 during 07-09 and 13-15 London weekdays, with immutable plans prioritised and remaining slots rotating across all 68 screened pairs. A missed observation creates no inferred trade; hourly collector and four weekday assessments continue.",
   "no_orders": true,
   "policies": [
     "champion",
     "challenger_v1"
   ],
-  "promotion_policy": "V16 prospectively corrects currency matching and headline materiality with no retrospective relabelling of V15 events: central-bank acronyms require word boundaries, publication title suffix is not event content, generic post-session currency/treasury commentary and ordinary conference announcements remain context, while specific monetary-policy decisions, shocks, inflation, employment, interventions and calendar releases remain hard blocks. Canonical entry stops, nearest structural targets, gross >=1.50 and net >=1.35 after spread, no-orders and account risk <=0.25% remain unchanged. Performance unproven and public GREEN always requires paired fresh data and independently completed prospective trigger.",
-  "registered_at": "2026-11-02T09:06:38.871Z",
+  "promotion_policy": "V16 prospectively corrects currency matching and headline materiality with no retrospective relabelling of V15 events: central-bank acronyms require word boundaries, publication title suffix is not event content, generic post-session currency/treasury commentary and ordinary conference announcements remain context, while specific monetary-policy decisions, shocks, inflation, employment, interventions and calendar releases remain hard blocks. Canonical entry stops, nearest structural targets, gross >=1.50 and net >=1.35 after spread, no-orders and account risk <=0.25% remain unchanged. Performance unproven and public GREEN always requires paired fresh data and independently completed prospective trigger. V17: the fixed fast top-eight starvation is replaced with deterministic rotating observation slots; late completed M5 (>5 min) and M15 (>15 min) patterns cannot become fresh alerts and are counted as missed observation windows, never invented missed profit. Risk/news/stop/TP/approval gates unchanged; no validated improvement claimed.",
   "require_pair_specific_observations": true,
-  "rule_sha256": "747b3d40e463ea7f779435cbffcd66cce60f522a1e662576297db24ce254ce8b",
+  "rule_sha256": "09f36ed3871572417ac0c2c8f46af253a449e46135cadecdec3bdba5ef577c55",
   "slippage_pips_per_side": [
     0,
     0.25,
     0.5
   ],
-  "supersedes_protocol_sha256": "343a9aafd9a561026309192e831783228253ba647a80501fef96dd4baee528a6"
+  "supersedes_protocol_sha256": "4a146eb51737572c724a515a59d0c6f410ba71af93340b2428c4159c66e47a06"
 }
