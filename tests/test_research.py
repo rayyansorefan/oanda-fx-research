@@ -23,7 +23,7 @@ class DataTests(unittest.TestCase):
         self.assertFalse(watch.valid_risk(s,1.2))
 
 
-    def test_hourly_rechecks_prior_completed_m15_bars(self):
+    def test_hourly_marks_old_m15_patterns_missed_not_new(self):
         from datetime import datetime, timezone, timedelta
         def bar(start, opening, high, low, close):
             return {"time": start.isoformat().replace("+00:00", "Z"),
@@ -45,9 +45,14 @@ class DataTests(unittest.TestCase):
         tracked={"notified":[]}
         result=watch.signal_match(sig,{"quote":quotes,"frames":{
             "M15":{"recent_completed_candles":bars}}},tracked,n)
-        self.assertIsNotNone(result)
-        self.assertEqual(result[0], "B")
-        self.assertEqual(result[1], bars[1]["time"])
+        # Historical checks must not present a long-expired rejection
+        # as a newly actionable conditional trigger.
+        self.assertIsNone(result)
+        self.assertEqual(tracked["late_candles_skipped"], 2)
+        self.assertEqual(tracked["last_late_candle_close"],
+                         "2026-10-20T11:45:00+00:00")
+        self.assertEqual(tracked["last_processed_bar_close"],
+                         "2026-10-20T12:00:00+00:00")
         sig["created_at"]="2026-10-20T12:01:00Z"
         self.assertIsNone(watch.signal_match(sig,{"quote":quotes,"frames":{
             "M15":{"recent_completed_candles":bars}}},{"notified":[]},n))
