@@ -63,6 +63,40 @@ class BudgetTests(unittest.TestCase):
                 self.assertEqual(frame["indicators"]["bollinger"]["bandwidth_percentile_recent"],50)
                 self.assertEqual(frame["indicators"]["structure"]["confirmed_swings"]["highs"],"HIGHER")
 
+    def test_extra_deep_charts_compact_context_before_entry_charts(self):
+        from unittest.mock import patch
+        import scripts.export_public_dashboard as exporter
+        # Simulate an already-compact but just-over-budget 68-pair feed.
+        # No source or candidate index may disappear to fit the JSON budget.
+        bar = {"t":"2026-11-02T07:00:00Z", "o":1.123456,
+               "h":1.123789, "l":1.123111, "c":1.123333, "v":120}
+        payload = {"pairs": {
+            f"FX_{i:02d}": {"deep": True,
+                "quote":{"time":"2026-11-02T07:20:00Z",
+                         "bid":1.12345, "ask":1.12355},
+                "frames": {tf: {"candles":[dict(bar) for _ in range(6)],
+                                "indicators":{"ema20":1.123}}
+                           for tf in ("M5", "M15", "H1", "H4", "D")}}
+            for i in range(68)},
+            "learning":{"paper_audit":{"totals":{"candidates":1},
+                        "candidates":[{"id":"frozen-1", "entry":1.12,
+                                       "stop":1.13,"tp1":1.10}]}}}
+        before = serialized_size(payload)
+        # Existing stages cannot reduce six-candle deep charts, so the
+        # final 6/3 frame fallback must handle this near-limit growth.
+        with patch.object(exporter, "PUBLIC_MAX_BYTES", before - 80), \\
+             patch.object(exporter, "PUBLIC_HARD_MAX_BYTES", before - 30):
+            exporter.fit_public_feed_budget(payload)
+            self.assertLessEqual(serialized_size(payload), before - 30)
+        self.assertEqual(len(payload["pairs"]), 68)
+        self.assertEqual(payload["learning"]["paper_audit"]["candidate_index"][0][0], "frozen-1")
+        self.assertTrue(payload["public_compaction"]["reduced_chart_history"])
+        for pair in payload["pairs"].values():
+            self.assertEqual(len(pair["frames"]["M15"]["candles"]), 6)
+            self.assertEqual(len(pair["frames"]["H1"]["candles"]), 6)
+            self.assertLessEqual(len(pair["frames"]["H4"]["candles"]), 3)
+            self.assertEqual(pair["quote"]["ask"], 1.12355)
+
     def test_small_feed_does_not_mutate_candidate_history(self):
         p={"pairs":{},"learning":{"paper_audit":{"totals":{"candidates":1},
             "candidates":[{"id":"1","tracking":{"history":[1,2,3]}}]}}}
