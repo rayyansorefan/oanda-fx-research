@@ -1,9 +1,9 @@
 {
   "purpose": "fresh OANDA price and news update when scheduled cron is unavailable",
-  "request": "FX_20261102_1319_HOURLY_STALE_REFRESH",
-  "requested_by": "ChatGPT FX hourly research automation",
+  "request": "FX_20261102_1407_PREUS_FULL_REFRESH",
+  "requested_by": "ChatGPT FX 14:00 pre-US research automation",
   "session_day_utc": "2026-11-02",
-  "sequence": 90,
-  "requested_at_utc": "2026-11-02T13:19:00Z",
-  "note": "13:15 UK hourly assessment: last saved OANDA snapshot 2026-11-02T12:08:57Z is over 70 minutes old at request. Request exactly one current-main collector refresh, verify saved OANDA price/news/candle timestamps and admission; NO ENTRY until independently verified. Research only, no orders."
+  "sequence": 91,
+  "requested_at_utc": "2026-11-02T14:07:20Z",
+  "note": "14:00 UK full pre-US brief: last saved OANDA snapshot 2026-11-02T13:19:45Z exceeds the protocol 25-minute full-brief freshness threshold. Request exactly one current-main collector refresh; verify the new Actions run and saved OANDA price/news/candle timestamps before admission. Research only, no orders."
 }
