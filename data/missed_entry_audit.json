@@ -848,16 +848,19 @@
     "202611021145-GBPUSD-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
+      "exit_at": "2026-11-02T18:30:00Z",
       "fill_at": "2026-11-02T12:45:00Z",
       "id": "202611021145-GBPUSD-LONG-EMA20_PULLBACK",
       "instrument": "GBP_USD",
       "paper_entry": 1.34156,
+      "paper_exit": 1.34047,
       "pattern_at": "2026-11-02T12:30:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/GBP_USD-d6f620ebb26f9c1091aea36e1b160d581d3f741381b4db61cb04cdca1d3ab63c.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/GBP_USD-2dd0b425b7c7d9b8798b2aca44588f408276f3a4d9858573cc49d2269bf252cb.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.08125
     },
     "202611021145-USDSEK-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
@@ -909,6 +912,20 @@
       "status": "PAPER_STOP_AFTER_FILL",
       "trade_executed": false,
       "underlying_move_pct": -0.11057
+    },
+    "202611021800-USDHUF-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202611021800-USDHUF-SHORT-EMA20_PULLBACK",
+      "instrument": "USD_HUF",
+      "invalidated_at": "2026-11-02T18:45:00Z",
+      "pattern_at": "2026-11-02T19:15:00+00:00",
+      "reason": "Frozen stop breached before pattern confirmation",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/USD_HUF-d02b80461f5bd3f17768b674faee26334e77c43fdf05dc6126c88bc97ff8229f.json",
+      "status": "PAPER_PRE_ENTRY_INVALIDATED",
+      "trade_executed": false
     }
   },
   "latency_audit": {
@@ -953,6 +970,14 @@
         "fill_precedes_detection": true,
         "id": "202611021345-EURTRY-LONG-EMA20_PULLBACK",
         "pattern_at": "2026-11-02T14:30:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-02T20:16:03.623160+00:00",
+        "detection_delay_minutes": 61.06,
+        "fill_precedes_detection": false,
+        "id": "202611021800-USDHUF-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-11-02T19:15:00+00:00"
       }
     ],
     "verified_profitable_missed_manual_entries": 0
@@ -960,14 +985,14 @@
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 4,
-  "today_forward_patterns": 5,
+  "today_distinct_pair_pattern_events": 5,
+  "today_forward_patterns": 6,
   "today_registered": 13,
-  "today_scored_hypothetical_entries": 4,
+  "today_scored_hypothetical_entries": 5,
   "today_status_counts": {
-    "PAPER_OPEN_UNRESOLVED": 1,
-    "PAPER_STOP_AFTER_FILL": 4
+    "PAPER_PRE_ENTRY_INVALIDATED": 1,
+    "PAPER_STOP_AFTER_FILL": 5
   },
   "today_uk": "2026-11-02",
-  "updated_at": "2026-11-02T18:16:03Z"
+  "updated_at": "2026-11-02T20:16:03Z"
 }
