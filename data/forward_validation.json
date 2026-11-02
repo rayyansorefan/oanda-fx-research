@@ -28,48 +28,65 @@
   "automatic_promotion_allowed": false,
   "coverage": {
     "count_note": "Rejection categories overlap; route counts and per-reason pair counts must not be summed into independent trades.",
-    "deep_pairs": 25,
-    "distinct_evaluated_pairs": 35,
+    "deep_pairs": 68,
+    "distinct_evaluated_pairs": 68,
     "distinct_pairs_by_rejection": {
-      "FOUR_FRAME_TREND_CONFLICT": 8,
-      "INVALID_BID_ASK_OR_SPREAD": 7,
-      "REQUIRED_FRAME_HISTORY_MISSING:H4": 1,
-      "REVERSAL_OR_EXHAUSTION": 19,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 1,
+      "FOUR_FRAME_TREND_CONFLICT": 25,
+      "INVALID_BID_ASK_OR_SPREAD": 18,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
+      "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 1,
+      "REVERSAL_OR_EXHAUSTION": 25,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 3,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
     "paper_prequalified": [
+      "AUD_JPY",
+      "EUR_CAD",
+      "EUR_CHF",
       "EUR_JPY",
-      "GBP_JPY",
-      "GBP_SGD",
-      "GBP_USD"
-    ],
-    "paper_prequalified_missing_deep": [
-      "GBP_SGD"
-    ],
-    "quoted_pairs": 35,
-    "route_evaluations": 70,
-    "route_rejections": {
-      "FOUR_FRAME_TREND_CONFLICT": 14,
-      "INVALID_BID_ASK_OR_SPREAD": 14,
-      "REQUIRED_FRAME_HISTORY_MISSING:H4": 2,
-      "REVERSAL_OR_EXHAUSTION": 36,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
-      "UNSUPPORTED_PAIR_OR_ROUTE": 2
-    },
-    "source_at": "2026-11-02T12:05:38Z",
-    "strict_prequalified": [
-      "EUR_JPY",
+      "EUR_SGD",
+      "EUR_USD",
+      "GBP_CAD",
       "GBP_JPY",
       "GBP_SGD",
       "GBP_USD",
+      "USD_CHF"
+    ],
+    "paper_prequalified_missing_deep": [],
+    "quoted_pairs": 68,
+    "route_evaluations": 136,
+    "route_rejections": {
+      "FOUR_FRAME_TREND_CONFLICT": 46,
+      "INVALID_BID_ASK_OR_SPREAD": 35,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
+      "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 1,
+      "REVERSAL_OR_EXHAUSTION": 46,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 5,
+      "UNSUPPORTED_PAIR_OR_ROUTE": 2
+    },
+    "source_at": "2026-11-02T12:08:57Z",
+    "strict_prequalified": [
+      "CHF_HKD",
+      "EUR_CAD",
+      "EUR_CHF",
+      "EUR_HKD",
+      "EUR_JPY",
+      "EUR_SGD",
+      "EUR_TRY",
+      "EUR_USD",
+      "GBP_CAD",
+      "GBP_HKD",
+      "GBP_JPY",
+      "GBP_SGD",
+      "GBP_USD",
+      "USD_CHF",
+      "USD_CZK",
       "USD_DKK",
+      "USD_MXN",
       "USD_SEK"
     ],
-    "strict_prequalified_missing_deep": [
-      "GBP_SGD"
-    ]
+    "strict_prequalified_missing_deep": []
   },
   "delivery_events_recorded": 1,
   "evidence_ready_for_independent_review": false,
@@ -94,5 +111,5 @@
     "statistical_improvement_established": false
   },
   "status": "HOLDOUT_NOT_STARTED",
-  "updated_at": "2026-11-02T12:05:45.111355+00:00"
+  "updated_at": "2026-11-02T12:09:05.659591+00:00"
 }
