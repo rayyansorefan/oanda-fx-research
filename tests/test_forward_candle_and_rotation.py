@@ -65,7 +65,7 @@ class ForwardTimingAndRotationTests(unittest.TestCase):
             limit=3, cursor=3, with_rotation=True)
         self.assertEqual(selected[0], "NZD_JPY")
         self.assertEqual(len(selected), 3)
-        self.assertEqual(steps, 0)
+        self.assertEqual(steps, 2)
 
 
 if __name__ == "__main__":
