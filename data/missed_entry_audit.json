@@ -828,6 +828,20 @@
       "trade_executed": false,
       "underlying_move_pct": -0.10394
     },
+    "202611021100-USDSEK-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "fill_at": "2026-11-02T13:45:00Z",
+      "id": "202611021100-USDSEK-SHORT-EMA20_PULLBACK",
+      "instrument": "USD_SEK",
+      "paper_entry": 9.76531,
+      "pattern_at": "2026-11-02T13:45:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/USD_SEK-0c934c660a4790d208f386b4e7d810fadfbb2a9acb5ce44d2054ab0eca5a2e20.json",
+      "status": "PAPER_OPEN_UNRESOLVED",
+      "trade_executed": false
+    },
     "202611021145-GBPUSD-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
@@ -838,26 +852,50 @@
       "pattern_at": "2026-11-02T12:30:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/GBP_USD-a12e5b39eedb206818c2b4355d2272860ede748f22d189a2224ed9329d61e74f.json",
+      "source_evidence": "data/replay_evidence/GBP_USD-af63471ec98e7acedc5d43123826fc5e2a15439ef0efb9388b7403c876def3a3.json",
       "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     },
     "202611021145-USDSEK-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "SHORT",
+      "fill_at": "2026-11-02T13:15:00Z",
       "id": "202611021145-USDSEK-SHORT-EMA20_PULLBACK",
       "instrument": "USD_SEK",
+      "paper_entry": 9.76213,
       "pattern_at": "2026-11-02T13:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_SEK-ed881150b50f3b50da68b2f5ed88991c81d883bf471e04a284daa8d592dad5cd.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/USD_SEK-fcbdb20349ea39171172c68c8facf5a91bf3866b5a7a3c8b1d84fc7f11a1d8c0.json",
+      "status": "PAPER_OPEN_UNRESOLVED",
+      "trade_executed": false
+    },
+    "202611021300-USDSEK-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "fill_at": "2026-11-02T13:45:00Z",
+      "id": "202611021300-USDSEK-SHORT-EMA20_PULLBACK",
+      "instrument": "USD_SEK",
+      "paper_entry": 9.75989,
+      "pattern_at": "2026-11-02T13:45:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/USD_SEK-8bdd8e8c0e538082ed7ee45316688676089e39f6374a2201abfef22da72d6a58.json",
+      "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     }
   },
   "latency_audit": {
     "method": "Legacy replay assumes pattern-close availability; no actual delivered alert or subsequent manual fill is established.",
     "records": [
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-02T14:08:19.076097+00:00",
+        "detection_delay_minutes": 23.32,
+        "fill_precedes_detection": true,
+        "id": "202611021100-USDSEK-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-11-02T13:45:00+00:00"
+      },
       {
         "after_alert_fill_verified": false,
         "detected_at": "2026-11-02T13:19:49.533641+00:00",
@@ -870,9 +908,17 @@
         "after_alert_fill_verified": false,
         "detected_at": "2026-11-02T13:19:49.533641+00:00",
         "detection_delay_minutes": 4.83,
-        "fill_precedes_detection": false,
+        "fill_precedes_detection": true,
         "id": "202611021145-USDSEK-SHORT-EMA20_PULLBACK",
         "pattern_at": "2026-11-02T13:15:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-02T14:08:19.076097+00:00",
+        "detection_delay_minutes": 23.32,
+        "fill_precedes_detection": true,
+        "id": "202611021300-USDSEK-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-11-02T13:45:00+00:00"
       }
     ],
     "verified_profitable_missed_manual_entries": 0
@@ -880,14 +926,13 @@
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 2,
-  "today_forward_patterns": 2,
-  "today_registered": 9,
+  "today_distinct_pair_pattern_events": 3,
+  "today_forward_patterns": 4,
+  "today_registered": 11,
   "today_scored_hypothetical_entries": 0,
   "today_status_counts": {
-    "PAPER_NO_CONTIGUOUS_CANDLES": 1,
-    "PAPER_OPEN_UNRESOLVED": 1
+    "PAPER_OPEN_UNRESOLVED": 4
   },
   "today_uk": "2026-11-02",
-  "updated_at": "2026-11-02T13:19:49Z"
+  "updated_at": "2026-11-02T14:08:19Z"
 }
