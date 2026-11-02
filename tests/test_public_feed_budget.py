@@ -84,8 +84,8 @@ class BudgetTests(unittest.TestCase):
         before = serialized_size(payload)
         # Existing stages cannot reduce six-candle deep charts, so the
         # final 6/3 frame fallback must handle this near-limit growth.
-        with patch.object(exporter, "PUBLIC_MAX_BYTES", before - 80), \\
-             patch.object(exporter, "PUBLIC_HARD_MAX_BYTES", before - 30):
+        with (patch.object(exporter, "PUBLIC_MAX_BYTES", before - 80),
+              patch.object(exporter, "PUBLIC_HARD_MAX_BYTES", before - 30)):
             exporter.fit_public_feed_budget(payload)
             self.assertLessEqual(serialized_size(payload), before - 30)
         self.assertEqual(len(payload["pairs"]), 68)
