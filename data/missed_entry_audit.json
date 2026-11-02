@@ -831,16 +831,19 @@
     "202611021100-USDSEK-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "SHORT",
+      "exit_at": "2026-11-02T15:30:00Z",
       "fill_at": "2026-11-02T13:45:00Z",
       "id": "202611021100-USDSEK-SHORT-EMA20_PULLBACK",
       "instrument": "USD_SEK",
       "paper_entry": 9.76531,
+      "paper_exit": 9.77835,
       "pattern_at": "2026-11-02T13:45:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/USD_SEK-4a819b17bd2da1c0af7d18b76eb66f1ac85747f50aefebde970f55b624b23ee8.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/USD_SEK-2e846c3ff040115fc7f279408822024f961c93a6554092cf4e7437f1bc37d319.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.13353
     },
     "202611021145-GBPUSD-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
@@ -852,7 +855,7 @@
       "pattern_at": "2026-11-02T12:30:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/GBP_USD-ff49b29dc924e4ab0098efa7fa615efc2b28fb99cc9053ec7c467cff2487910c.json",
+      "source_evidence": "data/replay_evidence/GBP_USD-b1f68ba9f4c524aa97080da0aefd890b1dbd8d0742fb9a9f807bb836969d6eca.json",
       "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     },
@@ -960,11 +963,11 @@
   "today_distinct_pair_pattern_events": 4,
   "today_forward_patterns": 5,
   "today_registered": 11,
-  "today_scored_hypothetical_entries": 3,
+  "today_scored_hypothetical_entries": 4,
   "today_status_counts": {
-    "PAPER_OPEN_UNRESOLVED": 2,
-    "PAPER_STOP_AFTER_FILL": 3
+    "PAPER_OPEN_UNRESOLVED": 1,
+    "PAPER_STOP_AFTER_FILL": 4
   },
   "today_uk": "2026-11-02",
-  "updated_at": "2026-11-02T16:00:48Z"
+  "updated_at": "2026-11-02T16:31:23Z"
 }
