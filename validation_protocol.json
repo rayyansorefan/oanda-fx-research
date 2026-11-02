@@ -3,9 +3,9 @@
   "common_universe": "All screened OANDA account currency pairs receive M5/M15/H1/H4/D collection, with explicit per-timeframe gaps. Both study arms require identical complete M15/H1/H4/D context. Fast checks remain bounded to active plans and leading candidates; omitted pairs never gain observation timestamps.",
   "cost_method": "Executable-side OANDA bid/ask fills and exits; no double spread subtraction. Adverse stop gaps and 0/0.25/0.5 pip per-side stress. Financing crossing NY 17:00 and actual Pepperstone costs remain unknown unless evidenced.",
   "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
-  "development_cutoff": "2026-11-02T09:29:59Z",
-  "holdout_start_at": "2026-11-02T09:30:00Z",
-  "id": "FX-OOS-20261102-v15",
+  "development_cutoff": "2026-11-02T09:44:59Z",
+  "holdout_start_at": "2026-11-02T09:45:00Z",
+  "id": "FX-OOS-20261102-v16",
   "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
   "minimum_independent_scored_pair_days_per_arm": 100,
   "minimum_scored_days_per_arm": 20,
@@ -15,8 +15,8 @@
     "champion",
     "challenger_v1"
   ],
-  "promotion_policy": "V15 begins a new prospective cohort after V14, preserving all prior recorded events and delivery evidence. Align public GREEN gating with the canonical pair-specific required official sources, calendar and material-headline checks; unrelated optional global feed outages remain disclosed but do not veto cleared pairs. Ordinary aggregate 'Forex Today' commentary without a specific material announcement is context, not an automatic high-impact event, while actual policy, shock, release, missing required sources, high-impact calendars, spreads, net R:R, completed candles and original risk conditions continue to gate admission. Entry ranking and price plans remain independent of historical profitable-move claims. No performance improvement or broker trade asserted.",
-  "registered_at": "2026-11-02T09:00:09.074Z",
+  "promotion_policy": "V16 prospectively corrects currency matching and headline materiality with no retrospective relabelling of V15 events: central-bank acronyms require word boundaries, publication title suffix is not event content, generic post-session currency/treasury commentary and ordinary conference announcements remain context, while specific monetary-policy decisions, shocks, inflation, employment, interventions and calendar releases remain hard blocks. Canonical entry stops, nearest structural targets, gross >=1.50 and net >=1.35 after spread, no-orders and account risk <=0.25% remain unchanged. Performance unproven and public GREEN always requires paired fresh data and independently completed prospective trigger.",
+  "registered_at": "2026-11-02T09:05:57.160Z",
   "require_pair_specific_observations": true,
   "rule_sha256": "094b3b11966d22ca57fbee9c2ccbc69afb93caed3e707ddf48253684ee25e458",
   "slippage_pips_per_side": [
@@ -24,5 +24,5 @@
     0.25,
     0.5
   ],
-  "supersedes_protocol_sha256": "4e6e26781504c71d98a6009020e47d82c98e57f9f50c2e5ba83c20012e7a537c"
+  "supersedes_protocol_sha256": "343a9aafd9a561026309192e831783228253ba647a80501fef96dd4baee528a6"
 }
