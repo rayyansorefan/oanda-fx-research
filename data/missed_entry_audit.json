@@ -838,7 +838,7 @@
       "pattern_at": "2026-11-02T13:45:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_SEK-17504d0c3b2dbbc4fcb84ae9cafb609f1f45132726f41b73ee885279320c3061.json",
+      "source_evidence": "data/replay_evidence/USD_SEK-4a819b17bd2da1c0af7d18b76eb66f1ac85747f50aefebde970f55b624b23ee8.json",
       "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     },
@@ -852,23 +852,26 @@
       "pattern_at": "2026-11-02T12:30:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/GBP_USD-76d031b309f012ac210ccc604d0e44c672a39f2c67a054328269ab953aa1027d.json",
+      "source_evidence": "data/replay_evidence/GBP_USD-ff49b29dc924e4ab0098efa7fa615efc2b28fb99cc9053ec7c467cff2487910c.json",
       "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     },
     "202611021145-USDSEK-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "SHORT",
+      "exit_at": "2026-11-02T15:15:00Z",
       "fill_at": "2026-11-02T13:15:00Z",
       "id": "202611021145-USDSEK-SHORT-EMA20_PULLBACK",
       "instrument": "USD_SEK",
       "paper_entry": 9.76213,
+      "paper_exit": 9.77483,
       "pattern_at": "2026-11-02T13:15:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/USD_SEK-d20fc207b229faffad1a11d2760bf0750bf9c6e81109e760e58503fe2a5e46e7.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/USD_SEK-9e382090bbbc534548fbc7164352ff3f4bd78058bff9236e7f9abad655b744d6.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.13009
     },
     "202611021300-USDSEK-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
@@ -897,7 +900,7 @@
       "pattern_at": "2026-11-02T14:30:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_TRY-3b911cb6402d87c123f14ff2a05f2d65f08fd84027e0ee545593ea865fa37ff7.json",
+      "source_evidence": "data/replay_evidence/EUR_TRY-57dda57f701f91023bdcb916299ff804a0cc015cd2a204803fd6432d31feb719.json",
       "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     }
@@ -954,11 +957,11 @@
   "today_distinct_pair_pattern_events": 4,
   "today_forward_patterns": 5,
   "today_registered": 11,
-  "today_scored_hypothetical_entries": 1,
+  "today_scored_hypothetical_entries": 2,
   "today_status_counts": {
-    "PAPER_OPEN_UNRESOLVED": 4,
-    "PAPER_STOP_AFTER_FILL": 1
+    "PAPER_OPEN_UNRESOLVED": 3,
+    "PAPER_STOP_AFTER_FILL": 2
   },
   "today_uk": "2026-11-02",
-  "updated_at": "2026-11-02T15:20:41Z"
+  "updated_at": "2026-11-02T15:41:08Z"
 }
