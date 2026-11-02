@@ -1,9 +1,9 @@
 {
   "purpose": "fresh OANDA price and news update when scheduled cron is unavailable",
-  "request": "FX_20261102_1629_AFTERNOON_FULL_REFRESH",
-  "requested_by": "ChatGPT FX 16:30 afternoon audit automation",
+  "request": "FX_20261102_1815_HOURLY_STALE_RECOVERY",
+  "requested_by": "ChatGPT FX hourly research automation",
   "session_day_utc": "2026-11-02",
-  "sequence": 93,
-  "requested_at_utc": "2026-11-02T16:29:10Z",
-  "note": "16:30 UK full afternoon audit: saved 16:00:42Z snapshot exceeds the protocol 25-minute full-brief freshness threshold and coverage fell to 44/68 M15-H1 plus 18 deep pairs after OANDA HTTP 504s. Request exactly one current-main collector refresh; verify the new Actions run and saved OANDA price/news/candle timestamps before admission. Research only, no orders."
+  "sequence": 94,
+  "requested_at_utc": "2026-11-02T18:14:30Z",
+  "note": "18:15 UK hourly check: OANDA 16:31:17Z source is ~103 minutes old (>70 min), canonical signals.json empty, private/public dashboard feed has disallowed top-level news_clearance and fast_entry_monitor. Request exactly one collector refresh on current main; verify new summary/news and admission audit before any entry. Manual research only, no orders."
 }
