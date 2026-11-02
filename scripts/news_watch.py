@@ -128,12 +128,26 @@ def parse_rss(xml_bytes, source, assigned):
 
 
 def classify(item):
-    text = " " + item["title"].lower() + " "
-    # Official bank/agency feed identifies the jurisdiction, but non-policy press
-    # headlines are not automatically considered market-moving.
+    # Aggregators append a publisher suffix (e.g. ' - Forex Factory').
+    # Its word 'forex' is NOT evidence the actual headline is a new event.
+    raw = str(item["title"]).lower()
+    head, sep, publisher = raw.rpartition(" - ")
+    if sep and publisher.strip() in (
+            "forex factory", "fxstreet", "focus taiwan", "wall street journal",
+            "wsj", "yahoo finance uk", "reuters", "bloomberg"):
+        raw = head
+    text = " " + raw + " "
+    # Currency codes are WORDS, never substrings of unrelated country names:
+    # Azerbaijan contains 'rba', but is not an RBA announcement for AUD.
+    def matches(word):
+        word = word.strip()
+        if word in ("rba", "boc", "boj", "snb", "ecb", "boe",
+                    "rbnz", "fomc", "fed"):
+            return re.search(r"(?<![a-z])" + re.escape(word) + r"(?![a-z])", text) is not None
+        return word in text
     related = set()
     for currency, words in WORDS.items():
-        if any(word in text for word in words):
+        if any(matches(word) for word in words):
             related.add(currency)
     if item["currency_source"] not in ("GLOBAL", ""):
         related.add(item["currency_source"])
@@ -160,11 +174,15 @@ def classify(item):
         item["currency_source"] == "GLOBAL"
         and any(label in text for label in (
             " forex today:", " market wrap:", " currency markets today:",
-            " market recap:", " daily forex outlook:"))
+            " market recap:", " daily forex outlook:",
+            " closes sharply higher ", " closes sharply lower ",
+            " treasury yields little changed ", " treasury yields unchanged ",
+            " to speak at ", " will speak at ", " to address conference "))
         and not any(term in text for term in CRITICAL)
         and not any(term in text for term in (
             "unexpected", "surprise decision", "rate hike", "rate cut",
-            "intervention", "emergency meeting", "actual release"))
+            "intervention", "emergency meeting", "actual release",
+            "policy announcement", "unplanned remarks"))
     )
     severity = ("CONTEXT" if routine_commentary or
                 (corporate and not macro and not is_global) else
