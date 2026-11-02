@@ -183,6 +183,22 @@ def momentum_continuation_qualifies(prev, curr, level, long, frames, tolerance, 
                     return False
                 if float(fresh["adx14"]) < 20:
                     return False
+            # The conditional higher-frame exception was admitted only for
+            # its original context. Recheck both higher frames before an
+            # earlier M5 trigger; never add a new unapproved exception.
+            def supports(tf):
+                ind = frames[tf]["indicators"]
+                ema20, ema50 = float(ind["ema20"]), float(ind["ema50"])
+                return ema20 > ema50 if long else ema20 < ema50
+            h4_ok, daily_ok = supports("H4"), supports("D")
+            if not daily_ok and not context.get("conditional_daily_exception"):
+                return False
+            if not h4_ok:
+                if not (daily_ok and context.get("conditional_weak_h4_exception")
+                        and 0 < float(frames["H4"]["indicators"]["adx14"]) < 18):
+                    return False
+            if not h4_ok and not daily_ok:
+                return False
         return True
     except (KeyError, TypeError, ValueError, ZeroDivisionError):
         return False
@@ -482,9 +498,11 @@ def setup_already_breached(pairdata, signal, now):
         if not side:
             return "PLAN_EXECUTABLE_SIDE_HISTORY_MISSING"
         if (side["l"] <= stop if long else side["h"] >= stop):
-            return "PLAN_STOP_LEVEL_TOUCHED_AFTER_CREATION"
+            return ("PLAN_STOP_LEVEL_TOUCHED_ON_M5" if tf == "M5"
+                    else "PLAN_STOP_LEVEL_TOUCHED_ON_M15")
         if (side["h"] >= tp if long else side["l"] <= tp):
-            return "PLAN_TP1_LEVEL_TOUCHED_AFTER_CREATION"
+            return ("PLAN_TP1_LEVEL_TOUCHED_ON_M5" if tf == "M5"
+                    else "PLAN_TP1_LEVEL_TOUCHED_ON_M15")
     return None
 
 def watch():
