@@ -698,6 +698,68 @@
         "macro": "US October ISM Manufacturing PMI due 15:00 UK; repository news coverage PARTIAL.",
         "completeness": "INCOMPLETE_NO_EXACT_TRIGGER_LEVELS"
       }
+    },
+    {
+      "id": "20261102-1214-GBPUSD-L-EMA20-PAPER",
+      "instrument": "GBP_USD",
+      "direction": "LONG",
+      "created_at": "2026-11-02T12:08:18.487Z",
+      "expires_at": "2026-11-02T13:35:36.663963Z",
+      "planned_entry": null,
+      "entry_zone": [
+        1.34133,
+        1.34156
+      ],
+      "stop": 1.34047,
+      "tp1": 1.3434,
+      "tp2": 1.34482,
+      "alert_b": null,
+      "max_oanda_spread_pips": null,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-02T12:05:36.663963550Z",
+      "original_note": "Incomplete paper-only EMA20 pullback watch. Frozen OANDA zone 1.34133-1.34156; require a newly completed M15 bullish rejection inside the zone after this assessment. The 11:45 M15 candle was bearish and predated registration, D1 context conflicts, and no immutable maximum OANDA spread cap was emitted. No approved entry or broker fill.",
+      "technical_context": {
+        "as_of_utc": "2026-11-02T12:05:36.663963550Z",
+        "m15": "RSI14 50.17; ADX14 26.99; +DI 28.70 > -DI 25.91; EMA20>50>200, but MACD histogram negative and Supertrend down; last completed M15 candle bearish.",
+        "h1": "RSI14 55.67; ADX14 20.98; +DI dominant; EMA20>50>200, Supertrend/cloud bullish, but trend strength is modest.",
+        "trend": "H4/H1 bullish structure; D1 Supertrend/cloud conflict near 1.34340 resistance. M5 recovered but does not replace the required new M15 rejection.",
+        "atr_spread": "OANDA bid/ask 1.34154/1.34167; observed spread 1.3 pips; M15 ATR about 7.75 pips; numeric frozen zone/stop/TP geometry is viable but entry trigger and max-spread field are absent.",
+        "macro": "US ISM Manufacturing PMI due 15:00 UK after this watch expiry; repository news coverage PARTIAL and full universe recalculation incomplete.",
+        "incomplete_fields": "planned_entry, precise alert_b and immutable max_oanda_spread_pips unavailable until a prospective completed M15 rejection and renewed checks."
+      }
+    },
+    {
+      "id": "20261102-1214-USDSEK-S-EMA20-PAPER",
+      "instrument": "USD_SEK",
+      "direction": "SHORT",
+      "created_at": "2026-11-02T12:08:18.487Z",
+      "expires_at": "2026-11-02T13:35:37.025284Z",
+      "planned_entry": null,
+      "entry_zone": [
+        9.76213,
+        9.76485
+      ],
+      "stop": 9.77483,
+      "tp1": 9.72028,
+      "tp2": null,
+      "alert_b": null,
+      "max_oanda_spread_pips": null,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-02T12:05:37.025284377Z",
+      "original_note": "Incomplete paper-only EMA20 pullback watch. Frozen OANDA zone 9.76213-9.76485; require a newly completed M15 bearish rejection inside the zone. Current OANDA ask 9.75618 is already below the zone, the 11:45 candle was bullish, M5 history was unavailable, Pepperstone symbol availability is unverified, and no immutable spread cap exists. Do not chase or infer a fill.",
+      "technical_context": {
+        "as_of_utc": "2026-11-02T12:05:37.025284377Z",
+        "m15": "RSI14 41.11; ADX14 37.57; -DI 31.83 > +DI 20.55; EMA20<50<200 and below cloud, but MACD histogram positive, Supertrend up, and last completed M15 candle bullish.",
+        "h1": "RSI14 31.34; ADX14 25.94; -DI dominant; EMA20<50<200, Supertrend/cloud bearish; H4 oversold RSI14 16.54.",
+        "trend": "D/H4/H1 broadly bearish price structure, but D EMA stack and H4 oversold condition conflict with a fresh chase; no M5 history in the current shard.",
+        "atr_spread": "OANDA bid/ask 9.75300/9.75618; observed spread 31.8 pips versus M15 ATR about 90.7 pips; current price below the frozen pullback zone.",
+        "macro": "US ISM Manufacturing PMI due 15:00 UK after this watch expiry; SEK-specific official coverage is limited.",
+        "incomplete_fields": "planned_entry, precise alert_b, immutable max_oanda_spread_pips and current M5 history unavailable."
+      }
     }
   ]
 }
