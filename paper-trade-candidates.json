@@ -673,6 +673,31 @@
         "atr_spread": "OANDA spread 2.5 pips at assessment; dashboard estimated cost-aware reward/risk 1.59, but no immutable maximum spread cap was emitted.",
         "macro": "News coverage PARTIAL; BLS feeds unavailable in collector, ECB/BoC official feeds checked, and event risk must be rechecked before any entry."
       }
+    },
+    {
+      "id": "20261102-0741-GBPNZD-L-RESEARCH",
+      "instrument": "GBP_NZD",
+      "direction": "LONG",
+      "created_at": "2026-11-02T07:41:00Z",
+      "expires_at": "2026-11-02T11:30:00Z",
+      "planned_entry": null,
+      "stop": null,
+      "tp1": null,
+      "max_oanda_spread_pips": null,
+      "event_blackouts_utc": [],
+      "strategy": "RESEARCH_PRIORITY_WATCH",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-02T07:20:48Z",
+      "original_note": "Incomplete directional paper watch only. D1/H4/H1/M15 are bullish, but H4/H1/M15 are overextended, price is close to 2.38745 resistance, and the observed OANDA spread is 8.3 pips versus M15 ATR about 10.8 pips. No completed qualifying pullback/rejection or cost-valid entry/stop/TP exists. Do not infer a fill or live approval.",
+      "technical_context": {
+        "as_of_utc": "2026-11-02T07:20:48Z",
+        "m15": "RSI14 71.3; ADX14 30.3; +DI dominant; bullish EMA/Supertrend/Ichimoku alignment, but overbought near resistance.",
+        "h1": "RSI14 70.1; ADX14 38.1; bullish trend alignment and momentum, but stretched.",
+        "trend": "D1/H4/H1/M15 bullish; H4 RSI14 72.8 and price near 2.38745 resistance make a fresh long chase unattractive.",
+        "atr_spread": "OANDA bid/ask 2.38564/2.38647; observed spread 8.3 pips versus M15 ATR about 10.8 pips; no cost-valid exact plan.",
+        "macro": "US October ISM Manufacturing PMI due 15:00 UK; repository news coverage PARTIAL.",
+        "completeness": "INCOMPLETE_NO_EXACT_TRIGGER_LEVELS"
+      }
     }
   ]
 }
