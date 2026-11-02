@@ -211,5 +211,49 @@ class NewsTests(unittest.TestCase):
         self.assertTrue(news.requires_headline_review(material))
         self.assertIn(material["severity"], ("HIGH", "REVIEW"))
 
+    def test_azerbaijan_does_not_identify_australian_rba(self):
+        headline = news.classify({
+            "title":"Azerbaijan's Central Bank unveils cross-border payment integration projects (PHOTO) - Trend News Agency",
+            "source":"Global markets aggregation","currency_source":"GLOBAL",
+            "published_at":news.iso(NOW)})
+        self.assertIsNone(headline)
+        official = news.classify({
+            "title":"RBA monetary policy rate decision surprises markets",
+            "source":"RBA press","currency_source":"AUD",
+            "published_at":news.iso(NOW)})
+        self.assertIn("AUD", official["currencies"])
+        self.assertTrue(news.requires_headline_review(official))
+
+    def test_market_roundups_and_speech_announcements_do_not_blanket_block(self):
+        headlines = [
+            ("U.S. dollar closes sharply higher on Taipei forex market - Focus Taiwan", "USD"),
+            ("Treasury Yields Little Changed in Asian Trade Ahead of Midterms, Key Data This Week - WSJ", "USD"),
+            ("H.M. Queen Máxima of the Netherlands and European Central Bank President Christine Lagarde to Speak at EMERGE Europe - Yahoo Finance UK", "EUR"),
+        ]
+        for title, currency in headlines:
+            with self.subTest(title=title):
+                row = news.classify({
+                    "title":title,"source":"Global markets aggregation",
+                    "currency_source":"GLOBAL","published_at":news.iso(NOW)})
+                self.assertIsNotNone(row)
+                self.assertIn(currency,row["currencies"])
+                self.assertEqual(row["severity"],"CONTEXT")
+                self.assertFalse(news.requires_headline_review(row))
+        factory = news.classify({
+            "title":"RBA Index of Commodity Prices: October 2026 - Forex Factory",
+            "source":"Global markets aggregation","currency_source":"GLOBAL",
+            "published_at":news.iso(NOW)})
+        self.assertIsNone(factory)
+
+    def test_urgent_policy_news_remains_blocking_when_publisher_mentions_forex(self):
+        item = news.classify({
+            "title":"Forex Today: Emergency RBA rate decision shocks the Australian dollar - Forex Factory",
+            "source":"Global markets aggregation","currency_source":"GLOBAL",
+            "published_at":news.iso(NOW)})
+        self.assertIsNotNone(item)
+        self.assertIn("AUD",item["currencies"])
+        self.assertEqual(item["severity"],"HIGH")
+        self.assertTrue(news.requires_headline_review(item))
+
 if __name__ == "__main__":
     unittest.main()
