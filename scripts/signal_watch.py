@@ -204,6 +204,17 @@ def momentum_continuation_qualifies(prev, curr, level, long, frames, tolerance, 
         return False
 
 
+def timely_completed_candle(close_time, current, timeframe):
+    """An older observed pattern is a missed observation, never a new trigger.
+
+    This is an optimistic detection window, NOT proof of user delivery.
+    No later candle may be retrospectively promoted as if observed at close.
+    """
+    return (timeframe in ("M5", "M15")
+            and timedelta(0) <= current - close_time
+            <= timedelta(minutes=5 if timeframe == "M5" else 15))
+
+
 def signal_match(signal, pairdata, state_for_signal, current):
     """Examine only post-admission completed M5 or legacy M15 candles."""
     quote = pairdata["quote"]
@@ -258,7 +269,13 @@ def signal_match(signal, pairdata, state_for_signal, current):
             continue
         if close_time > parse_time(signal["expires_at"]):
             continue
-        if current - close_time > timedelta(minutes=30 if timeframe == "M5" else 75):
+        if not timely_completed_candle(close_time, current, timeframe):
+            # Persist an explicit monitoring miss. We cannot reconstruct
+            # contemporaneous bid/ask, indicator context or delivery from
+            # today's quote, so no retrospective signal may be created.
+            state_for_signal["late_candles_skipped"] = (
+                state_for_signal.get("late_candles_skipped", 0) + 1)
+            state_for_signal["last_late_candle_close"] = close_time.isoformat()
             state_for_signal["last_processed_bar_close"] = close_time.isoformat()
             continue
         if blacked_out(signal, close_time):
@@ -633,6 +650,12 @@ def watch():
             report["signals"].append(row)
             continue
         found = signal_match(signal, pairdata, tracked, current)
+        row["candle_timing"] = {
+            "last_processed_bar_close": tracked.get("last_processed_bar_close"),
+            "late_candles_skipped": tracked.get("late_candles_skipped", 0),
+            "last_late_candle_close": tracked.get("last_late_candle_close"),
+            "user_delivery_verified": False,
+        }
         if found:
             route, bar_time, reason = found
             # Immutable research event for the private WhatsApp sender.
