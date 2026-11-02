@@ -28,60 +28,55 @@
   "automatic_promotion_allowed": false,
   "coverage": {
     "count_note": "Rejection categories overlap; route counts and per-reason pair counts must not be summed into independent trades.",
-    "deep_pairs": 24,
-    "distinct_evaluated_pairs": 47,
+    "deep_pairs": 65,
+    "distinct_evaluated_pairs": 65,
     "distinct_pairs_by_rejection": {
-      "FOUR_FRAME_TREND_CONFLICT": 8,
-      "INVALID_BID_ASK_OR_SPREAD": 11,
-      "REQUIRED_FRAME_HISTORY_MISSING:D": 2,
-      "REQUIRED_FRAME_HISTORY_MISSING:H4": 6,
-      "REVERSAL_OR_EXHAUSTION": 22,
+      "FOUR_FRAME_TREND_CONFLICT": 20,
+      "INVALID_BID_ASK_OR_SPREAD": 18,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 6,
+      "RECENT_MATERIAL_HEADLINE_REVIEW": 1,
+      "REVERSAL_OR_EXHAUSTION": 26,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
     "paper_prequalified": [
-      "AUD_CHF",
-      "GBP_CHF",
+      "AUD_JPY",
+      "AUD_SGD",
+      "AUD_USD",
+      "EUR_AUD",
+      "EUR_CAD",
+      "GBP_AUD",
+      "GBP_CAD",
       "GBP_JPY",
-      "GBP_SGD",
-      "NZD_CHF",
-      "SGD_CHF",
       "USD_CHF"
     ],
-    "paper_prequalified_missing_deep": [
-      "AUD_CHF",
-      "NZD_CHF",
-      "SGD_CHF",
-      "USD_CHF"
-    ],
-    "quoted_pairs": 47,
-    "route_evaluations": 94,
+    "paper_prequalified_missing_deep": [],
+    "quoted_pairs": 65,
+    "route_evaluations": 130,
     "route_rejections": {
-      "FOUR_FRAME_TREND_CONFLICT": 16,
-      "INVALID_BID_ASK_OR_SPREAD": 20,
-      "REQUIRED_FRAME_HISTORY_MISSING:D": 4,
-      "REQUIRED_FRAME_HISTORY_MISSING:H4": 11,
-      "REVERSAL_OR_EXHAUSTION": 41,
+      "FOUR_FRAME_TREND_CONFLICT": 38,
+      "INVALID_BID_ASK_OR_SPREAD": 34,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 6,
+      "RECENT_MATERIAL_HEADLINE_REVIEW": 1,
+      "REVERSAL_OR_EXHAUSTION": 45,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 4,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-11-02T16:31:17Z",
+    "source_at": "2026-11-02T18:15:57Z",
     "strict_prequalified": [
-      "AUD_CHF",
+      "AUD_SGD",
+      "CHF_HKD",
+      "EUR_AUD",
+      "EUR_CAD",
       "EUR_NOK",
-      "GBP_CHF",
-      "NZD_CHF",
-      "SGD_CHF",
+      "GBP_AUD",
       "USD_CHF",
       "USD_CZK",
+      "USD_HUF",
       "USD_NOK"
     ],
-    "strict_prequalified_missing_deep": [
-      "AUD_CHF",
-      "NZD_CHF",
-      "SGD_CHF",
-      "USD_CHF",
-      "USD_CZK"
-    ]
+    "strict_prequalified_missing_deep": []
   },
   "delivery_events_recorded": 1,
   "evidence_ready_for_independent_review": false,
@@ -106,5 +101,5 @@
     "statistical_improvement_established": false
   },
   "status": "HOLDOUT_NOT_STARTED",
-  "updated_at": "2026-11-02T16:54:56.157290+00:00"
+  "updated_at": "2026-11-02T18:16:08.676652+00:00"
 }
