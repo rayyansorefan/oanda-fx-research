@@ -197,5 +197,19 @@ class NewsTests(unittest.TestCase):
                          "NEWS_COVERAGE_INCOMPLETE")
 
 
+    def test_market_roundup_is_context_but_actual_policy_shock_still_blocks(self):
+        ordinary = news.classify({"title": "Forex Today: US Dollar slips as sentiment improves",
+                                  "currency_source": "GLOBAL", "source": "Global markets aggregation",
+                                  "published_at": news.iso(NOW)})
+        self.assertIsNotNone(ordinary)
+        self.assertEqual(ordinary["severity"], "CONTEXT")
+        self.assertFalse(news.requires_headline_review(ordinary))
+        material = news.classify({"title": "Forex Today: Emergency Fed rate decision shocks currency markets",
+                                  "currency_source": "GLOBAL", "source": "Global markets aggregation",
+                                  "published_at": news.iso(NOW)})
+        self.assertIsNotNone(material)
+        self.assertTrue(news.requires_headline_review(material))
+        self.assertIn(material["severity"], ("HIGH", "REVIEW"))
+
 if __name__ == "__main__":
     unittest.main()
