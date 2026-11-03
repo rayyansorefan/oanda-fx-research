@@ -950,6 +950,28 @@ def main() -> int:
                 "paper_only": True, "performance_validated": False,
                 "promotion_allowed": False}
             fit_public_feed_budget(data)
+        # Publish only aggregate exit-study progress. No broker positions,
+        # proposed stop changes or private trade identifiers leave this repo.
+        exit_study_path = Path("data/exit_management_research.json")
+        if exit_study_path.exists():
+            exit_study = load(str(exit_study_path))
+            stats = exit_study.get("metrics") or {}
+            data.setdefault("learning", {})["exit_management_study"] = {
+                "version": exit_study.get("version"),
+                "started_at": exit_study.get("study_started_at"),
+                "checked_at": exit_study.get("last_checked_at"),
+                "registered_paper_entries": stats.get("registered_paper_entries", 0),
+                "paired_scored": stats.get("paired_scored", 0),
+                "independent_pair_days": stats.get("independent_pair_days", 0),
+                "fixed_arm_wins": stats.get("fixed_arm_wins", 0),
+                "fixed_arm_losses": stats.get("fixed_arm_losses", 0),
+                "review_threshold_met": stats.get("review_threshold_met") is True,
+                "approved_for_live_exit_advice": False,
+                "paper_only": True,
+                "broker_positions_visible": False,
+                "status": "FORWARD_TEST_ONLY_NOT_PROMOTED",
+            }
+            fit_public_feed_budget(data)
         validation_path = Path("data/forward_validation.json")
         if validation_path.exists():
             validation = load(str(validation_path))
