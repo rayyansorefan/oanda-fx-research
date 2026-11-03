@@ -791,6 +791,33 @@
         "atr_spread": "OANDA bid/ask 56.06636/56.08259; observed spread 162.3 pips versus M15 ATR about 442.8 pips; no immutable spread cap.",
         "macro": "Repository news coverage PARTIAL; no supported official TRY feed. US ISM Manufacturing PMI at 15:00 UK is a global volatility risk."
       }
+    },
+    {
+      "id": "20261103-0735-AUDUSD-S-B-WATCH",
+      "instrument": "AUD_USD",
+      "direction": "SHORT",
+      "created_at": "2026-11-03T07:30:43.913Z",
+      "expires_at": "2026-11-03T08:10:33.103316Z",
+      "planned_entry": 0.69854,
+      "stop": 0.69915,
+      "tp1": 0.6973,
+      "tp2": null,
+      "alert_b": 0.69854,
+      "max_oanda_spread_pips": 1.495,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-03T07:28:42Z",
+      "status": "CONDITIONAL_WATCH_PENDING_NEW_M15_TRIGGER",
+      "original_note": "Prospective morning AUD/USD short watch retained from canonical signal AUTO-20261103T0640-AUD_USD-S-B. Valid only after a new completed M15 bearish rejection at/below 0.69854 and renewed quote/spread/news checks before expiry; current 07:28 quote was above entry and no qualified pattern was observed. No broker fill or buy/sell-now instruction.",
+      "technical_context": {
+        "as_of_utc": "2026-11-03T07:28:42Z",
+        "m15": "ADX14 45.57; RSI14 42.88; -DI 24.49 > +DI 12.06; EMA20<EMA50<EMA200, below Ichimoku and Supertrend down; MACD histogram positive and 07:00 candle rebounded, so trigger remains missing.",
+        "h1": "ADX14 38.91; RSI14 30.21; -DI 27.99 > +DI 9.71; EMA20<EMA50<EMA200, bearish cloud/Supertrend, but oversold rebound risk.",
+        "trend": "H4/H1/M15 bearish structure; D1 mixed with price near EMA200. M5 rebound conflicts with immediate execution.",
+        "atr_spread": "M15 ATR about 5.51 pips; OANDA spread 1.2 pips versus immutable cap 1.495 pips. Gross TP1 geometry 2.049 and capped-spread-adjusted 1.447 at creation.",
+        "macro": "US JOLTS due 15:00 UK after expiry; Swiss CPI at 07:30 creates cross-market CHF volatility but is outside the pair. News coverage remains PARTIAL."
+      }
     }
   ]
 }
