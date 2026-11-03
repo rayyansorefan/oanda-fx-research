@@ -184,6 +184,8 @@ def progress_case(case, raw_bars, source_at):
         case['data_status'] = 'AWAITING_NEXT_COMPLETED_BAR'; return case
     for arm_key,protective in [('FIXED_STOP_TARGET', False), ('PROFIT_PROTECTION', True)]:
         arm = case['arms'][arm_key]
+        if arm['status'] != 'OPEN':
+            continue  # Preserve already-scored outcomes as later M15 history rolls off.
         last = moment(arm.get('last_bar_at'))
         future = [bar for bar in post if last is None or bar['t'] > last]
         previous = last or entered
