@@ -550,7 +550,7 @@
       }
     ],
     "challenger": "PAPER_ONLY_NOT_VALIDATED",
-    "checked_at": "2026-11-03T05:12:20.726625+00:00",
+    "checked_at": "2026-11-03T06:40:34.693789+00:00",
     "favourable": 24,
     "flat": 0,
     "insufficient": 6,
@@ -560,11 +560,11 @@
     "sample_warning": "Directional movements are NOT filled trades, realised losses, success probabilities or evidence sufficient to change champion parameters.",
     "session_date_uk": "2026-11-02"
   },
-  "collected_at": "2026-11-03T05:12:20.726625+00:00",
+  "collected_at": "2026-11-03T06:40:34.693789+00:00",
   "counts": {
     "need_news_review": 0,
     "price_alerts": 0,
-    "watchlist": 0
+    "watchlist": 1
   },
   "data_policy": "Research-only, no orders. OANDA quotes are not Pepperstone executable prices; prepared alerts are not confirmed deliveries.",
   "feedback_summary": {
@@ -739,16 +739,98 @@
       "win_rate_pct": 77.8
     },
     "paper_totals": {
-      "candidates": 1152,
+      "candidates": 1158,
       "losses": 2,
       "scored": 3,
       "wins": 1
     },
     "threshold": "Paper bias neutral until >=30 scored samples, >=10 days, >=3 pairs and conservative 99% mean-R bound excludes zero. Never relax execution, spread or news gates."
   },
-  "news_collected_at": "2026-11-03T05:12:09Z",
+  "news_collected_at": "2026-11-03T06:40:28Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-11-03T05:12:09Z",
-  "signals": [],
+  "oanda_collected_at": "2026-11-03T06:40:28Z",
+  "signals": [
+    {
+      "adaptive_context": {
+        "block_new_alert": false,
+        "m15_ema_distance_atr": 0.345,
+        "reason": "Momentum is mixed; require the original completed-candle trigger, not directional bias alone.",
+        "status": "CAUTION_MIXED_MOMENTUM"
+      },
+      "candle_timing": {
+        "last_late_candle_close": null,
+        "last_processed_bar_close": null,
+        "late_candles_skipped": 0,
+        "user_delivery_verified": false
+      },
+      "caution": "Some optional news feeds unavailable; calendar and required headline feeds checked. This is NOT an all-clear.",
+      "created_at": "2026-11-03T06:40:33.103316Z",
+      "direction": "SHORT",
+      "expires_at": "2026-11-03T08:10:33.103316Z",
+      "id": "AUTO-20261103T0640-AUD_USD-S-B",
+      "news_source_coverage": {
+        "currencies_without_supported_official_feed": [],
+        "missing_required": [],
+        "note": "LIMITED means selected official and aggregate sources plus the calendar responded, but not every optional source. Never interpret this as complete global-news or real-time event coverage.",
+        "other_unavailable": [
+          "BLS employment",
+          "BLS inflation"
+        ],
+        "required_sources": [
+          "Fed policy",
+          "Global markets aggregation",
+          "RBA press"
+        ],
+        "status": "LIMITED"
+      },
+      "news_status": "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS",
+      "observed_price_reactions": [],
+      "pair": "AUD_USD",
+      "release_blackouts": [],
+      "relevant_headlines": [],
+      "status": "NO_QUALIFIED_PRICE_PATTERN",
+      "strategy_feedback": {
+        "broker_observations_not_weighted": 9,
+        "broker_positive_wins_not_weighted": 0,
+        "early_entry_study_available": false,
+        "execution_review": null,
+        "manual_execution_review_required": false,
+        "positive_broker_pattern_review_available": false,
+        "priority_bias": 0,
+        "routes": [
+          "B"
+        ],
+        "scored_route_samples": {
+          "B": 3
+        },
+        "status": "NEUTRAL_INSUFFICIENT_OR_MIXED_EVIDENCE",
+        "strategy": "M15_REJECTION"
+      },
+      "technical_checkpoint": {
+        "h1_adx14": 38.17203862988889,
+        "h1_rsi14": 30.402697616509386,
+        "indicative_distance_to_stop_pips": 8.7,
+        "indicative_distance_to_target_pips": 9.8,
+        "indicative_remaining_rr_before_new_spread_adjustment": 1.13,
+        "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
+        "latest_completed_m15_bar_start": "2026-11-03T06:15:00.000000000Z",
+        "m15_adx14": 47.59614470905324,
+        "m15_atr14": 0.0005784500604264795,
+        "m15_macd_histogram": 1.2345335500799158e-05,
+        "m15_rsi14": 45.44923118698006,
+        "oanda_quote": {
+          "ask": 0.69841,
+          "bid": 0.69828,
+          "pip_size": 0.0001,
+          "spread_pips": 1.2999999999996348,
+          "time": "2026-11-03T06:40:27.583694680Z",
+          "tradeable": true
+        },
+        "price_reference": 0.69828,
+        "quote_is_tradeable": true,
+        "vs_m15_ema20": "BELOW"
+      }
+    }
+  ],
   "status": "OK"
 }
