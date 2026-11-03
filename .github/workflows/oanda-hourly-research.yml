@@ -90,6 +90,11 @@ jobs:
         env:
           OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
         run: python scripts/strategy_comparison.py
+      - name: Forward-test FX exit management on confirmed OANDA paper entries
+        id: exit_management
+        if: steps.collect.outcome == 'success' && steps.comparison.outcome == 'success'
+        continue-on-error: true
+        run: python scripts/exit_management_research.py
       - name: Reassess approved setups against price AND news/event risk
         id: watch
         if: steps.collect.outcome == 'success' && steps.admission.outcome == 'success'
@@ -164,5 +169,5 @@ jobs:
       # Scheduled research is persisted in data/. User-facing hourly updates are
       # delivered by the separate ChatGPT task, not by GitHub Issues.
       - name: Fail closed if any research or public dashboard step failed
-        if: steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success'
+        if: steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success'
         run: exit 1
