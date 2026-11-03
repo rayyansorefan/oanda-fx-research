@@ -92,7 +92,7 @@ class ExitManagementResearchTests(unittest.TestCase):
             'created_at':time(0),'expires_at':time(90),
             'planned_entry':1.2,'stop':1.199,'tp1':1.202}
         record={'policy':'champion','plan':p,
-                'result':{'entry_at':time(15),'entry':1.2}}
+                'result':{'status':'OPEN','entry_at':time(15),'entry':1.2}}
         result=exit_study.update(None,{'records':[record]}, {},
                                  T0+timedelta(minutes=40))
         self.assertEqual(result['cases'],{})
@@ -104,7 +104,7 @@ class ExitManagementResearchTests(unittest.TestCase):
             'created_at':time(15),'expires_at':time(90),
             'planned_entry':1.2,'stop':1.199,'tp1':1.202}
         record={'policy':'champion','plan':p,
-                'result':{'entry_at':time(30),'entry':1.2}}
+                'result':{'status':'OPEN','entry_at':time(30),'entry':1.2}}
         book={'schema':1,'version':exit_study.RULE_VERSION,
               'study_started_at':time(0),'cases':{}}
         output=exit_study.update(book,{'records':[record]}, {},
