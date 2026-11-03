@@ -209,6 +209,9 @@ def register(book, record, registered_at):
     if record.get('policy') != 'champion':
         return False
     source, result = record.get('plan') or {}, record.get('result') or {}
+    if result.get('status') not in ('OPEN', 'WIN_TP1', 'LOSS_STOP',
+                                    'TIME_EXIT', 'AMBIGUOUS_EXIT_BAR'):
+        return False  # Entry was not proven executable by the existing paper evaluator.
     entered = moment(result.get('entry_at'))
     created = moment(source.get('created_at'))
     study_started = moment(book['study_started_at'])
@@ -220,7 +223,8 @@ def register(book, record, registered_at):
          'tp1': numeric(source.get('tp1')), 'pip_size': numeric(source.get('pip_size')) or
          (0.01 if str(source.get('instrument', '')).endswith('_JPY') else 0.0001),
          'expires_at': source.get('expires_at')}
-    if not p['id'] or not valid_plan(p) or not moment(p['expires_at']):
+    expiry = moment(p['expires_at'])
+    if not p['id'] or not valid_plan(p) or not expiry or entered > expiry:
         return False
     key = str(p['id'])
     if key not in book['cases']:
