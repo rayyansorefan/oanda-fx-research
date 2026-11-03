@@ -31,38 +31,44 @@
     "deep_pairs": 65,
     "distinct_evaluated_pairs": 65,
     "distinct_pairs_by_rejection": {
-      "FOUR_FRAME_TREND_CONFLICT": 16,
-      "INVALID_BID_ASK_OR_SPREAD": 18,
-      "REVERSAL_OR_EXHAUSTION": 24,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 6,
+      "ADX_TREND_STRENGTH": 3,
+      "FOUR_FRAME_TREND_CONFLICT": 18,
+      "INVALID_BID_ASK_OR_SPREAD": 17,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
+      "NO_INDEPENDENT_STRUCTURE_TARGET": 1,
+      "REVERSAL_OR_EXHAUSTION": 18,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 7,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
     "paper_prequalified": [
+      "AUD_CAD",
       "AUD_CHF",
       "AUD_JPY",
-      "AUD_NZD",
       "AUD_USD",
-      "CAD_CHF"
+      "EUR_AUD",
+      "NZD_CHF"
     ],
     "paper_prequalified_missing_deep": [],
     "quoted_pairs": 65,
     "route_evaluations": 130,
     "route_rejections": {
-      "FOUR_FRAME_TREND_CONFLICT": 32,
-      "INVALID_BID_ASK_OR_SPREAD": 36,
-      "REVERSAL_OR_EXHAUSTION": 48,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 12,
+      "ADX_TREND_STRENGTH": 6,
+      "FOUR_FRAME_TREND_CONFLICT": 36,
+      "INVALID_BID_ASK_OR_SPREAD": 34,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
+      "NO_INDEPENDENT_STRUCTURE_TARGET": 1,
+      "REVERSAL_OR_EXHAUSTION": 36,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 14,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-11-02T23:28:35Z",
+    "source_at": "2026-11-03T01:16:54Z",
     "strict_prequalified": [
       "AUD_CHF",
       "AUD_HKD",
       "AUD_JPY",
-      "AUD_NZD",
       "AUD_USD",
-      "CAD_CHF"
+      "NZD_CHF"
     ],
     "strict_prequalified_missing_deep": []
   },
@@ -82,12 +88,12 @@
     "actual_delivery_evidence": false,
     "broker_cost_evidence": false,
     "complete_cost_scenarios": false,
-    "holdout_started": false,
+    "holdout_started": true,
     "minimum_independent_samples": false,
     "minimum_scored_days": false,
     "rules_unchanged": true,
     "statistical_improvement_established": false
   },
-  "status": "HOLDOUT_NOT_STARTED",
-  "updated_at": "2026-11-02T23:28:44.079760+00:00"
+  "status": "COLLECTING_HOLDOUT",
+  "updated_at": "2026-11-03T01:17:02.734935+00:00"
 }
