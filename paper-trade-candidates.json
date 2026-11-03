@@ -818,6 +818,33 @@
         "atr_spread": "M15 ATR about 5.51 pips; OANDA spread 1.2 pips versus immutable cap 1.495 pips. Gross TP1 geometry 2.049 and capped-spread-adjusted 1.447 at creation.",
         "macro": "US JOLTS due 15:00 UK after expiry; Swiss CPI at 07:30 creates cross-market CHF volatility but is outside the pair. News coverage remains PARTIAL."
       }
+    },
+    {
+      "id": "20261103-120438-AUDCAD-S-B-WATCH",
+      "instrument": "AUD_CAD",
+      "direction": "SHORT",
+      "created_at": "2026-11-03T12:04:38.725Z",
+      "expires_at": "2026-11-03T13:24:37.229028Z",
+      "planned_entry": 0.97435,
+      "stop": 0.97501,
+      "tp1": 0.97244,
+      "tp2": null,
+      "alert_b": 0.97435,
+      "max_oanda_spread_pips": 2.875,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-03T11:55:41Z",
+      "status": "CONDITIONAL_WATCH_PENDING_NEW_M15_TRIGGER",
+      "original_note": "Prospective midday AUD/CAD short retained from canonical signal AUTO-20261103T1154-AUD_CAD-S-B. Valid only after a new completed M15 bearish rejection at/around 0.97435 with renewed OANDA quote, spread and news checks before expiry. The 11:55 assessment found no qualified completed price pattern; no broker fill or buy/sell-now instruction.",
+      "technical_context": {
+        "as_of_utc": "2026-11-03T11:55:41Z",
+        "m15": "ADX14 34.85; RSI14 43.08; -DI 27.12 > +DI 18.17; EMA20<EMA50<EMA200, below Ichimoku and Supertrend down; MACD histogram positive and M5 Supertrend up, so a fresh bearish rejection remains required.",
+        "h1": "ADX14 40.38; RSI14 31.40; -DI 28.76 > +DI 6.76; EMA20<EMA50<EMA200, below Ichimoku and Supertrend down.",
+        "trend": "D1/H4/H1/M15 bearish alignment, but oversold H4/H1 readings and short-term M5 rebound raise exhaustion risk.",
+        "atr_spread": "OANDA bid/ask 0.97418/0.97443; observed spread 2.5 pips versus immutable cap 2.875 pips; M15 ATR about 6.36 pips. Original TP1 geometry remains above internal gross and capped-spread-adjusted admission gates.",
+        "macro": "RBA raised the cash-rate target 25bp to 4.85% at 03:30 UTC, leaving AUD repricing risk; US JOLTS is due 15:00 UK after this plan expires. Repository news coverage is PARTIAL."
+      }
     }
   ]
 }
