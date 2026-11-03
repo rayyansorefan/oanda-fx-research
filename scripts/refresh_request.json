@@ -1,9 +1,9 @@
 {
   "purpose": "fresh OANDA price and news update when scheduled cron is unavailable",
-  "request": "FX_20261102_2212_HOURLY_STALE_RECOVERY",
+  "request": "FX_20261103_0115_HOURLY_STALE_RECOVERY",
   "requested_by": "ChatGPT FX hourly research automation",
-  "session_day_utc": "2026-11-02",
-  "sequence": 96,
-  "requested_at_utc": "2026-11-02T22:12:05Z",
-  "note": "22:12 UK hourly assessment: latest private universe and public feed snapshot 20:15:58Z (~116 min stale >70 min). Canonical signals.json empty. Request one current-main collector refresh; independently verify new saved summary/news/admission, no trade until fresh. Existing public feed has valid whitelist but private raw payload contains non-whitelisted fields, so never publish raw."
+  "session_day_utc": "2026-11-03",
+  "sequence": 97,
+  "requested_at_utc": "2026-11-03T01:15:51Z",
+  "note": "01:15 UTC overnight hourly assessment: last saved source 2026-11-02T23:28:35Z (~107 minutes old), above 70-minute maximum. Request current-main collector; verify saved timestamps and do not approve entries from stale data. Raw private dashboard payload has disallowed top-level fields; do not publish it unfiltered."
 }
