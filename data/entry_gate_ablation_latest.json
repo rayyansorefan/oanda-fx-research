@@ -2,72 +2,87 @@
   "counterfactual_arms": {
     "champion_all_gates": {
       "approval_allowed": true,
-      "counterfactual_pair_routes": 0,
+      "counterfactual_pair_routes": 1,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 5
+      "unverifiable": 10
     },
     "paper_without_m15_adx_and_missing_primary_feed": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 0,
-      "paper_watch_examples": [],
+      "counterfactual_pair_routes": 1,
+      "paper_watch_examples": [
+        {
+          "direction": "SHORT",
+          "economics_at_observation": {
+            "entry_reference": 0.9149170496067022,
+            "gross_rr": 2.7256,
+            "nearest_target": 0.913,
+            "net_rr": 1.80752,
+            "stop_reference": 0.9156203998577201
+          },
+          "news_status": "RESEARCH_CLEAR",
+          "pair": "EUR_CHF",
+          "route": "EMA20_PULLBACK",
+          "status": "PAPER_ONLY_NOT_A_FUTURE_TRIGGER_OR_MANUAL_ENTRY"
+        }
+      ],
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 5
+      "unverifiable": 10
     },
     "without_daily_ema_paper": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 0,
+      "counterfactual_pair_routes": 2,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 5
+      "unverifiable": 10
     },
     "without_m15_adx_paper": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 0,
+      "counterfactual_pair_routes": 1,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 5
+      "unverifiable": 10
     },
     "without_nearest_target_economics_diagnostic_only": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 3,
+      "counterfactual_pair_routes": 1,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
       "unverifiable": 0
     },
     "without_news_gate_diagnostic_only": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 0,
+      "counterfactual_pair_routes": 1,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 5
+      "unverifiable": 10
     },
     "without_reversal_veto_paper": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 0,
+      "counterfactual_pair_routes": 1,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 5
+      "unverifiable": 10
     }
   },
   "distinct_pairs": 68,
   "failures": {
     "absolute_spread_cap": 54,
     "adx_H1": 66,
-    "adx_M15": 52,
+    "adx_M15": 36,
     "direction_known": 0,
-    "dmi_H1": 20,
-    "dmi_M15": 14,
-    "gross_reward_minimum": 71,
-    "net_reward_minimum": 108,
-    "news_gate": 94,
-    "no_reversal_or_exhaustion": 68,
-    "observed_target_available": 5,
+    "dmi_H1": 12,
+    "dmi_M15": 2,
+    "gross_reward_minimum": 61,
+    "net_reward_minimum": 83,
+    "news_gate": 106,
+    "no_reversal_or_exhaustion": 50,
+    "observed_target_available": 10,
     "pair_supported": 2,
-    "quote_timely_tradeable": 2,
+    "quote_timely_tradeable": 0,
     "recent_completed_history": 0,
-    "relative_spread_cap": 66,
-    "route_not_stretched": 82,
-    "route_pattern": 51,
-    "structural_stop_range": 22,
-    "trend_D": 74,
-    "trend_H1": 44,
-    "trend_H4": 50,
-    "trend_M15": 16,
+    "relative_spread_cap": 52,
+    "route_not_stretched": 77,
+    "route_pattern": 50,
+    "structural_stop_range": 26,
+    "trend_D": 64,
+    "trend_H1": 34,
+    "trend_H4": 36,
+    "trend_M15": 12,
     "valid_two_sided_quote": 0
   },
   "isolated_only_blocker": {
@@ -78,7 +93,7 @@
     "dmi_H1": 0,
     "dmi_M15": 0,
     "gross_reward_minimum": 0,
-    "net_reward_minimum": 3,
+    "net_reward_minimum": 0,
     "news_gate": 0,
     "no_reversal_or_exhaustion": 0,
     "observed_target_available": 0,
@@ -89,7 +104,7 @@
     "route_not_stretched": 0,
     "route_pattern": 0,
     "structural_stop_range": 0,
-    "trend_D": 0,
+    "trend_D": 1,
     "trend_H1": 0,
     "trend_H4": 0,
     "trend_M15": 0,
@@ -102,5 +117,5 @@
     "Pair-route observations share prices and currency exposure; they are not independent trade outcomes."
   ],
   "route_observations": 136,
-  "source_at": "2026-11-03T07:31:38Z"
+  "source_at": "2026-11-03T09:13:50Z"
 }
