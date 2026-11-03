@@ -1,9 +1,9 @@
 {
   "purpose": "fresh OANDA price and news update when scheduled cron is unavailable",
-  "request": "FX_20261103_0730_MORNING_FULL_REFRESH",
+  "request": "FX_20261103_0915_HOURLY_STALE_RECOVERY",
   "requested_by": "ChatGPT FX hourly research automation",
   "session_day_utc": "2026-11-03",
-  "sequence": 100,
-  "requested_at_utc": "2026-11-03T07:28:15.725Z",
-  "note": "05:10 UTC quiet-hours check: last source 03:16:35 UTC, ~113 minutes old. Request current-main collector refresh; no trade readiness from stale quotes. Public feed matches stale source; raw payload contains non-whitelisted keys."
+  "sequence": 101,
+  "requested_at_utc": "2026-11-03T09:13:17.574Z",
+  "note": "09:15 UTC hourly recovery: 07:31:38 source exceeds 70-minute freshness. Request current-main collector; no entry until verified new saved data."
 }
