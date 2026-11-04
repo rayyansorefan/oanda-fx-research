@@ -1,0 +1,52 @@
+{
+  "cases": {},
+  "last_checked_at": "2026-11-04T10:08:52Z",
+  "metrics": {
+    "ambiguous_or_missing": 0,
+    "approved_for_live_exit_advice": false,
+    "arms": {
+      "FIXED_STOP_TARGET": {
+        "mean_ohlc_exit_side_r": null,
+        "paired_count": 0,
+        "slippage_stress_pips_per_side": {
+          "0": null,
+          "0.25": null,
+          "0.5": null
+        },
+        "total_r": null
+      },
+      "PROFIT_PROTECTION": {
+        "mean_ohlc_exit_side_r": null,
+        "paired_count": 0,
+        "slippage_stress_pips_per_side": {
+          "0": null,
+          "0.25": null,
+          "0.5": null
+        },
+        "total_r": null
+      }
+    },
+    "fixed_arm_losses": 0,
+    "fixed_arm_wins": 0,
+    "independent_pair_days": 0,
+    "paired_scored": 0,
+    "registered_paper_entries": 0,
+    "review_threshold_met": false
+  },
+  "policy": {
+    "arms": [
+      "FIXED_STOP_TARGET",
+      "PROFIT_PROTECTION"
+    ],
+    "broker_access": false,
+    "cost_note": "OANDA actual bid/ask exit side, with extra slippage sensitivity only; Pepperstone fills, funding and position sizing unknown.",
+    "entry_source": "Existing champion PAPER fills, never assumed live Pepperstone positions",
+    "retroactive_cohorts": false,
+    "rules": "At completed M15 close >=0.75R propose half-profit at NEXT bar open; >=1.0R tighten stop to OANDA entry effective next bar; at entry-plan expiry review thesis and EXIT next bar open only if adverse, else HOLD. Fixed-stop/TP baseline identical; both require post-entry completed bars.",
+    "trade_execution": false,
+    "validation": "No live advice or automatic promotion; >=30 paired independent pair-days and both positive and negative cases required even to consider further review."
+  },
+  "schema": 1,
+  "study_started_at": "2026-11-04T10:08:52Z",
+  "version": "exit-shadow-20261103-v1"
+}
