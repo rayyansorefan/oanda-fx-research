@@ -53,6 +53,18 @@ class AssessmentHealthTests(unittest.TestCase):
         feed = {"status": "OK", "snapshot_at": source()["collected_at"], "signals": [{"id": "X"}]}
         self.assertEqual(apply_to_public_feed(feed, ok, expected_source_at=source(5)["collected_at"], now=T)["signals"], [])
 
+    def test_unavailable_publication_is_idempotent_without_forged_market_clock(self):
+        prior = source()["collected_at"]
+        bad = assess(source(), stages(safety="failure"), now=T)
+        feed = {"status": "OK", "snapshot_at": prior, "published_at": prior,
+                "signals": [{"id": "X"}], "learning": {"paper_audit": {"totals": {"candidates": 1190}}}}
+        first = apply_to_public_feed(feed, bad, expected_source_at=prior, now=T)
+        second = apply_to_public_feed(first, bad, expected_source_at=prior, now=T)
+        self.assertEqual(first, second)
+        self.assertEqual(second["snapshot_at"], prior)
+        self.assertEqual(second["published_at"], prior)
+        self.assertEqual(second["learning"]["paper_audit"]["totals"]["candidates"], 1190)
+
     def test_source_collection_happens_before_fail_closed_tests(self):
         yml = (Path(__file__).resolve().parents[1] / ".github/workflows/oanda-hourly-research.yml").read_text()
         self.assertLess(yml.index("name: Fetch OANDA raw data"), yml.index("name: Offline safety tests"))
