@@ -140,6 +140,13 @@ class ForwardValidationTests(unittest.TestCase):
         self.assertFalse(v.delivered_before_entry(row(),ledger,NOW))
         self.assertEqual(ledger,v.merge_fast_events(ledger,fast))
 
+    def test_presentation_and_validation_reporting_not_strategy_fingerprint(self):
+        self.assertNotIn('scripts/export_public_dashboard.py', v.RULE_FILES)
+        self.assertNotIn('scripts/forward_validation.py', v.RULE_FILES)
+        self.assertIn('scripts/signal_admission.py', v.RULE_FILES)
+        self.assertIn('scripts/paper_trade_audit.py', v.RULE_FILES)
+        self.assertIn('scripts/exit_management_research.py', v.RULE_FILES)
+
     def test_live_rule_digest_matches_registered_holdout(self):
         registered=json.loads((v.ROOT/'validation_protocol.json').read_text())
         self.assertEqual(registered['rule_sha256'],v.digest_rules())
