@@ -59,6 +59,16 @@ class ShadowSimpleTests(unittest.TestCase):
             tampered["pairs"]["EUR_USD"]["frames"]["M15"]["last_3_completed_candles"][-1]["time"]="2026-11-05T07:00:00Z"
             self.assertFalse(sh.propose(tampered,{},BASE))
 
+    def test_new_plan_has_no_eligible_future_bar_yet_not_a_permanent_gap(self):
+        plan=sample_plan()
+        result=sh.replay(plan,[],BASE,[])
+        self.assertEqual(result["status"],"PENDING_TRIGGER")
+        self.assertFalse(result["scored"])
+        # After the first eligible M15 close should have arrived, missing
+        # market history remains unknown rather than a fabricated no-fill.
+        late=BASE+timedelta(minutes=40)
+        self.assertEqual(sh.replay(plan,[],late,[])["status"],"DATA_GAP")
+
     def test_late_or_missing_observation_cannot_become_fill(self):
         p=sample_plan();now=datetime(2026,11,5,9,tzinfo=timezone.utc)
         early=sh.replay(p,history(),now,[])
