@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 import urllib.error
 import urllib.request
+import time
 from paper_trade_audit import public_view
 from adaptive_research import afternoon_audit
 from entry_readiness import entry_diagnostics
@@ -781,14 +782,27 @@ def _github_error(action: str, exc: urllib.error.HTTPError) -> RuntimeError:
     return RuntimeError(f"GitHub {action} HTTP {exc.code}: {message or 'No explanation'}")
 
 
+TRANSIENT_GITHUB_STATUS = frozenset({429, 500, 502, 503, 504})
+
+
 def _existing_public_feed(url: str, headers: dict) -> tuple[str, dict]:
-    """Read the actual public-repository file, not an unverified local copy."""
+    """Read remote bytes, retrying only transient transport/server errors."""
     request = urllib.request.Request(url, headers={**headers, "Cache-Control": "no-cache"})
-    try:
-        with urllib.request.urlopen(request, timeout=20) as response:
-            current = json.load(response)
-    except urllib.error.HTTPError as exc:
-        raise _github_error("public feed GET", exc) from None
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(request, timeout=12) as response:
+                current = json.load(response)
+            break
+        except urllib.error.HTTPError as exc:
+            if exc.code in TRANSIENT_GITHUB_STATUS and attempt < 2:
+                time.sleep(1 + attempt)
+                continue
+            raise _github_error("public feed GET", exc) from None
+        except (urllib.error.URLError, TimeoutError):
+            if attempt < 2:
+                time.sleep(1 + attempt)
+                continue
+            raise RuntimeError("GitHub public feed GET network unavailable") from None
     if current.get("encoding") != "base64" or not current.get("content") or not current.get("sha"):
         raise ValueError("Cannot verify existing public feed before write")
     published = json.loads(base64.b64decode(current["content"]).decode("utf-8"))
@@ -805,8 +819,10 @@ def _timestamp(text: str) -> dt.datetime:
 def publish(payload: dict, token: str, *, expected_feed_sha=None) -> str:
     """Safely publish and read back the exact candidate; never overwrite newer data.
 
-    409/422 concurrent-write conflicts are retried after reading the new
-    remote content. A GitHub commit acknowledgement alone is insufficient.
+    Transient 429/5xx server failures and 409/422 conflicting writes are
+    retried only within a fixed budget. Every retry re-reads the remote feed
+    before attempting another write; a timed-out PUT may already have landed.
+    No failed PUT or bare commit acknowledgement is treated as publication.
     """
     url = "https://api.github.com/repos/" + DESTINATION + "/contents/" + TARGET
     headers = {
@@ -847,9 +863,15 @@ def publish(payload: dict, token: str, *, expected_feed_sha=None) -> str:
             with urllib.request.urlopen(update, timeout=30) as response:
                 saved = json.load(response)
         except urllib.error.HTTPError as exc:
-            if exc.code in (409, 422) and attempt < 3:
-                continue
+            if (exc.code in TRANSIENT_GITHUB_STATUS or exc.code in (409, 422)) and attempt < 3:
+                time.sleep(min(2 ** attempt, 4))
+                continue  # Re-read remote before resubmission; preserve newer data.
             raise _github_error("public feed PUT", exc) from None
+        except (urllib.error.URLError, TimeoutError):
+            if attempt < 3:
+                time.sleep(min(2 ** attempt, 4))
+                continue  # Outcome unknown: re-read remote before writing again.
+            raise RuntimeError("GitHub public feed PUT network unavailable") from None
         if not (saved.get("commit") or {}).get("sha"):
             raise ValueError("GitHub did not confirm a dashboard commit")
         # Verify the committed bytes through an independent Contents GET.
