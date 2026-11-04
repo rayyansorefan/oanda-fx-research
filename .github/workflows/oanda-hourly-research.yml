@@ -282,7 +282,7 @@ jobs:
     # unchanged so v21 and simple-v2 evidence hashes do not drift.
     if: github.event_name == 'schedule' && github.event.schedule == '4,19,34,49 7-18 * * 1-5'
     runs-on: ubuntu-24.04
-    timeout-minutes: 4
+    timeout-minutes: 9
     steps:
       - uses: actions/checkout@v5
         with:
@@ -294,11 +294,29 @@ jobs:
       - name: Test frozen fast research safety before optional recovery
         id: safety
         run: |
-          for suite in test_fast_entry_scan.py test_signal_admission.py test_watchlist_validation.py test_paper_evidence_guard.py test_simple_paper_shadow_v2.py test_simple_shadow_gate_diagnostics.py; do
+          for suite in test_fast_entry_scan.py test_signal_admission.py test_watchlist_validation.py test_paper_evidence_guard.py test_simple_paper_shadow_v2.py test_simple_shadow_gate_diagnostics.py test_source_freshness_fallback.py; do
             python -m unittest discover -s tests -p "$suite" -q || exit 1
           done
+      - name: Restore source coverage if hourly OANDA schedule was missed
+        id: source
+        env:
+          OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
+          OANDA_ACCOUNT_ID: ${{ secrets.OANDA_ACCOUNT_ID }}
+        run: python scripts/source_freshness_fallback.py
+      - name: Continue unchanged prospective ledgers after source recovery
+        id: paper_catchup
+        if: steps.source.outputs.refreshed == 'true'
+        env:
+          OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
+        run: |
+          python scripts/news_watch.py
+          python scripts/strategy_comparison.py
+          python scripts/simple_paper_shadow.py
+          python scripts/simple_paper_shadow_v2.py
+          python scripts/early_forward_start.py
       - name: Capture fast observation only if original monitor is overdue
         id: fast
+        if: steps.source.outcome == 'success' && (steps.source.outputs.refreshed != 'true' || steps.paper_catchup.outcome == 'success')
         env:
           OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
           OANDA_ACCOUNT_ID: ${{ secrets.OANDA_ACCOUNT_ID }}
@@ -318,7 +336,7 @@ jobs:
       - name: Attribute paper strategy zero-setup gates (no live approvals)
         id: paper_gates
         if: steps.fast.outputs.collected == 'true'
-        run: python scripts/simple_shadow_gate_diagnostics.py
+        run: python scripts/simple_shadow_gate_diagnostics.py --fast
       - name: Update public feed only after a genuine newly observed scan
         id: publish
         if: steps.fast.outputs.collected == 'true' && steps.validation.outcome == 'success'
@@ -367,5 +385,5 @@ jobs:
             data/monitoring_health.json
             signals.json
       - name: Fail closed if backup, publication, or persistence failed
-        if: always() && (steps.safety.outcome != 'success' || steps.fast.outcome != 'success' || steps.monitoring.outcome != 'success' || steps.persist.outcome != 'success' || (steps.fast.outputs.collected == 'true' && (steps.validation.outcome != 'success' || steps.paper_gates.outcome != 'success' || steps.publish.outcome != 'success')))
+        if: always() && (steps.safety.outcome != 'success' || steps.source.outcome != 'success' || (steps.source.outputs.refreshed == 'true' && steps.paper_catchup.outcome != 'success') || steps.fast.outcome != 'success' || steps.monitoring.outcome != 'success' || steps.persist.outcome != 'success' || (steps.fast.outputs.collected == 'true' && (steps.validation.outcome != 'success' || steps.paper_gates.outcome != 'success' || steps.publish.outcome != 'success')))
         run: exit 1
