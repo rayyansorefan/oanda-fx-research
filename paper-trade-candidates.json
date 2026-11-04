@@ -845,6 +845,33 @@
         "atr_spread": "OANDA bid/ask 0.97418/0.97443; observed spread 2.5 pips versus immutable cap 2.875 pips; M15 ATR about 6.36 pips. Original TP1 geometry remains above internal gross and capped-spread-adjusted admission gates.",
         "macro": "RBA raised the cash-rate target 25bp to 4.85% at 03:30 UTC, leaving AUD repricing risk; US JOLTS is due 15:00 UK after this plan expires. Repository news coverage is PARTIAL."
       }
+    },
+    {
+      "id": "20261104-120300-USDNOK-S-B-WATCH",
+      "instrument": "USD_NOK",
+      "direction": "SHORT",
+      "created_at": "2026-11-04T12:03:00.000Z",
+      "expires_at": "2026-11-04T13:17:22.200264Z",
+      "planned_entry": 9.2303,
+      "stop": 9.24251,
+      "tp1": 9.1979,
+      "tp2": 9.18327,
+      "alert_b": 9.2303,
+      "max_oanda_spread_pips": null,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-04T11:47:22Z",
+      "status": "RESEARCH_ONLY_INCOMPLETE_PENDING_M15_REJECTION_AND_COST_CAP",
+      "original_note": "Prospective midday USD/NOK short research watch. Indicative OANDA entry zone 9.22884-9.23177; requires a fresh completed M15 bearish rejection in-zone plus renewed quote, spread, news and event checks before expiry. No immutable maximum-spread cap is available, so this is incomplete and not eligible for canonical approval. No broker fill or buy/sell-now instruction.",
+      "technical_context": {
+        "as_of_utc": "2026-11-04T11:47:22Z",
+        "m15": "ADX14 41.10; RSI14 46.96; -DI 24.73 > +DI 17.70; EMA20<EMA50<EMA200, below Ichimoku and Supertrend down; MACD histogram positive, so a fresh bearish rejection remains required.",
+        "h1": "ADX14 23.72; RSI14 39.59; -DI 30.46 > +DI 13.62; bearish EMA stack, cloud and Supertrend.",
+        "trend": "D1/H4/H1/M15 bearish alignment; M5 rebound conflicts with immediate execution.",
+        "atr_spread": "OANDA bid/ask 9.22681/9.23015; observed spread 33.4 pips versus M15 ATR about 97.7 pips. No immutable maximum-spread cap is available.",
+        "macro": "Repository news coverage is PARTIAL. Norges Bank policy decision is due 2026-11-05 at 10:00 UK, after this watch expires."
+      }
     }
   ]
 }
