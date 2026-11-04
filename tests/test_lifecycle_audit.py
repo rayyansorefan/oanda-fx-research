@@ -43,6 +43,12 @@ class LifecycleAuditTests(unittest.TestCase):
         self.assertEqual(out["summary"]["paper_strategy_comparison"]["challenger_v1"]["scored"],0)
         self.assertEqual(out,evaluate(records=rows,signals=[base],watches={"w":{"id":"w","instrument":"EUR_USD"}},previous=out))
 
+    def test_frozen_paper_plan_without_trigger_is_pending_not_watch(self):
+        out=evaluate(records=[{"policy":"champion", "plan":plan(), "result":{}}])
+        row=next(iter(out["plans"].values()))
+        self.assertEqual(row["current_state"],"QUALIFIED_PENDING_TRIGGER")
+        self.assertEqual(out["summary"]["distinct_unadmitted_watch_observations"],0)
+
     def test_trigger_does_not_automatically_mean_fill(self):
         base=plan()
         row={"policy":"challenger_v1","plan":base,"result":{"status":"TRIGGERED_UNFILLED",
