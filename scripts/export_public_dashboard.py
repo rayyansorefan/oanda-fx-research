@@ -16,6 +16,10 @@ from paper_trade_audit import public_view
 from adaptive_research import afternoon_audit
 from entry_readiness import entry_diagnostics
 from signal_admission import news_gate, moment as admission_moment
+try:
+    from assessment_health import apply_to_public_feed
+except ModuleNotFoundError:
+    from scripts.assessment_health import apply_to_public_feed
 
 DESTINATION = "rayyansorefan/standalone-wallet-paper-agent"
 TARGET = "docs/fx-feed.json"
@@ -916,6 +920,7 @@ def main() -> int:
     token = os.environ.get("FX_DASHBOARD_DEPLOY_TOKEN", "").strip()
     try:
         summary = load("data/summary.json")
+        original_source_at = summary.get("collected_at")
         news = load("data/news_latest.json")
         recent = load("data/latest.json")
         if recent.get("collected_at") != summary.get("collected_at"):
@@ -1003,6 +1008,13 @@ def main() -> int:
                 "research_only": True, "manual_pepperstone_check_required": True,
             }
             fit_public_feed_budget(data)
+        # Integrity failures are public operational outages, never market NO_TRADE.
+        # This runs after all candidate fields are assembled, so no stale green
+        # may survive from a previous signals.json or fast assessment.
+        health_path = Path("data/assessment_health.json")
+        health = load(str(health_path)) if health_path.is_file() else None
+        apply_to_public_feed(data, health, expected_source_at=original_source_at)
+        fit_public_feed_budget(data)
         paper_audit = (data.get("learning") or {}).get("paper_audit") or {}
         expected_index = int((paper_audit.get("totals") or {}).get("candidates", 0))
         if len(paper_audit.get("candidate_index") or []) != expected_index:
