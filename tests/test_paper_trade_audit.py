@@ -396,3 +396,12 @@ class PaperAuditTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AdverseGapRegression(unittest.TestCase):
+    def test_gap_stop_uses_worse_ask_open_for_short(self):
+        history=first_two()+[bar('2026-10-23T10:30:00Z',1.106,1.107,1.1055,1.1065)]
+        result=replay(plan(),history,stamp('2026-10-23T11:00:00Z'))
+        self.assertEqual(result['status'],'LOSS_STOP')
+        self.assertAlmostEqual(result['exit'],1.1061)
+        self.assertLess(result['net_r'],-1)

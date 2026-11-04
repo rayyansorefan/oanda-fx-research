@@ -139,8 +139,16 @@ def perform(now=None):
 
     rotation_state = read(FAST_CURSOR, {"next_offset": 0})
     cursor = max(0, int(rotation_state.get("next_offset", 0)))
+    shadow = read(ROOT / "data/simple_paper_shadow_v2.json", {})
+    shadow_active = [r["plan"]["instrument"] for r in shadow.get("records", {}).values()
+                     if r.get("result", {}).get("status") in
+                     ("PENDING_TRIGGER", "TRIGGERED_UNFILLED", "OPEN", "SOURCE_UNAVAILABLE")]
+    combined = dict(previous)
+    combined["signals"] = list(previous.get("signals", [])) + [
+        {"instrument": pair, "expires_at": (now+timedelta(hours=1)).isoformat()}
+        for pair in dict.fromkeys(shadow_active)]
     pairs, omitted, rotated_count = choose_pairs(
-        summary, previous, cursor=cursor, with_rotation=True)
+        summary, combined, cursor=cursor, with_rotation=True)
     discovered = universe.get("instruments") or {}
     pairs = [p for p in pairs if p in discovered]
     if not pairs:
@@ -203,6 +211,14 @@ def perform(now=None):
         fast_summary, fresh_news, read(study_path, None),
         decided_at=decision.isoformat(), replay_pending=False)
     write(study_path, study)
+    try:
+        from scripts import simple_paper_shadow_v2 as simple
+    except ModuleNotFoundError:
+        import simple_paper_shadow_v2 as simple
+    simple.validate_protocol(read(simple.PROTOCOL, {}))
+    simple_book = simple.update(fast_summary, fresh_news, read(simple.OUT, None),
+                                now=decision)
+    write(simple.OUT, simple_book)
     # Plans are immutable after creation; the hourly engine subsequently shares
     # these same canonical plans and safety gates.
     if updated != previous:
@@ -255,3 +271,4 @@ def perform(now=None):
 
 if __name__ == "__main__":
     perform()
+

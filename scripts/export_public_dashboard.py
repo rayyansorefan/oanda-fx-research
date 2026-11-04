@@ -804,9 +804,9 @@ def _timestamp(text: str) -> dt.datetime:
 
 def _transient_public_error(exc: Exception) -> bool:
     """Retry safe read errors only; auth, invalid payload and conflicts stay closed."""
-    return isinstance(exc, RuntimeError) and any(
+    return isinstance(exc, (urllib.error.URLError, TimeoutError, ConnectionError)) or (isinstance(exc, RuntimeError) and any(
         f" HTTP {code}:" in str(exc) for code in (429, 500, 502, 503, 504)
-    )
+    ))
 
 
 def publish(payload: dict, token: str, *, expected_feed_sha=None) -> str:
@@ -832,7 +832,7 @@ def publish(payload: dict, token: str, *, expected_feed_sha=None) -> str:
         # preserving the newer-source and compare-and-swap checks below.
         try:
             blob_sha, current = _existing_public_feed(url, headers)
-        except RuntimeError as exc:
+        except (RuntimeError, urllib.error.URLError, TimeoutError, ConnectionError) as exc:
             if _transient_public_error(exc) and attempt < 3:
                 import time
                 time.sleep(min(2 ** attempt, 4))
@@ -873,14 +873,28 @@ def publish(payload: dict, token: str, *, expected_feed_sha=None) -> str:
                     time.sleep(min(2 ** attempt, 4))
                 continue
             raise _github_error("public feed PUT", exc) from None
+        except (urllib.error.URLError, TimeoutError, ConnectionError):
+            # Unknown PUT outcome: retry only after a fresh remote CAS read.
+            if attempt >= 3:
+                raise
+            import time
+            time.sleep(min(2 ** attempt, 4))
+            continue
         if not (saved.get("commit") or {}).get("sha"):
             raise ValueError("GitHub did not confirm a dashboard commit")
         # Verify the committed bytes through an independent Contents GET.
         # GitHub Pages deployment is verified separately by the public workflow.
         for read_attempt in range(3):
-            _, verified = _existing_public_feed(url, headers)
-            if verified == payload:
-                return "PUBLISHED"
+            try:
+                _, verified = _existing_public_feed(url, headers)
+            except (RuntimeError, urllib.error.URLError, TimeoutError, ConnectionError) as exc:
+                if not _transient_public_error(exc) or read_attempt == 2:
+                    raise
+            else:
+                if verified == payload:
+                    return "PUBLISHED"
+                if _timestamp(verified["snapshot_at"]) > candidate_time:
+                    return "SUPERSEDED"
             import time
             time.sleep(2)
         raise ValueError("Public repository readback did not match the candidate payload")
@@ -1055,7 +1069,9 @@ def main() -> int:
             fit_public_feed_budget(data)
         # Separate prospectively frozen experimental challenger. Aggregate
         # evidence only: NEVER expose these as approved conditional manual plans.
-        simple_path = Path("data/simple_paper_shadow.json")
+        simple_path = Path("data/simple_paper_shadow_v2.json")
+        if not simple_path.exists():
+            simple_path = Path("data/simple_paper_shadow.json")
         if simple_path.exists():
             shadow = load(str(simple_path))
             metrics = shadow.get("metrics") or {}
@@ -1129,4 +1145,5 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
 

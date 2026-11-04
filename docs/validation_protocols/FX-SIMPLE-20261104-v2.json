@@ -1,0 +1,47 @@
+{
+  "approval_permission": false,
+  "benchmark": "Compare with v20 champion on earliest independently scored matching pair/London-day cohorts when present. Additional reproducible no-trade benchmark 0R is disclosed as a weak opportunity-cost reference, not proof of edge.",
+  "cost_gates": "Observed spread <=2.5 pips for non-JPY or 3.0 for JPY, and <=0.20 ATR; prospective net R:R before extra slippage >=1.35. Reassess quote, spread, price-chase <=0.35 ATR and net R:R on next bar after response delay.",
+  "dependencies_sha256": {
+    "scripts/news_watch.py": "a1589f387422f28a0c8bcaddfa9b356fbcf471fa1fa0cc2189cf5ddbbf6076ff",
+    "scripts/paper_evidence_guard.py": "e27bd56320ea7fd64ecbee1245aa85882ae263fead7b1581be48fc6b3dff0ad6",
+    "scripts/paper_trade_audit.py": "6873a7eb6dc759b7d4dc5483c4ed9129f2b9eb61b32373d69f2ffeb25e4bc7d9",
+    "scripts/signal_admission.py": "338fc61eb6f0a06e2bb70c519d4d2ac34fe4a6bd13a91b12f02dffa6540dc19a"
+  },
+  "direction": "EMA20 above EMA50 on M15 and H1 LONG; both below SHORT; otherwise abstain.",
+  "evidence": "Genuine hourly and bounded fast pair snapshots; H1/M15 completed frame clocks verified. Fetch outages or contradictory replays retain original entry and evidence with explicit unverified status. DATA_GAP retried. Never infer an observation of an omitted or stale pair.",
+  "execution": "OANDA ask/bid entry and opposite exit side, actual pair-specific observation >= completed trigger, <=15 minutes detection delay, one-minute hypothetical manual response, next M15 opening, no inferred fill from price move. Stops gap adversely, same-bar entry exit extreme/stop+TP ambiguity unscored.",
+  "existing_v20": "Unchanged; separate prospectively registered shadow comparator, not a silent reset or replacement.",
+  "expiry_and_management": "Plan expires after 90 minutes unfilled; filled positions remain open up to 96 completed M15 bars and do not close just because entry opportunity expired.",
+  "exposure": "Separate portfolio per setup type: max three positions, two per currency, one per pair. Ambiguous filled cases retain unresolved exposure. Decisions deterministic and paper-only.",
+  "holdout_start_at": "2026-11-05T07:00:00Z",
+  "hypothesis": "Removing higher-frame alignment and ADX/DMI/exhaustion vetoes in liquid aligned H1/M15 EMA regimes may improve net opportunity capture. Both policies require comparison against v21 by London-day clusters with equal cost stresses and explicit universe differences.",
+  "id": "FX-SIMPLE-20261104-v2",
+  "levels": "Indicative entry executable-side OANDA quote, stop 1.25 M15 ATR, target 1.8 times initial risk; fixed for life. No retroactive level revisions.",
+  "liquid_pair_universe": [
+    "EUR_USD",
+    "GBP_USD",
+    "USD_JPY",
+    "USD_CHF",
+    "USD_CAD",
+    "AUD_USD",
+    "NZD_USD",
+    "EUR_JPY",
+    "EUR_GBP",
+    "GBP_JPY"
+  ],
+  "no_orders": true,
+  "performance_decision": "INCONCLUSIVE until sufficient forward fills and verified costs; never promote from approval counts or few wins.",
+  "policies": [
+    "MOMENTUM_CONTINUATION",
+    "TREND_PULLBACK"
+  ],
+  "predecessor": "FX-SIMPLE-20261104-v1 retained unchanged in source and separate ledger; no outcomes migrated",
+  "regime": "M15 and H1 EMA20/EMA50 aligned, both must be complete; no daily/ADX/DMI/exhaustion gates. Tradeable OANDA quote no older than five minutes; bid below ask.",
+  "registered_at": "2026-11-04T12:47:14.447442+00:00",
+  "review_floor": "At least 100 independent scored pair/London-days and 20 distinct days per policy, including adverse and favourable cases; floor is eligibility only. Day-clustered cost-stressed confidence intervals and a separately reviewed out-of-sample benefit are needed before any promotion.",
+  "script_blob_sha1": "1e14c31ade28a1a73b60cb2971f7cbaf69d7de5d",
+  "signals": "Momentum completed M15 body >=0.35 ATR and close in final 30% of direction, distance to EMA20 <=1.25 ATR. Pullback M15 wick crosses EMA20, direction close in final 30%, distance <=0.60 ATR. NEW future completed M15 close beyond frozen trigger required.",
+  "slippage_commission_financing": "Full bid/ask spread already in base R, no additional spread charge. Separate illustrative 0.25 pip per side slippage +0.15 pip per side commission stress; financing unknown and cannot be considered verified Pepperstone P&L.",
+  "status": "FROZEN_EXPERIMENT_NOT_VALIDATED"
+}

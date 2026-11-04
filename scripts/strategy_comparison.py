@@ -11,9 +11,11 @@ from collections import Counter
 from pathlib import Path
 from datetime import timedelta, datetime, timezone
 try:
+    from scripts.paper_evidence_guard import reconcile
     from scripts.signal_admission import qualify, moment, number
     from scripts.paper_trade_audit import source_bars, replay, iso
 except ModuleNotFoundError:
+    from paper_evidence_guard import reconcile
     from signal_admission import qualify, moment, number
     from paper_trade_audit import source_bars, replay, iso
 
@@ -122,13 +124,14 @@ def update(summary, news, book=None, fetch=None, *, decided_at=None, replay_pend
             pair_times = book.get("pair_observation_times", {}).get(row["pair"], [])
             scoped = [moment(t) for t in pair_times
                       if moment(t) and 7 <= moment(t).astimezone(ZoneInfo("Europe/London")).hour < 23]
-            row["result"] = replay(row["plan"], bars, now,
+            candidate = replay(row["plan"], bars, now,
                 observation_times=scoped if row.get("observation_scope") == "PAIR_SPECIFIC" else observations)
             if getattr(bars,"evidence_path",None):
-                row["result"]["source_evidence"] = bars.evidence_path
+                candidate["source_evidence"] = bars.evidence_path
+            row["result"] = reconcile(row, candidate, observation)
         except (OSError, RuntimeError, ValueError, KeyError, TypeError) as exc:
-            row["result"] = {"status":"SOURCE_UNAVAILABLE", "scored":False,
-                             "reason":type(exc).__name__}
+            row["result"] = reconcile(row, {"status":"SOURCE_UNAVAILABLE", "scored":False,
+                             "reason":type(exc).__name__}, observation)
     book.update(updated_at=observation, metrics=metrics(book["records"]),
         performance_validated=False, promotion_allowed=False,
         policy={"version":"20261028-v2", "challenger":"M15/H1 EMA+DMI; H1 ADX>=18; H4/D context not compulsory. Same exhaustion, stop, nearest-target, gross>=1.50/net>=1.35, news and spread gates.",
@@ -149,3 +152,4 @@ def main():
 
 if __name__=="__main__":
     main()
+

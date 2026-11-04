@@ -5,24 +5,24 @@
   "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
   "development_cutoff": "2026-11-05T06:59:59Z",
   "holdout_start_at": "2026-11-05T07:00:00Z",
-  "id": "FX-OOS-20261104-v20",
+  "id": "FX-OOS-20261104-v21",
   "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
   "minimum_independent_scored_pair_days_per_arm": 100,
   "minimum_scored_days_per_arm": 20,
-  "monitoring_method": "Best-effort five-minute GitHub cron (minutes 02,07,...57) during London weekday 07:00-09:00 and 13:00-15:00. Existing hourly all-pair collection and safe queued persistence continue outside these two windows. Cron dispatch, queue and publication delays are measured from actual observations; not a guaranteed five-minute SLA. No invented delivery receipts.",
+  "monitoring_method": "Same 48 weekday fast dispatches reallocated to London 07:02-18:47 every 15 minutes, rather than two five-minute windows. Existing hourly collection continues all day. Bounded shared queue and real pair clocks; no guaranteed 15-minute start or user delivery.",
   "no_orders": true,
   "policies": [
     "champion",
     "challenger_v1"
   ],
-  "promotion_policy": "V20 supersedes v19 BEFORE either holdout begins (same 2026-11-05T07:00:00Z holdout), preserves prior protocols and old observations. Fast cadence and explicit safety-step verification changed, not trading thresholds. No automatic strategy promotion.",
-  "registered_at": "2026-11-04T11:12:49.194Z",
+  "promotion_policy": "V21 preserves archived v18-v20 and all old records, corrects lost-open-position persistence and adds bounded active-day monitoring before the unchanged 5 Nov 07:00Z start. No price/indicator thresholds relaxed. Earlier protocols are not reclassified as v21 forward evidence. No automatic promotion; independent review, registered sample floors and real delivery/cost evidence required.",
+  "registered_at": "2026-11-04T12:47:14.446754+00:00",
   "require_pair_specific_observations": true,
-  "rule_sha256": "932d61141e42d745d64f7fa3c227fbb4b3f474f6f642e6a02c62e767bd3b599d",
+  "rule_sha256": "30482eb771753f4d09c017db9ddea30fc5ec4f15e0a4e1a84d386ad5d019259d",
   "slippage_pips_per_side": [
     0,
     0.25,
     0.5
   ],
-  "supersedes_protocol_sha256": "115ac5750f3b4189a7505470e803a2dc9f46ccee9eb7b46846741c33bc743e80"
+  "supersedes_protocol_sha256": "fcc91b0143589a9a76ad12d46be3f14d548b1f9339644f58680088b41c29105f"
 }
