@@ -1,0 +1,29 @@
+{
+  "bootstrap_resamples": 10000,
+  "common_universe": "All screened OANDA account currency pairs receive M5/M15/H1/H4/D collection, with explicit per-timeframe gaps. Both study arms require identical complete M15/H1/H4/D context. Fast checks remain bounded to active plans and leading candidates; omitted pairs never gain observation timestamps.",
+  "cost_method": "Executable-side OANDA bid/ask fills and exits; no double spread subtraction. Adverse stop gaps and 0/0.25/0.5 pip per-side stress. Financing crossing NY 17:00 and actual Pepperstone costs remain unknown unless evidenced.",
+  "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
+  "development_cutoff": "2026-11-04T10:29:59Z",
+  "holdout_start_at": "2026-11-04T10:30:00Z",
+  "id": "FX-OOS-20261104-v18",
+  "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
+  "minimum_independent_scored_pair_days_per_arm": 100,
+  "minimum_scored_days_per_arm": 20,
+  "monitoring_method": "Fast shortlist remains best-effort at :02/:17/:32/:47 during 07-09 and 13-15 London weekdays, with immutable plans prioritised and remaining slots rotating across all 68 screened pairs. A missed observation creates no inferred trade; hourly collector and four weekday assessments continue. Two-window 15-minute GitHub schedule is best effort, not the requested verified five-minute cadence; measure real detection delays before asserting a manual-entry SLA.",
+  "no_orders": true,
+  "policies": [
+    "champion",
+    "challenger_v1"
+  ],
+  "promotion_policy": "V18 prospectively re-registers the strategy dependency digest after the v17 audit demonstrated that a presentation-only exit-study export changed a broad source fingerprint and blocked raw market collection. Archive v17 exactly; do not relabel earlier records, receipts, fills, or simulation results. V18 protects strategy, collection, paper execution, and exit management source files, but intentionally excludes presentation serialization and the validation reporter itself. Collection is independent of offline rule tests; a failure blocks approvals, never archived raw data. Same champion/challenger_v1 strategy rules, unchanged trade economics, no automatic promotion. At least 100 independent scored pair-days per arm and 20 independent scored London days are review floors; requires net performance, uncertainty, real delivery evidence, and independent review. No-orders; do not claim any new demonstrated edge.",
+  "require_pair_specific_observations": true,
+  "rule_sha256": "d10e1dc16ac4a942c543f06035b9bdc376231fbc02eab71cfc1d0e20081059dd",
+  "slippage_pips_per_side": [
+    0,
+    0.25,
+    0.5
+  ],
+  "supersedes_protocol_sha256": "33722310a73100614726f3af76337f396183b43e9ff014631eb32abf8e0f347a",
+  "registered_at": "2026-11-04T09:55:31.348Z"
+}
+

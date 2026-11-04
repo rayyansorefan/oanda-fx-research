@@ -40,13 +40,18 @@ def main() -> int:
     headers = {"Authorization": "Bearer " + token, "Accept": "application/vnd.github+json",
                "User-Agent": "fx-research-dashboard-publisher"}
     try:
-        _, current = bridge._existing_public_feed(api, headers)
+        source_limit = os.environ.get("FX_FAILURE_STARTED_AT", "")
+        if not source_limit:
+            raise ValueError("Missing failed-run provenance")
+        blob_sha, current = bridge._existing_public_feed(api, headers)
+        if bridge._timestamp(current["published_at"]) > bridge._timestamp(source_limit):
+            return 0  # A newer assessment supersedes this failed run.
         now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         if current.get("assessment_status") == "ASSESSMENT_UNAVAILABLE" and current.get("unavailable_reason") == reason:
             # Already unhealthy. Never write a new assessment time merely to look fresh.
             return 0
         candidate = unavailable_payload(current, reason, now)
-        state = bridge.publish(candidate, token)
+        state = bridge.publish(candidate, token, expected_feed_sha=blob_sha)
         bridge.status(state, "Operational failure; market snapshot timestamp unchanged", candidate["snapshot_at"])
         return 0
     except Exception as exc:
@@ -57,3 +62,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
