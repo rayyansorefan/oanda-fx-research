@@ -219,7 +219,15 @@ def replay(plan,bars,now,observations):
         return {"status":"UNTESTABLE","scored":False}
     candles=sorted((b for b in bars if b["t"]>=created and
                     b["t"]+timedelta(minutes=15)<=now),key=lambda b:b["t"])
-    if not candles or candles[0]["t"]>created+timedelta(minutes=15):
+    # A newly created plan has NO eligible future completed bar yet.
+    # Absence before the earliest possible completed candle is PENDING,
+    # not permanent missing-data evidence (which would poison every new plan).
+    first_close=_ceil_m15(created)+timedelta(minutes=15)
+    if not candles:
+        if now<=first_close:
+            return {"status":"PENDING_TRIGGER","scored":False}
+        return {"status":"DATA_GAP","scored":False,"reason":"MISSING_INITIAL_M15"}
+    if candles[0]["t"]>created+timedelta(minutes=15):
         return {"status":"DATA_GAP","scored":False,"reason":"MISSING_INITIAL_M15"}
     sign=1 if plan["direction"]=="LONG" else -1
     stage="TRIGGER"
@@ -401,8 +409,14 @@ def update(summary,news,book=None,fetch=None,*,now=None):
                 if getattr(candles,"evidence_path",None):
                     item["result"]["source_evidence"]=candles.evidence_path
             except (OSError,RuntimeError,TypeError,ValueError,KeyError,TimeoutError) as exc:
-                item["result"]={"status":"SOURCE_UNAVAILABLE","scored":False,
-                                "reason":type(exc).__name__}
+                if item["result"].get("entry_at"):
+                    # A transient fetch outage cannot erase a prior paper fill,
+                    # its current open exposure, or the original evidence.
+                    item["result"]["data_status"]="SOURCE_UNAVAILABLE"
+                    item["result"]["data_error_type"]=type(exc).__name__
+                else:
+                    item["result"]={"status":"SOURCE_UNAVAILABLE","scored":False,
+                                    "reason":type(exc).__name__}
         apply_portfolio_limits(book["records"])
         book["status"]="FORWARD_RESEARCH_ONLY"
     book["checked_at"]=iso(now)
