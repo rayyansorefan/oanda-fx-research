@@ -11,9 +11,11 @@ on:
       - 'tests/test_fast_entry_scan.py'
       - '.github/workflows/oanda-fast-entry.yml'
   schedule:
-    # Only two high-interest UK market windows to protect private Actions quota.
-    # GitHub cron is best effort; a 15-minute expression is not a latency SLA.
-    - cron: '2,17,32,47 7-8,13-14 * * 1-5'
+    # Target five-minute checks in TWO high-interest London windows, not the
+    # entire trading day: private Actions allowance and shared hourly collector
+    # would make all-day 5-minute GitHub runners economically unreliable.
+    # Cron dispatch/start and serialised research are best effort, NOT a 5-minute SLA.
+    - cron: '2-59/5 7-8,13-14 * * 1-5'
       timezone: Europe/London
 permissions:
   contents: write
@@ -34,7 +36,11 @@ jobs:
         with:
           python-version: '3.12'
       - name: Test fast research safety and event chronology
-        run: python -m unittest discover -s tests -p 'test_fast_entry_scan.py' -v
+        id: safety
+        run: |
+          for suite in test_fast_entry_scan.py test_signal_admission.py test_watchlist_validation.py test_lifecycle_audit.py; do
+            python -m unittest discover -s tests -p "$suite" -q || exit 1
+          done
       - name: Refresh shortlist, primary news and prospective paper comparison
         id: fast
         continue-on-error: true
@@ -53,7 +59,7 @@ jobs:
         continue-on-error: true
         env:
           FX_DASHBOARD_DEPLOY_TOKEN: ${{ secrets.FX_DASHBOARD_DEPLOY_TOKEN }}
-          FX_SAFETY_OUTCOME: success
+          FX_SAFETY_OUTCOME: ${{ steps.safety.outcome }}
           FX_ADMISSION_OUTCOME: ${{ steps.fast.outcome }}
           FX_WATCH_OUTCOME: ${{ steps.fast.outcome }}
         run: python scripts/export_public_dashboard.py
