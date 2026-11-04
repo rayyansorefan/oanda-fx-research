@@ -3,10 +3,10 @@
   "benchmark": "Compare with v20 champion on earliest independently scored matching pair/London-day cohorts when present. Additional reproducible no-trade benchmark 0R is disclosed as a weak opportunity-cost reference, not proof of edge.",
   "cost_gates": "Observed spread <=2.5 pips for non-JPY or 3.0 for JPY, and <=0.20 ATR; prospective net R:R before extra slippage >=1.35. Reassess quote, spread, price-chase <=0.35 ATR and net R:R on next bar after response delay.",
   "dependencies_sha256": {
-    "scripts/news_watch.py": "a1589f387422f28a0c8bcaddfa9b356fbcf471fa1fa0cc2189cf5ddbbf6076ff",
+    "scripts/news_watch.py": "3e2fb7c063f83a26cf86aa5a3a8f8b46d318e079d075606d0aaa4526ce240f71",
     "scripts/paper_evidence_guard.py": "e27bd56320ea7fd64ecbee1245aa85882ae263fead7b1581be48fc6b3dff0ad6",
     "scripts/paper_trade_audit.py": "6873a7eb6dc759b7d4dc5483c4ed9129f2b9eb61b32373d69f2ffeb25e4bc7d9",
-    "scripts/signal_admission.py": "338fc61eb6f0a06e2bb70c519d4d2ac34fe4a6bd13a91b12f02dffa6540dc19a"
+    "scripts/signal_admission.py": "4741441fd2a238e581dbb91b6382c376adf8c4fbda6dfb237a3adbbcbce1ea60"
   },
   "direction": "EMA20 above EMA50 on M15 and H1 LONG; both below SHORT; otherwise abstain.",
   "evidence": "Genuine hourly and bounded fast pair snapshots; H1/M15 completed frame clocks verified. Fetch outages or contradictory replays retain original entry and evidence with explicit unverified status. DATA_GAP retried. Never infer an observation of an omitted or stale pair.",
