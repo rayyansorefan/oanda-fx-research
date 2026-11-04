@@ -23,6 +23,13 @@ on:
     # Two small UTC slots accommodate UK daylight saving; best effort only.
     # GitHub runners are NOT an SLA; delayed or skipped cron still possible.
     - cron: '19 6,7 * * 1-5'
+    # Independent staggered fast backup; cron actor is registered by this workflow.
+    # Uses ONE lightweight fast scan only when the frozen primary fast workflow
+    # did not already produce a recent, valid pair-specific observation.
+    # No additional OANDA requests when the normal fast monitor succeeded.
+    # GitHub dispatch is best-effort; this is redundancy, NOT an SLA.
+    - cron: '4,19,34,49 7-18 * * 1-5'
+      timezone: Europe/London
 permissions:
   contents: write
   actions: read
@@ -31,6 +38,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   snapshot:
+    # Dedicated backup tick must not start the expensive all-pair collector.
+    if: github.event_name != 'schedule' || github.event.schedule != '4,19,34,49 7-18 * * 1-5'
     runs-on: ubuntu-24.04
     timeout-minutes: 6
     steps:
@@ -114,6 +123,11 @@ jobs:
         env:
           OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
         run: python scripts/early_forward_start.py
+      - name: Explain frozen simple-paper research blockers without inventing trades
+        id: paper_gates
+        if: steps.collect.outcome == 'success' && steps.safety.outcome == 'success' && steps.early_cohort.outcome == 'success'
+        continue-on-error: true
+        run: python scripts/simple_shadow_gate_diagnostics.py
       - name: Audit prospective paper portfolio limits and additional cost stress
         id: portfolio
         if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.comparison.outcome == 'success'
@@ -259,8 +273,99 @@ jobs:
         if: always() && (steps.monitoring.outcome != 'success' || steps.fast_recovery.outcome == 'failure')
         run: exit 1
       - name: Fail closed if any research or public dashboard step failed
-        if: steps.lifecycle.outcome != 'success' || steps.safety.outcome != 'success' || steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success' || steps.portfolio.outcome != 'success' || steps.simple_shadow.outcome != 'success' || steps.early_cohort.outcome != 'success'
+        if: steps.lifecycle.outcome != 'success' || steps.safety.outcome != 'success' || steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success' || steps.portfolio.outcome != 'success' || steps.simple_shadow.outcome != 'success' || steps.early_cohort.outcome != 'success' || steps.paper_gates.outcome != 'success'
         run: exit 1
 
-
-
+  fast-tick:
+    # Backup is intentionally in the existing hourly WORKFLOW, not a new repo
+    # or provider. Existing frozen .github/workflows/oanda-fast-entry.yml remains
+    # unchanged so v21 and simple-v2 evidence hashes do not drift.
+    if: github.event_name == 'schedule' && github.event.schedule == '4,19,34,49 7-18 * * 1-5'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Test frozen fast research safety before optional recovery
+        id: safety
+        run: |
+          for suite in test_fast_entry_scan.py test_signal_admission.py test_watchlist_validation.py test_paper_evidence_guard.py test_simple_paper_shadow_v2.py test_simple_shadow_gate_diagnostics.py; do
+            python -m unittest discover -s tests -p "$suite" -q || exit 1
+          done
+      - name: Capture fast observation only if original monitor is overdue
+        id: fast
+        env:
+          OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
+          OANDA_ACCOUNT_ID: ${{ secrets.OANDA_ACCOUNT_ID }}
+        run: |
+          python scripts/monitoring_health.py --fast-if-due
+          if git diff --quiet -- data/fast_entry_audit.json; then
+            echo "collected=false" >> "$GITHUB_OUTPUT"
+            echo "Original fast monitor already fresh: no duplicate scan"
+          else
+            echo "collected=true" >> "$GITHUB_OUTPUT"
+            echo "Backup collected a new observable fast market snapshot"
+          fi
+      - name: Verify original immutable forward ledgers after new observation
+        id: validation
+        if: steps.fast.outputs.collected == 'true'
+        run: python scripts/forward_validation.py
+      - name: Attribute paper strategy zero-setup gates (no live approvals)
+        id: paper_gates
+        if: steps.fast.outputs.collected == 'true'
+        run: python scripts/simple_shadow_gate_diagnostics.py
+      - name: Update public feed only after a genuine newly observed scan
+        id: publish
+        if: steps.fast.outputs.collected == 'true' && steps.validation.outcome == 'success'
+        env:
+          FX_DASHBOARD_DEPLOY_TOKEN: ${{ secrets.FX_DASHBOARD_DEPLOY_TOKEN }}
+          FX_SAFETY_OUTCOME: success
+          FX_ADMISSION_OUTCOME: success
+          FX_WATCH_OUTCOME: success
+        run: python scripts/export_public_dashboard.py
+      - name: Record real scheduler event and monitoring gap evidence
+        id: monitoring
+        if: always()
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FX_MONITOR_OUTCOMES: '{"collect":"skipped","safety":"${{ steps.safety.outcome }}","early_cohort":"skipped","fast_recovery":"${{ steps.fast.outcome }}"}'
+        run: python scripts/monitoring_health.py
+      - name: Persist actual observations and fail rather than overwrite races
+        id: persist
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- data/ signals.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "data: fast backup cadence receipt [skip ci]"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main || exit 1
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 2
+          done
+          exit 1
+      - name: Preserve unpersisted research privately when push fails
+        if: always() && steps.persist.outcome != 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: fx-backup-unpersisted-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 3
+          path: |
+            data/fast_latest.json
+            data/fast_entry_audit.json
+            data/simple_paper_shadow_v2.json
+            data/simple_shadow_gate_diagnostics.json
+            data/strategy_comparison.json
+            data/monitoring_health.json
+            signals.json
+      - name: Fail closed if backup, publication, or persistence failed
+        if: always() && (steps.safety.outcome != 'success' || steps.fast.outcome != 'success' || steps.monitoring.outcome != 'success' || steps.persist.outcome != 'success' || (steps.fast.outputs.collected == 'true' && (steps.validation.outcome != 'success' || steps.paper_gates.outcome != 'success' || steps.publish.outcome != 'success')))
+        run: exit 1
