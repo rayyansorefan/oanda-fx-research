@@ -880,7 +880,6 @@ def publish(payload: dict, token: str, *, expected_feed_sha=None) -> str:
             _, verified = _existing_public_feed(url, headers)
             if verified == payload:
                 return "PUBLISHED"
-            import time
             time.sleep(2)
         raise ValueError("Public repository readback did not match the candidate payload")
     raise RuntimeError("Public feed changed repeatedly; bounded retries exhausted")
