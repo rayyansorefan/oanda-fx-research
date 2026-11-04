@@ -6,6 +6,7 @@ alters immutable shadow rules, trading ledgers or protocol registration.
 from __future__ import annotations
 
 import json
+import sys
 from collections import Counter
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -100,7 +101,7 @@ def first_blocker(pair, summary, news, now):
     return "FORMED_PAPER_SETUP_REQUIRES_PROSPECTIVE_REGISTRATION"
 
 
-def collect(summary=None, news=None, now=None, state=None):
+def collect(summary=None, news=None, now=None, state=None, *, fast_only=False):
     now = sh.when(now) if isinstance(now, str) else (now or datetime.now(timezone.utc))
     early = load(EARLY_PROTOCOL)
     start = sh.when(early.get("holdout_start_at"))
@@ -112,16 +113,24 @@ def collect(summary=None, news=None, now=None, state=None):
         "observations": [], "total_pair_gate_counts": {}, "total_evaluated_snapshots": 0,
     })
     source = sh.when(summary.get("collected_at"))
+    kind = "FAST" if fast_only else "HOURLY"
     # Diagnostics cannot authenticate a missed, old or failed observation.
     if (now < start or summary.get("status") not in ("OK", "PARTIAL")
             or source is None or not timedelta(0) <= now-source <= timedelta(minutes=15)
             or any(row.get("source_at") == summary.get("collected_at")
+                   and row.get("observation_kind", "HOURLY") == kind
                    for row in state.get("observations", []))):
         return state
-    pair_reasons = {p:first_blocker(p,summary,news,now) for p in sh.PAIRS}
+    # An omitted fast pair was never observed; never treat it as a rejection.
+    analysed = (tuple(p for p in sh.PAIRS if p in (summary.get("pairs") or {}))
+                if fast_only else sh.PAIRS)
+    if not analysed:
+        return state
+    pair_reasons = {p:first_blocker(p,summary,news,now) for p in analysed}
     counts = Counter(pair_reasons.values())
     state.setdefault("observations", []).append({
         "source_at": summary["collected_at"],
+        "observation_kind": kind,
         "evaluated_at": sh.iso(now),
         "pair_reasons": pair_reasons,
         "first_blocker_counts": dict(counts),
@@ -141,7 +150,13 @@ def collect(summary=None, news=None, now=None, state=None):
 
 
 def main():
-    result = collect()
+    fast_only = "--fast" in sys.argv[1:]
+    if fast_only:
+        result = collect(load(ROOT/"data/fast_latest.json"),
+                         load(ROOT/"data/fast_news_latest.json"),
+                         fast_only=True)
+    else:
+        result = collect()
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(result,indent=2,sort_keys=True)+"\n")
     print("Frozen paper shadow first-blocker diagnostics",
