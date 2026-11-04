@@ -1053,6 +1053,29 @@ def main() -> int:
                 k: validation.get(k) for k in ("updated_at", "protocol_id", "status", "holdout_start_at",
                     "readiness", "coverage", "performance_validated", "automatic_promotion_allowed")}
             fit_public_feed_budget(data)
+        # Separate prospectively frozen experimental challenger. Aggregate
+        # evidence only: NEVER expose these as approved conditional manual plans.
+        simple_path = Path("data/simple_paper_shadow.json")
+        if simple_path.exists():
+            shadow = load(str(simple_path))
+            metrics = shadow.get("metrics") or {}
+            data.setdefault("learning", {})["simple_paper_shadow"] = {
+                "version": shadow.get("study_version"),
+                "holdout_start_at": shadow.get("holdout_start_at"),
+                "checked_at": shadow.get("checked_at"),
+                "status": shadow.get("status"),
+                "experimental_paper_only": True,
+                "approved_manual_signals": 0,
+                "broker_orders_submitted": 0,
+                "plans": metrics.get("plans", 0),
+                "paper_fills": metrics.get("filled", 0),
+                "scored_exits": metrics.get("scored_exits", 0),
+                "open_exposure": metrics.get("open_paper_positions", 0),
+                "outcomes": metrics.get("outcomes") or {},
+                "broker_costs_verified": False,
+                "performance_validated": False,
+            }
+            fit_public_feed_budget(data)
         # Fast research is a separate, bounded observation stream. It never
         # substitutes for a verified ChatGPT delivery or broker fill.
         fast_path = Path("data/fast_entry_audit.json")
