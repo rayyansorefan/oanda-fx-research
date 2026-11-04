@@ -872,6 +872,37 @@
         "atr_spread": "OANDA bid/ask 9.22681/9.23015; observed spread 33.4 pips versus M15 ATR about 97.7 pips. No immutable maximum-spread cap is available.",
         "macro": "Repository news coverage is PARTIAL. Norges Bank policy decision is due 2026-11-05 at 10:00 UK, after this watch expires."
       }
+    },
+    {
+      "id": "20261104-163545-GBPUSD-L-B-WATCH",
+      "instrument": "GBP_USD",
+      "direction": "LONG",
+      "created_at": "2026-11-04T16:35:45.000Z",
+      "expires_at": "2026-11-04T18:00:00Z",
+      "planned_entry": 1.3465,
+      "entry_zone": [
+        1.3462,
+        1.3466
+      ],
+      "stop": 1.3451,
+      "tp1": 1.349,
+      "tp2": null,
+      "alert_b": 1.3465,
+      "max_oanda_spread_pips": 1.5,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-04T16:31:49Z",
+      "status": "CONDITIONAL_WATCH_PENDING_NEW_M15_BULLISH_REJECTION",
+      "original_note": "Prospective afternoon GBP/USD long paper watch only. Higher-timeframe H4/H1 trend remains bullish and price has pulled into completed M15 support 1.34604, but the 16:15 M15 candle was bearish and no completed M15 bullish rejection exists. Admit no canonical signal unless a NEW completed M15 bullish rejection closes within/above 1.34620-1.34660, quote/spread remain fresh and within 1.5 pips, news remains clear, and the plan is still before expiry. No broker fill or buy-now instruction.",
+      "technical_context": {
+        "as_of_utc": "2026-11-04T16:31:49Z",
+        "m15": "ADX14 23.64; RSI14 38.75; -DI 24.11 > +DI 14.71; below EMA20/50 but above EMA200, inside Ichimoku cloud and Supertrend down; support20 1.34604. The completed 16:15 candle was bearish, so trigger is missing.",
+        "h1": "ADX14 44.20; RSI14 57.03; +DI 25.02 > -DI 14.87; EMA20>EMA50>EMA200, above cloud, Supertrend up and HH/HL structure.",
+        "trend": "H4/H1 bullish structure; H4 RSI 73.58 and stochastic 86.89 show extension risk. M15/M5 are in a countertrend pullback, requiring a completed bullish rejection before admission.",
+        "atr_spread": "OANDA bid/ask 1.34636/1.34646; observed spread 1.0 pip versus 1.5-pip cap; M15 ATR about 8.87 pips. Original gross TP1 geometry 1.79 and capped-spread-adjusted 1.52.",
+        "macro": "Repository news coverage PARTIAL. Bank of England November policy decision and Monetary Policy Report are due 2026-11-05 at 12:00 UK, after this watch expires; current Pepperstone symbol/bid/ask/spread remain user-verification requirements."
+      }
     }
   ]
 }
