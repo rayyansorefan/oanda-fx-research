@@ -12,11 +12,13 @@ on:
       - 'paper-trade-candidates.json'
       - '.github/workflows/oanda-hourly-research.yml'
   schedule:
-    # Target :07 UTC to give ChatGPT's :15 London review fresh completed FX data. GitHub scheduling remains best-effort (no tick-level guarantee).
-    # Independent of ChatGPT usage. May miss short-lived M15 entry triggers.
-    - cron: '7 * * * 1-5'
-    # Sunday FX reopen: continue hourly collection on the same minute.
-    - cron: '7 21-23 * * 0'
+    # Best-effort :11 UTC dispatch to refresh the :15 London review.
+    # Shift off the previous :07 cron to resync GitHub's registered schedule
+    # after missing dispatches on 4 Nov. Same run count; not an SLA or proof
+    # that the 15-minute fast-monitoring workflow is dispatching.
+    - cron: '11 * * * 1-5'
+    # Sunday FX reopen: same hourly count, shifted away from :07.
+    - cron: '11 21-23 * * 0'
     # Independent ~07:19 London fallback to refresh the 07:30 full brief if the :07 runner was late.
     # Two small UTC slots accommodate UK daylight saving; best effort only.
     # GitHub runners are NOT an SLA; delayed or skipped cron still possible.
