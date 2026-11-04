@@ -1,13 +1,13 @@
 {
-  "active_london_day": true,
-  "checked_at": "2026-11-04T18:30:02.650217+00:00",
-  "consecutive_unobserved_fast_targets": 0,
+  "active_london_day": false,
+  "checked_at": "2026-11-04T20:16:38.903490+00:00",
+  "consecutive_unobserved_fast_targets": 2,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
     "event": "push",
-    "head_sha": "11e08c13c8f02e87589893898ef4746bc7f4d510",
-    "id": "41887599152",
+    "head_sha": "9128da5b23dd830da2923d04ef918a0d5466ca30",
+    "id": "41904916708",
     "outcomes": {
       "collect": "success",
       "early_cohort": "success",
@@ -17,46 +17,44 @@
     "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
   },
   "early_cohort_id": "FX-EARLY-20261104-v1",
-  "early_last_source_at": "2026-11-04T18:29:33Z",
-  "early_observation_count": 6,
-  "elapsed_fast_targets_today": 46,
-  "fast_age_seconds": 6.945369,
-  "fast_last_attempt_at": "2026-11-04T18:29:56.101649+00:00",
-  "fast_observation_valid": true,
+  "early_last_source_at": "2026-11-04T20:16:20Z",
+  "early_observation_count": 7,
+  "elapsed_fast_targets_today": 48,
+  "fast_age_seconds": null,
+  "fast_last_attempt_at": "2026-11-04T20:11:00.334897+00:00",
+  "fast_observation_valid": false,
   "fast_run_failures": {
     "failed": 5,
-    "sample": 9,
+    "sample": 10,
     "scope": "Latest 100 repository runs; process success is not observation success."
   },
-  "fast_source_at": "2026-11-04T18:29:55.704848+00:00",
-  "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 29.650217,
+  "fast_source_at": null,
+  "fast_status": "STALE_HOURLY_SOURCE",
+  "full_age_seconds": 18.90349,
   "full_collection_status": "PARTIAL",
   "full_fresh": true,
-  "full_last_attempt_at": "2026-11-04T18:29:33Z",
-  "full_source_at": "2026-11-04T18:29:33Z",
+  "full_last_attempt_at": "2026-11-04T20:16:20Z",
+  "full_source_at": "2026-11-04T20:16:20Z",
   "last_completed_jobs": [
+    {
+      "conclusion": "success",
+      "event": "schedule",
+      "failed_steps": [],
+      "run_id": 41904105986
+    },
     {
       "conclusion": "success",
       "event": "push",
       "failed_steps": [],
-      "run_id": 41873120648
-    },
-    {
-      "conclusion": "failure",
-      "event": "push",
-      "failed_steps": [
-        "Fail visibly after preserving observations"
-      ],
-      "run_id": 41873120643
+      "run_id": 41887599152
     }
   ],
   "previous_publication": {
-    "checked_at": "2026-11-04T17:18:42.328363Z",
+    "checked_at": "2026-11-04T20:11:08.014138Z",
     "public_feed_path": "docs/fx-feed.json",
     "public_repository": "rayyansorefan/standalone-wallet-paper-agent",
     "reason": "Public repository contents readback verified.",
-    "snapshot_at": "2026-11-04T17:17:51Z",
+    "snapshot_at": "2026-11-04T18:29:33Z",
     "status": "PUBLISHED"
   },
   "recovery": "ONE_INLINE_FAST_ATTEMPT_PER_HOURLY_RUN_WHEN_DUE",
@@ -68,6 +66,7 @@
         "success",
         "success",
         "success",
+        "success",
         "success"
       ],
       "created_at": [
@@ -76,14 +75,16 @@
         "2026-10-30T13:54:24Z",
         "2026-10-30T19:02:11Z",
         "2026-11-02T16:54:27Z",
-        "2026-11-03T14:54:19Z"
+        "2026-11-03T14:54:19Z",
+        "2026-11-04T20:10:49Z"
       ],
       "interval_seconds": [
         19868.0,
         66240.0,
         18467.0,
         251536.0,
-        79192.0
+        79192.0,
+        105390.0
       ],
       "note": "Run creation intervals only; exact intended dispatch identity is unavailable.",
       "run_ids": [
@@ -92,7 +93,8 @@
         41067148046,
         41111842269,
         41486017638,
-        41658311761
+        41658311761,
+        41904105986
       ]
     },
     "hourly": {
@@ -369,7 +371,9 @@
     "2026-11-04T17:02:00+00:00",
     "2026-11-04T17:32:00+00:00",
     "2026-11-04T17:47:00+00:00",
-    "2026-11-04T18:02:00+00:00"
+    "2026-11-04T18:02:00+00:00",
+    "2026-11-04T18:32:00+00:00",
+    "2026-11-04T18:47:00+00:00"
   ],
   "workflow_registration": [
     {
