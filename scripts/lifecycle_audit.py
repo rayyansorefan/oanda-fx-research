@@ -134,6 +134,23 @@ def match_paper_result(plan, index):
     )
 
 
+def economic_mismatch_fields(plan, rows):
+    """PRIVATE diagnostic names only; never publish prices or broker metadata."""
+    expected = economic_identity(plan)
+    if expected is None:
+        return ["CANONICAL_TERMS_UNREADABLE"]
+    baseline = json.loads(expected)
+    wrong = set()
+    for item in rows:
+        actual = economic_identity(item.get("plan"))
+        if actual is None:
+            wrong.add("PAPER_TERMS_UNREADABLE")
+        else:
+            other = json.loads(actual)
+            wrong.update(k for k in baseline if baseline[k] != other.get(k))
+    return sorted(wrong)
+
+
 def source_lifecycle(summary, comparison, signals, archive, fast_events, opportunities,
                      previous=None, *, assessed_at=None, holdout_start_at=None, paper_book=None):
     """Reconcile distinct immutable plans, with no snapshot-derived duplicate wins."""
@@ -247,6 +264,8 @@ def source_lifecycle(summary, comparison, signals, archive, fast_events, opportu
             rec["scored"] = False
             rec["result_status"] = "EVIDENCE_CONFLICT"
             rec["execution_evidence"] = paper_issue
+            rec["economic_conflict_fields"] = economic_mismatch_fields(
+                plan, paper_index.get(str(identifier), []))
             state = "UNVERIFIABLE"
         else:
             if old_state == "CLOSED" and state != "CLOSED":
@@ -259,6 +278,7 @@ def source_lifecycle(summary, comparison, signals, archive, fast_events, opportu
             if result.get("scored") is True and result.get("net_r") is not None:
                 rec["net_r"] = result["net_r"]
             rec.pop("execution_evidence", None)
+            rec.pop("economic_conflict_fields", None)
         rec["current_state"] = state
         rec["last_observed_at"] = source_at
         if has_trigger:
