@@ -42,6 +42,50 @@ class LifecycleAuditTests(unittest.TestCase):
         unknown=evaluate(signals=[base])
         self.assertEqual(next(iter(unknown["plans"].values()))["current_state"],"UNVERIFIABLE")
 
+    def test_same_id_different_stop_or_expiry_cannot_attach_paper_loss(self):
+        original=plan(expiry="2026-11-04T10:35:00Z")
+        conflicting=copy.deepcopy(original)
+        conflicting["stop"]=1.0960
+        result={"status":"LOSS_STOP","scored":True,"net_r":-1,
+                "entry_at":"2026-11-04T10:34:00Z","at":"2026-11-04T10:39:00Z"}
+        out=source_lifecycle({"collected_at":SOURCE},{},{"signals":[original]}, {}, {}, {},
+            assessed_at="2026-11-04T10:45:00Z",
+            paper_book={"candidates":{"mismatch":{"plan":conflicting,"result":result}}})
+        rec=next(iter(out["plans"].values()))
+        self.assertEqual(rec["current_state"],"UNVERIFIABLE")
+        self.assertFalse(rec["scored"])
+        self.assertNotIn("net_r",rec)
+        self.assertIn("PAPER_ECONOMICS_MISMATCH:"+original["id"],out["issues"])
+
+    def test_equivalent_utc_spelling_attaches_matching_result(self):
+        original=plan(expiry="2026-11-04T10:35:00Z")
+        paper=copy.deepcopy(original)
+        paper["created_at"]="2026-11-04T10:31:00+00:00"
+        paper["expires_at"]="2026-11-04T10:35:00+00:00"
+        result={"status":"LOSS_STOP","scored":True,"net_r":-1,
+                "entry_at":"2026-11-04T10:34:00Z","at":"2026-11-04T10:39:00Z"}
+        out=source_lifecycle({"collected_at":SOURCE},{},{"signals":[original]}, {}, {}, {},
+            assessed_at="2026-11-04T10:45:00Z",
+            paper_book={"candidates":{"p":{"plan":paper,"result":result}}})
+        rec=next(iter(out["plans"].values()))
+        self.assertEqual(rec["current_state"],"CLOSED")
+        self.assertFalse(out["issues"])
+
+    def test_conflicting_matching_results_are_not_silently_selected(self):
+        original=plan(expiry="2026-11-04T10:35:00Z")
+        def result(status):
+            return {"status":status,"scored":True,"net_r":-1 if status=="LOSS_STOP" else 2,
+                    "entry_at":"2026-11-04T10:34:00Z","at":"2026-11-04T10:39:00Z"}
+        out=source_lifecycle({"collected_at":SOURCE},{},{"signals":[original]}, {}, {}, {},
+            assessed_at="2026-11-04T10:45:00Z",
+            paper_book={"candidates":{
+                "a":{"plan":original,"result":result("LOSS_STOP")},
+                "b":{"plan":original,"result":result("WIN_TP1")}}})
+        rec=next(iter(out["plans"].values()))
+        self.assertEqual(rec["current_state"],"UNVERIFIABLE")
+        self.assertFalse(rec["scored"])
+        self.assertIn("CONTRADICTORY_PAPER_OUTCOMES:"+original["id"],out["issues"])
+
     def test_unique_plans_not_repeated_snapshots_or_broker_trades(self):
         base=plan()
         rows=[{"policy": "challenger_v1", "plan": copy.deepcopy(base),
