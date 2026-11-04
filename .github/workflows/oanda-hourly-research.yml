@@ -142,6 +142,14 @@ jobs:
         if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.diagnostics.outcome == 'success' && steps.comparison.outcome == 'success' && steps.validation.outcome == 'success'
         continue-on-error: true
         run: python scripts/entry_strategy_audit.py
+      - name: Recover missing fast observation once using unchanged frozen scanner
+        id: fast_recovery
+        if: steps.collect.outcome == 'success' && steps.safety.outcome == 'success' && steps.news.outcome == 'success' && steps.early_cohort.outcome == 'success'
+        continue-on-error: true
+        env:
+          OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
+          OANDA_ACCOUNT_ID: ${{ secrets.OANDA_ACCOUNT_ID }}
+        run: python scripts/monitoring_health.py --fast-if-due
       - name: Reconcile unique frozen FX plans and paper-trade lifecycles
         id: lifecycle
         if: steps.collect.outcome == 'success' && steps.safety.outcome == 'success' && steps.comparison.outcome == 'success'
@@ -154,6 +162,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python scripts/independent_operational_audit.py
+      - name: Record monitoring gaps and actual scheduler evidence
+        id: monitoring
+        if: always()
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FX_MONITOR_OUTCOMES: '{"collect":"${{ steps.collect.outcome }}","safety":"${{ steps.safety.outcome }}","early_cohort":"${{ steps.early_cohort.outcome }}","fast_recovery":"${{ steps.fast_recovery.outcome }}"}'
+        run: python scripts/monitoring_health.py
       - name: Publish sanitized FX research to existing HTML dashboard
         id: dashboard
         if: steps.collect.outcome == 'success' && steps.news.outcome == 'success'
@@ -220,8 +236,31 @@ jobs:
           fi
       # Scheduled research is persisted in data/. User-facing hourly updates are
       # delivered by the separate ChatGPT task, not by GitHub Issues.
+      - name: Preserve evidence artifact if repository persistence fails
+        if: always() && steps.persist.outcome != 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: fx-unpersisted-observations-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 3
+          path: |
+            data/monitoring_health.json
+            data/fast_entry_audit.json
+            data/fast_latest.json
+            data/fast_entry_history.json
+            data/early_simple_paper_shadow.json
+            data/early_forward_validation.json
+            data/strategy_comparison.json
+            data/simple_paper_shadow_v2.json
+            data/signal_plan_archive.json
+            data/signal_delivery_audit.json
+            data/paper_trade_ledger.json
+            signals.json
+      - name: Fail visibly when monitoring recovery or diagnostics failed
+        if: always() && (steps.monitoring.outcome != 'success' || steps.fast_recovery.outcome == 'failure')
+        run: exit 1
       - name: Fail closed if any research or public dashboard step failed
         if: steps.lifecycle.outcome != 'success' || steps.safety.outcome != 'success' || steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success' || steps.portfolio.outcome != 'success' || steps.simple_shadow.outcome != 'success' || steps.early_cohort.outcome != 'success'
         run: exit 1
+
 
 

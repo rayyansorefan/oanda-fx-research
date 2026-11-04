@@ -1102,7 +1102,9 @@ def main() -> int:
             if fast_time:
                 try:
                     age = dt.datetime.now(dt.timezone.utc) - _timestamp(fast_time)
-                    freshness = "CURRENT" if dt.timedelta(0) <= age <= dt.timedelta(minutes=40) else "STALE"
+                    freshness = "CURRENT" if (fast.get("status") == "FAST_RESEARCH_CHECK_COMPLETE"
+                        and fast.get("analysed", 0) > 0
+                        and dt.timedelta(0) <= age <= dt.timedelta(minutes=20)) else "STALE"
                 except (ValueError, TypeError):
                     pass
             data["fast_entry_monitor"] = {
@@ -1115,6 +1117,24 @@ def main() -> int:
                 "user_delivery_verified": False,
                 "research_only": True, "manual_pepperstone_check_required": True,
             }
+            fit_public_feed_budget(data)
+        monitoring_path = Path("data/monitoring_health.json")
+        if monitoring_path.exists():
+            monitoring = load(str(monitoring_path))
+            # Refresh ages at publication time; old diagnostics must not label
+            # a later fast publication CURRENT. No private run details exported.
+            try:
+                from scripts.monitoring_health import build as monitoring_build
+            except ModuleNotFoundError:
+                from monitoring_health import build as monitoring_build
+            current = monitoring_build(remote=False)
+            data["monitoring_health"] = {k: current.get(k) for k in (
+                "checked_at", "status", "active_london_day", "full_source_at",
+                "full_age_seconds", "full_fresh", "fast_source_at", "fast_age_seconds",
+                "fast_observation_valid", "target_fast_interval_seconds",
+                "consecutive_unobserved_fast_targets", "early_observation_count",
+                "early_last_source_at", "scheduler_guarantee")}
+            data["monitoring_health"]["scheduler_evidence_checked_at"] = monitoring.get("checked_at")
             fit_public_feed_budget(data)
         paper_audit = (data.get("learning") or {}).get("paper_audit") or {}
         expected_index = int((paper_audit.get("totals") or {}).get("candidates", 0))
