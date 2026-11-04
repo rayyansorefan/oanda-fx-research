@@ -985,6 +985,26 @@ def main() -> int:
                 "status": "FORWARD_TEST_ONLY_NOT_PROMOTED",
             }
             fit_public_feed_budget(data)
+        # Lifecycle reconciliation is a private ledger; publish only aggregate
+        # per-strategy state counts. Never leak original plans or private ids.
+        lifecycle_path = Path("data/lifecycle_ledger.json")
+        if lifecycle_path.exists():
+            lifecycle = load(str(lifecycle_path))
+            lifecycle_summary = lifecycle.get("summary") or {}
+            if lifecycle.get("source_at") == data.get("snapshot_at"):
+                data.setdefault("learning", {})["trade_lifecycle"] = {
+                    "source_at": lifecycle["source_at"],
+                    "ranked_observations": lifecycle_summary.get("ranked_observations", 0),
+                    "distinct_unadmitted_watches": lifecycle_summary.get("distinct_unadmitted_watch_observations", 0),
+                    "frozen_conditional_plans": lifecycle_summary.get("conditional_frozen_plans", 0),
+                    "states": lifecycle.get("counts") or {},
+                    "paper_by_policy": lifecycle_summary.get("paper_strategy_comparison") or {},
+                    "manual_broker_trades_verified_by_engine": 0,
+                    "user_receipt_verified_by_engine": False,
+                    "performance_validated": False,
+                    "research_only": True,
+                }
+                fit_public_feed_budget(data)
         validation_path = Path("data/forward_validation.json")
         if validation_path.exists():
             validation = load(str(validation_path))
