@@ -21,11 +21,16 @@ except ModuleNotFoundError:
 ROOT=Path(__file__).resolve().parents[1]
 LONDON=ZoneInfo('Europe/London')
 PUBLIC_FEED='https://rayyansorefan.github.io/standalone-wallet-paper-agent/fx-feed.json'
+# Freeze market rules, admission, paper results and integrity gates.
+# Presentation-only dashboard serialization is tested separately, not part of
+# the scientific trade-decision fingerprint. V17 retains its ORIGINAL digest.
 RULE_FILES=('scripts/signal_admission.py','scripts/adaptive_research.py','scripts/news_watch.py',
             'scripts/fx_universe.py','scripts/paper_trade_audit.py','scripts/signal_watch.py',
             'scripts/strategy_comparison.py','scripts/forward_validation.py',
-            'scripts/oanda_data.py','scripts/advanced_technicals.py','scripts/entry_readiness.py','scripts/export_public_dashboard.py',
-            'scripts/fast_entry_scan.py','.github/workflows/oanda-fast-entry.yml')
+            'scripts/exit_management_research.py','scripts/opportunity_tracker.py',
+            'scripts/oanda_data.py','scripts/advanced_technicals.py','scripts/entry_readiness.py',
+            'scripts/assessment_health.py','scripts/fast_entry_scan.py',
+            '.github/workflows/oanda-fast-entry.yml')
 
 def digest_rules(root=ROOT):
     h=hashlib.sha256()
