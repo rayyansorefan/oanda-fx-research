@@ -87,6 +87,9 @@ def report(study, protocol, observed_at):
             if entered < created:
                 exclusions["PRECREATION_FILL"] += 1
                 continue
+            if entered > now:
+                exclusions["FUTURE_FILL_NOT_YET_OBSERVED"] += 1
+                continue
             symbol = p.get("instrument", "")
             entry = num(result.get("entry"))
             stop = num(p.get("stop"))
@@ -95,6 +98,9 @@ def report(study, protocol, observed_at):
                 continue
             closed = time(result.get("at"))
             status = result.get("status")
+            if closed is not None and closed > now:
+                exclusions["FUTURE_EXIT_NOT_YET_OBSERVED"] += 1
+                continue
             if status in TERMINAL:
                 if closed is None or closed < entered or result.get("scored") is not True or num(result.get("net_r")) is None:
                     exclusions["UNSCORED_OR_UNDATED_EXIT"] += 1
