@@ -16,7 +16,7 @@ ROOT=Path(__file__).resolve().parents[1]
 SOURCE=ROOT/"data/summary.json"
 UNIVERSE=ROOT/"data/universe.json"
 OUTPUT=ROOT/"data/fast_source_preflight.json"
-MAX_AGE=timedelta(minutes=70)
+MAX_AGE=timedelta(minutes=45)
 RESTORE=("data/summary.json","data/latest.json","data/universe.json","data/pairs")
 
 

@@ -23,12 +23,16 @@ on:
     # Two small UTC slots accommodate UK daylight saving; best effort only.
     # GitHub runners are NOT an SLA; delayed or skipped cron still possible.
     - cron: '19 6,7 * * 1-5'
+    # Independent staggered fast backup through 22:49 London (daytime alerts to 23:00).
+    # Existing original fast schedule remains 07–19 and frozen; these slots cover the gap.
+    # The first independent verified market observation, not job success, determines freshness.
+    # Cron dispatch remains best effort, never a 15-minute reliability guarantee.
     # Independent staggered fast backup; cron actor is registered by this workflow.
     # Uses ONE lightweight fast scan only when the frozen primary fast workflow
     # did not already produce a recent, valid pair-specific observation.
     # No additional OANDA requests when the normal fast monitor succeeded.
     # GitHub dispatch is best-effort; this is redundancy, NOT an SLA.
-    - cron: '4,19,34,49 7-18 * * 1-5'
+    - cron: '4,19,34,49 7-22 * * 1-5'
       timezone: Europe/London
 permissions:
   contents: write
@@ -39,7 +43,7 @@ concurrency:
 jobs:
   snapshot:
     # Dedicated backup tick must not start the expensive all-pair collector.
-    if: github.event_name != 'schedule' || github.event.schedule != '4,19,34,49 7-18 * * 1-5'
+    if: github.event_name != 'schedule' || github.event.schedule != '4,19,34,49 7-22 * * 1-5'
     runs-on: ubuntu-24.04
     timeout-minutes: 6
     steps:
@@ -280,7 +284,7 @@ jobs:
     # Backup is intentionally in the existing hourly WORKFLOW, not a new repo
     # or provider. Existing frozen .github/workflows/oanda-fast-entry.yml remains
     # unchanged so v21 and simple-v2 evidence hashes do not drift.
-    if: github.event_name == 'schedule' && github.event.schedule == '4,19,34,49 7-18 * * 1-5'
+    if: github.event_name == 'schedule' && github.event.schedule == '4,19,34,49 7-22 * * 1-5'
     runs-on: ubuntu-24.04
     timeout-minutes: 9
     steps:

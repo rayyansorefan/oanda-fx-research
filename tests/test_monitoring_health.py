@@ -38,6 +38,14 @@ class MonitoringTests(unittest.TestCase):
         self.assertFalse(m.active(datetime(2026,11,7,10,tzinfo=timezone.utc)))
         self.assertEqual(m.slots(datetime(2026,11,7,10,tzinfo=timezone.utc)), [])
 
+    def test_evening_research_window_runs_until_2300_london(self):
+        at_twenty = datetime(2026,11,4,20,15,tzinfo=timezone.utc)
+        self.assertTrue(m.active(at_twenty))
+        self.assertTrue(m.slots(at_twenty))
+        self.assertIn("2026-11-04T20:02:00+00:00",
+                      [x.isoformat() for x in m.slots(at_twenty)])
+        self.assertFalse(m.active(datetime(2026,11,4,23,0,tzinfo=timezone.utc)))
+
     def test_missing_history_reports_gaps_without_creating_observations(self):
         with tempfile.TemporaryDirectory() as d, patch.object(m,"ROOT",Path(d)):
             report = m.build(NOW,remote=False)

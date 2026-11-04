@@ -38,7 +38,7 @@ def age(value, now):
 
 def active(now):
     local = now.astimezone(LONDON)
-    return local.weekday() < 5 and 7 <= local.hour < 19
+    return local.weekday() < 5 and 7 <= local.hour < 23
 
 
 def slots(now):
@@ -46,7 +46,7 @@ def slots(now):
     local = now.astimezone(LONDON)
     if local.weekday() >= 5:
         return []
-    return [t.astimezone(timezone.utc) for h in range(7, 19)
+    return [t.astimezone(timezone.utc) for h in range(7, 23)
             for m in (2, 17, 32, 47)
             if (t := local.replace(hour=h, minute=m, second=0, microsecond=0))
             + timedelta(minutes=5) <= local]
