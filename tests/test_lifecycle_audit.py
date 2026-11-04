@@ -101,6 +101,57 @@ class LifecycleAuditTests(unittest.TestCase):
         self.assertFalse(rec["scored"])
         self.assertIn("CONTRADICTORY_PAPER_OUTCOMES:"+original["id"],out["issues"])
 
+    def test_new_mismatch_does_not_reaffirm_previously_scored_close(self):
+        original=plan(expiry="2026-11-04T10:35:00Z")
+        loss={"status":"LOSS_STOP","scored":True,"net_r":-1,
+              "entry_at":"2026-11-04T10:34:00Z","at":"2026-11-04T10:39:00Z"}
+        common={"collected_at":SOURCE}
+        first=source_lifecycle(common,{},{"signals":[original]}, {}, {}, {},
+            assessed_at="2026-11-04T10:45:00Z",
+            paper_book={"candidates":{"p":{"plan":original,"result":loss}}})
+        self.assertEqual(next(iter(first["plans"].values()))["current_state"],"CLOSED")
+        wrong=copy.deepcopy(original)
+        wrong["tp1"]=1.12
+        changed=source_lifecycle({"collected_at":"2026-11-04T11:00:00Z"},
+            {},{"signals":[original]}, {}, {}, {},first,
+            assessed_at="2026-11-04T11:01:00Z",
+            paper_book={"candidates":{"p":{"plan":wrong,"result":loss}}})
+        row=next(iter(changed["plans"].values()))
+        self.assertEqual(row["current_state"],"UNVERIFIABLE")
+        self.assertFalse(row["scored"])
+        self.assertNotIn("net_r",row)
+        self.assertEqual(row["prior_disputed_execution"]["net_r"],-1)
+        self.assertIn("PAPER_ECONOMICS_MISMATCH:"+original["id"],changed["active_issues"])
+        # The historical closed event is retained as evidence, not duplicated.
+        self.assertGreaterEqual(len(changed["events"]),len(first["events"]))
+        restored=source_lifecycle({"collected_at":"2026-11-04T11:15:00Z"},
+            {},{"signals":[original]}, {}, {}, {},changed,
+            assessed_at="2026-11-04T11:16:00Z",
+            paper_book={"candidates":{"p":{"plan":original,"result":loss}}})
+        recovered=next(iter(restored["plans"].values()))
+        self.assertEqual(recovered["current_state"],"CLOSED")
+        self.assertEqual(recovered["net_r"],-1)
+        self.assertTrue(recovered["scored"])
+        self.assertEqual(restored["active_issues"],[])
+        self.assertIn("PAPER_ECONOMICS_MISMATCH:"+original["id"],
+                      restored["historical_only_issues"])
+
+    def test_no_new_paper_evidence_does_not_erase_verifiable_close(self):
+        original=plan(expiry="2026-11-04T10:35:00Z")
+        loss={"status":"LOSS_STOP","scored":True,"net_r":-1,
+              "entry_at":"2026-11-04T10:34:00Z","at":"2026-11-04T10:39:00Z"}
+        before=source_lifecycle({"collected_at":SOURCE},{},{"signals":[original]}, {}, {}, {},
+            assessed_at="2026-11-04T10:45:00Z",
+            paper_book={"candidates":{"p":{"plan":original,"result":loss}}})
+        later=source_lifecycle({"collected_at":"2026-11-04T11:00:00Z"},
+            {},{"signals":[original]}, {}, {}, {},before,
+            assessed_at="2026-11-04T11:01:00Z", paper_book={"candidates":{}})
+        record=next(iter(later["plans"].values()))
+        self.assertEqual(record["current_state"],"CLOSED")
+        self.assertTrue(record["scored"])
+        self.assertEqual(record["net_r"],-1)
+        self.assertEqual(later["active_issues"],[])
+
     def test_unique_plans_not_repeated_snapshots_or_broker_trades(self):
         base=plan()
         rows=[{"policy": "challenger_v1", "plan": copy.deepcopy(base),

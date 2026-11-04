@@ -134,6 +134,23 @@ def match_paper_result(plan, index):
     )
 
 
+def economic_mismatch_fields(plan, rows):
+    """PRIVATE diagnostic names only; never publish prices or broker metadata."""
+    expected = economic_identity(plan)
+    if expected is None:
+        return ["CANONICAL_TERMS_UNREADABLE"]
+    baseline = json.loads(expected)
+    wrong = set()
+    for item in rows:
+        actual = economic_identity(item.get("plan"))
+        if actual is None:
+            wrong.add("PAPER_TERMS_UNREADABLE")
+        else:
+            other = json.loads(actual)
+            wrong.update(k for k in baseline if baseline[k] != other.get(k))
+    return sorted(wrong)
+
+
 def source_lifecycle(summary, comparison, signals, archive, fast_events, opportunities,
                      previous=None, *, assessed_at=None, holdout_start_at=None, paper_book=None):
     """Reconcile distinct immutable plans, with no snapshot-derived duplicate wins."""
@@ -184,24 +201,32 @@ def source_lifecycle(summary, comparison, signals, archive, fast_events, opportu
         for r in observations if isinstance(r, dict) and isinstance(r.get("plan"), dict)
         and r.get("policy") in ("champion", "challenger_v1")
     )
+    # Keep every historical warning, but distinguish currently reproducible
+    # contradictions from earlier warnings that no longer reproduce.
     anomalies = set(book.get("issues") or [])
+    active_issues = set()
+    def note(issue):
+        anomalies.add(issue)
+        active_issues.add(issue)
+
     for entry in sources:
         kind, plan, policy, is_canonical = entry[:4]
         comparison_row = entry[4] if len(entry) > 4 else {}
         identifier = plan.get("id")
         if not identifier or not timestamp(plan.get("created_at")) or not timestamp(plan.get("expires_at")):
-            anomalies.add("MALFORMED_PLAN:" + str(identifier or "UNKNOWN")[:64])
+            note("MALFORMED_PLAN:" + str(identifier or "UNKNOWN")[:64])
             continue
         key = (("conditional:" if is_canonical else "paper:") + policy + ":" + identifier)
         frozen = digest(plan)
         existing = book["plans"].get(key)
         if existing is not None and existing["original_sha256"] != frozen:
-            anomalies.add("IMMUTABLE_CONFLICT:" + key)
+            note("IMMUTABLE_CONFLICT:" + key)
             continue  # Never replace original plan/levels.
+        paper_issue = None
         if is_canonical:
             result, paper_issue = match_paper_result(plan, paper_index)
             if paper_issue:
-                anomalies.add(paper_issue)
+                note(paper_issue)
         else:
             result = comparison_row.get("result") or {}
         detected = fast_by_plan.get(identifier) if is_canonical else None
@@ -223,17 +248,39 @@ def source_lifecycle(summary, comparison, signals, archive, fast_events, opportu
         old_state = rec["current_state"]
         # A CLOSED or PAPER_OPEN execution cannot become unfilled just because
         # its *entry plan* expired; terminal evidence dominates a later outage.
-        if old_state == "CLOSED" and state != "CLOSED":
-            state = "CLOSED"
-        elif old_state == "PAPER_OPEN" and state in ("EXPIRED_UNFILLED", "WATCH",
-                                                     "QUALIFIED_PENDING_TRIGGER"):
-            state = "PAPER_OPEN"
+        # An ID collision or contradictory terminal result is NEW adverse
+        # evidence. Never silently reaffirm a formerly CLOSED result on this
+        # run; preserve its original recorded exit separately for audit.
+        if paper_issue:
+            if rec.get("scored") or "net_r" in rec:
+                rec.setdefault("prior_disputed_execution", {
+                    "previous_state": old_state,
+                    "result_status": rec.get("result_status"),
+                    "scored": rec.get("scored"),
+                    "net_r": rec.get("net_r"),
+                    "last_observed_at": rec.get("last_observed_at"),
+                })
+            rec.pop("net_r", None)
+            rec["scored"] = False
+            rec["result_status"] = "EVIDENCE_CONFLICT"
+            rec["execution_evidence"] = paper_issue
+            rec["economic_conflict_fields"] = economic_mismatch_fields(
+                plan, paper_index.get(str(identifier), []))
+            state = "UNVERIFIABLE"
+        else:
+            if old_state == "CLOSED" and state != "CLOSED":
+                state = "CLOSED"  # A source outage cannot undo verified closure.
+            elif old_state == "PAPER_OPEN" and state in ("EXPIRED_UNFILLED", "WATCH",
+                                                        "QUALIFIED_PENDING_TRIGGER"):
+                state = "PAPER_OPEN"
+            rec["result_status"] = result.get("status") or rec.get("result_status")
+            rec["scored"] = bool(result.get("scored") is True) or rec.get("scored", False)
+            if result.get("scored") is True and result.get("net_r") is not None:
+                rec["net_r"] = result["net_r"]
+            rec.pop("execution_evidence", None)
+            rec.pop("economic_conflict_fields", None)
         rec["current_state"] = state
         rec["last_observed_at"] = source_at
-        rec["result_status"] = result.get("status") or rec.get("result_status")
-        rec["scored"] = bool(result.get("scored") is True) or rec.get("scored", False)
-        if result.get("scored") is True and result.get("net_r") is not None:
-            rec["net_r"] = result["net_r"]
         if has_trigger:
             rec["trigger_seen"] = True
         if old_state != state or existing is None:
@@ -258,7 +305,9 @@ def source_lifecycle(summary, comparison, signals, archive, fast_events, opportu
                            "scored": sum(bool(p.get("scored")) for p in sample),
                            "triggered": sum(bool(p.get("trigger_seen")) for p in sample),
                            "states": dict(Counter(p["current_state"] for p in sample))}
-    book["issues"] = sorted(anomalies)
+    book["issues"] = sorted(anomalies)  # Append-only warning history.
+    book["active_issues"] = sorted(active_issues)
+    book["historical_only_issues"] = sorted(anomalies - active_issues)
     book["source_at"] = source_at
     book["counts"] = dict(counts)
     book["summary"] = {
@@ -268,6 +317,9 @@ def source_lifecycle(summary, comparison, signals, archive, fast_events, opportu
         "paper_strategy_comparison": strategies,
         "manual_broker_trades_verified": 0,
         "verified_user_delivery_receipts": 0,
+        "active_evidence_conflicts": sum(
+            issue.startswith(("PAPER_ECONOMICS_", "CONTRADICTORY_PAPER_"))
+            for issue in active_issues),
         "source_at": source_at,
         "not_independent_trades": True,
         "interpretation": "Unique frozen plans, not snapshot-level candidate rows. Only independently scored bid/ask exits enter a performance sample.",
