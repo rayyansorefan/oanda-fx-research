@@ -1,0 +1,38 @@
+{
+  "bootstrap_resamples": 10000,
+  "common_universe": "All screened OANDA account currency pairs receive M5/M15/H1/H4/D collection, with explicit per-timeframe gaps. Both study arms require identical complete M15/H1/H4/D context. Fast checks remain bounded to active plans and leading candidates; omitted pairs never gain observation timestamps.",
+  "cost_method": "Executable-side OANDA bid/ask fills and exits; no double spread subtraction. Adverse stop gaps and 0/0.25/0.5 pip per-side stress. Financing crossing NY 17:00 and actual Pepperstone costs remain unknown unless evidenced.",
+  "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
+  "development_cutoff": "2026-11-04T14:29:59Z",
+  "holdout_start_at": "2026-11-04T14:30:00Z",
+  "id": "FX-EARLY-20261104-v1",
+  "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
+  "minimum_independent_scored_pair_days_per_arm": 100,
+  "minimum_scored_days_per_arm": 20,
+  "monitoring_method": "Existing hourly OANDA observations after registration; fast-collector monitoring is not represented as observed unless individually captured and recorded. No guaranteed hourly dispatch time.",
+  "no_orders": true,
+  "policies": [
+    "champion",
+    "challenger_v1"
+  ],
+  "promotion_policy": "Strict separately registered 4 November side cohort. 5 November v21 and simple v2 locked records, timelines and decisions untouched. No broker orders, no retrospective fills or automatic promotion. Do not pool pre-registered 5 November evidence with this separate side cohort.",
+  "registered_at": "2026-11-04T14:06:50.624Z",
+  "require_pair_specific_observations": true,
+  "rule_sha256": "040da6645e4d35f8c6313db7a72b29fd293a217684fd4287f0aff126320a3f26",
+  "slippage_pips_per_side": [
+    0,
+    0.25,
+    0.5
+  ],
+  "cohort_type": "PARALLEL_PROSPECTIVE_PAPER_ONLY",
+  "parent_protocol_id": "FX-OOS-20261104-v21",
+  "simple_shadow_parent_id": "FX-SIMPLE-20261104-v2",
+  "simple_shadow_script_blob_sha1": "1e14c31ade28a1a73b60cb2971f7cbaf69d7de5d",
+  "simple_shadow_version": "simple-shadow-early-20261104-v1",
+  "simple_shadow_source": "scripts/simple_paper_shadow_v2.py",
+  "monitored_routes": [
+    "MOMENTUM_CONTINUATION",
+    "TREND_PULLBACK"
+  ],
+  "performance_claim": "UNVALIDATED; early observations alone cannot establish a trading edge; user receipts and Pepperstone financing/costs unavailable"
+}
