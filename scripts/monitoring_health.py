@@ -105,7 +105,12 @@ def build(now=None, remote=True):
     fast = read("data/fast_entry_audit.json")
     latest = read("data/fast_latest.json")
     early = read("data/early_simple_paper_shadow.json")
-    full_age = age(summary.get("collected_at"), now)
+    publication = read("data/public_dashboard_status.json")
+    # Collection failure documents an ATTEMPT time, not a market observation.
+    # The health publisher preserves the verified previous source timestamp.
+    full_source = (summary.get("collected_at") if summary.get("status") in ("OK", "PARTIAL")
+                   else publication.get("snapshot_at"))
+    full_age = age(full_source, now)
     fast_age = age(fast.get("source_at"), now)
     full_ok = summary.get("status") in ("OK", "PARTIAL") and full_age is not None and full_age <= 75*60
     fast_ok = fast_valid(fast, latest, now)
@@ -130,7 +135,9 @@ def build(now=None, remote=True):
     outcomes = json.loads(os.environ.get("FX_MONITOR_OUTCOMES", "{}"))
     report = {"checked_at": now.isoformat(), "active_london_day": active(now),
               "status": "CURRENT" if full_ok and (fast_ok or not active(now)) else "DEGRADED",
-              "full_source_at": summary.get("collected_at"), "full_age_seconds": full_age,
+              "full_source_at": full_source, "full_age_seconds": full_age,
+              "full_last_attempt_at": summary.get("collected_at"),
+              "full_collection_status": summary.get("status"),
               "full_fresh": full_ok, "fast_source_at": fast.get("source_at"),
               "fast_age_seconds": fast_age, "fast_observation_valid": fast_ok,
               "fast_last_attempt_at": fast.get("checked_at"), "fast_status": fast.get("status"),
@@ -148,7 +155,7 @@ def build(now=None, remote=True):
                               "head_sha": os.environ.get("GITHUB_SHA"),
                               "outcomes": outcomes,
                               "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"},
-              "previous_publication": read("data/public_dashboard_status.json"),
+              "previous_publication": publication,
               "recovery": "ONE_INLINE_FAST_ATTEMPT_PER_HOURLY_RUN_WHEN_DUE",
               "scheduler_guarantee": False}
     if remote:

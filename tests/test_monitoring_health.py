@@ -70,3 +70,12 @@ class MonitoringTests(unittest.TestCase):
             report = m.build(datetime(2026,11,4,16,55,tzinfo=timezone.utc),remote=False)
             self.assertIn("2026-11-04T16:32:00+00:00",report["unobserved_fast_targets_today"])
             self.assertNotIn("2026-11-04T16:47:00+00:00",report["unobserved_fast_targets_today"])
+
+    def test_failed_collection_attempt_does_not_reset_market_age(self):
+        rows = {"data/summary.json":{"status":"DATA_UNAVAILABLE","collected_at":"2026-11-04T16:49:00Z"},
+                "data/public_dashboard_status.json":{"snapshot_at":"2026-11-04T16:00:00Z"}}
+        with patch.object(m,"read",side_effect=lambda p,*a:rows.get(p,{})):
+            report = m.build(NOW,remote=False)
+            self.assertEqual(report["full_age_seconds"],3000)
+            self.assertEqual(report["full_last_attempt_at"],"2026-11-04T16:49:00Z")
+            self.assertFalse(report["full_fresh"])
