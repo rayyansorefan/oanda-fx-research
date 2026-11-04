@@ -53,6 +53,9 @@ jobs:
         continue-on-error: true
         env:
           FX_DASHBOARD_DEPLOY_TOKEN: ${{ secrets.FX_DASHBOARD_DEPLOY_TOKEN }}
+          FX_SAFETY_OUTCOME: success
+          FX_ADMISSION_OUTCOME: ${{ steps.fast.outcome }}
+          FX_WATCH_OUTCOME: ${{ steps.fast.outcome }}
         run: python scripts/export_public_dashboard.py
       - name: Persist immutable plans, paper cohorts, and research observations
         id: persist
@@ -64,9 +67,14 @@ jobs:
           if [ -f data/signal_plan_archive.json ]; then git add -- data/signal_plan_archive.json; fi
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "data: persist timestamped fast FX research [skip ci]"
-          git fetch origin main
-          git rebase origin/main
-          git push origin HEAD:main
+          for attempt in 1 2 3; do
+            git fetch origin main
+            # Rebase fails on competing ledger edits: never resolve by discarding evidence.
+            git rebase origin/main || exit 1
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
       - name: Fail visibly after preserving observations
         if: steps.fast.outcome != 'success' || steps.validate.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success'
         run: exit 1
+

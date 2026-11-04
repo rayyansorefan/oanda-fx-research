@@ -55,11 +55,11 @@ def state_for(result, expires_at, observed_at, *, canonical_plan=False, trigger_
         return "INVALIDATED"
     expired = bool(timestamp(expires_at) and observed_at and observed_at >= timestamp(expires_at))
     if status == "UNTRIGGERED":
-        return "EXPIRED_UNFILLED"
+        return "EXPIRED_UNFILLED" if expired else "QUALIFIED_PENDING_TRIGGER"
     if status == "TRIGGERED_UNFILLED" or trigger_observed:
         return "EXPIRED_UNFILLED" if expired else "TRIGGERED"
     if expired:
-        return "EXPIRED_UNFILLED"
+        return "UNVERIFIABLE" if canonical_plan else "EXPIRED_UNFILLED"
     # An actually frozen paper plan is still a plan, not an unpriced WATCH.
     return "QUALIFIED_PENDING_TRIGGER"
 
@@ -75,7 +75,7 @@ def event_key(policy, plan_id, status, result):
 
 
 def source_lifecycle(summary, comparison, signals, archive, fast_events, opportunities,
-                     previous=None, *, assessed_at=None, holdout_start_at=None):
+                     previous=None, *, assessed_at=None, holdout_start_at=None, paper_book=None):
     """Reconcile distinct immutable plans, with no snapshot-derived duplicate wins."""
     now = timestamp(assessed_at) if assessed_at else datetime.now(timezone.utc)
     if now is None:
@@ -105,6 +105,9 @@ def source_lifecycle(summary, comparison, signals, archive, fast_events, opportu
             if timestamp(item.get("first_detected_at")) >= timestamp(item.get("plan_created_at")) if timestamp(item.get("plan_created_at")) else False:
                 fast_by_plan.setdefault(str(item["plan_id"]), []).append(item)
 
+    paper_results = {str(r.get("plan", {}).get("id")): r.get("result", {})
+                     for r in ((paper_book or {}).get("candidates") or {}).values()
+                     if isinstance(r, dict)}
     observations = comparison.get("records") or []
     sources = [
         ("champion_manual_plan", row, "champion", True)
@@ -132,7 +135,8 @@ def source_lifecycle(summary, comparison, signals, archive, fast_events, opportu
         if existing is not None and existing["original_sha256"] != frozen:
             anomalies.add("IMMUTABLE_CONFLICT:" + key)
             continue  # Never replace original plan/levels.
-        result = comparison_row.get("result") or {}
+        result = (paper_results.get(str(identifier), {}) if is_canonical
+                  else comparison_row.get("result")) or {}
         detected = fast_by_plan.get(identifier) if is_canonical else None
         has_trigger = bool(detected) or bool(timestamp(result.get("triggered_at")))
         state = state_for(result, plan["expires_at"], now, canonical_plan=is_canonical,
@@ -237,6 +241,7 @@ def main():
         read("data/fast_entry_events.json", {}), read("data/entry_opportunity_ledger.json", {}),
         read("data/lifecycle_ledger.json", {}),
         holdout_start_at=protocol.get("holdout_start_at"),
+        paper_book=read("data/paper_trade_ledger.json", {}),
     )
     path = ROOT / "data/lifecycle_ledger.json"
     if not path.exists() or json.loads(path.read_text()) != led:
@@ -246,3 +251,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

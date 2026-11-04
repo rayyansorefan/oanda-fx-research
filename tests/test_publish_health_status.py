@@ -1,9 +1,23 @@
 import unittest
+from unittest.mock import patch
+from scripts import export_public_dashboard as bridge
 from pathlib import Path
 from scripts import publish_health_status as h
 
 
 class PublishHealthStatusTests(unittest.TestCase):
+    def test_old_failure_cannot_mark_new_publication_unavailable(self):
+        current={"snapshot_at":"2026-11-04T10:21:49Z", "published_at":"2026-11-04T10:22:00Z"}
+        with patch.dict("os.environ", {"FX_DASHBOARD_DEPLOY_TOKEN":"test", "FX_FAILURE_STARTED_AT":"2026-11-04T10:20:00Z"}), patch.object(bridge,"_existing_public_feed",return_value=("sha",current)), patch.object(bridge,"publish") as pub:
+            self.assertEqual(h.main(),0)
+            pub.assert_not_called()
+
+    def test_compare_and_swap_blocks_concurrent_health_write(self):
+        payload={"snapshot_at":"2026-11-04T10:21:49Z"}
+        with patch.object(bridge,"_existing_public_feed", return_value=("new-sha",payload)), patch("urllib.request.urlopen") as put:
+            self.assertEqual(bridge.publish(payload,"test",expected_feed_sha="old-sha"),"SUPERSEDED")
+            put.assert_not_called()
+
     def test_outage_invalidation_keeps_source_clock_and_original(self):
         old = {
             "snapshot_at": "2026-11-03T11:55:41Z",
@@ -40,3 +54,4 @@ class PublishHealthStatusTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

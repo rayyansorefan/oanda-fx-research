@@ -40,6 +40,8 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
+      - name: Record run provenance
+        run: echo "FX_FAILURE_STARTED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
       - name: Fetch OANDA raw data (GET only)
         id: collect
         continue-on-error: true
@@ -130,6 +132,7 @@ jobs:
           FX_DASHBOARD_DEPLOY_TOKEN: ${{ secrets.FX_DASHBOARD_DEPLOY_TOKEN }}
           FX_SAFETY_OUTCOME: ${{ steps.safety.outcome }}
           FX_ADMISSION_OUTCOME: ${{ steps.admission.outcome }}
+          FX_WATCH_OUTCOME: ${{ steps.watch.outcome }}
         run: python scripts/export_public_dashboard.py
       - name: Mark deployed FX assessment unavailable on collection or publication failure
         id: health_fallback
@@ -189,3 +192,4 @@ jobs:
       - name: Fail closed if any research or public dashboard step failed
         if: steps.lifecycle.outcome != 'success' || steps.safety.outcome != 'success' || steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success'
         run: exit 1
+

@@ -802,7 +802,7 @@ def _timestamp(text: str) -> dt.datetime:
     return value.astimezone(dt.timezone.utc)
 
 
-def publish(payload: dict, token: str) -> str:
+def publish(payload: dict, token: str, *, expected_feed_sha=None) -> str:
     """Safely publish and read back the exact candidate; never overwrite newer data.
 
     409/422 concurrent-write conflicts are retried after reading the new
@@ -821,6 +821,8 @@ def publish(payload: dict, token: str) -> str:
     ).decode("ascii")
     for attempt in range(4):
         blob_sha, current = _existing_public_feed(url, headers)
+        if expected_feed_sha is not None and blob_sha != expected_feed_sha:
+            return "SUPERSEDED"
         previous_time = _timestamp(current["snapshot_at"])
         if previous_time > candidate_time:
             return "SUPERSEDED"
@@ -944,13 +946,13 @@ def main() -> int:
         # Collection freshness and strategy availability are separate facts.
         # Offline-test/protocol failures must never leave legacy GREEN signals
         # apparently actionable merely because OANDA collection succeeded.
-        assessment_ok = (os.environ.get("FX_SAFETY_OUTCOME", "success") == "success"
-                         and os.environ.get("FX_ADMISSION_OUTCOME", "success") == "success")
+        required = ("FX_SAFETY_OUTCOME", "FX_ADMISSION_OUTCOME", "FX_WATCH_OUTCOME")
+        failed = [key for key in required if os.environ.get(key) != "success"]
+        assessment_ok = not failed
         data["assessment_status"] = "ASSESSMENT_AVAILABLE" if assessment_ok else "ASSESSMENT_UNAVAILABLE"
         data["health_checked_at"] = utc_now()
         if not assessment_ok:
-            data["unavailable_reason"] = ("SAFETY_VALIDATION_FAILED" if
-                os.environ.get("FX_SAFETY_OUTCOME") != "success" else "ADMISSION_FAILED")
+            data["unavailable_reason"] = "ASSESSMENT_STAGE_UNVERIFIED:" + ",".join(failed)
             data["signals"] = []
             if isinstance(data.get("hourly"), dict):
                 data["hourly"]["signals"] = []
@@ -1065,3 +1067,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

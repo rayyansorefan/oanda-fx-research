@@ -29,6 +29,19 @@ def evaluate(*, records=None, signals=None, archived=None, previous=None, source
 
 
 class LifecycleAuditTests(unittest.TestCase):
+    def test_canonical_scored_paper_outcome_overrides_entry_expiry(self):
+        base=plan(expiry="2026-11-04T10:35:00Z")
+        result={"status":"LOSS_STOP","scored":True,"net_r":-1,
+                "entry_at":"2026-11-04T10:34:00Z","at":"2026-11-04T10:39:00Z"}
+        out=source_lifecycle({"collected_at":SOURCE},{},{"signals":[base]}, {}, {}, {},
+            assessed_at="2026-11-04T10:45:00Z",
+            paper_book={"candidates":{"p":{"plan":base,"result":result}}})
+        rec=next(iter(out["plans"].values()))
+        self.assertEqual(rec["current_state"],"CLOSED")
+        self.assertEqual(rec["net_r"],-1)
+        unknown=evaluate(signals=[base])
+        self.assertEqual(next(iter(unknown["plans"].values()))["current_state"],"UNVERIFIABLE")
+
     def test_unique_plans_not_repeated_snapshots_or_broker_trades(self):
         base=plan()
         rows=[{"policy": "challenger_v1", "plan": copy.deepcopy(base),
@@ -120,3 +133,4 @@ class LifecycleAuditTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
