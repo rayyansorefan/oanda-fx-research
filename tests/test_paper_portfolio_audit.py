@@ -37,8 +37,10 @@ class PaperPortfolioTests(unittest.TestCase):
         self.assertFalse(out["broker_costs_verified"])
 
     def test_correlated_currency_cap_and_same_pair(self):
-        rows=[rec("A","EUR_USD"),rec("B","EUR_GBP"),rec("C","EUR_CHF"),
-              rec("D","EUR_USD")]
+        rows=[rec("A","EUR_USD",entry="2026-11-05T07:30:00Z"),
+              rec("B","EUR_GBP",entry="2026-11-05T07:31:00Z"),
+              rec("C","EUR_CHF",entry="2026-11-05T07:32:00Z"),
+              rec("D","EUR_USD",entry="2026-11-05T07:33:00Z")]
         out=run(rows)
         arm=out["arms"]["challenger_v1"]
         self.assertEqual(arm["eligible_paper_fills_after_portfolio_limits"],2)
