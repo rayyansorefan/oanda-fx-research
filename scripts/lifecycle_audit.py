@@ -60,7 +60,8 @@ def state_for(result, expires_at, observed_at, *, canonical_plan=False, trigger_
         return "EXPIRED_UNFILLED" if expired else "TRIGGERED"
     if expired:
         return "EXPIRED_UNFILLED"
-    return "QUALIFIED_PENDING_TRIGGER" if canonical_plan else "WATCH"
+    # An actually frozen paper plan is still a plan, not an unpriced WATCH.
+    return "QUALIFIED_PENDING_TRIGGER"
 
 
 def event_key(policy, plan_id, status, result):
