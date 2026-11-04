@@ -987,6 +987,22 @@ def main() -> int:
                 "status": "FORWARD_TEST_ONLY_NOT_PROMOTED",
             }
             fit_public_feed_budget(data)
+        # Audit follows original experimental fills without changing them.
+        # Publish only policy-level aggregates, never private trade identifiers.
+        portfolio_path = Path("data/paper_portfolio_audit.json")
+        if portfolio_path.exists():
+            portfolio = load(str(portfolio_path))
+            data.setdefault("learning", {})["paper_portfolio_stress"] = {
+                "checked_at": portfolio.get("checked_at"),
+                "protocol_id": portfolio.get("protocol_id"),
+                "status": portfolio.get("status"),
+                "arms": portfolio.get("arms"),
+                "broker_costs_verified": False,
+                "performance_validated": False,
+                "research_only": True,
+                "cost_note": "Illustrative pip stresses; Pepperstone commission and swap unverified",
+            }
+            fit_public_feed_budget(data)
         # Lifecycle reconciliation is a private ledger; publish only aggregate
         # per-strategy state counts. Never leak original plans or private ids.
         lifecycle_path = Path("data/lifecycle_ledger.json")
