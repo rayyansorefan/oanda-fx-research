@@ -11,11 +11,11 @@ on:
       - 'tests/test_fast_entry_scan.py'
       - '.github/workflows/oanda-fast-entry.yml'
   schedule:
-    # Target five-minute checks in TWO high-interest London windows, not the
-    # entire trading day: private Actions allowance and shared hourly collector
-    # would make all-day 5-minute GitHub runners economically unreliable.
-    # Cron dispatch/start and serialised research are best effort, NOT a 5-minute SLA.
-    - cron: '2-59/5 7-8,13-14 * * 1-5'
+    # Reallocate the SAME 48 weekday dispatches across the active London day.
+    # Former two-window 5-minute schedule omitted most trading hours.
+    # 07-19 every 15 minutes; hourly collection continues outside this window.
+    # No extra scheduled fast-run count or guaranteed runner-start SLA.
+    - cron: '2,17,32,47 7-18 * * 1-5'
       timezone: Europe/London
 permissions:
   contents: write
@@ -38,7 +38,7 @@ jobs:
       - name: Test fast research safety and event chronology
         id: safety
         run: |
-          for suite in test_fast_entry_scan.py test_signal_admission.py test_watchlist_validation.py test_lifecycle_audit.py; do
+          for suite in test_fast_entry_scan.py test_signal_admission.py test_watchlist_validation.py test_lifecycle_audit.py test_paper_evidence_guard.py test_simple_paper_shadow_v2.py; do
             python -m unittest discover -s tests -p "$suite" -q || exit 1
           done
       - name: Refresh shortlist, primary news and prospective paper comparison
@@ -83,4 +83,5 @@ jobs:
       - name: Fail visibly after preserving observations
         if: steps.fast.outcome != 'success' || steps.validate.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success'
         run: exit 1
+
 

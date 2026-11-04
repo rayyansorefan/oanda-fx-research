@@ -203,7 +203,9 @@ class ValidationRepairTests(unittest.TestCase):
         old={'id':'old','holdout_start_at':'2026-10-29T07:00:00Z'}
         old_digest=validation.protocol_digest(old)
         book={'locked_protocol_sha256':old_digest,'events':{'e':{'received':'unchanged'}}}
-        new={'id':'new','supersedes_protocol_sha256':old_digest}
+        new={'id':'new','supersedes_protocol_sha256':old_digest,
+             'registered_at':(NOW-timedelta(hours=1)).isoformat(),
+             'holdout_start_at':(NOW+timedelta(hours=1)).isoformat()}
         validation.lock_protocol(book,new,NOW)
         self.assertEqual(book['events'],{'e':{'received':'unchanged'}})
         self.assertEqual(book['prior_protocol_locks'][0]['sha256'],old_digest)
@@ -226,3 +228,4 @@ class ValidationRepairTests(unittest.TestCase):
         self.assertFalse(report['performance_validated'])
 
 if __name__=='__main__':unittest.main()
+

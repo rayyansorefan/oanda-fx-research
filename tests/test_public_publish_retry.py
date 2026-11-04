@@ -58,3 +58,32 @@ class PublicPublishRetryTests(unittest.TestCase):
 
 if __name__=="__main__":
     unittest.main()
+
+
+class NetworkRetryTests(unittest.TestCase):
+    @patch('time.sleep')
+    @patch('scripts.export_public_dashboard._existing_public_feed')
+    @patch('scripts.export_public_dashboard.urllib.request.urlopen')
+    def test_unknown_network_put_outcome_reads_remote_before_retry(self, put, get, sleep):
+        from urllib.error import URLError
+        get.side_effect=[('old',OLD),('new',NEW)]
+        put.side_effect=URLError('connection closed')
+        self.assertEqual(pub.publish(NEW,'test'), 'ALREADY_CURRENT')
+        self.assertEqual(put.call_count,1)
+
+    @patch('time.sleep')
+    @patch('scripts.export_public_dashboard._existing_public_feed')
+    @patch('scripts.export_public_dashboard.urllib.request.urlopen')
+    def test_transient_readback_error_is_retried_without_another_put(self, put, get, sleep):
+        get.side_effect=[('old',OLD),RuntimeError('GitHub public feed GET HTTP 502: Server Error'),('new',NEW)]
+        put.return_value=GoodResponse()
+        self.assertEqual(pub.publish(NEW,'test'),'PUBLISHED')
+        self.assertEqual(put.call_count,1)
+
+    @patch('scripts.export_public_dashboard._existing_public_feed')
+    @patch('scripts.export_public_dashboard.urllib.request.urlopen')
+    def test_authorisation_failure_never_retried(self, put, get):
+        get.return_value=('old',OLD)
+        put.side_effect=transient(403)
+        with self.assertRaises(RuntimeError):pub.publish(NEW,'test')
+        self.assertEqual(put.call_count,1)

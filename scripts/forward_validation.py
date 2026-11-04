@@ -29,7 +29,8 @@ RULE_FILES=('scripts/signal_admission.py','scripts/adaptive_research.py','script
             'scripts/fx_universe.py','scripts/paper_trade_audit.py','scripts/signal_watch.py',
             'scripts/strategy_comparison.py','scripts/exit_management_research.py',
             'scripts/oanda_data.py','scripts/advanced_technicals.py','scripts/entry_readiness.py',
-            'scripts/fast_entry_scan.py','.github/workflows/oanda-fast-entry.yml')
+            'scripts/fast_entry_scan.py','.github/workflows/oanda-fast-entry.yml',
+            'scripts/paper_evidence_guard.py')
 
 def digest_rules(root=ROOT):
     h=hashlib.sha256()
@@ -279,7 +280,11 @@ def lock_protocol(book, protocol, now, recovery=None):
     target = protocol_digest(protocol)
     old_lock = book.get('locked_protocol_sha256')
     if old_lock and old_lock != target:
-        ordinary = old_lock == protocol.get('supersedes_protocol_sha256')
+        ordinary = (old_lock == protocol.get('supersedes_protocol_sha256')
+                    and moment(protocol.get('registered_at')) is not None
+                    and moment(protocol.get('holdout_start_at')) is not None
+                    and moment(protocol['registered_at']) <= now
+                    and now < moment(protocol['holdout_start_at']))
         registered = bool(
             isinstance(recovery, dict)
             and recovery.get('from_locked_sha256') == old_lock
@@ -291,6 +296,9 @@ def lock_protocol(book, protocol, now, recovery=None):
             and moment(protocol.get('holdout_start_at')) is not None
             and moment(recovery['registered_at']) <= now
             and now < moment(protocol['holdout_start_at'])
+            and recovery.get('holdout_start_unchanged') == protocol.get('holdout_start_at')
+            and protocol.get('id') == 'FX-OOS-20261104-v20'
+            and protocol_digest(protocol) == 'fcc91b0143589a9a76ad12d46be3f14d548b1f9339644f58680088b41c29105f'
         )
         if ordinary or registered:
             book.setdefault('prior_protocol_locks', []).append({
@@ -329,3 +337,4 @@ def main():
     print('Forward validation',report['status'],'validated',report['performance_validated'])
 
 if __name__=='__main__':main()
+

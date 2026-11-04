@@ -244,3 +244,19 @@ class LifecycleAuditTests(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
+
+
+class PriorClosureIntegrityTests(unittest.TestCase):
+    def test_same_economics_cannot_silently_rescore_a_recorded_close(self):
+        original=plan(expiry='2026-11-04T10:35:00Z')
+        def run(result, previous=None):
+            return source_lifecycle({'collected_at':SOURCE},{},{'signals':[original]}, {}, {}, {},
+                previous,assessed_at='2026-11-04T10:45:00Z',
+                paper_book={'candidates':{'original':{'plan':original,'result':result}}})
+        before=run({'status':'LOSS_STOP','scored':True,'net_r':-1})
+        after=run({'status':'WIN_TP1','scored':True,'net_r':2},before)
+        rec=next(iter(after['plans'].values()))
+        self.assertEqual(rec['current_state'],'UNVERIFIABLE')
+        self.assertEqual(rec['prior_disputed_execution']['net_r'],-1)
+        self.assertNotIn('net_r',rec)
+        self.assertEqual(after['summary']['active_evidence_conflicts'],1)

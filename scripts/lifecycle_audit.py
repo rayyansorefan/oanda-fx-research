@@ -225,6 +225,11 @@ def source_lifecycle(summary, comparison, signals, archive, fast_events, opportu
         paper_issue = None
         if is_canonical:
             result, paper_issue = match_paper_result(plan, paper_index)
+            if (not paper_issue and existing and existing.get("scored") is True
+                    and result.get("scored") is True
+                    and (result.get("status") != existing.get("result_status")
+                         or result.get("net_r") != existing.get("net_r"))):
+                paper_issue = "CONTRADICTORY_RECORDED_CLOSE:" + str(identifier)
             if paper_issue:
                 note(paper_issue)
         else:
@@ -318,7 +323,7 @@ def source_lifecycle(summary, comparison, signals, archive, fast_events, opportu
         "manual_broker_trades_verified": 0,
         "verified_user_delivery_receipts": 0,
         "active_evidence_conflicts": sum(
-            issue.startswith(("PAPER_ECONOMICS_", "CONTRADICTORY_PAPER_"))
+            issue.startswith(("PAPER_ECONOMICS_", "CONTRADICTORY_PAPER_", "CONTRADICTORY_RECORDED_CLOSE:"))
             for issue in active_issues),
         "source_at": source_at,
         "not_independent_trades": True,
@@ -370,4 +375,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

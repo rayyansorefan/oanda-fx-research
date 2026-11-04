@@ -567,6 +567,14 @@ def replay(plan, bars, now, observation_times=None):
             holding_bars += 1
             evaluation = ({**plan, "planned_entry": result["entry"]}
                           if result.get("route") == "C" else plan)
+            q = bar["bid"] if plan["direction"] == "LONG" else bar["ask"]
+            adverse_open = (q["o"] <= numeric(plan["stop"]) if plan["direction"] == "LONG"
+                            else q["o"] >= numeric(plan["stop"]))
+            if adverse_open:
+                return {**result, "status":"LOSS_STOP", "at":iso(bar["t"]),
+                        "exit":q["o"], "net_r":_r(evaluation,q["o"]),
+                        "evidence":{**result.get("evidence",{}),"exit":evidence(bar)},
+                        "stop_gap_adjusted":True, "scored":True}
             fav, adverse = _mark(evaluation, bar)
             mfe, mae = max(mfe, fav), min(mae, adverse)
             stop_hit, tp_hit = _stop_hit(plan, bar), _tp_hit(plan, bar)
@@ -846,6 +854,11 @@ def update_book(book, seeds, latest, now, fetch=None, market=None):
                 if msg not in messages:
                     messages.append(msg)
             continue
+        try:
+            from scripts.paper_evidence_guard import reconcile
+        except ModuleNotFoundError:
+            from paper_evidence_guard import reconcile
+        result = reconcile(rec, result, iso(now))
         if old.get("status") != result["status"]:
             rec["events"].append({"at": iso(now), "from": old.get("status"),
                                   "to": result["status"]})
@@ -876,3 +889,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

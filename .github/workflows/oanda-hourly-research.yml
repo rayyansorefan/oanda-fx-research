@@ -23,6 +23,7 @@ on:
     - cron: '19 6,7 * * 1-5'
 permissions:
   contents: write
+  actions: read
 concurrency:
   group: oanda-research-snapshot
   cancel-in-progress: false
@@ -101,7 +102,9 @@ jobs:
         continue-on-error: true
         env:
           OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
-        run: python scripts/simple_paper_shadow.py
+        run: |
+          python scripts/simple_paper_shadow.py
+          python scripts/simple_paper_shadow_v2.py
       - name: Audit prospective paper portfolio limits and additional cost stress
         id: portfolio
         if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.comparison.outcome == 'success'
@@ -135,6 +138,13 @@ jobs:
         if: steps.collect.outcome == 'success' && steps.safety.outcome == 'success' && steps.comparison.outcome == 'success'
         continue-on-error: true
         run: python scripts/lifecycle_audit.py
+      - name: Record independent economic reconciliation and actual workflow clocks
+        id: independent_audit
+        if: steps.lifecycle.outcome == 'success'
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/independent_operational_audit.py
       - name: Publish sanitized FX research to existing HTML dashboard
         id: dashboard
         if: steps.collect.outcome == 'success' && steps.news.outcome == 'success'
@@ -204,4 +214,5 @@ jobs:
       - name: Fail closed if any research or public dashboard step failed
         if: steps.lifecycle.outcome != 'success' || steps.safety.outcome != 'success' || steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success' || steps.portfolio.outcome != 'success' || steps.simple_shadow.outcome != 'success'
         run: exit 1
+
 

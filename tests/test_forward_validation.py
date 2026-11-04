@@ -19,25 +19,19 @@ def row(policy='champion'):
 
 class ForwardValidationTests(unittest.TestCase):
     def test_explicit_historic_lock_recovery_preserves_events_and_holdout(self):
-        p={'id':'FX-OOS-20261104-v20','rule_sha256':'frozen-rules',
-           'holdout_start_at':'2026-11-05T07:00:00Z'}
-        old={'locked_protocol_sha256':'historic-sha',
-             'protocol_id':'FX-OOS-20261029-v4',
+        p=json.loads((v.ROOT/'docs/validation_protocols/FX-OOS-20261104-v20.json').read_text())
+        recovery=json.loads((v.ROOT/'docs/validation_protocols/FX-LOCK-RECOVERY-20261104.json').read_text())
+        old={'locked_protocol_sha256':recovery['from_locked_sha256'],
+             'protocol_id':recovery['from_protocol_id'],
              'events':{'receipt':{'delivery_status':'NOT_VERIFIED'}},
              'prior_protocol_locks':[{'sha256':'predecessor'}]}
-        recovery={'from_locked_sha256':'historic-sha',
-                  'from_protocol_id':'FX-OOS-20261029-v4',
-                  'to_protocol_id':p['id'],
-                  'to_rule_sha256':'frozen-rules',
-                  'registered_at':'2026-11-04T11:20:00Z',
-                  'reason':'EXPLICIT_HISTORICAL_LOCK_RECOVERY'}
         now=datetime(2026,11,4,12,tzinfo=timezone.utc)
         closed=v.lock_protocol(deepcopy(old),p,now,recovery)
         self.assertEqual(closed['locked_protocol_sha256'],v.protocol_digest(p))
         self.assertEqual(closed['protocol_id'],p['id'])
         self.assertEqual(closed['events'],old['events'])
         self.assertEqual(len(closed['prior_protocol_locks']),2)
-        self.assertEqual(closed['prior_protocol_locks'][-1]['sha256'],'historic-sha')
+        self.assertEqual(closed['prior_protocol_locks'][-1]['sha256'],recovery['from_locked_sha256'])
         self.assertEqual(closed['prior_protocol_locks'][-1]['migration'],
                          'EXPLICIT_HISTORICAL_LOCK_RECOVERY')
         self.assertEqual(v.lock_protocol(closed,p,now,recovery),closed)
@@ -195,3 +189,19 @@ class ForwardValidationTests(unittest.TestCase):
 
 
 if __name__=='__main__':unittest.main()
+
+
+class ProtocolMigrationRegression(unittest.TestCase):
+    def test_ordinary_successor_cannot_relock_after_its_holdout(self):
+        old={'locked_protocol_sha256':'old','events':{'original':1}}
+        p={'id':'successor','supersedes_protocol_sha256':'old',
+           'registered_at':'2026-11-04T11:00:00Z','holdout_start_at':'2026-11-05T07:00:00Z'}
+        after=datetime(2026,11,5,8,tzinfo=timezone.utc)
+        self.assertEqual(v.lock_protocol(deepcopy(old),p,after),old)
+
+    def test_recovery_cannot_change_sample_floor_with_same_source_hash(self):
+        p=json.loads((v.ROOT/'docs/validation_protocols/FX-OOS-20261104-v20.json').read_text())
+        recovery=json.loads((v.ROOT/'docs/validation_protocols/FX-LOCK-RECOVERY-20261104.json').read_text())
+        old={'locked_protocol_sha256':recovery['from_locked_sha256'],'protocol_id':recovery['from_protocol_id']}
+        p['minimum_scored_days_per_arm']=1
+        self.assertEqual(v.lock_protocol(deepcopy(old),p,datetime(2026,11,4,12,tzinfo=timezone.utc),recovery),old)
