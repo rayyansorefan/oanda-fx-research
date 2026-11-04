@@ -1,6 +1,17 @@
 name: OANDA FX read-only research data
 on:
   workflow_dispatch:
+    # A separate trusted 15-minute scheduler can dispatch this existing
+    # private repo workflow independently of GitHub's best-effort cron.
+    inputs:
+      monitoring_mode:
+        description: 'full=normal research; fast=bounded existing fast backup'
+        required: true
+        default: full
+        type: choice
+        options:
+          - full
+          - fast
   # One-time validation when maintained code is deployed, not a second periodic scan.
   push:
     branches: [main]
@@ -43,7 +54,7 @@ concurrency:
 jobs:
   snapshot:
     # Dedicated backup tick must not start the expensive all-pair collector.
-    if: github.event_name != 'schedule' || github.event.schedule != '4,19,34,49 7-22 * * 1-5'
+    if: (github.event_name != 'schedule' || github.event.schedule != '4,19,34,49 7-22 * * 1-5') && (github.event_name != 'workflow_dispatch' || inputs.monitoring_mode != 'fast')
     runs-on: ubuntu-24.04
     timeout-minutes: 6
     steps:
@@ -281,10 +292,14 @@ jobs:
         run: exit 1
 
   fast-tick:
+    # Alternative externally dispatched fast input selects ONLY this job,
+    # and runs the same fail-closed source refresh, immutable paper study and
+    # public readback logic. External caller must have narrowly scoped GitHub
+    # Actions:write access; NEVER put the bearer token in repository files.
     # Backup is intentionally in the existing hourly WORKFLOW, not a new repo
     # or provider. Existing frozen .github/workflows/oanda-fast-entry.yml remains
     # unchanged so v21 and simple-v2 evidence hashes do not drift.
-    if: github.event_name == 'schedule' && github.event.schedule == '4,19,34,49 7-22 * * 1-5'
+    if: (github.event_name == 'schedule' && github.event.schedule == '4,19,34,49 7-22 * * 1-5') || (github.event_name == 'workflow_dispatch' && inputs.monitoring_mode == 'fast')
     runs-on: ubuntu-24.04
     timeout-minutes: 9
     steps:
