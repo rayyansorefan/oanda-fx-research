@@ -1,7 +1,204 @@
 {
   "actionable_count": 0,
-  "checked_at": "2026-11-04T17:16:28.146709+00:00",
+  "admission": {
+    "active": 0,
+    "admitted": [],
+    "candidate_routes": [
+      {
+        "direction": "SHORT",
+        "pair": "USD_PLN",
+        "reason": "INVALID_BID_ASK_OR_SPREAD",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "USD_PLN",
+        "reason": "INVALID_BID_ASK_OR_SPREAD",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "USD_CZK",
+        "reason": "INVALID_BID_ASK_OR_SPREAD",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "USD_CZK",
+        "reason": "INVALID_BID_ASK_OR_SPREAD",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "LONG",
+        "pair": "AUD_USD",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "LONG",
+        "pair": "AUD_USD",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "LONG",
+        "pair": "ZAR_JPY",
+        "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "LONG",
+        "pair": "ZAR_JPY",
+        "reason": "REVERSAL_OR_EXHAUSTION",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "LONG",
+        "pair": "CAD_SGD",
+        "reason": "REVERSAL_OR_EXHAUSTION",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "LONG",
+        "pair": "CAD_SGD",
+        "reason": "REVERSAL_OR_EXHAUSTION",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "USD_SGD",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "USD_SGD",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "USD_SEK",
+        "reason": "INVALID_BID_ASK_OR_SPREAD",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "USD_SEK",
+        "reason": "REVERSAL_OR_EXHAUSTION",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "LONG",
+        "pair": "GBP_USD",
+        "reason": "REVERSAL_OR_EXHAUSTION",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "LONG",
+        "pair": "GBP_USD",
+        "reason": "REVERSAL_OR_EXHAUSTION",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      }
+    ],
+    "evaluated_at": "2026-11-04T17:18:22.799168+00:00",
+    "rejected": {
+      "FOUR_FRAME_TREND_CONFLICT": 4,
+      "INVALID_BID_ASK_OR_SPREAD": 5,
+      "REVERSAL_OR_EXHAUSTION": 6,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 1
+    },
+    "source_at": "2026-11-04T17:18:22.799168+00:00",
+    "status": "NO_QUALIFIED_CONDITIONAL_PLAN"
+  },
+  "analysed": 8,
+  "candidate_count": 8,
+  "checked_at": "2026-11-04T17:18:23.192296+00:00",
+  "manual_pepperstone_check_required": true,
   "observations": [],
-  "status": "STALE_HOURLY_SOURCE",
+  "omitted_due_to_cap": [
+    "AUD_HKD",
+    "AUD_SGD",
+    "EUR_GBP",
+    "NZD_HKD",
+    "NZD_USD",
+    "AUD_JPY",
+    "GBP_AUD",
+    "USD_HUF",
+    "EUR_USD",
+    "EUR_HKD",
+    "USD_DKK",
+    "EUR_HUF",
+    "EUR_CAD",
+    "EUR_AUD",
+    "AUD_CAD",
+    "EUR_SGD",
+    "GBP_CAD",
+    "USD_ZAR",
+    "EUR_JPY",
+    "GBP_PLN",
+    "USD_MXN",
+    "AUD_NZD",
+    "EUR_NZD",
+    "AUD_CHF",
+    "CHF_ZAR",
+    "EUR_ZAR",
+    "CAD_CHF",
+    "EUR_CZK",
+    "USD_CNH",
+    "EUR_NOK",
+    "CHF_HKD",
+    "USD_CHF",
+    "USD_THB",
+    "SGD_CHF",
+    "EUR_PLN",
+    "CAD_HKD",
+    "USD_NOK",
+    "NZD_SGD",
+    "NZD_CAD",
+    "EUR_CHF",
+    "GBP_HKD",
+    "NZD_CHF",
+    "GBP_JPY",
+    "GBP_NZD",
+    "EUR_SEK",
+    "GBP_SGD",
+    "CHF_JPY",
+    "CAD_JPY",
+    "NZD_JPY",
+    "SGD_JPY",
+    "USD_JPY",
+    "HKD_JPY",
+    "USD_CAD",
+    "USD_HKD",
+    "GBP_CHF",
+    "EUR_DKK"
+  ],
+  "problems": {},
+  "research_only": true,
+  "rotation": {
+    "claim_of_complete_fast_coverage": false,
+    "cursor_after": 45,
+    "cursor_before": 40,
+    "slots_advanced": 5
+  },
+  "source_at": "2026-11-04T17:18:22.799168+00:00",
+  "status": "FAST_RESEARCH_CHECK_COMPLETE",
   "user_delivery_verified": false
 }
