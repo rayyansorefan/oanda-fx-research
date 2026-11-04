@@ -49,6 +49,7 @@ WORDS = {
     "CAD": ("bank of canada", "boc", "loonie", "canadian", "canada"),
     "AUD": ("rba", "reserve bank of australia", "australian", "aussie"),
     "CHF": ("snb", "swiss national bank", "swiss franc", "switzerland"),
+    "SEK": ("riksbank", "sweden", "swedish", "swedish krona"),
 }
 MATERIAL = ("rate decision", "monetary policy", "interest rate", "inflation", " cpi", "payroll",
             "jobs report", "employment", "unemployment", "central bank", "emergency",
@@ -154,10 +155,29 @@ def classify(item):
     is_material = any(term in text for term in MATERIAL)
     if not is_material:
         return None
-    is_global = item["currency_source"] == "GLOBAL" and any(term in text for term in (
-        "geopolitical", "oil price", "war ", "attack", "missile", "risk-off",
+    # A named central bank adjusting policy *because of an existing war*
+    # is not, by itself, a fresh global military or market shock. Previously
+    # the single token 'war ' expanded Sweden's rate decision to EVERY OANDA
+    # currency, blocking all 136 pair/route reviews. Keep the decision HIGH
+    # for the named currency (SEK), never silently waive its risk or missing
+    # official-feed coverage. Retain genuine attacks, escalation and global
+    # financial-shock headlines as global hard-reassessment events.
+    local_policy_decision = (len(related) == 1 and
+        any(k in text for k in ("central bank", "policy rate", "interest rate",
+                                "lifts rates", "raises rates", "cuts rates",
+                                "riksbank", "monetary policy")))
+    fresh_war_escalation = any(k in text for k in (
+        "war erupts", "war breaks out", "war begins", "war escalat",
+        "war intensif", "war expands", "war widens",
+        "new war", "declares war", "declaration of war"))
+    global_shock = any(term in text for term in (
+        "geopolitical", "oil price", "attack", "missile", "risk-off",
         "global markets", "trade war", "opec", "tariff",
-        "emergency", "liquidity crisis", "bond market crisis", "treasury market turmoil", "market crash"))
+        "emergency", "liquidity crisis", "bond market crisis",
+        "treasury market turmoil", "market crash"))
+    is_global = (item["currency_source"] == "GLOBAL" and
+                 (global_shock or fresh_war_escalation or
+                  ("war " in text and not local_policy_decision)))
     if is_global:
         related |= CURRENCIES
     if not related:
