@@ -1,7 +1,7 @@
 {
   "automatic_promotion_allowed": false,
   "broker_orders_submitted": 0,
-  "checked_at": "2026-11-04T17:18:03Z",
+  "checked_at": "2026-11-04T18:29:44Z",
   "cohort_id": "FX-EARLY-20261104-v1",
   "holdout_start_at": "2026-11-04T14:30:00Z",
   "independent_5_november_cohort_untouched": true,
@@ -15,12 +15,12 @@
     "by_setup": {
       "MOMENTUM_CONTINUATION": {
         "fills": 0,
-        "plans": 0,
+        "plans": 1,
         "scored_exits": 0
       },
       "TREND_PULLBACK": {
         "fills": 0,
-        "plans": 0,
+        "plans": 1,
         "scored_exits": 0
       }
     },
@@ -28,9 +28,11 @@
     "net_total_r_bidask": null,
     "net_total_r_cost_stress": null,
     "open_paper_positions": 0,
-    "outcomes": {},
+    "outcomes": {
+      "PENDING_TRIGGER": 2
+    },
     "performance_validated": false,
-    "plans": 0,
+    "plans": 2,
     "scored_exits": 0
   },
   "pair_observations": {
@@ -39,73 +41,150 @@
       "2026-11-04T16:18:41Z",
       "2026-11-04T16:32:00Z",
       "2026-11-04T16:36:43Z",
-      "2026-11-04T17:18:03Z"
+      "2026-11-04T17:18:03Z",
+      "2026-11-04T18:29:44Z"
     ],
     "EUR_GBP": [
       "2026-11-04T14:36:57Z",
       "2026-11-04T16:18:41Z",
       "2026-11-04T16:32:00Z",
       "2026-11-04T16:36:43Z",
-      "2026-11-04T17:18:03Z"
+      "2026-11-04T17:18:03Z",
+      "2026-11-04T18:29:44Z"
     ],
     "EUR_JPY": [
       "2026-11-04T14:36:57Z",
       "2026-11-04T16:18:41Z",
       "2026-11-04T16:32:00Z",
       "2026-11-04T16:36:43Z",
-      "2026-11-04T17:18:03Z"
+      "2026-11-04T17:18:03Z",
+      "2026-11-04T18:29:44Z"
     ],
     "EUR_USD": [
       "2026-11-04T14:36:57Z",
       "2026-11-04T16:18:41Z",
       "2026-11-04T16:32:00Z",
       "2026-11-04T16:36:43Z",
-      "2026-11-04T17:18:03Z"
+      "2026-11-04T17:18:03Z",
+      "2026-11-04T18:29:44Z"
     ],
     "GBP_JPY": [
       "2026-11-04T14:36:57Z",
       "2026-11-04T16:18:41Z",
       "2026-11-04T16:32:00Z",
       "2026-11-04T16:36:43Z",
-      "2026-11-04T17:18:03Z"
+      "2026-11-04T17:18:03Z",
+      "2026-11-04T18:29:44Z"
     ],
     "GBP_USD": [
       "2026-11-04T14:36:57Z",
       "2026-11-04T16:18:41Z",
       "2026-11-04T16:32:00Z",
       "2026-11-04T16:36:43Z",
-      "2026-11-04T17:18:03Z"
+      "2026-11-04T17:18:03Z",
+      "2026-11-04T18:29:44Z"
     ],
     "NZD_USD": [
       "2026-11-04T14:36:57Z",
       "2026-11-04T16:18:41Z",
       "2026-11-04T16:32:00Z",
       "2026-11-04T16:36:43Z",
-      "2026-11-04T17:18:03Z"
+      "2026-11-04T17:18:03Z",
+      "2026-11-04T18:29:44Z"
     ],
     "USD_CAD": [
       "2026-11-04T14:36:57Z",
       "2026-11-04T16:18:41Z",
       "2026-11-04T16:32:00Z",
       "2026-11-04T16:36:43Z",
-      "2026-11-04T17:18:03Z"
+      "2026-11-04T17:18:03Z",
+      "2026-11-04T18:29:44Z"
     ],
     "USD_CHF": [
       "2026-11-04T14:36:57Z",
       "2026-11-04T16:18:41Z",
       "2026-11-04T16:32:00Z",
       "2026-11-04T16:36:43Z",
-      "2026-11-04T17:18:03Z"
+      "2026-11-04T17:18:03Z",
+      "2026-11-04T18:29:44Z"
     ],
     "USD_JPY": [
       "2026-11-04T14:36:57Z",
       "2026-11-04T16:18:41Z",
       "2026-11-04T16:32:00Z",
       "2026-11-04T16:36:43Z",
-      "2026-11-04T17:18:03Z"
+      "2026-11-04T17:18:03Z",
+      "2026-11-04T18:29:44Z"
     ]
   },
-  "records": {},
+  "records": {
+    "simple-shadow-early-20261104-v1-20261104T182944Z-GBP_USD-MOMENTUM_CONTINUATION": {
+      "plan": {
+        "atr_at_decision": 0.0008499416388423383,
+        "broker_order_permitted": false,
+        "created_at": "2026-11-04T18:29:44Z",
+        "direction": "LONG",
+        "entry_condition": "NEXT_COMPLETED_M15_CLOSE_BEYOND_FROZEN_TRIGGER",
+        "estimated_net_rr_before_slippage": 1.5169,
+        "experimental_paper_only": true,
+        "expires_at": "2026-11-04T19:59:44Z",
+        "gross_rr": 1.8019,
+        "id": "simple-shadow-early-20261104-v1-20261104T182944Z-GBP_USD-MOMENTUM_CONTINUATION",
+        "indicative_entry": 1.3469,
+        "instrument": "GBP_USD",
+        "invalidation": "PREENTRY_STOP_TOUCH_OR_EXPIRY",
+        "last_source_bar_at": "2026-11-04T18:00:00Z",
+        "manual_response_seconds": 60,
+        "max_chase_atr": 0.35,
+        "max_spread_pips": 1.5,
+        "pip_size": 0.0001,
+        "policy": "simple-shadow-early-20261104-v1",
+        "setup_type": "MOMENTUM_CONTINUATION",
+        "source_at": "2026-11-04T18:29:33Z",
+        "stop": 1.34584,
+        "tp1": 1.34881,
+        "trigger": 1.34763
+      },
+      "result": {
+        "scored": false,
+        "source_evidence": "data/replay_evidence/GBP_USD-5cdf3a64df0c8bbcf2848dc78b98a2dae6ae637c7c77ae0897e70f7dd3e31bd4.json",
+        "status": "PENDING_TRIGGER"
+      }
+    },
+    "simple-shadow-early-20261104-v1-20261104T182944Z-GBP_USD-TREND_PULLBACK": {
+      "plan": {
+        "atr_at_decision": 0.0008499416388423383,
+        "broker_order_permitted": false,
+        "created_at": "2026-11-04T18:29:44Z",
+        "direction": "LONG",
+        "entry_condition": "NEXT_COMPLETED_M15_CLOSE_BEYOND_FROZEN_TRIGGER",
+        "estimated_net_rr_before_slippage": 1.5169,
+        "experimental_paper_only": true,
+        "expires_at": "2026-11-04T19:59:44Z",
+        "gross_rr": 1.8019,
+        "id": "simple-shadow-early-20261104-v1-20261104T182944Z-GBP_USD-TREND_PULLBACK",
+        "indicative_entry": 1.3469,
+        "instrument": "GBP_USD",
+        "invalidation": "PREENTRY_STOP_TOUCH_OR_EXPIRY",
+        "last_source_bar_at": "2026-11-04T18:00:00Z",
+        "manual_response_seconds": 60,
+        "max_chase_atr": 0.35,
+        "max_spread_pips": 1.5,
+        "pip_size": 0.0001,
+        "policy": "simple-shadow-early-20261104-v1",
+        "setup_type": "TREND_PULLBACK",
+        "source_at": "2026-11-04T18:29:33Z",
+        "stop": 1.34584,
+        "tp1": 1.34881,
+        "trigger": 1.34763
+      },
+      "result": {
+        "scored": false,
+        "source_evidence": "data/replay_evidence/GBP_USD-5cdf3a64df0c8bbcf2848dc78b98a2dae6ae637c7c77ae0897e70f7dd3e31bd4.json",
+        "status": "PENDING_TRIGGER"
+      }
+    }
+  },
   "registered_at": "2026-11-04T14:10:16Z",
   "schema": 1,
   "source_rule_protocol_id": "FX-SIMPLE-20261104-v2",
@@ -114,7 +193,8 @@
     "2026-11-04T16:18:30Z",
     "2026-11-04T16:31:49Z",
     "2026-11-04T16:36:31Z",
-    "2026-11-04T17:17:51Z"
+    "2026-11-04T17:17:51Z",
+    "2026-11-04T18:29:33Z"
   ],
   "status": "FORWARD_RESEARCH_ONLY",
   "study_version": "simple-shadow-early-20261104-v1"

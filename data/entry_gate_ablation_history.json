@@ -10331,6 +10331,112 @@
       ],
       "route_observations": 130,
       "source_at": "2026-11-04T17:17:51Z"
+    },
+    {
+      "counterfactual_arms": {
+        "champion_all_gates": {
+          "approval_allowed": true,
+          "counterfactual_pair_routes": 0,
+          "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
+          "unverifiable": 3
+        },
+        "paper_without_m15_adx_and_missing_primary_feed": {
+          "approval_allowed": false,
+          "counterfactual_pair_routes": 0,
+          "paper_watch_examples": [],
+          "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
+          "unverifiable": 3
+        },
+        "without_daily_ema_paper": {
+          "approval_allowed": false,
+          "counterfactual_pair_routes": 0,
+          "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
+          "unverifiable": 3
+        },
+        "without_m15_adx_paper": {
+          "approval_allowed": false,
+          "counterfactual_pair_routes": 0,
+          "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
+          "unverifiable": 3
+        },
+        "without_nearest_target_economics_diagnostic_only": {
+          "approval_allowed": false,
+          "counterfactual_pair_routes": 0,
+          "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
+          "unverifiable": 0
+        },
+        "without_news_gate_diagnostic_only": {
+          "approval_allowed": false,
+          "counterfactual_pair_routes": 0,
+          "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
+          "unverifiable": 3
+        },
+        "without_reversal_veto_paper": {
+          "approval_allowed": false,
+          "counterfactual_pair_routes": 0,
+          "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
+          "unverifiable": 3
+        }
+      },
+      "distinct_pairs": 65,
+      "failures": {
+        "absolute_spread_cap": 50,
+        "adx_H1": 36,
+        "adx_M15": 46,
+        "direction_known": 0,
+        "dmi_H1": 26,
+        "dmi_M15": 36,
+        "gross_reward_minimum": 50,
+        "net_reward_minimum": 72,
+        "news_gate": 88,
+        "no_reversal_or_exhaustion": 50,
+        "observed_target_available": 3,
+        "pair_supported": 2,
+        "quote_timely_tradeable": 0,
+        "recent_completed_history": 0,
+        "relative_spread_cap": 24,
+        "route_not_stretched": 50,
+        "route_pattern": 59,
+        "structural_stop_range": 6,
+        "trend_D": 94,
+        "trend_H1": 42,
+        "trend_H4": 72,
+        "trend_M15": 2,
+        "valid_two_sided_quote": 0
+      },
+      "isolated_only_blocker": {
+        "absolute_spread_cap": 0,
+        "adx_H1": 1,
+        "adx_M15": 0,
+        "direction_known": 0,
+        "dmi_H1": 0,
+        "dmi_M15": 0,
+        "gross_reward_minimum": 0,
+        "net_reward_minimum": 0,
+        "news_gate": 0,
+        "no_reversal_or_exhaustion": 0,
+        "observed_target_available": 0,
+        "pair_supported": 0,
+        "quote_timely_tradeable": 0,
+        "recent_completed_history": 0,
+        "relative_spread_cap": 0,
+        "route_not_stretched": 0,
+        "route_pattern": 0,
+        "structural_stop_range": 0,
+        "trend_D": 0,
+        "trend_H1": 0,
+        "trend_H4": 0,
+        "trend_M15": 0,
+        "valid_two_sided_quote": 0
+      },
+      "limitations": [
+        "The same market snapshot does not measure predictive value or profitability.",
+        "Ablations that waive news checks or minimum reward/risk are diagnostic only and never yield alerts.",
+        "The combined M15-ADX/unsupported-primary-feed paper hypothesis keeps all other technical and reward/risk gates; it cannot verify the missing source or support a manual fill.",
+        "Pair-route observations share prices and currency exposure; they are not independent trade outcomes."
+      ],
+      "route_observations": 130,
+      "source_at": "2026-11-04T18:29:33Z"
     }
   ]
 }
