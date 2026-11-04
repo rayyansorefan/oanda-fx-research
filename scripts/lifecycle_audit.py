@@ -10,7 +10,7 @@ import hashlib
 import json
 import os
 import tempfile
-from collections import Counter
+from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -74,6 +74,64 @@ def event_key(policy, plan_id, status, result):
     return digest(evidence)[:32]
 
 
+
+def economic_identity(plan):
+    """Economic equivalence only: UTC timestamp spellings and numeric serialisation may differ.
+
+    Never use an ID alone to attach a fill, stop or TP to a frozen manual plan.
+    A route/trigger difference can represent a completely different execution.
+    """
+    if not isinstance(plan, dict):
+        return None
+    keys = ("instrument", "direction", "entry_route", "created_at", "expires_at",
+            "planned_entry", "entry_low", "entry_high", "stop", "tp1", "tp2",
+            "alert_a", "alert_b", "alert_c", "max_oanda_spread_pips",
+            "event_blackouts_utc")
+    if not all(plan.get(k) is not None for k in
+               ("instrument", "direction", "created_at", "expires_at",
+                "planned_entry", "stop", "tp1")):
+        return None
+    out = {}
+    for key in keys:
+        value = plan.get(key)
+        if key in ("created_at", "expires_at"):
+            dt = timestamp(value)
+            if dt is None:
+                return None
+            value = dt.isoformat()
+        elif key in ("planned_entry", "entry_low", "entry_high", "stop",
+                     "tp1", "tp2", "alert_a", "alert_b", "alert_c",
+                     "max_oanda_spread_pips") and value is not None:
+            try:
+                value = round(float(value), 10)
+            except (TypeError, ValueError, OverflowError):
+                return None
+        elif key == "event_blackouts_utc":
+            value = value or []
+        out[key] = value
+    return canonical(out)
+
+
+def match_paper_result(plan, index):
+    """Return result only if the matched economic evidence is noncontradictory."""
+    rows = index.get(str(plan["id"]), [])
+    if not rows:
+        return {}, None
+    identity = economic_identity(plan)
+    compatible = [row for row in rows if identity is not None and
+                  economic_identity(row.get("plan")) == identity]
+    if not compatible:
+        return {}, "PAPER_ECONOMICS_MISMATCH:" + str(plan["id"])
+    results = [row.get("result") or {} for row in compatible]
+    distinct = {canonical(r) for r in results}
+    if len(distinct) > 1:
+        return {}, "CONTRADICTORY_PAPER_OUTCOMES:" + str(plan["id"])
+    return results[0], (
+        "PAPER_ECONOMICS_CONFLICTING_ID:" + str(plan["id"])
+        if len(compatible) != len(rows) else None
+    )
+
+
 def source_lifecycle(summary, comparison, signals, archive, fast_events, opportunities,
                      previous=None, *, assessed_at=None, holdout_start_at=None, paper_book=None):
     """Reconcile distinct immutable plans, with no snapshot-derived duplicate wins."""
@@ -105,9 +163,12 @@ def source_lifecycle(summary, comparison, signals, archive, fast_events, opportu
             if timestamp(item.get("first_detected_at")) >= timestamp(item.get("plan_created_at")) if timestamp(item.get("plan_created_at")) else False:
                 fast_by_plan.setdefault(str(item["plan_id"]), []).append(item)
 
-    paper_results = {str(r.get("plan", {}).get("id")): r.get("result", {})
-                     for r in ((paper_book or {}).get("candidates") or {}).values()
-                     if isinstance(r, dict)}
+    paper_index = defaultdict(list)
+    for row in ((paper_book or {}).get("candidates") or {}).values():
+        if isinstance(row, dict) and isinstance(row.get("plan"), dict):
+            identifier = row["plan"].get("id")
+            if identifier:
+                paper_index[str(identifier)].append(row)
     observations = comparison.get("records") or []
     sources = [
         ("champion_manual_plan", row, "champion", True)
@@ -135,8 +196,12 @@ def source_lifecycle(summary, comparison, signals, archive, fast_events, opportu
         if existing is not None and existing["original_sha256"] != frozen:
             anomalies.add("IMMUTABLE_CONFLICT:" + key)
             continue  # Never replace original plan/levels.
-        result = (paper_results.get(str(identifier), {}) if is_canonical
-                  else comparison_row.get("result")) or {}
+        if is_canonical:
+            result, paper_issue = match_paper_result(plan, paper_index)
+            if paper_issue:
+                anomalies.add(paper_issue)
+        else:
+            result = comparison_row.get("result") or {}
         detected = fast_by_plan.get(identifier) if is_canonical else None
         has_trigger = bool(detected) or bool(timestamp(result.get("triggered_at")))
         state = state_for(result, plan["expires_at"], now, canonical_plan=is_canonical,
