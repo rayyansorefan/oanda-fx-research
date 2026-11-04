@@ -1,0 +1,2227 @@
+{
+  "checked_at": "2026-11-04T12:55:55.056302+00:00",
+  "eur_aud": {
+    "active_issues": [],
+    "broker_execution_verified": false,
+    "canonical_r": -1.0,
+    "canonical_state": "CLOSED",
+    "historical_issues": [
+      "PAPER_ECONOMICS_MISMATCH:AUTO-20261029T0321-EUR_AUD-S-B",
+      "PAPER_ECONOMICS_MISMATCH:AUTO-20261103T0640-AUD_USD-S-B",
+      "PAPER_ECONOMICS_MISMATCH:AUTO-20261103T0913-EUR_CHF-S-B",
+      "PAPER_ECONOMICS_MISMATCH:AUTO-20261103T1154-AUD_CAD-S-B"
+    ],
+    "original": {
+      "alert_a": null,
+      "alert_b": 1.58044,
+      "alert_c": null,
+      "created_at": "2026-10-29T03:21:48.286130Z",
+      "direction": "SHORT",
+      "entry_high": null,
+      "entry_low": null,
+      "event_blackouts_utc": [],
+      "expires_at": "2026-10-29T04:51:48.286130Z",
+      "instrument": "EUR_AUD",
+      "max_oanda_spread_pips": 4.14,
+      "planned_entry": 1.58044,
+      "stop": 1.58145,
+      "tp1": 1.57781,
+      "tp2": null
+    },
+    "underlying_paper_records": [
+      {
+        "economic_terms": {
+          "alert_a": null,
+          "alert_b": 1.58044,
+          "alert_c": null,
+          "created_at": "2026-10-29T03:21:48.286130Z",
+          "direction": "SHORT",
+          "entry_high": null,
+          "entry_low": null,
+          "event_blackouts_utc": [],
+          "expires_at": "2026-10-29T04:51:48.286130Z",
+          "instrument": "EUR_AUD",
+          "max_oanda_spread_pips": 4.14,
+          "planned_entry": 1.58044,
+          "stop": 1.58145,
+          "tp1": 1.57781,
+          "tp2": null
+        },
+        "first_recorded_at": "2026-10-29T03:24:52Z",
+        "mismatched_fields": [],
+        "result": {
+          "at": "2026-10-29T06:30:00Z",
+          "detected_at": "2026-10-29T03:45:00Z",
+          "entry": 1.58044,
+          "entry_at": "2026-10-29T04:00:00Z",
+          "entry_available_at": "2026-10-29T03:45:00Z",
+          "evidence": {
+            "confirmation": {
+              "ask": {
+                "c": 1.58009,
+                "h": 1.5812,
+                "l": 1.58003,
+                "o": 1.58098
+              },
+              "bid": {
+                "c": 1.57975,
+                "h": 1.58083,
+                "l": 1.57967,
+                "o": 1.58063
+              },
+              "open_at": "2026-10-29T03:30:00Z"
+            },
+            "entry": {
+              "ask": {
+                "c": 1.58083,
+                "h": 1.58122,
+                "l": 1.58049,
+                "o": 1.58059
+              },
+              "bid": {
+                "c": 1.58048,
+                "h": 1.58086,
+                "l": 1.58011,
+                "o": 1.58022
+              },
+              "open_at": "2026-10-29T04:00:00Z"
+            },
+            "exit": {
+              "ask": {
+                "c": 1.58136,
+                "h": 1.58167,
+                "l": 1.58105,
+                "o": 1.58119
+              },
+              "bid": {
+                "c": 1.581,
+                "h": 1.58131,
+                "l": 1.58073,
+                "o": 1.58085
+              },
+              "open_at": "2026-10-29T06:15:00Z"
+            }
+          },
+          "exit": 1.58145,
+          "exit_move_pct": -0.06391,
+          "mae_r": -1.218,
+          "mfe_r": 1.228,
+          "net_r": -1.0,
+          "route": "B",
+          "scored": true,
+          "status": "LOSS_STOP",
+          "triggered_at": "2026-10-29T03:45:00Z"
+        }
+      }
+    ]
+  },
+  "exit_study": {
+    "ambiguous_or_missing": 0,
+    "approved_for_live_exit_advice": false,
+    "arms": {
+      "FIXED_STOP_TARGET": {
+        "mean_ohlc_exit_side_r": null,
+        "paired_count": 0,
+        "slippage_stress_pips_per_side": {
+          "0": null,
+          "0.25": null,
+          "0.5": null
+        },
+        "total_r": null
+      },
+      "PROFIT_PROTECTION": {
+        "mean_ohlc_exit_side_r": null,
+        "paired_count": 0,
+        "slippage_stress_pips_per_side": {
+          "0": null,
+          "0.25": null,
+          "0.5": null
+        },
+        "total_r": null
+      }
+    },
+    "fixed_arm_losses": 0,
+    "fixed_arm_wins": 0,
+    "independent_pair_days": 0,
+    "paired_scored": 0,
+    "registered_paper_entries": 0,
+    "review_threshold_met": false
+  },
+  "forward_results": {
+    "challenger_v1": {
+      "drawdown_r": null,
+      "exits": 0,
+      "fills": 0,
+      "net_r": null,
+      "outcomes": {},
+      "plans": 0,
+      "triggers": 0
+    },
+    "champion": {
+      "drawdown_r": null,
+      "exits": 0,
+      "fills": 0,
+      "net_r": null,
+      "outcomes": {},
+      "plans": 0,
+      "triggers": 0
+    }
+  },
+  "notification_delivery_verified": false,
+  "pages_runs": [
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T12:54:55Z",
+      "event": "push",
+      "head_sha": "86f812d9a4dfad918721277103c35ae88e1ba5df",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/41833383704",
+      "id": 41833383704,
+      "name": "FX HTML dashboard deployment",
+      "run_started_at": "2026-11-04T12:54:55Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T12:55:21Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T12:54:35Z",
+      "event": "pull_request",
+      "head_sha": "92901d84a9d5b19af9b8735a43318f18fe8c03e9",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/41833335878",
+      "id": 41833335878,
+      "name": "FX HTML dashboard deployment",
+      "run_started_at": "2026-11-04T12:54:35Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T12:54:48Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T12:06:49Z",
+      "event": "workflow_dispatch",
+      "head_sha": "080ffc1e94006842e7bea91e20abb537d6f374f1",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/41826462884",
+      "id": 41826462884,
+      "name": "FX HTML dashboard deployment",
+      "run_started_at": "2026-11-04T12:06:49Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T12:07:10Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T12:06:38Z",
+      "event": "schedule",
+      "head_sha": "7f8f2403a4b10d1fe8e8607bbf8cad928434d805",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/41826435186",
+      "id": 41826435186,
+      "name": "Bookie Intelligence - four-hour research",
+      "run_started_at": "2026-11-04T12:06:38Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T12:07:09Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T12:03:49Z",
+      "event": "push",
+      "head_sha": "7f8f2403a4b10d1fe8e8607bbf8cad928434d805",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/41826028188",
+      "id": 41826028188,
+      "name": "FX HTML dashboard deployment",
+      "run_started_at": "2026-11-04T12:03:49Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T12:04:28Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:47:39Z",
+      "event": "push",
+      "head_sha": "cfb32242778d137e0b27666dd6a5e94db73fda18",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/41823807861",
+      "id": 41823807861,
+      "name": "FX HTML dashboard deployment",
+      "run_started_at": "2026-11-04T11:47:39Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:48:04Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:46:51Z",
+      "event": "push",
+      "head_sha": "e2f73ab6586886af8900cf5f610595cc42c519c0",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/41823703186",
+      "id": 41823703186,
+      "name": "FX HTML dashboard deployment",
+      "run_started_at": "2026-11-04T11:46:51Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:47:22Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:36:05Z",
+      "event": "push",
+      "head_sha": "00b97300c07bbd36f200a9adef5d105232e62da7",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/41822236584",
+      "id": 41822236584,
+      "name": "FX HTML dashboard deployment",
+      "run_started_at": "2026-11-04T11:36:05Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:36:28Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:29:42Z",
+      "event": "push",
+      "head_sha": "a23c3ba91eec599b80f121675128ae5a72b79144",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/41821317258",
+      "id": 41821317258,
+      "name": "FX HTML dashboard deployment",
+      "run_started_at": "2026-11-04T11:29:42Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:30:07Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:28:54Z",
+      "event": "push",
+      "head_sha": "a63a6883aad797f5cc4545ee5f5665e713744b5c",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/41821208530",
+      "id": 41821208530,
+      "name": "FX HTML dashboard deployment",
+      "run_started_at": "2026-11-04T11:28:54Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:29:30Z"
+    }
+  ],
+  "performance_validated": false,
+  "protocol_id": "FX-OOS-20261104-v21",
+  "recent_job_steps": {
+    "41823639956": [
+      {
+        "conclusion": "success",
+        "id": 126552975859,
+        "steps": [
+          {
+            "completed_at": "2026-11-04T11:46:59Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "started_at": "2026-11-04T11:46:58Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:01Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v5",
+            "number": 2,
+            "started_at": "2026-11-04T11:46:59Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:02Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v6",
+            "number": 3,
+            "started_at": "2026-11-04T11:47:01Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:02Z",
+            "conclusion": "success",
+            "name": "Record run provenance",
+            "number": 4,
+            "started_at": "2026-11-04T11:47:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:22Z",
+            "conclusion": "success",
+            "name": "Fetch OANDA raw data (GET only)",
+            "number": 5,
+            "started_at": "2026-11-04T11:47:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:26Z",
+            "conclusion": "success",
+            "name": "Monitor economic releases and new market headlines (free public sources)",
+            "number": 6,
+            "started_at": "2026-11-04T11:47:22Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:29Z",
+            "conclusion": "success",
+            "name": "Offline safety tests (block signals, not collection)",
+            "number": 7,
+            "started_at": "2026-11-04T11:47:26Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:30Z",
+            "conclusion": "success",
+            "name": "Evaluate frozen shortlisted FX paper trades against subsequent bid/ask bars",
+            "number": 8,
+            "started_at": "2026-11-04T11:47:29Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:31Z",
+            "conclusion": "success",
+            "name": "Register and compare prospective momentum and pullback research opportunities",
+            "number": 9,
+            "started_at": "2026-11-04T11:47:30Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:31Z",
+            "conclusion": "success",
+            "name": "Audit missed forward FX research entries with actual later OANDA bid-ask candles",
+            "number": 10,
+            "started_at": "2026-11-04T11:47:31Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:31Z",
+            "conclusion": "success",
+            "name": "Record every independent admission gate and hidden news blockers",
+            "number": 11,
+            "started_at": "2026-11-04T11:47:31Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:31Z",
+            "conclusion": "success",
+            "name": "Freeze qualified prospective conditional manual FX signals",
+            "number": 12,
+            "started_at": "2026-11-04T11:47:31Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:32Z",
+            "conclusion": "success",
+            "name": "Compare frozen champion and challenger paper cohorts (never live promotion)",
+            "number": 13,
+            "started_at": "2026-11-04T11:47:31Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:32Z",
+            "conclusion": "success",
+            "name": "Evaluate separately frozen simple momentum/pullback paper shadow (no orders)",
+            "number": 14,
+            "started_at": "2026-11-04T11:47:32Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:32Z",
+            "conclusion": "success",
+            "name": "Audit prospective paper portfolio limits and additional cost stress",
+            "number": 15,
+            "started_at": "2026-11-04T11:47:32Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:32Z",
+            "conclusion": "success",
+            "name": "Forward-test FX exit management on confirmed OANDA paper entries",
+            "number": 16,
+            "started_at": "2026-11-04T11:47:32Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:33Z",
+            "conclusion": "success",
+            "name": "Reassess approved setups against price AND news/event risk",
+            "number": 17,
+            "started_at": "2026-11-04T11:47:32Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:33Z",
+            "conclusion": "success",
+            "name": "Audit locked forward validation, coverage and actual delivery evidence",
+            "number": 18,
+            "started_at": "2026-11-04T11:47:33Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:33Z",
+            "conclusion": "success",
+            "name": "Independently audit admission filters and holdout strategy evidence",
+            "number": 19,
+            "started_at": "2026-11-04T11:47:33Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:34Z",
+            "conclusion": "success",
+            "name": "Reconcile unique frozen FX plans and paper-trade lifecycles",
+            "number": 20,
+            "started_at": "2026-11-04T11:47:33Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:37Z",
+            "conclusion": "success",
+            "name": "Publish sanitized FX research to existing HTML dashboard",
+            "number": 21,
+            "started_at": "2026-11-04T11:47:34Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:37Z",
+            "conclusion": "skipped",
+            "name": "Mark deployed FX assessment unavailable on collection or publication failure",
+            "number": 22,
+            "started_at": "2026-11-04T11:47:37Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:41Z",
+            "conclusion": "success",
+            "name": "Save timestamped snapshot and watcher state",
+            "number": 23,
+            "started_at": "2026-11-04T11:47:37Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:41Z",
+            "conclusion": "skipped",
+            "name": "Fail closed if any research or public dashboard step failed",
+            "number": 24,
+            "started_at": "2026-11-04T11:47:41Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:42Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v6",
+            "number": 47,
+            "started_at": "2026-11-04T11:47:41Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:42Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v5",
+            "number": 48,
+            "started_at": "2026-11-04T11:47:42Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T11:47:42Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 49,
+            "started_at": "2026-11-04T11:47:42Z",
+            "status": "completed"
+          }
+        ]
+      }
+    ],
+    "41825893483": [
+      {
+        "conclusion": "success",
+        "id": 126560401360,
+        "steps": [
+          {
+            "completed_at": "2026-11-04T12:02:57Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "started_at": "2026-11-04T12:02:56Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:00Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v5",
+            "number": 2,
+            "started_at": "2026-11-04T12:02:57Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:00Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v6",
+            "number": 3,
+            "started_at": "2026-11-04T12:03:00Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:00Z",
+            "conclusion": "success",
+            "name": "Record run provenance",
+            "number": 4,
+            "started_at": "2026-11-04T12:03:00Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:31Z",
+            "conclusion": "success",
+            "name": "Fetch OANDA raw data (GET only)",
+            "number": 5,
+            "started_at": "2026-11-04T12:03:00Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:35Z",
+            "conclusion": "success",
+            "name": "Monitor economic releases and new market headlines (free public sources)",
+            "number": 6,
+            "started_at": "2026-11-04T12:03:31Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:39Z",
+            "conclusion": "success",
+            "name": "Offline safety tests (block signals, not collection)",
+            "number": 7,
+            "started_at": "2026-11-04T12:03:35Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:40Z",
+            "conclusion": "success",
+            "name": "Evaluate frozen shortlisted FX paper trades against subsequent bid/ask bars",
+            "number": 8,
+            "started_at": "2026-11-04T12:03:39Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:40Z",
+            "conclusion": "success",
+            "name": "Register and compare prospective momentum and pullback research opportunities",
+            "number": 9,
+            "started_at": "2026-11-04T12:03:40Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:41Z",
+            "conclusion": "success",
+            "name": "Audit missed forward FX research entries with actual later OANDA bid-ask candles",
+            "number": 10,
+            "started_at": "2026-11-04T12:03:40Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:41Z",
+            "conclusion": "success",
+            "name": "Record every independent admission gate and hidden news blockers",
+            "number": 11,
+            "started_at": "2026-11-04T12:03:41Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:41Z",
+            "conclusion": "success",
+            "name": "Freeze qualified prospective conditional manual FX signals",
+            "number": 12,
+            "started_at": "2026-11-04T12:03:41Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:42Z",
+            "conclusion": "success",
+            "name": "Compare frozen champion and challenger paper cohorts (never live promotion)",
+            "number": 13,
+            "started_at": "2026-11-04T12:03:41Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:42Z",
+            "conclusion": "success",
+            "name": "Evaluate separately frozen simple momentum/pullback paper shadow (no orders)",
+            "number": 14,
+            "started_at": "2026-11-04T12:03:42Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:42Z",
+            "conclusion": "success",
+            "name": "Audit prospective paper portfolio limits and additional cost stress",
+            "number": 15,
+            "started_at": "2026-11-04T12:03:42Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:42Z",
+            "conclusion": "success",
+            "name": "Forward-test FX exit management on confirmed OANDA paper entries",
+            "number": 16,
+            "started_at": "2026-11-04T12:03:42Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:43Z",
+            "conclusion": "success",
+            "name": "Reassess approved setups against price AND news/event risk",
+            "number": 17,
+            "started_at": "2026-11-04T12:03:42Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:43Z",
+            "conclusion": "success",
+            "name": "Audit locked forward validation, coverage and actual delivery evidence",
+            "number": 18,
+            "started_at": "2026-11-04T12:03:43Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:43Z",
+            "conclusion": "success",
+            "name": "Independently audit admission filters and holdout strategy evidence",
+            "number": 19,
+            "started_at": "2026-11-04T12:03:43Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:43Z",
+            "conclusion": "success",
+            "name": "Reconcile unique frozen FX plans and paper-trade lifecycles",
+            "number": 20,
+            "started_at": "2026-11-04T12:03:43Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:48Z",
+            "conclusion": "success",
+            "name": "Publish sanitized FX research to existing HTML dashboard",
+            "number": 21,
+            "started_at": "2026-11-04T12:03:43Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:48Z",
+            "conclusion": "skipped",
+            "name": "Mark deployed FX assessment unavailable on collection or publication failure",
+            "number": 22,
+            "started_at": "2026-11-04T12:03:48Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:52Z",
+            "conclusion": "success",
+            "name": "Save timestamped snapshot and watcher state",
+            "number": 23,
+            "started_at": "2026-11-04T12:03:48Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:52Z",
+            "conclusion": "skipped",
+            "name": "Fail closed if any research or public dashboard step failed",
+            "number": 24,
+            "started_at": "2026-11-04T12:03:52Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:52Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v6",
+            "number": 47,
+            "started_at": "2026-11-04T12:03:52Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:53Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v5",
+            "number": 48,
+            "started_at": "2026-11-04T12:03:52Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:03:53Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 49,
+            "started_at": "2026-11-04T12:03:53Z",
+            "status": "completed"
+          }
+        ]
+      }
+    ],
+    "41833364854": [],
+    "41833364919": [
+      {
+        "conclusion": null,
+        "id": 126585914710,
+        "steps": [
+          {
+            "completed_at": "2026-11-04T12:54:52Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "started_at": "2026-11-04T12:54:51Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:54:55Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v5",
+            "number": 2,
+            "started_at": "2026-11-04T12:54:52Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:54:55Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v6",
+            "number": 3,
+            "started_at": "2026-11-04T12:54:55Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:54:55Z",
+            "conclusion": "success",
+            "name": "Record run provenance",
+            "number": 4,
+            "started_at": "2026-11-04T12:54:55Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:39Z",
+            "conclusion": "success",
+            "name": "Fetch OANDA raw data (GET only)",
+            "number": 5,
+            "started_at": "2026-11-04T12:54:55Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:43Z",
+            "conclusion": "success",
+            "name": "Monitor economic releases and new market headlines (free public sources)",
+            "number": 6,
+            "started_at": "2026-11-04T12:55:39Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:46Z",
+            "conclusion": "success",
+            "name": "Offline safety tests (block signals, not collection)",
+            "number": 7,
+            "started_at": "2026-11-04T12:55:43Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:47Z",
+            "conclusion": "success",
+            "name": "Evaluate frozen shortlisted FX paper trades against subsequent bid/ask bars",
+            "number": 8,
+            "started_at": "2026-11-04T12:55:46Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:47Z",
+            "conclusion": "success",
+            "name": "Register and compare prospective momentum and pullback research opportunities",
+            "number": 9,
+            "started_at": "2026-11-04T12:55:47Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:52Z",
+            "conclusion": "success",
+            "name": "Audit missed forward FX research entries with actual later OANDA bid-ask candles",
+            "number": 10,
+            "started_at": "2026-11-04T12:55:47Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:52Z",
+            "conclusion": "success",
+            "name": "Record every independent admission gate and hidden news blockers",
+            "number": 11,
+            "started_at": "2026-11-04T12:55:52Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:52Z",
+            "conclusion": "success",
+            "name": "Freeze qualified prospective conditional manual FX signals",
+            "number": 12,
+            "started_at": "2026-11-04T12:55:52Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:53Z",
+            "conclusion": "success",
+            "name": "Compare frozen champion and challenger paper cohorts (never live promotion)",
+            "number": 13,
+            "started_at": "2026-11-04T12:55:52Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:53Z",
+            "conclusion": "success",
+            "name": "Evaluate separately frozen simple momentum/pullback paper shadow (no orders)",
+            "number": 14,
+            "started_at": "2026-11-04T12:55:53Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:53Z",
+            "conclusion": "success",
+            "name": "Audit prospective paper portfolio limits and additional cost stress",
+            "number": 15,
+            "started_at": "2026-11-04T12:55:53Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:53Z",
+            "conclusion": "success",
+            "name": "Forward-test FX exit management on confirmed OANDA paper entries",
+            "number": 16,
+            "started_at": "2026-11-04T12:55:53Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:54Z",
+            "conclusion": "success",
+            "name": "Reassess approved setups against price AND news/event risk",
+            "number": 17,
+            "started_at": "2026-11-04T12:55:53Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:54Z",
+            "conclusion": "success",
+            "name": "Audit locked forward validation, coverage and actual delivery evidence",
+            "number": 18,
+            "started_at": "2026-11-04T12:55:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:54Z",
+            "conclusion": "success",
+            "name": "Independently audit admission filters and holdout strategy evidence",
+            "number": 19,
+            "started_at": "2026-11-04T12:55:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-04T12:55:55Z",
+            "conclusion": "success",
+            "name": "Reconcile unique frozen FX plans and paper-trade lifecycles",
+            "number": 20,
+            "started_at": "2026-11-04T12:55:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Record independent economic reconciliation and actual workflow clocks",
+            "number": 21,
+            "started_at": "2026-11-04T12:55:55Z",
+            "status": "in_progress"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Publish sanitized FX research to existing HTML dashboard",
+            "number": 22,
+            "started_at": null,
+            "status": "pending"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Mark deployed FX assessment unavailable on collection or publication failure",
+            "number": 23,
+            "started_at": null,
+            "status": "pending"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Save timestamped snapshot and watcher state",
+            "number": 24,
+            "started_at": null,
+            "status": "pending"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Fail closed if any research or public dashboard step failed",
+            "number": 25,
+            "started_at": null,
+            "status": "pending"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Post Run actions/setup-python@v6",
+            "number": 49,
+            "started_at": null,
+            "status": "pending"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Post Run actions/checkout@v5",
+            "number": 50,
+            "started_at": null,
+            "status": "pending"
+          }
+        ]
+      }
+    ]
+  },
+  "scheduler_measurement": {
+    "five_minute_sla_proven": false,
+    "missed_cron_slots_verified": null,
+    "queue_delay": {
+      "count": 1,
+      "max_seconds": 0.0,
+      "median_seconds": 0.0,
+      "p95_seconds": 0.0
+    },
+    "scheduled_run_count": 1,
+    "scope": "Latest 100 run objects; run creation to runner start only. Intended cron dispatch unavailable."
+  },
+  "simple_v1": {
+    "benchmark": {
+      "champion_v20": "SEPARATE_PAIRED_DAYS_REQUIRED",
+      "no_trade_r": 0
+    },
+    "broker_costs_verified": false,
+    "filled": 0,
+    "net_total_r_bidask": null,
+    "net_total_r_cost_stress": null,
+    "open_paper_positions": 0,
+    "outcomes": {},
+    "performance_validated": false,
+    "plans": 0,
+    "scored_exits": 0
+  },
+  "simple_v2": {
+    "benchmark": {
+      "champion_v20": "SEPARATE_PAIRED_DAYS_REQUIRED",
+      "no_trade_r": 0
+    },
+    "broker_costs_verified": false,
+    "by_setup": {
+      "MOMENTUM_CONTINUATION": {
+        "fills": 0,
+        "plans": 0,
+        "scored_exits": 0
+      },
+      "TREND_PULLBACK": {
+        "fills": 0,
+        "plans": 0,
+        "scored_exits": 0
+      }
+    },
+    "filled": 0,
+    "net_total_r_bidask": null,
+    "net_total_r_cost_stress": null,
+    "open_paper_positions": 0,
+    "outcomes": {},
+    "performance_validated": false,
+    "plans": 0,
+    "scored_exits": 0
+  },
+  "source_at": "2026-11-04T12:55:39Z",
+  "workflow_runs": [
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T12:54:47Z",
+      "event": "push",
+      "head_sha": "f13126ca70fd1e0cfedd8d03f9b7aff0f13f8299",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41833365020",
+      "id": 41833365020,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T12:54:47Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T12:55:00Z"
+    },
+    {
+      "conclusion": null,
+      "created_at": "2026-11-04T12:54:47Z",
+      "event": "push",
+      "head_sha": "f13126ca70fd1e0cfedd8d03f9b7aff0f13f8299",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41833364919",
+      "id": 41833364919,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T12:54:47Z",
+      "status": "in_progress",
+      "updated_at": "2026-11-04T12:54:50Z"
+    },
+    {
+      "conclusion": null,
+      "created_at": "2026-11-04T12:54:47Z",
+      "event": "push",
+      "head_sha": "f13126ca70fd1e0cfedd8d03f9b7aff0f13f8299",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41833364854",
+      "id": 41833364854,
+      "name": "FX fast shortlisted entry research (read-only)",
+      "run_started_at": "2026-11-04T12:54:47Z",
+      "status": "pending",
+      "updated_at": "2026-11-04T12:54:48Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T12:54:11Z",
+      "event": "pull_request",
+      "head_sha": "f9ceb75d4340dadf5779d03850402a42ae13d5e2",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41833278488",
+      "id": 41833278488,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T12:54:11Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T12:54:27Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T12:54:11Z",
+      "event": "pull_request",
+      "head_sha": "f9ceb75d4340dadf5779d03850402a42ae13d5e2",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41833278483",
+      "id": 41833278483,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T12:54:11Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T12:54:28Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T12:53:14Z",
+      "event": "pull_request",
+      "head_sha": "7f0ccc401a989f522f2675b501b21fae83388f83",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41833145443",
+      "id": 41833145443,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T12:53:14Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T12:53:38Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T12:53:14Z",
+      "event": "pull_request",
+      "head_sha": "7f0ccc401a989f522f2675b501b21fae83388f83",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41833145424",
+      "id": 41833145424,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T12:53:14Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T12:53:29Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T12:51:33Z",
+      "event": "pull_request",
+      "head_sha": "92544c5b2517f040d331774c5eab5b33a39ed3cb",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41832904094",
+      "id": 41832904094,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T12:51:33Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T12:51:47Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T12:51:32Z",
+      "event": "pull_request",
+      "head_sha": "92544c5b2517f040d331774c5eab5b33a39ed3cb",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41832904007",
+      "id": 41832904007,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T12:51:32Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T12:51:45Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T12:02:51Z",
+      "event": "push",
+      "head_sha": "87cc27482ef26cd0a2b1e6981c65d6ca5a20bfd7",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41825893483",
+      "id": 41825893483,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T12:02:51Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T12:03:55Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:46:23Z",
+      "event": "push",
+      "head_sha": "2abe033f9d092931c94bb396a62020a73de2dbb4",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41823639956",
+      "id": 41823639956,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T11:46:23Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:47:44Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:46:23Z",
+      "event": "push",
+      "head_sha": "2abe033f9d092931c94bb396a62020a73de2dbb4",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41823639765",
+      "id": 41823639765,
+      "name": "FX fast shortlisted entry research (read-only)",
+      "run_started_at": "2026-11-04T11:46:23Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:46:55Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:46:23Z",
+      "event": "push",
+      "head_sha": "2abe033f9d092931c94bb396a62020a73de2dbb4",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41823639674",
+      "id": 41823639674,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:46:23Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:46:37Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:45:49Z",
+      "event": "pull_request",
+      "head_sha": "3b1f7043f343f6a5b1b0629ea6a4fe9e4bbf8b1d",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41823563860",
+      "id": 41823563860,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:45:49Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:46:06Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:45:49Z",
+      "event": "pull_request",
+      "head_sha": "3b1f7043f343f6a5b1b0629ea6a4fe9e4bbf8b1d",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41823563442",
+      "id": 41823563442,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T11:45:49Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:46:04Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T11:45:10Z",
+      "event": "pull_request",
+      "head_sha": "a6d9b08412d3bef487c53338505261623d260e6c",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41823471879",
+      "id": 41823471879,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:45:10Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:45:27Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T11:45:10Z",
+      "event": "pull_request",
+      "head_sha": "a6d9b08412d3bef487c53338505261623d260e6c",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41823471795",
+      "id": 41823471795,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T11:45:10Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:45:25Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T11:44:59Z",
+      "event": "pull_request",
+      "head_sha": "e0601fd4585202ecd7e1350e49d770b42418a81b",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41823444670",
+      "id": 41823444670,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:44:59Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:45:13Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T11:44:59Z",
+      "event": "pull_request",
+      "head_sha": "e0601fd4585202ecd7e1350e49d770b42418a81b",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41823444434",
+      "id": 41823444434,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T11:44:59Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:45:19Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T11:43:48Z",
+      "event": "pull_request",
+      "head_sha": "babc02b3ac9f80c084031cb8c30c1cfc1942e6bc",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41823283440",
+      "id": 41823283440,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:43:48Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:44:04Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T11:43:48Z",
+      "event": "pull_request",
+      "head_sha": "babc02b3ac9f80c084031cb8c30c1cfc1942e6bc",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41823283405",
+      "id": 41823283405,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T11:43:48Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:44:03Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:35:27Z",
+      "event": "push",
+      "head_sha": "4da748c8493765af1c6f1eebbf4d648c74b3e712",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41822146824",
+      "id": 41822146824,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T11:35:27Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:36:11Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:35:27Z",
+      "event": "push",
+      "head_sha": "4da748c8493765af1c6f1eebbf4d648c74b3e712",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41822146462",
+      "id": 41822146462,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:35:27Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:35:42Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:34:50Z",
+      "event": "pull_request",
+      "head_sha": "8a0a5a4b3e2b3cddb372dc1a7938d0b4aeda6809",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41822056409",
+      "id": 41822056409,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:34:50Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:35:04Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:34:50Z",
+      "event": "pull_request",
+      "head_sha": "8a0a5a4b3e2b3cddb372dc1a7938d0b4aeda6809",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41822056250",
+      "id": 41822056250,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T11:34:50Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:35:06Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:28:27Z",
+      "event": "push",
+      "head_sha": "bc21b0a5866831de1c36459e30e664190ba8a14a",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41821145698",
+      "id": 41821145698,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T11:28:27Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:29:50Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:28:27Z",
+      "event": "push",
+      "head_sha": "bc21b0a5866831de1c36459e30e664190ba8a14a",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41821145529",
+      "id": 41821145529,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:28:27Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:28:41Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:28:26Z",
+      "event": "push",
+      "head_sha": "bc21b0a5866831de1c36459e30e664190ba8a14a",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41821145382",
+      "id": 41821145382,
+      "name": "FX fast shortlisted entry research (read-only)",
+      "run_started_at": "2026-11-04T11:28:26Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:29:00Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:27:53Z",
+      "event": "pull_request",
+      "head_sha": "d7a756150c46f8d93a251d7b177e573efb6af117",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41821069490",
+      "id": 41821069490,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:27:53Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:28:07Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:27:53Z",
+      "event": "pull_request",
+      "head_sha": "d7a756150c46f8d93a251d7b177e573efb6af117",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41821069457",
+      "id": 41821069457,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T11:27:53Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:28:07Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:27:48Z",
+      "event": "pull_request",
+      "head_sha": "177f96c8aee67f932affb56a38c31f42cd2d323d",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41821059886",
+      "id": 41821059886,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:27:48Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:28:04Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:27:48Z",
+      "event": "pull_request",
+      "head_sha": "177f96c8aee67f932affb56a38c31f42cd2d323d",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41821059754",
+      "id": 41821059754,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T11:27:48Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:28:02Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T11:27:00Z",
+      "event": "pull_request",
+      "head_sha": "ca4801d1c6e051edccf2c790710650c9e65fce35",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41820950294",
+      "id": 41820950294,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:27:00Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:27:13Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T11:27:00Z",
+      "event": "pull_request",
+      "head_sha": "ca4801d1c6e051edccf2c790710650c9e65fce35",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41820950229",
+      "id": 41820950229,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T11:27:00Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:27:13Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:24:33Z",
+      "event": "push",
+      "head_sha": "aae94ed0a520771da968d6e186ba8d963dca6428",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41820599667",
+      "id": 41820599667,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:24:33Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:24:47Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:24:32Z",
+      "event": "push",
+      "head_sha": "aae94ed0a520771da968d6e186ba8d963dca6428",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41820599507",
+      "id": 41820599507,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T11:24:32Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:26:09Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:23:55Z",
+      "event": "pull_request",
+      "head_sha": "da304a393f8149aa742f561d7a002edee4fd9c2f",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41820494770",
+      "id": 41820494770,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:23:55Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:24:08Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:23:55Z",
+      "event": "pull_request",
+      "head_sha": "da304a393f8149aa742f561d7a002edee4fd9c2f",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41820494533",
+      "id": 41820494533,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T11:23:55Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:24:10Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:22:58Z",
+      "event": "push",
+      "head_sha": "6b2c21f3bab5a3c10431563e0333f184fd534ac7",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41820392119",
+      "id": 41820392119,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T11:22:58Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:25:00Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:22:58Z",
+      "event": "push",
+      "head_sha": "6b2c21f3bab5a3c10431563e0333f184fd534ac7",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41820391727",
+      "id": 41820391727,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:22:58Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:23:12Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T11:22:58Z",
+      "event": "push",
+      "head_sha": "6b2c21f3bab5a3c10431563e0333f184fd534ac7",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41820391726",
+      "id": 41820391726,
+      "name": "FX fast shortlisted entry research (read-only)",
+      "run_started_at": "2026-11-04T11:22:58Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:23:41Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:21:28Z",
+      "event": "pull_request",
+      "head_sha": "f999f72d156c3f3485e18246e9d01e199ed29e24",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41820210499",
+      "id": 41820210499,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:21:28Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:21:43Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:21:28Z",
+      "event": "pull_request",
+      "head_sha": "f999f72d156c3f3485e18246e9d01e199ed29e24",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41820210370",
+      "id": 41820210370,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T11:21:28Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:21:45Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T11:19:33Z",
+      "event": "push",
+      "head_sha": "4898efa9ffc8e77453efcc82fa899fd23febdf34",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41820004364",
+      "id": 41820004364,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T11:19:33Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:22:03Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:19:33Z",
+      "event": "push",
+      "head_sha": "4898efa9ffc8e77453efcc82fa899fd23febdf34",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41820004336",
+      "id": 41820004336,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:19:33Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:19:48Z"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-11-04T11:19:28Z",
+      "event": "push",
+      "head_sha": "6607284a8d86587432f5a839982ed9adc2790b2a",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41819992256",
+      "id": 41819992256,
+      "name": "FX fast shortlisted entry research (read-only)",
+      "run_started_at": "2026-11-04T11:19:28Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:19:34Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T11:19:28Z",
+      "event": "push",
+      "head_sha": "6607284a8d86587432f5a839982ed9adc2790b2a",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41819991848",
+      "id": 41819991848,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T11:19:28Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:20:32Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T11:18:54Z",
+      "event": "pull_request",
+      "head_sha": "13b52b9f72696db4bc288b35fb249d8269bc89aa",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41819889145",
+      "id": 41819889145,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T11:18:54Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:19:22Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T11:18:54Z",
+      "event": "pull_request",
+      "head_sha": "13b52b9f72696db4bc288b35fb249d8269bc89aa",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41819887947",
+      "id": 41819887947,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:18:54Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:19:17Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:15:55Z",
+      "event": "pull_request",
+      "head_sha": "79493f99c2640031c6313d2f62e7cf068340c8aa",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41819722113",
+      "id": 41819722113,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T11:15:55Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:16:09Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:15:55Z",
+      "event": "pull_request",
+      "head_sha": "79493f99c2640031c6313d2f62e7cf068340c8aa",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41819721993",
+      "id": 41819721993,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:15:55Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:16:11Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:13:12Z",
+      "event": "pull_request",
+      "head_sha": "abc102ba52cc451858c0b18d46e2b48f24926f34",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41819406368",
+      "id": 41819406368,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T11:13:12Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:13:28Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:08:55Z",
+      "event": "push",
+      "head_sha": "b26ad17423358f71f6d0499896a567cd2f782992",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41818927067",
+      "id": 41818927067,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:08:55Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:09:09Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:08:55Z",
+      "event": "push",
+      "head_sha": "b26ad17423358f71f6d0499896a567cd2f782992",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41818926896",
+      "id": 41818926896,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T11:08:55Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:10:40Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:08:26Z",
+      "event": "pull_request",
+      "head_sha": "f47471d6f743bc7ead91ece8d1ba298e77632c4f",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41818870822",
+      "id": 41818870822,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T11:08:26Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:08:38Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:08:26Z",
+      "event": "pull_request",
+      "head_sha": "f47471d6f743bc7ead91ece8d1ba298e77632c4f",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41818870783",
+      "id": 41818870783,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:08:26Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:08:41Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:05:39Z",
+      "event": "push",
+      "head_sha": "2a66996eeb3506561acca92111aedfac78164186",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41818543970",
+      "id": 41818543970,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T11:05:39Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:05:54Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:05:39Z",
+      "event": "push",
+      "head_sha": "2a66996eeb3506561acca92111aedfac78164186",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41818543955",
+      "id": 41818543955,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T11:05:39Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:07:31Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T11:05:39Z",
+      "event": "push",
+      "head_sha": "2a66996eeb3506561acca92111aedfac78164186",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41818543895",
+      "id": 41818543895,
+      "name": "FX fast shortlisted entry research (read-only)",
+      "run_started_at": "2026-11-04T11:05:39Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T11:06:21Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:54:45Z",
+      "event": "pull_request",
+      "head_sha": "574d36438f1a0a6289a0a5544e868e61faadd0d8",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41817339156",
+      "id": 41817339156,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T10:54:45Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:55:03Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:54:45Z",
+      "event": "pull_request",
+      "head_sha": "574d36438f1a0a6289a0a5544e868e61faadd0d8",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41817339080",
+      "id": 41817339080,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T10:54:45Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:54:58Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T10:53:47Z",
+      "event": "pull_request",
+      "head_sha": "ae6b809a675e03b866104ae9486973781ff66175",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41817226396",
+      "id": 41817226396,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T10:53:47Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:54:02Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T10:53:47Z",
+      "event": "pull_request",
+      "head_sha": "ae6b809a675e03b866104ae9486973781ff66175",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41817226052",
+      "id": 41817226052,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T10:53:47Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:54:02Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:20:41Z",
+      "event": "push",
+      "head_sha": "c98d2def1c7e51820ba9c1063d78840da386353c",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41813536938",
+      "id": 41813536938,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T10:20:41Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:22:46Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T10:20:41Z",
+      "event": "push",
+      "head_sha": "c98d2def1c7e51820ba9c1063d78840da386353c",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41813536934",
+      "id": 41813536934,
+      "name": "FX fast shortlisted entry research (read-only)",
+      "run_started_at": "2026-11-04T10:20:41Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:21:15Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:20:41Z",
+      "event": "push",
+      "head_sha": "c98d2def1c7e51820ba9c1063d78840da386353c",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41813536802",
+      "id": 41813536802,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T10:20:41Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:20:54Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:19:32Z",
+      "event": "pull_request",
+      "head_sha": "0b844f2fcbffb18e5b72d9f5501e82084f5e67ef",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41813409084",
+      "id": 41813409084,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T10:19:32Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:19:46Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:19:32Z",
+      "event": "pull_request",
+      "head_sha": "0b844f2fcbffb18e5b72d9f5501e82084f5e67ef",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41813409055",
+      "id": 41813409055,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T10:19:32Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:19:45Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:19:17Z",
+      "event": "pull_request",
+      "head_sha": "b87a6139eff2d174efdb6f93c41a81e099af4634",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41813378857",
+      "id": 41813378857,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T10:19:17Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:19:30Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:19:16Z",
+      "event": "pull_request",
+      "head_sha": "b87a6139eff2d174efdb6f93c41a81e099af4634",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41813377534",
+      "id": 41813377534,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T10:19:16Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:19:31Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:18:11Z",
+      "event": "pull_request",
+      "head_sha": "caf9386f3afd10e91da6de44b0faf5be8777026f",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41813258706",
+      "id": 41813258706,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T10:18:11Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:18:27Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:18:11Z",
+      "event": "pull_request",
+      "head_sha": "caf9386f3afd10e91da6de44b0faf5be8777026f",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41813258638",
+      "id": 41813258638,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T10:18:11Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:18:27Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:08:20Z",
+      "event": "push",
+      "head_sha": "90bfc194c9173148a8ed8e009dce46a813a8a361",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41812164010",
+      "id": 41812164010,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T10:08:20Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:08:33Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T10:08:20Z",
+      "event": "push",
+      "head_sha": "90bfc194c9173148a8ed8e009dce46a813a8a361",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41812163879",
+      "id": 41812163879,
+      "name": "FX fast shortlisted entry research (read-only)",
+      "run_started_at": "2026-11-04T10:19:36Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:20:34Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:08:20Z",
+      "event": "push",
+      "head_sha": "90bfc194c9173148a8ed8e009dce46a813a8a361",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41812163689",
+      "id": 41812163689,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T10:08:20Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:09:27Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:07:53Z",
+      "event": "pull_request",
+      "head_sha": "d2ea4139da12dc70ca80e0bca8baf04eabad19d5",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41812114051",
+      "id": 41812114051,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T10:07:53Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:08:09Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:07:53Z",
+      "event": "pull_request",
+      "head_sha": "d2ea4139da12dc70ca80e0bca8baf04eabad19d5",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41812114015",
+      "id": 41812114015,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T10:07:53Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:08:09Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:02:26Z",
+      "event": "pull_request",
+      "head_sha": "382f4e838ad80b510394b89168699a027234e8ad",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41811495752",
+      "id": 41811495752,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T10:02:26Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:02:47Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T10:02:26Z",
+      "event": "pull_request",
+      "head_sha": "382f4e838ad80b510394b89168699a027234e8ad",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41811495744",
+      "id": 41811495744,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T10:02:26Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T10:02:40Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T09:58:53Z",
+      "event": "pull_request",
+      "head_sha": "3c245139424df42f366aae0a4cc6933d9ca0fa9f",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41811121159",
+      "id": 41811121159,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T09:58:53Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T09:59:04Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T09:58:53Z",
+      "event": "pull_request",
+      "head_sha": "3c245139424df42f366aae0a4cc6933d9ca0fa9f",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41811121155",
+      "id": 41811121155,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T09:58:53Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T09:59:07Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T09:57:17Z",
+      "event": "pull_request",
+      "head_sha": "0f9527caf97c87d1e015df1048481988578b2169",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41810952200",
+      "id": 41810952200,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T09:57:17Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T09:57:32Z"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-04T09:57:17Z",
+      "event": "pull_request",
+      "head_sha": "0f9527caf97c87d1e015df1048481988578b2169",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41810952095",
+      "id": 41810952095,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T09:57:17Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T09:57:31Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T09:56:48Z",
+      "event": "pull_request",
+      "head_sha": "d4085e2a69ec0ac0873b4bdbe8e302eac43387dd",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41810902402",
+      "id": 41810902402,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T09:56:48Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T09:57:02Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T09:56:48Z",
+      "event": "pull_request",
+      "head_sha": "d4085e2a69ec0ac0873b4bdbe8e302eac43387dd",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41810902372",
+      "id": 41810902372,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T09:56:48Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T09:57:01Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T09:56:27Z",
+      "event": "pull_request",
+      "head_sha": "fa2d4c015fe946c03f1039f0fcc843c89350bfa2",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41810867312",
+      "id": 41810867312,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T09:56:27Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T09:56:41Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T09:56:27Z",
+      "event": "pull_request",
+      "head_sha": "fa2d4c015fe946c03f1039f0fcc843c89350bfa2",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41810867233",
+      "id": 41810867233,
+      "name": "FX entry safety regression",
+      "run_started_at": "2026-11-04T09:56:27Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T09:56:42Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T09:16:45Z",
+      "event": "push",
+      "head_sha": "0e121ce65e1fd6e3a905000b90a860ad44b916a2",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41806153891",
+      "id": 41806153891,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T09:16:45Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T09:16:59Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T09:16:45Z",
+      "event": "push",
+      "head_sha": "0e121ce65e1fd6e3a905000b90a860ad44b916a2",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41806153869",
+      "id": 41806153869,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T09:16:45Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T09:17:00Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T09:04:08Z",
+      "event": "schedule",
+      "head_sha": "8adc71083a20450ebe54fabf4bf1935d7ec38dac",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41804402580",
+      "id": 41804402580,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T09:04:08Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T09:04:23Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T07:34:06Z",
+      "event": "push",
+      "head_sha": "8adc71083a20450ebe54fabf4bf1935d7ec38dac",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41793166153",
+      "id": 41793166153,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T07:34:06Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T07:34:22Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T07:34:06Z",
+      "event": "push",
+      "head_sha": "8adc71083a20450ebe54fabf4bf1935d7ec38dac",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41793166097",
+      "id": 41793166097,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T07:34:06Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T07:34:19Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T07:17:09Z",
+      "event": "push",
+      "head_sha": "00496753d6fe52596a2a8cb19268d22efd9d9b0a",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41791195856",
+      "id": 41791195856,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T07:17:09Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T07:17:25Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T07:17:09Z",
+      "event": "push",
+      "head_sha": "00496753d6fe52596a2a8cb19268d22efd9d9b0a",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41791195755",
+      "id": 41791195755,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T07:17:09Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T07:17:22Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T06:17:35Z",
+      "event": "push",
+      "head_sha": "bd3f7a21b059ce37e560708fb077ed734145966a",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41784554362",
+      "id": 41784554362,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T06:17:35Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T06:17:49Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T06:17:35Z",
+      "event": "push",
+      "head_sha": "bd3f7a21b059ce37e560708fb077ed734145966a",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41784554300",
+      "id": 41784554300,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T06:17:35Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T06:17:48Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T05:12:09Z",
+      "event": "push",
+      "head_sha": "a817b557b045e10cbe67bc77cae6529856fa2cd5",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41777792581",
+      "id": 41777792581,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T05:12:09Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T05:12:26Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T05:12:09Z",
+      "event": "push",
+      "head_sha": "a817b557b045e10cbe67bc77cae6529856fa2cd5",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41777792577",
+      "id": 41777792577,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T05:12:09Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T05:12:25Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T04:19:19Z",
+      "event": "push",
+      "head_sha": "d005329c7dc07a9e7b4da4f97e2d2f71fe5c1496",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41772482942",
+      "id": 41772482942,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-04T04:19:19Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T04:19:32Z"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-04T04:19:19Z",
+      "event": "push",
+      "head_sha": "d005329c7dc07a9e7b4da4f97e2d2f71fe5c1496",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/41772482941",
+      "id": 41772482941,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-04T04:19:19Z",
+      "status": "completed",
+      "updated_at": "2026-11-04T04:19:35Z"
+    }
+  ]
+}
