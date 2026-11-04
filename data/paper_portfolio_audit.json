@@ -1,0 +1,70 @@
+{
+  "arms": {
+    "challenger_v1": {
+      "blocked_overlapping_entries": 0,
+      "cost_scenarios_complete": false,
+      "cost_stress_total_r": {
+        "0": null,
+        "0.25": null,
+        "0.5": null
+      },
+      "eligible_paper_fills_after_portfolio_limits": 0,
+      "excluded": {
+        "HISTORICAL_NOT_FORWARD": 23
+      },
+      "forward_candidates_evaluated": 0,
+      "independently_scored_exits": 0,
+      "max_cost_stressed_drawdown_r": null,
+      "open_exposure_pairs": [],
+      "open_paper_positions": 0,
+      "overlap_reasons": {},
+      "total_oanda_bidask_r": null
+    },
+    "champion": {
+      "blocked_overlapping_entries": 0,
+      "cost_scenarios_complete": false,
+      "cost_stress_total_r": {
+        "0": null,
+        "0.25": null,
+        "0.5": null
+      },
+      "eligible_paper_fills_after_portfolio_limits": 0,
+      "excluded": {
+        "HISTORICAL_NOT_FORWARD": 5
+      },
+      "forward_candidates_evaluated": 0,
+      "independently_scored_exits": 0,
+      "max_cost_stressed_drawdown_r": null,
+      "open_exposure_pairs": [],
+      "open_paper_positions": 0,
+      "overlap_reasons": {},
+      "total_oanda_bidask_r": null
+    }
+  },
+  "benchmark": {
+    "description": "Cash/no-trade opportunity-cost reference only; no predictive edge benchmark established",
+    "no_trade_r": 0.0
+  },
+  "broker_costs_verified": false,
+  "checked_at": "2026-11-04T11:24:20.556389+00:00",
+  "holdout_start_at": "2026-11-05T07:00:00Z",
+  "performance_validated": false,
+  "policy": {
+    "commission_proxy_pips_per_side": 0.15,
+    "cost_limit": "Commission/swap are deliberately UNVERIFIED illustrative stress proxies, NOT Pepperstone net P&L",
+    "exposure_limit": "Sequential shadow portfolio, not an order rejection or changed original experiment",
+    "funding_proxy_pips_per_calendar_overnight": 0.25,
+    "max_per_currency": 2,
+    "max_total_open": 3,
+    "slippage_pips_per_side": [
+      0.0,
+      0.25,
+      0.5
+    ],
+    "source": "Already-confirmed OANDA paper bid/ask fills; no invented entry"
+  },
+  "promoted": false,
+  "protocol_id": "FX-OOS-20261104-v20",
+  "schema": 1,
+  "status": "HOLDOUT_NOT_STARTED"
+}
