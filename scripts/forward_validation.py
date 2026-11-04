@@ -269,22 +269,49 @@ def read(name,default):
     path=ROOT/name
     return json.loads(path.read_text()) if path.exists() else default
 
-def lock_protocol(book, protocol, now):
-    """Explicit version migration; retain old lock and every event/receipt."""
+def lock_protocol(book, protocol, now, recovery=None):
+    """Append-only, prospective protocol migration; never repair a lock implicitly.
+
+    Historical lock drift is permitted ONLY with an explicit, pre-registered
+    recovery record naming the exact original lock and the new rule digest.
+    This preserves all prior events, timestamps, and older protocol identities.
+    """
+    target = protocol_digest(protocol)
     old_lock = book.get('locked_protocol_sha256')
-    if (old_lock and old_lock != protocol_digest(protocol)
-            and old_lock == protocol.get('supersedes_protocol_sha256')):
-        book.setdefault('prior_protocol_locks', []).append({
-            'sha256': old_lock, 'superseded_at': now.isoformat(),
-            'replacement_protocol_id': protocol['id']})
-        book['locked_protocol_sha256'] = protocol_digest(protocol)
-    book.setdefault('locked_protocol_sha256',protocol_digest(protocol))
+    if old_lock and old_lock != target:
+        ordinary = old_lock == protocol.get('supersedes_protocol_sha256')
+        registered = bool(
+            isinstance(recovery, dict)
+            and recovery.get('from_locked_sha256') == old_lock
+            and recovery.get('from_protocol_id') == book.get('protocol_id')
+            and recovery.get('to_protocol_id') == protocol.get('id')
+            and recovery.get('to_rule_sha256') == protocol.get('rule_sha256')
+            and recovery.get('reason') == 'EXPLICIT_HISTORICAL_LOCK_RECOVERY'
+            and moment(recovery.get('registered_at')) is not None
+            and moment(protocol.get('holdout_start_at')) is not None
+            and moment(recovery['registered_at']) <= now
+            and now < moment(protocol['holdout_start_at'])
+        )
+        if ordinary or registered:
+            book.setdefault('prior_protocol_locks', []).append({
+                'sha256': old_lock, 'superseded_at': now.isoformat(),
+                'replacement_protocol_id': protocol['id'],
+                'migration': ('EXPLICIT_HISTORICAL_LOCK_RECOVERY' if registered
+                              else 'REGISTERED_SUCCESSOR'),
+                'previous_protocol_id': book.get('protocol_id'),
+                'recovery_reference': ('docs/validation_protocols/FX-LOCK-RECOVERY-20261104.json'
+                                       if registered else None),
+            })
+            book['locked_protocol_sha256'] = target
+            book['protocol_id'] = protocol['id']
+    book.setdefault('locked_protocol_sha256', target)
     return book
 
 def main():
     now=datetime.now(timezone.utc);protocol=read('validation_protocol.json',{})
     book=read('data/signal_delivery_audit.json',{'schema':1,'events':{}})
-    lock_protocol(book, protocol, now)
+    lock_protocol(book, protocol, now,
+                  read('docs/validation_protocols/FX-LOCK-RECOVERY-20261104.json', {}))
     # Check the already deployed snapshot before recording a newly collected one.
     try:
         req=Request(PUBLIC_FEED,headers={'User-Agent':'FX-forward-validation-read-only'})
