@@ -83,7 +83,9 @@ def economic_identity(plan):
     """
     if not isinstance(plan, dict):
         return None
-    keys = ("instrument", "direction", "entry_route", "created_at", "expires_at",
+    # The paper ledger's immutable frozen() schema intentionally omits entry_route.
+    # The original alert_a/b/c route triggers ARE preserved and economically checked.
+    keys = ("instrument", "direction", "created_at", "expires_at",
             "planned_entry", "entry_low", "entry_high", "stop", "tp1", "tp2",
             "alert_a", "alert_b", "alert_c", "max_oanda_spread_pips",
             "event_blackouts_utc")
