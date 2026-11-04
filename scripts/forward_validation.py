@@ -21,10 +21,14 @@ except ModuleNotFoundError:
 ROOT=Path(__file__).resolve().parents[1]
 LONDON=ZoneInfo('Europe/London')
 PUBLIC_FEED='https://rayyansorefan.github.io/standalone-wallet-paper-agent/fx-feed.json'
+# Only source files that determine collection, eligibility, entry, paper execution
+# or management belong in the prospective strategy lock. UI serialization
+# and this evidence reporter are separately tested; presentation changes
+# must not silently invalidate a frozen market-rule holdout.
 RULE_FILES=('scripts/signal_admission.py','scripts/adaptive_research.py','scripts/news_watch.py',
             'scripts/fx_universe.py','scripts/paper_trade_audit.py','scripts/signal_watch.py',
-            'scripts/strategy_comparison.py','scripts/forward_validation.py',
-            'scripts/oanda_data.py','scripts/advanced_technicals.py','scripts/entry_readiness.py','scripts/export_public_dashboard.py',
+            'scripts/strategy_comparison.py','scripts/exit_management_research.py',
+            'scripts/oanda_data.py','scripts/advanced_technicals.py','scripts/entry_readiness.py',
             'scripts/fast_entry_scan.py','.github/workflows/oanda-fast-entry.yml')
 
 def digest_rules(root=ROOT):

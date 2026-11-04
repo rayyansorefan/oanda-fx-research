@@ -941,6 +941,19 @@ def main() -> int:
             dt.datetime.now(dt.timezone.utc))
         data = build_public_feed(summary, news, signals, watcher, detailed,
                                  recent.get("pairs") or {}, paper, opportunity)
+        # Collection freshness and strategy availability are separate facts.
+        # Offline-test/protocol failures must never leave legacy GREEN signals
+        # apparently actionable merely because OANDA collection succeeded.
+        assessment_ok = (os.environ.get("FX_SAFETY_OUTCOME", "success") == "success"
+                         and os.environ.get("FX_ADMISSION_OUTCOME", "success") == "success")
+        data["assessment_status"] = "ASSESSMENT_AVAILABLE" if assessment_ok else "ASSESSMENT_UNAVAILABLE"
+        data["health_checked_at"] = utc_now()
+        if not assessment_ok:
+            data["unavailable_reason"] = ("SAFETY_VALIDATION_FAILED" if
+                os.environ.get("FX_SAFETY_OUTCOME") != "success" else "ADMISSION_FAILED")
+            data["signals"] = []
+            if isinstance(data.get("hourly"), dict):
+                data["hourly"]["signals"] = []
         comparison_path = Path("data/strategy_comparison.json")
         if comparison_path.exists():
             comparison = load(str(comparison_path))
