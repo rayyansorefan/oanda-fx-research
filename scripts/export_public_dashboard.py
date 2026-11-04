@@ -802,6 +802,13 @@ def _timestamp(text: str) -> dt.datetime:
     return value.astimezone(dt.timezone.utc)
 
 
+def _transient_public_error(exc: Exception) -> bool:
+    """Retry safe read errors only; auth, invalid payload and conflicts stay closed."""
+    return isinstance(exc, RuntimeError) and any(
+        f" HTTP {code}:" in str(exc) for code in (429, 500, 502, 503, 504)
+    )
+
+
 def publish(payload: dict, token: str, *, expected_feed_sha=None) -> str:
     """Safely publish and read back the exact candidate; never overwrite newer data.
 
@@ -820,7 +827,17 @@ def publish(payload: dict, token: str, *, expected_feed_sha=None) -> str:
         (json.dumps(payload, ensure_ascii=True, separators=(",", ":")) + "\n").encode("utf-8")
     ).decode("ascii")
     for attempt in range(4):
-        blob_sha, current = _existing_public_feed(url, headers)
+        # GitHub API read/write can transiently return 429/5xx even when
+        # another publisher has already committed. Re-read before EACH retry,
+        # preserving the newer-source and compare-and-swap checks below.
+        try:
+            blob_sha, current = _existing_public_feed(url, headers)
+        except RuntimeError as exc:
+            if _transient_public_error(exc) and attempt < 3:
+                import time
+                time.sleep(min(2 ** attempt, 4))
+                continue
+            raise
         if expected_feed_sha is not None and blob_sha != expected_feed_sha:
             return "SUPERSEDED"
         previous_time = _timestamp(current["snapshot_at"])
@@ -847,7 +864,13 @@ def publish(payload: dict, token: str, *, expected_feed_sha=None) -> str:
             with urllib.request.urlopen(update, timeout=30) as response:
                 saved = json.load(response)
         except urllib.error.HTTPError as exc:
-            if exc.code in (409, 422) and attempt < 3:
+            # A failed PUT may still have committed server-side. The next
+            # iteration MUST fetch the latest content and may return
+            # ALREADY_CURRENT/SUPERSEDED; never blindly repeat with old SHA.
+            if exc.code in (409, 422, 429, 500, 502, 503, 504) and attempt < 3:
+                if exc.code in (429, 500, 502, 503, 504):
+                    import time
+                    time.sleep(min(2 ** attempt, 4))
                 continue
             raise _github_error("public feed PUT", exc) from None
         if not (saved.get("commit") or {}).get("sha"):
