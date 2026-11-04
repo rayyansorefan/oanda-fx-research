@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "reason": "EXPLICIT_HISTORICAL_LOCK_RECOVERY",
+  "registered_at": "2026-11-04T11:26:00Z",
+  "from_protocol_id": "FX-OOS-20261029-v4",
+  "from_locked_sha256": "bda405becdd4d071e5b2219564029ee748c8a488dfe2d0e8fc9b8956617fc311",
+  "to_protocol_id": "FX-OOS-20261104-v20",
+  "to_rule_sha256": "932d61141e42d745d64f7fa3c227fbb4b3f474f6f642e6a02c62e767bd3b599d",
+  "holdout_start_unchanged": "2026-11-05T07:00:00Z",
+  "immutable_prior_evidence": "Retain all previously scored observations, delivery events and historical protocol lock transitions; do not classify any pre-holdout records as forward evidence.",
+  "scope": "Evidence-ledger lock compatibility only. Does not change champion/challenger strategy, fills, thresholds, source collection, signal approvals or broker permissions.",
+  "explanation": "The stored ledger remained bound to the historical v4 lock while later rules were prospectively registered; the ordinary single-step supersedes checksum cannot match that stranded lock. This exact one-time migration permits v20 only before its existing holdout starts, and appends the old lock to the recorded chain."
+}

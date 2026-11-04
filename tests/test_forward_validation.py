@@ -18,6 +18,48 @@ def row(policy='champion'):
             'result':{'status':'WIN_TP1','scored':True,'entry':1.1,'exit':1.102,'entry_at':'2026-10-29T09:45:00Z','at':'2026-10-29T10:00:00Z'}}
 
 class ForwardValidationTests(unittest.TestCase):
+    def test_explicit_historic_lock_recovery_preserves_events_and_holdout(self):
+        p={'id':'FX-OOS-20261104-v20','rule_sha256':'frozen-rules',
+           'holdout_start_at':'2026-11-05T07:00:00Z'}
+        old={'locked_protocol_sha256':'historic-sha',
+             'protocol_id':'FX-OOS-20261029-v4',
+             'events':{'receipt':{'delivery_status':'NOT_VERIFIED'}},
+             'prior_protocol_locks':[{'sha256':'predecessor'}]}
+        recovery={'from_locked_sha256':'historic-sha',
+                  'from_protocol_id':'FX-OOS-20261029-v4',
+                  'to_protocol_id':p['id'],
+                  'to_rule_sha256':'frozen-rules',
+                  'registered_at':'2026-11-04T11:20:00Z',
+                  'reason':'EXPLICIT_HISTORICAL_LOCK_RECOVERY'}
+        now=datetime(2026,11,4,12,tzinfo=timezone.utc)
+        closed=v.lock_protocol(deepcopy(old),p,now,recovery)
+        self.assertEqual(closed['locked_protocol_sha256'],v.protocol_digest(p))
+        self.assertEqual(closed['protocol_id'],p['id'])
+        self.assertEqual(closed['events'],old['events'])
+        self.assertEqual(len(closed['prior_protocol_locks']),2)
+        self.assertEqual(closed['prior_protocol_locks'][-1]['sha256'],'historic-sha')
+        self.assertEqual(closed['prior_protocol_locks'][-1]['migration'],
+                         'EXPLICIT_HISTORICAL_LOCK_RECOVERY')
+        self.assertEqual(v.lock_protocol(closed,p,now,recovery),closed)
+
+    def test_recovery_is_fail_closed_on_missing_wrong_or_late_evidence(self):
+        p={'id':'FX-OOS-20261104-v20','rule_sha256':'frozen-rules',
+           'holdout_start_at':'2026-11-05T07:00:00Z'}
+        old={'locked_protocol_sha256':'historic-sha','protocol_id':'FX-OOS-20261029-v4',
+             'events':{'receipt':'immutable'}}
+        recovery={'from_locked_sha256':'historic-sha',
+                  'from_protocol_id':'FX-OOS-20261029-v4',
+                  'to_protocol_id':p['id'], 'to_rule_sha256':'frozen-rules',
+                  'reason':'EXPLICIT_HISTORICAL_LOCK_RECOVERY',
+                  'registered_at':'2026-11-04T11:20:00Z'}
+        now=datetime(2026,11,4,12,tzinfo=timezone.utc)
+        for variant in (None,{**recovery,'from_locked_sha256':'wrong'},
+                        {**recovery,'to_rule_sha256':'wrong'},
+                        {**recovery,'registered_at':'2026-11-05T07:10:00Z'}):
+            self.assertEqual(v.lock_protocol(deepcopy(old),p,now,variant),old)
+        after=datetime(2026,11,5,8,tzinfo=timezone.utc)
+        self.assertEqual(v.lock_protocol(deepcopy(old),p,after,recovery),old)
+
     def test_coverage_counts_routes_and_distinct_pairs_separately(self):
         s={'pairs':{'EUR_USD':{'frames':{tf:{'indicators':{'ema20':1}} for tf in ('M15','H1','H4','D')}}},
            'ranked_review_candidates':[{'instrument':'EUR_USD','deep_entry_scout_eligible':True}]}
