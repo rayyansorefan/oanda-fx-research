@@ -1,0 +1,28 @@
+{
+  "bootstrap_resamples": 10000,
+  "common_universe": "All screened OANDA account currency pairs receive M5/M15/H1/H4/D collection, with explicit per-timeframe gaps. Both study arms require identical complete M15/H1/H4/D context. Fast checks remain bounded to active plans and leading candidates; omitted pairs never gain observation timestamps.",
+  "cost_method": "Executable-side OANDA bid/ask fills and exits; no double spread subtraction. Adverse stop gaps and 0/0.25/0.5 pip per-side stress. Financing crossing NY 17:00 and actual Pepperstone costs remain unknown unless evidenced.",
+  "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
+  "development_cutoff": "2026-11-05T06:59:59Z",
+  "holdout_start_at": "2026-11-05T07:00:00Z",
+  "id": "FX-OOS-20261104-v19",
+  "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
+  "minimum_independent_scored_pair_days_per_arm": 100,
+  "minimum_scored_days_per_arm": 20,
+  "monitoring_method": "Fast shortlist remains best-effort at :02/:17/:32/:47 during 07-09 and 13-15 London weekdays, with immutable plans prioritised and remaining slots rotating across all 68 screened pairs. A missed observation creates no inferred trade; hourly collector and four weekday assessments continue. Two-window 15-minute GitHub schedule is best effort, not the requested verified five-minute cadence; measure real detection delays before asserting a manual-entry SLA.",
+  "no_orders": true,
+  "policies": [
+    "champion",
+    "challenger_v1"
+  ],
+  "promotion_policy": "V19 preserves v18 and prospectively registers fast persistence retries and explicit assessment health. Trading thresholds unchanged. No automatic promotion; all existing sample and evidence requirements apply.",
+  "require_pair_specific_observations": true,
+  "rule_sha256": "37ef9177120a3d5749fd4cc32a7f564b7b8454aae626f55723244003830149d0",
+  "slippage_pips_per_side": [
+    0,
+    0.25,
+    0.5
+  ],
+  "supersedes_protocol_sha256": "5beb7a0a3cf0bb6e6d31db5d474eb51627ec1bcb3426033380550a345089b6e3",
+  "registered_at": "2026-11-04T10:53:00.734171+00:00"
+}
