@@ -42,6 +42,21 @@ class LifecycleAuditTests(unittest.TestCase):
         unknown=evaluate(signals=[base])
         self.assertEqual(next(iter(unknown["plans"].values()))["current_state"],"UNVERIFIABLE")
 
+    def test_actual_paper_frozen_schema_omits_descriptive_entry_route(self):
+        from scripts.paper_trade_audit import frozen
+        original=plan(expiry="2026-11-04T10:35:00Z")
+        paper=frozen(original)
+        self.assertNotIn("entry_route", paper)
+        result={"status":"LOSS_STOP","scored":True,"net_r":-1,
+                "entry_at":"2026-11-04T10:34:00Z","at":"2026-11-04T10:39:00Z"}
+        out=source_lifecycle({"collected_at":SOURCE},{},{"signals":[original]}, {}, {}, {},
+            assessed_at="2026-11-04T10:45:00Z",
+            paper_book={"candidates":{"legacy":{"plan":paper,"result":result}}})
+        rec=next(iter(out["plans"].values()))
+        self.assertEqual(rec["current_state"],"CLOSED")
+        self.assertTrue(rec["scored"])
+        self.assertFalse(out["issues"])
+
     def test_same_id_different_stop_or_expiry_cannot_attach_paper_loss(self):
         original=plan(expiry="2026-11-04T10:35:00Z")
         conflicting=copy.deepcopy(original)
