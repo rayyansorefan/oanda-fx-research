@@ -40,8 +40,6 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-      - name: Offline safety tests
-        run: python -m unittest discover -s tests -v
       - name: Fetch OANDA raw data (GET only)
         id: collect
         continue-on-error: true
@@ -54,50 +52,55 @@ jobs:
         if: steps.collect.outcome == 'success'
         continue-on-error: true
         run: python scripts/news_watch.py
+      # Raw evidence must survive a strategy test / protocol failure.
+      - name: Offline safety tests (block signals, not collection)
+        id: safety
+        continue-on-error: true
+        run: python -m unittest discover -s tests -v
       - name: Evaluate frozen shortlisted FX paper trades against subsequent bid/ask bars
         id: paper
-        if: steps.collect.outcome == 'success'
+        if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success'
         continue-on-error: true
         env:
           OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
         run: python scripts/paper_trade_audit.py
       - name: Register and compare prospective momentum and pullback research opportunities
         id: opportunities
-        if: steps.collect.outcome == 'success'
+        if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success'
         continue-on-error: true
         run: python scripts/opportunity_tracker.py
       - name: Audit missed forward FX research entries with actual later OANDA bid-ask candles
         id: missed
-        if: steps.collect.outcome == 'success' && steps.opportunities.outcome == 'success'
+        if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.opportunities.outcome == 'success'
         continue-on-error: true
         env:
           OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
         run: python scripts/missed_entry_audit.py
       - name: Record every independent admission gate and hidden news blockers
         id: diagnostics
-        if: steps.collect.outcome == 'success' && steps.news.outcome == 'success'
+        if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.news.outcome == 'success'
         continue-on-error: true
         run: python scripts/admission_diagnostics.py
       - name: Freeze qualified prospective conditional manual FX signals
         id: admission
-        if: steps.collect.outcome == 'success' && steps.news.outcome == 'success'
+        if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.news.outcome == 'success'
         continue-on-error: true
         run: python scripts/signal_admission.py
       - name: Compare frozen champion and challenger paper cohorts (never live promotion)
         id: comparison
-        if: steps.collect.outcome == 'success' && steps.news.outcome == 'success'
+        if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.news.outcome == 'success'
         continue-on-error: true
         env:
           OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
         run: python scripts/strategy_comparison.py
       - name: Forward-test FX exit management on confirmed OANDA paper entries
         id: exit_management
-        if: steps.collect.outcome == 'success' && steps.comparison.outcome == 'success'
+        if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.comparison.outcome == 'success'
         continue-on-error: true
         run: python scripts/exit_management_research.py
       - name: Reassess approved setups against price AND news/event risk
         id: watch
-        if: steps.collect.outcome == 'success' && steps.admission.outcome == 'success'
+        if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.admission.outcome == 'success'
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -105,22 +108,32 @@ jobs:
         run: python scripts/signal_watch.py
       - name: Audit locked forward validation, coverage and actual delivery evidence
         id: validation
-        if: steps.collect.outcome == 'success' && steps.comparison.outcome == 'success' && steps.watch.outcome == 'success'
+        if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.comparison.outcome == 'success' && steps.watch.outcome == 'success'
         continue-on-error: true
         run: python scripts/forward_validation.py
       - name: Independently audit admission filters and holdout strategy evidence
         id: strategy_audit
-        if: steps.collect.outcome == 'success' && steps.diagnostics.outcome == 'success' && steps.comparison.outcome == 'success' && steps.validation.outcome == 'success'
+        if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.diagnostics.outcome == 'success' && steps.comparison.outcome == 'success' && steps.validation.outcome == 'success'
         continue-on-error: true
         run: python scripts/entry_strategy_audit.py
       - name: Publish sanitized FX research to existing HTML dashboard
         id: dashboard
-        if: steps.collect.outcome == 'success' && steps.news.outcome == 'success' && steps.admission.outcome == 'success'
+        if: steps.collect.outcome == 'success' && steps.news.outcome == 'success'
         # Export failure must be reported after persisting diagnostic status.
         continue-on-error: true
         env:
           FX_DASHBOARD_DEPLOY_TOKEN: ${{ secrets.FX_DASHBOARD_DEPLOY_TOKEN }}
+          FX_SAFETY_OUTCOME: ${{ steps.safety.outcome }}
+          FX_ADMISSION_OUTCOME: ${{ steps.admission.outcome }}
         run: python scripts/export_public_dashboard.py
+      - name: Mark deployed FX assessment unavailable on collection or publication failure
+        id: health_fallback
+        if: always() && (steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.dashboard.outcome != 'success')
+        continue-on-error: true
+        env:
+          FX_DASHBOARD_DEPLOY_TOKEN: ${{ secrets.FX_DASHBOARD_DEPLOY_TOKEN }}
+          FX_HEALTH_FAILURE: ${{ steps.collect.outcome != 'success' && 'MARKET_COLLECTION_FAILED' || steps.news.outcome != 'success' && 'NEWS_COLLECTION_FAILED' || 'PUBLICATION_FAILED' }}
+        run: python scripts/publish_health_status.py
       - name: Save timestamped snapshot and watcher state
         id: persist
         if: always()
@@ -169,5 +182,5 @@ jobs:
       # Scheduled research is persisted in data/. User-facing hourly updates are
       # delivered by the separate ChatGPT task, not by GitHub Issues.
       - name: Fail closed if any research or public dashboard step failed
-        if: steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success'
+        if: steps.safety.outcome != 'success' || steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success'
         run: exit 1
