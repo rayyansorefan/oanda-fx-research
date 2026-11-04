@@ -139,7 +139,7 @@ def report(study, protocol, observed_at):
                 extra_pips = 2 * slip + 2 * COMMISSION_PROXY_PIPS_PER_SIDE
                 if rollovers is not None:
                     extra_pips += rollovers * FUNDING_PROXY_PIPS_PER_OVERNIGHT
-                scenarios[str(slip)] = round(total_r-extra_pips/risk_pips, 6) if total_r is not None and rollovers is not None else None
+                scenarios[format(slip, "g")] = round(total_r-extra_pips/risk_pips, 6) if total_r is not None and rollovers is not None else None
             accepted.append({"plan_id": str(p.get("id", "")), "pair": pair,
                              "entry_at": entered, "exit_at": closed,
                              "status": status, "base_oanda_r": total_r,
