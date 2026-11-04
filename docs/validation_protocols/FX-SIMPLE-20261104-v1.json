@@ -1,0 +1,39 @@
+{
+  "id": "FX-SIMPLE-20261104-v1",
+  "registered_at": "2026-11-04T11:45:02.348Z",
+  "holdout_start_at": "2026-11-05T07:00:00Z",
+  "script_blob_sha1": "58fb90768f94de17d32389899398803673a25da4",
+  "no_orders": true,
+  "approval_permission": false,
+  "status": "FROZEN_EXPERIMENT_NOT_VALIDATED",
+  "policies": [
+    "MOMENTUM_CONTINUATION",
+    "TREND_PULLBACK"
+  ],
+  "liquid_pair_universe": [
+    "EUR_USD",
+    "GBP_USD",
+    "USD_JPY",
+    "USD_CHF",
+    "USD_CAD",
+    "AUD_USD",
+    "NZD_USD",
+    "EUR_JPY",
+    "EUR_GBP",
+    "GBP_JPY"
+  ],
+  "regime": "M15 and H1 EMA20/EMA50 aligned, both must be complete; no daily/ADX/DMI/exhaustion gates. Tradeable OANDA quote no older than five minutes; bid below ask.",
+  "direction": "EMA20 above EMA50 on M15 and H1 LONG; both below SHORT; otherwise abstain.",
+  "signals": "Momentum completed M15 body >=0.35 ATR and close in final 30% of direction, distance to EMA20 <=1.25 ATR. Pullback M15 wick crosses EMA20, direction close in final 30%, distance <=0.60 ATR. NEW future completed M15 close beyond frozen trigger required.",
+  "levels": "Indicative entry executable-side OANDA quote, stop 1.25 M15 ATR, target 1.8 times initial risk; fixed for life. No retroactive level revisions.",
+  "cost_gates": "Observed spread <=2.5 pips for non-JPY or 3.0 for JPY, and <=0.20 ATR; prospective net R:R before extra slippage >=1.35. Reassess quote, spread, price-chase <=0.35 ATR and net R:R on next bar after response delay.",
+  "expiry_and_management": "Plan expires after 90 minutes unfilled; filled positions remain open up to 96 completed M15 bars and do not close just because entry opportunity expired.",
+  "execution": "OANDA ask/bid entry and opposite exit side, actual pair-specific observation >= completed trigger, <=15 minutes detection delay, one-minute hypothetical manual response, next M15 opening, no inferred fill from price move. Stops gap adversely, same-bar entry exit extreme/stop+TP ambiguity unscored.",
+  "slippage_commission_financing": "Full bid/ask spread already in base R, no additional spread charge. Separate illustrative 0.25 pip per side slippage +0.15 pip per side commission stress; financing unknown and cannot be considered verified Pepperstone P&L.",
+  "exposure": "Maximum three simultaneous paper positions, two involving any currency, one open per exact pair; chronological deterministic exclusions, no broker execution.",
+  "evidence": "Historical/development and forward evidence separate; pair-specific actual snapshot times only. Hourly evaluations automatically replay subsequent completed OANDA bars with source evidence hashes. Fast pipeline observations cannot be retroactively inferred as shadow detection.",
+  "benchmark": "Compare with v20 champion on earliest independently scored matching pair/London-day cohorts when present. Additional reproducible no-trade benchmark 0R is disclosed as a weak opportunity-cost reference, not proof of edge.",
+  "review_floor": "At least 100 independent scored pair/London-days and 20 distinct days per policy, including adverse and favourable cases; floor is eligibility only. Day-clustered cost-stressed confidence intervals and a separately reviewed out-of-sample benefit are needed before any promotion.",
+  "performance_decision": "INCONCLUSIVE until sufficient forward fills and verified costs; never promote from approval counts or few wins.",
+  "existing_v20": "Unchanged; separate prospectively registered shadow comparator, not a silent reset or replacement."
+}
