@@ -3,9 +3,9 @@
   "common_universe": "All screened OANDA account currency pairs receive M5/M15/H1/H4/D collection, with explicit per-timeframe gaps. Both study arms require identical complete M15/H1/H4/D context. Fast checks remain bounded to active plans and leading candidates; omitted pairs never gain observation timestamps.",
   "cost_method": "Executable-side OANDA bid/ask fills and exits; no double spread subtraction. Adverse stop gaps and 0/0.25/0.5 pip per-side stress. Financing crossing NY 17:00 and actual Pepperstone costs remain unknown unless evidenced.",
   "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
-  "development_cutoff": "2026-11-02T23:59:59Z",
-  "holdout_start_at": "2026-11-03T00:00:00Z",
-  "id": "FX-OOS-20261102-v17",
+  "development_cutoff": "2026-11-05T06:59:59Z",
+  "holdout_start_at": "2026-11-05T07:00:00Z",
+  "id": "FX-OOS-20261105-v18",
   "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
   "minimum_independent_scored_pair_days_per_arm": 100,
   "minimum_scored_days_per_arm": 20,
@@ -15,13 +15,14 @@
     "champion",
     "challenger_v1"
   ],
-  "promotion_policy": "V16 prospectively corrects currency matching and headline materiality with no retrospective relabelling of V15 events: central-bank acronyms require word boundaries, publication title suffix is not event content, generic post-session currency/treasury commentary and ordinary conference announcements remain context, while specific monetary-policy decisions, shocks, inflation, employment, interventions and calendar releases remain hard blocks. Canonical entry stops, nearest structural targets, gross >=1.50 and net >=1.35 after spread, no-orders and account risk <=0.25% remain unchanged. Performance unproven and public GREEN always requires paired fresh data and independently completed prospective trigger. V17: the fixed fast top-eight starvation is replaced with deterministic rotating observation slots; late completed M5 (>5 min) and M15 (>15 min) patterns cannot become fresh alerts and are counted as missed observation windows, never invented missed profit. Risk/news/stop/TP/approval gates unchanged; no validated improvement claimed.",
+  "promotion_policy": "V18 is newly pre-registered before the 2026-11-05T07:00:00Z prospective holdout. Preserve V17 and all earlier cohorts. The hourly OANDA raw collector is separated from fail-closed strategy testing; failed or unavailable assessments must be published with original source timestamps and no approved routes. The 4 Nov code work also revises the public exporter, an integrity dependency tracked by the frozen fingerprint. Canonical champion/challenger risk, news, price, entry, exit and reward gates are NOT silently relaxed or validated. No orders, no verified user receipt, no automatic promotion. Before acceptance, replace the pending digest with the independently observed CI rule digest; never overwrite the V17 expected hash.",
   "require_pair_specific_observations": true,
-  "rule_sha256": "09f36ed3871572417ac0c2c8f46af253a449e46135cadecdec3bdba5ef577c55",
+  "rule_sha256": "PENDING_CI_VERIFIED_RULE_SHA256",
   "slippage_pips_per_side": [
     0,
     0.25,
     0.5
   ],
-  "supersedes_protocol_sha256": "4a146eb51737572c724a515a59d0c6f410ba71af93340b2428c4159c66e47a06"
+  "supersedes_protocol_sha256": "33722310a73100614726f3af76337f396183b43e9ff014631eb32abf8e0f347a",
+  "registered_at": "2026-11-04T09:56:05.624Z"
 }
