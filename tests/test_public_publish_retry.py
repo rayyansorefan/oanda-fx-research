@@ -22,7 +22,7 @@ class GoodResponse:
         return json.dumps({"commit":{"sha":"verified-commit"}}).encode()
 
 class PublicPublishRetryTests(unittest.TestCase):
-    @patch("scripts.export_public_dashboard.time.sleep",create=True)
+    @patch("time.sleep")
     @patch("scripts.export_public_dashboard._existing_public_feed")
     @patch("scripts.export_public_dashboard.urllib.request.urlopen")
     def test_ambiguous_502_put_then_committed_content_is_not_overwritten(self, put, get, sleep):
@@ -33,7 +33,7 @@ class PublicPublishRetryTests(unittest.TestCase):
         self.assertEqual(get.call_count,2)
         self.assertEqual(sleep.call_count,1)
 
-    @patch("scripts.export_public_dashboard.time.sleep",create=True)
+    @patch("time.sleep")
     @patch("scripts.export_public_dashboard._existing_public_feed")
     @patch("scripts.export_public_dashboard.urllib.request.urlopen")
     def test_retry_only_after_fetching_new_remote_sha(self, put, get, sleep):
@@ -44,7 +44,7 @@ class PublicPublishRetryTests(unittest.TestCase):
         self.assertEqual(get.call_count,3)
         self.assertEqual(sleep.call_count,1)
 
-    @patch("scripts.export_public_dashboard.time.sleep",create=True)
+    @patch("time.sleep")
     @patch("scripts.export_public_dashboard._existing_public_feed")
     @patch("scripts.export_public_dashboard.urllib.request.urlopen")
     def test_get_502_is_retryable_without_attempting_put_first(self, put, get, sleep):
