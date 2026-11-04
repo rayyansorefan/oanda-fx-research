@@ -5,24 +5,24 @@
   "delivery_method": "Separate source quote, frozen plan, completed trigger, observed detection, repository readback, public serving and independently verified provider/user receipt. Prepared price alerts and GitHub public feed are NOT verified ChatGPT delivery.",
   "development_cutoff": "2026-11-05T06:59:59Z",
   "holdout_start_at": "2026-11-05T07:00:00Z",
-  "id": "FX-OOS-20261104-v19",
+  "id": "FX-OOS-20261104-v20",
   "independence_rule": "Earliest scored fill per pair per London day per arm. Statistical comparison clustered by day; counts are eligibility floors, not proof of edge.",
   "minimum_independent_scored_pair_days_per_arm": 100,
   "minimum_scored_days_per_arm": 20,
-  "monitoring_method": "Fast shortlist remains best-effort at :02/:17/:32/:47 during 07-09 and 13-15 London weekdays, with immutable plans prioritised and remaining slots rotating across all 68 screened pairs. A missed observation creates no inferred trade; hourly collector and four weekday assessments continue. Two-window 15-minute GitHub schedule is best effort, not the requested verified five-minute cadence; measure real detection delays before asserting a manual-entry SLA.",
+  "monitoring_method": "Best-effort five-minute GitHub cron (minutes 02,07,...57) during London weekday 07:00-09:00 and 13:00-15:00. Existing hourly all-pair collection and safe queued persistence continue outside these two windows. Cron dispatch, queue and publication delays are measured from actual observations; not a guaranteed five-minute SLA. No invented delivery receipts.",
   "no_orders": true,
   "policies": [
     "champion",
     "challenger_v1"
   ],
-  "promotion_policy": "V19 preserves v18 and prospectively registers fast persistence retries and explicit assessment health. Trading thresholds unchanged. No automatic promotion; all existing sample and evidence requirements apply.",
+  "promotion_policy": "V20 supersedes v19 BEFORE either holdout begins (same 2026-11-05T07:00:00Z holdout), preserves prior protocols and old observations. Fast cadence and explicit safety-step verification changed, not trading thresholds. No automatic strategy promotion.",
+  "registered_at": "2026-11-04T11:12:49.194Z",
   "require_pair_specific_observations": true,
-  "rule_sha256": "37ef9177120a3d5749fd4cc32a7f564b7b8454aae626f55723244003830149d0",
+  "rule_sha256": "932d61141e42d745d64f7fa3c227fbb4b3f474f6f642e6a02c62e767bd3b599d",
   "slippage_pips_per_side": [
     0,
     0.25,
     0.5
   ],
-  "supersedes_protocol_sha256": "5beb7a0a3cf0bb6e6d31db5d474eb51627ec1bcb3426033380550a345089b6e3",
-  "registered_at": "2026-11-04T10:53:00.734171+00:00"
+  "supersedes_protocol_sha256": "115ac5750f3b4189a7505470e803a2dc9f46ccee9eb7b46846741c33bc743e80"
 }
