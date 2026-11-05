@@ -1,17 +1,17 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-05T19:13:15.598666+00:00",
-  "consecutive_unobserved_fast_targets": 8,
+  "checked_at": "2026-11-05T20:16:20.304064+00:00",
+  "consecutive_unobserved_fast_targets": 0,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
     "event": "push",
-    "head_sha": "529f33dac84954ce848f89ea653feba283e17e43",
-    "id": "42091729896",
+    "head_sha": "cb5ebfc860b7468ef395a0a6745377a42de3e16a",
+    "id": "42101586232",
     "outcomes": {
-      "collect": "failure",
-      "early_cohort": "skipped",
-      "fast_recovery": "skipped",
+      "collect": "success",
+      "early_cohort": "success",
+      "fast_recovery": "success",
       "safety": "success"
     },
     "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
@@ -43,24 +43,24 @@
     }
   ],
   "early_cohort_id": "FX-EARLY-20261104-v1",
-  "early_last_source_at": "2026-11-05T17:12:39Z",
-  "early_observation_count": 30,
-  "elapsed_fast_targets_today": 49,
-  "fast_age_seconds": 7209.339563,
-  "fast_last_attempt_at": "2026-11-05T17:13:06.705908+00:00",
-  "fast_observation_valid": false,
+  "early_last_source_at": "2026-11-05T20:15:35Z",
+  "early_observation_count": 31,
+  "elapsed_fast_targets_today": 53,
+  "fast_age_seconds": 6.786639,
+  "fast_last_attempt_at": "2026-11-05T20:16:13.932542+00:00",
+  "fast_observation_valid": true,
   "fast_run_failures": {
     "failed": 2,
     "sample": 5,
     "scope": "Latest 100 repository runs; process success is not observation success."
   },
-  "fast_source_at": "2026-11-05T17:13:06.259103+00:00",
+  "fast_source_at": "2026-11-05T20:16:13.517425+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 7236.598666,
-  "full_collection_status": "DATA_UNAVAILABLE",
-  "full_fresh": false,
-  "full_last_attempt_at": "2026-11-05T19:13:11Z",
-  "full_source_at": "2026-11-05T17:12:39Z",
+  "full_age_seconds": 45.304064,
+  "full_collection_status": "PARTIAL",
+  "full_fresh": true,
+  "full_last_attempt_at": "2026-11-05T20:15:35Z",
+  "full_source_at": "2026-11-05T20:15:35Z",
   "last_completed_jobs": [
     {
       "conclusion": "failure",
@@ -68,13 +68,15 @@
       "failed_steps": [
         "Fail closed if any research or public dashboard step failed"
       ],
-      "run_id": 42081878711
+      "run_id": 42091729896
     },
     {
-      "conclusion": "success",
+      "conclusion": "failure",
       "event": "push",
-      "failed_steps": [],
-      "run_id": 42072255351
+      "failed_steps": [
+        "Fail closed if any research or public dashboard step failed"
+      ],
+      "run_id": 42081878711
     }
   ],
   "previous_publication": {
@@ -385,7 +387,7 @@
     }
   },
   "scheduler_guarantee": false,
-  "status": "DEGRADED",
+  "status": "CURRENT",
   "target_fast_interval_seconds": 900,
   "target_full_interval_seconds": 3600,
   "unobserved_fast_targets_today": [
@@ -426,7 +428,10 @@
     "2026-11-05T18:17:00+00:00",
     "2026-11-05T18:32:00+00:00",
     "2026-11-05T18:47:00+00:00",
-    "2026-11-05T19:02:00+00:00"
+    "2026-11-05T19:02:00+00:00",
+    "2026-11-05T19:17:00+00:00",
+    "2026-11-05T19:32:00+00:00",
+    "2026-11-05T19:47:00+00:00"
   ],
   "workflow_registration": [
     {

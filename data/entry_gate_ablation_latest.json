@@ -4,26 +4,41 @@
       "approval_allowed": true,
       "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 1
+      "unverifiable": 0
     },
     "paper_without_m15_adx_and_missing_primary_feed": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 0,
-      "paper_watch_examples": [],
+      "counterfactual_pair_routes": 1,
+      "paper_watch_examples": [
+        {
+          "direction": "SHORT",
+          "economics_at_observation": {
+            "entry_reference": 0.4576174226955454,
+            "gross_rr": 2.75218,
+            "nearest_target": 0.4561,
+            "net_rr": 1.81331,
+            "stop_reference": 0.45816877647374565
+          },
+          "news_status": "SOURCE_UNVERIFIED",
+          "pair": "NZD_CHF",
+          "route": "EMA20_PULLBACK",
+          "status": "PAPER_ONLY_NOT_A_FUTURE_TRIGGER_OR_MANUAL_ENTRY"
+        }
+      ],
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 1
+      "unverifiable": 0
     },
     "without_daily_ema_paper": {
       "approval_allowed": false,
       "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 1
+      "unverifiable": 0
     },
     "without_m15_adx_paper": {
       "approval_allowed": false,
       "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 1
+      "unverifiable": 0
     },
     "without_nearest_target_economics_diagnostic_only": {
       "approval_allowed": false,
@@ -33,41 +48,41 @@
     },
     "without_news_gate_diagnostic_only": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 0,
+      "counterfactual_pair_routes": 1,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 1
+      "unverifiable": 0
     },
     "without_reversal_veto_paper": {
       "approval_allowed": false,
       "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 1
+      "unverifiable": 0
     }
   },
-  "distinct_pairs": 33,
+  "distinct_pairs": 21,
   "failures": {
-    "absolute_spread_cap": 24,
-    "adx_H1": 18,
-    "adx_M15": 6,
+    "absolute_spread_cap": 20,
+    "adx_H1": 4,
+    "adx_M15": 8,
     "direction_known": 0,
-    "dmi_H1": 6,
-    "dmi_M15": 4,
-    "gross_reward_minimum": 36,
-    "net_reward_minimum": 41,
-    "news_gate": 66,
-    "no_reversal_or_exhaustion": 44,
-    "observed_target_available": 1,
-    "pair_supported": 0,
+    "dmi_H1": 4,
+    "dmi_M15": 0,
+    "gross_reward_minimum": 15,
+    "net_reward_minimum": 24,
+    "news_gate": 42,
+    "no_reversal_or_exhaustion": 8,
+    "observed_target_available": 0,
+    "pair_supported": 2,
     "quote_timely_tradeable": 0,
     "recent_completed_history": 0,
-    "relative_spread_cap": 8,
-    "route_not_stretched": 46,
-    "route_pattern": 26,
+    "relative_spread_cap": 20,
+    "route_not_stretched": 17,
+    "route_pattern": 16,
     "structural_stop_range": 1,
-    "trend_D": 36,
-    "trend_H1": 14,
+    "trend_D": 6,
+    "trend_H1": 20,
     "trend_H4": 28,
-    "trend_M15": 8,
+    "trend_M15": 0,
     "valid_two_sided_quote": 0
   },
   "isolated_only_blocker": {
@@ -79,7 +94,7 @@
     "dmi_M15": 0,
     "gross_reward_minimum": 0,
     "net_reward_minimum": 0,
-    "news_gate": 0,
+    "news_gate": 1,
     "no_reversal_or_exhaustion": 0,
     "observed_target_available": 0,
     "pair_supported": 0,
@@ -101,6 +116,6 @@
     "The combined M15-ADX/unsupported-primary-feed paper hypothesis keeps all other technical and reward/risk gates; it cannot verify the missing source or support a manual fill.",
     "Pair-route observations share prices and currency exposure; they are not independent trade outcomes."
   ],
-  "route_observations": 66,
-  "source_at": "2026-11-05T17:12:39Z"
+  "route_observations": 42,
+  "source_at": "2026-11-05T20:15:35Z"
 }
