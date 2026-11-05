@@ -333,9 +333,19 @@ jobs:
           python scripts/simple_paper_shadow.py
           python scripts/simple_paper_shadow_v2.py
           python scripts/early_forward_start.py
+      - name: Admit all-pair plans from recovered full source
+        id: recovered_admission
+        if: steps.source.outputs.refreshed == 'true' && steps.paper_catchup.outcome == 'success'
+        run: |
+          python scripts/admission_diagnostics.py
+          python scripts/signal_admission.py
+      - name: Reassess canonical plans after recovered full source
+        id: recovered_watch
+        if: steps.recovered_admission.outcome == 'success'
+        run: python scripts/signal_watch.py
       - name: Capture fast observation only if original monitor is overdue
         id: fast
-        if: steps.source.outcome == 'success' && (steps.source.outputs.refreshed != 'true' || steps.paper_catchup.outcome == 'success')
+        if: steps.source.outcome == 'success' && (steps.source.outputs.refreshed != 'true' || (steps.paper_catchup.outcome == 'success' && steps.recovered_admission.outcome == 'success' && steps.recovered_watch.outcome == 'success'))
         env:
           OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
           OANDA_ACCOUNT_ID: ${{ secrets.OANDA_ACCOUNT_ID }}
@@ -365,6 +375,12 @@ jobs:
           FX_ADMISSION_OUTCOME: success
           FX_WATCH_OUTCOME: success
         run: python scripts/export_public_dashboard.py
+      - name: Mark failed backup assessment unavailable
+        if: failure()
+        env:
+          FX_DASHBOARD_DEPLOY_TOKEN: ${{ secrets.FX_DASHBOARD_DEPLOY_TOKEN }}
+          FX_HEALTH_FAILURE: FAST_BACKUP_FAILED
+        run: python scripts/publish_health_status.py
       - name: Record real scheduler event and monitoring gap evidence
         id: monitoring
         if: always()
@@ -404,5 +420,5 @@ jobs:
             data/monitoring_health.json
             signals.json
       - name: Fail closed if backup, publication, or persistence failed
-        if: always() && (steps.safety.outcome != 'success' || steps.source.outcome != 'success' || (steps.source.outputs.refreshed == 'true' && steps.paper_catchup.outcome != 'success') || steps.fast.outcome != 'success' || steps.monitoring.outcome != 'success' || steps.persist.outcome != 'success' || (steps.fast.outputs.collected == 'true' && (steps.validation.outcome != 'success' || steps.paper_gates.outcome != 'success' || steps.publish.outcome != 'success')))
+        if: always() && (steps.safety.outcome != 'success' || steps.source.outcome != 'success' || (steps.source.outputs.refreshed == 'true' && (steps.paper_catchup.outcome != 'success' || steps.recovered_admission.outcome != 'success' || steps.recovered_watch.outcome != 'success')) || steps.fast.outcome != 'success' || steps.monitoring.outcome != 'success' || steps.persist.outcome != 'success' || (steps.fast.outputs.collected == 'true' && (steps.validation.outcome != 'success' || steps.paper_gates.outcome != 'success' || steps.publish.outcome != 'success')))
         run: exit 1

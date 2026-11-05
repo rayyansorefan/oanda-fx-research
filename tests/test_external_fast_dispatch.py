@@ -50,6 +50,23 @@ class ExternalFastDispatchTests(unittest.TestCase):
                       FAST_FROZEN.read_text())
         self.assertNotIn("monitoring_mode",FAST_FROZEN.read_text())
 
+    def test_recovered_full_universe_is_admitted_before_shortlist_scan(self):
+        # Recovery used to refresh all quotes but admit only the eight fast
+        # pairs. A valid setup outside that shortlist was never considered.
+        recovery = self.config.index("      - name: Admit all-pair plans")
+        fast = self.config.index("      - name: Capture fast observation")
+        section = self.config[recovery:fast]
+        self.assertLess(recovery, fast)
+        self.assertIn("python scripts/signal_admission.py", section)
+        self.assertIn("python scripts/signal_watch.py", section)
+        self.assertIn("steps.recovered_watch.outcome == 'success'", self.config[fast:])
+        self.assertIn("steps.recovered_admission.outcome != 'success'", self.config)
+
+    def test_failed_backup_invalidates_public_assessment(self):
+        section = self.config[self.config.index("  fast-tick:"):]
+        self.assertIn("FX_HEALTH_FAILURE: FAST_BACKUP_FAILED", section)
+        self.assertIn("python scripts/publish_health_status.py", section)
+
 
 if __name__=="__main__":
     unittest.main()
