@@ -903,6 +903,37 @@
         "atr_spread": "OANDA bid/ask 1.34636/1.34646; observed spread 1.0 pip versus 1.5-pip cap; M15 ATR about 8.87 pips. Original gross TP1 geometry 1.79 and capped-spread-adjusted 1.52.",
         "macro": "Repository news coverage PARTIAL. Bank of England November policy decision and Monetary Policy Report are due 2026-11-05 at 12:00 UK, after this watch expires; current Pepperstone symbol/bid/ask/spread remain user-verification requirements."
       }
+    },
+    {
+      "id": "20261105-0735-EURUSD-L-EMA20-PAPER",
+      "instrument": "EUR_USD",
+      "direction": "LONG",
+      "created_at": "2026-11-05T07:35:00Z",
+      "expires_at": "2026-11-05T09:12:44.397696Z",
+      "planned_entry": null,
+      "entry_zone": [
+        1.12541,
+        1.12554
+      ],
+      "stop": 1.12492,
+      "tp1": 1.12682,
+      "tp2": 1.12731,
+      "alert_b": null,
+      "max_oanda_spread_pips": null,
+      "event_blackouts_utc": [],
+      "strategy": "EMA20_PULLBACK",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-05T07:16:57Z",
+      "status": "EARLY_WATCH_ONLY_UNTRIGGERED_INCOMPLETE",
+      "original_note": "Prospective early EUR/USD long paper watch retained from immutable opportunity 202611050445-EURUSD-LONG-EMA20_PULLBACK. Frozen OANDA zone 1.12541-1.12554; require a newly completed bullish entry-pattern candle after the original plan and renewed quote, spread and news review before expiry. Current completed M15 was a bearish outside candle, M5 momentum turned down, Daily trend conflicts and recent USD-yield headlines require review. No immutable maximum-spread cap, canonical signal, broker fill or buy-now instruction.",
+      "technical_context": {
+        "as_of_utc": "2026-11-05T07:16:57Z",
+        "m15": "RSI14 51.15; ADX14 37.86; +DI 21.57 > -DI 14.25; above EMA50/200 and visible cloud with Supertrend up, but below EMA20, MACD histogram negative and latest completed candle bearish outside.",
+        "h1": "RSI14 63.26; ADX14 27.43; +DI 29.60 > -DI 13.44; EMA20>EMA50>EMA200, cloud/Supertrend bullish; latest completed candle bullish engulfing.",
+        "trend": "H4/H1 constructive, M15 pullback; Daily EMA/cloud/Supertrend and lower-high/lower-low structure conflict, while M5 broke its prior Donchian low with weak ADX.",
+        "atr_spread": "OANDA 1.12558/1.12566 at 07:16:57Z; observed spread 0.8 pip versus M15 ATR about 5.0 pips. Immutable maximum-spread cap unavailable, so not canonical.",
+        "macro": "Repository news coverage PARTIAL; fresh 07:11Z headline reported U.S. Treasury yields at eight-week lows after midterm results. U.S. preliminary Q3 productivity/costs is due 13:30 UK, after this watch expires."
+      }
     }
   ]
 }
