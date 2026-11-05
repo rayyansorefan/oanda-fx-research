@@ -28,49 +28,50 @@
   "automatic_promotion_allowed": false,
   "coverage": {
     "count_note": "Rejection categories overlap; route counts and per-reason pair counts must not be summed into independent trades.",
-    "deep_pairs": 65,
-    "distinct_evaluated_pairs": 65,
+    "deep_pairs": 68,
+    "distinct_evaluated_pairs": 68,
     "distinct_pairs_by_rejection": {
-      "FOUR_FRAME_TREND_CONFLICT": 32,
-      "INVALID_BID_ASK_OR_SPREAD": 23,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
-      "REVERSAL_OR_EXHAUSTION": 11,
+      "FOUR_FRAME_TREND_CONFLICT": 26,
+      "INVALID_BID_ASK_OR_SPREAD": 14,
+      "REVERSAL_OR_EXHAUSTION": 28,
       "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 1,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
     "paper_prequalified": [
-      "AUD_CHF",
-      "AUD_USD",
+      "AUD_NZD",
       "CHF_JPY",
       "EUR_USD",
       "GBP_USD",
       "NZD_USD",
       "USD_CAD",
-      "USD_CHF"
+      "USD_CHF",
+      "USD_JPY"
     ],
     "paper_prequalified_missing_deep": [],
-    "quoted_pairs": 65,
-    "route_evaluations": 130,
+    "quoted_pairs": 68,
+    "route_evaluations": 136,
     "route_rejections": {
-      "FOUR_FRAME_TREND_CONFLICT": 62,
-      "INVALID_BID_ASK_OR_SPREAD": 44,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
-      "REVERSAL_OR_EXHAUSTION": 19,
+      "FOUR_FRAME_TREND_CONFLICT": 50,
+      "INVALID_BID_ASK_OR_SPREAD": 28,
+      "REVERSAL_OR_EXHAUSTION": 54,
       "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-11-05T05:12:35Z",
+    "source_at": "2026-11-05T07:16:57Z",
     "strict_prequalified": [
       "CHF_HKD",
-      "CHF_JPY",
       "EUR_HKD",
       "EUR_USD",
+      "GBP_HKD",
       "GBP_USD",
+      "HKD_JPY",
       "NZD_HKD",
       "NZD_USD",
       "USD_CAD",
-      "USD_CHF"
+      "USD_CHF",
+      "USD_DKK",
+      "USD_JPY"
     ],
     "strict_prequalified_missing_deep": []
   },
@@ -90,12 +91,12 @@
     "actual_delivery_evidence": false,
     "broker_cost_evidence": false,
     "complete_cost_scenarios": false,
-    "holdout_started": false,
+    "holdout_started": true,
     "minimum_independent_samples": false,
     "minimum_scored_days": false,
     "rules_unchanged": true,
     "statistical_improvement_established": false
   },
-  "status": "HOLDOUT_NOT_STARTED",
-  "updated_at": "2026-11-05T05:12:46.970868+00:00"
+  "status": "COLLECTING_HOLDOUT",
+  "updated_at": "2026-11-05T07:17:15.207148+00:00"
 }
