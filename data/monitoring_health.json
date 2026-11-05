@@ -1,13 +1,13 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-05T18:12:03.134780+00:00",
-  "consecutive_unobserved_fast_targets": 4,
+  "checked_at": "2026-11-05T19:13:15.598666+00:00",
+  "consecutive_unobserved_fast_targets": 8,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
     "event": "push",
-    "head_sha": "ada011f1702c35d580aedea50d00c2706b244176",
-    "id": "42081878711",
+    "head_sha": "529f33dac84954ce848f89ea653feba283e17e43",
+    "id": "42091729896",
     "outcomes": {
       "collect": "failure",
       "early_cohort": "skipped",
@@ -17,6 +17,14 @@
     "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
   },
   "dashboard_deployments": [
+    {
+      "conclusion": "failure",
+      "created_at": "2026-11-05T18:12:15Z",
+      "head_sha": "5c24aeb0c22733102544817f3554ca34b4b400e1",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42081958806",
+      "id": 42081958806,
+      "status": "completed"
+    },
     {
       "conclusion": "failure",
       "created_at": "2026-11-05T17:13:27Z",
@@ -32,21 +40,13 @@
       "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42063458283",
       "id": 42063458283,
       "status": "completed"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-11-05T15:22:58Z",
-      "head_sha": "35b59d3c2404526804c36520ce49cb6f7099694f",
-      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42054402832",
-      "id": 42054402832,
-      "status": "completed"
     }
   ],
   "early_cohort_id": "FX-EARLY-20261104-v1",
   "early_last_source_at": "2026-11-05T17:12:39Z",
   "early_observation_count": 30,
-  "elapsed_fast_targets_today": 45,
-  "fast_age_seconds": 3536.875677,
+  "elapsed_fast_targets_today": 49,
+  "fast_age_seconds": 7209.339563,
   "fast_last_attempt_at": "2026-11-05T17:13:06.705908+00:00",
   "fast_observation_valid": false,
   "fast_run_failures": {
@@ -56,32 +56,32 @@
   },
   "fast_source_at": "2026-11-05T17:13:06.259103+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 3564.13478,
+  "full_age_seconds": 7236.598666,
   "full_collection_status": "DATA_UNAVAILABLE",
   "full_fresh": false,
-  "full_last_attempt_at": "2026-11-05T18:11:59Z",
+  "full_last_attempt_at": "2026-11-05T19:13:11Z",
   "full_source_at": "2026-11-05T17:12:39Z",
   "last_completed_jobs": [
-    {
-      "conclusion": "success",
-      "event": "push",
-      "failed_steps": [],
-      "run_id": 42072255351
-    },
     {
       "conclusion": "failure",
       "event": "push",
       "failed_steps": [
         "Fail closed if any research or public dashboard step failed"
       ],
-      "run_id": 42064359249
+      "run_id": 42081878711
+    },
+    {
+      "conclusion": "success",
+      "event": "push",
+      "failed_steps": [],
+      "run_id": 42072255351
     }
   ],
   "previous_publication": {
-    "checked_at": "2026-11-05T17:13:26.928582Z",
+    "checked_at": "2026-11-05T18:12:13.579546Z",
     "public_feed_path": "docs/fx-feed.json",
     "public_repository": "rayyansorefan/standalone-wallet-paper-agent",
-    "reason": "Public repository contents readback verified.",
+    "reason": "Operational failure; market snapshot timestamp unchanged",
     "snapshot_at": "2026-11-05T17:12:39Z",
     "status": "PUBLISHED"
   },
@@ -422,7 +422,11 @@
     "2026-11-05T17:17:00+00:00",
     "2026-11-05T17:32:00+00:00",
     "2026-11-05T17:47:00+00:00",
-    "2026-11-05T18:02:00+00:00"
+    "2026-11-05T18:02:00+00:00",
+    "2026-11-05T18:17:00+00:00",
+    "2026-11-05T18:32:00+00:00",
+    "2026-11-05T18:47:00+00:00",
+    "2026-11-05T19:02:00+00:00"
   ],
   "workflow_registration": [
     {
