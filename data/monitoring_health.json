@@ -1,15 +1,15 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-05T21:32:55.135484+00:00",
-  "consecutive_unobserved_fast_targets": 3,
+  "checked_at": "2026-11-05T22:15:14.241455+00:00",
+  "consecutive_unobserved_fast_targets": 6,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
-    "event": "schedule",
-    "head_sha": "2e632aac6827d0a45a8379c57bf02ca7a3c9b0a4",
-    "id": "42113596630",
+    "event": "push",
+    "head_sha": "a47bf9b1e6b3e550e49f7bd97c24b0fae8081a6d",
+    "id": "42119853781",
     "outcomes": {
-      "collect": "skipped",
+      "collect": "failure",
       "early_cohort": "skipped",
       "fast_recovery": "skipped",
       "safety": "success"
@@ -17,6 +17,14 @@
     "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
   },
   "dashboard_deployments": [
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-05T21:59:01Z",
+      "head_sha": "f810343476a685f56e84d3ea8742bf5f2f10640a",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42117490646",
+      "id": 42117490646,
+      "status": "completed"
+    },
     {
       "conclusion": "success",
       "created_at": "2026-11-05T20:39:19Z",
@@ -32,36 +40,38 @@
       "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42101850835",
       "id": 42101850835,
       "status": "completed"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-11-05T18:12:15Z",
-      "head_sha": "5c24aeb0c22733102544817f3554ca34b4b400e1",
-      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42081958806",
-      "id": 42081958806,
-      "status": "completed"
     }
   ],
   "early_cohort_id": "FX-EARLY-20261104-v1",
   "early_last_source_at": "2026-11-05T20:38:35Z",
   "early_observation_count": 32,
-  "elapsed_fast_targets_today": 58,
-  "fast_age_seconds": 3232.675305,
+  "elapsed_fast_targets_today": 61,
+  "fast_age_seconds": 5771.781276,
   "fast_last_attempt_at": "2026-11-05T20:39:02.788411+00:00",
   "fast_observation_valid": false,
   "fast_run_failures": {
     "failed": 3,
-    "sample": 6,
+    "sample": 5,
     "scope": "Latest 100 repository runs; process success is not observation success."
   },
   "fast_source_at": "2026-11-05T20:39:02.460179+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 3260.135484,
-  "full_collection_status": "PARTIAL",
-  "full_fresh": true,
-  "full_last_attempt_at": "2026-11-05T20:38:35Z",
+  "full_age_seconds": 5799.241455,
+  "full_collection_status": "DATA_UNAVAILABLE",
+  "full_fresh": false,
+  "full_last_attempt_at": "2026-11-05T22:15:10Z",
   "full_source_at": "2026-11-05T20:38:35Z",
   "last_completed_jobs": [
+    {
+      "conclusion": "failure",
+      "event": "schedule",
+      "failed_steps": [
+        "Restore source coverage if hourly OANDA schedule was missed",
+        "Mark failed backup assessment unavailable",
+        "Fail closed if backup, publication, or persistence failed"
+      ],
+      "run_id": 42113596630
+    },
     {
       "conclusion": "failure",
       "event": "schedule",
@@ -69,12 +79,6 @@
         "Fail visibly after preserving observations"
       ],
       "run_id": 42112855633
-    },
-    {
-      "conclusion": "success",
-      "event": "schedule",
-      "failed_steps": [],
-      "run_id": 42105204748
     }
   ],
   "previous_publication": {
@@ -197,7 +201,7 @@
         "failure",
         "success",
         "success",
-        null
+        "failure"
       ],
       "created_at": [
         "2026-10-21T15:38:58Z",
@@ -445,7 +449,10 @@
     "2026-11-05T20:17:00+00:00",
     "2026-11-05T20:47:00+00:00",
     "2026-11-05T21:02:00+00:00",
-    "2026-11-05T21:17:00+00:00"
+    "2026-11-05T21:17:00+00:00",
+    "2026-11-05T21:32:00+00:00",
+    "2026-11-05T21:47:00+00:00",
+    "2026-11-05T22:02:00+00:00"
   ],
   "workflow_registration": [
     {
