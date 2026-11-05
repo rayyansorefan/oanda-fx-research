@@ -1,26 +1,26 @@
 {
   "active_london_day": false,
-  "checked_at": "2026-11-05T01:00:19.947438+00:00",
+  "checked_at": "2026-11-05T02:11:41.572640+00:00",
   "consecutive_unobserved_fast_targets": 0,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
-    "event": "schedule",
-    "head_sha": "066ec53314f319fec511a9564e66ee348b49108a",
-    "id": "41945436683",
+    "event": "push",
+    "head_sha": "28b75739bc3c41f1a4f43c23d236dcc64b57f7b4",
+    "id": "41953489884",
     "outcomes": {
-      "collect": "skipped",
-      "early_cohort": "skipped",
+      "collect": "success",
+      "early_cohort": "success",
       "fast_recovery": "success",
       "safety": "success"
     },
     "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
   },
   "early_cohort_id": "FX-EARLY-20261104-v1",
-  "early_last_source_at": "2026-11-05T00:16:01Z",
-  "early_observation_count": 12,
+  "early_last_source_at": "2026-11-05T02:11:23Z",
+  "early_observation_count": 13,
   "elapsed_fast_targets_today": 0,
-  "fast_age_seconds": 8637.940376,
+  "fast_age_seconds": 12919.565578,
   "fast_last_attempt_at": "2026-11-04T22:36:22.410342+00:00",
   "fast_observation_valid": false,
   "fast_run_failures": {
@@ -30,23 +30,23 @@
   },
   "fast_source_at": "2026-11-04T22:36:22.007062+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 2658.947438,
+  "full_age_seconds": 18.57264,
   "full_collection_status": "PARTIAL",
   "full_fresh": true,
-  "full_last_attempt_at": "2026-11-05T00:16:01Z",
-  "full_source_at": "2026-11-05T00:16:01Z",
+  "full_last_attempt_at": "2026-11-05T02:11:23Z",
+  "full_source_at": "2026-11-05T02:11:23Z",
   "last_completed_jobs": [
+    {
+      "conclusion": "success",
+      "event": "schedule",
+      "failed_steps": [],
+      "run_id": 41945436683
+    },
     {
       "conclusion": "success",
       "event": "push",
       "failed_steps": [],
       "run_id": 41939927645
-    },
-    {
-      "conclusion": "success",
-      "event": "schedule",
-      "failed_steps": [],
-      "run_id": 41926627314
     }
   ],
   "previous_publication": {
@@ -155,7 +155,7 @@
         "failure",
         "success",
         "success",
-        null
+        "success"
       ],
       "created_at": [
         "2026-10-21T15:38:58Z",
