@@ -934,6 +934,43 @@
         "atr_spread": "OANDA 1.12558/1.12566 at 07:16:57Z; observed spread 0.8 pip versus M15 ATR about 5.0 pips. Immutable maximum-spread cap unavailable, so not canonical.",
         "macro": "Repository news coverage PARTIAL; fresh 07:11Z headline reported U.S. Treasury yields at eight-week lows after midterm results. U.S. preliminary Q3 productivity/costs is due 13:30 UK, after this watch expires."
       }
+    },
+    {
+      "id": "20261105-1208-AUDJPY-L-C-PAPER",
+      "instrument": "AUD_JPY",
+      "direction": "LONG",
+      "created_at": "2026-11-05T12:08:00Z",
+      "expires_at": "2026-11-05T14:00:00Z",
+      "planned_entry": 111.14,
+      "entry_zone": [
+        111.13,
+        111.16
+      ],
+      "stop": 110.97,
+      "tp1": 111.46,
+      "tp2": null,
+      "alert_c": 111.132,
+      "max_oanda_spread_pips": 3,
+      "event_blackouts_utc": [
+        {
+          "start": "2026-11-05T13:20:00Z",
+          "end": "2026-11-05T13:45:00Z",
+          "reason": "US claims/productivity broad rates-volatility risk"
+        }
+      ],
+      "strategy": "M15_MOMENTUM_CONTINUATION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-05T12:03:19Z",
+      "status": "EARLY_WATCH_ONLY_UNTESTABLE_NOT_CANONICAL",
+      "original_note": "Prospective AUD/JPY long continuation paper watch only. Require a NEW completed M15 close above 111.132 with a decisive bullish body, renewed OANDA quote/spread/news checks and current Pepperstone confirmation. H1 ADX 14.9 and H4 ADX 13.5 remain below the research threshold and D1/H4 regime evidence is mixed, so this is not eligible for signals.json or buy-now action. No broker fill is implied.",
+      "technical_context": {
+        "as_of_utc": "2026-11-05T12:03:19Z",
+        "m15": "RSI14 64.5; ADX14 27.5; +DI dominant; bullish EMA/Supertrend/cloud, but no completed close above 111.132.",
+        "h1": "RSI14 60.2; ADX14 14.9; +DI dominant and bullish EMA/Supertrend/cloud, but trend strength remains sub-threshold.",
+        "trend": "M5/M15/H1 direction is constructive; H4 ADX 13.5 with Supertrend down and D1 mixed/cloud-below context are material counterevidence.",
+        "atr_spread": "OANDA 111.074/111.099 at 12:03:19Z; spread 2.5 pips, M15 ATR about 7.0 pips; paper cap 3.0 pips. Original gross and capped-spread-adjusted TP1 geometry exceed internal gates.",
+        "macro": "BoE raised Bank Rate to 4% at 12:00 UK, driving sterling volatility. US claims and Q3 productivity/costs are due 13:30 UK; apply 13:20-13:45 broad-volatility blackout."
+      }
     }
   ]
 }
