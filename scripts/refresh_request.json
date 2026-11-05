@@ -1,9 +1,9 @@
 {
   "purpose": "fresh OANDA price and news update when scheduled cron is unavailable",
-  "request": "FX_20261105_1630_MAIN_ASSESSMENT_FRESHNESS_RECOVERY",
-  "requested_by": "ChatGPT FX Afternoon Trade Audit",
+  "request": "FX_20261105_1711_HOURLY_STALE_OANDA_401_RECOVERY",
+  "requested_by": "ChatGPT FX Trade Alerts & Dashboard Sync",
   "session_day_utc": "2026-11-05",
-  "sequence": 141,
-  "requested_at_utc": "2026-11-05T16:25:45Z",
-  "note": "16:30 full assessment recovery after 16:20 collector persisted OANDA_HTTP_504; request one current-main collection, news, all-pair admission and public readback verification."
+  "sequence": 142,
+  "requested_at_utc": "2026-11-05T17:11:49Z",
+  "note": "One current-main refresh attempt; previous 16:26 full collector OANDA_HTTP_401, verify fresh source, all-pair admission, signals, and public Pages feed; fail closed."
 }
