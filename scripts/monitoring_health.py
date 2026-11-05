@@ -78,12 +78,12 @@ def fast_if_due(now=None):
     return 0
 
 
-def github(path):
+def github(path, repository=None):
     headers = {"Accept": "application/vnd.github+json", "User-Agent": "fx-monitoring-health"}
     token = os.environ.get("GITHUB_TOKEN")
     if token:
         headers["Authorization"] = "Bearer " + token
-    repo = os.environ.get("GITHUB_REPOSITORY", "rayyansorefan/oanda-fx-research")
+    repo = repository or os.environ.get("GITHUB_REPOSITORY", "rayyansorefan/oanda-fx-research")
     with urlopen(Request("https://api.github.com/repos/"+repo+"/"+path, headers=headers), timeout=15) as r:
         return json.load(r)
 
@@ -173,6 +173,13 @@ def build(now=None, remote=True):
             report["fast_run_failures"] = {"sample": len(fast_runs),
                 "failed": sum(r.get("conclusion") != "success" for r in fast_runs),
                 "scope": "Latest 100 repository runs; process success is not observation success."}
+            # A repository feed write is not a Pages deployment. Retain the
+            # actual deployment job identity/outcome for independent checking.
+            pages = github("actions/workflows/fx-dashboard.yml/runs?per_page=3",
+                           repository="rayyansorefan/standalone-wallet-paper-agent")
+            report["dashboard_deployments"] = [
+                {k: r.get(k) for k in ("id", "head_sha", "status", "conclusion", "html_url", "created_at")}
+                for r in pages.get("workflow_runs", [])]
             # Completed run steps independently expose earlier persistence/publication failures.
             report["last_completed_jobs"] = []
             completed = [r for r in recent if r.get("status") == "completed" and r.get("path") in

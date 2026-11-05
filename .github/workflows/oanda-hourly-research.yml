@@ -54,7 +54,7 @@ concurrency:
 jobs:
   snapshot:
     # Dedicated backup tick must not start the expensive all-pair collector.
-    if: (github.event_name != 'schedule' || github.event.schedule != '4,19,34,49 7-22 * * 1-5') && (github.event_name != 'workflow_dispatch' || inputs.monitoring_mode != 'fast')
+    if: (github.event_name != 'schedule' || github.event.schedule != '4,19,34,49 7-22 * * 1-5') && (github.event_name != 'workflow_dispatch' || inputs.monitoring_mode != 'fast') && !(github.event_name == 'push' && contains(github.event.head_commit.message, '[fx-fast-check]'))
     runs-on: ubuntu-24.04
     timeout-minutes: 6
     steps:
@@ -299,7 +299,7 @@ jobs:
     # Backup is intentionally in the existing hourly WORKFLOW, not a new repo
     # or provider. Existing frozen .github/workflows/oanda-fast-entry.yml remains
     # unchanged so v21 and simple-v2 evidence hashes do not drift.
-    if: (github.event_name == 'schedule' && github.event.schedule == '4,19,34,49 7-22 * * 1-5') || (github.event_name == 'workflow_dispatch' && inputs.monitoring_mode == 'fast')
+    if: (github.event_name == 'schedule' && github.event.schedule == '4,19,34,49 7-22 * * 1-5') || (github.event_name == 'workflow_dispatch' && inputs.monitoring_mode == 'fast') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[fx-fast-check]'))
     runs-on: ubuntu-24.04
     timeout-minutes: 9
     steps:

@@ -62,6 +62,10 @@ class ExternalFastDispatchTests(unittest.TestCase):
         self.assertIn("steps.recovered_watch.outcome == 'success'", self.config[fast:])
         self.assertIn("steps.recovered_admission.outcome != 'success'", self.config)
 
+    def test_authorized_push_can_verify_fast_job_without_external_token(self):
+        self.assertEqual(self.config.count("contains(github.event.head_commit.message, '[fx-fast-check]')"), 2)
+        self.assertIn("&& !(github.event_name == 'push'", self.config)
+
     def test_failed_backup_invalidates_public_assessment(self):
         section = self.config[self.config.index("  fast-tick:"):]
         self.assertIn("FX_HEALTH_FAILURE: FAST_BACKUP_FAILED", section)
