@@ -1,5 +1,5 @@
 {
-  "last_source_at": "2026-11-05T10:13:23Z",
+  "last_source_at": "2026-11-05T11:10:56Z",
   "no_broker_orders": true,
   "observations": [
     {
@@ -404,18 +404,42 @@
       },
       "paper_plans_not_inferred": true,
       "source_at": "2026-11-05T10:13:23Z"
+    },
+    {
+      "evaluated_at": "2026-11-05T11:11:08Z",
+      "first_blocker_counts": {
+        "M15_H1_EMA_DIRECTION_CONFLICT": 5,
+        "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW": 1,
+        "SPREAD_RELATIVE_TO_ATR": 3,
+        "SPREAD_TOO_WIDE": 1
+      },
+      "observation_kind": "HOURLY",
+      "pair_reasons": {
+        "AUD_USD": "SPREAD_RELATIVE_TO_ATR",
+        "EUR_GBP": "M15_H1_EMA_DIRECTION_CONFLICT",
+        "EUR_JPY": "M15_H1_EMA_DIRECTION_CONFLICT",
+        "EUR_USD": "M15_H1_EMA_DIRECTION_CONFLICT",
+        "GBP_JPY": "SPREAD_TOO_WIDE",
+        "GBP_USD": "M15_H1_EMA_DIRECTION_CONFLICT",
+        "NZD_USD": "SPREAD_RELATIVE_TO_ATR",
+        "USD_CAD": "SPREAD_RELATIVE_TO_ATR",
+        "USD_CHF": "M15_H1_EMA_DIRECTION_CONFLICT",
+        "USD_JPY": "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW"
+      },
+      "paper_plans_not_inferred": true,
+      "source_at": "2026-11-05T11:10:56Z"
     }
   ],
   "performance_validated": false,
   "registered_cohort": "FX-EARLY-20261104-v1",
   "scope": "FIRST_BLOCKER_DIAGNOSTIC_NOT_AN_ELIGIBLE_FILL",
-  "total_evaluated_snapshots": 17,
+  "total_evaluated_snapshots": 18,
   "total_pair_gate_counts": {
     "FORMED_PAPER_SETUP_REQUIRES_PROSPECTIVE_REGISTRATION": 1,
-    "M15_H1_EMA_DIRECTION_CONFLICT": 44,
-    "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW": 21,
+    "M15_H1_EMA_DIRECTION_CONFLICT": 49,
+    "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW": 22,
     "NO_COMPLETED_MOMENTUM_OR_PULLBACK_SETUP": 5,
-    "SPREAD_RELATIVE_TO_ATR": 64,
-    "SPREAD_TOO_WIDE": 35
+    "SPREAD_RELATIVE_TO_ATR": 67,
+    "SPREAD_TOO_WIDE": 36
   }
 }
