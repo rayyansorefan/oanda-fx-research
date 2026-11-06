@@ -1,10 +1,8 @@
 {
   "activated_at": "2026-11-06T09:47:09Z",
-  "last_evaluated_at": "2026-11-06T11:17:18Z",
-  "latest_source_at": "2026-11-06T11:16:59Z",
-  "new_ids": [
-    "FX-GATE-v1-20261106T111659-NZD_JPY-SHORT"
-  ],
+  "last_evaluated_at": "2026-11-06T12:46:52Z",
+  "latest_source_at": "2026-11-06T12:46:35Z",
+  "new_ids": [],
   "no_orders": true,
   "policy": "Only news-source-missing single-blocker pullback hypotheses; unrelated hard gates remain. No manual alerts, promotions or claims of an executable broker edge.",
   "protocol_id": "FX-GATE-20261106-v1",
@@ -39,10 +37,39 @@
       },
       "policy": "FX-GATE-20261106-v1",
       "registered_at": "2026-11-06T11:17:18Z",
-      "replay_attempts": [],
+      "replay_attempts": [
+        {
+          "at": "2026-11-06T12:46:52Z",
+          "candle_evidence_path": "data/replay_evidence/NZD_JPY-fce4cde0fee00a08b0b417443fbe1f52a95f2011e238c140595a2c16c1b81741.json",
+          "pair_observation_count": 1,
+          "status": "INVALIDATED_PRE_ENTRY"
+        }
+      ],
       "result": {
+        "detected_at": "2026-11-06T12:46:35Z",
+        "entry_available_at": "2026-11-06T13:00:00Z",
+        "evidence": {
+          "confirmation": {
+            "ask": {
+              "c": 87.754,
+              "h": 87.811,
+              "l": 87.742,
+              "o": 87.8
+            },
+            "bid": {
+              "c": 87.729,
+              "h": 87.784,
+              "l": 87.717,
+              "o": 87.774
+            },
+            "open_at": "2026-11-06T11:30:00Z"
+          }
+        },
+        "reason": "Exit level reached before observed alert could be acted on",
+        "route": "B",
         "scored": false,
-        "status": "PENDING_TRIGGER"
+        "status": "INVALIDATED_PRE_ENTRY",
+        "triggered_at": "2026-11-06T11:45:00Z"
       },
       "route": "EMA20_PULLBACK",
       "source_at": "2026-11-06T11:16:59Z",
@@ -52,9 +79,9 @@
   "schema": 1,
   "status": "PAPER_ONLY_PROSPECTIVE_STUDY",
   "summary": {
-    "new_this_run": 1,
+    "new_this_run": 0,
     "outcomes": {
-      "PENDING_TRIGGER": 1
+      "INVALIDATED_PRE_ENTRY": 1
     },
     "registered": 1,
     "scored": 0
