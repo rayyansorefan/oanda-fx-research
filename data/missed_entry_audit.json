@@ -1267,6 +1267,30 @@
       "status": "PAPER_STOP_AFTER_FILL",
       "trade_executed": false,
       "underlying_move_pct": -0.11994
+    },
+    "202611061500-EURSGD-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202611061500-EURSGD-SHORT-EMA20_PULLBACK",
+      "instrument": "EUR_SGD",
+      "pattern_at": "2026-11-06T15:45:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/EUR_SGD-b330e42b97a95f3f93fe56a1e820c8963438f2b5531a41cce9a196314ecaa655.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
+      "trade_executed": false
+    },
+    "202611061500-USDPLN-LONG-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "LONG",
+      "id": "202611061500-USDPLN-LONG-EMA20_PULLBACK",
+      "instrument": "USD_PLN",
+      "pattern_at": "2026-11-06T15:45:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/USD_PLN-e3982efea6157537a4cf7f6b3f9574a44fc751cff7e18c2e07b4e3c2cd9e4beb.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
+      "trade_executed": false
     }
   },
   "latency_audit": {
@@ -1319,6 +1343,22 @@
         "fill_precedes_detection": true,
         "id": "202611061100-AUDCAD-SHORT-EMA20_PULLBACK",
         "pattern_at": "2026-11-06T13:00:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-06T16:35:10.278191+00:00",
+        "detection_delay_minutes": 50.17,
+        "fill_precedes_detection": false,
+        "id": "202611061500-EURSGD-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-11-06T15:45:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-06T16:35:10.278191+00:00",
+        "detection_delay_minutes": 50.17,
+        "fill_precedes_detection": false,
+        "id": "202611061500-USDPLN-LONG-EMA20_PULLBACK",
+        "pattern_at": "2026-11-06T15:45:00+00:00"
       }
     ],
     "verified_profitable_missed_manual_entries": 0
@@ -1326,15 +1366,16 @@
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 5,
-  "today_forward_patterns": 6,
-  "today_registered": 28,
+  "today_distinct_pair_pattern_events": 7,
+  "today_forward_patterns": 8,
+  "today_registered": 32,
   "today_scored_hypothetical_entries": 3,
   "today_status_counts": {
     "PAPER_NOT_FILLED_BEFORE_EXPIRY": 1,
     "PAPER_PRE_ENTRY_INVALIDATED": 2,
-    "PAPER_STOP_AFTER_FILL": 3
+    "PAPER_STOP_AFTER_FILL": 3,
+    "PAPER_WAITING_FOR_ENTRY": 2
   },
   "today_uk": "2026-11-06",
-  "updated_at": "2026-11-06T15:18:28Z"
+  "updated_at": "2026-11-06T16:35:10Z"
 }
