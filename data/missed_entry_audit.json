@@ -1208,16 +1208,19 @@
     "202611060115-SGDJPY-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "SHORT",
+      "exit_at": "2026-11-06T09:15:00Z",
       "fill_at": "2026-11-06T04:30:00Z",
       "id": "202611060115-SGDJPY-SHORT-EMA20_PULLBACK",
       "instrument": "SGD_JPY",
       "paper_entry": 123.347,
+      "paper_exit": 123.501,
       "pattern_at": "2026-11-06T03:00:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/SGD_JPY-0ac9c27fb8c1af49e31b595e47039b0c68f39dd8b756a5d9d5ae46825abdeb71.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/SGD_JPY-f5c0c5896d7ff5ef999f38d7cd9bab535ad3ed8811d2b03b138edff04556e04c.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.12485
     }
   },
   "latency_audit": {
@@ -1255,12 +1258,12 @@
   "schema": 1,
   "today_distinct_pair_pattern_events": 3,
   "today_forward_patterns": 3,
-  "today_registered": 10,
-  "today_scored_hypothetical_entries": 0,
+  "today_registered": 14,
+  "today_scored_hypothetical_entries": 1,
   "today_status_counts": {
-    "PAPER_OPEN_UNRESOLVED": 1,
-    "PAPER_PRE_ENTRY_INVALIDATED": 2
+    "PAPER_PRE_ENTRY_INVALIDATED": 2,
+    "PAPER_STOP_AFTER_FILL": 1
   },
   "today_uk": "2026-11-06",
-  "updated_at": "2026-11-06T09:27:44Z"
+  "updated_at": "2026-11-06T09:35:49Z"
 }
