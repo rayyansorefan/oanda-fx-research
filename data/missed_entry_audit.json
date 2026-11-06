@@ -1237,16 +1237,19 @@
     "202611060915-AUDSGD-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "SHORT",
+      "exit_at": "2026-11-06T14:30:00Z",
       "fill_at": "2026-11-06T13:15:00Z",
       "id": "202611060915-AUDSGD-SHORT-EMA20_PULLBACK",
       "instrument": "AUD_SGD",
       "paper_entry": 0.88136,
+      "paper_exit": 0.8826,
       "pattern_at": "2026-11-06T13:00:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_SGD-28cb45236813e0e788df21b2419457413d777233550a9b6ad0a41cc599de4b8c.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/AUD_SGD-bdf498a1c97ae63660387ecffe3ab7ac41a8251ba5726d3eef0878212ead9fb2.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.14069
     },
     "202611061100-AUDCAD-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
@@ -1325,14 +1328,13 @@
   "schema": 1,
   "today_distinct_pair_pattern_events": 5,
   "today_forward_patterns": 6,
-  "today_registered": 26,
-  "today_scored_hypothetical_entries": 2,
+  "today_registered": 28,
+  "today_scored_hypothetical_entries": 3,
   "today_status_counts": {
     "PAPER_NOT_FILLED_BEFORE_EXPIRY": 1,
-    "PAPER_OPEN_UNRESOLVED": 1,
     "PAPER_PRE_ENTRY_INVALIDATED": 2,
-    "PAPER_STOP_AFTER_FILL": 2
+    "PAPER_STOP_AFTER_FILL": 3
   },
   "today_uk": "2026-11-06",
-  "updated_at": "2026-11-06T14:20:15Z"
+  "updated_at": "2026-11-06T15:18:28Z"
 }

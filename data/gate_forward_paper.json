@@ -1,7 +1,7 @@
 {
   "activated_at": "2026-11-06T09:47:09Z",
-  "last_evaluated_at": "2026-11-06T14:20:20Z",
-  "latest_source_at": "2026-11-06T14:20:04Z",
+  "last_evaluated_at": "2026-11-06T15:18:34Z",
+  "latest_source_at": "2026-11-06T15:18:17Z",
   "new_ids": [],
   "no_orders": true,
   "policy": "Only news-source-missing single-blocker pullback hypotheses; unrelated hard gates remain. No manual alerts, promotions or claims of an executable broker edge.",
@@ -117,12 +117,19 @@
           "candle_evidence_path": "data/replay_evidence/AUD_SGD-b03c32128b74e94afb32fe2037372b8b97fc1d11b044205a9ac3c38aec5e0fa5.json",
           "pair_observation_count": 2,
           "status": "DATA_GAP"
+        },
+        {
+          "at": "2026-11-06T15:18:34Z",
+          "candle_evidence_path": "data/replay_evidence/AUD_SGD-7db3937c93e3a8b037527488da1134ba3e2766a9314414dc8a125e308d8704ef.json",
+          "pair_observation_count": 3,
+          "status": "INVALIDATED_PRE_ENTRY"
         }
       ],
       "result": {
-        "reason": "Initial post-signal M15 candles missing",
+        "at": "2026-11-06T14:45:00Z",
+        "reason": "Stop touched before confirmation",
         "scored": false,
-        "status": "DATA_GAP"
+        "status": "INVALIDATED_PRE_ENTRY"
       },
       "route": "EMA20_PULLBACK",
       "source_at": "2026-11-06T14:01:49Z",
@@ -134,8 +141,7 @@
   "summary": {
     "new_this_run": 0,
     "outcomes": {
-      "DATA_GAP": 1,
-      "INVALIDATED_PRE_ENTRY": 1
+      "INVALIDATED_PRE_ENTRY": 2
     },
     "registered": 2,
     "scored": 0

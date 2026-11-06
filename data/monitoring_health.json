@@ -1,42 +1,42 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-06T14:55:59.560121+00:00",
+  "checked_at": "2026-11-06T15:18:56.327274+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-06T14:20:05Z",
-    "collection_tries": 1,
+    "checked_at": "2026-11-06T15:18:17Z",
+    "collection_tries": 2,
     "collector_endpoint": "practice",
     "error": null,
-    "event": "schedule",
-    "first_attempt_error": null,
+    "event": "push",
+    "first_attempt_error": "OANDA_HTTP_401_ACCOUNTS",
     "last_valid_source_preserved": false,
-    "recovered_on_second_try": false,
-    "run_id": "42232888503",
-    "started_at": "2026-11-06T14:19:35Z",
+    "recovered_on_second_try": true,
+    "run_id": "42241644693",
+    "started_at": "2026-11-06T15:17:32Z",
     "status": "COLLECTED"
   },
-  "consecutive_unobserved_fast_targets": 2,
+  "consecutive_unobserved_fast_targets": 3,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
-    "event": "schedule",
-    "head_sha": "eb76370c184bf9b8f19bb44646f4bb546bb65928",
-    "id": "42238276110",
+    "event": "push",
+    "head_sha": "a4cb0de07fcb9b9803708c05055b8c53219e526d",
+    "id": "42241644693",
     "outcomes": {
-      "collect": "skipped",
-      "early_cohort": "skipped",
-      "fast_recovery": "failure",
+      "collect": "success",
+      "early_cohort": "success",
+      "fast_recovery": "success",
       "safety": "success"
     },
     "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
   },
   "dashboard_deployments": [
     {
-      "conclusion": null,
+      "conclusion": "failure",
       "created_at": "2026-11-06T14:56:00Z",
       "head_sha": "32c6812d116b3f9ab5aeeaddcd3949450be28f16",
       "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42238339420",
       "id": 42238339420,
-      "status": "queued"
+      "status": "completed"
     },
     {
       "conclusion": "failure",
@@ -56,10 +56,10 @@
     }
   ],
   "early_cohort_id": "FX-EARLY-20261104-v1",
-  "early_last_source_at": "2026-11-06T14:20:04Z",
-  "early_observation_count": 45,
-  "elapsed_fast_targets_today": 32,
-  "fast_age_seconds": null,
+  "early_last_source_at": "2026-11-06T15:18:17Z",
+  "early_observation_count": 46,
+  "elapsed_fast_targets_today": 33,
+  "fast_age_seconds": 6.739903,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -77,21 +77,30 @@
     "valid_new_market_observations": 0,
     "verification_note": "workflow_dispatch may be manual; external scheduler origin/requests and missing provider calls cannot be verified from repository receipts alone. Four observed pair-specific events and two sessions are necessary, not sufficient, for sustained reliability."
   },
-  "fast_last_attempt_at": "2026-11-06T14:55:56.978538+00:00",
-  "fast_observation_valid": false,
+  "fast_last_attempt_at": "2026-11-06T15:18:50.106468+00:00",
+  "fast_observation_valid": true,
   "fast_run_failures": {
     "failed": 3,
     "sample": 3,
     "scope": "Latest 100 repository runs; process success is not observation success."
   },
-  "fast_source_at": null,
-  "fast_status": "FAST_MARKET_DATA_UNAVAILABLE",
-  "full_age_seconds": 2155.560121,
+  "fast_source_at": "2026-11-06T15:18:49.587371+00:00",
+  "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
+  "full_age_seconds": 39.327274,
   "full_collection_status": "PARTIAL",
   "full_fresh": true,
-  "full_last_attempt_at": "2026-11-06T14:20:05Z",
-  "full_source_at": "2026-11-06T14:20:04Z",
+  "full_last_attempt_at": "2026-11-06T15:18:17Z",
+  "full_source_at": "2026-11-06T15:18:17Z",
   "last_completed_jobs": [
+    {
+      "conclusion": "failure",
+      "event": "schedule",
+      "failed_steps": [
+        "Capture fast observation only if original monitor is overdue",
+        "Fail closed if backup, publication, or persistence failed"
+      ],
+      "run_id": 42238276110
+    },
     {
       "conclusion": "failure",
       "event": "schedule",
@@ -99,12 +108,6 @@
         "Fail visibly after preserving observations"
       ],
       "run_id": 42236467185
-    },
-    {
-      "conclusion": "success",
-      "event": "schedule",
-      "failed_steps": [],
-      "run_id": 42232888503
     }
   ],
   "previous_publication": {
@@ -236,7 +239,7 @@
         "success",
         "success",
         "success",
-        null
+        "failure"
       ],
       "created_at": [
         "2026-10-21T15:38:58Z",
@@ -451,7 +454,7 @@
     }
   },
   "scheduler_guarantee": false,
-  "status": "DEGRADED",
+  "status": "CURRENT",
   "target_fast_interval_seconds": 900,
   "target_full_interval_seconds": 3600,
   "unobserved_fast_targets_today": [
@@ -479,7 +482,8 @@
     "2026-11-06T13:32:00+00:00",
     "2026-11-06T13:47:00+00:00",
     "2026-11-06T14:32:00+00:00",
-    "2026-11-06T14:47:00+00:00"
+    "2026-11-06T14:47:00+00:00",
+    "2026-11-06T15:02:00+00:00"
   ],
   "workflow_registration": [
     {
