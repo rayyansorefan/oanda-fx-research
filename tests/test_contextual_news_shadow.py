@@ -7,7 +7,7 @@ from unittest.mock import patch
 from scripts import contextual_news_shadow as study
 from scripts import simple_paper_shadow_v2 as base
 
-AT = datetime(2026, 11, 6, 10, 15, 10, tzinfo=timezone.utc)
+AT = datetime(2026, 11, 6, 10, 14, 10, tzinfo=timezone.utc)
 
 
 def candle(minute, o, h, l, c):
