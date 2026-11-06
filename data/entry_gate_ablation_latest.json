@@ -8,8 +8,23 @@
     },
     "paper_without_m15_adx_and_missing_primary_feed": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 0,
-      "paper_watch_examples": [],
+      "counterfactual_pair_routes": 1,
+      "paper_watch_examples": [
+        {
+          "direction": "SHORT",
+          "economics_at_observation": {
+            "entry_reference": 0.8809462205328498,
+            "gross_rr": 2.19785,
+            "nearest_target": 0.87904,
+            "net_rr": 1.45052,
+            "stop_reference": 0.8818135321823712
+          },
+          "news_status": "SOURCE_UNVERIFIED",
+          "pair": "AUD_SGD",
+          "route": "EMA20_PULLBACK",
+          "status": "PAPER_ONLY_NOT_A_FUTURE_TRIGGER_OR_MANUAL_ENTRY"
+        }
+      ],
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
       "unverifiable": 3
     },
@@ -33,7 +48,7 @@
     },
     "without_news_gate_diagnostic_only": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 0,
+      "counterfactual_pair_routes": 1,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
       "unverifiable": 3
     },
@@ -44,30 +59,30 @@
       "unverifiable": 3
     }
   },
-  "distinct_pairs": 68,
+  "distinct_pairs": 67,
   "failures": {
     "absolute_spread_cap": 54,
-    "adx_H1": 16,
-    "adx_M15": 46,
+    "adx_H1": 22,
+    "adx_M15": 42,
     "direction_known": 0,
-    "dmi_H1": 18,
-    "dmi_M15": 46,
-    "gross_reward_minimum": 76,
-    "net_reward_minimum": 99,
-    "news_gate": 130,
-    "no_reversal_or_exhaustion": 60,
+    "dmi_H1": 16,
+    "dmi_M15": 30,
+    "gross_reward_minimum": 74,
+    "net_reward_minimum": 82,
+    "news_gate": 122,
+    "no_reversal_or_exhaustion": 92,
     "observed_target_available": 3,
     "pair_supported": 2,
-    "quote_timely_tradeable": 2,
-    "recent_completed_history": 2,
-    "relative_spread_cap": 44,
-    "route_not_stretched": 58,
-    "route_pattern": 60,
-    "structural_stop_range": 6,
-    "trend_D": 50,
-    "trend_H1": 26,
-    "trend_H4": 64,
-    "trend_M15": 2,
+    "quote_timely_tradeable": 0,
+    "recent_completed_history": 0,
+    "relative_spread_cap": 28,
+    "route_not_stretched": 70,
+    "route_pattern": 45,
+    "structural_stop_range": 29,
+    "trend_D": 52,
+    "trend_H1": 16,
+    "trend_H4": 62,
+    "trend_M15": 8,
     "valid_two_sided_quote": 0
   },
   "isolated_only_blocker": {
@@ -79,7 +94,7 @@
     "dmi_M15": 0,
     "gross_reward_minimum": 0,
     "net_reward_minimum": 0,
-    "news_gate": 0,
+    "news_gate": 1,
     "no_reversal_or_exhaustion": 0,
     "observed_target_available": 0,
     "pair_supported": 0,
@@ -101,6 +116,6 @@
     "The combined M15-ADX/unsupported-primary-feed paper hypothesis keeps all other technical and reward/risk gates; it cannot verify the missing source or support a manual fill.",
     "Pair-route observations share prices and currency exposure; they are not independent trade outcomes."
   ],
-  "route_observations": 136,
-  "source_at": "2026-11-06T12:46:35Z"
+  "route_observations": 134,
+  "source_at": "2026-11-06T14:01:49Z"
 }

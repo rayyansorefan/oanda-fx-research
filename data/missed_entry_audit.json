@@ -1221,6 +1221,49 @@
       "status": "PAPER_STOP_AFTER_FILL",
       "trade_executed": false,
       "underlying_move_pct": -0.12485
+    },
+    "202611060900-AUDSGD-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202611060900-AUDSGD-SHORT-EMA20_PULLBACK",
+      "instrument": "AUD_SGD",
+      "pattern_at": "2026-11-06T13:00:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/AUD_SGD-18ab0c518b0fed4523084b41de998dedc4dbb89e532913317a49fd9de476c753.json",
+      "status": "PAPER_NOT_FILLED_BEFORE_EXPIRY",
+      "trade_executed": false
+    },
+    "202611060915-AUDSGD-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "fill_at": "2026-11-06T13:15:00Z",
+      "id": "202611060915-AUDSGD-SHORT-EMA20_PULLBACK",
+      "instrument": "AUD_SGD",
+      "paper_entry": 0.88136,
+      "pattern_at": "2026-11-06T13:00:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/AUD_SGD-71570c82eb66da9eb1726c01a6beb175db367a9e9557a62b2fec77c5ae631717.json",
+      "status": "PAPER_OPEN_UNRESOLVED",
+      "trade_executed": false
+    },
+    "202611061100-AUDCAD-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "exit_at": "2026-11-06T13:30:00Z",
+      "fill_at": "2026-11-06T13:00:00Z",
+      "id": "202611061100-AUDCAD-SHORT-EMA20_PULLBACK",
+      "instrument": "AUD_CAD",
+      "paper_entry": 0.96711,
+      "paper_exit": 0.96827,
+      "pattern_at": "2026-11-06T13:00:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": true,
+      "source_evidence": "data/replay_evidence/AUD_CAD-917339257773238ed1d3f5b8c292c879e07a649936c8d72352ecf07796f3e070.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.11994
     }
   },
   "latency_audit": {
@@ -1249,6 +1292,30 @@
         "fill_precedes_detection": true,
         "id": "202611060115-SGDJPY-SHORT-EMA20_PULLBACK",
         "pattern_at": "2026-11-06T03:00:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-06T14:02:00.893072+00:00",
+        "detection_delay_minutes": 62.01,
+        "fill_precedes_detection": false,
+        "id": "202611060900-AUDSGD-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-11-06T13:00:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-06T14:02:00.893072+00:00",
+        "detection_delay_minutes": 62.01,
+        "fill_precedes_detection": true,
+        "id": "202611060915-AUDSGD-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-11-06T13:00:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-06T14:02:00.893072+00:00",
+        "detection_delay_minutes": 62.01,
+        "fill_precedes_detection": true,
+        "id": "202611061100-AUDCAD-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-11-06T13:00:00+00:00"
       }
     ],
     "verified_profitable_missed_manual_entries": 0
@@ -1256,14 +1323,16 @@
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 3,
-  "today_forward_patterns": 3,
-  "today_registered": 21,
-  "today_scored_hypothetical_entries": 1,
+  "today_distinct_pair_pattern_events": 5,
+  "today_forward_patterns": 6,
+  "today_registered": 23,
+  "today_scored_hypothetical_entries": 2,
   "today_status_counts": {
+    "PAPER_NOT_FILLED_BEFORE_EXPIRY": 1,
+    "PAPER_OPEN_UNRESOLVED": 1,
     "PAPER_PRE_ENTRY_INVALIDATED": 2,
-    "PAPER_STOP_AFTER_FILL": 1
+    "PAPER_STOP_AFTER_FILL": 2
   },
   "today_uk": "2026-11-06",
-  "updated_at": "2026-11-06T12:46:47Z"
+  "updated_at": "2026-11-06T14:02:01Z"
 }

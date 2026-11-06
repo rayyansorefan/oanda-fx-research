@@ -1,5 +1,5 @@
 {
-  "last_source_at": "2026-11-06T12:46:35Z",
+  "last_source_at": "2026-11-06T14:01:49Z",
   "no_broker_orders": true,
   "observations": [
     {
@@ -887,21 +887,47 @@
       },
       "paper_plans_not_inferred": true,
       "source_at": "2026-11-06T12:46:35Z"
+    },
+    {
+      "evaluated_at": "2026-11-06T14:02:20Z",
+      "first_blocker_counts": {
+        "M15_H1_EMA_DIRECTION_CONFLICT": 1,
+        "NEWS_EVENT_CALENDAR_OR_BLACKOUT": 4,
+        "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW": 1,
+        "PAIR_SOURCE_MISSING": 1,
+        "SPREAD_RELATIVE_TO_ATR": 2,
+        "SPREAD_TOO_WIDE": 1
+      },
+      "observation_kind": "HOURLY",
+      "pair_reasons": {
+        "AUD_USD": "NEWS_EVENT_CALENDAR_OR_BLACKOUT",
+        "EUR_GBP": "M15_H1_EMA_DIRECTION_CONFLICT",
+        "EUR_JPY": "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW",
+        "EUR_USD": "PAIR_SOURCE_MISSING",
+        "GBP_JPY": "SPREAD_TOO_WIDE",
+        "GBP_USD": "NEWS_EVENT_CALENDAR_OR_BLACKOUT",
+        "NZD_USD": "SPREAD_RELATIVE_TO_ATR",
+        "USD_CAD": "NEWS_EVENT_CALENDAR_OR_BLACKOUT",
+        "USD_CHF": "SPREAD_RELATIVE_TO_ATR",
+        "USD_JPY": "NEWS_EVENT_CALENDAR_OR_BLACKOUT"
+      },
+      "paper_plans_not_inferred": true,
+      "source_at": "2026-11-06T14:01:49Z"
     }
   ],
   "performance_validated": false,
   "registered_cohort": "FX-EARLY-20261104-v1",
   "scope": "FIRST_BLOCKER_DIAGNOSTIC_NOT_AN_ELIGIBLE_FILL",
-  "total_evaluated_snapshots": 38,
+  "total_evaluated_snapshots": 39,
   "total_pair_gate_counts": {
     "COMPLETED_M15_FRAME_MISSING_OR_STALE": 5,
     "FORMED_PAPER_SETUP_REQUIRES_PROSPECTIVE_REGISTRATION": 1,
-    "M15_H1_EMA_DIRECTION_CONFLICT": 104,
-    "NEWS_EVENT_CALENDAR_OR_BLACKOUT": 2,
-    "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW": 49,
+    "M15_H1_EMA_DIRECTION_CONFLICT": 105,
+    "NEWS_EVENT_CALENDAR_OR_BLACKOUT": 6,
+    "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW": 50,
     "NO_COMPLETED_MOMENTUM_OR_PULLBACK_SETUP": 9,
-    "PAIR_SOURCE_MISSING": 26,
-    "SPREAD_RELATIVE_TO_ATR": 112,
-    "SPREAD_TOO_WIDE": 57
+    "PAIR_SOURCE_MISSING": 27,
+    "SPREAD_RELATIVE_TO_ATR": 114,
+    "SPREAD_TOO_WIDE": 58
   }
 }
