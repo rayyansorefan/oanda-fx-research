@@ -178,6 +178,13 @@ jobs:
         if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.diagnostics.outcome == 'success' && steps.comparison.outcome == 'success' && steps.validation.outcome == 'success'
         continue-on-error: true
         run: python scripts/entry_strategy_audit.py
+      - name: Register and score prospective news-source-gap counterfactuals (paper only)
+        id: gate_forward
+        if: steps.strategy_audit.outcome == 'success' && steps.collect.outcome == 'success'
+        continue-on-error: true
+        env:
+          OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
+        run: python scripts/gate_forward_research.py
       - name: Recover missing fast observation once using unchanged frozen scanner
         id: fast_recovery
         if: steps.collect.outcome == 'success' && steps.safety.outcome == 'success' && steps.news.outcome == 'success' && steps.early_cohort.outcome == 'success'
@@ -296,7 +303,7 @@ jobs:
         if: always() && (steps.monitoring.outcome != 'success' || steps.fast_recovery.outcome == 'failure')
         run: exit 1
       - name: Fail closed if any research or public dashboard step failed
-        if: steps.lifecycle.outcome != 'success' || steps.safety.outcome != 'success' || steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success' || steps.portfolio.outcome != 'success' || steps.simple_shadow.outcome != 'success' || steps.contextual_shadow.outcome != 'success' || steps.early_cohort.outcome != 'success' || steps.paper_gates.outcome != 'success'
+        if: steps.lifecycle.outcome != 'success' || steps.safety.outcome != 'success' || steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success' || steps.portfolio.outcome != 'success' || steps.simple_shadow.outcome != 'success' || steps.contextual_shadow.outcome != 'success' || steps.early_cohort.outcome != 'success' || steps.paper_gates.outcome != 'success' || steps.gate_forward.outcome != 'success'
         run: exit 1
 
   fast-tick:
