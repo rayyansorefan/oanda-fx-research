@@ -17,6 +17,11 @@ except ModuleNotFoundError:
     import oanda_data as market
     import fast_entry_scan as fast
 
+try:
+    from scripts import oanda_auth_diagnostics as auth
+except ModuleNotFoundError:
+    import oanda_auth_diagnostics as auth
+
 ROOT = Path(__file__).resolve().parents[1]
 def now():
     return datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
@@ -33,6 +38,7 @@ def run_collection():
     """
     paths = (market.OUT, Path("data/summary.json"), Path("data/universe.json"), Path("data/pairs"))
     started = now()
+    observer = auth.Observer()
     with tempfile.TemporaryDirectory(prefix="fx-source-") as directory:
         backups = []
         for i, path in enumerate(paths):
@@ -43,7 +49,8 @@ def run_collection():
                 shutil.copy2(path, backup)
             backups.append((path, backup))
         try:
-            market.collect()
+            with observer.capture(market):
+                market.collect()
         except (RuntimeError, ValueError, KeyError, TypeError, OSError) as exc:
             for path, backup in backups:
                 if path.is_dir():
@@ -55,15 +62,10 @@ def run_collection():
                 elif backup.exists():
                     path.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(backup, path)
-            # Only allow known non-sensitive error identifiers into evidence.
-            code = str(exc)
-            if code == "Missing OANDA_API_TOKEN secret":
-                code = "OANDA_TOKEN_MISSING"
-            elif code.startswith("Set OANDA_ACCOUNT_ID"):
-                code = "OANDA_ACCOUNT_CONFIGURATION_REQUIRED"
-            elif not (code.startswith("OANDA_") or code in
-                    ("INSUFFICIENT_COMPLETED_CANDLES", "MISSING_PAIRS_IN_PRICING")):
-                code = type(exc).__name__
+            # Diagnose the failed stage without changing the frozen collector.
+            # A single distinct accounts request is allowed only for 401/403
+            # on instruments; it does not retry the denied instruments call.
+            code = observer.probe(market, observer.error_for(exc))
             record_collection_attempt(started, "DATA_UNAVAILABLE", code)
             print("Data unavailable:", code, file=sys.stderr)
             return 1
@@ -76,9 +78,7 @@ def record_collection_attempt(started, status, error):
               "error": error, "last_valid_source_preserved": status == "DATA_UNAVAILABLE",
               "run_id": os.environ.get("GITHUB_RUN_ID"),
               "event": os.environ.get("GITHUB_EVENT_NAME"),
-              "oanda_environment": (os.environ.get("OANDA_ENVIRONMENT", "practice").strip().lower()
-                                    if os.environ.get("OANDA_ENVIRONMENT", "practice").strip().lower()
-                                    in ("practice", "live") else "INVALID")}
+              "collector_endpoint": auth.safe_host(market)}
     write_json(Path("data/collection_attempt.json"), report)
     identity = os.environ.get("GITHUB_RUN_ID")
     if identity and identity.isdigit():
@@ -90,21 +90,22 @@ def record_collection_attempt(started, status, error):
 
 
 def run_fast():
+    observer = auth.Observer()
     try:
-        result = fast.perform()
+        with observer.capture(fast.market):
+            result = fast.perform()
     except (RuntimeError, ValueError, KeyError, TypeError, OSError) as exc:
-        code = str(exc)
-        if code == "Missing OANDA_API_TOKEN secret":
-            code = "OANDA_TOKEN_MISSING"
-        elif code.startswith("Set OANDA_ACCOUNT_ID"):
-            code = "OANDA_ACCOUNT_CONFIGURATION_REQUIRED"
-        elif not code.startswith("OANDA_"):
-            code = type(exc).__name__
+        code = observer.probe(fast.market, observer.error_for(exc))
         result = {"checked_at": datetime.now(timezone.utc).isoformat(),
                   "status": "FAST_MARKET_DATA_UNAVAILABLE", "error": code,
                   "analysed": 0, "observations": [], "actionable_count": 0,
                   "user_delivery_verified": False}
         fast.write(fast.FAST_AUDIT, result)
+    # The frozen fast scanner sometimes reports a generic no-quotes error
+    # after catching per-batch 401. Preserve the actual observed failure stage.
+    if result.get("status") != "FAST_RESEARCH_CHECK_COMPLETE" and observer.first_auth():
+        result["error"] = observer.probe(fast.market, observer.first_auth())
+    result["collector_endpoint"] = auth.safe_host(fast.market)
     # Exit zero only after a genuine new observation. Preserve the previous
     # fast snapshot and history on failure; do not re-date either of them.
     result["run_id"] = os.environ.get("GITHUB_RUN_ID")
