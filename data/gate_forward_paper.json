@@ -1,10 +1,8 @@
 {
   "activated_at": "2026-11-06T09:47:09Z",
-  "last_evaluated_at": "2026-11-06T17:27:45Z",
-  "latest_source_at": "2026-11-06T17:27:30Z",
-  "new_ids": [
-    "FX-GATE-v1-20261106T172730-NZD_SGD-SHORT"
-  ],
+  "last_evaluated_at": "2026-11-06T18:20:17Z",
+  "latest_source_at": "2026-11-06T18:19:51Z",
+  "new_ids": [],
   "no_orders": true,
   "policy": "Only news-source-missing single-blocker pullback hypotheses; unrelated hard gates remain. No manual alerts, promotions or claims of an executable broker edge.",
   "protocol_id": "FX-GATE-20261106-v1",
@@ -179,11 +177,18 @@
           "candle_evidence_path": "data/replay_evidence/NZD_USD-8e63da7190437206eb9a782d939420e4be1570323ed6644576b29c11c42d7d14.json",
           "pair_observation_count": 1,
           "status": "PENDING_TRIGGER"
+        },
+        {
+          "at": "2026-11-06T18:20:17Z",
+          "candle_evidence_path": "data/replay_evidence/NZD_USD-4b7d9fc976fc370800ac796dcec6bceeec2bb69cf950da6af34f411ffb15bc14.json",
+          "pair_observation_count": 1,
+          "status": "TRIGGERED_UNFILLED"
         }
       ],
       "result": {
+        "reason": "Expiry without verified entry",
         "scored": false,
-        "status": "PENDING_TRIGGER"
+        "status": "TRIGGERED_UNFILLED"
       },
       "route": "EMA20_PULLBACK",
       "source_at": "2026-11-06T16:34:59Z",
@@ -219,10 +224,38 @@
       },
       "policy": "FX-GATE-20261106-v1",
       "registered_at": "2026-11-06T17:27:45Z",
-      "replay_attempts": [],
+      "replay_attempts": [
+        {
+          "at": "2026-11-06T18:20:17Z",
+          "candle_evidence_path": "data/replay_evidence/NZD_SGD-799a78147a0c1ff5003753fba6837ed3397f2760181d8149b67249bb06d7e600.json",
+          "pair_observation_count": 1,
+          "status": "TRIGGERED_UNFILLED"
+        }
+      ],
       "result": {
+        "detected_at": "2026-11-06T18:19:51Z",
+        "entry_available_at": "2026-11-06T18:30:00Z",
+        "evidence": {
+          "confirmation": {
+            "ask": {
+              "c": 0.71124,
+              "h": 0.71178,
+              "l": 0.71114,
+              "o": 0.71166
+            },
+            "bid": {
+              "c": 0.71098,
+              "h": 0.71153,
+              "l": 0.7109,
+              "o": 0.71142
+            },
+            "open_at": "2026-11-06T17:30:00Z"
+          }
+        },
+        "route": "B",
         "scored": false,
-        "status": "PENDING_TRIGGER"
+        "status": "TRIGGERED_UNFILLED",
+        "triggered_at": "2026-11-06T17:45:00Z"
       },
       "route": "EMA20_PULLBACK",
       "source_at": "2026-11-06T17:27:30Z",
@@ -232,10 +265,10 @@
   "schema": 1,
   "status": "PAPER_ONLY_PROSPECTIVE_STUDY",
   "summary": {
-    "new_this_run": 1,
+    "new_this_run": 0,
     "outcomes": {
       "INVALIDATED_PRE_ENTRY": 2,
-      "PENDING_TRIGGER": 2
+      "TRIGGERED_UNFILLED": 2
     },
     "registered": 4,
     "scored": 0
