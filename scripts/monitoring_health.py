@@ -12,6 +12,10 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
 from zoneinfo import ZoneInfo
+try:
+    from scripts import fast_dispatch_proof
+except ModuleNotFoundError:
+    import fast_dispatch_proof
 
 ROOT = Path(__file__).resolve().parents[1]
 LONDON = ZoneInfo("Europe/London")
@@ -162,7 +166,9 @@ def build(now=None, remote=True):
                               "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"},
               "previous_publication": publication,
               "recovery": "ONE_INLINE_FAST_ATTEMPT_PER_HOURLY_RUN_WHEN_DUE",
-              "scheduler_guarantee": False}
+              "scheduler_guarantee": False,
+              "fast_dispatch_evidence": fast_dispatch_proof.summarize(
+                  ROOT / "data/fast_attempts", now)}
     if remote:
         try:
             # Query schedule events directly so push/PR traffic cannot hide them.
