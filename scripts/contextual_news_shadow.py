@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 from collections import Counter
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -274,12 +275,17 @@ def update(summary, news, book=None, fetch=None, *, now=None):
 
 
 def main():
+    if len(sys.argv) > 2 or (len(sys.argv) == 2 and sys.argv[1] != "--fast"):
+        raise SystemExit("Only --fast optional mode supported")
+    fast = len(sys.argv) == 2
     now = datetime.now(UTC)
-    result = update(read(ROOT / "data/summary.json", {}),
-                    read(ROOT / "data/news_latest.json", {}),
+    summary_path = ROOT / ("data/fast_latest.json" if fast else "data/summary.json")
+    news_path = ROOT / ("data/fast_news_latest.json" if fast else "data/news_latest.json")
+    result = update(read(summary_path, {}), read(news_path, {}),
                     read(OUT, None), now=now)
     write(OUT, result)
-    print("Contextual news prospective challenger", result["status"], result["metrics"])
+    print("Contextual news prospective challenger", "FAST" if fast else "FULL",
+          result["status"], result["metrics"])
 
 
 if __name__ == "__main__":
