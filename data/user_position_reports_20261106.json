@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "report_id": "USER-20261106-1140-UK",
+  "observed_at_utc": "2026-11-06T11:40:00Z",
+  "timestamp_precision": "minute_displayed_on_user_supplied_phone_screenshot",
+  "source": "USER_CHAT_REPORT_AND_PEPPERSTONE_APP_SCREENSHOTS_2026-11-06_1139_1140_UK",
+  "source_class": "USER_REPORTED_TARGET_AND_SCREENSHOT_EVIDENCED_OPEN_POSITIONS",
+  "account_mode": "UNVERIFIED_NOT_VISIBLE",
+  "execution_data_access": "NO_PEPPERSTONE_BROKER_API; USER_SCREENSHOT_ONLY",
+  "account_snapshot": {
+    "balance_gbp": 1174.73,
+    "equity_gbp": 1169.27,
+    "displayed_loss_gbp": -5.46,
+    "free_margin_gbp": 188.42,
+    "open_positions": 2,
+    "as_of_utc": "2026-11-06T11:40:00Z",
+    "note": "Snapshot only. Neither leverage, broker margin close-out threshold, stop-loss prices nor account mode verified."
+  },
+  "positions": [
+    {
+      "id": "20261106-USER-REPORTED-AUDJPY-SHORT",
+      "instrument": "AUD_JPY",
+      "direction": "SHORT",
+      "state": "OPEN_AT_SCREENSHOT",
+      "entry_price": 108.764,
+      "displayed_stake": 0.9,
+      "stake_unit": "UNVERIFIED_BROKER_UI",
+      "unrealised_pnl_gbp": -4.14,
+      "reported_at_utc": "2026-11-06T11:40:00Z",
+      "opened_at": "UNKNOWN_BUT_USER_SAYS_JUST_NOW",
+      "stop_loss": "NOT_VISIBLE",
+      "take_profit": "NOT_VISIBLE",
+      "entry_classification": "USER_EXECUTED_AMBER_RESEARCH_WATCH",
+      "source": "USER_SUPPLIED_PEPPERSTONE_PORTFOLIO_SCREENSHOT_1140_UK",
+      "signal_match": "PENDING",
+      "broker_order_id": null
+    },
+    {
+      "id": "20261106-USER-REPORTED-GBPUSD-SHORT",
+      "instrument": "GBP_USD",
+      "direction": "SHORT",
+      "state": "OPEN_AT_SCREENSHOT",
+      "entry_price": 1.33993,
+      "displayed_stake": 1.1,
+      "stake_unit": "UNVERIFIED_BROKER_UI",
+      "unrealised_pnl_gbp": -1.32,
+      "reported_at_utc": "2026-11-06T11:40:00Z",
+      "opened_at": "UNKNOWN_BUT_USER_SAYS_JUST_NOW",
+      "stop_loss": "NOT_VISIBLE",
+      "take_profit": "NOT_VISIBLE",
+      "entry_classification": "USER_EXECUTED_AMBER_RESEARCH_WATCH",
+      "source": "USER_SUPPLIED_PEPPERSTONE_PORTFOLIO_SCREENSHOT_1140_UK",
+      "signal_match": "PENDING",
+      "broker_order_id": null
+    }
+  ],
+  "reported_outcomes": [
+    {
+      "instrument": "NZD_CAD",
+      "direction": "SHORT",
+      "state": "USER_REPORT_TARGET_REACHED_NOT_BROKER_VERIFIED",
+      "reported_at_utc": "2026-11-06T11:39:00Z",
+      "screenshot_sell_quote": 0.77952,
+      "screenshot_buy_quote": 0.77971,
+      "chart_timeframe": "M15",
+      "entry_price": null,
+      "target_price": null,
+      "exit_price": null,
+      "realised_pnl_gbp": null,
+      "close_time": null,
+      "source": "USER_STATEMENT_TARGET_REACHED_PLUS_PEPPERSTONE_NZDCAD_CHART_SCREENSHOT_1139_UK",
+      "signal_match": "PENDING",
+      "note": "User confirms target reached; chart shows directional fall. No actual broker closure/TP execution shown. Research dashboard at 11:17 classified NZD/CAD as UNPRICED_WATCH, with NO_APPROVED_TRIGGER, STRUCTURAL_REWARD and NEWS_REQUIRED_SOURCE_MISSING. Do not credit a canonical strategy win without immutable setup/fill reconciliation."
+    }
+  ],
+  "interpretation": "Historical user-provided evidence, not broker-feed verification or proof of entry validity, realised profit, or strategy edge. No automatic model weight/parameter promotion. These entries are not yet consumed by the engine unless explicitly integrated; monitoring of Pepperstone positions is not automatic.",
+  "learning_review_needed": [
+    "Reconcile any frozen timely research setup and entry confirmation for NZD/CAD, AUD/JPY and GBP/USD",
+    "Verify NZD/CAD target and any realised close from broker history",
+    "Compare screenshot 11:40 risk exposure, stops, margin and plan expiry; do not assume protective stops exist",
+    "Assess whether unpriced amber watches should present executable levels",
+    "Protect all original unmodified observations and include losing outcomes as well as winning outcomes"
+  ]
+}
