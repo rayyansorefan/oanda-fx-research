@@ -18,6 +18,25 @@ def row(policy='champion'):
             'result':{'status':'WIN_TP1','scored':True,'entry':1.1,'exit':1.102,'entry_at':'2026-10-29T09:45:00Z','at':'2026-10-29T10:00:00Z'}}
 
 class ForwardValidationTests(unittest.TestCase):
+    def test_future_plan_cannot_enter_as_of_review(self):
+        r=row()
+        r['decision_at']='2026-10-30T09:00:00Z'
+        r['plan']['created_at']=r['decision_at']
+        report=v.evaluate(protocol(),{'records':[r]},{},'locked',NOW)
+        self.assertEqual(report['arms']['champion']['prospective_plans'],0)
+        self.assertEqual(report['excluded']['FUTURE_OBSERVATION_TIMING'],1)
+
+    def test_future_exit_is_pending_without_mutating_evidence(self):
+        r=row()
+        r['result']['at']='2026-10-30T10:00:00Z'
+        before=deepcopy(r)
+        report=v.evaluate(protocol(),{'records':[r]},{},'locked',NOW)
+        arm=report['arms']['champion']
+        self.assertEqual(arm['prospective_plans'],1)
+        self.assertEqual(arm['independent_scored_pair_days'],0)
+        self.assertEqual(arm['outcomes'],{'PENDING_AS_OF_REVIEW':1})
+        self.assertEqual(r,before)
+
     def test_explicit_historic_lock_recovery_preserves_events_and_holdout(self):
         p=json.loads((v.ROOT/'docs/validation_protocols/FX-OOS-20261104-v20.json').read_text())
         recovery=json.loads((v.ROOT/'docs/validation_protocols/FX-LOCK-RECOVERY-20261104.json').read_text())

@@ -75,7 +75,7 @@ jobs:
         env:
           OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
           OANDA_ACCOUNT_ID: ${{ secrets.OANDA_ACCOUNT_ID }}
-        run: python scripts/oanda_data.py
+        run: python scripts/production_recovery.py full
       - name: Monitor economic releases and new market headlines (free public sources)
         id: news
         if: steps.collect.outcome == 'success'
@@ -310,10 +310,12 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
+      - name: Record backup run provenance
+        run: echo "FX_FAILURE_STARTED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
       - name: Test frozen fast research safety before optional recovery
         id: safety
         run: |
-          for suite in test_fast_entry_scan.py test_signal_admission.py test_watchlist_validation.py test_paper_evidence_guard.py test_simple_paper_shadow_v2.py test_simple_shadow_gate_diagnostics.py test_source_freshness_fallback.py; do
+          for suite in test_fast_entry_scan.py test_signal_admission.py test_watchlist_validation.py test_paper_evidence_guard.py test_simple_paper_shadow_v2.py test_simple_shadow_gate_diagnostics.py test_source_freshness_fallback.py test_production_recovery.py; do
             python -m unittest discover -s tests -p "$suite" -q || exit 1
           done
       - name: Restore source coverage if hourly OANDA schedule was missed

@@ -69,7 +69,7 @@ def fast_if_due(now=None):
         return 0
     # Exactly one inline attempt, serialized by the existing workflow group.
     # Uses the unchanged fast collector and all of its existing safety gates.
-    result = subprocess.run([sys.executable, "scripts/fast_entry_scan.py"], cwd=ROOT)
+    result = subprocess.run([sys.executable, "scripts/production_recovery.py", "fast"], cwd=ROOT)
     checked = datetime.now(timezone.utc)
     valid = fast_valid(read("data/fast_entry_audit.json"), read("data/fast_latest.json"), checked)
     if result.returncode or not valid:
@@ -106,6 +106,7 @@ def build(now=None, remote=True):
     latest = read("data/fast_latest.json")
     early = read("data/early_simple_paper_shadow.json")
     publication = read("data/public_dashboard_status.json")
+    attempt = read("data/collection_attempt.json")
     # Collection failure documents an ATTEMPT time, not a market observation.
     # The health publisher preserves the verified previous source timestamp.
     full_source = (summary.get("collected_at") if summary.get("status") in ("OK", "PARTIAL")
@@ -113,6 +114,9 @@ def build(now=None, remote=True):
     full_age = age(full_source, now)
     fast_age = age(fast.get("source_at"), now)
     full_ok = summary.get("status") in ("OK", "PARTIAL") and full_age is not None and full_age <= 75*60
+    last_collection_failed = (attempt.get("status") == "DATA_UNAVAILABLE"
+                              and when(attempt.get("checked_at")) is not None
+                              and (when(full_source) is None or when(attempt["checked_at"]) >= when(full_source)))
     fast_ok = fast_valid(fast, latest, now)
     history = read("data/fast_entry_history.json", {"observations": []})
     observed = [when(r.get("at")) for r in history.get("observations", []) if r.get("pairs")]
@@ -134,9 +138,10 @@ def build(now=None, remote=True):
         consecutive += 1
     outcomes = json.loads(os.environ.get("FX_MONITOR_OUTCOMES", "{}"))
     report = {"checked_at": now.isoformat(), "active_london_day": active(now),
-              "status": "CURRENT" if full_ok and (fast_ok or not active(now)) else "DEGRADED",
+              "status": "CURRENT" if full_ok and not last_collection_failed and (fast_ok or not active(now)) else "DEGRADED",
               "full_source_at": full_source, "full_age_seconds": full_age,
-              "full_last_attempt_at": summary.get("collected_at"),
+              "full_last_attempt_at": attempt.get("checked_at") or summary.get("collected_at"),
+              "collection_attempt": attempt,
               "full_collection_status": summary.get("status"),
               "full_fresh": full_ok, "fast_source_at": fast.get("source_at"),
               "fast_age_seconds": fast_age, "fast_observation_valid": fast_ok,

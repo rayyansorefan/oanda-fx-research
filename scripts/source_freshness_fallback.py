@@ -51,7 +51,7 @@ def collect(*,now=None,invoke=None,restore=None):
                 "source_at":read(SOURCE)["collected_at"]}
     old=read(SOURCE).get("collected_at")
     run=invoke or (lambda:subprocess.run(
-        [sys.executable,"scripts/oanda_data.py"],cwd=ROOT,check=False).returncode)
+        [sys.executable,"scripts/production_recovery.py","full"],cwd=ROOT,check=False).returncode)
     result=run()
     observed=datetime.now(timezone.utc)
     summary=read(SOURCE)
