@@ -174,6 +174,12 @@ def update(study, raw, summary, history, protocol, *, now=None, fetch_bars=None)
     if book.get("protocol_id") not in (None, protocol["id"]):
         raise ValueError("PROTOCOL_CONFLICT")
     records = dict(book.get("records") or {})
+    # The first deployed invocation only activates the protocol. An observation
+    # predating that invocation cannot become a newly registered counterfactual.
+    activated_at = instant(book.get("activated_at"))
+    if activated_at is None:
+        activated_at = now
+        book["activated_at"] = texttime(now)
     for key in sorted(records):
         if len([r for r in records.values() if (r.get("result") or {}).get("scored") is not True]) == 0:
             break
@@ -195,7 +201,7 @@ def update(study, raw, summary, history, protocol, *, now=None, fetch_bars=None)
         record.pop("_scored_this_run", None)
     source_at = instant(raw.get("source_at"))
     summary_at = instant(summary.get("collected_at"))
-    valid = (now >= begin and source_at is not None and source_at == summary_at
+    valid = (now >= begin and source_at is not None and source_at > activated_at and source_at == summary_at
              and summary.get("status") in ("OK", "PARTIAL")
              and timedelta(0) <= now - source_at <= timedelta(minutes=10)
              and raw.get("status") == "DIAGNOSTICS_ONLY")
@@ -222,6 +228,7 @@ def update(study, raw, summary, history, protocol, *, now=None, fetch_bars=None)
         outcomes[status] = outcomes.get(status, 0) + 1
     return {
         "schema": 1, "protocol_id": protocol["id"], "no_orders": True,
+        "activated_at": book["activated_at"],
         "last_evaluated_at": texttime(now),
         "status": "PAPER_ONLY_PROSPECTIVE_STUDY" if valid else "NO_ELIGIBLE_NEW_SOURCE",
         "latest_source_at": texttime(source_at) if source_at else None,
