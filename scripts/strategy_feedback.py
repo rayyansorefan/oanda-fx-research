@@ -202,11 +202,18 @@ def main():
     book_path = ROOT / "data/paper_trade_ledger.json"
     broker = json.loads(source.read_text(encoding="utf-8"))
     paper_valid = book_path.is_file() and book_path.stat().st_size > 0
-    paper = json.loads(book_path.read_text(encoding="utf-8")) if paper_valid else {}
+    paper_status = "PRESENT" if paper_valid else "MISSING_OR_EMPTY"
+    try:
+        paper = json.loads(book_path.read_text(encoding="utf-8")) if paper_valid else {}
+    except (ValueError, OSError):
+        paper = {}
+        paper_status = "INVALID_OR_UNREADABLE"
+    # A missing paper ledger cannot excuse dropping actual screenshot losses;
+    # it also must not be silently represented as complete paper coverage.
     report = build_feedback(paper, broker)
     report["generated_at"] = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     report["source"] = "PRIVATE_USER_SCREENSHOT_EVIDENCED_BROKER_OUTCOMES"
-    report["paper_input_status"] = "PRESENT" if paper_valid else "MISSING_OR_EMPTY"
+    report["paper_input_status"] = paper_status
     report["model_weight_update"] = "NONE"
     report["alert_gate_changes"] = "NONE"
     output = ROOT / "data/manual_execution_review.json"
