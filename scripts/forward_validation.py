@@ -192,14 +192,22 @@ def evaluate(protocol,study,ledger,current_hash,now):
         decision=moment(row.get('decision_at'))
         if not decision or decision<start or not moment(plan.get('created_at')) or moment(plan['created_at'])<start:
             excluded['DEVELOPMENT_OR_LEGACY_TIMING']+=1;continue
+        if decision > now or moment(plan['created_at']) > now:
+            excluded['FUTURE_OBSERVATION_TIMING']+=1;continue
         if row.get('observation_scope') != 'PAIR_SPECIFIC' and protocol.get('require_pair_specific_observations'):
             excluded['UNSCOPED_OBSERVATION_TIMING']+=1;continue
         if not row.get('common_deep_history_available'):
             excluded['INCOMPLETE_COMMON_UNIVERSE']+=1;continue
         if not unchanged:
             excluded['PROTOCOL_CHANGED']+=1;continue
-        eligible.append(row)
         result=row.get('result') or {}
+        result_times=[moment(result.get(k)) for k in ('entry_at','at','exit_at')]
+        if any(t and t > now for t in result_times):
+            excluded['FUTURE_RESULT_TIMING']+=1
+            # Review as of the requested clock without changing stored evidence.
+            row={**row,'result':{'status':'PENDING_AS_OF_REVIEW','scored':False}}
+            result=row['result']
+        eligible.append(row)
         if result.get('scored') is True and result.get('entry_at'):
             day=moment(result['entry_at']).astimezone(LONDON).date().isoformat()
             key=(row['policy'],plan['instrument'],day)
