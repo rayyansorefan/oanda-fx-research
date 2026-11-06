@@ -8,6 +8,44 @@ class StrategyFeedbackTests(unittest.TestCase):
         self.short = {"instrument": "GBP_USD", "direction": "SHORT",
                       "strategy": "M15_REJECTION", "alert_b": 1.3355}
 
+    def test_november_amber_stopouts_count_once_without_promoting_or_vetoing(self):
+        aud = {"key": "2026-11-06-audjpy-stop-1203", "instrument": "AUD_JPY",
+               "status": "CLOSED", "net_pnl_gbp": -9.99,
+               "exit_reason": "STOP_LOSS",
+               "entry_classification": "USER_EXECUTED_AMBER_RESEARCH_WATCH",
+               "closed_at": "2026-11-06T12:03:27Z",
+               "signal_id": None, "signal_match": "PENDING"}
+        gbp = {"key": "2026-11-06-gbpusd-stop-1220", "instrument": "GBP_USD",
+               "status": "CLOSED", "net_pnl_gbp": -4.95,
+               "exit_reason": "STOP_LOSS",
+               "entry_classification": "USER_EXECUTED_AMBER_RESEARCH_WATCH",
+               "closed_at": "2026-11-06T12:20:09Z",
+               "signal_id": None, "signal_match": "PENDING"}
+        review = build_feedback({"candidates": {}}, {"trades": [aud, gbp, aud]})
+        self.assertEqual(review["broker"]["closed_count"], 2)
+        self.assertEqual(review["broker"]["unapproved_watch_stopouts"], 2)
+        self.assertEqual(review["broker"]["loss_count"], 2)
+        self.assertEqual(review["broker"]["net_profit_gbp"], -14.94)
+        self.assertEqual(review["broker"]["unlinked_count"], 2)
+        self.assertEqual(review["broker"]["included_in_strategy_weighting"], 0)
+        for pair in ("AUD_JPY", "GBP_USD"):
+            self.assertEqual(review["broker"]["pair_observations"][pair]["unapproved_watch_losses"], 1)
+            decision = signal_policy({**self.short, "instrument": pair}, review)
+            self.assertTrue(decision["manual_execution_review_required"])
+            self.assertEqual(decision["priority_bias"], 0)
+            self.assertIn("non-approved paper watch", decision["execution_review"])
+        self.assertEqual(len(review["broker"]["execution_lessons"]), 2)
+
+    def test_closed_loss_not_assumed_to_exceed_planned_risk_without_original_stop(self):
+        row = {"instrument": "GBP_USD", "status": "CLOSED", "net_pnl_gbp": -4.95,
+               "entry_classification": "USER_EXECUTED_AMBER_RESEARCH_WATCH",
+               "execution_review": {"reference_equity_gbp": 1169.27,
+                                    "risk_above_target": None},
+               "signal_match": "PENDING"}
+        report = build_feedback({"candidates": {}}, {"trades": [row]})
+        self.assertEqual(report["broker"]["pair_observations"]["GBP_USD"]["risk_budget_breaches"], 0)
+        self.assertEqual(report["broker"]["unapproved_watch_stopouts"], 1)
+
     def test_broker_screenshots_are_recorded_but_not_trained(self):
         book = {"candidates": {}, "updated_at": "2026-10-26T14:00:00Z"}
         broker = {"trades": [
