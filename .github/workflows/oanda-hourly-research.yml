@@ -131,6 +131,13 @@ jobs:
         run: |
           python scripts/simple_paper_shadow.py
           python scripts/simple_paper_shadow_v2.py
+      - name: Register and score contextual-news paper challenger, separately frozen
+        id: contextual_shadow
+        if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.news.outcome == 'success' && steps.simple_shadow.outcome == 'success'
+        continue-on-error: true
+        env:
+          OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
+        run: python scripts/contextual_news_shadow.py
       - name: Collect separately locked 4 November early forward paper cohort
         id: early_cohort
         if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.news.outcome == 'success' && steps.comparison.outcome == 'success' && steps.simple_shadow.outcome == 'success'
@@ -280,6 +287,7 @@ jobs:
             data/early_forward_validation.json
             data/strategy_comparison.json
             data/simple_paper_shadow_v2.json
+            data/contextual_news_shadow_v1.json
             data/signal_plan_archive.json
             data/signal_delivery_audit.json
             data/paper_trade_ledger.json
@@ -288,7 +296,7 @@ jobs:
         if: always() && (steps.monitoring.outcome != 'success' || steps.fast_recovery.outcome == 'failure')
         run: exit 1
       - name: Fail closed if any research or public dashboard step failed
-        if: steps.lifecycle.outcome != 'success' || steps.safety.outcome != 'success' || steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success' || steps.portfolio.outcome != 'success' || steps.simple_shadow.outcome != 'success' || steps.early_cohort.outcome != 'success' || steps.paper_gates.outcome != 'success'
+        if: steps.lifecycle.outcome != 'success' || steps.safety.outcome != 'success' || steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success' || steps.portfolio.outcome != 'success' || steps.simple_shadow.outcome != 'success' || steps.contextual_shadow.outcome != 'success' || steps.early_cohort.outcome != 'success' || steps.paper_gates.outcome != 'success'
         run: exit 1
 
   fast-tick:
@@ -334,6 +342,7 @@ jobs:
           python scripts/strategy_comparison.py
           python scripts/simple_paper_shadow.py
           python scripts/simple_paper_shadow_v2.py
+          python scripts/contextual_news_shadow.py
           python scripts/early_forward_start.py
       - name: Admit all-pair plans from recovered full source
         id: recovered_admission
@@ -360,6 +369,12 @@ jobs:
             echo "collected=true" >> "$GITHUB_OUTPUT"
             echo "Backup collected a new observable fast market snapshot"
           fi
+      - name: Track contextual paper results on actual fast source observations
+        id: contextual_fast
+        if: steps.fast.outputs.collected == 'true'
+        env:
+          OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
+        run: python scripts/contextual_news_shadow.py --fast
       - name: Verify original immutable forward ledgers after new observation
         id: validation
         if: steps.fast.outputs.collected == 'true'
@@ -417,10 +432,11 @@ jobs:
             data/fast_latest.json
             data/fast_entry_audit.json
             data/simple_paper_shadow_v2.json
+            data/contextual_news_shadow_v1.json
             data/simple_shadow_gate_diagnostics.json
             data/strategy_comparison.json
             data/monitoring_health.json
             signals.json
       - name: Fail closed if backup, publication, or persistence failed
-        if: always() && (steps.safety.outcome != 'success' || steps.source.outcome != 'success' || (steps.source.outputs.refreshed == 'true' && (steps.paper_catchup.outcome != 'success' || steps.recovered_admission.outcome != 'success' || steps.recovered_watch.outcome != 'success')) || steps.fast.outcome != 'success' || steps.monitoring.outcome != 'success' || steps.persist.outcome != 'success' || (steps.fast.outputs.collected == 'true' && (steps.validation.outcome != 'success' || steps.paper_gates.outcome != 'success' || steps.publish.outcome != 'success')))
+        if: always() && (steps.safety.outcome != 'success' || steps.source.outcome != 'success' || (steps.source.outputs.refreshed == 'true' && (steps.paper_catchup.outcome != 'success' || steps.recovered_admission.outcome != 'success' || steps.recovered_watch.outcome != 'success')) || steps.fast.outcome != 'success' || steps.monitoring.outcome != 'success' || steps.persist.outcome != 'success' || (steps.fast.outputs.collected == 'true' && (steps.contextual_fast.outcome != 'success' || steps.validation.outcome != 'success' || steps.paper_gates.outcome != 'success' || steps.publish.outcome != 'success')))
         run: exit 1
