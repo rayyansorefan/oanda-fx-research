@@ -213,6 +213,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FX_MONITOR_OUTCOMES: '{"collect":"${{ steps.collect.outcome }}","safety":"${{ steps.safety.outcome }}","early_cohort":"${{ steps.early_cohort.outcome }}","fast_recovery":"${{ steps.fast_recovery.outcome }}"}'
         run: python scripts/monitoring_health.py
+      - name: Refresh private manual execution loss review independent of OANDA availability
+        id: manual_execution_review
+        if: always()
+        continue-on-error: true
+        run: python scripts/strategy_feedback.py
       - name: Publish sanitized FX research to existing HTML dashboard
         id: dashboard
         if: steps.collect.outcome == 'success' && steps.news.outcome == 'success'
@@ -303,7 +308,7 @@ jobs:
         if: always() && (steps.monitoring.outcome != 'success' || steps.fast_recovery.outcome == 'failure')
         run: exit 1
       - name: Fail closed if any research or public dashboard step failed
-        if: steps.lifecycle.outcome != 'success' || steps.safety.outcome != 'success' || steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success' || steps.portfolio.outcome != 'success' || steps.simple_shadow.outcome != 'success' || steps.contextual_shadow.outcome != 'success' || steps.early_cohort.outcome != 'success' || steps.paper_gates.outcome != 'success' || steps.gate_forward.outcome != 'success'
+        if: steps.lifecycle.outcome != 'success' || steps.safety.outcome != 'success' || steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success' || steps.portfolio.outcome != 'success' || steps.simple_shadow.outcome != 'success' || steps.contextual_shadow.outcome != 'success' || steps.early_cohort.outcome != 'success' || steps.paper_gates.outcome != 'success' || steps.gate_forward.outcome != 'success' || steps.manual_execution_review.outcome != 'success'
         run: exit 1
 
   fast-tick:

@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "as_of": "2026-10-28T09:10:52Z",
-  "provenance": "Manually transcribed user-supplied Pepperstone closed-position screenshots; not broker-API verified.",
-  "policy": "Pepperstone screenshot outcomes remain execution observations, not formally matched OANDA paper fills. Profitable observations create positive review hypotheses (including early NZD/JPY short), while stopped-out discretionary entries trigger confirmation/risk review. Preserve all wins and losses. Only immutable prospective setup linkage, confirmed trigger/fill and sufficiently sized cost-adjusted OANDA paper evidence can alter strategy weights. Never auto-reinforce simply because a screenshot is profitable.",
+  "as_of": "2026-11-06T12:20:09Z",
+  "provenance": "User-supplied Pepperstone closed-position screenshots, transcribed into private execution evidence; not broker API or proven OANDA signal fills.",
+  "policy": "All closed screenshot outcomes (wins and losses) are private manual execution observations. AMBER untriggered research is not approval. Do not infer the planned stop or entry risk from realised loss alone. None is a scored paper result or may alter live strategy weights absent independently audited immutable plan, trigger, fill and full OANDA chronology.",
   "trades": [
     {
       "key": "2026-10-23-usdjpy-closed-1057",
@@ -209,6 +209,68 @@
         "risk_above_target": true,
         "entry_vs_exit_pips": -5.1,
         "lesson": "Short was entered before completed bearish M15 confirmation while M5 rebound remained bullish; the stop loss worked as a hard loss cap but trade risk was about 0.48% of reported equity vs the 0.25% guidance. Tighten execution discipline and trade-size checks; do not relax entry gates or infer strategy failure from one discretionary stop-out."
+      }
+    },
+    {
+      "key": "2026-11-06-audjpy-stop-1203",
+      "instrument": "AUD_JPY",
+      "direction": "SHORT",
+      "status": "CLOSED",
+      "opened_at": "2026-11-06T11:37:54Z",
+      "closed_at": "2026-11-06T12:03:27Z",
+      "entry_price": 108.764,
+      "exit_price": 108.875,
+      "exit_reason": "STOP_LOSS",
+      "net_pnl_gbp": -9.99,
+      "size_gbp_per_point": 0.9,
+      "commission_gbp": 0,
+      "swap_fees_gbp": 0,
+      "total_fees_gbp": 0,
+      "signal_id": null,
+      "signal_match": "PENDING",
+      "entry_classification": "USER_EXECUTED_AMBER_RESEARCH_WATCH",
+      "provenance": "USER_SUPPLIED_PEPPERSTONE_CLOSED_POSITION_SCREENSHOT_2026-11-06_1207_UK",
+      "execution_review": {
+        "approved_signal_at_entry": false,
+        "completed_m15_confirmation_at_entry": "UNVERIFIED",
+        "initial_stop_price": "NOT_EVIDENCED",
+        "entry_news_and_spread_checks": "UNVERIFIED",
+        "entry_vs_exit_pips": -11.1,
+        "reference_equity_gbp": 1169.27,
+        "realised_loss_pct_of_reference_equity": 0.85,
+        "risk_above_target": null,
+        "lesson": "AMBER ranked direction is not a canonical triggered signal. Screenshot proves a manual stop-out, not research-strategy failure. Retrospectively compare actual entry to frozen original plan, M15 confirmation, event risk and executable spread; do not train weights or relax admission."
+      }
+    },
+    {
+      "key": "2026-11-06-gbpusd-stop-1220",
+      "instrument": "GBP_USD",
+      "direction": "SHORT",
+      "status": "CLOSED",
+      "opened_at": "2026-11-06T11:38:53Z",
+      "closed_at": "2026-11-06T12:20:09Z",
+      "entry_price": 1.33993,
+      "exit_price": 1.34038,
+      "exit_reason": "STOP_LOSS",
+      "net_pnl_gbp": -4.95,
+      "size_gbp_per_point": 1.1,
+      "commission_gbp": 0,
+      "swap_fees_gbp": 0,
+      "total_fees_gbp": 0,
+      "signal_id": null,
+      "signal_match": "PENDING",
+      "entry_classification": "USER_EXECUTED_AMBER_RESEARCH_WATCH",
+      "provenance": "USER_SUPPLIED_PEPPERSTONE_CLOSED_POSITION_SCREENSHOT_2026-11-06_1224_UK",
+      "execution_review": {
+        "approved_signal_at_entry": false,
+        "completed_m15_confirmation_at_entry": "UNVERIFIED",
+        "initial_stop_price": "NOT_EVIDENCED",
+        "entry_news_and_spread_checks": "UNVERIFIED",
+        "entry_vs_exit_pips": -4.5,
+        "reference_equity_gbp": 1169.27,
+        "realised_loss_pct_of_reference_equity": 0.42,
+        "risk_above_target": null,
+        "lesson": "User executed an AMBER GBP/USD short before verified GREEN trigger. Material-headline review was a blocker in latest prior full feed. The screenshot proves a manual stop-out only; compare timestamped entry vs authentic M15 bars, news and source freshness before drawing technical conclusions."
       }
     }
   ],

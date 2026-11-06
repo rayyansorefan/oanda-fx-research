@@ -7,16 +7,36 @@ and only after the established minimum sample and conservative bounds.
 from __future__ import annotations
 
 import math
+import json
+from datetime import datetime, timezone
+from pathlib import Path
 from paper_trade_audit import public_view
+
+ROOT = Path(__file__).resolve().parents[1]
+WATCH_LOSS_CLASSES = frozenset({
+    "UNAPPROVED_RESEARCH_WATCH_EXECUTED", "USER_EXECUTED_AMBER_RESEARCH_WATCH"
+})
 
 
 def build_feedback(book, broker):
     view = public_view(book if isinstance(book, dict) else {})
     rows = (broker or {}).get("trades") or []
-    closed = [row for row in rows if isinstance(row, dict)
-              and row.get("status") == "CLOSED"
-              and isinstance(row.get("net_pnl_gbp"), (int, float))
-              and math.isfinite(row["net_pnl_gbp"])]
+    closed = []
+    seen = set()
+    for row in rows:
+        if not isinstance(row, dict) or row.get("status") != "CLOSED":
+            continue
+        pnl = row.get("net_pnl_gbp")
+        if isinstance(pnl, bool) or not isinstance(pnl, (int, float)) or not math.isfinite(pnl):
+            continue
+        # A unique screenshot close is one observation. Reimport must not
+        # inflate wins/losses or falsely imply more statistical evidence.
+        key = row.get("key")
+        if isinstance(key, str) and key:
+            if key in seen:
+                continue
+            seen.add(key)
+        closed.append(row)
     # A claimed match alone is not sufficient to train: confirmation, route,
     # source signal and fills must be independently audited first.
     unlinked = sum(row.get("signal_match") != "VERIFIED" or
@@ -41,7 +61,7 @@ def build_feedback(book, broker):
         group["net_pnl_gbp"] += row["net_pnl_gbp"]
         group["unapproved_watch_losses"] += (
             row["net_pnl_gbp"] < 0
-            and row.get("entry_classification") == "UNAPPROVED_RESEARCH_WATCH_EXECUTED")
+            and row.get("entry_classification") in WATCH_LOSS_CLASSES)
         early = row.get("entry_classification") == "USER_EXECUTED_EARLY_BEFORE_M15_CONFIRMATION"
         group["early_manual_wins"] += early and row["net_pnl_gbp"] > 0
         group["early_manual_losses"] += early and row["net_pnl_gbp"] < 0
@@ -58,7 +78,7 @@ def build_feedback(book, broker):
         group["net_pnl_gbp"] = round(group["net_pnl_gbp"], 2)
     watch_losses = [row for row in closed
                     if row["net_pnl_gbp"] < 0
-                    and row.get("entry_classification") == "UNAPPROVED_RESEARCH_WATCH_EXECUTED"]
+                    and row.get("entry_classification") in WATCH_LOSS_CLASSES]
     early = [row for row in closed if row.get("entry_classification")
              == "USER_EXECUTED_EARLY_BEFORE_M15_CONFIRMATION"]
     # Broker wins are useful positive hypotheses for investigation; none
@@ -170,3 +190,39 @@ def signal_policy(signal, feedback):
             "risk against verified equity; do not turn a research watch into approval."
             if needs_execution_review else None),
     }
+
+
+def main():
+    """Refresh the PRIVATE manual-execution audit separately from OANDA scoring.
+
+    Independent of live OANDA collection: an outage must not erase a verified
+    screenshot stop-out or turn it into an OANDA strategy fill.
+    """
+    source = ROOT / "data/verified_broker_outcomes.json"
+    book_path = ROOT / "data/paper_trade_ledger.json"
+    broker = json.loads(source.read_text(encoding="utf-8"))
+    paper_valid = book_path.is_file() and book_path.stat().st_size > 0
+    paper_status = "PRESENT" if paper_valid else "MISSING_OR_EMPTY"
+    try:
+        paper = json.loads(book_path.read_text(encoding="utf-8")) if paper_valid else {}
+    except (ValueError, OSError):
+        paper = {}
+        paper_status = "INVALID_OR_UNREADABLE"
+    # A missing paper ledger cannot excuse dropping actual screenshot losses;
+    # it also must not be silently represented as complete paper coverage.
+    report = build_feedback(paper, broker)
+    report["generated_at"] = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+    report["source"] = "PRIVATE_USER_SCREENSHOT_EVIDENCED_BROKER_OUTCOMES"
+    report["paper_input_status"] = paper_status
+    report["model_weight_update"] = "NONE"
+    report["alert_gate_changes"] = "NONE"
+    output = ROOT / "data/manual_execution_review.json"
+    output.write_text(json.dumps(report, indent=2, sort_keys=True, allow_nan=False) + "\n",
+                      encoding="utf-8")
+    print("Private manual execution review: closed", report["broker"]["closed_count"],
+          "watch losses", report["broker"]["unapproved_watch_stopouts"],
+          "weighted", report["broker"]["included_in_strategy_weighting"])
+
+
+if __name__ == "__main__":
+    main()

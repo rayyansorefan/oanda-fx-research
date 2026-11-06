@@ -33,7 +33,11 @@
       "entry_classification": "USER_EXECUTED_AMBER_RESEARCH_WATCH",
       "source": "USER_SUPPLIED_PEPPERSTONE_PORTFOLIO_SCREENSHOT_1140_UK",
       "signal_match": "PENDING",
-      "broker_order_id": null
+      "broker_order_id": null,
+      "latest_known_state": "CLOSED_BY_STOP_SCREENSHOT_EVIDENCED",
+      "closed_at": "2026-11-06T12:03:27Z",
+      "realised_pnl_gbp": -9.99,
+      "entry_match_to_canonical_signal": "UNVERIFIED"
     },
     {
       "id": "20261106-USER-REPORTED-GBPUSD-SHORT",
@@ -51,7 +55,11 @@
       "entry_classification": "USER_EXECUTED_AMBER_RESEARCH_WATCH",
       "source": "USER_SUPPLIED_PEPPERSTONE_PORTFOLIO_SCREENSHOT_1140_UK",
       "signal_match": "PENDING",
-      "broker_order_id": null
+      "broker_order_id": null,
+      "latest_known_state": "CLOSED_BY_STOP_SCREENSHOT_EVIDENCED",
+      "closed_at": "2026-11-06T12:20:09Z",
+      "realised_pnl_gbp": -4.95,
+      "entry_match_to_canonical_signal": "UNVERIFIED"
     }
   ],
   "reported_outcomes": [
@@ -73,12 +81,50 @@
       "note": "User confirms target reached; chart shows directional fall. No actual broker closure/TP execution shown. Research dashboard at 11:17 classified NZD/CAD as UNPRICED_WATCH, with NO_APPROVED_TRIGGER, STRUCTURAL_REWARD and NEWS_REQUIRED_SOURCE_MISSING. Do not credit a canonical strategy win without immutable setup/fill reconciliation."
     }
   ],
-  "interpretation": "Historical user-provided evidence, not broker-feed verification or proof of entry validity, realised profit, or strategy edge. No automatic model weight/parameter promotion. These entries are not yet consumed by the engine unless explicitly integrated; monitoring of Pepperstone positions is not automatic.",
+  "interpretation": "11:40 positions were genuinely open at that snapshot; both later closed by screenshot-confirmed stop losses. These are discretionary AMBER execution outcomes, not verified canonical research fills or paper-test scoring. No automatic broker access or strategy-weight promotion.",
   "learning_review_needed": [
-    "Reconcile any frozen timely research setup and entry confirmation for NZD/CAD, AUD/JPY and GBP/USD",
-    "Verify NZD/CAD target and any realised close from broker history",
-    "Compare screenshot 11:40 risk exposure, stops, margin and plan expiry; do not assume protective stops exist",
-    "Assess whether unpriced amber watches should present executable levels",
-    "Protect all original unmodified observations and include losing outcomes as well as winning outcomes"
-  ]
+    "Include both stopped AMBER entries in private execution-quality review on the next workflow run",
+    "Compare each exact historical entry time against frozen signals, M15 close confirmation and event/spread context without retrospective approval",
+    "Do not label realised losses proof that an entire directional strategy is unprofitable, nor reduce risk/news protections",
+    "Keep 11:39 NZD/CAD target-reached statement separate and unverified until closed trade screenshot"
+  ],
+  "subsequent_close_reports": [
+    {
+      "instrument": "AUD_JPY",
+      "direction": "SHORT",
+      "opened_at": "2026-11-06T11:37:54Z",
+      "closed_at": "2026-11-06T12:03:27Z",
+      "entry_price": 108.764,
+      "exit_price": 108.875,
+      "exit_reason": "STOP_LOSS",
+      "stake_gbp_per_point": 0.9,
+      "net_pnl_gbp": -9.99,
+      "fees_gbp": 0,
+      "matched_to_canonical_signal": false,
+      "signal_match": "PENDING",
+      "source": "CLOSED_POSITION_SCREENSHOT_2026-11-06_1207_UK"
+    },
+    {
+      "instrument": "GBP_USD",
+      "direction": "SHORT",
+      "opened_at": "2026-11-06T11:38:53Z",
+      "closed_at": "2026-11-06T12:20:09Z",
+      "entry_price": 1.33993,
+      "exit_price": 1.34038,
+      "exit_reason": "STOP_LOSS",
+      "stake_gbp_per_point": 1.1,
+      "net_pnl_gbp": -4.95,
+      "fees_gbp": 0,
+      "matched_to_canonical_signal": false,
+      "signal_match": "PENDING",
+      "source": "CLOSED_POSITION_SCREENSHOT_2026-11-06_1224_UK"
+    }
+  ],
+  "latest_evidence_at_utc": "2026-11-06T12:24:00Z",
+  "outcome_summary": {
+    "positions_initially_open_at_1140": 2,
+    "subsequently_closed_by_stop": 2,
+    "total_realised_loss_gbp": -14.94,
+    "performance_scope": "USER_DISCRETIONARY_AMBER_ENTRIES_ONLY; NOT ENGINE PAPER_SCORING"
+  }
 }
