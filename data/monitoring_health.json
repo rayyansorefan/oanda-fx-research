@@ -1,23 +1,23 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-06T12:11:24.803211+00:00",
+  "checked_at": "2026-11-06T12:37:13.595662+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-06T12:11:19Z",
+    "checked_at": "2026-11-06T12:37:09Z",
     "collector_endpoint": "practice",
-    "error": "OANDA_INSTRUMENTS_ACCESS_DENIED_PRACTICE",
+    "error": "OANDA_HTTP_401_ACCOUNTS",
     "event": "push",
     "last_valid_source_preserved": true,
-    "run_id": "42215701173",
-    "started_at": "2026-11-06T12:11:07Z",
+    "run_id": "42219021511",
+    "started_at": "2026-11-06T12:37:04Z",
     "status": "DATA_UNAVAILABLE"
   },
-  "consecutive_unobserved_fast_targets": 3,
+  "consecutive_unobserved_fast_targets": 5,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
     "event": "push",
-    "head_sha": "5687b6f7ff43249de52448955873c60d34a01892",
-    "id": "42215701173",
+    "head_sha": "72c161870f147d355553665fd0a91b28d565437b",
+    "id": "42219021511",
     "outcomes": {
       "collect": "failure",
       "early_cohort": "skipped",
@@ -55,8 +55,8 @@
   "early_cohort_id": "FX-EARLY-20261104-v1",
   "early_last_source_at": "2026-11-06T11:16:59Z",
   "early_observation_count": 41,
-  "elapsed_fast_targets_today": 21,
-  "fast_age_seconds": 3228.052125,
+  "elapsed_fast_targets_today": 23,
+  "fast_age_seconds": 4776.844576,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -83,10 +83,10 @@
   },
   "fast_source_at": "2026-11-06T11:17:36.751086+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 3265.803211,
+  "full_age_seconds": 4814.595662,
   "full_collection_status": "PARTIAL",
-  "full_fresh": true,
-  "full_last_attempt_at": "2026-11-06T12:11:19Z",
+  "full_fresh": false,
+  "full_last_attempt_at": "2026-11-06T12:37:09Z",
   "full_source_at": "2026-11-06T11:16:59Z",
   "last_completed_jobs": [
     {
@@ -95,13 +95,15 @@
       "failed_steps": [
         "Fail closed if any research or public dashboard step failed"
       ],
-      "run_id": 42214206458
+      "run_id": 42215701173
     },
     {
-      "conclusion": "success",
+      "conclusion": "failure",
       "event": "push",
-      "failed_steps": [],
-      "run_id": 42208991688
+      "failed_steps": [
+        "Fail closed if any research or public dashboard step failed"
+      ],
+      "run_id": 42214206458
     }
   ],
   "previous_publication": {
@@ -456,7 +458,9 @@
     "2026-11-06T11:02:00+00:00",
     "2026-11-06T11:32:00+00:00",
     "2026-11-06T11:47:00+00:00",
-    "2026-11-06T12:02:00+00:00"
+    "2026-11-06T12:02:00+00:00",
+    "2026-11-06T12:17:00+00:00",
+    "2026-11-06T12:32:00+00:00"
   ],
   "workflow_registration": [
     {

@@ -1,0 +1,224 @@
+{
+  "alert_gate_changes": "NONE",
+  "basis": "OANDA bid/ask paper outcomes, separately from manual Pepperstone screenshots",
+  "broker": {
+    "closed_count": 11,
+    "confirmed_strategy_wins_from_broker_screenshots": 0,
+    "early_entry_study": {
+      "cases": [
+        {
+          "net_gbp": 9.02,
+          "pair": "EUR_USD",
+          "plan": "20261027-1403-EURUSD-S-B03",
+          "signal_match": "PENDING"
+        }
+      ],
+      "closed": 1,
+      "losses": 0,
+      "net_gbp": 9.02,
+      "policy": "Compare a completed M5 alternative against the original M15 route prospectively. Count losses, no-fills and costs. Broker screenshots never auto-approve entries.",
+      "strict_plan_retouch_not_observed": 1,
+      "wins": 1
+    },
+    "execution_lessons": [
+      {
+        "action": "Treat watch-only candidates as NOT APPROVED; require a fresh independently confirmed entry.",
+        "classification": "UNAPPROVED_RESEARCH_WATCH_EXECUTED",
+        "closed_at": "2026-10-26T16:22:59Z",
+        "instrument": "AUD_NZD",
+        "planned_entry_deviation_pips": 4,
+        "research_gate": "FAILED_SPREAD_ADJUSTED_TP1_RR"
+      },
+      {
+        "action": "Treat watch-only candidates as NOT APPROVED; require a fresh independently confirmed entry.",
+        "classification": "USER_EXECUTED_AMBER_RESEARCH_WATCH",
+        "closed_at": "2026-11-06T12:03:27Z",
+        "instrument": "AUD_JPY",
+        "planned_entry_deviation_pips": null,
+        "research_gate": null
+      },
+      {
+        "action": "Treat watch-only candidates as NOT APPROVED; require a fresh independently confirmed entry.",
+        "classification": "USER_EXECUTED_AMBER_RESEARCH_WATCH",
+        "closed_at": "2026-11-06T12:20:09Z",
+        "instrument": "GBP_USD",
+        "planned_entry_deviation_pips": null,
+        "research_gate": null
+      }
+    ],
+    "included_in_strategy_weighting": 0,
+    "loss_count": 4,
+    "net_profit_gbp": 138.56,
+    "pair_observations": {
+      "AUD_JPY": {
+        "closed": 1,
+        "early_manual_losses": 0,
+        "early_manual_wins": 0,
+        "losses": 1,
+        "net_pnl_gbp": -9.99,
+        "positive_review_wins": 0,
+        "risk_budget_breaches": 0,
+        "unapproved_watch_losses": 1,
+        "unconfirmed_entry_stopouts": 0,
+        "wins": 0
+      },
+      "AUD_NZD": {
+        "closed": 1,
+        "early_manual_losses": 0,
+        "early_manual_wins": 0,
+        "losses": 1,
+        "net_pnl_gbp": -7.0,
+        "positive_review_wins": 0,
+        "risk_budget_breaches": 0,
+        "unapproved_watch_losses": 1,
+        "unconfirmed_entry_stopouts": 0,
+        "wins": 0
+      },
+      "EUR_USD": {
+        "closed": 2,
+        "early_manual_losses": 0,
+        "early_manual_wins": 1,
+        "losses": 0,
+        "net_pnl_gbp": 17.02,
+        "positive_review_wins": 2,
+        "risk_budget_breaches": 0,
+        "unapproved_watch_losses": 0,
+        "unconfirmed_entry_stopouts": 0,
+        "wins": 2
+      },
+      "GBP_JPY": {
+        "closed": 1,
+        "early_manual_losses": 0,
+        "early_manual_wins": 0,
+        "losses": 0,
+        "net_pnl_gbp": 34.16,
+        "positive_review_wins": 1,
+        "risk_budget_breaches": 0,
+        "unapproved_watch_losses": 0,
+        "unconfirmed_entry_stopouts": 0,
+        "wins": 1
+      },
+      "GBP_USD": {
+        "closed": 3,
+        "early_manual_losses": 0,
+        "early_manual_wins": 0,
+        "losses": 2,
+        "net_pnl_gbp": -1.61,
+        "positive_review_wins": 1,
+        "risk_budget_breaches": 1,
+        "unapproved_watch_losses": 1,
+        "unconfirmed_entry_stopouts": 1,
+        "wins": 1
+      },
+      "NZD_JPY": {
+        "closed": 1,
+        "early_manual_losses": 0,
+        "early_manual_wins": 0,
+        "losses": 0,
+        "net_pnl_gbp": 22.9,
+        "positive_review_wins": 1,
+        "risk_budget_breaches": 0,
+        "unapproved_watch_losses": 0,
+        "unconfirmed_entry_stopouts": 0,
+        "wins": 1
+      },
+      "USD_JPY": {
+        "closed": 2,
+        "early_manual_losses": 0,
+        "early_manual_wins": 0,
+        "losses": 0,
+        "net_pnl_gbp": 83.08,
+        "positive_review_wins": 2,
+        "risk_budget_breaches": 0,
+        "unapproved_watch_losses": 0,
+        "unconfirmed_entry_stopouts": 0,
+        "wins": 2
+      }
+    },
+    "policy": "No broker screenshots train strategy weights until independently linked to original immutable signal, trigger, fill and exit.",
+    "positive_review_queue": [
+      {
+        "instrument": "USD_JPY",
+        "net_gbp": 40.08,
+        "next_step": "Compare frozen prospective route against losses, costs, missed entries and no-fills.",
+        "signal_match": "PENDING",
+        "trade_key": "2026-10-23-usdjpy-closed-1057",
+        "weight_change": 0
+      },
+      {
+        "instrument": "GBP_JPY",
+        "net_gbp": 34.16,
+        "next_step": "Compare frozen prospective route against losses, costs, missed entries and no-fills.",
+        "signal_match": "PENDING",
+        "trade_key": "2026-10-23-gbpjpy-closed-1349",
+        "weight_change": 0
+      },
+      {
+        "instrument": "USD_JPY",
+        "net_gbp": 43,
+        "next_step": "Compare frozen prospective route against losses, costs, missed entries and no-fills.",
+        "signal_match": "PENDING",
+        "trade_key": "2026-10-23-usdjpy-open-1355",
+        "weight_change": 0
+      },
+      {
+        "instrument": "EUR_USD",
+        "net_gbp": 8,
+        "next_step": "Compare frozen prospective route against losses, costs, missed entries and no-fills.",
+        "signal_match": "PENDING",
+        "trade_key": "2026-10-26-eurusd-closed-1202",
+        "weight_change": 0
+      },
+      {
+        "instrument": "GBP_USD",
+        "net_gbp": 8.95,
+        "next_step": "Compare frozen prospective route against losses, costs, missed entries and no-fills.",
+        "signal_match": "PENDING",
+        "trade_key": "2026-10-26-gbpusd-closed-1358",
+        "weight_change": 0
+      },
+      {
+        "instrument": "EUR_USD",
+        "net_gbp": 9.02,
+        "next_step": "Compare frozen prospective route against losses, costs, missed entries and no-fills.",
+        "signal_match": "PENDING",
+        "trade_key": "2026-10-27-eurusd-closed-1739",
+        "weight_change": 0
+      },
+      {
+        "instrument": "NZD_JPY",
+        "net_gbp": 22.9,
+        "next_step": "Compare frozen prospective route against losses, costs, missed entries and no-fills.",
+        "signal_match": "PENDING",
+        "trade_key": "2026-10-28-nzdjpy-closed-0811",
+        "weight_change": 0
+      }
+    ],
+    "profitable_count": 7,
+    "unapproved_watch_stopouts": 3,
+    "unlinked_count": 11,
+    "win_rate_pct": 63.6
+  },
+  "generated_at": "2026-11-06T12:37:19.635555Z",
+  "model_weight_update": "NONE",
+  "paper_input_status": "PRESENT",
+  "paper_strategy": {
+    "M15_REJECTION / ROUTE_B": {
+      "count": 4,
+      "distinct_days": 4,
+      "distinct_pairs": 4,
+      "eligible_for_reinforcement": false,
+      "paper_priority_bias": 0,
+      "wins": 1
+    }
+  },
+  "paper_totals": {
+    "candidates": 1504,
+    "losses": 3,
+    "scored": 4,
+    "wins": 1
+  },
+  "paper_updated_at": "2026-11-06T11:17:07Z",
+  "source": "PRIVATE_USER_SCREENSHOT_EVIDENCED_BROKER_OUTCOMES",
+  "threshold": "Paper bias neutral until >=30 scored samples, >=10 days, >=3 pairs and conservative 99% mean-R bound excludes zero. Never relax execution, spread or news gates."
+}
