@@ -971,6 +971,80 @@
         "atr_spread": "OANDA 111.074/111.099 at 12:03:19Z; spread 2.5 pips, M15 ATR about 7.0 pips; paper cap 3.0 pips. Original gross and capped-spread-adjusted TP1 geometry exceed internal gates.",
         "macro": "BoE raised Bank Rate to 4% at 12:00 UK, driving sterling volatility. US claims and Q3 productivity/costs are due 13:30 UK; apply 13:20-13:45 broad-volatility blackout."
       }
+    },
+    {
+      "id": "202611061345-AUDUSD-SHORT-EMA20_PULLBACK",
+      "instrument": "AUD_USD",
+      "direction": "SHORT",
+      "created_at": "2026-11-06T14:02:00.893072Z",
+      "expires_at": "2026-11-06T15:01:49.581831Z",
+      "planned_entry": null,
+      "entry_zone": [
+        0.68741,
+        0.68763
+      ],
+      "stop": 0.68805,
+      "tp1": 0.6858,
+      "tp2": null,
+      "alert_b": null,
+      "max_oanda_spread_pips": null,
+      "event_blackouts_utc": [
+        {
+          "start": "2026-11-06T14:50:00Z",
+          "end": "2026-11-06T15:10:00Z",
+          "reason": "US preliminary consumer sentiment and inflation expectations"
+        }
+      ],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-06T14:01:49.581831438Z",
+      "status": "EARLY_WATCH_ONLY_UNTRIGGERED_INCOMPLETE",
+      "original_note": "Prospective paper-only AUD/USD short EMA20-pullback watch from immutable opportunity 202611061345-AUDUSD-SHORT-EMA20_PULLBACK. Frozen OANDA zone 0.68741-0.68763; require a NEW completed M15 bearish rejection in-zone after registration and renewed quote, spread, event and news checks. Current price is already below the zone after the US payroll impulse, so do not chase. No precise alert_b or immutable maximum-spread cap exists; no canonical signal, broker fill or sell-now instruction.",
+      "technical_context": {
+        "as_of_utc": "2026-11-06T14:01:49.581831438Z",
+        "m15": "RSI14 35.0; ADX14 35.55; -DI 31.12 dominant; bearish EMA/cloud/Supertrend context, but the required post-registration rejection in the frozen zone is absent.",
+        "h1": "RSI14 17.23; ADX14 57.63; -DI 41.17 dominant; EMA20<EMA50<EMA200 and bearish cloud/Supertrend; materially oversold.",
+        "trend": "D1/H4/H1/M15 bearish alignment; H4 RSI14 19.93 and H1/M15 extension raise exhaustion and chase risk.",
+        "atr_spread": "OANDA bid/ask 0.68628/0.68642; observed spread 1.4 pips; M15 ATR about 7.42 pips. Immutable maximum-spread cap unavailable.",
+        "macro": "BLS October payrolls +165k, unemployment 4.1% and hourly earnings +0.4% m/m at 13:30 UTC strengthened USD; US preliminary sentiment/inflation expectations at 15:00 UTC."
+      }
+    },
+    {
+      "id": "202611061345-NZDSGD-SHORT-EMA20_PULLBACK",
+      "instrument": "NZD_SGD",
+      "direction": "SHORT",
+      "created_at": "2026-11-06T14:02:00.893072Z",
+      "expires_at": "2026-11-06T15:01:44.522201Z",
+      "planned_entry": null,
+      "entry_zone": [
+        0.7106,
+        0.71078
+      ],
+      "stop": 0.71119,
+      "tp1": 0.7088,
+      "tp2": null,
+      "alert_b": null,
+      "max_oanda_spread_pips": null,
+      "event_blackouts_utc": [
+        {
+          "start": "2026-11-06T14:50:00Z",
+          "end": "2026-11-06T15:10:00Z",
+          "reason": "US preliminary consumer sentiment and inflation expectations; global rates-volatility risk"
+        }
+      ],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-06T14:01:44.522201716Z",
+      "status": "EARLY_WATCH_ONLY_UNTRIGGERED_INCOMPLETE",
+      "original_note": "Prospective paper-only NZD/SGD short EMA20-pullback watch from immutable opportunity 202611061345-NZDSGD-SHORT-EMA20_PULLBACK. Frozen OANDA zone 0.71060-0.71078; require a NEW completed M15 bearish rejection in-zone after registration and renewed quote, spread, event and news checks. Current price is below the zone, so do not chase. No precise alert_b or immutable maximum-spread cap exists; no canonical signal, broker fill or sell-now instruction.",
+      "technical_context": {
+        "as_of_utc": "2026-11-06T14:01:44.522201716Z",
+        "m15": "RSI14 33.26; ADX14 39.68; bearish EMA/cloud/Supertrend alignment; required new in-zone M15 rejection is absent.",
+        "h1": "RSI14 22.13; ADX14 51.29; bearish structure and momentum, but materially oversold.",
+        "trend": "D1/H4/H1/M15 bearish alignment; extension and oversold readings make a fresh chase unattractive.",
+        "atr_spread": "OANDA ask 0.70988 at source time; current price below the frozen pullback zone. Immutable maximum-spread cap unavailable.",
+        "macro": "Official NZD/SGD-specific news coverage is incomplete; US preliminary sentiment/inflation expectations at 15:00 UTC are a global volatility risk."
+      }
     }
   ]
 }
