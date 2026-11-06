@@ -7,6 +7,7 @@ The original bounded HTTP retry policy remains authoritative.
 import json
 import os
 import shutil
+import time
 import sys
 import tempfile
 from datetime import datetime, timezone
@@ -29,16 +30,26 @@ def write_json(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, sort_keys=True, indent=2)+"\n")
 
-def run_collection():
-    """Keep last verified source bytes; failed attempts have their own clock.
+# Operational-only second try after an observed intermittent practice-host failure.
+# The frozen collector, OANDA request's own retry policy and signal rules remain
+# unchanged. Credential/permission failures are NOT silently reclassified.
+BOUNDED_SOURCE_RECOVERY_ERRORS = frozenset({
+    "OANDA_HTTP_401_ACCOUNTS", "OANDA_HTTP_504_ACCOUNTS",
+    "OANDA_HTTP_401_INSTRUMENTS", "OANDA_HTTP_504_INSTRUMENTS",
+})
 
-    Back up the source set before collection because collect writes several
-    files. Restore the whole set on any caught failure, including partial
-    filesystem publication. Never restore or modify prospective paper ledgers.
+
+def run_collection():
+    """Try a failed full-source collection once more without destroying evidence.
+
+    An observed transient-looking 401/504 on account discovery or instruments
+    may be followed by a successful request under an unchanged valid token.
+    Never switch hosts/tokens, suppress persistent auth failure, reuse old
+    quotes as fresh or repeat a historical GitHub workflow.
     """
     paths = (market.OUT, Path("data/summary.json"), Path("data/universe.json"), Path("data/pairs"))
     started = now()
-    observer = auth.Observer()
+    first_error = None
     with tempfile.TemporaryDirectory(prefix="fx-source-") as directory:
         backups = []
         for i, path in enumerate(paths):
@@ -48,10 +59,8 @@ def run_collection():
             elif path.exists():
                 shutil.copy2(path, backup)
             backups.append((path, backup))
-        try:
-            with observer.capture(market):
-                market.collect()
-        except (RuntimeError, ValueError, KeyError, TypeError, OSError) as exc:
+
+        def restore_last_valid():
             for path, backup in backups:
                 if path.is_dir():
                     shutil.rmtree(path)
@@ -62,23 +71,44 @@ def run_collection():
                 elif backup.exists():
                     path.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(backup, path)
-            # Diagnose the failed stage without changing the frozen collector.
-            # A single distinct accounts request is allowed only for 401/403
-            # on instruments; it does not retry the denied instruments call.
-            code = observer.probe(market, observer.error_for(exc))
-            record_collection_attempt(started, "DATA_UNAVAILABLE", code)
-            print("Data unavailable:", code, file=sys.stderr)
-            return 1
-    record_collection_attempt(started, "COLLECTED", None)
-    return 0
+
+        for attempt in (1, 2):
+            observer = auth.Observer()
+            try:
+                with observer.capture(market):
+                    market.collect()
+            except (RuntimeError, ValueError, KeyError, TypeError, OSError) as exc:
+                code = observer.error_for(exc)
+                restore_last_valid()
+                if attempt == 1 and code in BOUNDED_SOURCE_RECOVERY_ERRORS:
+                    first_error = code
+                    print("OANDA full-source request failed at", code,
+                          "- one bounded independent collection recovery", file=sys.stderr)
+                    time.sleep(2)
+                    continue
+                final_error = observer.probe(market, code)
+                record_collection_attempt(started, "DATA_UNAVAILABLE", final_error,
+                                          collection_tries=attempt, first_error=first_error)
+                print("Data unavailable:", final_error, file=sys.stderr)
+                return 1
+            else:
+                record_collection_attempt(started, "COLLECTED", None,
+                                          collection_tries=attempt, first_error=first_error)
+                if first_error:
+                    print("OANDA source recovered after first failure:", first_error)
+                return 0
+    raise AssertionError("unreachable bounded OANDA collection recovery")
 
 
-def record_collection_attempt(started, status, error):
+def record_collection_attempt(started, status, error, *, collection_tries=1, first_error=None):
     report = {"started_at": started, "checked_at": now(), "status": status,
               "error": error, "last_valid_source_preserved": status == "DATA_UNAVAILABLE",
               "run_id": os.environ.get("GITHUB_RUN_ID"),
               "event": os.environ.get("GITHUB_EVENT_NAME"),
-              "collector_endpoint": auth.safe_host(market)}
+              "collector_endpoint": auth.safe_host(market),
+              "collection_tries": collection_tries,
+              "first_attempt_error": first_error,
+              "recovered_on_second_try": status == "COLLECTED" and collection_tries == 2}
     write_json(Path("data/collection_attempt.json"), report)
     identity = os.environ.get("GITHUB_RUN_ID")
     if identity and identity.isdigit():

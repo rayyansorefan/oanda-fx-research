@@ -45,6 +45,81 @@ class RecoveryTests(unittest.TestCase):
             finally:
                 os.chdir(previous)
 
+    def test_one_bounded_recovery_succeeds_after_intermitttent_accounts_401(self):
+        with tempfile.TemporaryDirectory() as d:
+            previous = Path.cwd()
+            os.chdir(d)
+            try:
+                Path("data/summary.json").parent.mkdir(parents=True)
+                Path("data/summary.json").write_text("last-good-summary")
+                calls = []
+
+                def flaky():
+                    calls.append(len(calls) + 1)
+                    if len(calls) == 1:
+                        Path("data/summary.json").write_text("bad-partial-summary")
+                        raise RuntimeError("OANDA_HTTP_401_ACCOUNTS")
+                    # Must see the restored bytes before a second collection.
+                    self.assertEqual(Path("data/summary.json").read_text(),
+                                     "last-good-summary")
+                    Path("data/summary.json").write_text("fresh-verified-summary")
+
+                with patch.object(market, "collect", side_effect=flaky), \
+                     patch.object(recovery.time, "sleep") as pause:
+                    self.assertEqual(recovery.run_collection(), 0)
+                self.assertEqual(calls, [1, 2])
+                pause.assert_called_once_with(2)
+                self.assertEqual(Path("data/summary.json").read_text(),
+                                 "fresh-verified-summary")
+                receipt = json.loads(Path("data/collection_attempt.json").read_text())
+                self.assertEqual(receipt["status"], "COLLECTED")
+                self.assertEqual(receipt["collection_tries"], 2)
+                self.assertTrue(receipt["recovered_on_second_try"])
+                self.assertEqual(receipt["first_attempt_error"],
+                                 "OANDA_HTTP_401_ACCOUNTS")
+            finally:
+                os.chdir(previous)
+
+    def test_persistent_accounts_401_fails_closed_and_preserves_last_source(self):
+        with tempfile.TemporaryDirectory() as d:
+            old = Path.cwd()
+            os.chdir(d)
+            try:
+                path = Path("data/summary.json")
+                path.parent.mkdir(parents=True)
+                path.write_text("last-valid-source")
+                with patch.object(market, "collect",
+                                  side_effect=RuntimeError("OANDA_HTTP_401_ACCOUNTS")) as collect, \
+                     patch.object(recovery.time, "sleep") as pause:
+                    self.assertEqual(recovery.run_collection(), 1)
+                self.assertEqual(collect.call_count, 2)
+                pause.assert_called_once_with(2)
+                self.assertEqual(path.read_text(), "last-valid-source")
+                receipt = json.loads(Path("data/collection_attempt.json").read_text())
+                self.assertEqual(receipt["status"], "DATA_UNAVAILABLE")
+                self.assertEqual(receipt["collection_tries"], 2)
+                self.assertFalse(receipt["recovered_on_second_try"])
+                self.assertEqual(receipt["error"], "OANDA_HTTP_401_ACCOUNTS")
+            finally:
+                os.chdir(old)
+
+    def test_403_and_missing_token_never_trigger_recovery(self):
+        for error in ("OANDA_HTTP_403_ACCOUNTS", "Missing OANDA_API_TOKEN secret"):
+            with self.subTest(error=error), tempfile.TemporaryDirectory() as d:
+                previous = Path.cwd()
+                os.chdir(d)
+                try:
+                    with patch.object(market, "collect", side_effect=RuntimeError(error)) as collect, \
+                         patch.object(recovery.time, "sleep") as pause:
+                        self.assertEqual(recovery.run_collection(), 1)
+                    collect.assert_called_once()
+                    pause.assert_not_called()
+                    report = json.loads(Path("data/collection_attempt.json").read_text())
+                    self.assertEqual(report["collection_tries"], 1)
+                    self.assertFalse(report["recovered_on_second_try"])
+                finally:
+                    os.chdir(previous)
+
     def test_fast_exception_replaces_success_audit_without_rewriting_history(self):
         with tempfile.TemporaryDirectory() as d, patch.object(fast, 'ROOT', Path(d)), patch.object(fast, 'FAST_AUDIT', Path(d)/'audit.json'), patch.object(fast, 'perform', side_effect=RuntimeError('OANDA_HTTP_401')):
             history = Path(d)/'history.json'
