@@ -30,7 +30,7 @@ def market(at=AT):
                 "frames":{"M15":{"completed_at":last.isoformat(),
                     "indicators":{"ema20":1.1011,"ema50":1.10,"atr14":.001},
                     "last_3_completed_candles":bars},
-                    "H1":{"completed_at":at.replace(minute=0,second=0,microsecond=0).isoformat(),
+                    "H1":{"completed_at":(at.replace(minute=0,second=0,microsecond=0)-timedelta(hours=1)).isoformat(),
                     "indicators":{"ema20":1.101,"ema50":1.10}}}}}}
 
 
