@@ -1,0 +1,21 @@
+{
+  "id": "FX-GATE-20261106-v1",
+  "title": "Prospective single-blocker primary-news-source missing counterfactual (paper-only)",
+  "prospective_start_at": "2026-11-06T10:30:00Z",
+  "registration_policy": "First live execution establishes activated_at; only strictly newer full-source observations may register new plans.",
+  "no_orders": true,
+  "broker_execution": false,
+  "target_strategy": "EMA20_PULLBACK",
+  "eligible_failed_gates": [
+    "news_gate"
+  ],
+  "eligible_news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+  "expiry_minutes": 90,
+  "original_immutable_rule_hash_untouched": true,
+  "original_paper_rule_hash_untouched": true,
+  "max_new_per_source": 3,
+  "max_active": 12,
+  "comparison_policy": "No claims of manual executability or commercial edge from news-unverified paper hypotheticals. Escalate candidate policy changes to separately versioned, independent prospective evaluation.",
+  "outcome_policy": "Bid/ask replay only with observed source clocks. Missing observations are DATA_GAP/UNAVAILABLE. No retrospective manufacture of fill or alert delivery.",
+  "review_policy": "Only form hypotheses until adequate independent correlated-exposure-adjusted cost-stressed forward results. Requires independent review before canonical promotion."
+}
