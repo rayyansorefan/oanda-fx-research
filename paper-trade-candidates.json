@@ -1045,6 +1045,99 @@
         "atr_spread": "OANDA ask 0.70988 at source time; current price below the frozen pullback zone. Immutable maximum-spread cap unavailable.",
         "macro": "Official NZD/SGD-specific news coverage is incomplete; US preliminary sentiment/inflation expectations at 15:00 UTC are a global volatility risk."
       }
+    },
+    {
+      "id": "202611061615-NZDUSD-SHORT-EMA20_PULLBACK",
+      "instrument": "NZD_USD",
+      "direction": "SHORT",
+      "created_at": "2026-11-06T16:35:10.278191Z",
+      "expires_at": "2026-11-06T18:04:59.105191Z",
+      "planned_entry": null,
+      "entry_zone": [
+        0.55455,
+        0.55473
+      ],
+      "stop": 0.55539,
+      "tp1": 0.55301,
+      "tp2": 0.55275,
+      "alert_b": null,
+      "max_oanda_spread_pips": null,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-06T16:34:59.105191287Z",
+      "status": "EARLY_WATCH_ONLY_UNTRIGGERED_INCOMPLETE",
+      "original_note": "Prospective paper-only NZD/USD short EMA20-pullback watch. Frozen OANDA zone 0.55455-0.55473; require a NEW completed M15 bearish rejection in-zone after this assessment, renewed official-news/event review and a defined immutable maximum-spread cap. H1/H4/D remain bearish, but M15/M5 are rebounding and the current quote is above the zone. No canonical signal, broker fill or sell-now instruction.",
+      "technical_context": {
+        "as_of_utc": "2026-11-06T16:34:59.105191287Z",
+        "m15": "RSI14 53.50; ADX14 30.25; +DI 24.08 and -DI 25.04; below EMA50/200 and cloud, but above EMA20 with Supertrend up and higher-high/higher-low rebound. Trigger missing.",
+        "h1": "RSI14 33.01; ADX14 54.74; -DI 34.16 > +DI 11.36; EMA20<EMA50<EMA200, below cloud and Supertrend down.",
+        "trend": "D1/H4/H1 bearish context; H4 RSI14 25.95 and M15/M5 rebound create exhaustion/countertrend risk.",
+        "atr_spread": "OANDA 0.55482/0.55497; observed spread 1.5 pips; M15 ATR about 6.06 pips. Immutable maximum-spread cap unavailable.",
+        "macro": "US payrolls +165k and preliminary Michigan sentiment 51.0 strengthened USD context; RBNZ OCR 2.75%. US Fed-speaker risk later in the session; news coverage PARTIAL."
+      }
+    },
+    {
+      "id": "202611061615-EURSGD-SHORT-EMA20_PULLBACK",
+      "instrument": "EUR_SGD",
+      "direction": "SHORT",
+      "created_at": "2026-11-06T16:35:10.278191Z",
+      "expires_at": "2026-11-06T18:05:23.866439Z",
+      "planned_entry": null,
+      "entry_zone": [
+        1.4302,
+        1.43044
+      ],
+      "stop": 1.43129,
+      "tp1": 1.42802,
+      "tp2": 1.42384,
+      "alert_b": null,
+      "max_oanda_spread_pips": null,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-06T16:35:23.866439681Z",
+      "status": "EARLY_WATCH_ONLY_UNTRIGGERED_H4_CONFLICT",
+      "original_note": "Prospective paper-only EUR/SGD short EMA20-pullback watch. Frozen OANDA zone 1.43020-1.43044; require a NEW completed M15 bearish rejection in-zone. H4 conflict/weak ADX, the missing precise alert_b and missing immutable spread cap prevent canonical admission. No broker fill or sell-now instruction.",
+      "technical_context": {
+        "as_of_utc": "2026-11-06T16:34:40.325157453Z",
+        "m15": "RSI14 41.73; ADX14 38.73; -DI 29.14 > +DI 13.08; bearish EMA/cloud/Supertrend, but MACD histogram positive and no new rejection trigger.",
+        "h1": "RSI14 26.97; ADX14 31.82; -DI 34.13 dominant; bearish cloud/Supertrend and lower-high/lower-low structure.",
+        "trend": "D1/H1/M15 bearish; H4 ADX14 16.60 and inside-cloud context are material conflict, while M5 Supertrend is up.",
+        "atr_spread": "OANDA 1.42966/1.42995; observed spread 2.9 pips; M15 ATR about 7.77 pips. Immutable maximum-spread cap unavailable.",
+        "macro": "ECB policy rates held at the 29 October decision; SGD-specific primary coverage is limited. News coverage PARTIAL."
+      }
+    },
+    {
+      "id": "202611061615-USDPLN-LONG-EMA20_PULLBACK",
+      "instrument": "USD_PLN",
+      "direction": "LONG",
+      "created_at": "2026-11-06T16:35:10.278191Z",
+      "expires_at": "2026-11-06T18:04:57.350913Z",
+      "planned_entry": null,
+      "entry_zone": [
+        3.9383,
+        3.93967
+      ],
+      "stop": 3.93325,
+      "tp1": 3.9608,
+      "tp2": 3.97675,
+      "alert_b": null,
+      "max_oanda_spread_pips": null,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-06T16:34:57.350913707Z",
+      "status": "EARLY_WATCH_ONLY_UNTRIGGERED_H4_CONFLICT",
+      "original_note": "Prospective paper-only USD/PLN long EMA20-pullback watch. Frozen OANDA zone 3.93830-3.93967; require a NEW completed M15 bullish rejection in-zone. H4 swing conflict, M5 weakness, the missing precise alert_b and missing immutable spread cap prevent canonical admission. No broker fill or buy-now instruction.",
+      "technical_context": {
+        "as_of_utc": "2026-11-06T16:34:57.350913707Z",
+        "m15": "RSI14 52.78; ADX14 32.25; +DI 33.63 > -DI 17.72; bullish EMA/cloud/Supertrend, but MACD histogram negative and latest swing highs are lower.",
+        "h1": "RSI14 67.89; ADX14 34.96; +DI 39.21 dominant; bullish price/EMA/cloud/Supertrend and higher-high/higher-low structure.",
+        "trend": "D1/H1/M15 constructive; H4 has lower-high/lower-low swing conflict and M5 Supertrend/cloud are bearish.",
+        "atr_spread": "OANDA 3.93880/3.94030; observed spread 15.0 pips; M15 ATR about 45.86 pips. Immutable maximum-spread cap unavailable.",
+        "macro": "US payrolls +165k and Michigan sentiment 51.0 support USD, but Fed-speaker risk remains later; PLN-specific primary-source coverage is limited."
+      }
     }
   ]
 }
