@@ -36,6 +36,10 @@ def classify(row, now):
         result["reason"] = "INVALID_OR_FUTURE_ATTEMPT_CLOCK"
         return result
     result["_checked"] = checked
+    local = checked.astimezone(LONDON)
+    if local.weekday() >= 5 or not 7 <= local.hour < 23:
+        result["reason"] = "OUTSIDE_ACTIVE_LONDON_RESEARCH_SESSION"
+        return result
     if row.get("status") != COMPLETE or not isinstance(row.get("pair_evidence"), dict):
         result["reason"] = "FAILED_OR_MISSING_PAIR_EVIDENCE"
         return result
@@ -45,7 +49,7 @@ def classify(row, now):
     if source is None or not timedelta(0) <= checked - source <= timedelta(minutes=5):
         result["reason"] = "INVALID_SOURCE_CLOCK"
         return result
-    if row.get("analysed", 0) < 1 or not row["pair_evidence"]:
+    if not isinstance(row.get("analysed"), int) or row["analysed"] < 1 or not row["pair_evidence"]:
         result["reason"] = "NO_ANALYSED_PAIRS"
         return result
     # At least one pair must have its own current OANDA quote and completed M5
@@ -75,7 +79,7 @@ def summarize(directory, now=None):
     now = now or datetime.now(timezone.utc)
     directory = Path(directory)
     attempts = []
-    for path in sorted(directory.glob("*.json")) if directory.is_dir() else []:
+    for path in (sorted(directory.glob("*.json")) if directory.is_dir() else []):
         try:
             row = json.loads(path.read_text())
             event = classify(row, now)
