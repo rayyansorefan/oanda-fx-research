@@ -2,12 +2,17 @@
 import io
 import json
 import os
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 from urllib.error import HTTPError, URLError
 
+# The independently scheduled fast job runs each frozen safety suite in its
+# own Python process. This module must resolve OANDA's legacy absolute imports
+# without relying on other test modules having modified sys.path first.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from scripts import oanda_data as market
 from scripts import fast_entry_scan as fast
 from scripts import production_recovery as recovery
