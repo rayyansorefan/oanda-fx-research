@@ -1,14 +1,14 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-06T09:59:29.547349+00:00",
+  "checked_at": "2026-11-06T10:02:10.514261+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-06T09:57:42Z",
+    "checked_at": "2026-11-06T10:02:06Z",
     "collector_endpoint": "practice",
-    "error": "OANDA_HTTP_401_ACCOUNTS",
+    "error": "OANDA_HTTP_504_ACCOUNTS",
     "event": "push",
     "last_valid_source_preserved": true,
-    "run_id": "42198929332",
-    "started_at": "2026-11-06T09:57:37Z",
+    "run_id": "42199475145",
+    "started_at": "2026-11-06T10:01:55Z",
     "status": "DATA_UNAVAILABLE"
   },
   "consecutive_unobserved_fast_targets": 1,
@@ -16,24 +16,24 @@
   "current_run": {
     "attempt": "1",
     "event": "push",
-    "head_sha": "2aa60f453a7becece422487b5a8a3387dc570af5",
-    "id": "42199147184",
+    "head_sha": "8cb2821aeadcbfce749f12df8910b290890bd754",
+    "id": "42199475145",
     "outcomes": {
-      "collect": "skipped",
+      "collect": "failure",
       "early_cohort": "skipped",
       "fast_recovery": "skipped",
-      "safety": "failure"
+      "safety": "success"
     },
     "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
   },
   "dashboard_deployments": [
     {
-      "conclusion": null,
+      "conclusion": "success",
       "created_at": "2026-11-06T09:59:30Z",
       "head_sha": "3e9ae382153416c2986e93a0adad6839bad3cc49",
       "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42199173391",
       "id": 42199173391,
-      "status": "queued"
+      "status": "completed"
     },
     {
       "conclusion": "success",
@@ -56,7 +56,7 @@
   "early_last_source_at": "2026-11-06T09:46:54Z",
   "early_observation_count": 40,
   "elapsed_fast_targets_today": 12,
-  "fast_age_seconds": 1405.765107,
+  "fast_age_seconds": 1566.732019,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -83,12 +83,21 @@
   },
   "fast_source_at": "2026-11-06T09:36:03.782242+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 755.547349,
+  "full_age_seconds": 916.514261,
   "full_collection_status": "OK",
   "full_fresh": true,
-  "full_last_attempt_at": "2026-11-06T09:57:42Z",
+  "full_last_attempt_at": "2026-11-06T10:02:06Z",
   "full_source_at": "2026-11-06T09:46:54Z",
   "last_completed_jobs": [
+    {
+      "conclusion": "failure",
+      "event": "push",
+      "failed_steps": [
+        "Test frozen fast research safety before optional recovery",
+        "Fail closed if backup, publication, or persistence failed"
+      ],
+      "run_id": 42199147184
+    },
     {
       "conclusion": "failure",
       "event": "push",
@@ -96,12 +105,6 @@
         "Fail closed if any research or public dashboard step failed"
       ],
       "run_id": 42198929332
-    },
-    {
-      "conclusion": "success",
-      "event": "push",
-      "failed_steps": [],
-      "run_id": 42197553389
     }
   ],
   "previous_publication": {
