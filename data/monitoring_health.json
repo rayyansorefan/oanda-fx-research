@@ -1,22 +1,23 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-06T09:21:03.411328+00:00",
+  "checked_at": "2026-11-06T09:27:55.895668+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-06T09:20:41Z",
+    "checked_at": "2026-11-06T09:27:34Z",
+    "collector_endpoint": "practice",
     "error": null,
-    "event": "schedule",
+    "event": "push",
     "last_valid_source_preserved": false,
-    "run_id": "42194108289",
-    "started_at": "2026-11-06T09:19:59Z",
+    "run_id": "42195131518",
+    "started_at": "2026-11-06T09:27:09Z",
     "status": "COLLECTED"
   },
-  "consecutive_unobserved_fast_targets": 9,
+  "consecutive_unobserved_fast_targets": 0,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
-    "event": "schedule",
-    "head_sha": "333628d3736f75e916e0c5705aaa6042a4f46698",
-    "id": "42194108289",
+    "event": "push",
+    "head_sha": "2992133f8bb1a9c45d70592ab0deb87b997f68a9",
+    "id": "42195131518",
     "outcomes": {
       "collect": "success",
       "early_cohort": "success",
@@ -26,6 +27,14 @@
     "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
   },
   "dashboard_deployments": [
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-06T09:21:14Z",
+      "head_sha": "8e7c281e2366c803ed08dd1ed41eddbdad948429",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42194398982",
+      "id": 42194398982,
+      "status": "completed"
+    },
     {
       "conclusion": "failure",
       "created_at": "2026-11-06T09:19:43Z",
@@ -41,57 +50,47 @@
       "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42188821987",
       "id": 42188821987,
       "status": "completed"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-11-06T08:15:18Z",
-      "head_sha": "b0b8461aa0cc896ac10cc17d02a5a4bd1c792d57",
-      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42186358059",
-      "id": 42186358059,
-      "status": "completed"
     }
   ],
   "early_cohort_id": "FX-EARLY-20261104-v1",
-  "early_last_source_at": "2026-11-06T09:20:41Z",
-  "early_observation_count": 37,
-  "elapsed_fast_targets_today": 9,
-  "fast_age_seconds": 99.393876,
+  "early_last_source_at": "2026-11-06T09:27:34Z",
+  "early_observation_count": 38,
+  "elapsed_fast_targets_today": 10,
+  "fast_age_seconds": 511.878216,
   "fast_last_attempt_at": "2026-11-06T09:19:24.503720+00:00",
   "fast_observation_valid": true,
   "fast_run_failures": {
-    "failed": 3,
-    "sample": 4,
+    "failed": 2,
+    "sample": 2,
     "scope": "Latest 100 repository runs; process success is not observation success."
   },
   "fast_source_at": "2026-11-06T09:19:24.017452+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 22.411328,
+  "full_age_seconds": 21.895668,
   "full_collection_status": "OK",
   "full_fresh": true,
-  "full_last_attempt_at": "2026-11-06T09:20:41Z",
-  "full_source_at": "2026-11-06T09:20:41Z",
+  "full_last_attempt_at": "2026-11-06T09:27:34Z",
+  "full_source_at": "2026-11-06T09:27:34Z",
   "last_completed_jobs": [
+    {
+      "conclusion": "success",
+      "event": "schedule",
+      "failed_steps": [],
+      "run_id": 42194108289
+    },
     {
       "conclusion": "success",
       "event": "push",
       "failed_steps": [],
       "run_id": 42194017943
-    },
-    {
-      "conclusion": "failure",
-      "event": "push",
-      "failed_steps": [
-        "Fail closed if any research or public dashboard step failed"
-      ],
-      "run_id": 42188766257
     }
   ],
   "previous_publication": {
-    "checked_at": "2026-11-06T09:19:42.880384Z",
+    "checked_at": "2026-11-06T09:21:12.819166Z",
     "public_feed_path": "docs/fx-feed.json",
     "public_repository": "rayyansorefan/standalone-wallet-paper-agent",
     "reason": "Public repository contents readback verified.",
-    "snapshot_at": "2026-11-06T09:18:51Z",
+    "snapshot_at": "2026-11-06T09:20:41Z",
     "status": "PUBLISHED"
   },
   "recovery": "ONE_INLINE_FAST_ATTEMPT_PER_HOURLY_RUN_WHEN_DUE",
@@ -209,7 +208,7 @@
         "failure",
         "success",
         "success",
-        null
+        "success"
       ],
       "created_at": [
         "2026-10-21T15:38:58Z",
