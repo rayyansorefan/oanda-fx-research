@@ -1,23 +1,23 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-06T11:59:27.939985+00:00",
+  "checked_at": "2026-11-06T12:11:24.803211+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-06T11:59:24Z",
+    "checked_at": "2026-11-06T12:11:19Z",
     "collector_endpoint": "practice",
-    "error": "OANDA_HTTP_504_ACCOUNTS",
+    "error": "OANDA_INSTRUMENTS_ACCESS_DENIED_PRACTICE",
     "event": "push",
     "last_valid_source_preserved": true,
-    "run_id": "42214206458",
-    "started_at": "2026-11-06T11:59:13Z",
+    "run_id": "42215701173",
+    "started_at": "2026-11-06T12:11:07Z",
     "status": "DATA_UNAVAILABLE"
   },
-  "consecutive_unobserved_fast_targets": 2,
+  "consecutive_unobserved_fast_targets": 3,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
     "event": "push",
-    "head_sha": "e53b1e3d93d47dadf5bd428a0cc94e90279e5541",
-    "id": "42214206458",
+    "head_sha": "5687b6f7ff43249de52448955873c60d34a01892",
+    "id": "42215701173",
     "outcomes": {
       "collect": "failure",
       "early_cohort": "skipped",
@@ -27,6 +27,14 @@
     "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
   },
   "dashboard_deployments": [
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-06T11:59:37Z",
+      "head_sha": "f84e9863df7a0a2acd6a929d2576677901df563e",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42214270832",
+      "id": 42214270832,
+      "status": "completed"
+    },
     {
       "conclusion": "success",
       "created_at": "2026-11-06T11:17:55Z",
@@ -42,21 +50,13 @@
       "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42199677197",
       "id": 42199677197,
       "status": "completed"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-11-06T10:02:18Z",
-      "head_sha": "b8dbfbd17cb15c7e0bc894162745a019bd2b2955",
-      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42199546162",
-      "id": 42199546162,
-      "status": "completed"
     }
   ],
   "early_cohort_id": "FX-EARLY-20261104-v1",
   "early_last_source_at": "2026-11-06T11:16:59Z",
   "early_observation_count": 41,
-  "elapsed_fast_targets_today": 20,
-  "fast_age_seconds": 2511.188899,
+  "elapsed_fast_targets_today": 21,
+  "fast_age_seconds": 3228.052125,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -83,30 +83,32 @@
   },
   "fast_source_at": "2026-11-06T11:17:36.751086+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 2548.939985,
+  "full_age_seconds": 3265.803211,
   "full_collection_status": "PARTIAL",
   "full_fresh": true,
-  "full_last_attempt_at": "2026-11-06T11:59:24Z",
+  "full_last_attempt_at": "2026-11-06T12:11:19Z",
   "full_source_at": "2026-11-06T11:16:59Z",
   "last_completed_jobs": [
     {
-      "conclusion": "success",
+      "conclusion": "failure",
       "event": "push",
-      "failed_steps": [],
-      "run_id": 42208991688
+      "failed_steps": [
+        "Fail closed if any research or public dashboard step failed"
+      ],
+      "run_id": 42214206458
     },
     {
       "conclusion": "success",
       "event": "push",
       "failed_steps": [],
-      "run_id": 42199573130
+      "run_id": 42208991688
     }
   ],
   "previous_publication": {
-    "checked_at": "2026-11-06T11:17:53.937216Z",
+    "checked_at": "2026-11-06T11:59:36.947547Z",
     "public_feed_path": "docs/fx-feed.json",
     "public_repository": "rayyansorefan/standalone-wallet-paper-agent",
-    "reason": "Public repository contents readback verified.",
+    "reason": "Operational failure; market snapshot timestamp unchanged",
     "snapshot_at": "2026-11-06T11:16:59Z",
     "status": "PUBLISHED"
   },
@@ -453,7 +455,8 @@
     "2026-11-06T10:47:00+00:00",
     "2026-11-06T11:02:00+00:00",
     "2026-11-06T11:32:00+00:00",
-    "2026-11-06T11:47:00+00:00"
+    "2026-11-06T11:47:00+00:00",
+    "2026-11-06T12:02:00+00:00"
   ],
   "workflow_registration": [
     {
