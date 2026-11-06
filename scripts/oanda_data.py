@@ -16,7 +16,33 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-BASE = "https://api-fxpractice.oanda.com"
+BASE = "https://api-fxpractice.oanda.com"  # Historical default, retained for compatibility.
+ENDPOINTS = {
+    "practice": "https://api-fxpractice.oanda.com",
+    "live": "https://api-fxtrade.oanda.com",
+}
+
+
+def oanda_environment():
+    """Explicit read-only endpoint selection; no silent live/practice fallback."""
+    environment = os.environ.get("OANDA_ENVIRONMENT", "practice").strip().lower()
+    if environment not in ENDPOINTS:
+        raise RuntimeError("OANDA_INVALID_ENVIRONMENT")
+    return environment
+
+
+def request_stage(path):
+    """Safe API stage identifier: no account IDs, prices, URLs or credentials."""
+    if path == "/v3/accounts":
+        return "ACCOUNTS"
+    if path.endswith("/instruments"):
+        return "INSTRUMENTS"
+    if path.endswith("/pricing"):
+        return "PRICING"
+    if "/candles" in path:
+        return "CANDLES"
+    return "OTHER"
+
 # All OANDA account CURRENCY instruments are discovered dynamically every run.
 # Never hardcode the historical 8-pair test universe as an execution limit.
 FRAMES = ("M5", "M15", "H1", "H4", "D")
@@ -89,7 +115,7 @@ def request(path, params=None):
     token = os.environ.get("OANDA_API_TOKEN", "").strip()
     if not token:
         raise RuntimeError("Missing OANDA_API_TOKEN secret")
-    url = BASE + path + (("?" + urlencode(params)) if params else "")
+    url = ENDPOINTS[oanda_environment()] + path + (("?" + urlencode(params)) if params else "")
     req = Request(url, headers={"Authorization": "Bearer " + token,
                                 "Accept": "application/json",
                                 "Accept-Datetime-Format": "RFC3339"}, method="GET")
@@ -103,7 +129,7 @@ def request(path, params=None):
                     and take_retry()):
                 time.sleep(0.5)
                 continue
-            raise RuntimeError("OANDA_HTTP_" + str(exc.code)) from None
+            raise RuntimeError("OANDA_HTTP_" + str(exc.code) + "_" + request_stage(path)) from None
         except (URLError, TimeoutError):
             raise RuntimeError("OANDA_NETWORK_ERROR") from None
 
@@ -345,7 +371,23 @@ def collect():
         if len(accounts) != 1:
             raise RuntimeError("Set OANDA_ACCOUNT_ID secret: expected exactly one account")
         account_id = accounts[0]["id"]
-    instruments = request("/v3/accounts/" + account_id + "/instruments").get("instruments", [])
+    try:
+        instruments = request("/v3/accounts/" + account_id + "/instruments").get("instruments", [])
+    except RuntimeError as exc:
+        # A 401/403 on a configured account alone cannot establish a bad token.
+        # Probe the independent GET /accounts endpoint exactly once to distinguish
+        # token/host rejection from inaccessible account, without logging IDs.
+        if str(exc) not in ("OANDA_HTTP_401_INSTRUMENTS", "OANDA_HTTP_403_INSTRUMENTS"):
+            raise
+        try:
+            accessible = request("/v3/accounts").get("accounts", [])
+        except RuntimeError as probe:
+            if str(probe) in ("OANDA_HTTP_401_ACCOUNTS", "OANDA_HTTP_403_ACCOUNTS"):
+                raise RuntimeError("OANDA_TOKEN_REJECTED_" + oanda_environment().upper()) from None
+            raise  # A transient failure in the separate probe is not an auth verdict.
+        if account_id not in {item.get("id") for item in accessible}:
+            raise RuntimeError("OANDA_ACCOUNT_NOT_ACCESSIBLE_" + oanda_environment().upper()) from None
+        raise RuntimeError("OANDA_INSTRUMENTS_ACCESS_DENIED_" + oanda_environment().upper()) from None
     discovered = catalog(instruments)
     if not discovered:
         raise RuntimeError("OANDA_NO_FX_CURRENCIES_DISCOVERED")
