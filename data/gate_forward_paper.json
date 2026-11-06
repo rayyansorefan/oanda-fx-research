@@ -1,8 +1,10 @@
 {
   "activated_at": "2026-11-06T09:47:09Z",
-  "last_evaluated_at": "2026-11-06T16:39:41Z",
-  "latest_source_at": "2026-11-06T16:39:27Z",
-  "new_ids": [],
+  "last_evaluated_at": "2026-11-06T17:27:45Z",
+  "latest_source_at": "2026-11-06T17:27:30Z",
+  "new_ids": [
+    "FX-GATE-v1-20261106T172730-NZD_SGD-SHORT"
+  ],
   "no_orders": true,
   "policy": "Only news-source-missing single-blocker pullback hypotheses; unrelated hard gates remain. No manual alerts, promotions or claims of an executable broker edge.",
   "protocol_id": "FX-GATE-20261106-v1",
@@ -171,27 +173,71 @@
           "candle_evidence_path": "data/replay_evidence/NZD_USD-e711cfc1b3e9598bafd3a26a065e1b6b9e75f83c74d42879e9faec87390444c9.json",
           "pair_observation_count": 1,
           "status": "DATA_GAP"
+        },
+        {
+          "at": "2026-11-06T17:27:45Z",
+          "candle_evidence_path": "data/replay_evidence/NZD_USD-8e63da7190437206eb9a782d939420e4be1570323ed6644576b29c11c42d7d14.json",
+          "pair_observation_count": 1,
+          "status": "PENDING_TRIGGER"
         }
       ],
       "result": {
-        "reason": "Initial post-signal M15 candles missing",
         "scored": false,
-        "status": "DATA_GAP"
+        "status": "PENDING_TRIGGER"
       },
       "route": "EMA20_PULLBACK",
       "source_at": "2026-11-06T16:34:59Z",
+      "source_lineage": "CURRENT_FULL_MARKET_SNAPSHOT"
+    },
+    "FX-GATE-v1-20261106T172730-NZD_SGD-SHORT": {
+      "failed_gate": "news_gate",
+      "id": "FX-GATE-v1-20261106T172730-NZD_SGD-SHORT",
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "no_live_entry": true,
+      "original_gate_row_sha256": "97c2b69c8c6edf773a3572def0345c536c3d70c5290834c9a2377bbd622da7fb",
+      "pair": "NZD_SGD",
+      "plan": {
+        "alert_b": 0.7112328105182555,
+        "created_at": "2026-11-06T17:27:45Z",
+        "direction": "SHORT",
+        "event_blackouts_utc": [],
+        "expires_at": "2026-11-06T18:57:45Z",
+        "id": "FX-GATE-v1-20261106T172730-NZD_SGD-SHORT",
+        "instrument": "NZD_SGD",
+        "max_oanda_spread_pips": 3.6,
+        "original_note": "News source UNVERIFIED; paper-only; neither approval nor a broker entry",
+        "pip_size": 0.0001,
+        "planned_entry": 0.7112328105182555,
+        "source": "OANDA_READ_ONLY",
+        "source_ref": "2026-11-06T17:27:30Z",
+        "stop": 0.7119093090727457,
+        "strategy": "PROSPECTIVE_NEWS_COVERAGE_ABLATION_PAPER",
+        "technical_context": {
+          "source_bar_time": "2026-11-06T17:00:00.000000000Z"
+        },
+        "tp1": 0.7088
+      },
+      "policy": "FX-GATE-20261106-v1",
+      "registered_at": "2026-11-06T17:27:45Z",
+      "replay_attempts": [],
+      "result": {
+        "scored": false,
+        "status": "PENDING_TRIGGER"
+      },
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-11-06T17:27:30Z",
       "source_lineage": "CURRENT_FULL_MARKET_SNAPSHOT"
     }
   },
   "schema": 1,
   "status": "PAPER_ONLY_PROSPECTIVE_STUDY",
   "summary": {
-    "new_this_run": 0,
+    "new_this_run": 1,
     "outcomes": {
-      "DATA_GAP": 1,
-      "INVALIDATED_PRE_ENTRY": 2
+      "INVALIDATED_PRE_ENTRY": 2,
+      "PENDING_TRIGGER": 2
     },
-    "registered": 3,
+    "registered": 4,
     "scored": 0
   }
 }
