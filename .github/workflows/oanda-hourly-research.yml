@@ -45,6 +45,11 @@ on:
     # GitHub dispatch is best-effort; this is redundancy, NOT an SLA.
     - cron: '4,19,34,49 7-22 * * 1-5'
       timezone: Europe/London
+# Nonsecret endpoint selector. Set repository variable OANDA_ENVIRONMENT=live
+# only when the stored OANDA token/account belongs to the live environment.
+# Do not silently fail over across trading environments on HTTP 401.
+env:
+  OANDA_ENVIRONMENT: ${{ vars.OANDA_ENVIRONMENT || 'practice' }}
 permissions:
   contents: write
   actions: read
