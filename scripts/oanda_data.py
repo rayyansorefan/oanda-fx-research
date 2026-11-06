@@ -271,6 +271,10 @@ def fetch_quote_batch(account_id, instruments, discovered):
                            "includeHomeConversions": "false",
                            "includeUnitsAvailable": "false"})
         except RuntimeError as exc:
+            # A genuine authorization failure cannot be downgraded to an
+            # ordinary quote gap and masked as OANDA_NO_USABLE_FX_QUOTES.
+            if str(exc) in ("OANDA_HTTP_401_PRICING", "OANDA_HTTP_403_PRICING"):
+                raise
             for pair in group:
                 problems[pair] = "OANDA_PRICING_ERROR_" + str(exc)[:70]
             continue
@@ -424,6 +428,10 @@ def collect():
             if score is not None:
                 ranking[pair] = score
     if not all_data:
+        if any("OANDA_HTTP_401_CANDLES" in reason for reason in full_failures.values()):
+            raise RuntimeError("OANDA_HTTP_401_CANDLES")
+        if any("OANDA_HTTP_403_CANDLES" in reason for reason in full_failures.values()):
+            raise RuntimeError("OANDA_HTTP_403_CANDLES")
         raise RuntimeError("OANDA_NO_FX_TECHNICAL_HISTORY")
     # Phase 2: full D/H4/H1/M15/M5 evidence for EVERY screened pair.
     # Do not use the strategy being tested to decide whose context is observable.
