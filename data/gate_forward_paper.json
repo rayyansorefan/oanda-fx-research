@@ -1,10 +1,8 @@
 {
   "activated_at": "2026-11-06T09:47:09Z",
-  "last_evaluated_at": "2026-11-06T16:35:17Z",
-  "latest_source_at": "2026-11-06T16:34:59Z",
-  "new_ids": [
-    "FX-GATE-v1-20261106T163459-NZD_USD-SHORT"
-  ],
+  "last_evaluated_at": "2026-11-06T16:39:41Z",
+  "latest_source_at": "2026-11-06T16:39:27Z",
+  "new_ids": [],
   "no_orders": true,
   "policy": "Only news-source-missing single-blocker pullback hypotheses; unrelated hard gates remain. No manual alerts, promotions or claims of an executable broker edge.",
   "protocol_id": "FX-GATE-20261106-v1",
@@ -167,10 +165,18 @@
       },
       "policy": "FX-GATE-20261106-v1",
       "registered_at": "2026-11-06T16:35:17Z",
-      "replay_attempts": [],
+      "replay_attempts": [
+        {
+          "at": "2026-11-06T16:39:41Z",
+          "candle_evidence_path": "data/replay_evidence/NZD_USD-e711cfc1b3e9598bafd3a26a065e1b6b9e75f83c74d42879e9faec87390444c9.json",
+          "pair_observation_count": 1,
+          "status": "DATA_GAP"
+        }
+      ],
       "result": {
+        "reason": "Initial post-signal M15 candles missing",
         "scored": false,
-        "status": "PENDING_TRIGGER"
+        "status": "DATA_GAP"
       },
       "route": "EMA20_PULLBACK",
       "source_at": "2026-11-06T16:34:59Z",
@@ -180,10 +186,10 @@
   "schema": 1,
   "status": "PAPER_ONLY_PROSPECTIVE_STUDY",
   "summary": {
-    "new_this_run": 1,
+    "new_this_run": 0,
     "outcomes": {
-      "INVALIDATED_PRE_ENTRY": 2,
-      "PENDING_TRIGGER": 1
+      "DATA_GAP": 1,
+      "INVALIDATED_PRE_ENTRY": 2
     },
     "registered": 3,
     "scored": 0
