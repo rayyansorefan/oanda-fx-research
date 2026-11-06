@@ -238,7 +238,7 @@
       }
     ],
     "challenger": "PAPER_ONLY_NOT_VALIDATED",
-    "checked_at": "2026-11-06T08:14:45.099183+00:00",
+    "checked_at": "2026-11-06T09:19:08.558225+00:00",
     "favourable": 0,
     "flat": 0,
     "insufficient": 13,
@@ -248,7 +248,7 @@
     "sample_warning": "Directional movements are NOT filled trades, realised losses, success probabilities or evidence sufficient to change champion parameters.",
     "session_date_uk": "2026-11-05"
   },
-  "collected_at": "2026-11-06T08:14:45.099183+00:00",
+  "collected_at": "2026-11-06T09:19:08.558225+00:00",
   "counts": {
     "need_news_review": 0,
     "price_alerts": 0,
@@ -427,56 +427,25 @@
       "win_rate_pct": 77.8
     },
     "paper_totals": {
-      "candidates": 1467,
-      "losses": 2,
-      "scored": 3,
+      "candidates": 1474,
+      "losses": 3,
+      "scored": 4,
       "wins": 1
     },
     "threshold": "Paper bias neutral until >=30 scored samples, >=10 days, >=3 pairs and conservative 99% mean-R bound excludes zero. Never relax execution, spread or news gates."
   },
-  "news_collected_at": "2026-11-06T08:14:31Z",
+  "news_collected_at": "2026-11-06T09:18:51Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-11-06T08:14:30Z",
+  "oanda_collected_at": "2026-11-06T09:18:51Z",
   "signals": [
     {
-      "adaptive_context": {
-        "block_new_alert": false,
-        "m15_ema_distance_atr": -0.148,
-        "reason": "No reversal or overextension warning on the available completed M15/H1 evidence.",
-        "status": "NO_NEW_TECHNICAL_WARNING"
-      },
-      "candle_timing": {
-        "last_late_candle_close": null,
-        "last_processed_bar_close": null,
-        "late_candles_skipped": 0,
-        "user_delivery_verified": false
-      },
-      "caution": "Some optional news feeds unavailable; calendar and required headline feeds checked. This is NOT an all-clear.",
       "created_at": "2026-11-06T08:14:42.643088Z",
       "direction": "SHORT",
       "expires_at": "2026-11-06T09:44:42.643088Z",
       "id": "AUTO-20261106T0814-EUR_CHF-S-B",
-      "news_source_coverage": {
-        "currencies_without_supported_official_feed": [],
-        "missing_required": [],
-        "note": "LIMITED means selected official and aggregate sources plus the calendar responded, but not every optional source. Never interpret this as complete global-news or real-time event coverage.",
-        "other_unavailable": [
-          "BLS employment",
-          "BLS inflation"
-        ],
-        "required_sources": [
-          "ECB press",
-          "Global markets aggregation",
-          "SNB monetary policy"
-        ],
-        "status": "LIMITED"
-      },
-      "news_status": "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS",
-      "observed_price_reactions": [],
       "pair": "EUR_CHF",
-      "release_blackouts": [],
-      "relevant_headlines": [],
-      "status": "NO_QUALIFIED_PRICE_PATTERN",
+      "reason": "PLAN_STOP_LEVEL_TOUCHED_ON_M15",
+      "status": "REASSESS_OR_EXPIRE_PRIOR_PLAN_LEVEL_REACHED",
       "strategy_feedback": {
         "broker_observations_not_weighted": 9,
         "broker_positive_wins_not_weighted": 0,
@@ -489,32 +458,32 @@
           "B"
         ],
         "scored_route_samples": {
-          "B": 3
+          "B": 4
         },
         "status": "NEUTRAL_INSUFFICIENT_OR_MIXED_EVIDENCE",
         "strategy": "M15_REJECTION"
       },
       "technical_checkpoint": {
-        "h1_adx14": 26.934250480081293,
-        "h1_rsi14": 34.864954711806206,
-        "indicative_distance_to_stop_pips": 6.3,
-        "indicative_distance_to_target_pips": 14.4,
-        "indicative_remaining_rr_before_new_spread_adjustment": 2.29,
+        "h1_adx14": 28.867191869853077,
+        "h1_rsi14": 42.293030753301295,
+        "indicative_distance_to_stop_pips": 4.4,
+        "indicative_distance_to_target_pips": 16.3,
+        "indicative_remaining_rr_before_new_spread_adjustment": 3.7,
         "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
-        "latest_completed_m15_bar_start": "2026-11-06T07:45:00.000000000Z",
-        "m15_adx14": 34.1270958322976,
-        "m15_atr14": 0.0005786789515341539,
-        "m15_macd_histogram": -2.765896255202009e-05,
-        "m15_rsi14": 42.43326530073633,
+        "latest_completed_m15_bar_start": "2026-11-06T09:00:00.000000000Z",
+        "m15_adx14": 32.34854434842039,
+        "m15_atr14": 0.0006065843546035986,
+        "m15_macd_histogram": 0.00012822166496551248,
+        "m15_rsi14": 53.31699639433906,
         "oanda_quote": {
-          "ask": 0.91465,
-          "bid": 0.91444,
+          "ask": 0.91482,
+          "bid": 0.91463,
           "pip_size": 0.0001,
-          "spread_pips": 2.0999999999993246,
-          "time": "2026-11-06T08:14:30.200778071Z",
+          "spread_pips": 1.8999999999991246,
+          "time": "2026-11-06T09:18:50.023652861Z",
           "tradeable": true
         },
-        "price_reference": 0.91444,
+        "price_reference": 0.91463,
         "quote_is_tradeable": true,
         "vs_m15_ema20": "ABOVE"
       }

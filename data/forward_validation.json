@@ -10,10 +10,12 @@
       "independent_scored_pair_days": 0,
       "outcomes": {
         "DATA_GAP": 2,
+        "INVALIDATED_PRE_ENTRY": 1,
+        "PENDING_TRIGGER": 1,
         "TRIGGERED_UNFILLED": 1,
         "UNTRIGGERED": 1
       },
-      "prospective_plans": 4,
+      "prospective_plans": 6,
       "verified_user_deliveries": 0
     },
     "champion": {
@@ -25,24 +27,27 @@
       "distinct_scored_days": 0,
       "independent_scored_pair_days": 0,
       "outcomes": {
-        "DATA_GAP": 1
+        "DATA_GAP": 1,
+        "INVALIDATED_PRE_ENTRY": 1
       },
-      "prospective_plans": 1,
+      "prospective_plans": 2,
       "verified_user_deliveries": 0
     }
   },
   "automatic_promotion_allowed": false,
   "coverage": {
     "count_note": "Rejection categories overlap; route counts and per-reason pair counts must not be summed into independent trades.",
-    "deep_pairs": 68,
-    "distinct_evaluated_pairs": 68,
+    "deep_pairs": 64,
+    "distinct_evaluated_pairs": 63,
     "distinct_pairs_by_rejection": {
-      "CONTINUATION_PRICE_STRETCHED": 1,
-      "FOUR_FRAME_TREND_CONFLICT": 14,
-      "INVALID_BID_ASK_OR_SPREAD": 18,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 7,
+      "FOUR_FRAME_TREND_CONFLICT": 10,
+      "INVALID_BID_ASK_OR_SPREAD": 7,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 8,
       "NO_DECISIVE_COMPLETED_M15_IMPULSE": 10,
-      "REVERSAL_OR_EXHAUSTION": 33,
+      "PRIMARY_NEWS_SOURCE_MISSING": 1,
+      "RECENT_MATERIAL_HEADLINE_REVIEW": 1,
+      "REVERSAL_OR_EXHAUSTION": 38,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
@@ -50,54 +55,57 @@
       "AUD_CAD",
       "AUD_CHF",
       "AUD_JPY",
-      "AUD_NZD",
+      "AUD_SGD",
+      "AUD_USD",
       "CAD_CHF",
       "CAD_JPY",
       "CHF_JPY",
+      "EUR_AUD",
+      "EUR_CAD",
       "EUR_CHF",
       "EUR_JPY",
-      "EUR_USD",
+      "EUR_NZD",
       "GBP_AUD",
       "GBP_CHF",
       "GBP_JPY",
       "NZD_CAD",
       "NZD_CHF",
-      "NZD_JPY",
-      "SGD_JPY"
+      "NZD_JPY"
     ],
     "paper_prequalified_missing_deep": [],
-    "quoted_pairs": 68,
-    "route_evaluations": 136,
+    "quoted_pairs": 64,
+    "route_evaluations": 126,
     "route_rejections": {
-      "CONTINUATION_PRICE_STRETCHED": 1,
-      "FOUR_FRAME_TREND_CONFLICT": 26,
-      "INVALID_BID_ASK_OR_SPREAD": 31,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 7,
+      "FOUR_FRAME_TREND_CONFLICT": 19,
+      "INVALID_BID_ASK_OR_SPREAD": 10,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 8,
       "NO_DECISIVE_COMPLETED_M15_IMPULSE": 10,
-      "REVERSAL_OR_EXHAUSTION": 58,
+      "PRIMARY_NEWS_SOURCE_MISSING": 1,
+      "RECENT_MATERIAL_HEADLINE_REVIEW": 1,
+      "REVERSAL_OR_EXHAUSTION": 71,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 4,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-11-06T08:14:30Z",
+    "source_at": "2026-11-06T09:18:51Z",
     "strict_prequalified": [
       "AUD_CAD",
       "AUD_CHF",
+      "AUD_HKD",
       "AUD_JPY",
-      "AUD_NZD",
+      "AUD_SGD",
+      "AUD_USD",
       "CAD_CHF",
       "CAD_JPY",
+      "EUR_AUD",
       "EUR_CHF",
-      "EUR_HKD",
       "EUR_JPY",
-      "EUR_USD",
+      "EUR_NZD",
       "GBP_AUD",
       "GBP_CHF",
       "GBP_JPY",
       "NZD_CAD",
       "NZD_CHF",
-      "NZD_JPY",
-      "SGD_JPY",
-      "USD_CZK",
-      "USD_DKK"
+      "NZD_JPY"
     ],
     "strict_prequalified_missing_deep": []
   },
@@ -124,5 +132,5 @@
     "statistical_improvement_established": false
   },
   "status": "COLLECTING_HOLDOUT",
-  "updated_at": "2026-11-06T08:14:45.357455+00:00"
+  "updated_at": "2026-11-06T09:19:08.850021+00:00"
 }
