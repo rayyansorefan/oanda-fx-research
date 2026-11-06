@@ -1,0 +1,23 @@
+{
+  "id": "FX-CONTEXT-20261106-v1",
+  "version": "contextual-news-shadow-v1",
+  "registration": "First successful post-merge production execution; starts with actual decision clock, never backdated",
+  "predecessor": "FX-SIMPLE-20261104-v2 (unchanged separate comparator)",
+  "hypothesis": "A pair-specific, evidence-labelled news policy which retains high-impact calendar blackouts and primary official HIGH headline review, but does not hard-veto a pair solely due to unknown official-feed coverage or broad third-party headline tags, may increase realistic forward paper fills without worsening cost-stressed expectancy.",
+  "same_market_technicals": "Reuse byte-identical simple-shadow-v2 propose/replay/position limits; source and all 10 liquid pairs identical. Only news gate differs.",
+  "blackout": "Calendar must be fresh and available; high-impact currency event blackout preserved; direct primary official HIGH headlines for the affected pair within 3h block proposals.",
+  "uncertain_news": "Missing primary coverage, unsupported official-feed currency, and global/third-party headlines are flagged UNVERIFIED and remain paper-only. Never claim cleared for Pepperstone manual signals.",
+  "execution": "NEXT completed M15 candle beyond immutable trigger, later actual OANDA bid/ask observation, 60s response, subsequent M15 open and realistic price chase, gap/ambiguous bars unscored, existing 0.25+0.15pip per-side additional cost stress.",
+  "limits": "Existing paper portfolio maximum 3 concurrent positions, 2 per currency, 1 per pair per setup; no orders.",
+  "suspension": "After at least 5 independent scored pair/London-days, a drawdown of >= 5 net illustrative R from the running peak triggers a sticky suspension of NEW paper registrations. Existing paper positions remain monitored; no automatic reset or live promotion.",
+  "evaluation": "Compare only contemporaneous paired independent pair/London-days against untouched simple-v2 and existing champion; track pending/expired, missed triggers, data gaps, adverse and favourable exits. Treat statistical inference as insufficient until >=20 distinct sessions and >=100 independent scored pair-days and separately reviewed outcomes.",
+  "promotion_allowed": false,
+  "broker_access": false,
+  "notifications_verified": false,
+  "source_frozen_required": true,
+  "implementation_files": [
+    "scripts/contextual_news_shadow.py",
+    "docs/validation_protocols/FX-CONTEXT-20261106-v1.json"
+  ],
+  "notes": "No arbitrary green-trade quota. Relaxed filter is a test hypothesis, never evidence of a profitable edge."
+}
