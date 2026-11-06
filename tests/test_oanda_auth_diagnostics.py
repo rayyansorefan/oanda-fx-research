@@ -1,67 +1,75 @@
-"""Read-only OANDA endpoint and 401-stage diagnosis; no real secrets or API requests."""
-import io
+"""401/403 observation without changing hashed collector/forward trading rules."""
 import os
 import sys
 import unittest
 from pathlib import Path
-from unittest.mock import patch
-from urllib.error import HTTPError
+from types import SimpleNamespace
+from unittest.mock import Mock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-import oanda_data as market
+import oanda_auth_diagnostics as auth
 
 
-class OandaAuthDiagnosticsTests(unittest.TestCase):
-    def test_explicit_live_endpoint_is_used_without_fallback(self):
-        with patch.dict(os.environ, {"OANDA_API_TOKEN": "synthetic", "OANDA_ENVIRONMENT": "live"}), \
-             patch.object(market, "urlopen", return_value=io.BytesIO(b'{"accounts":[]}')) as opened:
-            self.assertEqual(market.request("/v3/accounts"), {"accounts": []})
-            self.assertEqual(opened.call_args.args[0].full_url,
-                             "https://api-fxtrade.oanda.com/v3/accounts")
+class AuthDiagnosticsTests(unittest.TestCase):
+    def test_stage_redacts_account_ids_and_pair_names(self):
+        self.assertEqual(auth.stage("/v3/accounts/sensitive-id/instruments"), "INSTRUMENTS")
+        self.assertEqual(auth.stage("/v3/instruments/EUR_USD/candles"), "CANDLES")
+        self.assertEqual(auth.stage("/v3/accounts/sensitive-id/pricing"), "PRICING")
+        self.assertEqual(auth.stage("/v3/accounts"), "ACCOUNTS")
 
-    def test_invalid_environment_blocks_network(self):
-        with patch.dict(os.environ, {"OANDA_API_TOKEN": "synthetic", "OANDA_ENVIRONMENT": "demo"}), \
-             patch.object(market, "urlopen") as opened:
-            with self.assertRaisesRegex(RuntimeError, "OANDA_INVALID_ENVIRONMENT"):
-                market.request("/v3/accounts")
-            opened.assert_not_called()
+    def test_401_is_observed_once_and_does_not_retry(self):
+        request = Mock(side_effect=RuntimeError("OANDA_HTTP_401"))
+        module = SimpleNamespace(request=request)
+        obs = auth.Observer()
+        with obs.capture(module):
+            with self.assertRaisesRegex(RuntimeError, "^OANDA_HTTP_401_INSTRUMENTS$"):
+                module.request("/v3/accounts/PRIVATE_ID/instruments")
+        self.assertEqual(request.call_count, 1)
+        self.assertIs(module.request, request)
+        self.assertEqual(obs.failures, ["OANDA_HTTP_401_INSTRUMENTS"])
+        self.assertNotIn("PRIVATE_ID", str(obs.failures))
 
-    def test_401_includes_only_redacted_request_stage_and_is_not_retried(self):
-        denied = HTTPError("https://example.invalid/mock", 401, "Unauthorized", {}, None)
-        with patch.dict(os.environ, {"OANDA_API_TOKEN": "synthetic", "OANDA_ENVIRONMENT": "practice"}), \
-             patch.object(market, "urlopen", side_effect=denied) as opened:
-            with self.assertRaisesRegex(RuntimeError, r"^OANDA_HTTP_401_INSTRUMENTS$"):
-                market.request("/v3/accounts/SENSITIVE_TEST_ID/instruments")
-            self.assertEqual(opened.call_count, 1)
+    def test_masked_quote_auth_error_is_still_reported(self):
+        request = Mock(side_effect=RuntimeError("OANDA_HTTP_401"))
+        module = SimpleNamespace(request=request)
+        obs = auth.Observer()
+        with obs.capture(module):
+            try:
+                module.request("/v3/accounts/secret/pricing")
+            except RuntimeError:
+                pass  # frozen quote batch can mask an individual failure
+        self.assertEqual(obs.error_for(RuntimeError("OANDA_NO_USABLE_FX_QUOTES")),
+                         "OANDA_HTTP_401_PRICING")
 
-    def test_denied_account_is_differentiated_from_invalid_token(self):
-        with patch.dict(os.environ, {"OANDA_ACCOUNT_ID": "synthetic-account", "OANDA_ENVIRONMENT": "live"}), \
-             patch.object(market, "request", side_effect=[
-                 RuntimeError("OANDA_HTTP_401_INSTRUMENTS"),
-                 {"accounts": [{"id": "different-account"}]},
-             ]) as req:
-            with self.assertRaisesRegex(RuntimeError, "^OANDA_ACCOUNT_NOT_ACCESSIBLE_LIVE$"):
-                market.collect()
-            self.assertEqual(req.call_count, 2)
+    def test_token_rejection_is_distinguished_by_second_endpoint(self):
+        module = SimpleNamespace(request=Mock(side_effect=RuntimeError("OANDA_HTTP_401")))
+        obs = auth.Observer()
+        self.assertEqual(obs.probe(module, "OANDA_HTTP_401_INSTRUMENTS"),
+                         "OANDA_TOKEN_REJECTED_PRACTICE")
+        module.request.assert_called_once_with("/v3/accounts")
 
-    def test_token_rejection_after_account_probe(self):
-        with patch.dict(os.environ, {"OANDA_ACCOUNT_ID": "synthetic-account", "OANDA_ENVIRONMENT": "practice"}), \
-             patch.object(market, "request", side_effect=[
-                 RuntimeError("OANDA_HTTP_401_INSTRUMENTS"),
-                 RuntimeError("OANDA_HTTP_401_ACCOUNTS"),
-             ]) as req:
-            with self.assertRaisesRegex(RuntimeError, "^OANDA_TOKEN_REJECTED_PRACTICE$"):
-                market.collect()
-            self.assertEqual(req.call_count, 2)
+    def test_accessible_token_inaccessible_account(self):
+        module = SimpleNamespace(request=Mock(return_value={"accounts": [{"id": "other"}]}))
+        with patch.dict(os.environ, {"OANDA_ACCOUNT_ID": "hidden"}):
+            self.assertEqual(auth.Observer().probe(module, "OANDA_HTTP_401_INSTRUMENTS"),
+                             "OANDA_ACCOUNT_NOT_ACCESSIBLE_PRACTICE")
 
-    def test_probe_timeout_is_not_mislabelled_invalid_token(self):
-        with patch.dict(os.environ, {"OANDA_ACCOUNT_ID": "synthetic-account"}), \
-             patch.object(market, "request", side_effect=[
-                 RuntimeError("OANDA_HTTP_401_INSTRUMENTS"),
-                 RuntimeError("OANDA_HTTP_504_ACCOUNTS"),
-             ]):
-            with self.assertRaisesRegex(RuntimeError, "^OANDA_HTTP_504_ACCOUNTS$"):
-                market.collect()
+    def test_distinct_504_probe_does_not_claim_invalid_token(self):
+        module = SimpleNamespace(request=Mock(side_effect=RuntimeError("OANDA_HTTP_504")))
+        self.assertEqual(auth.Observer().probe(module, "OANDA_HTTP_401_INSTRUMENTS"),
+                         "OANDA_ACCOUNT_PROBE_INCONCLUSIVE")
+
+    def test_other_http_failure_does_not_trigger_probe(self):
+        module = SimpleNamespace(request=Mock())
+        self.assertEqual(auth.Observer().probe(module, "OANDA_HTTP_504_PRICING"),
+                         "OANDA_HTTP_504_PRICING")
+        module.request.assert_not_called()
+
+    def test_safe_host_reports_actual_frozen_endpoint_only(self):
+        self.assertEqual(auth.safe_host(SimpleNamespace(BASE="https://api-fxpractice.oanda.com")),
+                         "practice")
+        self.assertEqual(auth.safe_host(SimpleNamespace(BASE="https://api-fxtrade.oanda.com")),
+                         "NONSTANDARD")
 
 
 if __name__ == "__main__":
