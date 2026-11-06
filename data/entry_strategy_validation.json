@@ -1,10 +1,11 @@
 {
   "arms": {
     "challenger_v1": {
-      "abstaining_common_days": 1,
-      "eligible_pair_days": 67,
+      "abstaining_common_days": 2,
+      "eligible_pair_days": 122,
       "outcomes": {
-        "DATA_GAP": 2
+        "TRIGGERED_UNFILLED": 1,
+        "UNTRIGGERED": 1
       },
       "plans_created": 2,
       "scored_unique_currency_exposure_days": 0,
@@ -12,8 +13,8 @@
       "sum_net_r_stressed": null
     },
     "champion": {
-      "abstaining_common_days": 1,
-      "eligible_pair_days": 67,
+      "abstaining_common_days": 2,
+      "eligible_pair_days": 122,
       "outcomes": {},
       "plans_created": 0,
       "scored_unique_currency_exposure_days": 0,
@@ -23,9 +24,9 @@
   },
   "automatic_promotion_allowed": false,
   "caution": "Research-only counterfactual portfolio proxy. Missing broker costs or receipts prevent demonstrated manual achievability. No orders or parameter promotion.",
-  "cohort_sha256": "6da286ff110696f8c5021846bc98a3d8a66ca5abb3fc2fb64e9aa7ca075d6061",
-  "common_eligible_observation_days": 1,
-  "common_eligible_pair_days": 67,
+  "cohort_sha256": "f4572a68388c35ec2d05011d81f2db5fc82ac7cf34539487b1023a17ef6c7d20",
+  "common_eligible_observation_days": 2,
+  "common_eligible_pair_days": 122,
   "decision": "INSUFFICIENT_EVIDENCE",
   "earliest_common_day": "2026-11-05",
   "evidence": {
@@ -38,7 +39,13 @@
   "excluded": {
     "BEFORE_REGISTERED_HOLDOUT": 32920
   },
-  "paired_day_cluster_interval": null,
+  "paired_day_cluster_interval": {
+    "lower_95pct_r": 0.0,
+    "mean_improvement_r": 0.0,
+    "method": "Pre-registered day-cluster bootstrap; abstention contributes zero; overlapping pair exposures are clustered by day.",
+    "paired_days": 2,
+    "upper_95pct_r": 0.0
+  },
   "protocol_id": "FX-OOS-20261104-v21",
   "reason": "Registered observation-day or challenger sample floor not reached",
   "registered_holdout_start_unchanged": "2026-11-05T07:00:00Z",
@@ -48,5 +55,5 @@
     "common_days": 20
   },
   "trading_performance_validated": false,
-  "updated_at": "2026-11-05T20:38:46.462281+00:00"
+  "updated_at": "2026-11-06T01:30:55.894118+00:00"
 }
