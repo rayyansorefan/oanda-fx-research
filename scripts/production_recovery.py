@@ -57,7 +57,11 @@ def run_collection():
                     shutil.copy2(backup, path)
             # Only allow known non-sensitive error identifiers into evidence.
             code = str(exc)
-            if not (code.startswith("OANDA_") or code in
+            if code == "Missing OANDA_API_TOKEN secret":
+                code = "OANDA_TOKEN_MISSING"
+            elif code.startswith("Set OANDA_ACCOUNT_ID"):
+                code = "OANDA_ACCOUNT_CONFIGURATION_REQUIRED"
+            elif not (code.startswith("OANDA_") or code in
                     ("INSUFFICIENT_COMPLETED_CANDLES", "MISSING_PAIRS_IN_PRICING")):
                 code = type(exc).__name__
             record_collection_attempt(started, "DATA_UNAVAILABLE", code)
@@ -71,7 +75,10 @@ def record_collection_attempt(started, status, error):
     report = {"started_at": started, "checked_at": now(), "status": status,
               "error": error, "last_valid_source_preserved": status == "DATA_UNAVAILABLE",
               "run_id": os.environ.get("GITHUB_RUN_ID"),
-              "event": os.environ.get("GITHUB_EVENT_NAME")}
+              "event": os.environ.get("GITHUB_EVENT_NAME"),
+              "oanda_environment": (os.environ.get("OANDA_ENVIRONMENT", "practice").strip().lower()
+                                    if os.environ.get("OANDA_ENVIRONMENT", "practice").strip().lower()
+                                    in ("practice", "live") else "INVALID")}
     write_json(Path("data/collection_attempt.json"), report)
     identity = os.environ.get("GITHUB_RUN_ID")
     if identity and identity.isdigit():
@@ -87,7 +94,11 @@ def run_fast():
         result = fast.perform()
     except (RuntimeError, ValueError, KeyError, TypeError, OSError) as exc:
         code = str(exc)
-        if not code.startswith("OANDA_"):
+        if code == "Missing OANDA_API_TOKEN secret":
+            code = "OANDA_TOKEN_MISSING"
+        elif code.startswith("Set OANDA_ACCOUNT_ID"):
+            code = "OANDA_ACCOUNT_CONFIGURATION_REQUIRED"
+        elif not code.startswith("OANDA_"):
             code = type(exc).__name__
         result = {"checked_at": datetime.now(timezone.utc).isoformat(),
                   "status": "FAST_MARKET_DATA_UNAVAILABLE", "error": code,
