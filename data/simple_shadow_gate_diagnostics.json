@@ -1,5 +1,5 @@
 {
-  "last_source_at": "2026-11-06T10:03:13.838997+00:00",
+  "last_source_at": "2026-11-06T11:16:59Z",
   "no_broker_orders": true,
   "observations": [
     {
@@ -837,20 +837,46 @@
       },
       "paper_plans_not_inferred": true,
       "source_at": "2026-11-06T10:03:13.838997+00:00"
+    },
+    {
+      "evaluated_at": "2026-11-06T11:17:16Z",
+      "first_blocker_counts": {
+        "M15_H1_EMA_DIRECTION_CONFLICT": 2,
+        "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW": 2,
+        "NO_COMPLETED_MOMENTUM_OR_PULLBACK_SETUP": 1,
+        "PAIR_SOURCE_MISSING": 1,
+        "SPREAD_RELATIVE_TO_ATR": 3,
+        "SPREAD_TOO_WIDE": 1
+      },
+      "observation_kind": "HOURLY",
+      "pair_reasons": {
+        "AUD_USD": "PAIR_SOURCE_MISSING",
+        "EUR_GBP": "M15_H1_EMA_DIRECTION_CONFLICT",
+        "EUR_JPY": "NO_COMPLETED_MOMENTUM_OR_PULLBACK_SETUP",
+        "EUR_USD": "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW",
+        "GBP_JPY": "SPREAD_TOO_WIDE",
+        "GBP_USD": "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW",
+        "NZD_USD": "SPREAD_RELATIVE_TO_ATR",
+        "USD_CAD": "SPREAD_RELATIVE_TO_ATR",
+        "USD_CHF": "SPREAD_RELATIVE_TO_ATR",
+        "USD_JPY": "M15_H1_EMA_DIRECTION_CONFLICT"
+      },
+      "paper_plans_not_inferred": true,
+      "source_at": "2026-11-06T11:16:59Z"
     }
   ],
   "performance_validated": false,
   "registered_cohort": "FX-EARLY-20261104-v1",
   "scope": "FIRST_BLOCKER_DIAGNOSTIC_NOT_AN_ELIGIBLE_FILL",
-  "total_evaluated_snapshots": 36,
+  "total_evaluated_snapshots": 37,
   "total_pair_gate_counts": {
     "COMPLETED_M15_FRAME_MISSING_OR_STALE": 5,
     "FORMED_PAPER_SETUP_REQUIRES_PROSPECTIVE_REGISTRATION": 1,
-    "M15_H1_EMA_DIRECTION_CONFLICT": 100,
-    "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW": 47,
-    "NO_COMPLETED_MOMENTUM_OR_PULLBACK_SETUP": 8,
-    "PAIR_SOURCE_MISSING": 25,
-    "SPREAD_RELATIVE_TO_ATR": 104,
-    "SPREAD_TOO_WIDE": 55
+    "M15_H1_EMA_DIRECTION_CONFLICT": 102,
+    "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW": 49,
+    "NO_COMPLETED_MOMENTUM_OR_PULLBACK_SETUP": 9,
+    "PAIR_SOURCE_MISSING": 26,
+    "SPREAD_RELATIVE_TO_ATR": 107,
+    "SPREAD_TOO_WIDE": 56
   }
 }
