@@ -34,14 +34,14 @@ UTC = timezone.utc
 def digest():
     # Lock every dependency that can change market, news or fill economics.
     h = hashlib.sha256()
-    paths = (Path(__file__), PROTOCOL,
+    paths = (Path(__file__).resolve(), PROTOCOL,
              ROOT/"scripts/simple_paper_shadow_v2.py",
              ROOT/"scripts/contextual_news_shadow.py",
              ROOT/"scripts/paper_evidence_guard.py",
              ROOT/"scripts/paper_trade_audit.py",
              ROOT/"scripts/oanda_data.py")
     for path in paths:
-        h.update(str(path.relative_to(ROOT)).encode() + b"\\x00")
+        h.update(str(path.relative_to(ROOT)).encode() + b"\x00")
         h.update(path.read_bytes())
     return h.hexdigest()
 
