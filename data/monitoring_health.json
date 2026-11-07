@@ -1,17 +1,17 @@
 {
   "active_london_day": false,
-  "checked_at": "2026-11-07T00:26:38.206455+00:00",
+  "checked_at": "2026-11-07T02:45:18.555428+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-07T00:26:33Z",
+    "checked_at": "2026-11-07T02:45:14Z",
     "collection_tries": 2,
     "collector_endpoint": "practice",
-    "error": "OANDA_HTTP_401_ACCOUNTS",
+    "error": "OANDA_NO_USABLE_FX_QUOTES",
     "event": "schedule",
     "first_attempt_error": "OANDA_HTTP_401_ACCOUNTS",
     "last_valid_source_preserved": true,
     "recovered_on_second_try": false,
-    "run_id": "42318198434",
-    "started_at": "2026-11-07T00:26:21Z",
+    "run_id": "42330748533",
+    "started_at": "2026-11-07T02:45:05Z",
     "status": "DATA_UNAVAILABLE"
   },
   "consecutive_unobserved_fast_targets": 0,
@@ -19,10 +19,10 @@
   "current_run": {
     "attempt": "1",
     "event": "schedule",
-    "head_sha": "b1ade24fdabb3a18f2ace50ba5b7e4460fc7ba42",
-    "id": "42318198434",
+    "head_sha": "7c628cbe7302701a8417c1aa08956a5651ff10af",
+    "id": "42330748533",
     "outcomes": {
-      "collect": "skipped",
+      "collect": "failure",
       "early_cohort": "skipped",
       "fast_recovery": "skipped",
       "safety": "success"
@@ -31,12 +31,12 @@
   },
   "dashboard_deployments": [
     {
-      "conclusion": null,
+      "conclusion": "success",
       "created_at": "2026-11-07T00:26:39Z",
       "head_sha": "b6a055ec01a6f8715a91bfa2d3dac2fb27bb872a",
       "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42318247297",
       "id": 42318247297,
-      "status": "queued"
+      "status": "completed"
     },
     {
       "conclusion": "success",
@@ -59,7 +59,7 @@
   "early_last_source_at": "2026-11-06T19:16:52Z",
   "early_observation_count": 51,
   "elapsed_fast_targets_today": 0,
-  "fast_age_seconds": 18539.88227,
+  "fast_age_seconds": 26860.231243,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -86,12 +86,21 @@
   },
   "fast_source_at": "2026-11-06T19:17:38.324185+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 18586.206455,
+  "full_age_seconds": 26906.555428,
   "full_collection_status": "PARTIAL",
   "full_fresh": false,
-  "full_last_attempt_at": "2026-11-07T00:26:33Z",
+  "full_last_attempt_at": "2026-11-07T02:45:14Z",
   "full_source_at": "2026-11-06T19:16:52Z",
   "last_completed_jobs": [
+    {
+      "conclusion": "failure",
+      "event": "schedule",
+      "failed_steps": [
+        "Restore source coverage if hourly OANDA schedule was missed",
+        "Fail closed if backup, publication, or persistence failed"
+      ],
+      "run_id": 42318198434
+    },
     {
       "conclusion": "failure",
       "event": "schedule",
@@ -99,14 +108,6 @@
         "Fail closed if any research or public dashboard step failed"
       ],
       "run_id": 42309263301
-    },
-    {
-      "conclusion": "failure",
-      "event": "push",
-      "failed_steps": [
-        "Fail closed if any research or public dashboard step failed"
-      ],
-      "run_id": 42303095601
     }
   ],
   "previous_publication": {
@@ -246,6 +247,7 @@
         "success",
         "failure",
         "failure",
+        "failure",
         null
       ],
       "created_at": [
@@ -320,7 +322,8 @@
         "2026-11-06T17:27:00Z",
         "2026-11-06T20:48:39Z",
         "2026-11-06T23:03:51Z",
-        "2026-11-07T00:26:09Z"
+        "2026-11-07T00:26:09Z",
+        "2026-11-07T02:44:56Z"
       ],
       "interval_seconds": [
         14458.0,
@@ -393,7 +396,8 @@
         9086.0,
         12099.0,
         8112.0,
-        4938.0
+        4938.0,
+        8327.0
       ],
       "note": "Run creation intervals only; exact intended dispatch identity is unavailable.",
       "run_ids": [
@@ -468,7 +472,8 @@
         42261729334,
         42291478609,
         42309263301,
-        42318198434
+        42318198434,
+        42330748533
       ]
     }
   },
