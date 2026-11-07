@@ -8,6 +8,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from types import FunctionType
@@ -207,14 +208,20 @@ def update(summary, news, book=None, fetch=None, *, now=None):
 
 def main():
     validate_protocol()
-    summary = json.loads((ROOT/"data/summary.json").read_text())
-    news = json.loads((ROOT/"data/news_latest.json").read_text())
+    if len(sys.argv) > 2 or (len(sys.argv) == 2 and sys.argv[1] != "--fast"):
+        raise SystemExit("Usage: liquid_momentum_shadow_v1.py [--fast]")
+    fast = len(sys.argv) == 2
+    summary_path = ROOT / ("data/fast_latest.json" if fast else "data/summary.json")
+    news_path = ROOT / ("data/fast_news_latest.json" if fast else "data/news_latest.json")
+    summary = json.loads(summary_path.read_text())
+    news = json.loads(news_path.read_text())
     book = json.loads(OUT.read_text()) if OUT.exists() else None
     outcome = update(summary, news, book)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(outcome, sort_keys=True, indent=2, allow_nan=False) + "\n")
     print("Liquid momentum forward paper cohort:", outcome["metrics"],
-          "| source:", summary.get("collected_at"))
+          "| source:", summary.get("collected_at"),
+          "| mode:", "fast" if fast else "full")
 
 
 if __name__ == "__main__":
