@@ -1,8 +1,8 @@
 {
   "active_london_day": false,
-  "checked_at": "2026-11-06T23:04:17.841540+00:00",
+  "checked_at": "2026-11-07T00:26:38.206455+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-06T23:04:14Z",
+    "checked_at": "2026-11-07T00:26:33Z",
     "collection_tries": 2,
     "collector_endpoint": "practice",
     "error": "OANDA_HTTP_401_ACCOUNTS",
@@ -10,19 +10,19 @@
     "first_attempt_error": "OANDA_HTTP_401_ACCOUNTS",
     "last_valid_source_preserved": true,
     "recovered_on_second_try": false,
-    "run_id": "42309263301",
-    "started_at": "2026-11-06T23:04:01Z",
+    "run_id": "42318198434",
+    "started_at": "2026-11-07T00:26:21Z",
     "status": "DATA_UNAVAILABLE"
   },
-  "consecutive_unobserved_fast_targets": 14,
+  "consecutive_unobserved_fast_targets": 0,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
     "event": "schedule",
-    "head_sha": "ffdc6c56804bf647f086f24103de36e3d0d1a0ce",
-    "id": "42309263301",
+    "head_sha": "b1ade24fdabb3a18f2ace50ba5b7e4460fc7ba42",
+    "id": "42318198434",
     "outcomes": {
-      "collect": "failure",
+      "collect": "skipped",
       "early_cohort": "skipped",
       "fast_recovery": "skipped",
       "safety": "success"
@@ -30,6 +30,14 @@
     "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
   },
   "dashboard_deployments": [
+    {
+      "conclusion": null,
+      "created_at": "2026-11-07T00:26:39Z",
+      "head_sha": "b6a055ec01a6f8715a91bfa2d3dac2fb27bb872a",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42318247297",
+      "id": 42318247297,
+      "status": "queued"
+    },
     {
       "conclusion": "success",
       "created_at": "2026-11-06T21:29:06Z",
@@ -45,21 +53,13 @@
       "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42295637794",
       "id": 42295637794,
       "status": "completed"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-11-06T20:49:14Z",
-      "head_sha": "019d6b4741c74b78bb19a2e26197b9bb6af7af02",
-      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42291557021",
-      "id": 42291557021,
-      "status": "completed"
     }
   ],
   "early_cohort_id": "FX-EARLY-20261104-v1",
   "early_last_source_at": "2026-11-06T19:16:52Z",
   "early_observation_count": 51,
-  "elapsed_fast_targets_today": 64,
-  "fast_age_seconds": 13599.517355,
+  "elapsed_fast_targets_today": 0,
+  "fast_age_seconds": 18539.88227,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -86,19 +86,19 @@
   },
   "fast_source_at": "2026-11-06T19:17:38.324185+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 13645.84154,
+  "full_age_seconds": 18586.206455,
   "full_collection_status": "PARTIAL",
   "full_fresh": false,
-  "full_last_attempt_at": "2026-11-06T23:04:14Z",
+  "full_last_attempt_at": "2026-11-07T00:26:33Z",
   "full_source_at": "2026-11-06T19:16:52Z",
   "last_completed_jobs": [
     {
       "conclusion": "failure",
-      "event": "push",
+      "event": "schedule",
       "failed_steps": [
         "Fail closed if any research or public dashboard step failed"
       ],
-      "run_id": 42303095601
+      "run_id": 42309263301
     },
     {
       "conclusion": "failure",
@@ -106,11 +106,11 @@
       "failed_steps": [
         "Fail closed if any research or public dashboard step failed"
       ],
-      "run_id": 42295556393
+      "run_id": 42303095601
     }
   ],
   "previous_publication": {
-    "checked_at": "2026-11-06T21:18:32.981898Z",
+    "checked_at": "2026-11-07T00:26:38.112189Z",
     "public_feed_path": "docs/fx-feed.json",
     "public_repository": "rayyansorefan/standalone-wallet-paper-agent",
     "reason": "Operational failure; market snapshot timestamp unchanged",
@@ -245,6 +245,7 @@
         "failure",
         "success",
         "failure",
+        "failure",
         null
       ],
       "created_at": [
@@ -318,7 +319,8 @@
         "2026-11-06T14:55:34Z",
         "2026-11-06T17:27:00Z",
         "2026-11-06T20:48:39Z",
-        "2026-11-06T23:03:51Z"
+        "2026-11-06T23:03:51Z",
+        "2026-11-07T00:26:09Z"
       ],
       "interval_seconds": [
         14458.0,
@@ -390,7 +392,8 @@
         2168.0,
         9086.0,
         12099.0,
-        8112.0
+        8112.0,
+        4938.0
       ],
       "note": "Run creation intervals only; exact intended dispatch identity is unavailable.",
       "run_ids": [
@@ -464,7 +467,8 @@
         42238276110,
         42261729334,
         42291478609,
-        42309263301
+        42309263301,
+        42318198434
       ]
     }
   },
@@ -472,60 +476,7 @@
   "status": "DEGRADED",
   "target_fast_interval_seconds": 900,
   "target_full_interval_seconds": 3600,
-  "unobserved_fast_targets_today": [
-    "2026-11-06T07:02:00+00:00",
-    "2026-11-06T07:17:00+00:00",
-    "2026-11-06T07:32:00+00:00",
-    "2026-11-06T07:47:00+00:00",
-    "2026-11-06T08:02:00+00:00",
-    "2026-11-06T08:17:00+00:00",
-    "2026-11-06T08:32:00+00:00",
-    "2026-11-06T08:47:00+00:00",
-    "2026-11-06T09:02:00+00:00",
-    "2026-11-06T09:47:00+00:00",
-    "2026-11-06T10:17:00+00:00",
-    "2026-11-06T10:32:00+00:00",
-    "2026-11-06T10:47:00+00:00",
-    "2026-11-06T11:02:00+00:00",
-    "2026-11-06T11:32:00+00:00",
-    "2026-11-06T11:47:00+00:00",
-    "2026-11-06T12:02:00+00:00",
-    "2026-11-06T12:17:00+00:00",
-    "2026-11-06T12:32:00+00:00",
-    "2026-11-06T13:02:00+00:00",
-    "2026-11-06T13:17:00+00:00",
-    "2026-11-06T13:32:00+00:00",
-    "2026-11-06T13:47:00+00:00",
-    "2026-11-06T14:32:00+00:00",
-    "2026-11-06T14:47:00+00:00",
-    "2026-11-06T15:02:00+00:00",
-    "2026-11-06T15:32:00+00:00",
-    "2026-11-06T15:47:00+00:00",
-    "2026-11-06T16:02:00+00:00",
-    "2026-11-06T16:17:00+00:00",
-    "2026-11-06T16:47:00+00:00",
-    "2026-11-06T17:02:00+00:00",
-    "2026-11-06T17:32:00+00:00",
-    "2026-11-06T17:47:00+00:00",
-    "2026-11-06T18:02:00+00:00",
-    "2026-11-06T18:32:00+00:00",
-    "2026-11-06T18:47:00+00:00",
-    "2026-11-06T19:02:00+00:00",
-    "2026-11-06T19:32:00+00:00",
-    "2026-11-06T19:47:00+00:00",
-    "2026-11-06T20:02:00+00:00",
-    "2026-11-06T20:17:00+00:00",
-    "2026-11-06T20:32:00+00:00",
-    "2026-11-06T20:47:00+00:00",
-    "2026-11-06T21:02:00+00:00",
-    "2026-11-06T21:17:00+00:00",
-    "2026-11-06T21:32:00+00:00",
-    "2026-11-06T21:47:00+00:00",
-    "2026-11-06T22:02:00+00:00",
-    "2026-11-06T22:17:00+00:00",
-    "2026-11-06T22:32:00+00:00",
-    "2026-11-06T22:47:00+00:00"
-  ],
+  "unobserved_fast_targets_today": [],
   "workflow_registration": [
     {
       "id": 400054680,
