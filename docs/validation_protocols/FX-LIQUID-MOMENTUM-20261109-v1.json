@@ -1,0 +1,48 @@
+{
+  "id": "FX-LIQUID-MOMENTUM-20261109-v1",
+  "study_version": "liquid-momentum-shadow-v1",
+  "registered_as": "NEW_PROSPECTIVE_PAPER_CHALLENGER_NOT_PRODUCTION_ADMISSION",
+  "holdout_start_at": "2026-11-09T07:00:00Z",
+  "pairs": [
+    "EUR_USD",
+    "GBP_USD",
+    "USD_JPY",
+    "USD_CHF",
+    "USD_CAD",
+    "AUD_USD",
+    "NZD_USD",
+    "EUR_JPY"
+  ],
+  "single_setup_type": "MOMENTUM_CONTINUATION",
+  "rules": {
+    "timeframe": "M15 trigger candle close with H1 trend context",
+    "confirmation": "NEXT completed M15 candle must close beyond frozen trigger",
+    "require_trend": "M15 and H1 EMA20/50 same direction",
+    "minimum_h1_adx": 18,
+    "minimum_completed_m15_body_fraction": 0.35,
+    "minimum_completed_m15_close_extreme_fraction": 0.65,
+    "m15_ema20_max_extension_atr": 1.5,
+    "m15_spread_max_atr_fraction": 0.2,
+    "fixed_max_spread_pips": 2.5,
+    "minimum_net_rr_illustrative": 1.35,
+    "initial_stop_atr_floor": 1.1,
+    "target_1_r": 1.8,
+    "manual_delay_seconds": 60,
+    "expiry_minutes": 90,
+    "market_source_max_age_minutes": 15,
+    "pair_quote_max_age_minutes": 5,
+    "entry_event_policy": "NO_KNOWN_HIGH_IMPACT_EVENT; economic_calendar_required; unsupported_optional_sources tagged UNKNOWN never deemed verified",
+    "no_lookahead": true,
+    "no_orders": true
+  },
+  "validation": {
+    "filled_trades_per_policy_minimum": 100,
+    "distinct_london_days_minimum": 20,
+    "distinct_pairs_minimum": 3,
+    "minimum_net_mean_r": 0,
+    "bootstrap_95pct_lower_bound_gt_zero": true,
+    "beats_cost_matched_random_entries": true,
+    "no_trade_benchmark": 0,
+    "automatic_live_promotion": false
+  }
+}

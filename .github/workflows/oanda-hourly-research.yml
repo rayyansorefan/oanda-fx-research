@@ -138,6 +138,13 @@ jobs:
         env:
           OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
         run: python scripts/contextual_news_shadow.py
+      - name: Score new liquid-major momentum paper challenger independently
+        id: liquid_shadow
+        if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.news.outcome == 'success'
+        continue-on-error: true
+        env:
+          OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
+        run: python scripts/liquid_momentum_shadow_v1.py
       - name: Collect separately locked 4 November early forward paper cohort
         id: early_cohort
         if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.news.outcome == 'success' && steps.comparison.outcome == 'success' && steps.simple_shadow.outcome == 'success'
@@ -387,6 +394,13 @@ jobs:
         env:
           OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
         run: python scripts/contextual_news_shadow.py --fast
+      - name: Forward-score liquid major momentum on fresh fast market observations
+        id: liquid_fast
+        if: steps.fast.outcome == 'success'
+        continue-on-error: true
+        env:
+          OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
+        run: python scripts/liquid_momentum_shadow_v1.py --fast
       - name: Verify original immutable forward ledgers after new observation
         id: validation
         if: steps.fast.outputs.collected == 'true'
