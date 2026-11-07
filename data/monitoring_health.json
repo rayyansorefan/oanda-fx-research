@@ -1,8 +1,8 @@
 {
   "active_london_day": false,
-  "checked_at": "2026-11-07T07:20:31.321046+00:00",
+  "checked_at": "2026-11-07T12:14:18.602317+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-07T07:20:27Z",
+    "checked_at": "2026-11-07T12:14:16Z",
     "collection_tries": 1,
     "collector_endpoint": "practice",
     "error": "OANDA_NO_USABLE_FX_QUOTES",
@@ -10,8 +10,8 @@
     "first_attempt_error": null,
     "last_valid_source_preserved": true,
     "recovered_on_second_try": false,
-    "run_id": "42350857845",
-    "started_at": "2026-11-07T07:20:26Z",
+    "run_id": "42371562765",
+    "started_at": "2026-11-07T12:14:14Z",
     "status": "DATA_UNAVAILABLE"
   },
   "consecutive_unobserved_fast_targets": 0,
@@ -19,8 +19,8 @@
   "current_run": {
     "attempt": "1",
     "event": "push",
-    "head_sha": "ee08ff43794007de9bd510ba25a262b94bbff686",
-    "id": "42350857845",
+    "head_sha": "27875f7f5d2b347e803229b7c2ee62f9ed9e317f",
+    "id": "42371562765",
     "outcomes": {
       "collect": "failure",
       "early_cohort": "skipped",
@@ -59,7 +59,7 @@
   "early_last_source_at": "2026-11-06T19:16:52Z",
   "early_observation_count": 51,
   "elapsed_fast_targets_today": 0,
-  "fast_age_seconds": 43372.996861,
+  "fast_age_seconds": 61000.278132,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -86,12 +86,20 @@
   },
   "fast_source_at": "2026-11-06T19:17:38.324185+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 43419.321046,
+  "full_age_seconds": 61046.602317,
   "full_collection_status": "PARTIAL",
   "full_fresh": false,
-  "full_last_attempt_at": "2026-11-07T07:20:27Z",
+  "full_last_attempt_at": "2026-11-07T12:14:16Z",
   "full_source_at": "2026-11-06T19:16:52Z",
   "last_completed_jobs": [
+    {
+      "conclusion": "failure",
+      "event": "push",
+      "failed_steps": [
+        "Fail closed if any research or public dashboard step failed"
+      ],
+      "run_id": 42350857845
+    },
     {
       "conclusion": "failure",
       "event": "schedule",
@@ -99,15 +107,6 @@
         "Fail closed if any research or public dashboard step failed"
       ],
       "run_id": 42330748533
-    },
-    {
-      "conclusion": "failure",
-      "event": "schedule",
-      "failed_steps": [
-        "Restore source coverage if hourly OANDA schedule was missed",
-        "Fail closed if backup, publication, or persistence failed"
-      ],
-      "run_id": 42318198434
     }
   ],
   "previous_publication": {
