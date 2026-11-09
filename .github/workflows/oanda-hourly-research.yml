@@ -244,6 +244,10 @@ jobs:
           FX_DASHBOARD_DEPLOY_TOKEN: ${{ secrets.FX_DASHBOARD_DEPLOY_TOKEN }}
           FX_HEALTH_FAILURE: ${{ steps.collect.outcome != 'success' && 'MARKET_COLLECTION_FAILED' || steps.news.outcome != 'success' && 'NEWS_COLLECTION_FAILED' || 'PUBLICATION_FAILED' }}
         run: python scripts/publish_health_status.py
+      - name: Audit five distinct ChatGPT research roles without fabricating task receipts
+        if: always()
+        continue-on-error: true
+        run: python scripts/scheduled_task_audit.py
       - name: Save timestamped snapshot and watcher state
         id: persist
         if: always()

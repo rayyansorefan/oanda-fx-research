@@ -1,0 +1,19 @@
+{
+  "version": "fx-five-task-20261109-v1",
+  "repository": "rayyansorefan/oanda-fx-research",
+  "timezone": "Europe/London",
+  "scope": "FX research and simulated trades only; no broker orders",
+  "roles": [
+    {"id":"macro_events","task_id":"6ad64bc84d288191bfe52acb0f27ab1a","minute":5,"job":"Primary-source events and scenario research","receipt":"data/task_runs/macro_events.json"},
+    {"id":"market_scan","task_id":"6ad87aeea2008191a5d2795b4c9343a7","minute":15,"job":"Universe scan, source recovery and decision summary","receipt":"data/task_runs/market_scan.json"},
+    {"id":"position_monitor","task_id":"6ad73063edc8819180df9ee118759289","minute":30,"job":"Paper entry/exit and profit-protection monitoring","receipt":"data/task_runs/position_monitor.json"},
+    {"id":"candidate_review","task_id":"6ad64be7ad108191832ada8e2f57ccb0","minute":40,"job":"Independent prospective candidate review","receipt":"data/task_runs/candidate_review.json"},
+    {"id":"evidence_audit","task_id":"6ad7308041208191b46f38377742f784","minute":50,"job":"Balanced outcome, lifecycle and publication audit","receipt":"data/task_runs/evidence_audit.json"}
+  ],
+  "cadence_note":"Five distinct hourly duties. Not five duplicate scans, a 12-minute polling service, real-time execution, or proof of completed runs.",
+  "receipt_fields":["schema","role","status","started_at","completed_at","source_at","source_commit","source_age_seconds","counts","findings","blockers","evidence_paths","run_ids","no_broker_orders"],
+  "receipt_statuses":["NOT_RUN","COMPLETE","PARTIAL","BLOCKED","FAILED"],
+  "notification_policy":"Only market_scan retains a concise daytime summary; other roles persist quietly. Quiet hours 23:00-07:00 Europe/London.",
+  "recovery_ownership":"market_scan may request one current-main full collection when stale; position_monitor may request one bounded existing fast recovery for open/prospectively pending paper plans only. Other roles do not start duplicate scans. Coalesce an in-progress request. No new dispatcher or periodic commit claimed independent.",
+  "authority":"Current validation_protocol.json and registered rule hashes; no rule changes, promotion, risk increases, fabricated entries/exits or reset of existing cohorts. OANDA research prices are not Pepperstone fills."
+}
