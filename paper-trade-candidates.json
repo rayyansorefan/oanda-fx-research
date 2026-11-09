@@ -1138,6 +1138,37 @@
         "atr_spread": "OANDA 3.93880/3.94030; observed spread 15.0 pips; M15 ATR about 45.86 pips. Immutable maximum-spread cap unavailable.",
         "macro": "US payrolls +165k and Michigan sentiment 51.0 support USD, but Fed-speaker risk remains later; PLN-specific primary-source coverage is limited."
       }
+    },
+    {
+      "id": "20261109-1202-GBPCAD-L-B-WATCH",
+      "instrument": "GBP_CAD",
+      "direction": "LONG",
+      "created_at": "2026-11-09T12:02:31Z",
+      "expires_at": "2026-11-09T14:00:00Z",
+      "planned_entry": 1.88915,
+      "entry_zone": [
+        1.88895,
+        1.8892
+      ],
+      "stop": 1.88795,
+      "tp1": 1.89155,
+      "tp2": null,
+      "alert_b": 1.88915,
+      "max_oanda_spread_pips": 3.2,
+      "event_blackouts_utc": [],
+      "strategy": "M15_REJECTION",
+      "source": "SCHEDULED_MAIN_ASSESSMENT",
+      "source_ref": "2026-11-09T11:59:24.500915695Z",
+      "status": "EARLY_WATCH_ONLY_PENDING_M15_REJECTION_SPREAD_AND_H1_STRENGTH",
+      "original_note": "Prospective GBP/CAD long paper-only pullback watch. D1/H4/H1/M15 direction is broadly constructive, but current price is above the frozen 1.88895-1.88920 zone, the latest completed M15 candle showed upper-wick hesitation, H1 ADX is 18.1 and observed OANDA spread 3.5 pips exceeds the 3.2-pip cap. Require a NEW completed M15 bullish rejection after trading into the zone, fresh quote with spread <=3.2 pips, renewed news review and current Pepperstone verification before expiry. No canonical signal, broker fill or buy-now instruction.",
+      "technical_context": {
+        "as_of_utc": "2026-11-09T11:59:24.500915695Z",
+        "m15": "RSI14 71.65; ADX14 38.00; +DI 34.71 > -DI 7.35; EMA20>EMA50>EMA200, cloud and Supertrend bullish, but the 11:30 completed candle was a small inside candle with 85% upper wick and no Donchian breakout.",
+        "h1": "RSI14 69.76; ADX14 18.11; +DI 24.69 > -DI 9.42; bullish EMA/cloud/Supertrend, but trend strength remains below 20.",
+        "trend": "H4/H1/M15 bullish HH/HL context; D1 price/EMA/cloud constructive but ADX14 16.97 and older daily swing sequence remains lower-high/lower-low counterevidence.",
+        "atr_spread": "OANDA 1.88962/1.88997; observed spread 3.5 pips versus M15 ATR about 7.17 pips. Admission requires spread <=3.2 pips; frozen entry 1.88915, stop 1.88795 and TP1 1.89155 retain gross geometry above 1.50 and capped-spread-adjusted geometry above 1.35.",
+        "macro": "Repository news coverage PARTIAL. Fed Vice Chair Bowman speaks at 13:40 UK and Bank of England Governor Bailey at 17:25 UK; reassess headlines before any manual decision."
+      }
     }
   ]
 }
