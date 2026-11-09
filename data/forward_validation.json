@@ -9,8 +9,8 @@
       "distinct_scored_days": 0,
       "independent_scored_pair_days": 0,
       "outcomes": {
-        "DATA_GAP": 1,
         "INVALIDATED_PRE_ENTRY": 5,
+        "PENDING_TRIGGER": 1,
         "TRIGGERED_UNFILLED": 4,
         "UNTRIGGERED": 5
       },
@@ -37,52 +37,41 @@
   "automatic_promotion_allowed": false,
   "coverage": {
     "count_note": "Rejection categories overlap; route counts and per-reason pair counts must not be summed into independent trades.",
-    "deep_pairs": 40,
-    "distinct_evaluated_pairs": 57,
+    "deep_pairs": 68,
+    "distinct_evaluated_pairs": 68,
     "distinct_pairs_by_rejection": {
-      "ADX_TREND_STRENGTH": 2,
-      "FOUR_FRAME_TREND_CONFLICT": 20,
-      "INVALID_BID_ASK_OR_SPREAD": 18,
-      "REQUIRED_FRAME_HISTORY_MISSING:D": 5,
-      "REQUIRED_FRAME_HISTORY_MISSING:H4": 3,
-      "REVERSAL_OR_EXHAUSTION": 10,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 1,
-      "STALE_OR_UNTRADEABLE_OANDA_QUOTE": 1,
+      "ADX_TREND_STRENGTH": 1,
+      "FOUR_FRAME_TREND_CONFLICT": 28,
+      "INVALID_BID_ASK_OR_SPREAD": 21,
+      "REVERSAL_OR_EXHAUSTION": 25,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
     "paper_prequalified": [
-      "AUD_NZD",
-      "CAD_JPY",
       "EUR_NZD",
       "GBP_AUD",
-      "NZD_CHF",
       "NZD_JPY",
-      "NZD_SGD",
-      "NZD_USD"
+      "NZD_USD",
+      "USD_JPY"
     ],
     "paper_prequalified_missing_deep": [],
-    "quoted_pairs": 57,
-    "route_evaluations": 114,
+    "quoted_pairs": 68,
+    "route_evaluations": 136,
     "route_rejections": {
-      "ADX_TREND_STRENGTH": 4,
-      "FOUR_FRAME_TREND_CONFLICT": 39,
-      "INVALID_BID_ASK_OR_SPREAD": 35,
-      "REQUIRED_FRAME_HISTORY_MISSING:D": 10,
-      "REQUIRED_FRAME_HISTORY_MISSING:H4": 5,
-      "REVERSAL_OR_EXHAUSTION": 16,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
-      "STALE_OR_UNTRADEABLE_OANDA_QUOTE": 1,
+      "ADX_TREND_STRENGTH": 2,
+      "FOUR_FRAME_TREND_CONFLICT": 50,
+      "INVALID_BID_ASK_OR_SPREAD": 39,
+      "REVERSAL_OR_EXHAUSTION": 40,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 3,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-11-09T12:04:16Z",
+    "source_at": "2026-11-09T13:27:28Z",
     "strict_prequalified": [
-      "AUD_NZD",
-      "EUR_NZD",
-      "NZD_CHF",
+      "HKD_JPY",
       "NZD_HKD",
-      "NZD_SGD",
-      "NZD_USD"
+      "NZD_USD",
+      "USD_JPY"
     ],
     "strict_prequalified_missing_deep": []
   },
@@ -109,5 +98,5 @@
     "statistical_improvement_established": false
   },
   "status": "COLLECTING_HOLDOUT",
-  "updated_at": "2026-11-09T12:04:34.839086+00:00"
+  "updated_at": "2026-11-09T13:27:42.790532+00:00"
 }
