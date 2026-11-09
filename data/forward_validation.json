@@ -9,8 +9,7 @@
       "distinct_scored_days": 0,
       "independent_scored_pair_days": 0,
       "outcomes": {
-        "INVALIDATED_PRE_ENTRY": 5,
-        "NOT_REPLAYED": 1,
+        "INVALIDATED_PRE_ENTRY": 6,
         "TRIGGERED_UNFILLED": 4,
         "UNTRIGGERED": 9
       },
@@ -38,36 +37,38 @@
   "coverage": {
     "count_note": "Rejection categories overlap; route counts and per-reason pair counts must not be summed into independent trades.",
     "deep_pairs": 65,
-    "distinct_evaluated_pairs": 64,
+    "distinct_evaluated_pairs": 65,
     "distinct_pairs_by_rejection": {
-      "FOUR_FRAME_TREND_CONFLICT": 14,
-      "INVALID_BID_ASK_OR_SPREAD": 10,
+      "FOUR_FRAME_TREND_CONFLICT": 22,
+      "INVALID_BID_ASK_OR_SPREAD": 15,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
       "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
-      "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 1,
-      "REVERSAL_OR_EXHAUSTION": 47,
+      "REVERSAL_OR_EXHAUSTION": 35,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
     "paper_prequalified": [
+      "AUD_CHF",
       "AUD_NZD",
       "CAD_JPY",
-      "GBP_CAD"
+      "USD_JPY"
     ],
     "paper_prequalified_missing_deep": [],
     "quoted_pairs": 65,
-    "route_evaluations": 128,
+    "route_evaluations": 130,
     "route_rejections": {
-      "FOUR_FRAME_TREND_CONFLICT": 24,
-      "INVALID_BID_ASK_OR_SPREAD": 15,
+      "FOUR_FRAME_TREND_CONFLICT": 38,
+      "INVALID_BID_ASK_OR_SPREAD": 27,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
       "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
-      "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 1,
-      "REVERSAL_OR_EXHAUSTION": 85,
+      "REVERSAL_OR_EXHAUSTION": 61,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-11-09T20:16:48Z",
+    "source_at": "2026-11-09T21:13:50Z",
     "strict_prequalified": [
       "CAD_JPY",
-      "GBP_CAD"
+      "HKD_JPY",
+      "USD_JPY"
     ],
     "strict_prequalified_missing_deep": []
   },
@@ -94,5 +95,5 @@
     "statistical_improvement_established": false
   },
   "status": "COLLECTING_HOLDOUT",
-  "updated_at": "2026-11-09T20:17:16.932730+00:00"
+  "updated_at": "2026-11-09T21:14:06.770269+00:00"
 }
