@@ -145,6 +145,13 @@ jobs:
         env:
           OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
         run: python scripts/liquid_momentum_shadow_v1.py
+      - name: Compare confirmed-momentum paper entries and profit-protection exits
+        id: confirmed_execution
+        if: always() && steps.safety.outcome == 'success'
+        continue-on-error: true
+        env:
+          OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
+        run: python scripts/confirmed_momentum_execution.py
       - name: Collect separately locked 4 November early forward paper cohort
         id: early_cohort
         if: steps.safety.outcome == 'success' && steps.collect.outcome == 'success' && steps.news.outcome == 'success' && steps.comparison.outcome == 'success' && steps.simple_shadow.outcome == 'success'
@@ -319,7 +326,7 @@ jobs:
         if: always() && (steps.monitoring.outcome != 'success' || steps.fast_recovery.outcome == 'failure')
         run: exit 1
       - name: Fail closed if any research or public dashboard step failed
-        if: steps.lifecycle.outcome != 'success' || steps.safety.outcome != 'success' || steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success' || steps.portfolio.outcome != 'success' || steps.simple_shadow.outcome != 'success' || steps.contextual_shadow.outcome != 'success' || steps.early_cohort.outcome != 'success' || steps.paper_gates.outcome != 'success' || steps.gate_forward.outcome != 'success' || steps.manual_execution_review.outcome != 'success'
+        if: steps.lifecycle.outcome != 'success' || steps.safety.outcome != 'success' || steps.collect.outcome != 'success' || steps.news.outcome != 'success' || steps.admission.outcome != 'success' || steps.paper.outcome != 'success' || steps.opportunities.outcome != 'success' || steps.missed.outcome != 'success' || steps.watch.outcome != 'success' || steps.dashboard.outcome != 'success' || steps.persist.outcome != 'success' || steps.comparison.outcome != 'success' || steps.exit_management.outcome != 'success' || steps.diagnostics.outcome != 'success' || steps.validation.outcome != 'success' || steps.strategy_audit.outcome != 'success' || steps.portfolio.outcome != 'success' || steps.simple_shadow.outcome != 'success' || steps.contextual_shadow.outcome != 'success' || steps.early_cohort.outcome != 'success' || steps.paper_gates.outcome != 'success' || steps.gate_forward.outcome != 'success' || steps.manual_execution_review.outcome != 'success' || steps.confirmed_execution.outcome == 'failure'
         run: exit 1
 
   fast-tick:
@@ -405,6 +412,13 @@ jobs:
         env:
           OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
         run: python scripts/liquid_momentum_shadow_v1.py --fast
+      - name: Continue paired paper execution and exit research independently of quote collection
+        id: confirmed_execution_fast
+        if: always() && steps.safety.outcome == 'success'
+        continue-on-error: true
+        env:
+          OANDA_API_TOKEN: ${{ secrets.OANDA_API_TOKEN }}
+        run: python scripts/confirmed_momentum_execution.py --fast
       - name: Verify original immutable forward ledgers after new observation
         id: validation
         if: steps.fast.outputs.collected == 'true'
@@ -468,5 +482,5 @@ jobs:
             data/monitoring_health.json
             signals.json
       - name: Fail closed if backup, publication, or persistence failed
-        if: always() && (steps.safety.outcome != 'success' || steps.source.outcome != 'success' || (steps.source.outputs.refreshed == 'true' && (steps.paper_catchup.outcome != 'success' || steps.recovered_admission.outcome != 'success' || steps.recovered_watch.outcome != 'success')) || steps.fast.outcome != 'success' || steps.monitoring.outcome != 'success' || steps.persist.outcome != 'success' || (steps.fast.outputs.collected == 'true' && (steps.contextual_fast.outcome != 'success' || steps.validation.outcome != 'success' || steps.paper_gates.outcome != 'success' || steps.publish.outcome != 'success')))
+        if: always() && (steps.safety.outcome != 'success' || steps.source.outcome != 'success' || (steps.source.outputs.refreshed == 'true' && (steps.paper_catchup.outcome != 'success' || steps.recovered_admission.outcome != 'success' || steps.recovered_watch.outcome != 'success')) || steps.fast.outcome != 'success' || steps.monitoring.outcome != 'success' || steps.persist.outcome != 'success' || steps.confirmed_execution_fast.outcome == 'failure' || (steps.fast.outputs.collected == 'true' && (steps.contextual_fast.outcome != 'success' || steps.validation.outcome != 'success' || steps.paper_gates.outcome != 'success' || steps.publish.outcome != 'success')))
         run: exit 1

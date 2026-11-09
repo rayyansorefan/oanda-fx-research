@@ -1,0 +1,1068 @@
+{
+  "version": "entry-timing-development-20261109-v1",
+  "decision": "REJECT_UNCONFIRMED_EARLY_ENTRY_FOR_DEPLOYMENT",
+  "profitability_established": false,
+  "existing_cohorts_modified": false,
+  "script": "research/experiments/entry_timing_probe.py",
+  "script_sha256": "c085a50d29bed97ae39a7aeb5fe1b05a939bab2cbd92fe6f96e82d5c5b46ede6",
+  "trials": [
+    {
+      "scope": "RETROSPECTIVE_DIAGNOSTIC_NOT_PORTFOLIO_RETURN_OR_FORWARD_VALIDATION",
+      "mode": "confirmed_next_open",
+      "period": "development",
+      "source_ledger_sha256": "fb03b394dd1298095e18df2ceffe58f9c56334aebd9384a51484f239a349d94a",
+      "cutoff": "2026-11-05T07:00:00Z",
+      "selection": "All distinct registered plans in date interval, first preserved policy per immutable ID; no selection by outcome. Unknown cases remain counted.",
+      "limitations": [
+        "Unconfirmed entry variants are rejected diagnostics, not approved trading rules.",
+        "Cases may overlap currency exposures and are not independent portfolio trades.",
+        "No full historical news reconstruction, actual broker funding or verified human execution.",
+        "Reserved-period data existed before this experiment and are not a newly untouched holdout."
+      ],
+      "counts": {
+        "COST_OR_GEOMETRY": 4,
+        "NO_CONFIRMATION": 24
+      },
+      "arms": {
+        "fixed": {
+          "n": 0,
+          "netR": 0
+        },
+        "protect": {
+          "n": 0,
+          "netR": 0
+        }
+      },
+      "rows": [
+        {
+          "id": "AUTO-20261029T0321-EUR_AUD-S-B",
+          "pair": "EUR_AUD",
+          "created_at": "2026-10-29T03:21:48Z",
+          "original_status": "TRIGGERED_UNFILLED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261029T0515-EUR_AUD-S-B",
+          "pair": "EUR_AUD",
+          "created_at": "2026-10-29T05:15:50Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261029T0621-EUR_USD-S-B",
+          "pair": "EUR_USD",
+          "created_at": "2026-10-29T06:21:48Z",
+          "original_status": "UNTRIGGERED",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261029T0621-EUR_AUD-S-B",
+          "pair": "EUR_AUD",
+          "created_at": "2026-10-29T06:21:48Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261029T1306-CAD_JPY-L-B",
+          "pair": "CAD_JPY",
+          "created_at": "2026-10-29T13:06:34Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261029T1706-GBP_AUD-L-B",
+          "pair": "GBP_AUD",
+          "created_at": "2026-10-29T17:06:10Z",
+          "original_status": "UNTRIGGERED",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261029T2217-USD_CAD-S-B",
+          "pair": "USD_CAD",
+          "created_at": "2026-10-29T22:17:55Z",
+          "original_status": "UNTRIGGERED",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261030T0016-AUD_USD-S-B",
+          "pair": "AUD_USD",
+          "created_at": "2026-10-30T00:16:32Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261030T0515-AUD_CHF-S-B",
+          "pair": "AUD_CHF",
+          "created_at": "2026-10-30T05:15:26Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261030T1919-USD_CAD-S-B",
+          "pair": "USD_CAD",
+          "created_at": "2026-10-30T19:19:38Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261102T1408-CHF_JPY-L-B",
+          "pair": "CHF_JPY",
+          "created_at": "2026-11-02T14:08:20Z",
+          "original_status": "TRIGGERED_UNFILLED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261102T1408-AUD_USD-S-C",
+          "pair": "AUD_USD",
+          "created_at": "2026-11-02T14:08:20Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261102T1411-AUD_USD-S-B",
+          "pair": "AUD_USD",
+          "created_at": "2026-11-02T14:11:54Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261102T1541-CHF_JPY-L-B",
+          "pair": "CHF_JPY",
+          "created_at": "2026-11-02T15:41:13Z",
+          "original_status": "UNTRIGGERED",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261102T1541-AUD_CHF-S-B",
+          "pair": "AUD_CHF",
+          "created_at": "2026-11-02T15:41:13Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261102T1601-AUD_CHF-S-B",
+          "pair": "AUD_CHF",
+          "created_at": "2026-11-02T16:01:00Z",
+          "original_status": "TRIGGERED_UNFILLED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261102T1631-AUD_CHF-S-B",
+          "pair": "AUD_CHF",
+          "created_at": "2026-11-02T16:31:23Z",
+          "original_status": "UNTRIGGERED",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261103T0640-AUD_USD-S-B",
+          "pair": "AUD_USD",
+          "created_at": "2026-11-03T06:40:33Z",
+          "original_status": "UNTRIGGERED",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261103T0728-AUD_USD-S-B",
+          "pair": "AUD_USD",
+          "created_at": "2026-11-03T07:28:49Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261103T0913-EUR_CHF-S-B",
+          "pair": "EUR_CHF",
+          "created_at": "2026-11-03T09:13:57Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261103T0913-CHF_JPY-L-B",
+          "pair": "CHF_JPY",
+          "created_at": "2026-11-03T09:13:57Z",
+          "original_status": "UNTRIGGERED",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261103T1154-AUD_CAD-S-B",
+          "pair": "AUD_CAD",
+          "created_at": "2026-11-03T11:54:37Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261103T1154-CHF_JPY-L-B",
+          "pair": "CHF_JPY",
+          "created_at": "2026-11-03T11:54:37Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261104T1255-AUD_JPY-L-B",
+          "pair": "AUD_JPY",
+          "created_at": "2026-11-04T12:55:52Z",
+          "original_status": "UNTRIGGERED",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261104T1829-GBP_USD-L-B",
+          "pair": "GBP_USD",
+          "created_at": "2026-11-04T18:29:43Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261104T2016-GBP_JPY-L-B",
+          "pair": "GBP_JPY",
+          "created_at": "2026-11-04T20:16:30Z",
+          "original_status": "UNTRIGGERED",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261104T2022-AUD_JPY-L-B",
+          "pair": "AUD_JPY",
+          "created_at": "2026-11-04T20:22:22Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "NO_CONFIRMATION"
+        },
+        {
+          "id": "AUTO-20261104T2032-GBP_JPY-L-B",
+          "pair": "GBP_JPY",
+          "created_at": "2026-11-04T20:32:33Z",
+          "original_status": "UNTRIGGERED",
+          "status": "NO_CONFIRMATION"
+        }
+      ]
+    },
+    {
+      "scope": "RETROSPECTIVE_DIAGNOSTIC_NOT_PORTFOLIO_RETURN_OR_FORWARD_VALIDATION",
+      "mode": "unconfirmed_next_open",
+      "period": "development",
+      "source_ledger_sha256": "fb03b394dd1298095e18df2ceffe58f9c56334aebd9384a51484f239a349d94a",
+      "cutoff": "2026-11-05T07:00:00Z",
+      "selection": "All distinct registered plans in date interval, first preserved policy per immutable ID; no selection by outcome. Unknown cases remain counted.",
+      "limitations": [
+        "Unconfirmed entry variants are rejected diagnostics, not approved trading rules.",
+        "Cases may overlap currency exposures and are not independent portfolio trades.",
+        "No full historical news reconstruction, actual broker funding or verified human execution.",
+        "Reserved-period data existed before this experiment and are not a newly untouched holdout."
+      ],
+      "counts": {
+        "FILLED_MODEL": 9,
+        "COST_OR_GEOMETRY": 19
+      },
+      "arms": {
+        "fixed": {
+          "n": 9,
+          "netR": -10.11770901243136
+        },
+        "protect": {
+          "n": 9,
+          "netR": -9.08812321361486
+        }
+      },
+      "rows": [
+        {
+          "id": "AUTO-20261029T0321-EUR_AUD-S-B",
+          "pair": "EUR_AUD",
+          "created_at": "2026-10-29T03:21:48Z",
+          "original_status": "TRIGGERED_UNFILLED",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": -1.0295857988164996,
+              "exit_at": "2026-10-29T06:30:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": -0.0,
+              "exit_at": "2026-10-29T06:00:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261029T0515-EUR_AUD-S-B",
+          "pair": "EUR_AUD",
+          "created_at": "2026-10-29T05:15:50Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261029T0621-EUR_USD-S-B",
+          "pair": "EUR_USD",
+          "created_at": "2026-10-29T06:21:48Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261029T0621-EUR_AUD-S-B",
+          "pair": "EUR_AUD",
+          "created_at": "2026-10-29T06:21:48Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": -1.8139534883728134,
+              "exit_at": "2026-10-29T06:45:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": -1.8139534883728134,
+              "exit_at": "2026-10-29T06:45:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261029T1306-CAD_JPY-L-B",
+          "pair": "CAD_JPY",
+          "created_at": "2026-10-29T13:06:34Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": -1.047619047619009,
+              "exit_at": "2026-10-29T13:30:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": -1.047619047619009,
+              "exit_at": "2026-10-29T13:30:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261029T1706-GBP_AUD-L-B",
+          "pair": "GBP_AUD",
+          "created_at": "2026-10-29T17:06:10Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261029T2217-USD_CAD-S-B",
+          "pair": "USD_CAD",
+          "created_at": "2026-10-29T22:17:55Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261030T0016-AUD_USD-S-B",
+          "pair": "AUD_USD",
+          "created_at": "2026-10-30T00:16:32Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261030T0515-AUD_CHF-S-B",
+          "pair": "AUD_CHF",
+          "created_at": "2026-10-30T05:15:26Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": -1.053763440860323,
+              "exit_at": "2026-10-30T06:00:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": -1.053763440860323,
+              "exit_at": "2026-10-30T06:00:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261030T1919-USD_CAD-S-B",
+          "pair": "USD_CAD",
+          "created_at": "2026-10-30T19:19:38Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": -1.5862068965507208,
+              "exit_at": "2026-10-30T19:45:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": -1.5862068965507208,
+              "exit_at": "2026-10-30T19:45:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261102T1408-CHF_JPY-L-B",
+          "pair": "CHF_JPY",
+          "created_at": "2026-11-02T14:08:20Z",
+          "original_status": "TRIGGERED_UNFILLED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261102T1408-AUD_USD-S-C",
+          "pair": "AUD_USD",
+          "created_at": "2026-11-02T14:08:20Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": -1.0230414746544265,
+              "exit_at": "2026-11-02T14:45:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": -1.0230414746544265,
+              "exit_at": "2026-11-02T14:45:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261102T1411-AUD_USD-S-B",
+          "pair": "AUD_USD",
+          "created_at": "2026-11-02T14:11:54Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261102T1541-CHF_JPY-L-B",
+          "pair": "CHF_JPY",
+          "created_at": "2026-11-02T15:41:13Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261102T1541-AUD_CHF-S-B",
+          "pair": "AUD_CHF",
+          "created_at": "2026-11-02T15:41:13Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": -3.6363636363581313,
+              "exit_at": "2026-11-02T16:00:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": -3.6363636363581313,
+              "exit_at": "2026-11-02T16:00:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261102T1601-AUD_CHF-S-B",
+          "pair": "AUD_CHF",
+          "created_at": "2026-11-02T16:01:00Z",
+          "original_status": "TRIGGERED_UNFILLED",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": 2.1134751773045948,
+              "exit_at": "2026-11-02T17:45:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": 2.1134751773045948,
+              "exit_at": "2026-11-02T17:45:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261102T1631-AUD_CHF-S-B",
+          "pair": "AUD_CHF",
+          "created_at": "2026-11-02T16:31:23Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261103T0640-AUD_USD-S-B",
+          "pair": "AUD_USD",
+          "created_at": "2026-11-03T06:40:33Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261103T0728-AUD_USD-S-B",
+          "pair": "AUD_USD",
+          "created_at": "2026-11-03T07:28:49Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261103T0913-EUR_CHF-S-B",
+          "pair": "EUR_CHF",
+          "created_at": "2026-11-03T09:13:57Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261103T0913-CHF_JPY-L-B",
+          "pair": "CHF_JPY",
+          "created_at": "2026-11-03T09:13:57Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261103T1154-AUD_CAD-S-B",
+          "pair": "AUD_CAD",
+          "created_at": "2026-11-03T11:54:37Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261103T1154-CHF_JPY-L-B",
+          "pair": "CHF_JPY",
+          "created_at": "2026-11-03T11:54:37Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": -1.0406504065040312,
+              "exit_at": "2026-11-03T12:15:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": -1.0406504065040312,
+              "exit_at": "2026-11-03T12:15:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261104T1255-AUD_JPY-L-B",
+          "pair": "AUD_JPY",
+          "created_at": "2026-11-04T12:55:52Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261104T1829-GBP_USD-L-B",
+          "pair": "GBP_USD",
+          "created_at": "2026-11-04T18:29:43Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261104T2016-GBP_JPY-L-B",
+          "pair": "GBP_JPY",
+          "created_at": "2026-11-04T20:16:30Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261104T2022-AUD_JPY-L-B",
+          "pair": "AUD_JPY",
+          "created_at": "2026-11-04T20:22:22Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261104T2032-GBP_JPY-L-B",
+          "pair": "GBP_JPY",
+          "created_at": "2026-11-04T20:32:33Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        }
+      ]
+    },
+    {
+      "scope": "RETROSPECTIVE_DIAGNOSTIC_NOT_PORTFOLIO_RETURN_OR_FORWARD_VALIDATION",
+      "mode": "unconfirmed_with_floor",
+      "period": "development",
+      "source_ledger_sha256": "fb03b394dd1298095e18df2ceffe58f9c56334aebd9384a51484f239a349d94a",
+      "cutoff": "2026-11-05T07:00:00Z",
+      "selection": "All distinct registered plans in date interval, first preserved policy per immutable ID; no selection by outcome. Unknown cases remain counted.",
+      "limitations": [
+        "Unconfirmed entry variants are rejected diagnostics, not approved trading rules.",
+        "Cases may overlap currency exposures and are not independent portfolio trades.",
+        "No full historical news reconstruction, actual broker funding or verified human execution.",
+        "Reserved-period data existed before this experiment and are not a newly untouched holdout."
+      ],
+      "counts": {
+        "FILLED_MODEL": 3,
+        "COST_OR_GEOMETRY": 25
+      },
+      "arms": {
+        "fixed": {
+          "n": 3,
+          "netR": 0.036270330869086154
+        },
+        "protect": {
+          "n": 3,
+          "netR": 1.0658561296855857
+        }
+      },
+      "rows": [
+        {
+          "id": "AUTO-20261029T0321-EUR_AUD-S-B",
+          "pair": "EUR_AUD",
+          "created_at": "2026-10-29T03:21:48Z",
+          "original_status": "TRIGGERED_UNFILLED",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": -1.0295857988164996,
+              "exit_at": "2026-10-29T06:30:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": -0.0,
+              "exit_at": "2026-10-29T06:00:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261029T0515-EUR_AUD-S-B",
+          "pair": "EUR_AUD",
+          "created_at": "2026-10-29T05:15:50Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261029T0621-EUR_USD-S-B",
+          "pair": "EUR_USD",
+          "created_at": "2026-10-29T06:21:48Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261029T0621-EUR_AUD-S-B",
+          "pair": "EUR_AUD",
+          "created_at": "2026-10-29T06:21:48Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261029T1306-CAD_JPY-L-B",
+          "pair": "CAD_JPY",
+          "created_at": "2026-10-29T13:06:34Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": -1.047619047619009,
+              "exit_at": "2026-10-29T13:30:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": -1.047619047619009,
+              "exit_at": "2026-10-29T13:30:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261029T1706-GBP_AUD-L-B",
+          "pair": "GBP_AUD",
+          "created_at": "2026-10-29T17:06:10Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261029T2217-USD_CAD-S-B",
+          "pair": "USD_CAD",
+          "created_at": "2026-10-29T22:17:55Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261030T0016-AUD_USD-S-B",
+          "pair": "AUD_USD",
+          "created_at": "2026-10-30T00:16:32Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261030T0515-AUD_CHF-S-B",
+          "pair": "AUD_CHF",
+          "created_at": "2026-10-30T05:15:26Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261030T1919-USD_CAD-S-B",
+          "pair": "USD_CAD",
+          "created_at": "2026-10-30T19:19:38Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261102T1408-CHF_JPY-L-B",
+          "pair": "CHF_JPY",
+          "created_at": "2026-11-02T14:08:20Z",
+          "original_status": "TRIGGERED_UNFILLED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261102T1408-AUD_USD-S-C",
+          "pair": "AUD_USD",
+          "created_at": "2026-11-02T14:08:20Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261102T1411-AUD_USD-S-B",
+          "pair": "AUD_USD",
+          "created_at": "2026-11-02T14:11:54Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261102T1541-CHF_JPY-L-B",
+          "pair": "CHF_JPY",
+          "created_at": "2026-11-02T15:41:13Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261102T1541-AUD_CHF-S-B",
+          "pair": "AUD_CHF",
+          "created_at": "2026-11-02T15:41:13Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261102T1601-AUD_CHF-S-B",
+          "pair": "AUD_CHF",
+          "created_at": "2026-11-02T16:01:00Z",
+          "original_status": "TRIGGERED_UNFILLED",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": 2.1134751773045948,
+              "exit_at": "2026-11-02T17:45:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": 2.1134751773045948,
+              "exit_at": "2026-11-02T17:45:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261102T1631-AUD_CHF-S-B",
+          "pair": "AUD_CHF",
+          "created_at": "2026-11-02T16:31:23Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261103T0640-AUD_USD-S-B",
+          "pair": "AUD_USD",
+          "created_at": "2026-11-03T06:40:33Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261103T0728-AUD_USD-S-B",
+          "pair": "AUD_USD",
+          "created_at": "2026-11-03T07:28:49Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261103T0913-EUR_CHF-S-B",
+          "pair": "EUR_CHF",
+          "created_at": "2026-11-03T09:13:57Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261103T0913-CHF_JPY-L-B",
+          "pair": "CHF_JPY",
+          "created_at": "2026-11-03T09:13:57Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261103T1154-AUD_CAD-S-B",
+          "pair": "AUD_CAD",
+          "created_at": "2026-11-03T11:54:37Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261103T1154-CHF_JPY-L-B",
+          "pair": "CHF_JPY",
+          "created_at": "2026-11-03T11:54:37Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261104T1255-AUD_JPY-L-B",
+          "pair": "AUD_JPY",
+          "created_at": "2026-11-04T12:55:52Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261104T1829-GBP_USD-L-B",
+          "pair": "GBP_USD",
+          "created_at": "2026-11-04T18:29:43Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261104T2016-GBP_JPY-L-B",
+          "pair": "GBP_JPY",
+          "created_at": "2026-11-04T20:16:30Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261104T2022-AUD_JPY-L-B",
+          "pair": "AUD_JPY",
+          "created_at": "2026-11-04T20:22:22Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261104T2032-GBP_JPY-L-B",
+          "pair": "GBP_JPY",
+          "created_at": "2026-11-04T20:32:33Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        }
+      ]
+    },
+    {
+      "scope": "RETROSPECTIVE_DIAGNOSTIC_NOT_PORTFOLIO_RETURN_OR_FORWARD_VALIDATION",
+      "mode": "unconfirmed_with_floor",
+      "period": "retrospective_reserved",
+      "source_ledger_sha256": "fb03b394dd1298095e18df2ceffe58f9c56334aebd9384a51484f239a349d94a",
+      "cutoff": "2026-11-09T22:25:55Z",
+      "selection": "All distinct registered plans in date interval, first preserved policy per immutable ID; no selection by outcome. Unknown cases remain counted.",
+      "limitations": [
+        "Unconfirmed entry variants are rejected diagnostics, not approved trading rules.",
+        "Cases may overlap currency exposures and are not independent portfolio trades.",
+        "No full historical news reconstruction, actual broker funding or verified human execution.",
+        "Reserved-period data existed before this experiment and are not a newly untouched holdout."
+      ],
+      "counts": {
+        "COST_OR_GEOMETRY": 14,
+        "FILLED_MODEL": 6
+      },
+      "arms": {
+        "fixed": {
+          "n": 4,
+          "netR": -4.133663842606425
+        },
+        "protect": {
+          "n": 5,
+          "netR": -4.133663842606425
+        }
+      },
+      "rows": [
+        {
+          "id": "AUTO-20261105T2038-USD_JPY-S-B",
+          "pair": "USD_JPY",
+          "created_at": "2026-11-05T20:38:43Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261105T2038-CAD_CHF-S-B",
+          "pair": "CAD_CHF",
+          "created_at": "2026-11-05T20:38:43Z",
+          "original_status": "TRIGGERED_UNFILLED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261106T0814-EUR_CHF-S-B",
+          "pair": "EUR_CHF",
+          "created_at": "2026-11-06T08:14:42Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": -1.0393700787402373,
+              "exit_at": "2026-11-06T09:15:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": -1.0393700787402373,
+              "exit_at": "2026-11-06T09:15:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261106T0814-GBP_CHF-S-B",
+          "pair": "GBP_CHF",
+          "created_at": "2026-11-06T08:14:42Z",
+          "original_status": "TRIGGERED_UNFILLED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261106T0919-EUR_CHF-S-B",
+          "pair": "EUR_CHF",
+          "created_at": "2026-11-06T09:19:04Z",
+          "original_status": "TRIGGERED_UNFILLED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261106T0919-GBP_CHF-S-B",
+          "pair": "GBP_CHF",
+          "created_at": "2026-11-06T09:19:04Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261106T1117-AUD_CAD-S-B",
+          "pair": "AUD_CAD",
+          "created_at": "2026-11-06T11:17:09Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261106T1117-GBP_AUD-L-B",
+          "pair": "GBP_AUD",
+          "created_at": "2026-11-06T11:17:09Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261106T1117-EUR_JPY-S-B",
+          "pair": "EUR_JPY",
+          "created_at": "2026-11-06T11:17:09Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261106T1820-AUD_CHF-S-B",
+          "pair": "AUD_CHF",
+          "created_at": "2026-11-06T18:20:11Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261106T1917-CAD_JPY-S-B",
+          "pair": "CAD_JPY",
+          "created_at": "2026-11-06T19:17:10Z",
+          "original_status": "TRIGGERED_UNFILLED",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "GAP"
+            },
+            "protect": {
+              "status": "GAP"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261106T1917-CAD_CHF-S-B",
+          "pair": "CAD_CHF",
+          "created_at": "2026-11-06T19:17:10Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261106T1917-AUD_CHF-S-B",
+          "pair": "AUD_CHF",
+          "created_at": "2026-11-06T19:17:10Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": -1.0427350427351287,
+              "exit_at": "2026-11-06T20:15:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": -1.0427350427351287,
+              "exit_at": "2026-11-06T20:15:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261109T0013-EUR_AUD-L-B",
+          "pair": "EUR_AUD",
+          "created_at": "2026-11-09T00:13:29Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261109T1204-GBP_AUD-L-B",
+          "pair": "GBP_AUD",
+          "created_at": "2026-11-09T12:04:27Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261109T1726-CHF_JPY-S-B",
+          "pair": "CHF_JPY",
+          "created_at": "2026-11-09T17:26:28Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261109T1814-EUR_CHF-L-B",
+          "pair": "EUR_CHF",
+          "created_at": "2026-11-09T18:14:44Z",
+          "original_status": "UNTRIGGERED",
+          "status": "COST_OR_GEOMETRY"
+        },
+        {
+          "id": "AUTO-20261109T1814-CHF_JPY-S-B",
+          "pair": "CHF_JPY",
+          "created_at": "2026-11-09T18:14:44Z",
+          "original_status": "UNTRIGGERED",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": -1.0253807106598751,
+              "exit_at": "2026-11-09T20:15:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": -1.0253807106598751,
+              "exit_at": "2026-11-09T20:15:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261109T1914-CAD_JPY-S-C",
+          "pair": "CAD_JPY",
+          "created_at": "2026-11-09T19:14:08Z",
+          "original_status": "TRIGGERED_UNFILLED",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "OPEN"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": -0.0,
+              "exit_at": "2026-11-09T20:15:00Z"
+            }
+          }
+        },
+        {
+          "id": "AUTO-20261109T1914-CHF_JPY-S-B",
+          "pair": "CHF_JPY",
+          "created_at": "2026-11-09T19:14:08Z",
+          "original_status": "INVALIDATED_PRE_ENTRY",
+          "status": "FILLED_MODEL",
+          "arms": {
+            "fixed": {
+              "status": "CLOSED",
+              "r": -1.026178010471184,
+              "exit_at": "2026-11-09T20:15:00Z"
+            },
+            "protect": {
+              "status": "CLOSED",
+              "r": -1.026178010471184,
+              "exit_at": "2026-11-09T20:15:00Z"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
