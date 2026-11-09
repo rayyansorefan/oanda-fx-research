@@ -1,7 +1,7 @@
 {
   "automatic_promotion_allowed": false,
   "broker_orders_submitted": 0,
-  "checked_at": "2026-11-09T17:26:30Z",
+  "checked_at": "2026-11-09T18:14:49Z",
   "holdout_start_at": "2026-11-09T07:00:00Z",
   "metrics": {
     "benchmark": {
@@ -21,7 +21,7 @@
     "net_total_r_cost_stress": null,
     "open_paper_positions": 0,
     "outcomes": {
-      "PENDING_TRIGGER": 1
+      "MISSED_ENTRY": 1
     },
     "performance_validated": false,
     "plans": 1,
@@ -42,7 +42,8 @@
       "2026-11-09T16:17:44Z",
       "2026-11-09T16:25:29Z",
       "2026-11-09T17:05:20Z",
-      "2026-11-09T17:26:30Z"
+      "2026-11-09T17:26:30Z",
+      "2026-11-09T18:14:49Z"
     ],
     "EUR_JPY": [
       "2026-11-09T07:24:02Z",
@@ -58,7 +59,8 @@
       "2026-11-09T16:17:44Z",
       "2026-11-09T16:25:29Z",
       "2026-11-09T17:05:20Z",
-      "2026-11-09T17:26:30Z"
+      "2026-11-09T17:26:30Z",
+      "2026-11-09T18:14:49Z"
     ],
     "EUR_USD": [
       "2026-11-09T07:24:02Z",
@@ -74,7 +76,8 @@
       "2026-11-09T16:17:44Z",
       "2026-11-09T16:25:29Z",
       "2026-11-09T17:05:20Z",
-      "2026-11-09T17:26:30Z"
+      "2026-11-09T17:26:30Z",
+      "2026-11-09T18:14:49Z"
     ],
     "GBP_USD": [
       "2026-11-09T07:24:02Z",
@@ -91,7 +94,8 @@
       "2026-11-09T16:25:29Z",
       "2026-11-09T17:05:20Z",
       "2026-11-09T17:23:22Z",
-      "2026-11-09T17:26:30Z"
+      "2026-11-09T17:26:30Z",
+      "2026-11-09T18:14:49Z"
     ],
     "NZD_USD": [
       "2026-11-09T07:24:02Z",
@@ -108,7 +112,8 @@
       "2026-11-09T16:25:29Z",
       "2026-11-09T17:05:20Z",
       "2026-11-09T17:23:22Z",
-      "2026-11-09T17:26:30Z"
+      "2026-11-09T17:26:30Z",
+      "2026-11-09T18:14:49Z"
     ],
     "USD_CAD": [
       "2026-11-09T07:24:02Z",
@@ -124,7 +129,8 @@
       "2026-11-09T16:17:44Z",
       "2026-11-09T16:25:29Z",
       "2026-11-09T17:05:20Z",
-      "2026-11-09T17:26:30Z"
+      "2026-11-09T17:26:30Z",
+      "2026-11-09T18:14:49Z"
     ],
     "USD_CHF": [
       "2026-11-09T07:24:02Z",
@@ -140,7 +146,8 @@
       "2026-11-09T16:25:29Z",
       "2026-11-09T17:05:20Z",
       "2026-11-09T17:23:22Z",
-      "2026-11-09T17:26:30Z"
+      "2026-11-09T17:26:30Z",
+      "2026-11-09T18:14:49Z"
     ],
     "USD_JPY": [
       "2026-11-09T07:24:02Z",
@@ -156,7 +163,8 @@
       "2026-11-09T16:17:44Z",
       "2026-11-09T16:25:29Z",
       "2026-11-09T17:05:20Z",
-      "2026-11-09T17:26:30Z"
+      "2026-11-09T17:26:30Z",
+      "2026-11-09T18:14:49Z"
     ]
   },
   "performance_validated": false,
@@ -196,9 +204,12 @@
         "user_delivery_verified": false
       },
       "result": {
+        "detected_at": "2026-11-09T18:14:49Z",
+        "reason": "LATE_OBSERVATION",
         "scored": false,
-        "source_evidence": "data/replay_evidence/USD_JPY-b002eab3ed6379f519c0ccebfd640c91be52c55eebf4464c78a942a1d6996f36.json",
-        "status": "PENDING_TRIGGER"
+        "source_evidence": "data/replay_evidence/USD_JPY-45ed372c0cc83a71fc3bae1cb9f6eaf6a3f7d86a028c301c6d816b3148de68e6.json",
+        "status": "MISSED_ENTRY",
+        "triggered_at": "2026-11-09T17:30:00Z"
       }
     }
   },
@@ -221,7 +232,8 @@
     "2026-11-09T16:25:10Z",
     "2026-11-09T17:04:55Z",
     "2026-11-09T17:23:22.009594+00:00",
-    "2026-11-09T17:26:16Z"
+    "2026-11-09T17:26:16Z",
+    "2026-11-09T18:14:34Z"
   ],
   "status": "FORWARD_RESEARCH_ONLY",
   "strategy_lifecycle_note": "No live admissions or broker orders; separate 8-liquid-pair momentum holdout started 9 November 2026. Any later live change requires independent profitability evidence.",
