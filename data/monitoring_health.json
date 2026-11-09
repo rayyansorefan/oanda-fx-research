@@ -1,14 +1,14 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-09T22:04:31.912278+00:00",
+  "checked_at": "2026-11-09T22:18:50.199354+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-09T22:04:28Z",
+    "checked_at": "2026-11-09T22:18:18Z",
     "collection_tries": 1,
     "collector_endpoint": "practice",
-    "error": "OANDA_NO_USABLE_FX_QUOTES",
+    "error": null,
     "event": "push",
     "first_attempt_error": null,
-    "last_valid_source_preserved": true,
+    "last_valid_source_preserved": false,
     "recovered_on_second_try": false,
     "request_diagnostics": {
       "failures": [],
@@ -16,39 +16,54 @@
         {
           "missing_bid_ask": 0,
           "returned_prices": 35,
-          "tradeable_false": 35,
+          "tradeable_false": 1,
           "tradeable_missing": 0,
-          "tradeable_true": 0
+          "tradeable_true": 34
         },
         {
           "missing_bid_ask": 0,
           "returned_prices": 33,
-          "tradeable_false": 33,
+          "tradeable_false": 2,
           "tradeable_missing": 0,
-          "tradeable_true": 0
+          "tradeable_true": 31
+        },
+        {
+          "missing_bid_ask": 0,
+          "returned_prices": 35,
+          "tradeable_false": 0,
+          "tradeable_missing": 0,
+          "tradeable_true": 35
+        },
+        {
+          "missing_bid_ask": 0,
+          "returned_prices": 30,
+          "tradeable_false": 0,
+          "tradeable_missing": 0,
+          "tradeable_true": 30
         }
       ],
       "successful_requests": {
         "ACCOUNTS": 1,
+        "CANDLES": 341,
         "INSTRUMENTS": 1,
-        "PRICING": 2
+        "PRICING": 4
       }
     },
-    "run_id": "42708419533",
-    "started_at": "2026-11-09T22:04:26Z",
-    "status": "DATA_UNAVAILABLE"
+    "run_id": "42710559543",
+    "started_at": "2026-11-09T22:17:51Z",
+    "status": "COLLECTED"
   },
-  "consecutive_unobserved_fast_targets": 3,
+  "consecutive_unobserved_fast_targets": 4,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
     "event": "push",
-    "head_sha": "91dbfe79d41d251de7798c5908d2d9dcf51f6e9a",
-    "id": "42708419533",
+    "head_sha": "209a2572c359d596b9ee0dc96fcf847e346cec1c",
+    "id": "42710559543",
     "outcomes": {
-      "collect": "failure",
-      "early_cohort": "skipped",
-      "fast_recovery": "skipped",
+      "collect": "success",
+      "early_cohort": "success",
+      "fast_recovery": "success",
       "safety": "success"
     },
     "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
@@ -80,10 +95,10 @@
     }
   ],
   "early_cohort_id": "FX-EARLY-20261104-v1",
-  "early_last_source_at": "2026-11-09T21:13:50Z",
-  "early_observation_count": 74,
-  "elapsed_fast_targets_today": 60,
-  "fast_age_seconds": 3010.365172,
+  "early_last_source_at": "2026-11-09T22:18:18Z",
+  "early_observation_count": 75,
+  "elapsed_fast_targets_today": 61,
+  "fast_age_seconds": 5.88914,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -101,20 +116,20 @@
     "valid_new_market_observations": 0,
     "verification_note": "workflow_dispatch may be manual; external scheduler origin/requests and missing provider calls cannot be verified from repository receipts alone. Four observed pair-specific events and two sessions are necessary, not sufficient, for sustained reliability."
   },
-  "fast_last_attempt_at": "2026-11-09T21:14:22.127362+00:00",
-  "fast_observation_valid": false,
+  "fast_last_attempt_at": "2026-11-09T22:18:44.960734+00:00",
+  "fast_observation_valid": true,
   "fast_run_failures": {
-    "failed": 2,
-    "sample": 3,
+    "failed": 1,
+    "sample": 2,
     "scope": "Latest 100 repository runs; process success is not observation success."
   },
-  "fast_source_at": "2026-11-09T21:14:21.547106+00:00",
+  "fast_source_at": "2026-11-09T22:18:44.310214+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 3041.912278,
+  "full_age_seconds": 32.199354,
   "full_collection_status": "PARTIAL",
   "full_fresh": true,
-  "full_last_attempt_at": "2026-11-09T22:04:28Z",
-  "full_source_at": "2026-11-09T21:13:50Z",
+  "full_last_attempt_at": "2026-11-09T22:18:18Z",
+  "full_source_at": "2026-11-09T22:18:18Z",
   "last_completed_jobs": [
     {
       "conclusion": "failure",
@@ -122,7 +137,7 @@
       "failed_steps": [
         "Fail closed if any research or public dashboard step failed"
       ],
-      "run_id": 42708040178
+      "run_id": 42708419533
     },
     {
       "conclusion": "failure",
@@ -130,7 +145,7 @@
       "failed_steps": [
         "Fail closed if any research or public dashboard step failed"
       ],
-      "run_id": 42707641443
+      "run_id": 42708040178
     }
   ],
   "previous_publication": {
@@ -525,7 +540,7 @@
     }
   },
   "scheduler_guarantee": false,
-  "status": "DEGRADED",
+  "status": "CURRENT",
   "target_fast_interval_seconds": 900,
   "target_full_interval_seconds": 3600,
   "unobserved_fast_targets_today": [
@@ -572,7 +587,8 @@
     "2026-11-09T20:47:00+00:00",
     "2026-11-09T21:17:00+00:00",
     "2026-11-09T21:32:00+00:00",
-    "2026-11-09T21:47:00+00:00"
+    "2026-11-09T21:47:00+00:00",
+    "2026-11-09T22:02:00+00:00"
   ],
   "workflow_registration": [
     {
