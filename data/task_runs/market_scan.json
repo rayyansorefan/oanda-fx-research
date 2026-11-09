@@ -2,53 +2,51 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-09T22:17:14Z",
-  "completed_at": "2026-11-09T22:17:51.419Z",
-  "source_at": "2026-11-09T21:13:50Z",
-  "source_commit": "b11594ef17dca5098f2d133e75c3d1f9a8cf891a",
-  "source_age_seconds": 3810,
+  "started_at": "2026-11-09T23:13:05Z",
+  "completed_at": "2026-11-09T23:13:32.359Z",
+  "source_at": "2026-11-09T22:29:31Z",
+  "source_commit": "fb763623c511f5c182a3aa013b7443d29e39f99c",
+  "source_age_seconds": 2641,
   "counts": {
     "discovered": 68,
     "last_valid_quoted": 65,
     "last_valid_m15_h1": 65,
     "last_valid_deep": 65,
-    "current_attempt_tradeable": 0,
+    "unusable": 3,
     "canonical_signals": 0,
     "admitted": 0,
-    "unusable_in_last_valid": 3
+    "rejection_routes": 130
   },
   "findings": [
-    "Last valid OANDA snapshot 21:13:50Z, stale at review; 65/68 previously usable, no current fresh full scan.",
-    "22:04:28Z collection run 42708419533 returned 68 quotes with tradeable_false=68, DATA_UNAVAILABLE; preserved old source.",
-    "Canonical signals.json empty; admission audit NO_QUALIFIED_CONDITIONAL_PLAN. WAIT; no paper entry/exit asserted.",
-    "Macro receipt PARTIAL; event and official-source gaps prohibit automatic news clearance.",
-    "One current-main recovery request committed 209a2572c359d596b9ee0dc96fcf847e346cec1 and read back; resulting collector/source/admission/publication not yet verified.",
-    "Private sanitized feed snapshot 21:13:50Z, 924904 bytes, schema 1; served Pages freshness not independently verified."
+    "Last persisted full collection 22:29:31Z; 65 of 68 usable, 65 with M15/H1 and D1/H4/H1/M15/M5 coverage according to universe manifest; large summary/latest returned empty connector content and independent per-pair candle inspection was not completed.",
+    "Collector run 42712262259 reported COLLECTED with 4 successful pricing requests; retained source timestamp unchanged.",
+    "Canonical signals.json empty and admission audit NO_QUALIFIED_CONDITIONAL_PLAN; 130 rejected routes (15 trend, 66 spread/quote, 47 reversal/exhaustion, 2 unsupported). WAIT; no fills claimed.",
+    "Private sanitized payload and public repository feed share blob SHA 01542531456dfc7b863f9a7cbec222dc9ba0e2c9 and snapshot 22:29:31Z; actual served Pages JSON could not be verified.",
+    "Macro receipt PARTIAL; independent event clearance remains incomplete. Quiet-hours run: no user bulletin and no recovery requested."
   ],
   "blockers": [
-    "Recovery collector completion and readback unverified",
-    "Current OANDA quotes not tradeable in latest attempted collection",
-    "Stale source and partial macro clearance",
-    "Served Pages feed not verified"
+    "Large summary/latest file contents unavailable via connector; per-pair independent screening unverified",
+    "Served Pages JSON unavailable for independent verification",
+    "Macro clearance partial",
+    "Last full source older than 25-minute research freshness threshold"
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
     "config/scheduled_research_roles.json",
     "validation_protocol.json",
     "data/universe.json",
-    "data/summary.json",
-    "data/latest.json",
     "data/collection_attempt.json",
     "data/monitoring_health.json",
     "data/fast_entry_audit.json",
     "data/signal_admission_audit.json",
     "signals.json",
+    "data/hourly_assessment.json",
     "data/task_runs/macro_events.json",
     "data/public_dashboard_payload.json",
-    "scripts/refresh_request.json"
+    "rayyansorefan/standalone-wallet-paper-agent/docs/fx-feed.json"
   ],
   "run_ids": [
-    "42708419533"
+    "42712262259"
   ],
   "no_broker_orders": true
 }
