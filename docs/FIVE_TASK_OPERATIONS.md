@@ -55,3 +55,11 @@ Read current full and pair-specific fast source, macro and market findings, actu
 ### evidence_audit
 
 Reconcile complete registered cohort IDs against scored/unscored paper and lifecycle records, source coverage and public sanitized feed. Inspect current locked protocol/hash, forward_validation, early_forward_validation, simple/liquid metrics, exit-study matched cases and public serving. Wins, losses, unfilled, stopped, expired, ambiguous and missing cases all remain. Compare net-of-cost expectancy, drawdown and fixed-vs-profit-protection results on like-for-like cohorts; insufficient samples stay unvalidated. Read other four receipts, report stale/missing roles without fabricating their completion, and persist an exact retry context for operational faults. No automatic rule changes, strategy promotion, account reset, public raw-ledger export or claim of guaranteed profit.
+
+## Setup verification — 9 November 2026
+
+All five existing task IDs in the registry were updated in place and read back enabled. They run hourly weekdays at :05/:15/:30/:40/:50 Europe/London; no additional active task was created. First future role completions must still be established by real receipts, not this setup check.
+
+451 local regression tests passed, GitHub CI run42708421618 passed, and the registered trading-rule digest is unchanged. Operations commits:33e6bfb9d116ef8d562c28801c17e8bb6697d8d6 and91dbfe79d41d251de7798c5908d2d9dcf51f6e9a.
+
+Live source verification run42708419533 at22:04:28Z authenticated successfully:1accounts request,1instrument request and2pricing requests succeeded with no recorded HTTP failures. Pricing returned68records, all68 with tradeable=false, none missing bid/ask. The correct action is NO ENTRY / WAIT, not a claim that credentials are invalid or a relaxation of tradability. The last valid21:13:50Z source was retained with its original clock. This does not prove a fixed cause or duration for the provider's non-tradable state. Future workers must recheck actual new responses and distinguish fresh non-tradable quotes from stale usable observations.
