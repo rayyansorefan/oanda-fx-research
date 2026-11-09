@@ -1277,7 +1277,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_SGD-91912c6dda86404272343b9b7e1e881fceb712bf8cad16be738d5f57a539e9ff.json",
+      "source_evidence": "data/replay_evidence/EUR_SGD-a1ee4dd9b048b605428dc821a306c360486b9330dd6e516511ddc8bb865dbbea.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1290,7 +1290,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_PLN-286e75360ef58466809aaf9a121335dfba4f9bb289dab67fd43398a07b22935c.json",
+      "source_evidence": "data/replay_evidence/USD_PLN-ca49e7700c3b9deb34db449c086b0fca3501cf94640857b35455aeab5c02d4d5.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1303,7 +1303,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_SGD-ec613eee9d3790d2a4915c4be60909e15a64e2beb8d249c07477c0de07e96ea4.json",
+      "source_evidence": "data/replay_evidence/EUR_SGD-a03173448f150b6d676863ad0f4c039039de0189ca762be483af1c1e12636dbc.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1412,7 +1412,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_PLN-12be05026cd5562b77f2623f03f83db7cdd5ac2b7aa09f30258cea431feecaba.json",
+      "source_evidence": "data/replay_evidence/USD_PLN-4554264cfd651acace565eb0a1a26b58c1e1e937e25d237fec970cee53ecc651.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1429,21 +1429,49 @@
       "source_evidence": "data/replay_evidence/USD_NOK-5b443cc09f2ffbf387b17c3145cf6b415f69e6a9fb833184db5c9f028172ec11.json",
       "status": "PAPER_PRE_ENTRY_INVALIDATED",
       "trade_executed": false
+    },
+    "202611091845-CHFJPY-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "exit_at": "2026-11-09T20:00:00Z",
+      "fill_at": "2026-11-09T19:45:00Z",
+      "id": "202611091845-CHFJPY-SHORT-EMA20_PULLBACK",
+      "instrument": "CHF_JPY",
+      "paper_entry": 192.541,
+      "paper_exit": 192.666,
+      "pattern_at": "2026-11-09T19:45:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": true,
+      "source_evidence": "data/replay_evidence/CHF_JPY-c2892bda7dafedef157c71d408111c5f9f71cf8ce8d2bd11a53509ee89240f4f.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.06492
     }
   },
   "latency_audit": {
     "method": "Legacy replay assumes pattern-close availability; no actual delivered alert or subsequent manual fill is established.",
-    "records": [],
+    "records": [
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-09T20:16:59.987572+00:00",
+        "detection_delay_minutes": 32.0,
+        "fill_precedes_detection": true,
+        "id": "202611091845-CHFJPY-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-11-09T19:45:00+00:00"
+      }
+    ],
     "verified_profitable_missed_manual_entries": 0
   },
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 0,
-  "today_forward_patterns": 0,
+  "today_distinct_pair_pattern_events": 1,
+  "today_forward_patterns": 1,
   "today_registered": 4,
-  "today_scored_hypothetical_entries": 0,
-  "today_status_counts": {},
+  "today_scored_hypothetical_entries": 1,
+  "today_status_counts": {
+    "PAPER_STOP_AFTER_FILL": 1
+  },
   "today_uk": "2026-11-09",
-  "updated_at": "2026-11-09T19:14:07Z"
+  "updated_at": "2026-11-09T20:17:00Z"
 }

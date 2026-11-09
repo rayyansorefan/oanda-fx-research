@@ -1,8 +1,8 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-09T19:14:34.364122+00:00",
+  "checked_at": "2026-11-09T20:17:48.349703+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-09T19:13:57Z",
+    "checked_at": "2026-11-09T20:16:48Z",
     "collection_tries": 1,
     "collector_endpoint": "practice",
     "error": null,
@@ -10,17 +10,17 @@
     "first_attempt_error": null,
     "last_valid_source_preserved": false,
     "recovered_on_second_try": false,
-    "run_id": "42681295564",
-    "started_at": "2026-11-09T19:13:40Z",
+    "run_id": "42691228070",
+    "started_at": "2026-11-09T20:15:43Z",
     "status": "COLLECTED"
   },
-  "consecutive_unobserved_fast_targets": 0,
+  "consecutive_unobserved_fast_targets": 4,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
     "event": "push",
-    "head_sha": "081f34f2c2e6e3675b669e9e82bf39feac036dc0",
-    "id": "42681295564",
+    "head_sha": "a9df4b768ef3b38980a4aad379780a9107c6e42b",
+    "id": "42691228070",
     "outcomes": {
       "collect": "success",
       "early_cohort": "success",
@@ -30,6 +30,14 @@
     "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
   },
   "dashboard_deployments": [
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-09T19:14:50Z",
+      "head_sha": "71c2dbde2594d4b46bb16331a63868c319036101",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42681495886",
+      "id": 42681495886,
+      "status": "completed"
+    },
     {
       "conclusion": "success",
       "created_at": "2026-11-09T18:47:10Z",
@@ -45,21 +53,13 @@
       "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42672430160",
       "id": 42672430160,
       "status": "completed"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-11-09T17:26:48Z",
-      "head_sha": "fd317c2bd41395a4524972acbc7a19c0ed7b9fb4",
-      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42664690275",
-      "id": 42664690275,
-      "status": "completed"
     }
   ],
   "early_cohort_id": "FX-EARLY-20261104-v1",
-  "early_last_source_at": "2026-11-09T19:13:57Z",
-  "early_observation_count": 72,
-  "elapsed_fast_targets_today": 49,
-  "fast_age_seconds": 6.447551,
+  "early_last_source_at": "2026-11-09T20:16:48Z",
+  "early_observation_count": 73,
+  "elapsed_fast_targets_today": 53,
+  "fast_age_seconds": 7.72326,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -77,40 +77,40 @@
     "valid_new_market_observations": 0,
     "verification_note": "workflow_dispatch may be manual; external scheduler origin/requests and missing provider calls cannot be verified from repository receipts alone. Four observed pair-specific events and two sessions are necessary, not sufficient, for sustained reliability."
   },
-  "fast_last_attempt_at": "2026-11-09T19:14:28.415535+00:00",
+  "fast_last_attempt_at": "2026-11-09T20:17:41.220060+00:00",
   "fast_observation_valid": true,
   "fast_run_failures": {
     "failed": 2,
     "sample": 3,
     "scope": "Latest 100 repository runs; process success is not observation success."
   },
-  "fast_source_at": "2026-11-09T19:14:27.916571+00:00",
+  "fast_source_at": "2026-11-09T20:17:40.626443+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 37.364122,
+  "full_age_seconds": 60.349703,
   "full_collection_status": "PARTIAL",
   "full_fresh": true,
-  "full_last_attempt_at": "2026-11-09T19:13:57Z",
-  "full_source_at": "2026-11-09T19:13:57Z",
+  "full_last_attempt_at": "2026-11-09T20:16:48Z",
+  "full_source_at": "2026-11-09T20:16:48Z",
   "last_completed_jobs": [
     {
       "conclusion": "success",
       "event": "push",
       "failed_steps": [],
-      "run_id": 42672100908
+      "run_id": 42681295564
     },
     {
       "conclusion": "success",
-      "event": "schedule",
+      "event": "push",
       "failed_steps": [],
-      "run_id": 42664488558
+      "run_id": 42672100908
     }
   ],
   "previous_publication": {
-    "checked_at": "2026-11-09T18:15:23.994859Z",
+    "checked_at": "2026-11-09T19:14:49.692280Z",
     "public_feed_path": "docs/fx-feed.json",
     "public_repository": "rayyansorefan/standalone-wallet-paper-agent",
     "reason": "Public repository contents readback verified.",
-    "snapshot_at": "2026-11-09T18:14:34Z",
+    "snapshot_at": "2026-11-09T19:13:57Z",
     "status": "PUBLISHED"
   },
   "recovery": "ONE_INLINE_FAST_ATTEMPT_PER_HOURLY_RUN_WHEN_DUE",
@@ -535,7 +535,11 @@
     "2026-11-09T17:47:00+00:00",
     "2026-11-09T18:17:00+00:00",
     "2026-11-09T18:32:00+00:00",
-    "2026-11-09T18:47:00+00:00"
+    "2026-11-09T18:47:00+00:00",
+    "2026-11-09T19:17:00+00:00",
+    "2026-11-09T19:32:00+00:00",
+    "2026-11-09T19:47:00+00:00",
+    "2026-11-09T20:02:00+00:00"
   ],
   "workflow_registration": [
     {
