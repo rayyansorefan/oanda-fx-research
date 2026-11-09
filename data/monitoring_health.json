@@ -1,8 +1,8 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-09T14:12:06.990048+00:00",
+  "checked_at": "2026-11-09T15:47:28.971605+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-09T14:11:18Z",
+    "checked_at": "2026-11-09T15:46:45Z",
     "collection_tries": 1,
     "collector_endpoint": "practice",
     "error": null,
@@ -10,17 +10,17 @@
     "first_attempt_error": null,
     "last_valid_source_preserved": false,
     "recovered_on_second_try": false,
-    "run_id": "42632037996",
-    "started_at": "2026-11-09T14:10:24Z",
+    "run_id": "42647887265",
+    "started_at": "2026-11-09T15:45:47Z",
     "status": "COLLECTED"
   },
-  "consecutive_unobserved_fast_targets": 0,
+  "consecutive_unobserved_fast_targets": 6,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
     "event": "push",
-    "head_sha": "4de151cb620bd20fd9433cdbe821aa9217815b14",
-    "id": "42632037996",
+    "head_sha": "fe678dd759e43e3c854c1e89038be36f81414ade",
+    "id": "42647887265",
     "outcomes": {
       "collect": "success",
       "early_cohort": "success",
@@ -56,10 +56,10 @@
     }
   ],
   "early_cohort_id": "FX-EARLY-20261104-v1",
-  "early_last_source_at": "2026-11-09T14:11:18Z",
-  "early_observation_count": 65,
-  "elapsed_fast_targets_today": 29,
-  "fast_age_seconds": 7.755439,
+  "early_last_source_at": "2026-11-09T15:46:44Z",
+  "early_observation_count": 66,
+  "elapsed_fast_targets_today": 35,
+  "fast_age_seconds": 8.155105,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -77,20 +77,20 @@
     "valid_new_market_observations": 0,
     "verification_note": "workflow_dispatch may be manual; external scheduler origin/requests and missing provider calls cannot be verified from repository receipts alone. Four observed pair-specific events and two sessions are necessary, not sufficient, for sustained reliability."
   },
-  "fast_last_attempt_at": "2026-11-09T14:11:59.817491+00:00",
+  "fast_last_attempt_at": "2026-11-09T15:47:21.406060+00:00",
   "fast_observation_valid": true,
   "fast_run_failures": {
     "failed": 2,
     "sample": 2,
     "scope": "Latest 100 repository runs; process success is not observation success."
   },
-  "fast_source_at": "2026-11-09T14:11:59.234609+00:00",
+  "fast_source_at": "2026-11-09T15:47:20.816500+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 48.990048,
+  "full_age_seconds": 44.971605,
   "full_collection_status": "OK",
   "full_fresh": true,
-  "full_last_attempt_at": "2026-11-09T14:11:18Z",
-  "full_source_at": "2026-11-09T14:11:18Z",
+  "full_last_attempt_at": "2026-11-09T15:46:45Z",
+  "full_source_at": "2026-11-09T15:46:44Z",
   "last_completed_jobs": [
     {
       "conclusion": "failure",
@@ -98,22 +98,24 @@
       "failed_steps": [
         "Fail closed if any research or public dashboard step failed"
       ],
-      "run_id": 42625556443
+      "run_id": 42632037996
     },
     {
-      "conclusion": "success",
+      "conclusion": "failure",
       "event": "push",
-      "failed_steps": [],
-      "run_id": 42613763093
+      "failed_steps": [
+        "Fail closed if any research or public dashboard step failed"
+      ],
+      "run_id": 42625556443
     }
   ],
   "previous_publication": {
-    "checked_at": "2026-11-09T13:28:12.201496Z",
+    "checked_at": "2026-11-09T14:12:19.078717Z",
     "public_feed_path": "docs/fx-feed.json",
     "public_repository": "rayyansorefan/standalone-wallet-paper-agent",
-    "reason": "Operational failure; market snapshot timestamp unchanged",
-    "snapshot_at": "2026-11-09T12:04:16Z",
-    "status": "PUBLISHED"
+    "reason": "ValueError: Public FX payload exceeds hard limit after safe compaction; publication refused",
+    "snapshot_at": null,
+    "status": "FAILED"
   },
   "recovery": "ONE_INLINE_FAST_ATTEMPT_PER_HOURLY_RUN_WHEN_DUE",
   "scheduled": {
@@ -507,7 +509,13 @@
     "2026-11-09T12:47:00+00:00",
     "2026-11-09T13:02:00+00:00",
     "2026-11-09T13:32:00+00:00",
-    "2026-11-09T13:47:00+00:00"
+    "2026-11-09T13:47:00+00:00",
+    "2026-11-09T14:17:00+00:00",
+    "2026-11-09T14:32:00+00:00",
+    "2026-11-09T14:47:00+00:00",
+    "2026-11-09T15:02:00+00:00",
+    "2026-11-09T15:17:00+00:00",
+    "2026-11-09T15:32:00+00:00"
   ],
   "workflow_registration": [
     {
