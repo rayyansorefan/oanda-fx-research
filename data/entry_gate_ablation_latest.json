@@ -4,70 +4,70 @@
       "approval_allowed": true,
       "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 32
+      "unverifiable": 2
     },
     "paper_without_m15_adx_and_missing_primary_feed": {
       "approval_allowed": false,
       "counterfactual_pair_routes": 0,
       "paper_watch_examples": [],
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 32
+      "unverifiable": 2
     },
     "without_daily_ema_paper": {
       "approval_allowed": false,
       "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 16
+      "unverifiable": 2
     },
     "without_m15_adx_paper": {
       "approval_allowed": false,
       "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 32
+      "unverifiable": 2
     },
     "without_nearest_target_economics_diagnostic_only": {
       "approval_allowed": false,
       "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 32
+      "unverifiable": 0
     },
     "without_news_gate_diagnostic_only": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 0,
+      "counterfactual_pair_routes": 1,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 32
+      "unverifiable": 2
     },
     "without_reversal_veto_paper": {
       "approval_allowed": false,
       "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 32
+      "unverifiable": 2
     }
   },
-  "distinct_pairs": 54,
+  "distinct_pairs": 65,
   "failures": {
-    "absolute_spread_cap": 34,
-    "adx_H1": 34,
-    "adx_M15": 18,
+    "absolute_spread_cap": 50,
+    "adx_H1": 40,
+    "adx_M15": 22,
     "direction_known": 0,
-    "dmi_H1": 6,
-    "dmi_M15": 12,
-    "gross_reward_minimum": 42,
-    "net_reward_minimum": 61,
-    "news_gate": 88,
-    "no_reversal_or_exhaustion": 54,
+    "dmi_H1": 4,
+    "dmi_M15": 24,
+    "gross_reward_minimum": 50,
+    "net_reward_minimum": 74,
+    "news_gate": 110,
+    "no_reversal_or_exhaustion": 74,
     "observed_target_available": 2,
     "pair_supported": 2,
     "quote_timely_tradeable": 0,
     "recent_completed_history": 0,
-    "relative_spread_cap": 28,
-    "route_not_stretched": 57,
-    "route_pattern": 40,
-    "structural_stop_range": 2,
-    "trend_D": 64,
-    "trend_H1": 42,
-    "trend_H4": 54,
-    "trend_M15": 0,
+    "relative_spread_cap": 42,
+    "route_not_stretched": 79,
+    "route_pattern": 62,
+    "structural_stop_range": 3,
+    "trend_D": 92,
+    "trend_H1": 44,
+    "trend_H4": 70,
+    "trend_M15": 4,
     "valid_two_sided_quote": 0
   },
   "isolated_only_blocker": {
@@ -79,7 +79,7 @@
     "dmi_M15": 0,
     "gross_reward_minimum": 0,
     "net_reward_minimum": 0,
-    "news_gate": 0,
+    "news_gate": 1,
     "no_reversal_or_exhaustion": 0,
     "observed_target_available": 0,
     "pair_supported": 0,
@@ -91,7 +91,7 @@
     "structural_stop_range": 0,
     "trend_D": 0,
     "trend_H1": 0,
-    "trend_H4": 0,
+    "trend_H4": 1,
     "trend_M15": 0,
     "valid_two_sided_quote": 0
   },
@@ -101,6 +101,6 @@
     "The combined M15-ADX/unsupported-primary-feed paper hypothesis keeps all other technical and reward/risk gates; it cannot verify the missing source or support a manual fill.",
     "Pair-route observations share prices and currency exposure; they are not independent trade outcomes."
   ],
-  "route_observations": 108,
-  "source_at": "2026-11-09T17:04:55Z"
+  "route_observations": 130,
+  "source_at": "2026-11-09T17:26:16Z"
 }
