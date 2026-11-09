@@ -7,6 +7,7 @@ registered fast workflow are byte-identical to their prospective study locks.
 from __future__ import annotations
 
 import os
+from collections import Counter
 import re
 from contextlib import contextmanager
 
@@ -30,6 +31,8 @@ def stage(path):
 class Observer:
     def __init__(self):
         self.failures = []
+        self.successes = Counter()
+        self.pricing = []
 
     @contextmanager
     def capture(self, module):
@@ -38,7 +41,19 @@ class Observer:
 
         def observed(path, params=None):
             try:
-                return original(path, params)
+                response = original(path, params)
+                purpose = stage(path)
+                self.successes[purpose] += 1
+                if purpose == "PRICING":
+                    prices = response.get("prices", []) if isinstance(response, dict) else []
+                    prices = prices if isinstance(prices, list) else []
+                    rows = [p for p in prices if isinstance(p, dict)]
+                    self.pricing.append({"returned_prices": len(rows),
+                        "tradeable_true": sum(p.get("tradeable") is True for p in rows),
+                        "tradeable_false": sum(p.get("tradeable") is False for p in rows),
+                        "tradeable_missing": sum("tradeable" not in p for p in rows),
+                        "missing_bid_ask": sum(not p.get("bids") or not p.get("asks") for p in rows)})
+                return response
             except RuntimeError as exc:
                 code = str(exc)
                 if HTTP_ERROR.fullmatch(code):
@@ -54,6 +69,11 @@ class Observer:
             yield self
         finally:
             module.request = original
+
+    def summary(self):
+        """Only counts and fixed purpose/error labels; no URLs, accounts or prices."""
+        return {"successful_requests": dict(self.successes),
+                "failures": list(self.failures), "pricing_batches": list(self.pricing)}
 
     def first_auth(self):
         return next((e for e in self.failures if e.startswith(("OANDA_HTTP_401_", "OANDA_HTTP_403_"))), None)

@@ -65,6 +65,23 @@ class AuthDiagnosticsTests(unittest.TestCase):
                          "OANDA_HTTP_504_PRICING")
         module.request.assert_not_called()
 
+    def test_no_tradeable_quotes_distinguished_without_changing_response(self):
+        response={"prices":[{"instrument":"PRIVATE_PAIR","tradeable":False,"bids":[{"price":"1.23"}],"asks":[{"price":"1.24"}]}],"accountID":"PRIVATE_ID"}
+        request=Mock(return_value=response); module=SimpleNamespace(request=request); obs=auth.Observer()
+        with obs.capture(module):
+            self.assertIs(module.request("/v3/accounts/PRIVATE_ID/pricing"), response)
+        self.assertEqual(request.call_count,1)
+        summary=obs.summary()
+        self.assertEqual(summary['pricing_batches'][0]['tradeable_false'],1)
+        self.assertEqual(summary['successful_requests'],{'PRICING':1})
+        self.assertNotIn('PRIVATE_ID',str(summary));self.assertNotIn('PRIVATE_PAIR',str(summary));self.assertNotIn('1.23',str(summary))
+
+    def test_empty_pricing_and_auth_failure_are_separate(self):
+        module=SimpleNamespace(request=Mock(return_value={"prices":[]}));obs=auth.Observer()
+        with obs.capture(module):module.request('/v3/accounts/hidden/pricing')
+        self.assertEqual(obs.summary()['pricing_batches'][0]['returned_prices'],0)
+        self.assertEqual(obs.summary()['failures'],[])
+
     def test_safe_host_reports_actual_frozen_endpoint_only(self):
         self.assertEqual(auth.safe_host(SimpleNamespace(BASE="https://api-fxpractice.oanda.com")),
                          "practice")

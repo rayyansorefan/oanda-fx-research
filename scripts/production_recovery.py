@@ -88,19 +88,21 @@ def run_collection():
                     continue
                 final_error = observer.probe(market, code)
                 record_collection_attempt(started, "DATA_UNAVAILABLE", final_error,
-                                          collection_tries=attempt, first_error=first_error)
+                                          collection_tries=attempt, first_error=first_error,
+                                          diagnostics=observer.summary())
                 print("Data unavailable:", final_error, file=sys.stderr)
                 return 1
             else:
                 record_collection_attempt(started, "COLLECTED", None,
-                                          collection_tries=attempt, first_error=first_error)
+                                          collection_tries=attempt, first_error=first_error,
+                                          diagnostics=observer.summary())
                 if first_error:
                     print("OANDA source recovered after first failure:", first_error)
                 return 0
     raise AssertionError("unreachable bounded OANDA collection recovery")
 
 
-def record_collection_attempt(started, status, error, *, collection_tries=1, first_error=None):
+def record_collection_attempt(started, status, error, *, collection_tries=1, first_error=None, diagnostics=None):
     report = {"started_at": started, "checked_at": now(), "status": status,
               "error": error, "last_valid_source_preserved": status == "DATA_UNAVAILABLE",
               "run_id": os.environ.get("GITHUB_RUN_ID"),
@@ -108,7 +110,8 @@ def record_collection_attempt(started, status, error, *, collection_tries=1, fir
               "collector_endpoint": auth.safe_host(market),
               "collection_tries": collection_tries,
               "first_attempt_error": first_error,
-              "recovered_on_second_try": status == "COLLECTED" and collection_tries == 2}
+              "recovered_on_second_try": status == "COLLECTED" and collection_tries == 2,
+              "request_diagnostics": diagnostics or {}}
     write_json(Path("data/collection_attempt.json"), report)
     identity = os.environ.get("GITHUB_RUN_ID")
     if identity and identity.isdigit():
