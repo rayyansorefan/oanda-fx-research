@@ -1,7 +1,7 @@
 {
   "automatic_promotion_allowed": false,
   "broker_orders_submitted": 0,
-  "checked_at": "2026-11-09T16:17:44Z",
+  "checked_at": "2026-11-09T16:25:29Z",
   "holdout_start_at": "2026-11-09T07:00:00Z",
   "metrics": {
     "benchmark": {
@@ -12,7 +12,7 @@
     "by_setup": {
       "MOMENTUM_CONTINUATION": {
         "fills": 0,
-        "plans": 0,
+        "plans": 1,
         "scored_exits": 0
       }
     },
@@ -20,9 +20,11 @@
     "net_total_r_bidask": null,
     "net_total_r_cost_stress": null,
     "open_paper_positions": 0,
-    "outcomes": {},
+    "outcomes": {
+      "PENDING_TRIGGER": 1
+    },
     "performance_validated": false,
-    "plans": 0,
+    "plans": 1,
     "scored_exits": 0
   },
   "pair_observations": {
@@ -37,7 +39,8 @@
       "2026-11-09T13:27:41Z",
       "2026-11-09T14:11:39Z",
       "2026-11-09T15:47:00Z",
-      "2026-11-09T16:17:44Z"
+      "2026-11-09T16:17:44Z",
+      "2026-11-09T16:25:29Z"
     ],
     "EUR_JPY": [
       "2026-11-09T07:24:02Z",
@@ -50,7 +53,8 @@
       "2026-11-09T13:27:41Z",
       "2026-11-09T14:11:39Z",
       "2026-11-09T15:47:00Z",
-      "2026-11-09T16:17:44Z"
+      "2026-11-09T16:17:44Z",
+      "2026-11-09T16:25:29Z"
     ],
     "EUR_USD": [
       "2026-11-09T07:24:02Z",
@@ -63,7 +67,8 @@
       "2026-11-09T13:27:41Z",
       "2026-11-09T14:11:39Z",
       "2026-11-09T15:47:00Z",
-      "2026-11-09T16:17:44Z"
+      "2026-11-09T16:17:44Z",
+      "2026-11-09T16:25:29Z"
     ],
     "GBP_USD": [
       "2026-11-09T07:24:02Z",
@@ -76,7 +81,8 @@
       "2026-11-09T13:27:41Z",
       "2026-11-09T14:11:39Z",
       "2026-11-09T15:47:00Z",
-      "2026-11-09T16:17:44Z"
+      "2026-11-09T16:17:44Z",
+      "2026-11-09T16:25:29Z"
     ],
     "NZD_USD": [
       "2026-11-09T07:24:02Z",
@@ -89,7 +95,8 @@
       "2026-11-09T13:27:41Z",
       "2026-11-09T14:11:39Z",
       "2026-11-09T15:47:00Z",
-      "2026-11-09T16:17:44Z"
+      "2026-11-09T16:17:44Z",
+      "2026-11-09T16:25:29Z"
     ],
     "USD_CAD": [
       "2026-11-09T07:24:02Z",
@@ -102,7 +109,8 @@
       "2026-11-09T13:27:41Z",
       "2026-11-09T14:11:39Z",
       "2026-11-09T15:47:00Z",
-      "2026-11-09T16:17:44Z"
+      "2026-11-09T16:17:44Z",
+      "2026-11-09T16:25:29Z"
     ],
     "USD_CHF": [
       "2026-11-09T07:24:02Z",
@@ -114,7 +122,8 @@
       "2026-11-09T13:27:41Z",
       "2026-11-09T14:11:39Z",
       "2026-11-09T15:47:00Z",
-      "2026-11-09T16:17:44Z"
+      "2026-11-09T16:17:44Z",
+      "2026-11-09T16:25:29Z"
     ],
     "USD_JPY": [
       "2026-11-09T07:24:02Z",
@@ -127,11 +136,53 @@
       "2026-11-09T13:27:41Z",
       "2026-11-09T14:11:39Z",
       "2026-11-09T15:47:00Z",
-      "2026-11-09T16:17:44Z"
+      "2026-11-09T16:17:44Z",
+      "2026-11-09T16:25:29Z"
     ]
   },
   "performance_validated": false,
-  "records": {},
+  "records": {
+    "liquid-momentum-shadow-v1-20261109T162529Z-USD_JPY-MOMENTUM_CONTINUATION": {
+      "plan": {
+        "approved_entry": false,
+        "atr_at_decision": 0.08273633418820615,
+        "broker_order_permitted": false,
+        "created_at": "2026-11-09T16:25:29Z",
+        "direction": "SHORT",
+        "entry_condition": "FUTURE_COMPLETED_M15_CLOSE_BEYOND_FROZEN_TRIGGER",
+        "estimated_net_rr_before_slippage": 1.4768,
+        "execution_cost_assumption": "OANDA bid-ask plus illustrative 0.5 pip stress",
+        "experimental_paper_only": true,
+        "expires_at": "2026-11-09T17:55:29Z",
+        "gross_rr": 1.8039,
+        "id": "liquid-momentum-shadow-v1-20261109T162529Z-USD_JPY-MOMENTUM_CONTINUATION",
+        "indicative_entry": 158.037,
+        "instrument": "USD_JPY",
+        "invalidation": "PREENTRY_STOP_TOUCH_OR_EXPIRY",
+        "last_source_bar_at": "2026-11-09T16:00:00Z",
+        "manual_response_seconds": 60,
+        "max_chase_atr": 0.35,
+        "max_spread_pips": 2.25,
+        "news_uncertainty": [
+          "MATERIAL_HEADLINE_REVIEW_UNVERIFIED",
+          "NEWS_COVERAGE_PARTIAL_OR_UNVERIFIED"
+        ],
+        "pip_size": 0.01,
+        "policy": "liquid-momentum-shadow-v1",
+        "setup_type": "MOMENTUM_CONTINUATION",
+        "source_at": "2026-11-09T16:25:10Z",
+        "stop": 158.19,
+        "tp1": 157.761,
+        "trigger": 158.006,
+        "user_delivery_verified": false
+      },
+      "result": {
+        "scored": false,
+        "source_evidence": "data/replay_evidence/USD_JPY-cf7b1c0fee65a1794537fd526bdfe1d8abbf1ec3a44c88f3faa9812f79cfaab6.json",
+        "status": "PENDING_TRIGGER"
+      }
+    }
+  },
   "registered_at": "2026-11-08T22:15:59Z",
   "research_only": true,
   "rule_sha256": "08ed34826b5efe22ddf344b3991ef9c47726d11777221c3ff3b8738d429b8257",
@@ -147,7 +198,8 @@
     "2026-11-09T13:27:28Z",
     "2026-11-09T14:11:18Z",
     "2026-11-09T15:46:44Z",
-    "2026-11-09T16:17:23Z"
+    "2026-11-09T16:17:23Z",
+    "2026-11-09T16:25:10Z"
   ],
   "status": "FORWARD_RESEARCH_ONLY",
   "strategy_lifecycle_note": "No live admissions or broker orders; separate 8-liquid-pair momentum holdout started 9 November 2026. Any later live change requires independent profitability evidence.",
