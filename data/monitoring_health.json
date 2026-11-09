@@ -1,8 +1,8 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-09T22:02:06.160414+00:00",
+  "checked_at": "2026-11-09T22:04:31.912278+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-09T22:02:02Z",
+    "checked_at": "2026-11-09T22:04:28Z",
     "collection_tries": 1,
     "collector_endpoint": "practice",
     "error": "OANDA_NO_USABLE_FX_QUOTES",
@@ -10,8 +10,32 @@
     "first_attempt_error": null,
     "last_valid_source_preserved": true,
     "recovered_on_second_try": false,
-    "run_id": "42708040178",
-    "started_at": "2026-11-09T22:02:01Z",
+    "request_diagnostics": {
+      "failures": [],
+      "pricing_batches": [
+        {
+          "missing_bid_ask": 0,
+          "returned_prices": 35,
+          "tradeable_false": 35,
+          "tradeable_missing": 0,
+          "tradeable_true": 0
+        },
+        {
+          "missing_bid_ask": 0,
+          "returned_prices": 33,
+          "tradeable_false": 33,
+          "tradeable_missing": 0,
+          "tradeable_true": 0
+        }
+      ],
+      "successful_requests": {
+        "ACCOUNTS": 1,
+        "INSTRUMENTS": 1,
+        "PRICING": 2
+      }
+    },
+    "run_id": "42708419533",
+    "started_at": "2026-11-09T22:04:26Z",
     "status": "DATA_UNAVAILABLE"
   },
   "consecutive_unobserved_fast_targets": 3,
@@ -19,8 +43,8 @@
   "current_run": {
     "attempt": "1",
     "event": "push",
-    "head_sha": "1713aefd3f35f357e43224843c5de64867f2dc81",
-    "id": "42708040178",
+    "head_sha": "91dbfe79d41d251de7798c5908d2d9dcf51f6e9a",
+    "id": "42708419533",
     "outcomes": {
       "collect": "failure",
       "early_cohort": "skipped",
@@ -59,7 +83,7 @@
   "early_last_source_at": "2026-11-09T21:13:50Z",
   "early_observation_count": 74,
   "elapsed_fast_targets_today": 60,
-  "fast_age_seconds": 2864.613308,
+  "fast_age_seconds": 3010.365172,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -86,10 +110,10 @@
   },
   "fast_source_at": "2026-11-09T21:14:21.547106+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 2896.160414,
+  "full_age_seconds": 3041.912278,
   "full_collection_status": "PARTIAL",
   "full_fresh": true,
-  "full_last_attempt_at": "2026-11-09T22:02:02Z",
+  "full_last_attempt_at": "2026-11-09T22:04:28Z",
   "full_source_at": "2026-11-09T21:13:50Z",
   "last_completed_jobs": [
     {
@@ -98,13 +122,15 @@
       "failed_steps": [
         "Fail closed if any research or public dashboard step failed"
       ],
-      "run_id": 42707641443
+      "run_id": 42708040178
     },
     {
-      "conclusion": "success",
+      "conclusion": "failure",
       "event": "push",
-      "failed_steps": [],
-      "run_id": 42700449566
+      "failed_steps": [
+        "Fail closed if any research or public dashboard step failed"
+      ],
+      "run_id": 42707641443
     }
   ],
   "previous_publication": {
