@@ -1,0 +1,145 @@
+{
+  "active_london_day": true,
+  "checked_at": "2026-11-10T16:14:56.714459+00:00",
+  "collection_attempt": {
+    "checked_at": "2026-11-10T16:13:55Z",
+    "collection_tries": 1,
+    "collector_endpoint": "practice",
+    "error": null,
+    "event": "push",
+    "first_attempt_error": null,
+    "last_valid_source_preserved": false,
+    "recovered_on_second_try": false,
+    "request_diagnostics": {
+      "failures": [],
+      "pricing_batches": [
+        {
+          "missing_bid_ask": 0,
+          "returned_prices": 35,
+          "tradeable_false": 1,
+          "tradeable_missing": 0,
+          "tradeable_true": 34
+        },
+        {
+          "missing_bid_ask": 0,
+          "returned_prices": 33,
+          "tradeable_false": 2,
+          "tradeable_missing": 0,
+          "tradeable_true": 31
+        },
+        {
+          "missing_bid_ask": 0,
+          "returned_prices": 35,
+          "tradeable_false": 0,
+          "tradeable_missing": 0,
+          "tradeable_true": 35
+        },
+        {
+          "missing_bid_ask": 0,
+          "returned_prices": 30,
+          "tradeable_false": 0,
+          "tradeable_missing": 0,
+          "tradeable_true": 30
+        }
+      ],
+      "successful_requests": {
+        "ACCOUNTS": 1,
+        "CANDLES": 341,
+        "INSTRUMENTS": 1,
+        "PRICING": 4
+      }
+    },
+    "run_id": "42852227974",
+    "started_at": "2026-11-10T16:12:51Z",
+    "status": "COLLECTED"
+  },
+  "consecutive_unobserved_fast_targets": 0,
+  "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
+  "current_run": {
+    "attempt": "1",
+    "event": "push",
+    "head_sha": "9ba3a45bf9ca19bf6f40261ccec369dc8f000626",
+    "id": "42852227974",
+    "outcomes": {
+      "collect": "success",
+      "early_cohort": "success",
+      "fast_recovery": "success",
+      "safety": "success"
+    },
+    "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
+  },
+  "early_cohort_id": "FX-EARLY-20261104-v1",
+  "early_last_source_at": "2026-11-10T16:13:55Z",
+  "early_observation_count": 88,
+  "elapsed_fast_targets_today": 37,
+  "fast_age_seconds": 6.972571,
+  "fast_dispatch_evidence": {
+    "actual_intervals_seconds": [],
+    "dispatch_attempt_receipts": 0,
+    "external_scheduler_origin_verified": false,
+    "four_consecutive_event_observations": false,
+    "last_four_run_ids": [],
+    "last_four_source_times": [],
+    "latest_consecutive_valid_event_observations": 0,
+    "longest_valid_event_streak": 0,
+    "recent_failures": [],
+    "sessions_with_four_event_observations": [],
+    "status": "NO_DISPATCH_RECEIPTS",
+    "sustained_reliability_verified": false,
+    "two_session_observation_evidence": false,
+    "valid_new_market_observations": 0,
+    "verification_note": "workflow_dispatch may be manual; external scheduler origin/requests and missing provider calls cannot be verified from repository receipts alone. Four observed pair-specific events and two sessions are necessary, not sufficient, for sustained reliability."
+  },
+  "fast_last_attempt_at": "2026-11-10T16:14:50.388849+00:00",
+  "fast_observation_valid": true,
+  "fast_source_at": "2026-11-10T16:14:49.741888+00:00",
+  "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
+  "full_age_seconds": 61.714459,
+  "full_collection_status": "PARTIAL",
+  "full_fresh": true,
+  "full_last_attempt_at": "2026-11-10T16:13:55Z",
+  "full_source_at": "2026-11-10T16:13:55Z",
+  "previous_publication": {
+    "checked_at": "2026-11-10T15:21:03.637796Z",
+    "public_feed_path": "docs/fx-feed.json",
+    "public_repository": "rayyansorefan/standalone-wallet-paper-agent",
+    "reason": "ValueError: Public FX payload exceeds hard limit after safe compaction; publication refused",
+    "snapshot_at": null,
+    "status": "FAILED"
+  },
+  "recovery": "ONE_INLINE_FAST_ATTEMPT_PER_HOURLY_RUN_WHEN_DUE",
+  "remote_evidence_error": "HTTPError",
+  "scheduler_guarantee": false,
+  "scheduler_verification": "UNAVAILABLE",
+  "status": "CURRENT",
+  "target_fast_interval_seconds": 900,
+  "target_full_interval_seconds": 3600,
+  "unobserved_fast_targets_today": [
+    "2026-11-10T07:02:00+00:00",
+    "2026-11-10T07:32:00+00:00",
+    "2026-11-10T07:47:00+00:00",
+    "2026-11-10T08:02:00+00:00",
+    "2026-11-10T08:32:00+00:00",
+    "2026-11-10T08:47:00+00:00",
+    "2026-11-10T09:02:00+00:00",
+    "2026-11-10T09:47:00+00:00",
+    "2026-11-10T10:02:00+00:00",
+    "2026-11-10T10:32:00+00:00",
+    "2026-11-10T10:47:00+00:00",
+    "2026-11-10T11:17:00+00:00",
+    "2026-11-10T11:32:00+00:00",
+    "2026-11-10T11:47:00+00:00",
+    "2026-11-10T12:17:00+00:00",
+    "2026-11-10T12:32:00+00:00",
+    "2026-11-10T12:47:00+00:00",
+    "2026-11-10T13:02:00+00:00",
+    "2026-11-10T13:17:00+00:00",
+    "2026-11-10T13:32:00+00:00",
+    "2026-11-10T13:47:00+00:00",
+    "2026-11-10T14:02:00+00:00",
+    "2026-11-10T14:32:00+00:00",
+    "2026-11-10T15:02:00+00:00",
+    "2026-11-10T15:32:00+00:00",
+    "2026-11-10T15:47:00+00:00"
+  ]
+}
