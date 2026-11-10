@@ -2,41 +2,43 @@
   "schema": 1,
   "role": "macro_events",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T03:01:25Z",
-  "completed_at": "2026-11-10T03:04:05Z",
+  "started_at": "2026-11-10T04:03:41Z",
+  "completed_at": "2026-11-10T04:08:20Z",
   "source_at": "2026-11-10T01:28:57Z",
   "source_commit": "3d3d4a4c8927b9a1072b7478edd1eb244230a849",
-  "source_age_seconds": 5708,
+  "source_age_seconds": 9563,
   "counts": {
     "current_paper_positions": 0,
     "pending_simulated_fills": 0,
     "current_frozen_signals": 0,
     "unexpired_paper_candidates": 0,
+    "unexpired_research_opportunities": 0,
     "leading_candidates_reviewed": 3,
     "currencies_in_scope": 4,
     "official_authorities_checked": 8,
-    "official_pages_checked": 15,
-    "verified_timed_events_next_48h": 24,
-    "verified_date_only_events_next_48h": 4,
-    "known_major_releases_just_outside_48h": 1,
+    "official_pages_checked": 17,
+    "verified_timed_events_next_48h": 29,
+    "verified_date_only_or_boundary_uncertain_events": 7,
+    "known_official_events_just_outside_48h": 2,
     "machine_news_clearance_changes": 0,
     "broker_orders": 0
   },
   "findings": [
     {
       "scope": "engine",
-      "checked_at": "2026-11-10T03:03:39Z",
-      "fact": "Current derived engine receipts report zero open or pending simulated positions, zero canonical signals, zero unexpired paper candidates and zero unexpired research opportunities. The three leading candidates were EUR_HKD LONG, EUR_CAD LONG and GBP_CAD LONG; all were rejected by the current admission review.",
-      "conditional_scenario": "Macro risk was limited to EUR, HKD, CAD and GBP because no current simulated position or frozen plan exists. This receipt does not change machine news clearance, admission state, plan state or trade eligibility.",
+      "checked_at": "2026-11-10T04:08:20Z",
+      "fact": "Current receipts show zero open or pending simulated positions, zero canonical signals, zero unexpired paper candidates and zero unexpired research opportunities. The three leading rejected candidates are EUR_HKD LONG, EUR_CAD LONG and GBP_CAD LONG.",
+      "conditional_scenario": "Macro scope is limited to EUR, HKD, CAD and GBP. This role does not change machine news clearance, admission state, immutable plans or trade eligibility.",
       "sources": [
-        "data/task_runs/position_monitor.json@bcea4e92cde3d056095da3d42b73b7094d9f9b18",
-        "data/task_runs/candidate_review.json@854cc6f71befdfa86f8428cf8d6169bbfa3596e1",
-        "signals.json@152c8fc0e06968402d34f2d415e0c5be00802636"
+        "data/task_runs/position_monitor.json@5e18dfcf57afdfbca3cd03b780207bb1286d363c",
+        "data/task_runs/candidate_review.json@0c9729ac14a5632ed91b9ef3cc000fe6ec8b33db",
+        "signals.json@152c8fc0e06968402d34f2d415e0c5be00802636",
+        "data/admission_audit.json@6d4bff200ac36940b5fd4adea64460cdd2dc593d"
       ]
     },
     {
       "scope": "GBP",
-      "checked_at": "2026-11-10T03:03:39Z",
+      "checked_at": "2026-11-10T04:08:20Z",
       "publication_clocks": [
         "2026-11-05 Bank of England November Monetary Policy Summary",
         "Bank of England upcoming-events page last updated 2026-11-09"
@@ -50,8 +52,8 @@
         "2026-11-11T11:30:00Z Jon Hall speech",
         "2026-11-11T14:00:00Z Huw Pill speech text publication"
       ],
-      "fact": "The Bank of England raised Bank Rate by 0.25 percentage points to 4% in an 8-1 vote at the meeting ending 4 November; the official summary stated September CPI inflation was 3.5%. No future speaker substance was inferred. The ONS calendar shows UK Q3 GDP, September monthly GDP, trade, production and services at 07:00Z on 12 November, outside this run's 48-hour window ending 03:01Z on 12 November.",
-      "conditional_scenario": "GBP_CAD remains exposed to policy-communication risk if official remarks materially change expectations for inflation persistence or the policy path; direction is conditional on the published content.",
+      "fact": "The Bank of England raised Bank Rate by 0.25 percentage points to 4% in an 8-1 vote at the meeting ending 4 November; its summary stated September CPI inflation was 3.5%. No future speaker substance was inferred.",
+      "conditional_scenario": "GBP_CAD remains exposed to policy-communication risk only if official remarks materially change inflation-persistence or policy-path expectations.",
       "sources": [
         "https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2026/november-2026",
         "https://www.bankofengland.co.uk/events/upcoming-events",
@@ -60,27 +62,27 @@
     },
     {
       "scope": "EUR",
-      "checked_at": "2026-11-10T03:03:39Z",
+      "checked_at": "2026-11-10T04:08:20Z",
       "publication_clocks": [
         "2026-10-29 ECB monetary-policy decision",
         "ECB weekly schedule last modified 2026-11-09T10:35:00Z"
       ],
       "scheduled_utc": [
-        "2026-11-10T09:00:00Z Economic Bulletin pre-release on EU industrial policy",
-        "2026-11-10T13:00:00Z Economic Bulletin pre-release on bank competitiveness",
+        "2026-11-10T09:00:00Z industrial-policy Economic Bulletin pre-release",
+        "2026-11-10T13:00:00Z bank-competitiveness Economic Bulletin pre-release",
         "2026-11-10T14:00:00Z Eurosystem consolidated financial statement",
-        "2026-11-10T14:00:00Z weekly APP and PEPP update",
-        "2026-11-10T14:00:00Z Piero Cipollone digital-euro hearing statement",
+        "2026-11-10T14:00:00Z APP and PEPP weekly update",
+        "2026-11-10T14:00:00Z Piero Cipollone statement",
         "2026-11-10T16:45:00Z Philip Lane keynote with text",
-        "2026-11-11T07:50:00Z Piero Cipollone digital-euro roundtable",
-        "2026-11-11T09:00:00Z ECB long-term interest-rate statistics for October 2026",
-        "2026-11-11T09:00:00Z Economic Bulletin pre-release on refining margins and HICP energy inflation",
-        "2026-11-11T09:45:00Z Christine Lagarde Paris Peace Forum panel",
+        "2026-11-11T07:50:00Z Piero Cipollone roundtable",
+        "2026-11-11T09:00:00Z ECB long-term interest-rate statistics",
+        "2026-11-11T09:00:00Z HICP energy-inflation Economic Bulletin pre-release",
+        "2026-11-11T09:45:00Z Christine Lagarde panel",
         "2026-11-11T10:00:00Z ECB Supervision Newsletter",
-        "2026-11-11T13:00:00Z Economic Bulletin pre-release on euro-area stablecoin holdings"
+        "2026-11-11T13:00:00Z stablecoin-holdings Economic Bulletin pre-release"
       ],
-      "fact": "On 29 October the ECB kept the deposit, main-refinancing and marginal-lending rates unchanged at 2.50%, 2.65% and 2.90%. The statement identified higher energy prices as upside inflation risk and downside growth risk. No future speech content, release value or consensus was inferred.",
-      "conditional_scenario": "EUR_HKD and EUR_CAD may reprice if official communication or the interest-rate statistics materially alter inflation, growth, financing-condition or policy expectations; direction remains conditional.",
+      "fact": "On 29 October the ECB kept the deposit, main-refinancing and marginal-lending rates unchanged at 2.50%, 2.65% and 2.90%. No future release value, speech content or consensus was inferred.",
+      "conditional_scenario": "EUR_HKD and EUR_CAD may reprice only if official communication or statistics materially alter inflation, growth, financing-condition or policy expectations.",
       "sources": [
         "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp261029~9a493adf17.en.html",
         "https://www.ecb.europa.eu/press/calendars/weekly/html/index.en.html",
@@ -90,21 +92,19 @@
     },
     {
       "scope": "CAD",
-      "checked_at": "2026-11-10T03:03:39Z",
+      "checked_at": "2026-11-10T04:08:20Z",
       "publication_clocks": [
         "2026-10-28 Bank of Canada rate decision",
-        "Statistics Canada upcoming-releases schedule produced 2026-10-30"
+        "Statistics Canada upcoming-releases schedule checked 2026-11-10"
       ],
       "scheduled_utc": [
+        "2026-11-10T13:30:00Z Statistics Canada farm product prices, September 2026",
+        "2026-11-10T13:30:00Z Statistics Canada Industrial Water Survey, 2024",
+        "2026-11-10T13:30:00Z Statistics Canada energy supply and demand, 2025",
         "2026-11-10T18:30:00Z Bank of Canada Summary of Deliberations for the 28 October decision"
       ],
-      "date_only_releases": [
-        "2026-11-10 Statistics Canada farm product prices, September 2026",
-        "2026-11-10 Statistics Canada Industrial Water Survey, 2024",
-        "2026-11-10 Statistics Canada energy supply and demand, 2025"
-      ],
-      "fact": "The Bank of Canada raised the overnight-rate target by 25 basis points to 2.50% on 28 October, with Bank Rate 2.75% and deposit rate 2.45%. The official events page states its clocks are Eastern Time; 13:30 ET converts to 18:30Z on 10 November. Statistics Canada's schedule supplied dates but not publication times for the three listed releases.",
-      "conditional_scenario": "EUR_CAD and GBP_CAD face event risk if the deliberations materially change the perceived balance of inflation, growth or policy risks. No actual, consensus or directional outcome was assigned.",
+      "fact": "The Bank of Canada raised the overnight-rate target by 25 basis points to 2.50% on 28 October, with Bank Rate 2.75% and deposit rate 2.45%. Statistics Canada states its listed releases publish each working day at 08:30 Eastern, which is 13:30Z on 10 November. No actuals or consensus were inferred.",
+      "conditional_scenario": "EUR_CAD and GBP_CAD face event risk only if the deliberations or releases materially change perceived inflation, growth or policy risks.",
       "sources": [
         "https://www.bankofcanada.ca/2026/10/fad-press-release-2026-10-28/",
         "https://www.bankofcanada.ca/press/upcoming-events/",
@@ -112,47 +112,51 @@
       ]
     },
     {
-      "scope": "HKD",
-      "checked_at": "2026-11-10T03:03:39Z",
+      "scope": "HKD_and_local_funding",
+      "checked_at": "2026-11-10T04:08:20Z",
       "publication_clocks": [
-        "2026-11-05 HKMA tender announcements",
-        "HKMA economic and financial data checked 2026-11-10T03:03:39Z"
+        "HKMA economic and financial data page checked 2026-11-10",
+        "HKMA tender announcements dated 2026-11-05 and 2026-11-06"
       ],
       "scheduled_utc": [
-        "2026-11-11T01:30:00Z to 2026-11-11T02:30:00Z HKMA 7-year HKD government-bond tender",
-        "2026-11-11T01:30:00Z to 2026-11-11T02:30:00Z HKMA 1-year HONIA-indexed floating-rate-note tender",
-        "2026-11-11T07:00:00Z expected latest publication time for the 7-year tender result",
-        "2026-11-11T07:00:00Z expected latest publication time for the 1-year HONIA tender result"
+        "2026-11-11T01:30:00Z/02:30:00Z HKMA 7-year HKD government-bond tender window",
+        "2026-11-11T01:30:00Z/02:30:00Z HKMA 1-year HONIA-indexed note tender window",
+        "2026-11-11T07:00:00Z latest stated result time for each 11 November tender",
+        "2026-11-12T01:30:00Z/02:30:00Z 3-year RMB HKSAR bond tender window",
+        "2026-11-12T01:30:00Z/02:30:00Z 10-year RMB HKSAR bond tender window"
       ],
-      "date_only_releases": [
-        "2026-11-10 Hong Kong C&SD October business situation of small and medium-sized enterprises"
+      "date_only_or_boundary_uncertain": [
+        "2026-11-10 Hong Kong C&SD October SME business situation; exact clock not exposed",
+        "2026-11-12T07:00:00Z latest result time for each RMB tender is outside the run cutoff"
       ],
-      "fact": "HKMA's official economic data showed the October 2026 Base Rate at 4.25%. The 7-year tender offers HK$1.25 billion and the one-year HONIA-indexed tender HK$1.5 billion; both run 09:30-10:30 HKT on 11 November, with results expected no later than 15:00 HKT. The C&SD page verified the SME release date but did not expose an exact publication time.",
-      "conditional_scenario": "EUR_HKD faces HKD funding and local-rate sensitivity around the two tenders and any official SME release, but these events do not establish a directional trade signal or clear the pair's existing spread and higher-timeframe blockers.",
+      "fact": "HKMA's official data showed the October 2026 Base Rate at 4.25%. The 11 November tenders offer HK$1.25bn and HK$1.5bn; the 12 November RMB tenders offer RMB0.75bn and RMB1.5bn. No tender result was inferred.",
+      "conditional_scenario": "EUR_HKD retains HKD/local-funding sensitivity, but these events do not clear its existing spread or higher-timeframe blockers.",
       "sources": [
         "https://www.hkma.gov.hk/eng/data-publications-and-research/data-and-statistics/economic-financial-data-for-hong-kong",
         "https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/11/20261105-4/",
         "https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/11/20261105-3/",
+        "https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/11/20261106-5/",
+        "https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/11/20261106-6/",
         "https://www.censtatd.gov.hk/en/scode300.html"
       ]
     },
     {
       "scope": "coverage",
-      "checked_at": "2026-11-10T03:03:39Z",
-      "fact": "Official-source checks covered the Bank of England, ONS, ECB, Eurostat, Bank of Canada, Statistics Canada, HKMA and Hong Kong C&SD. Exact clocks were not exposed for the Statistics Canada date-only releases or the Hong Kong SME release. Eurostat's calendar is date-based and lists Q3 euro-area GDP on 12 November without an exact clock on the checked page, so its inclusion before the 03:01Z cutoff could not be established.",
-      "conditional_scenario": "These gaps prevent an exhaustive macro all-clear. Machine news clearance remains unchanged and PARTIAL; unscheduled official statements and market headlines remain possible.",
+      "checked_at": "2026-11-10T04:08:20Z",
+      "fact": "Official checks covered BoE, ONS, ECB, Eurostat, BoC, Statistics Canada, HKMA and Hong Kong C&SD. Exact clocks were not exposed for the Hong Kong SME release, the ECB Economic Bulletin Issue 7 on 12 November, or five Eurostat releases dated 12 November. The ONS 07:00Z GDP/trade/production/services batch and BoE Vicky White event at 06:00Z on 12 November are outside the 48-hour cutoff.",
+      "conditional_scenario": "The seven date-only or boundary-uncertain items prevent an exhaustive macro all-clear. Machine news clearance remains unchanged and PARTIAL; unscheduled official statements and headlines remain possible.",
       "sources": [
         "https://www.ons.gov.uk/releasecalendar",
         "https://ec.europa.eu/eurostat/en/news/release-calendar",
-        "https://www150.statcan.gc.ca/n1/dai-quo/upcoming-a_venir-eng.pdf",
+        "https://www.ecb.europa.eu/press/calendars/weekly/html/index.en.html",
         "https://www.censtatd.gov.hk/en/scode300.html"
       ]
     }
   ],
   "blockers": [
-    "The observed market source was 5,708 seconds old at completion; source_at was preserved and not replaced by task time.",
-    "No current open or pending simulated position, canonical signal, or unexpired paper watch existed; macro mapping therefore used only the three leading rejected candidates.",
-    "Exact publication times were unavailable on the checked official pages for three Statistics Canada date-only releases, the Hong Kong SME release and Eurostat's 12 November Q3 GDP release.",
+    "The observed market source was 9563 seconds old at completion; source_at was preserved and not replaced by task time.",
+    "No current open or pending simulated position, canonical signal, unexpired paper candidate or unexpired research opportunity existed; macro mapping therefore used only the three leading rejected candidates.",
+    "Seven official items were date-only or boundary-uncertain on the checked pages, so exhaustive next-48-hour clock coverage was not established.",
     "Future events had not occurred, so speaker substance, actuals and consensus were unavailable and were not invented.",
     "Machine news coverage remained PARTIAL and was not altered or cleared by this role.",
     "No role-specific GitHub Actions run ID or verified notification receipt was produced or claimed."
@@ -162,11 +166,10 @@
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
     "data/collection_attempt.json@565cf009b4411c4cdc27ac7ef0b185057facec45",
-    "data/public_dashboard_payload.json@95c6bc6c67ed1931f2f952fd1d75f1d1274d4971",
-    "data/task_runs/market_scan.json@6357000c8a3b7a6228841d87ebbb9e8fd7c8b7f8",
-    "data/task_runs/position_monitor.json@bcea4e92cde3d056095da3d42b73b7094d9f9b18",
-    "data/task_runs/candidate_review.json@854cc6f71befdfa86f8428cf8d6169bbfa3596e1",
+    "data/task_runs/position_monitor.json@5e18dfcf57afdfbca3cd03b780207bb1286d363c",
+    "data/task_runs/candidate_review.json@0c9729ac14a5632ed91b9ef3cc000fe6ec8b33db",
     "signals.json@152c8fc0e06968402d34f2d415e0c5be00802636",
+    "data/admission_audit.json@6d4bff200ac36940b5fd4adea64460cdd2dc593d",
     "https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2026/november-2026",
     "https://www.bankofengland.co.uk/events/upcoming-events",
     "https://www.ons.gov.uk/releasecalendar",
@@ -180,6 +183,8 @@
     "https://www.hkma.gov.hk/eng/data-publications-and-research/data-and-statistics/economic-financial-data-for-hong-kong",
     "https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/11/20261105-4/",
     "https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/11/20261105-3/",
+    "https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/11/20261106-5/",
+    "https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/11/20261106-6/",
     "https://www.censtatd.gov.hk/en/scode300.html"
   ],
   "run_ids": [
