@@ -2,20 +2,23 @@
   "schema": 1,
   "role": "candidate_review",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T03:42:22Z",
-  "completed_at": "2026-11-10T03:44:05Z",
-  "source_at": "2026-11-10T01:28:57Z",
-  "source_commit": "3d3d4a4c8927b9a1072b7478edd1eb244230a849",
-  "source_age_seconds": 8108,
+  "started_at": "2026-11-10T07:36:04Z",
+  "completed_at": "2026-11-10T07:38:29Z",
+  "source_at": "2026-11-10T07:19:35Z",
+  "source_commit": "2bb068028fbebb313d941cc54c3ca7673220f632",
+  "source_age_seconds": 1134,
   "counts": {
-    "usable_quoted_pairs": 65,
-    "admission_routes_reviewed": 130,
+    "discovered_pairs": 68,
+    "usable_quoted_pairs": 68,
+    "reported_full_multiframe_pairs": 68,
+    "admission_routes_reviewed": 136,
     "admission_routes_admitted": 0,
-    "admission_routes_rejected": 130,
-    "rejected_four_frame_trend_conflict": 25,
-    "rejected_invalid_bid_ask_or_spread": 27,
-    "rejected_reversal_or_exhaustion": 72,
-    "rejected_spread_too_high_relative_to_volatility": 4,
+    "admission_routes_rejected": 136,
+    "rejected_four_frame_trend_conflict": 27,
+    "rejected_invalid_bid_ask_or_spread": 20,
+    "rejected_no_decisive_completed_m15_impulse": 1,
+    "rejected_reversal_or_exhaustion": 78,
+    "rejected_spread_too_high_relative_to_volatility": 8,
     "rejected_unsupported_pair_or_route": 2,
     "strongest_ranked_candidates_independently_challenged": 3,
     "pair_shards_directly_inspected": 3,
@@ -34,78 +37,78 @@
   "findings": [
     {
       "scope": "admission and source gate",
-      "fact": "The persisted 01:28:57Z snapshot reported 65 usable quoted pairs and evaluated 130 registered routes. All 130 routes were rejected: 72 REVERSAL_OR_EXHAUSTION, 25 FOUR_FRAME_TREND_CONFLICT, 27 INVALID_BID_ASK_OR_SPREAD, 4 SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY and 2 UNSUPPORTED_PAIR_OR_ROUTE. signals.json remained empty.",
-      "counter_evidence": "At completion the source was 8,108 seconds old, beyond both the 25-minute full-research limit and the outer 70-minute execution-evidence ceiling. Historical completed candles cannot prove a fresh current trigger, current spread, or prospective expiry window.",
-      "decision": "REJECTED every new registration. candidate_review has no authority to request a duplicate full refresh."
+      "fact": "The refreshed 07:19:35Z snapshot has 68/68 usable OANDA quotes and reported D/H4/H1/M15/M5 coverage. The current admission audit evaluated 136 registered routes and admitted none.",
+      "counter_evidence": "Rejections are 78 REVERSAL_OR_EXHAUSTION, 27 FOUR_FRAME_TREND_CONFLICT, 20 INVALID_BID_ASK_OR_SPREAD, 8 SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY, 2 UNSUPPORTED_PAIR_OR_ROUTE and 1 NO_DECISIVE_COMPLETED_M15_IMPULSE. signals.json remains empty.",
+      "decision": "REJECTED every new registration; no threshold was relaxed and no canonical signal was created."
     },
     {
-      "scope": "EUR_HKD LONG, rank 1",
-      "fact": "The frozen pair shard showed 8.80430/8.80560 with a 13.0-pip spread, M15 ATR about 30.19 pips and M15/H1 positive directional structure. The 01:00Z completed M15 candle closed above the prior Donchian high with a 72.6% body, but M15 MACD histogram remained negative in the admission snapshot, H1 RSI14 was 70.62 and the move was materially extended above M15 EMA20.",
-      "counter_evidence": "D1 retained lower highs/lows, price below the visible Ichimoku cloud and DOWN Supertrend; H4 also retained lower highs/lows and DOWN Supertrend. The breakout is old relative to this review, the current route has no immutable entry/stop/target/expiry package, and HKD macro coverage remains partial around the 10 November SME release and 11 November tenders.",
-      "admission_reason": "REVERSAL_OR_EXHAUSTION for both MOMENTUM_CONTINUATION and EMA20_PULLBACK.",
-      "decision": "REJECTED. No backdated continuation trigger or chase entry was created."
+      "scope": "EUR_USD LONG",
+      "source_quote_at": "2026-11-10T07:19:35.906475904Z",
+      "quote": "OANDA bid 1.12322 / ask 1.12330; observed spread 0.8 pips.",
+      "evidence": "H1, M15 and M5 are bullish above EMA20/50/200 with positive DMI and Supertrend UP; M15 ADX 29.22 and ATR about 3.90 pips. However D remains below EMA50/200, cloud and Supertrend DOWN, H4 Supertrend is DOWN with lower-high/lower-low structure, and the latest completed M15 candle had only 39% body, 48% upper wick and no Donchian breakout.",
+      "counter_evidence": "The registered continuation route is rejected NO_DECISIVE_COMPLETED_M15_IMPULSE and the pullback route is rejected REVERSAL_OR_EXHAUSTION. No fresh registered entry, stop, target and expiry package exists; USD macro coverage is not complete in the current macro receipt.",
+      "decision": "REJECTED; no paper watch appended."
     },
     {
-      "scope": "EUR_CAD LONG, rank 2",
-      "fact": "The frozen pair shard showed 1.58482/1.58511 with a 2.9-pip spread. H1 RSI14 was 80.86 and H4 RSI14 79.11 near 1.5852 resistance; H4 ADX14 was 16.41, M15 MACD histogram was negative, and D1/H4 remained conflicted with longer-term trend measures.",
-      "counter_evidence": "Shorter-frame strength did not establish four-frame agreement, a new completed pullback or continuation trigger, or an immutable entry/stop/target/expiry package. ECB communication begins from 09:00Z and Bank of Canada deliberations are scheduled at 18:30Z; the macro receipt is PARTIAL and does not clear the pair.",
-      "admission_reason": "FOUR_FRAME_TREND_CONFLICT for both registered routes.",
-      "decision": "REJECTED. No threshold was relaxed and no paper watch was appended."
+      "scope": "EUR_CAD LONG",
+      "source_quote_at": "2026-11-10T07:19:35.857682016Z",
+      "quote": "OANDA bid 1.58480 / ask 1.58506; observed spread 2.6 pips.",
+      "evidence": "H4/H1/M15 retain broadly bullish EMA/cloud structure, but D is below EMA50/200 with lower-high/lower-low structure. M15 ATR is about 4.49 pips, making the 2.6-pip spread more than half ATR; the latest M15 candle was bearish/outside, while M5 Supertrend, DMI and MACD turned bearish.",
+      "counter_evidence": "Both registered routes are rejected FOUR_FRAME_TREND_CONFLICT. Current CAD official-event risk includes three Statistics Canada releases at 13:30Z and Bank of Canada deliberations at 18:30Z; macro coverage remains PARTIAL.",
+      "decision": "REJECTED; costs, frame conflict and lower-frame weakening prevent a prospective package."
     },
     {
-      "scope": "GBP_CAD LONG, rank 3",
-      "fact": "The frozen pair shard showed 1.89819/1.89858 with a 3.9-pip spread, equal to about 0.632 of M15 ATR. D1/H4/H1 structure was constructive, but H4 RSI14 was 83.17, H1 RSI14 79.55, price was testing 1.89858 resistance and M15 MACD histogram was negative.",
-      "counter_evidence": "The last registered GBP_CAD watch expired at 14:00Z on 9 November and had a frozen 3.2-pip spread cap; it cannot be revived or duplicated. The current routes provide no fresh immutable economics package, while Bank of England events begin at 08:30Z and Bank of Canada deliberations are scheduled at 18:30Z.",
-      "admission_reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY for both registered routes.",
-      "decision": "REJECTED. Existing expired terms were preserved and not reused."
+      "scope": "EUR_JPY LONG",
+      "source_quote_at": "2026-11-10T07:19:35.515718888Z",
+      "quote": "OANDA bid 177.423 / ask 177.447; observed spread 2.4 pips.",
+      "evidence": "H1/M15/M5 are bullish above EMA20/50/200 with positive DMI, but D remains below EMA50/200, cloud and Supertrend DOWN. H4 Supertrend is DOWN with mixed swing structure and ADX 19.74; the latest M15 candle was bearish with 56% upper wick and no Donchian breakout.",
+      "counter_evidence": "Both registered routes are rejected FOUR_FRAME_TREND_CONFLICT. The current macro receipt does not independently cover JPY events, and news_latest remains PARTIAL.",
+      "decision": "REJECTED; no complete trigger/economics/expiry package survived."
     },
     {
-      "scope": "correlation and macro challenge",
-      "fact": "The three leading ideas are not independent: EUR_HKD and EUR_CAD share long-EUR exposure, while EUR_CAD and GBP_CAD share short-CAD exposure. The current macro receipt is PARTIAL, checked eight official authorities and lists 24 timed events plus four date-only events for EUR, HKD, CAD and GBP over the next 48 hours.",
-      "counter_evidence": "A rank ordering across correlated ideas is not diversification or confirmation. Unknown future speaker substance, date-only release clocks and unchanged machine-news PARTIAL status prevent an event all-clear.",
-      "decision": "No correlated quota was filled and no macro clearance was inferred."
+      "scope": "correlation and registry integrity",
+      "fact": "The three strongest reviewed ideas were all EUR-long exposures, so simultaneous acceptance would create correlated EUR concentration. None survived independently. The signal archive contains 8 immutable IDs, paper-trade-candidates contains 44 preserved records, and the opportunity ledger contains 279 records; all current candidate and opportunity expiries have passed.",
+      "counter_evidence": "No genuinely new, prospective, non-duplicate candidate with a completed trigger and registered entry/stop/target/expiry economics was available.",
+      "decision": "No append was made to paper-trade-candidates.json; signals.json was not altered."
     },
     {
-      "scope": "trigger and economics integrity",
-      "fact": "The six top candidate-route records contain pair, direction, route and rejection reason only. They do not contain a prospective created_at, planned entry or zone, stop, TP1, expiry, precise trigger, allowed spread, or event blackout package.",
-      "counter_evidence": "Constructing those terms from stale candles would be a new invented plan, and treating an older candle as a current trigger would be backdating.",
-      "decision": "No candidate met the registered gross, spread-adjusted, trigger, news, spread and expiry safeguards. Zero new paper candidates were appended."
-    },
-    {
-      "scope": "prospective registry integrity",
-      "fact": "paper-trade-candidates contains 44 unique IDs with zero duplicates and zero unexpired candidates; signal_plan_archive contains 8 historical canonical IDs; entry_opportunity_ledger contains 279 registered observations with zero unexpired opportunities at the review cutoff.",
-      "decision": "All immutable, expired, unfilled, invalidated and adverse records were preserved. paper-trade-candidates and signals.json were not modified."
+      "scope": "macro and coverage",
+      "fact": "The macro receipt is PARTIAL and records verified EUR/CAD events, including ECB material from 09:00Z and Canadian releases at 13:30Z, but it predates the refreshed candidate set and does not supply complete USD or JPY coverage. news_latest is PARTIAL.",
+      "counter_evidence": "The fresh market snapshot cannot substitute for missing macro clearance or verified broker costs.",
+      "decision": "PARTIAL receipt retained; no machine news clearance was changed."
     }
   ],
   "blockers": [
-    "The observed market snapshot was 8,108 seconds old at completion, so current price, spread, completed trigger and expiry economics could not be verified.",
-    "The latest fast audit was STALE_HOURLY_SOURCE with zero actionable observations and no verified user delivery.",
-    "The current macro-events receipt remained PARTIAL; exact clocks were missing for several date-only releases and machine news clearance was not changed.",
-    "No top candidate supplied a complete fresh registered entry, stop, target, expiry, trigger, allowed-spread and blackout package that survived current admission controls.",
-    "candidate_review is not authorized to trigger a stale whole-market recovery; only market_scan owns that recovery path.",
-    "No role-specific GitHub Actions run ID or notification receipt was produced or claimed."
+    "No route supplied a complete fresh registered entry, stop, target, expiry, completed trigger, allowed spread and blackout package that survived current admission controls.",
+    "The macro-events receipt is PARTIAL and does not fully cover USD or JPY for the refreshed leading set; news_latest is also PARTIAL.",
+    "The market_scan receipt was completed before the recovery collection finished and still describes the earlier stale state; candidate_review used the later verified collection_attempt, current admission audit and current pair shards instead.",
+    "The fast audit inspected 8 rotated pairs only and admitted none; it does not prove complete fast coverage of all 68 pairs.",
+    "Pepperstone symbol availability, executable spread, funding, commission and account equity remain unverified.",
+    "No verified user-delivery receipt was produced or claimed."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md@bbc5a5091c16425eceadda27867c284007487800",
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
-    "data/task_runs/market_scan.json@3e0178c5769974a5e6e879cc9a8d1a1033fe46c5",
-    "data/task_runs/macro_events.json@eac69bc032630e156b3713d104f622dec9994f11",
-    "data/task_runs/position_monitor.json@5e18dfcf57afdfbca3cd03b780207bb1286d363c",
-    "data/signal_admission_audit.json@6d4bff200ac36940b5fd4adea64460cdd2dc593d",
-    "data/fast_entry_audit.json@ddb4964163cdb9e283fc0587cc13c44a0f5cdbd0",
-    "data/hourly_assessment.json@d277e3928801b3750e77329a176c139b65f42da9",
-    "data/pairs/EUR_HKD.json@92cd2204a32d8b45186e9aa8f281cf0edcb02171",
-    "data/pairs/EUR_CAD.json@4301311c965030bc0cdfd74d302e89fcbadd5d99",
-    "data/pairs/GBP_CAD.json@cb6b6b5b2630ba7f5137d5fa4fdad92149c05439",
+    "data/task_runs/market_scan.json@3f838b581b988f580ed34ba953990a9b818e13ec",
+    "data/task_runs/macro_events.json@e4a8bb1df71c2d7dd152ae60fcae14b3a6121198",
+    "data/collection_attempt.json@b92a9e6a3b38e72bc0adebc8482b359d15298ba0",
+    "data/monitoring_health.json@1555fdba3b7a9be0d1256d36b0f904098424815b",
+    "data/signal_admission_audit.json@0aefa925b2b60f855f71cffe007aec75e9ba6549",
+    "data/fast_entry_audit.json@1c84d0890e3c8ed4f8a0cafb729401e56fabb1ef",
+    "data/hourly_assessment.json@4049278160c79d58a973c80be2da180a3597f187",
+    "data/news_latest.json@9bd3595fc8f5b9776305fed5db357925e94672e1",
+    "data/universe.json@659a1ef7fad085123b9b9e8e7e55eeba93cdb7c3",
+    "data/pairs/EUR_USD.json@6ebca6a18e5370cfaa1432a3dbde19cd01f90703",
+    "data/pairs/EUR_CAD.json@8277d1f458b314ebf1ee72ee87b55463c524604b",
+    "data/pairs/EUR_JPY.json@2fbcb33ae27f522773f7193ef5b5e5ccf015a85e",
     "data/signal_plan_archive.json@629806f66e9d2491a3174c68ad17e9f0f7fade9c",
     "paper-trade-candidates.json@35daf9a27b23c9b67a2c45bbf870dcc5bb2ccf81",
-    "data/entry_opportunity_ledger.json@f608ec88d47be6963f9b0ec4a33c2af1c60953da",
-    "signals.json@152c8fc0e06968402d34f2d415e0c5be00802636",
-    "data/collection_attempt.json@565cf009b4411c4cdc27ac7ef0b185057facec45"
+    "data/entry_opportunity_ledger.json@e38a7858214f0fce4af8f334d05c941038ee80a9",
+    "signals.json@f7c8c979c1568acf77ef3cf53a894a07610f6b1b"
   ],
   "run_ids": [
-    "42736022053"
+    "42774422355"
   ],
   "no_broker_orders": true
 }
