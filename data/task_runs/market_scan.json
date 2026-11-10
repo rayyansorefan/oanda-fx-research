@@ -2,17 +2,17 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T13:10:51Z",
-  "completed_at": "2026-11-10T13:11:37.758Z",
+  "started_at": "2026-11-10T14:17:31Z",
+  "completed_at": "2026-11-10T14:18:27.325Z",
   "source_at": "2026-11-10T12:13:45Z",
   "source_commit": "157cfe5e95c32f875243fbb367c6315b245edde9",
-  "source_age_seconds": 3473,
+  "source_age_seconds": 7482,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs": 68,
     "reported_m15_h1_indicator_pairs": 58,
     "reported_deep_five_frame_pairs": 31,
-    "independently_inspected_pair_shards_this_run": 9,
+    "independently_inspected_pair_shards_this_run": 10,
     "independently_verified_all_pairs": false,
     "admission_routes": 116,
     "admitted": 0,
@@ -29,16 +29,17 @@
     }
   },
   "findings": [
-    "12:13:45Z full source, 68 usable quoted pairs but only 58 M15/H1 indicator pairs and 31 complete five-frame deep pairs; OANDA 504 candle failures create actual gaps. Nine existing pair shards independently fetched and frame presence checked; three attempted shards absent.",
-    "Canonical 12:13:45Z admission rejected all 116 routes, signals.json empty at 12:15:18Z. WAIT; no approved conditional paper plan or verified simulated fill.",
-    "Collection attempt 42813744825 recorded COLLECTED with 504 candle failures. Source freshness not replaced by task clock. Last recovery request sequence 198 at 12:12:11Z; no new request issued because current Actions state cannot be independently checked for coalescing.",
-    "Private sanitized public_dashboard_payload snapshot 12:13:45Z status PARTIAL, but last known public publication failure exceeded payload limit. Actual served GitHub Pages feed could not be retrieved. Macro receipt 08:05:50Z; news clearance remains partial."
+    "Latest accessible full source 12:13:45Z: 68 usable quoted pairs, 58 with M15/H1 indicators and 31 complete D/H4/H1/M15/M5; candle HTTP 504 errors caused real gaps.",
+    "Canonical admission rejected all 116 routes; signals.json has zero signals. WAIT; no verified conditional paper plan or simulated fill.",
+    "Ten existing pair shards independently retrieved at 12:13:45Z; GBP_USD and EUR_JPY shards unavailable. Not an independent all-pair validation.",
+    "One current-main stale-source recovery requested at 14:18:05Z sequence 199 commit 4a937dc4a85e9e4371ffeae7783713a0c47475e3, request readback confirmed. No resulting collection/admission/publication verified.",
+    "Macro receipt from 08:05:50Z and machine news PARTIAL. Private sanitized dashboard payload dated 12:13:45Z; public serving and publication readback unverified."
   ],
   "blockers": [
-    "Full/deep coverage incomplete: 37 of 68 pairs lack complete five-frame deep context; only nine shards independently inspected this run.",
-    "Latest source exceeds 20-minute active-session freshness target; no verified current-main Actions in-flight status to safely coalesce a recovery.",
-    "Public GitHub Pages feed inaccessible and latest successful deployment/publication of this source unverified.",
-    "Macro receipt stale relative to current market source; machine news remains partial."
+    "Source >20 minutes old during active London session; recovery result pending/unverified.",
+    "37/68 pairs missing complete five-frame context; all-pair shard verification incomplete.",
+    "Dashboard publication previously failed due to payload size; actual public served feed unverified.",
+    "Macro receipt older than source; news PARTIAL."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -57,12 +58,13 @@
     "data/pairs/EUR_USD.json",
     "data/pairs/USD_CAD.json",
     "data/pairs/EUR_CAD.json",
-    "data/pairs/CHF_HKD.json",
+    "data/pairs/USD_JPY.json",
     "data/pairs/AUD_JPY.json",
     "data/pairs/EUR_GBP.json",
     "data/pairs/GBP_JPY.json",
-    "data/pairs/USD_JPY.json",
-    "data/pairs/CAD_HKD.json"
+    "data/pairs/CAD_HKD.json",
+    "data/pairs/CHF_HKD.json",
+    "data/pairs/AUD_NZD.json"
   ],
   "run_ids": [
     "42813744825"
