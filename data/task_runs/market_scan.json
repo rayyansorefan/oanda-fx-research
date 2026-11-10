@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T18:17:25Z",
-  "completed_at": "2026-11-10T18:18:35.512Z",
-  "source_at": "2026-11-10T17:46:03Z",
-  "source_commit": "48543ebd978b2199b7586a53b82ddafe27eb0bfd",
-  "source_age_seconds": 1953,
+  "started_at": "2026-11-10T19:18:24Z",
+  "completed_at": "2026-11-10T19:19:01.511Z",
+  "source_at": "2026-11-10T18:56:24Z",
+  "source_commit": "2a85272edd5a3de422f4b2aab7a420c6d1cc407e",
+  "source_age_seconds": 1358,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs": 65,
@@ -18,34 +18,36 @@
     "admitted": 0,
     "canonical_signals": 0,
     "rejection_reasons": {
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 6,
+      "RECENT_MATERIAL_HEADLINE_REVIEW": 2,
+      "FOUR_FRAME_TREND_CONFLICT": 54,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 2,
+      "INVALID_BID_ASK_OR_SPREAD": 43,
+      "PRIMARY_NEWS_SOURCE_MISSING": 2,
+      "REVERSAL_OR_EXHAUSTION": 15,
       "ADX_TREND_STRENGTH": 4,
-      "FOUR_FRAME_TREND_CONFLICT": 34,
-      "INVALID_BID_ASK_OR_SPREAD": 15,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 3,
-      "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 1,
-      "REVERSAL_OR_EXHAUSTION": 71,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     }
   },
   "findings": [
-    "17:46:03Z collected source: 65/68 usable quotes, reported full five-frame contexts for 65; 3 TRY pairs non-tradeable. Twelve leading pair shards independently read, not all 65.",
-    "Canonical admission 130/130 rejected; signals.json generated 17:46:56Z empty. WAIT. Hourly research run 42868077511 concluded failure despite COLLECTED attempt; publication not proven.",
-    "One current-main full recovery sequence 202 requested 18:18Z and read back commit 403552e; associated Actions run 42873798557 in progress, companion 42873798554 completed successfully; resulting collection/admission/publication not yet verified.",
-    "Private sanitized dashboard payload snapshot 12:13:45Z; actual public served feed not verified. Machine news PARTIAL (BLS feeds unavailable); macro receipt 08:05:50Z."
+    "18:56:24Z full collection COLLECTED, 65/68 usable quotes and reported complete five-frame coverage; 3 TRY instruments non-tradeable. Twelve leading pair shards inspected independently; all-pair independent verification incomplete.",
+    "Canonical admission rejected 130/130 routes, signals.json empty at 18:56:37Z. WAIT; no verified simulated fills or conditional plans.",
+    "One current-main recovery sequence 203 requested 19:18:48Z, commit 5f9467388c0930674203bf603e3b7f43ae52d81f; exact request readback verified. Resulting collection/admission/publication not yet established.",
+    "Private dashboard payload snapshot 18:56:24Z but public serving unverified. Machine news PARTIAL; macro role last checked 08:05:50Z."
   ],
   "blockers": [
-    "Full independent all-pair audit not completed; measured 12/65 inspected.",
-    "Source older than 20-minute recovery threshold; recovery request committed but result unverified.",
-    "Latest hourly Actions run failed; publication pipeline and actual served feed unverified.",
-    "Machine news PARTIAL and macro receipt stale."
+    "Full independent all-pair shard verification incomplete (12/65).",
+    "Source exceeded 20-minute active-session recovery threshold; recovery outcome unverified.",
+    "Sanitized public repository publication and actual served feed unverified.",
+    "Machine news PARTIAL and macro research receipt old."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
     "config/scheduled_research_roles.json",
     "validation_protocol.json",
-    "data/universe.json",
     "data/collection_attempt.json",
     "data/monitoring_health.json",
+    "data/universe.json",
     "data/signal_admission_audit.json",
     "signals.json",
     "data/hourly_assessment.json",
@@ -53,23 +55,21 @@
     "data/task_runs/macro_events.json",
     "data/public_dashboard_payload.json",
     "scripts/refresh_request.json",
-    "data/pairs/SGD_CHF.json",
-    "data/pairs/EUR_AUD.json",
-    "data/pairs/EUR_GBP.json",
-    "data/pairs/CAD_HKD.json",
-    "data/pairs/USD_JPY.json",
+    "data/pairs/EUR_USD.json",
+    "data/pairs/GBP_USD.json",
+    "data/pairs/AUD_USD.json",
     "data/pairs/AUD_HKD.json",
     "data/pairs/USD_CAD.json",
-    "data/pairs/AUD_USD.json",
-    "data/pairs/EUR_ZAR.json",
-    "data/pairs/CHF_JPY.json",
+    "data/pairs/GBP_HKD.json",
     "data/pairs/USD_CHF.json",
-    "data/pairs/CHF_HKD.json"
+    "data/pairs/EUR_CAD.json",
+    "data/pairs/CAD_HKD.json",
+    "data/pairs/CHF_HKD.json",
+    "data/pairs/AUD_SGD.json",
+    "data/pairs/USD_DKK.json"
   ],
   "run_ids": [
-    "42868077511",
-    "42873798557",
-    "42873798554"
+    "42879957577"
   ],
   "no_broker_orders": true
 }
