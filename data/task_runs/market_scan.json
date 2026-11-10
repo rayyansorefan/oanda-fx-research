@@ -2,35 +2,35 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T01:16:56Z",
-  "completed_at": "2026-11-10T01:17:28.831Z",
-  "source_at": "2026-11-10T00:51:01Z",
-  "source_commit": "15c631d938ffb22a154d37c308f220c103fd53c8",
-  "source_age_seconds": 1588,
+  "started_at": "2026-11-10T02:19:20Z",
+  "completed_at": "2026-11-10T02:19:52.375Z",
+  "source_at": "2026-11-10T01:28:57Z",
+  "source_commit": "3d3d4a4c8927b9a1072b7478edd1eb244230a849",
+  "source_age_seconds": 3055,
   "counts": {
     "discovered": 68,
-    "last_valid_quoted": 65,
-    "last_valid_m15_h1": 65,
-    "last_valid_deep": 65,
-    "unusable": 3,
+    "usable_quoted": 65,
+    "reported_m15_h1": 65,
+    "reported_deep_d1_h4_h1_m15_m5": 65,
+    "unusable_nontradeable": 3,
+    "independently_inspected_pair_shards": 8,
     "canonical_signals": 0,
     "admitted": 0,
-    "rejection_routes": 130,
-    "independently_inspected_pair_shards": 4
+    "fast_actionable": 0
   },
   "findings": [
-    "Read current five-task operations, registry and registered FX-OOS-20261104-v21 protocol on main; read full summary/latest through authenticated blob fetch because contents responses were empty.",
-    "Last verified collector attempt 2026-11-10T00:51:01Z COLLECTED, run 42731311021, 65/68 usable quoted pairs; EUR_TRY, TRY_JPY and USD_TRY non-tradeable. Persisted summary reports 65 M15/H1 and 65 D/H4/H1/M15/M5; independent inspection covered 4 of 65 shards, not a complete candle audit.",
-    "Current canonical signals empty, admission active=0, 130 rejected routes: 40 four-frame conflicts, 54 reversal/exhaustion, 30 spread/quote-related, 2 insufficient structure reward, 2 ADX, 2 unsupported. WAIT; no simulated entry or outcome asserted.",
-    "Macro-events receipt PARTIAL, official-event clearance not independently refreshed during this run. Fast audit 00:33:28Z stale hourly source and no actionable observations.",
-    "Private sanitized dashboard payload and public repository feed same blob SHA be34e2384e1943bb97447ed8a7493aeec5776f75, but feed snapshot_at remains 2026-11-09T22:29:31Z, older than fresh private 00:51:01Z. Actual served Pages JSON and exporter chronology not independently verified. Publication cannot be described as current.",
-    "Quiet hours: no recovery request, no user notification, no broker orders or rule changes."
+    "Read current operations, five-role registry and locked FX-OOS-20261104-v21 protocol before assessing.",
+    "Current 01:28:57Z full OANDA collector reports COLLECTED (run 42736022053); fetched actual 1.36MB summary and 1.20MB latest blobs because fetch_file returned empty text. 65/68 quotes usable; EUR_TRY, TRY_JPY, USD_TRY non-tradeable. 65 M15/H1 and five-frame chart sets reported, eight current manifest pair shards directly inspected; independent all-shard candle verification incomplete.",
+    "Canonical signals.json has zero plans; admission audit active=0. Strongest ranked EUR_HKD LONG rejected for reversal/exhaustion; EUR_CAD LONG rejected for trend conflict; GBP_CAD LONG rejected for spread/volatility. WAIT, no simulated fills inferred.",
+    "Fast audit 00:33:28Z has no valid actionable observations. Macro role receipt PARTIAL and machine news clearance PARTIAL; no independent new overnight official release verification.",
+    "Private sanitized payload and public repository feed blob SHA 95c6bc6c67ed1931f2f952fd1d75f1d1274d4971 match, source snapshot 01:28:57Z; published_at 01:29:27Z. Served GitHub Pages feed not independently accessible/verified.",
+    "Quiet hours: no stale recovery triggered, no notification, no broker orders, no strategy or cohort changes."
   ],
   "blockers": [
-    "Source exceeds 25-minute full research freshness threshold at review; 70-minute outer limit approaching/exceeded depending on completion.",
-    "Only 4/65 current pair shards independently inspected; measured deep candle verification incomplete.",
-    "Public repository feed still reflects 22:29:31Z while private source is 00:51:01Z; Pages serving unverified.",
-    "Macro receipt partial; no fresh independent event clearance."
+    "Source exceeds 25-minute full-research freshness limit at this review; no current entry assessment.",
+    "Only 8 of 65 pair shards directly checked; reported full-universe coverage is not independent per-candle verification.",
+    "Actual served Pages JSON not verified; repository feed equality alone is insufficient.",
+    "Macro clearance PARTIAL and fast scan STALE_HOURLY_SOURCE."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -40,21 +40,25 @@
     "data/summary.json",
     "data/latest.json",
     "data/collection_attempt.json",
-    "data/fast_entry_audit.json",
     "data/monitoring_health.json",
+    "data/fast_entry_audit.json",
     "data/signal_admission_audit.json",
     "signals.json",
     "data/hourly_assessment.json",
     "data/task_runs/macro_events.json",
     "data/public_dashboard_payload.json",
-    "data/pairs/EUR_JPY.json",
+    "data/pairs/EUR_HKD.json",
     "data/pairs/EUR_CAD.json",
-    "data/pairs/NZD_JPY.json",
-    "data/pairs/USD_CAD.json",
+    "data/pairs/GBP_CAD.json",
+    "data/pairs/EUR_USD.json",
+    "data/pairs/USD_JPY.json",
+    "data/pairs/NZD_USD.json",
+    "data/pairs/GBP_USD.json",
+    "data/pairs/CAD_JPY.json",
     "rayyansorefan/standalone-wallet-paper-agent/docs/fx-feed.json"
   ],
   "run_ids": [
-    "42731311021"
+    "42736022053"
   ],
   "no_broker_orders": true
 }
