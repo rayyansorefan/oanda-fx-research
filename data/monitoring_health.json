@@ -1,8 +1,8 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-10T21:24:07.653588+00:00",
+  "checked_at": "2026-11-10T22:15:47.785775+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-10T21:14:42Z",
+    "checked_at": "2026-11-10T22:14:45Z",
     "collection_tries": 1,
     "collector_endpoint": "practice",
     "error": null,
@@ -49,26 +49,34 @@
         "PRICING": 4
       }
     },
-    "run_id": "42903066975",
-    "started_at": "2026-11-10T21:14:29Z",
+    "run_id": "42912668105",
+    "started_at": "2026-11-10T22:14:24Z",
     "status": "COLLECTED"
   },
   "consecutive_unobserved_fast_targets": 0,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
-    "event": "schedule",
-    "head_sha": "01d730fcae3636df075ce042233841bb637c7817",
-    "id": "42904653716",
+    "event": "push",
+    "head_sha": "5ffeac9ddd91719b2f3014ec7eb23a9dc24f3cc3",
+    "id": "42912668105",
     "outcomes": {
-      "collect": "skipped",
-      "early_cohort": "skipped",
+      "collect": "success",
+      "early_cohort": "success",
       "fast_recovery": "success",
       "safety": "success"
     },
     "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
   },
   "dashboard_deployments": [
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-10T21:48:01Z",
+      "head_sha": "3f284baca29df24f8f67031ee30559674fdf2813",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42908518327",
+      "id": 42908518327,
+      "status": "completed"
+    },
     {
       "conclusion": "success",
       "created_at": "2026-11-10T21:22:59Z",
@@ -84,21 +92,13 @@
       "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42903285091",
       "id": 42903285091,
       "status": "completed"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-11-10T20:17:52Z",
-      "head_sha": "83123ef6d9eef771c55a74958ed0fa5d2309df50",
-      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/42893884648",
-      "id": 42893884648,
-      "status": "completed"
     }
   ],
   "early_cohort_id": "FX-EARLY-20261104-v1",
-  "early_last_source_at": "2026-11-10T21:14:42Z",
-  "early_observation_count": 95,
-  "elapsed_fast_targets_today": 58,
-  "fast_age_seconds": 77.917917,
+  "early_last_source_at": "2026-11-10T22:14:45Z",
+  "early_observation_count": 96,
+  "elapsed_fast_targets_today": 61,
+  "fast_age_seconds": 6.261272,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -116,32 +116,32 @@
     "valid_new_market_observations": 0,
     "verification_note": "workflow_dispatch may be manual; external scheduler origin/requests and missing provider calls cannot be verified from repository receipts alone. Four observed pair-specific events and two sessions are necessary, not sufficient, for sustained reliability."
   },
-  "fast_last_attempt_at": "2026-11-10T21:22:50.299043+00:00",
+  "fast_last_attempt_at": "2026-11-10T22:15:42.175140+00:00",
   "fast_observation_valid": true,
   "fast_run_failures": {
     "failed": 1,
     "sample": 5,
     "scope": "Latest 100 repository runs; process success is not observation success."
   },
-  "fast_source_at": "2026-11-10T21:22:49.735671+00:00",
+  "fast_source_at": "2026-11-10T22:15:41.524503+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 565.653588,
+  "full_age_seconds": 62.785775,
   "full_collection_status": "PARTIAL",
   "full_fresh": true,
-  "full_last_attempt_at": "2026-11-10T21:14:42Z",
-  "full_source_at": "2026-11-10T21:14:42Z",
+  "full_last_attempt_at": "2026-11-10T22:14:45Z",
+  "full_source_at": "2026-11-10T22:14:45Z",
   "last_completed_jobs": [
     {
       "conclusion": "success",
       "event": "schedule",
       "failed_steps": [],
-      "run_id": 42904409325
+      "run_id": 42904653716
     },
     {
       "conclusion": "success",
-      "event": "push",
+      "event": "schedule",
       "failed_steps": [],
-      "run_id": 42903066975
+      "run_id": 42904409325
     }
   ],
   "previous_publication": {
@@ -310,7 +310,7 @@
         "failure",
         "success",
         "failure",
-        null
+        "success"
       ],
       "created_at": [
         "2026-10-21T15:38:58Z",
@@ -618,7 +618,9 @@
     "2026-11-10T19:47:00+00:00",
     "2026-11-10T20:02:00+00:00",
     "2026-11-10T20:32:00+00:00",
-    "2026-11-10T20:47:00+00:00"
+    "2026-11-10T20:47:00+00:00",
+    "2026-11-10T21:32:00+00:00",
+    "2026-11-10T21:47:00+00:00"
   ],
   "workflow_registration": [
     {

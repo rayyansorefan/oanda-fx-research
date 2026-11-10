@@ -1277,7 +1277,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_SGD-38c279cda0e4049331d8b1b50f3a7eebad854b80a199962e50f48eb20027f997.json",
+      "source_evidence": "data/replay_evidence/EUR_SGD-f45ab9460dd8c614f3d9e0ba5331f60f4b008ace13a82476ad731cc31a0b472a.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1290,7 +1290,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_PLN-b17e7bfa77e09aadf28eb1dc617deff3ebdb73b74570f73d49f955964d87da2a.json",
+      "source_evidence": "data/replay_evidence/USD_PLN-087a3c2f576f0c3c1215ae88dde668087244ef530e06e2c3db9368f9b671dd1f.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1303,7 +1303,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_SGD-b81b0c1dcf65ad251bb8d5f0273221f04c43500efe41321059478f2602018648.json",
+      "source_evidence": "data/replay_evidence/EUR_SGD-b795313404d47d37e3c2a62730595d69583c271154d03100ef96c9a28f05e9c7.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1412,7 +1412,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_PLN-0c629a6c9e8d5c1c74ff28ee4fca31ca91e2a6891c4e01fed60616dd961f5887.json",
+      "source_evidence": "data/replay_evidence/USD_PLN-f384c6519a3ea895aef893b86a8ef9009cc619864268c417fb6e0808b05dd1b1.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1598,11 +1598,10 @@
       "id": "202611101645-SGDJPY-LONG-EMA20_PULLBACK",
       "instrument": "SGD_JPY",
       "pattern_at": "2026-11-10T17:30:00+00:00",
-      "reason": "Final pre-expiry M15 candle not yet observed",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/SGD_JPY-9c2db27d59fd9aac3d6ed085c6e42d2fc67951546a151bc944276988e6610a74.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/SGD_JPY-3c6cbcbf3c7d863d0fd07d1c8091e186d3d12ae6c644e7a4d2f0283138ef983e.json",
+      "status": "PAPER_NOT_FILLED_BEFORE_EXPIRY",
       "trade_executed": false
     },
     "202611101800-CADHKD-SHORT-EMA20_PULLBACK": {
@@ -1613,23 +1612,26 @@
       "pattern_at": "2026-11-10T20:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/CAD_HKD-51de5ef025a656ad89df9eb4229f7db7d686477136d9641e117154e5a407ca0a.json",
+      "source_evidence": "data/replay_evidence/CAD_HKD-3c8a7108e7f43aa8b19f4dc2c9d106d2d60a314783cb208366e4e1e92f8d2066.json",
       "status": "PAPER_WAITING_FOR_ENTRY",
       "trade_executed": false
     },
     "202611101800-CADSGD-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "SHORT",
+      "exit_at": "2026-11-10T21:45:00Z",
       "fill_at": "2026-11-10T20:30:00Z",
       "id": "202611101800-CADSGD-SHORT-EMA20_PULLBACK",
       "instrument": "CAD_SGD",
       "paper_entry": 0.90367,
+      "paper_exit": 0.90422,
       "pattern_at": "2026-11-10T20:15:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/CAD_SGD-c0fd8415a884f6234ae1e8320f3975bcd0bfb599abcba28a835f9b5cb8e90264.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/CAD_SGD-210559ee081a06e5c1b6e6a3b173b47645581719903b3118a1b1edf2a1b211e2.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.06086
     },
     "202611101830-AUDNZD-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
@@ -1639,7 +1641,7 @@
       "pattern_at": "2026-11-10T19:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_NZD-5b33f7ab0259fb54c3c4d9d40f1872be3d2262f1ad74d605b5badaf4f72ea6d4.json",
+      "source_evidence": "data/replay_evidence/AUD_NZD-6e36a907e3434b2a693cdfabc30d372c6f567585a9c058b6f2fe56e8aac161e1.json",
       "status": "PAPER_WAITING_FOR_ENTRY",
       "trade_executed": false
     },
@@ -1651,21 +1653,26 @@
       "pattern_at": "2026-11-10T20:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/CAD_HKD-c978392341d721be11ef33e7a5d62e6150757340902cba797033cff4dae277eb.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/CAD_HKD-3888164afbe551204ca13316a0c6913406637799246c05c93fc0cefbc81c4d2e.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
       "trade_executed": false
     },
     "202611101830-CADSGD-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "SHORT",
+      "exit_at": "2026-11-10T21:45:00Z",
+      "fill_at": "2026-11-10T20:30:00Z",
       "id": "202611101830-CADSGD-SHORT-EMA20_PULLBACK",
       "instrument": "CAD_SGD",
+      "paper_entry": 0.90369,
+      "paper_exit": 0.9042,
       "pattern_at": "2026-11-10T20:15:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/CAD_SGD-c33b449ce1a1342996f7fedca242d2bda5784d9b3d1026ced05190dbab797bff.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/CAD_SGD-86ec8b7b51657f061856133aee51201403d0159cd291fce697dbff9913ac3574.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.05644
     },
     "202611101830-USDCAD-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
@@ -1675,44 +1682,62 @@
       "pattern_at": "2026-11-10T20:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_CAD-f44ce47cfb972e8315460afe90dd838ddab75a09f4f878a5c4b3007b3bfe1d98.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/USD_CAD-9df00a02bd0b8143ade2e04a3bf7fc4bb9cc44f72f1c1db2dc2625b978eacc97.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
       "trade_executed": false
     },
     "202611101830-USDSEK-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
+      "fill_at": "2026-11-10T21:15:00Z",
       "id": "202611101830-USDSEK-LONG-EMA20_PULLBACK",
       "instrument": "USD_SEK",
+      "paper_entry": 9.8738,
       "pattern_at": "2026-11-10T21:00:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_SEK-a7a34ebe3248086da8a58d5ab4bb40cc11ffa82c5b96114b92bf420be448f0bd.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/USD_SEK-bacce00e102b9f50d0bb1b78f1fcb66db66ce29b30acb7238f67b75f4259f4ee.json",
+      "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     },
     "202611101900-CADHKD-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "SHORT",
+      "fill_at": "2026-11-10T20:30:00Z",
       "id": "202611101900-CADHKD-SHORT-EMA20_PULLBACK",
       "instrument": "CAD_HKD",
+      "paper_entry": 5.53137,
       "pattern_at": "2026-11-10T20:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/CAD_HKD-baf9b46f28792b9383a88d76ce7cc7c0800e15988f67bcd51ddc030a69b32779.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/CAD_HKD-93c49b074e967325c9eb1bc571d40bbef5d09ec0a897306e63ecb8d5a426aa4f.json",
+      "status": "PAPER_OPEN_UNRESOLVED",
+      "trade_executed": false
+    },
+    "202611101900-EURHKD-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202611101900-EURHKD-SHORT-EMA20_PULLBACK",
+      "instrument": "EUR_HKD",
+      "pattern_at": "2026-11-10T21:15:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/EUR_HKD-56ee4e33b35a56e13fcb16712244e24fb17e8eb73f765766cb51c60c6323f246.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
       "trade_executed": false
     },
     "202611101900-USDCAD-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
+      "fill_at": "2026-11-10T20:30:00Z",
       "id": "202611101900-USDCAD-LONG-EMA20_PULLBACK",
       "instrument": "USD_CAD",
+      "paper_entry": 1.41833,
       "pattern_at": "2026-11-10T20:15:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_CAD-ed0addee63b7c1f2363a46e36cca7804d9dc4872147a2d46b73f4fabf707fec0.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/USD_CAD-17b2d38c49ca8aaaf04f3862bdc6c8ce4421d04868ad32a9a93b690cc30d2bcd.json",
+      "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     },
     "202611101900-USDSEK-LONG-EMA20_PULLBACK": {
@@ -1834,6 +1859,30 @@
       "route": "EMA20_PULLBACK",
       "scored": false,
       "source_evidence": "data/replay_evidence/USD_SGD-dfd4777f55d1b86b467ce17bfb706f9fbcc26d05f52e2f6559832a60217d25f6.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
+      "trade_executed": false
+    },
+    "202611102045-EURHKD-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202611102045-EURHKD-SHORT-EMA20_PULLBACK",
+      "instrument": "EUR_HKD",
+      "pattern_at": "2026-11-10T21:45:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/EUR_HKD-5873719d943954624a536bb5c66045c17b1500f2b0148c90a8d40826299e5917.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
+      "trade_executed": false
+    },
+    "202611102045-EURUSD-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202611102045-EURUSD-SHORT-EMA20_PULLBACK",
+      "instrument": "EUR_USD",
+      "pattern_at": "2026-11-10T21:45:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/EUR_USD-b3435a6aa5bcc2585bb1ad52a3a34e725b089ea61a69638299d1e2433111ce3c.json",
       "status": "PAPER_WAITING_FOR_ENTRY",
       "trade_executed": false
     }
@@ -1979,6 +2028,14 @@
       },
       {
         "after_alert_fill_verified": false,
+        "detected_at": "2026-11-10T22:14:55.241415+00:00",
+        "detection_delay_minutes": 59.92,
+        "fill_precedes_detection": false,
+        "id": "202611101900-EURHKD-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-11-10T21:15:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
         "detected_at": "2026-11-10T20:17:00.350825+00:00",
         "detection_delay_minutes": 2.01,
         "fill_precedes_detection": false,
@@ -2064,6 +2121,22 @@
         "fill_precedes_detection": false,
         "id": "202611102000-USDSGD-LONG-EMA20_PULLBACK",
         "pattern_at": "2026-11-10T20:45:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-10T22:14:55.241415+00:00",
+        "detection_delay_minutes": 29.92,
+        "fill_precedes_detection": false,
+        "id": "202611102045-EURHKD-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-11-10T21:45:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-10T22:14:55.241415+00:00",
+        "detection_delay_minutes": 29.92,
+        "fill_precedes_detection": false,
+        "id": "202611102045-EURUSD-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-11-10T21:45:00+00:00"
       }
     ],
     "verified_profitable_missed_manual_entries": 0
@@ -2071,17 +2144,17 @@
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 20,
-  "today_forward_patterns": 28,
-  "today_registered": 76,
-  "today_scored_hypothetical_entries": 3,
+  "today_distinct_pair_pattern_events": 23,
+  "today_forward_patterns": 31,
+  "today_registered": 77,
+  "today_scored_hypothetical_entries": 5,
   "today_status_counts": {
-    "PAPER_NOT_FILLED_BEFORE_EXPIRY": 5,
-    "PAPER_NO_CONTIGUOUS_CANDLES": 11,
-    "PAPER_OPEN_UNRESOLVED": 2,
-    "PAPER_STOP_AFTER_FILL": 3,
-    "PAPER_WAITING_FOR_ENTRY": 7
+    "PAPER_NOT_FILLED_BEFORE_EXPIRY": 6,
+    "PAPER_NO_CONTIGUOUS_CANDLES": 4,
+    "PAPER_OPEN_UNRESOLVED": 4,
+    "PAPER_STOP_AFTER_FILL": 5,
+    "PAPER_WAITING_FOR_ENTRY": 12
   },
   "today_uk": "2026-11-10",
-  "updated_at": "2026-11-10T21:14:52Z"
+  "updated_at": "2026-11-10T22:14:55Z"
 }
