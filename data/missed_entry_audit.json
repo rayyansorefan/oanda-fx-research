@@ -1277,7 +1277,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_SGD-5aafca994bbead94009b9a5f3e13b45fff195e4e59cec2fd54a5323a42fd7280.json",
+      "source_evidence": "data/replay_evidence/EUR_SGD-3b5dbf3034cf1c87a9058712c897e2620bafe2b60fe685dbc16f834359fe027b.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1290,7 +1290,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_PLN-65c3c955ef0302221b9e94fa82db766809f789483d48c9f8f4203222ef30da91.json",
+      "source_evidence": "data/replay_evidence/USD_PLN-09f3ac4ce6ed28ec7ab562860c62f800d48f249f270b2e5da2e5c5daae9ed126.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1303,7 +1303,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_SGD-2da50f3652cff645102b823218fd6eef79f0998783dcb8764fa47bfbf6e7d26a.json",
+      "source_evidence": "data/replay_evidence/EUR_SGD-ba2abc8ddfbc924599b4ae4b5e6a681d1e48b055252c20de1be2025fa7465976.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1412,7 +1412,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_PLN-08f01311eaae9d9850f6f2985bfaa955b255a83a04c1eb57ecda2509d9406a84.json",
+      "source_evidence": "data/replay_evidence/USD_PLN-9ef4a51b47f1dded718997695c6153fd7c80a1588614dc752c4c25941a335ffa.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1562,11 +1562,10 @@
       "id": "202611101430-AUDNZD-SHORT-EMA20_PULLBACK",
       "instrument": "AUD_NZD",
       "pattern_at": "2026-11-10T15:45:00+00:00",
-      "reason": "Final pre-expiry M15 candle not yet observed",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_NZD-72d2cbb37882fbe227a6d8ae3fab9a6776c6372434676c4a23b70a798d71fafe.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/AUD_NZD-3b3f98e3e30bc2c388c78262189d37584237b17f0ab44fcfb550b48f46ec7948.json",
+      "status": "PAPER_NOT_FILLED_BEFORE_EXPIRY",
       "trade_executed": false
     },
     "202611101430-CADSGD-SHORT-EMA20_PULLBACK": {
@@ -1575,11 +1574,10 @@
       "id": "202611101430-CADSGD-SHORT-EMA20_PULLBACK",
       "instrument": "CAD_SGD",
       "pattern_at": "2026-11-10T15:15:00+00:00",
-      "reason": "Final pre-expiry M15 candle not yet observed",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/CAD_SGD-818e9d822a4d222e9b8492d8c1c6fc44206f9c2b560de6f338cdf46295cb4216.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/CAD_SGD-b9bc1eb5d3d21801d8f024a8b016f5f94f324f943fd0dea866e98d8394250b42.json",
+      "status": "PAPER_NOT_FILLED_BEFORE_EXPIRY",
       "trade_executed": false
     },
     "202611101430-EURNOK-LONG-EMA20_PULLBACK": {
@@ -1588,11 +1586,10 @@
       "id": "202611101430-EURNOK-LONG-EMA20_PULLBACK",
       "instrument": "EUR_NOK",
       "pattern_at": "2026-11-10T15:15:00+00:00",
-      "reason": "Final pre-expiry M15 candle not yet observed",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_NOK-9f845e13099662e6d73be168049e54a9734310e090986656367614e7d7f1c656.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/EUR_NOK-27115a25b2295c67e5cec794285b7cc8f898313bb6efdab7a98f078593f03394.json",
+      "status": "PAPER_NOT_FILLED_BEFORE_EXPIRY",
       "trade_executed": false
     },
     "202611101645-SGDJPY-LONG-EMA20_PULLBACK": {
@@ -1603,8 +1600,20 @@
       "pattern_at": "2026-11-10T17:30:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/SGD_JPY-976cf632517cd45a1ea1cfff66e9ddf3ab0ffb9abc68e993b79367ac06d8bdcb.json",
+      "source_evidence": "data/replay_evidence/SGD_JPY-1f33e94b8cf1d6210001eee07ef45777cc1fdcb8a1aed0e0f133af45dc42fe4f.json",
       "status": "PAPER_WAITING_FOR_ENTRY",
+      "trade_executed": false
+    },
+    "202611101830-AUDNZD-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202611101830-AUDNZD-SHORT-EMA20_PULLBACK",
+      "instrument": "AUD_NZD",
+      "pattern_at": "2026-11-10T19:15:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/AUD_NZD-2ef115929b66410362ad940dbdaad0550daa91662366c13ce74fcb1afeffffd4.json",
+      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     }
   },
@@ -1682,6 +1691,14 @@
         "fill_precedes_detection": false,
         "id": "202611101645-SGDJPY-LONG-EMA20_PULLBACK",
         "pattern_at": "2026-11-10T17:30:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-10T19:19:52.389747+00:00",
+        "detection_delay_minutes": 4.87,
+        "fill_precedes_detection": false,
+        "id": "202611101830-AUDNZD-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-11-10T19:15:00+00:00"
       }
     ],
     "verified_profitable_missed_manual_entries": 0
@@ -1689,16 +1706,16 @@
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 8,
-  "today_forward_patterns": 9,
-  "today_registered": 43,
+  "today_distinct_pair_pattern_events": 9,
+  "today_forward_patterns": 10,
+  "today_registered": 53,
   "today_scored_hypothetical_entries": 3,
   "today_status_counts": {
-    "PAPER_NOT_FILLED_BEFORE_EXPIRY": 2,
-    "PAPER_NO_CONTIGUOUS_CANDLES": 3,
+    "PAPER_NOT_FILLED_BEFORE_EXPIRY": 5,
+    "PAPER_NO_CONTIGUOUS_CANDLES": 1,
     "PAPER_STOP_AFTER_FILL": 3,
     "PAPER_WAITING_FOR_ENTRY": 1
   },
   "today_uk": "2026-11-10",
-  "updated_at": "2026-11-10T18:56:34Z"
+  "updated_at": "2026-11-10T19:19:52Z"
 }

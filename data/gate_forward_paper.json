@@ -1,10 +1,8 @@
 {
   "activated_at": "2026-11-06T09:47:09Z",
-  "last_evaluated_at": "2026-11-10T18:56:44Z",
-  "latest_source_at": "2026-11-10T18:56:24Z",
-  "new_ids": [
-    "FX-GATE-v1-20261110T185624-USD_SGD-LONG"
-  ],
+  "last_evaluated_at": "2026-11-10T19:20:00Z",
+  "latest_source_at": "2026-11-10T19:19:41Z",
+  "new_ids": [],
   "no_orders": true,
   "policy": "Only news-source-missing single-blocker pullback hypotheses; unrelated hard gates remain. No manual alerts, promotions or claims of an executable broker edge.",
   "protocol_id": "FX-GATE-20261106-v1",
@@ -413,7 +411,14 @@
       },
       "policy": "FX-GATE-20261106-v1",
       "registered_at": "2026-11-10T18:56:44Z",
-      "replay_attempts": [],
+      "replay_attempts": [
+        {
+          "at": "2026-11-10T19:20:00Z",
+          "candle_evidence_path": "data/replay_evidence/USD_SGD-c84a31be1831d477a113e8fc5114daa1d93f28540b8801f07cb3bf0bced6d2c3.json",
+          "pair_observation_count": 1,
+          "status": "PENDING_TRIGGER"
+        }
+      ],
       "result": {
         "scored": false,
         "status": "PENDING_TRIGGER"
@@ -426,7 +431,7 @@
   "schema": 1,
   "status": "PAPER_ONLY_PROSPECTIVE_STUDY",
   "summary": {
-    "new_this_run": 1,
+    "new_this_run": 0,
     "outcomes": {
       "INVALIDATED_PRE_ENTRY": 2,
       "PENDING_TRIGGER": 1,

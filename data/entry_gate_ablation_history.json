@@ -19882,6 +19882,155 @@
       ],
       "route_observations": 130,
       "source_at": "2026-11-10T18:56:24Z"
+    },
+    {
+      "counterfactual_arms": {
+        "champion_all_gates": {
+          "approval_allowed": true,
+          "counterfactual_pair_routes": 1,
+          "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
+          "unverifiable": 1
+        },
+        "paper_without_m15_adx_and_missing_primary_feed": {
+          "approval_allowed": false,
+          "counterfactual_pair_routes": 3,
+          "paper_watch_examples": [
+            {
+              "direction": "SHORT",
+              "economics_at_observation": {
+                "entry_reference": 5.531777921412516,
+                "gross_rr": 3.89753,
+                "nearest_target": 5.52064,
+                "net_rr": 2.66024,
+                "stop_reference": 5.534635606400597
+              },
+              "news_status": "SOURCE_UNVERIFIED",
+              "pair": "CAD_HKD",
+              "route": "EMA20_PULLBACK",
+              "status": "PAPER_ONLY_NOT_A_FUTURE_TRIGGER_OR_MANUAL_ENTRY"
+            },
+            {
+              "direction": "LONG",
+              "economics_at_observation": {
+                "entry_reference": 1.2817147953895398,
+                "gross_rr": 3.2427,
+                "nearest_target": 1.28304,
+                "net_rr": 1.98341,
+                "stop_reference": 1.2813061218796062
+              },
+              "news_status": "SOURCE_UNVERIFIED",
+              "pair": "USD_SGD",
+              "route": "EMA20_PULLBACK",
+              "status": "PAPER_ONLY_NOT_A_FUTURE_TRIGGER_OR_MANUAL_ENTRY"
+            },
+            {
+              "direction": "SHORT",
+              "economics_at_observation": {
+                "entry_reference": 108.92585766339015,
+                "gross_rr": 2.57878,
+                "nearest_target": 108.678,
+                "net_rr": 1.83304,
+                "stop_reference": 109.02197195707498
+              },
+              "news_status": "RESEARCH_CLEAR",
+              "pair": "AUD_JPY",
+              "route": "EMA20_PULLBACK",
+              "status": "PAPER_ONLY_NOT_A_FUTURE_TRIGGER_OR_MANUAL_ENTRY"
+            }
+          ],
+          "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
+          "unverifiable": 1
+        },
+        "without_daily_ema_paper": {
+          "approval_allowed": false,
+          "counterfactual_pair_routes": 1,
+          "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
+          "unverifiable": 1
+        },
+        "without_m15_adx_paper": {
+          "approval_allowed": false,
+          "counterfactual_pair_routes": 1,
+          "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
+          "unverifiable": 1
+        },
+        "without_nearest_target_economics_diagnostic_only": {
+          "approval_allowed": false,
+          "counterfactual_pair_routes": 1,
+          "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
+          "unverifiable": 0
+        },
+        "without_news_gate_diagnostic_only": {
+          "approval_allowed": false,
+          "counterfactual_pair_routes": 5,
+          "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
+          "unverifiable": 1
+        },
+        "without_reversal_veto_paper": {
+          "approval_allowed": false,
+          "counterfactual_pair_routes": 1,
+          "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
+          "unverifiable": 1
+        }
+      },
+      "distinct_pairs": 65,
+      "failures": {
+        "absolute_spread_cap": 50,
+        "adx_H1": 18,
+        "adx_M15": 14,
+        "direction_known": 0,
+        "dmi_H1": 10,
+        "dmi_M15": 10,
+        "gross_reward_minimum": 39,
+        "net_reward_minimum": 66,
+        "news_gate": 110,
+        "no_reversal_or_exhaustion": 14,
+        "observed_target_available": 1,
+        "pair_supported": 2,
+        "quote_timely_tradeable": 0,
+        "recent_completed_history": 0,
+        "relative_spread_cap": 54,
+        "route_not_stretched": 22,
+        "route_pattern": 59,
+        "structural_stop_range": 2,
+        "trend_D": 46,
+        "trend_H1": 32,
+        "trend_H4": 70,
+        "trend_M15": 6,
+        "valid_two_sided_quote": 0
+      },
+      "isolated_only_blocker": {
+        "absolute_spread_cap": 0,
+        "adx_H1": 1,
+        "adx_M15": 0,
+        "direction_known": 0,
+        "dmi_H1": 0,
+        "dmi_M15": 0,
+        "gross_reward_minimum": 0,
+        "net_reward_minimum": 0,
+        "news_gate": 4,
+        "no_reversal_or_exhaustion": 0,
+        "observed_target_available": 0,
+        "pair_supported": 0,
+        "quote_timely_tradeable": 0,
+        "recent_completed_history": 0,
+        "relative_spread_cap": 0,
+        "route_not_stretched": 0,
+        "route_pattern": 1,
+        "structural_stop_range": 0,
+        "trend_D": 0,
+        "trend_H1": 0,
+        "trend_H4": 0,
+        "trend_M15": 0,
+        "valid_two_sided_quote": 0
+      },
+      "limitations": [
+        "The same market snapshot does not measure predictive value or profitability.",
+        "Ablations that waive news checks or minimum reward/risk are diagnostic only and never yield alerts.",
+        "The combined M15-ADX/unsupported-primary-feed paper hypothesis keeps all other technical and reward/risk gates; it cannot verify the missing source or support a manual fill.",
+        "Pair-route observations share prices and currency exposure; they are not independent trade outcomes."
+      ],
+      "route_observations": 130,
+      "source_at": "2026-11-10T19:19:41Z"
     }
   ]
 }
