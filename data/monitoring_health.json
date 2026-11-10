@@ -1,8 +1,8 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-10T10:20:59.315558+00:00",
+  "checked_at": "2026-11-10T11:12:41.377548+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-10T10:19:53Z",
+    "checked_at": "2026-11-10T11:11:52Z",
     "collection_tries": 1,
     "collector_endpoint": "practice",
     "error": null,
@@ -49,17 +49,17 @@
         "PRICING": 4
       }
     },
-    "run_id": "42798148166",
-    "started_at": "2026-11-10T10:19:31Z",
+    "run_id": "42805375594",
+    "started_at": "2026-11-10T11:11:19Z",
     "status": "COLLECTED"
   },
-  "consecutive_unobserved_fast_targets": 2,
+  "consecutive_unobserved_fast_targets": 0,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
     "event": "push",
-    "head_sha": "e2f1796018524c1c4702c7a8a5facd961d5e8bd8",
-    "id": "42798148166",
+    "head_sha": "235dd32f09d4231f465fdf1299d80af9773ed7a0",
+    "id": "42805375594",
     "outcomes": {
       "collect": "success",
       "early_cohort": "success",
@@ -95,10 +95,10 @@
     }
   ],
   "early_cohort_id": "FX-EARLY-20261104-v1",
-  "early_last_source_at": "2026-11-10T10:19:53Z",
-  "early_observation_count": 83,
-  "elapsed_fast_targets_today": 13,
-  "fast_age_seconds": 7.289911,
+  "early_last_source_at": "2026-11-10T11:11:52Z",
+  "early_observation_count": 84,
+  "elapsed_fast_targets_today": 17,
+  "fast_age_seconds": 5.819269,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -116,21 +116,29 @@
     "valid_new_market_observations": 0,
     "verification_note": "workflow_dispatch may be manual; external scheduler origin/requests and missing provider calls cannot be verified from repository receipts alone. Four observed pair-specific events and two sessions are necessary, not sufficient, for sustained reliability."
   },
-  "fast_last_attempt_at": "2026-11-10T10:20:52.668841+00:00",
+  "fast_last_attempt_at": "2026-11-10T11:12:36.090411+00:00",
   "fast_observation_valid": true,
   "fast_run_failures": {
     "failed": 1,
     "sample": 3,
     "scope": "Latest 100 repository runs; process success is not observation success."
   },
-  "fast_source_at": "2026-11-10T10:20:52.025647+00:00",
+  "fast_source_at": "2026-11-10T11:12:35.558279+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 66.315558,
+  "full_age_seconds": 49.377548,
   "full_collection_status": "OK",
   "full_fresh": true,
-  "full_last_attempt_at": "2026-11-10T10:19:53Z",
-  "full_source_at": "2026-11-10T10:19:53Z",
+  "full_last_attempt_at": "2026-11-10T11:11:52Z",
+  "full_source_at": "2026-11-10T11:11:52Z",
   "last_completed_jobs": [
+    {
+      "conclusion": "failure",
+      "event": "push",
+      "failed_steps": [
+        "Fail closed if any research or public dashboard step failed"
+      ],
+      "run_id": 42798148166
+    },
     {
       "conclusion": "failure",
       "event": "schedule",
@@ -138,18 +146,10 @@
         "Fail closed if any research or public dashboard step failed"
       ],
       "run_id": 42792846276
-    },
-    {
-      "conclusion": "failure",
-      "event": "push",
-      "failed_steps": [
-        "Fail closed if any research or public dashboard step failed"
-      ],
-      "run_id": 42789365701
     }
   ],
   "previous_publication": {
-    "checked_at": "2026-11-10T09:42:55.101090Z",
+    "checked_at": "2026-11-10T10:21:11.261294Z",
     "public_feed_path": "docs/fx-feed.json",
     "public_repository": "rayyansorefan/standalone-wallet-paper-agent",
     "reason": "ValueError: Public FX payload exceeds hard limit after safe compaction; publication refused",
@@ -568,7 +568,9 @@
     "2026-11-10T08:47:00+00:00",
     "2026-11-10T09:02:00+00:00",
     "2026-11-10T09:47:00+00:00",
-    "2026-11-10T10:02:00+00:00"
+    "2026-11-10T10:02:00+00:00",
+    "2026-11-10T10:32:00+00:00",
+    "2026-11-10T10:47:00+00:00"
   ],
   "workflow_registration": [
     {
