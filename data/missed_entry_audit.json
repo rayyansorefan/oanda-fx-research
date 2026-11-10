@@ -1277,7 +1277,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_SGD-dfc90c39851274fd85cea93cd3a236f4f6bc88073edf8b2f41ec852615e470bb.json",
+      "source_evidence": "data/replay_evidence/EUR_SGD-ab43c6d0e5f370d99fdc90b712cfe877f07777a0bc918b32bb20b5dc0eaa48a7.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1290,7 +1290,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_PLN-dc87d87c5911c82eda0e4b0ab6b95083ccc4d78c56498888394431780b25ddc8.json",
+      "source_evidence": "data/replay_evidence/USD_PLN-07ef6a2b536b0876b83782b38070a6296f4ee34288d357cbfec2a36f0882a988.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1303,7 +1303,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_SGD-45f7ae50a7230bf2649b53c2e73c874c09b74d1bb6ec4b831d94bb3eabe6fc44.json",
+      "source_evidence": "data/replay_evidence/EUR_SGD-f0da593b365603cfacb7bba2da8ae2fea4b66293b75001c68feb927f1eea55bc.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1412,7 +1412,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_PLN-05fc89f1db6d6f351537f74652e08aaae4830835efaa548eb5e0f2b252fe0857.json",
+      "source_evidence": "data/replay_evidence/USD_PLN-9f6c619ddb3c1f335040cb7042a0eceeb5ad82ffc369f6b5b2da5ec7b652b2d7.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1450,73 +1450,51 @@
     "202611092045-HKDJPY-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "SHORT",
+      "exit_at": "2026-11-10T00:00:00Z",
       "fill_at": "2026-11-09T21:30:00Z",
       "id": "202611092045-HKDJPY-SHORT-EMA20_PULLBACK",
       "instrument": "HKD_JPY",
       "paper_entry": 20.13817,
+      "paper_exit": 20.15243,
       "pattern_at": "2026-11-09T21:30:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/HKD_JPY-9813b80d5cb6c51fad6bf15370e8fd6a9bede4eee04645e1824ca664603e297e.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/HKD_JPY-4b747fa8338b3897a7b5b9418f8e1a1eab293bf03fa9fb13c96ccfc071f74352.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.07081
     },
     "202611092045-USDJPY-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "SHORT",
+      "exit_at": "2026-11-09T23:45:00Z",
       "fill_at": "2026-11-09T21:30:00Z",
       "id": "202611092045-USDJPY-SHORT-EMA20_PULLBACK",
       "instrument": "USD_JPY",
       "paper_entry": 157.921,
+      "paper_exit": 158.034,
       "pattern_at": "2026-11-09T21:30:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/USD_JPY-04a86edd9118006786e375f7a2dab388744157033ff6a7fac71c470571a2a896.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/USD_JPY-5888a397465e4056515773d2d2bfb80aa682ac50e333d546299a21c0613f44a2.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.07155
     }
   },
   "latency_audit": {
     "method": "Legacy replay assumes pattern-close availability; no actual delivered alert or subsequent manual fill is established.",
-    "records": [
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-09T20:16:59.987572+00:00",
-        "detection_delay_minutes": 32.0,
-        "fill_precedes_detection": true,
-        "id": "202611091845-CHFJPY-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-09T19:45:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-09T22:18:29.316520+00:00",
-        "detection_delay_minutes": 48.49,
-        "fill_precedes_detection": true,
-        "id": "202611092045-HKDJPY-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-09T21:30:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-09T22:18:29.316520+00:00",
-        "detection_delay_minutes": 48.49,
-        "fill_precedes_detection": true,
-        "id": "202611092045-USDJPY-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-09T21:30:00+00:00"
-      }
-    ],
+    "records": [],
     "verified_profitable_missed_manual_entries": 0
   },
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 3,
-  "today_forward_patterns": 3,
-  "today_registered": 6,
-  "today_scored_hypothetical_entries": 1,
-  "today_status_counts": {
-    "PAPER_OPEN_UNRESOLVED": 2,
-    "PAPER_STOP_AFTER_FILL": 1
-  },
-  "today_uk": "2026-11-09",
-  "updated_at": "2026-11-09T22:29:41Z"
+  "today_distinct_pair_pattern_events": 0,
+  "today_forward_patterns": 0,
+  "today_registered": 0,
+  "today_scored_hypothetical_entries": 0,
+  "today_status_counts": {},
+  "today_uk": "2026-11-10",
+  "updated_at": "2026-11-10T01:29:06Z"
 }

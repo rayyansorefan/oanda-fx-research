@@ -2,60 +2,61 @@
   "active_canonical_plans": 0,
   "admission": {
     "rejected": {
-      "FOUR_FRAME_TREND_CONFLICT": 15,
-      "INVALID_BID_ASK_OR_SPREAD": 66,
-      "REVERSAL_OR_EXHAUSTION": 47,
+      "FOUR_FRAME_TREND_CONFLICT": 25,
+      "INVALID_BID_ASK_OR_SPREAD": 27,
+      "REVERSAL_OR_EXHAUSTION": 72,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 4,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-11-09T22:29:31Z",
+    "source_at": "2026-11-10T01:28:57Z",
     "status": "NO_QUALIFIED_CONDITIONAL_PLAN"
   },
-  "checked_at": "2026-11-09T22:30:03.505929+00:00",
+  "checked_at": "2026-11-10T01:29:34.785220+00:00",
   "fast_pair_clocks": {
     "AUD_CHF": {
-      "age_seconds": 695.4,
+      "age_seconds": 11466.7,
       "at": "2026-11-09T22:18:28.087504399Z",
-      "status": "CURRENT"
+      "status": "STALE"
     },
     "AUD_NZD": {
-      "age_seconds": 686.7,
+      "age_seconds": 11458.0,
       "at": "2026-11-09T22:18:36.795701426Z",
-      "status": "CURRENT"
+      "status": "STALE"
     },
     "CAD_HKD": {
-      "age_seconds": 698.2,
+      "age_seconds": 11469.5,
       "at": "2026-11-09T22:18:25.311904864Z",
-      "status": "CURRENT"
+      "status": "STALE"
     },
     "CHF_JPY": {
-      "age_seconds": 688.3,
+      "age_seconds": 11459.6,
       "at": "2026-11-09T22:18:35.202998104Z",
-      "status": "CURRENT"
+      "status": "STALE"
     },
     "EUR_CHF": {
-      "age_seconds": 695.4,
+      "age_seconds": 11466.7,
       "at": "2026-11-09T22:18:28.088651524Z",
-      "status": "CURRENT"
+      "status": "STALE"
     },
     "EUR_NZD": {
-      "age_seconds": 686.7,
+      "age_seconds": 11458.0,
       "at": "2026-11-09T22:18:36.796044093Z",
-      "status": "CURRENT"
+      "status": "STALE"
     },
     "EUR_SGD": {
-      "age_seconds": 691.3,
+      "age_seconds": 11462.5,
       "at": "2026-11-09T22:18:32.237129854Z",
-      "status": "CURRENT"
+      "status": "STALE"
     },
     "NZD_CHF": {
-      "age_seconds": 691.7,
+      "age_seconds": 11462.9,
       "at": "2026-11-09T22:18:31.835804494Z",
-      "status": "CURRENT"
+      "status": "STALE"
     }
   },
   "full_source": {
-    "age_seconds": 32.5,
-    "at": "2026-11-09T22:29:31Z",
+    "age_seconds": 37.8,
+    "at": "2026-11-10T01:28:57Z",
     "status": "CURRENT"
   },
   "no_broker_orders": true,
@@ -97,7 +98,7 @@
   "publication": {
     "note": "A verified fast publication may legitimately differ; validate fast pair clocks and exporter provenance separately.",
     "same_full_source": true,
-    "snapshot_at": "2026-11-09T22:29:31Z",
+    "snapshot_at": "2026-11-10T01:28:57Z",
     "status": "PUBLISHED"
   },
   "quote_coverage": {
@@ -115,40 +116,40 @@
       ],
       "completed_at": "2026-11-09T22:12:05Z",
       "completion_clock": {
-        "age_seconds": 1078.5,
+        "age_seconds": 11849.8,
         "at": "2026-11-09T22:12:05Z",
-        "status": "CURRENT"
+        "status": "STALE"
       },
       "minute": 5,
       "receipt": "data/task_runs/macro_events.json",
       "role": "macro_events",
       "source_clock": {
-        "age_seconds": 4573.5,
+        "age_seconds": 15344.8,
         "at": "2026-11-09T21:13:50Z",
         "status": "STALE"
       },
-      "status": "PARTIAL",
+      "status": "STALE_RECEIPT",
       "task_id": "6ad64bc84d288191bfe52acb0f27ab1a"
     },
     {
       "blockers": [
-        "Recovery collector completion and readback unverified",
-        "Current OANDA quotes not tradeable in latest attempted collection",
-        "Stale source and partial macro clearance",
-        "Served Pages feed not verified"
+        "Source exceeds 25-minute full research freshness threshold at review; 70-minute outer limit approaching/exceeded depending on completion.",
+        "Only 4/65 current pair shards independently inspected; measured deep candle verification incomplete.",
+        "Public repository feed still reflects 22:29:31Z while private source is 00:51:01Z; Pages serving unverified.",
+        "Macro receipt partial; no fresh independent event clearance."
       ],
-      "completed_at": "2026-11-09T22:17:51.419Z",
+      "completed_at": "2026-11-10T01:17:28.831Z",
       "completion_clock": {
-        "age_seconds": 732.1,
-        "at": "2026-11-09T22:17:51.419Z",
+        "age_seconds": 726.0,
+        "at": "2026-11-10T01:17:28.831Z",
         "status": "CURRENT"
       },
       "minute": 15,
       "receipt": "data/task_runs/market_scan.json",
       "role": "market_scan",
       "source_clock": {
-        "age_seconds": 4573.5,
-        "at": "2026-11-09T21:13:50Z",
+        "age_seconds": 2313.8,
+        "at": "2026-11-10T00:51:01Z",
         "status": "STALE"
       },
       "status": "PARTIAL",
@@ -156,23 +157,26 @@
     },
     {
       "blockers": [
-        "Updated task has not yet produced a verified scheduled run."
+        "GitHub fetch_file returned empty content for the 26.4 MB paper_trade_ledger.json and 19.9 MB strategy_comparison.json; fetch_blob transport also closed. Their current SHAs were observed, but raw rows could not be independently reread in this run.",
+        "Authoritative derived lifecycle, cohort, portfolio and validation outputs were current and internally reported zero open simulated positions, but the raw-ledger access gap prevents COMPLETE status.",
+        "The three unexpired early opportunities have completed paper patterns but no separately verified executable-side fill; outcomes remain unscored.",
+        "Actual broker funding, fees and fills remain unverified and were not inferred."
       ],
-      "completed_at": null,
+      "completed_at": "2026-11-09T22:39:10Z",
       "completion_clock": {
-        "age_seconds": null,
-        "at": null,
-        "status": "INVALID"
+        "age_seconds": 10224.8,
+        "at": "2026-11-09T22:39:10Z",
+        "status": "STALE"
       },
       "minute": 30,
       "receipt": "data/task_runs/position_monitor.json",
       "role": "position_monitor",
       "source_clock": {
-        "age_seconds": null,
-        "at": null,
-        "status": "INVALID"
+        "age_seconds": 10803.8,
+        "at": "2026-11-09T22:29:31Z",
+        "status": "STALE"
       },
-      "status": "NOT_RUN",
+      "status": "STALE_RECEIPT",
       "task_id": "6ad73063edc8819180df9ee118759289"
     },
     {
