@@ -9,6 +9,7 @@ import base64
 import datetime as dt
 import json
 import os
+import zlib
 from pathlib import Path
 import urllib.error
 import urllib.request
@@ -76,6 +77,21 @@ PUBLIC_HARD_MAX_BYTES = 930_000
 def serialized_size(payload: dict) -> int:
     return len((json.dumps(payload, ensure_ascii=True, separators=(",", ":")) + "\n").encode("utf-8"))
 
+def full_candidate_index(audit: dict) -> list:
+    """Decode the full watch index, including lossless public fallback."""
+    rows = audit.get("candidate_index")
+    if isinstance(rows, list) and rows:
+        return rows
+    packed = audit.get("candidate_index_zlib_base64")
+    if packed:
+        raw = zlib.decompress(base64.b64decode(packed))
+        rows = json.loads(raw)
+        if not isinstance(rows, list) or len(raw) > 4_000_000:
+            raise ValueError("Malformed or oversized packed candidate index")
+        return rows
+    return rows if isinstance(rows, list) else []
+
+
 def fit_public_feed_budget(payload: dict) -> None:
     """Keep current quotes and all published research economics immutable.
 
@@ -120,10 +136,11 @@ def fit_public_feed_budget(payload: dict) -> None:
     # sections are appended. By then audit["candidates"] may have been capped
     # to 30 to meet the public size budget. Do not rebuild the full index from
     # that rolling window and silently discard hundreds of registered IDs.
-    previous_index = audit.get("candidate_index")
+    previous_index = full_candidate_index(audit)
+    audit.pop("candidate_index_zlib_base64", None)
+    audit.pop("candidate_index_encoding", None)
     audit["candidate_index"] = (
-        previous_index if isinstance(previous_index, list)
-        and len(previous_index) > len(fresh_index) else fresh_index
+        previous_index if len(previous_index) > len(fresh_index) else fresh_index
     )
     audit["public_window"] = {
         "published_candidates": len(candidates),
@@ -279,6 +296,19 @@ def fit_public_feed_budget(payload: dict) -> None:
     if serialized_size(payload) <= PUBLIC_HARD_MAX_BYTES:
         payload.setdefault("public_compaction", {})["reduced_chart_history"] = True
         return
+    # Last-resort lossless encoding for the growing historical watch index.
+    # Current quotes, scouts, plans, signals and scored outcomes remain plain
+    # JSON. All archived IDs and economics are recoverable; private data stays.
+    index = audit.get("candidate_index")
+    if isinstance(index, list) and index:
+        index_bytes = json.dumps(index, ensure_ascii=True, separators=(",", ":")).encode("utf-8")
+        audit["candidate_index_zlib_base64"] = base64.b64encode(zlib.compress(index_bytes, 9)).decode("ascii")
+        audit["candidate_index_encoding"] = "zlib-base64-json-v1"
+        del audit["candidate_index"]
+        if serialized_size(payload) <= PUBLIC_HARD_MAX_BYTES:
+            payload.setdefault("public_compaction", {})["lossless_historical_index"] = True
+            if serialized_size(payload) <= PUBLIC_HARD_MAX_BYTES:
+                return
     raise ValueError("Public FX payload exceeds hard limit after safe compaction; publication refused")
 
 def build_research_setups(summary: dict, limit: int = 3) -> list[dict]:
@@ -1138,7 +1168,7 @@ def main() -> int:
             fit_public_feed_budget(data)
         paper_audit = (data.get("learning") or {}).get("paper_audit") or {}
         expected_index = int((paper_audit.get("totals") or {}).get("candidates", 0))
-        if len(paper_audit.get("candidate_index") or []) != expected_index:
+        if len(full_candidate_index(paper_audit)) != expected_index:
             raise ValueError("Public candidate index is incomplete; refusing misleading feed")
         if not data.get("snapshot_at") or len(data.get("pairs", {})) < 1:
             raise ValueError("Invalid sanitized payload")
