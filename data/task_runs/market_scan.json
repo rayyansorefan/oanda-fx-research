@@ -2,41 +2,43 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T09:16:20Z",
-  "completed_at": "2026-11-10T09:16:55.119Z",
-  "source_at": "2026-11-10T08:19:01Z",
-  "source_commit": "025819dcac5c4046d7b31299a56a8d5fe4fbc58b",
-  "source_age_seconds": 3474,
+  "started_at": "2026-11-10T10:19:01Z",
+  "completed_at": "2026-11-10T10:19:32.055Z",
+  "source_at": "2026-11-10T09:42:12Z",
+  "source_commit": "e18e05037dcfe615bbe5afd1b71c68b78bcde5ae",
+  "source_age_seconds": 2240,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs": 68,
     "reported_full_multiframe_pairs": 68,
-    "independently_inspected_pair_shards": 5,
+    "independently_inspected_pair_shards_this_run": 1,
     "independently_verified_all_pairs": false,
     "admission_routes": 136,
     "admitted": 0,
     "canonical_signals": 0,
     "rejection_reasons": {
+      "INVALID_BID_ASK_OR_SPREAD": 19,
       "NO_DECISIVE_COMPLETED_M15_IMPULSE": 2,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
-      "INVALID_BID_ASK_OR_SPREAD": 24,
-      "FOUR_FRAME_TREND_CONFLICT": 31,
-      "REVERSAL_OR_EXHAUSTION": 69,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 7,
-      "UNSUPPORTED_PAIR_OR_ROUTE": 2
+      "FOUR_FRAME_TREND_CONFLICT": 24,
+      "REVERSAL_OR_EXHAUSTION": 83,
+      "ADX_TREND_STRENGTH": 4,
+      "UNSUPPORTED_PAIR_OR_ROUTE": 2,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2
     }
   },
   "findings": [
-    "08:19:01Z source collected successfully in recovery run 42781615718, with 68/68 usable quoted pairs and five-frame coverage reported by manifest; independently inspected 5 pair shards.",
-    "Current canonical admission rejected all 136 routes; signals.json empty; WAIT. No paper fill or profitability inferred.",
-    "One bounded stale-source recovery request sequence 195 at 09:16:43Z, commit e9aade4a3e62137548ee540f00f098229e9a7057; exact request readback verified; new run/source not yet verified.",
-    "Macro receipt at 08:05:50Z flags 13:30Z USD CPI and partial machine news coverage; no gate override."
+    "09:42:12Z scheduled collection reports 68 usable quoted pairs and 68 five-frame shards; only EUR_USD shard inspected directly in this review.",
+    "All 136 canonical admission routes rejected; signals.json empty. WAIT, no simulated entry or exit inferred.",
+    "Latest hourly Actions run 42792846276 concluded failure despite collection success; publication failed with public payload hard-size limit in monitoring_health.",
+    "Requested one bounded full recovery at 10:19:18.527Z, sequence 196, commit e2f1796018524c1c4702c7a8a5facd961d5e8bd8; request readback verified.",
+    "Macro receipt from 08:05:50Z identifies USD CPI at 13:30Z; no news gate override."
   ],
   "blockers": [
-    "09:16 recovery resulting Actions run, collection and admission not yet verified.",
-    "Only 5 of 68 pair shards independently inspected; full/deep coverage is manifest-reported, not independently established.",
-    "Private public_dashboard_payload snapshot remains 01:28:57Z; sanitized publication and actual served feed not verified.",
-    "Full latest summary content not independently retrieved."
+    "Recovery result/run and new source/admission/publication not yet verified.",
+    "Full latest and summary GitHub file reads returned empty despite nonempty blob SHA; full contents not independently obtained.",
+    "67 of 68 pair shards not directly inspected this review.",
+    "Public dashboard payload remains at 01:28:57Z; actual served feed not verified.",
+    "Latest workflow failed; sanitized publication not verified."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -50,14 +52,12 @@
     "data/task_runs/macro_events.json",
     "scripts/refresh_request.json",
     "data/public_dashboard_payload.json",
-    "data/pairs/GBP_USD.json",
     "data/pairs/EUR_USD.json",
-    "data/pairs/NZD_CAD.json",
-    "data/pairs/EUR_CAD.json",
-    "data/pairs/EUR_JPY.json"
+    "data/summary.json",
+    "data/latest.json"
   ],
   "run_ids": [
-    "42781615718"
+    "42792846276"
   ],
   "no_broker_orders": true
 }
