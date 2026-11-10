@@ -2,16 +2,19 @@
   "schema": 1,
   "role": "position_monitor",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T04:32:01Z",
-  "completed_at": "2026-11-10T04:35:06Z",
-  "source_at": "2026-11-10T01:28:57Z",
-  "source_commit": "3d3d4a4c8927b9a1072b7478edd1eb244230a849",
-  "source_age_seconds": 11169,
+  "started_at": "2026-11-10T08:27:39Z",
+  "completed_at": "2026-11-10T08:31:11Z",
+  "source_at": "2026-11-10T08:19:01Z",
+  "source_commit": "c768e65746877954f3ce30ec3b79f1226b3575b3",
+  "source_age_seconds": 730,
   "counts": {
     "lifecycle_plans": 66,
     "lifecycle_closed": 2,
     "lifecycle_expired_unfilled": 33,
     "lifecycle_invalidated": 31,
+    "lifecycle_historical_pending_state_events": 20,
+    "lifecycle_event_data_gaps": 25,
+    "lifecycle_event_source_unavailable": 1,
     "open_simulated_positions": 0,
     "pending_simulated_fills": 0,
     "newly_verified_simulated_exits": 0,
@@ -31,6 +34,7 @@
     "simple_v2_plans": 0,
     "liquid_momentum_plans": 1,
     "liquid_momentum_fills": 0,
+    "liquid_momentum_missed_entries": 1,
     "gate_study_plans": 4,
     "gate_study_scored_exits": 0,
     "confirmed_momentum_records": 0,
@@ -42,20 +46,22 @@
     "retrospective_diagnostic_open_arms_excluded_from_forward_monitoring": 1,
     "oversized_raw_ledgers_attempted": 2,
     "oversized_raw_ledgers_readable": 0,
+    "source_collection_successes": 1,
+    "source_workflow_final_failures": 1,
     "fast_recovery_requests": 0,
     "broker_orders": 0
   },
   "findings": [
     {
       "scope": "authoritative lifecycle and portfolio",
-      "fact": "The current lifecycle ledger retains 66 terminal plans: 2 CLOSED, 33 EXPIRED_UNFILLED and 31 INVALIDATED. The portfolio audit reports zero open paper positions, zero open exposure pairs and zero eligible paper fills after portfolio limits in both champion and challenger arms.",
-      "chronology": "No current later completed trigger, separate later executable-side bid/ask fill, stop, TP, expiry or time exit required adjudication.",
+      "fact": "The current lifecycle ledger retains 66 terminal plans: 2 CLOSED, 33 EXPIRED_UNFILLED and 31 INVALIDATED. Historical QUALIFIED_PENDING_TRIGGER events are prior snapshots, not current positions. The portfolio audit reports zero open simulated positions, zero open exposure pairs and zero eligible fills in champion and challenger arms.",
+      "chronology": "No current completed trigger, separate later executable-side bid/ask fill, stop, TP, expiry or time exit required adjudication.",
       "action": "Preserved all machine-scorer states; no scored or unscored ledger was rewritten."
     },
     {
       "scope": "current prospective registries",
-      "fact": "signals.json has zero canonical plans. paper-trade-candidates preserves 44 candidates with zero unexpired candidates; entry_opportunity_ledger preserves 279 observations with zero unexpired opportunities at the 04:32:01Z cutoff.",
-      "action": "No bounded [fx-fast-check] recovery was requested because there was no actual open or prospectively pending simulated plan lacking pair-specific evidence."
+      "fact": "signals.json has zero canonical plans. paper-trade-candidates preserves 44 candidates with zero unexpired candidates; entry_opportunity_ledger preserves 279 observations with zero unexpired opportunities.",
+      "action": "No bounded [fx-fast-check] recovery was requested because there was no actual open or pending simulated plan lacking pair-specific evidence."
     },
     {
       "scope": "locked forward cohorts",
@@ -69,24 +75,28 @@
     },
     {
       "scope": "fixed versus profit-protection",
-      "fact": "exit_management_research has zero registered entries, zero cases and zero paired scored comparisons. confirmed_momentum_execution has zero records, fills or paired exit cases across EXISTING_EXTRA_CONFIRMATION, CONFIRMED_NEXT_OPEN and CONFIRMED_NEXT_OPEN_PROTECTED.",
+      "fact": "exit_management_research has zero registered entries, zero cases and zero paired scored comparisons. confirmed_momentum_execution has zero records, fills or paired exit cases across all fixed and protection arms.",
       "action": "No exit arm was selected and no trailing, breakeven or profitable path was applied retrospectively."
     },
     {
       "scope": "development diagnostic and user evidence",
-      "fact": "profitability_execution_development still contains one OPEN fixed arm at trials.3.rows.18.arms.fixed, but the report classifies the trial as rejected retrospective diagnostic research, profitability_established=false and existing_cohorts_modified=false. manual_early_entry_tests remains CLOSED_SCREENSHOT_CONFIRMED and separate from model cohorts.",
+      "fact": "profitability_execution_development contains one OPEN fixed arm inside rejected retrospective diagnostic research; profitability_established=false and existing_cohorts_modified=false. manual_early_entry_tests remains closed and separate from model cohorts.",
       "action": "The diagnostic arm was excluded from forward-position monitoring and was not refreshed, closed or imported; no personal broker details were copied."
     },
     {
-      "scope": "source and raw-ledger coverage",
-      "fact": "The last collected market source remains 2026-11-10T01:28:57Z from collector run 42736022053. At completion it was 11169 seconds old. GitHub fetch_file again returned empty content for the nonempty paper_trade_ledger and strategy_comparison blobs.",
+      "scope": "source collection and publication separation",
+      "fact": "The latest private source is 2026-11-10T08:19:01Z. Collector run 42781615718 completed collection and persisted the snapshot to commit c768e65746877954f3ce30ec3b79f1226b3575b3. The workflow later concluded failure at the fail-closed publication check with PUBLICATION_FAILED.",
+      "action": "Used the verified private source for observation while keeping publication success unproven and separate from collection and task completion."
+    },
+    {
+      "scope": "raw-ledger coverage",
+      "fact": "Authenticated fetch_file and fetch_blob attempts returned no readable content for the nonempty paper_trade_ledger and strategy_comparison blobs.",
       "action": "Derived lifecycle, portfolio and cohort outputs were used for current state; raw-row completeness remains unverified, so status is PARTIAL."
     }
   ],
   "blockers": [
-    "The observed source snapshot was 11169 seconds old at completion, beyond both the 25-minute full-research limit and 70-minute outer execution-evidence ceiling; no execution claim was made.",
-    "data/paper_trade_ledger.json and data/strategy_comparison.json have nonempty current blob SHAs but returned no readable content in this run.",
-    "Because no open or prospectively pending simulated plan existed, position_monitor was not authorized to trigger a bounded fast recovery merely to refresh stale whole-market data.",
+    "data/paper_trade_ledger.json and data/strategy_comparison.json have nonempty current blob SHAs but returned no readable content through authenticated file and blob reads.",
+    "Workflow run 42781615718 concluded failure at the final publication health step; current public serving was not proven by this role.",
     "No independently scored forward fill or exit exists, so fixed-versus-profit-protection evidence remains empty and unvalidated.",
     "Actual broker fills, funding, commissions, swap and account equity remain unverified and were not inferred."
   ],
@@ -95,31 +105,35 @@
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
     "docs/PROFITABILITY_EXECUTION_REWORK.md@e852a5d8cb3f509a0919ed7c48bdba220d5234f7",
-    "data/collection_attempt.json@565cf009b4411c4cdc27ac7ef0b185057facec45",
-    "data/task_runs/market_scan.json@50dddcd5052ac1267fb6671215238180a21da2ff",
-    "data/paper_trade_ledger.json@6cd7a4871297630c73334d5bc89997b86ee7c9b1",
-    "data/strategy_comparison.json@9ac192d279d21a1333be4212534911832a93e180",
-    "data/lifecycle_ledger.json@035e00550471726d2d0affdce1f6049b6b91eb8a",
-    "data/paper_portfolio_audit.json@66314fbe961ef5a1b6d636b536dfd58b5d4edbaf",
-    "data/forward_validation.json@75a8e680d4ecb3fb88b994fcb3512762ea10993c",
-    "data/early_forward_validation.json@c100aebb03c14c0fe548bb746a52dec8b467aae4",
-    "data/early_simple_paper_shadow.json@6b99764ee59a306ac4b0538d0e97a5c34fc23efa",
-    "data/simple_paper_shadow.json@e69a209152e54a664c61a9fcd3806227f4cad5fe",
-    "data/simple_paper_shadow_v2.json@c3e86a00d4b5e286b69b75e26ca0a6b9fa52ef4e",
-    "data/liquid_momentum_shadow_v1.json@aadfc8b08a663e92b64a175fae8b2c353ca3e05f",
-    "data/gate_forward_paper.json@567dc1fe342be8188fc83d139824636e7e20234c",
-    "data/confirmed_momentum_execution.json@01b7447cd999a4745aee72949e2bfaa8bfd8ed74",
-    "data/exit_management_research.json@8d3a11a3c79542d1337e0ec3a127dc8a91efd2db",
+    "data/collection_attempt.json@db4b4d892d6e5e7caad5dcf8fcf0fb07bb03d212",
+    "data/task_runs/market_scan.json@7c45909714517848f012b8fd7f5c99f2840136f9",
+    "data/task_runs/macro_events.json@7dae4032fa7556140f3d986db4866493902ab310",
+    "data/paper_trade_ledger.json@d7c8c9e3602425cbd42aa6f19dee20616c3ade66",
+    "data/strategy_comparison.json@db1b463052691004e432f6cf137f7e5aacef44e6",
+    "data/lifecycle_ledger.json@39c3539fa1c2032604cc13e55677806a300d1999",
+    "data/paper_portfolio_audit.json@ea5707d2bee69622c652afa401502c8a4d079d38",
+    "data/forward_validation.json@fea16638c3e8809ac6e795ed7db730cb1f16e632",
+    "data/early_forward_validation.json@28f418ffd67425217a8387e4b27a6994bf97ef7a",
+    "data/early_simple_paper_shadow.json@0b599e543aa75160b433d7c5dfa9b87e89ab6bf5",
+    "data/simple_paper_shadow.json@35cfb04da7da017b0ab1ffc53bc24c52f5042fdc",
+    "data/simple_paper_shadow_v2.json@1b05f0dde93b0017ef5a646589318f26791793ff",
+    "data/liquid_momentum_shadow_v1.json@b8b4ba3335b85f7c7db4006e7027071e61f6495b",
+    "data/gate_forward_paper.json@c88757b4db655bfa535a519c136ef067c45268fc",
+    "data/confirmed_momentum_execution.json@4c9bf078000859e2629edc68f1baad03e212ad32",
+    "data/exit_management_research.json@edbe0c94ae10c7eb2d4eb652796bb548a4d9ac80",
     "data/profitability_execution_development.json@f9cba96d501933c4bbd37e0ed866e3c4bdc2bbfd",
-    "data/entry_opportunity_ledger.json@f608ec88d47be6963f9b0ec4a33c2af1c60953da",
+    "data/entry_opportunity_ledger.json@51acfb6ab0708b204af1e5dd844ae2a7076b19cb",
     "paper-trade-candidates.json@35daf9a27b23c9b67a2c45bbf870dcc5bb2ccf81",
     "data/manual_early_entry_tests.json@b067d3ef78a6db9dc04282eb8ee7344d8882e6ad",
-    "data/fast_entry_audit.json@ddb4964163cdb9e283fc0587cc13c44a0f5cdbd0",
-    "data/monitoring_health.json@da9828c7aa688355c1cf0a6b0b0437c12bde8994",
-    "signals.json@152c8fc0e06968402d34f2d415e0c5be00802636"
+    "data/fast_entry_audit.json@6e6f62b378846c257e03606d9743a91a16de7c84",
+    "data/monitoring_health.json@c8909ddf06daf6f8a6590e694bfc4b54e1abb8df",
+    "data/scheduled_task_health.json@52791b31c816a4fb4f8e4e446db877af5b3ca015",
+    "data/hourly_assessment.json@999b4ffc520ca7fe7f0e4a2ae71b650d136837f0",
+    "data/signal_admission_audit.json@0dc6ff3b73b9abac545908d29f8497cc53840cf9",
+    "signals.json@3818969f72b583496dda2fe78939ddca91f5ef4a"
   ],
   "run_ids": [
-    "42736022053"
+    "42781615718"
   ],
   "no_broker_orders": true
 }
