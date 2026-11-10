@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-09T23:13:05Z",
-  "completed_at": "2026-11-09T23:13:32.359Z",
+  "started_at": "2026-11-10T00:16:00Z",
+  "completed_at": "2026-11-10T00:19:59.839Z",
   "source_at": "2026-11-09T22:29:31Z",
   "source_commit": "fb763623c511f5c182a3aa013b7443d29e39f99c",
-  "source_age_seconds": 2641,
+  "source_age_seconds": 6629,
   "counts": {
     "discovered": 68,
     "last_valid_quoted": 65,
@@ -15,29 +15,32 @@
     "unusable": 3,
     "canonical_signals": 0,
     "admitted": 0,
-    "rejection_routes": 130
+    "rejection_routes": 130,
+    "independently_inspected_pair_shards": 0
   },
   "findings": [
-    "Last persisted full collection 22:29:31Z; 65 of 68 usable, 65 with M15/H1 and D1/H4/H1/M15/M5 coverage according to universe manifest; large summary/latest returned empty connector content and independent per-pair candle inspection was not completed.",
-    "Collector run 42712262259 reported COLLECTED with 4 successful pricing requests; retained source timestamp unchanged.",
-    "Canonical signals.json empty and admission audit NO_QUALIFIED_CONDITIONAL_PLAN; 130 rejected routes (15 trend, 66 spread/quote, 47 reversal/exhaustion, 2 unsupported). WAIT; no fills claimed.",
-    "Private sanitized payload and public repository feed share blob SHA 01542531456dfc7b863f9a7cbec222dc9ba0e2c9 and snapshot 22:29:31Z; actual served Pages JSON could not be verified.",
-    "Macro receipt PARTIAL; independent event clearance remains incomplete. Quiet-hours run: no user bulletin and no recovery requested."
+    "Read current operations, role registry and locked FX-OOS-20261104-v21 protocol. Retrieved actual summary/latest via blob SHA after empty fetch_file responses.",
+    "Last persisted full OANDA collection 2026-11-09T22:29:31Z, run 42712262259 COLLECTED; historical manifest shows 65/68 usable with full M15/H1 and D/H4/H1/M15/M5, but no fresh overnight observation and independent pair-shard validation not completed.",
+    "Canonical signals empty; 130 rejected routes (15 trend conflict, 66 spread/quote, 47 reversal/exhaustion, 2 unsupported). WAIT, no paper entry or profit inferred.",
+    "Private sanitized feed and public repository docs/fx-feed.json match SHA 01542531456dfc7b863f9a7cbec222dc9ba0e2c9; source 22:29:31Z. Actual served Pages feed could not be verified.",
+    "Macro receipt PARTIAL, news clearance incomplete. Quiet-hours run: no refresh request, no user bulletin."
   ],
   "blockers": [
-    "Large summary/latest file contents unavailable via connector; per-pair independent screening unverified",
-    "Served Pages JSON unavailable for independent verification",
-    "Macro clearance partial",
-    "Last full source older than 25-minute research freshness threshold"
+    "Last source older than full research 25-minute threshold; no current trade readiness",
+    "Independent per-pair candle audit not completed",
+    "Actual Pages served JSON inaccessible for verification",
+    "Macro clearance partial"
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
     "config/scheduled_research_roles.json",
     "validation_protocol.json",
     "data/universe.json",
+    "data/summary.json",
+    "data/latest.json",
     "data/collection_attempt.json",
-    "data/monitoring_health.json",
     "data/fast_entry_audit.json",
+    "data/monitoring_health.json",
     "data/signal_admission_audit.json",
     "signals.json",
     "data/hourly_assessment.json",
