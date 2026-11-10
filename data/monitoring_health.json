@@ -1,6 +1,6 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-10T14:56:53.345851+00:00",
+  "checked_at": "2026-11-10T15:30:38.571842+00:00",
   "collection_attempt": {
     "checked_at": "2026-11-10T14:56:19Z",
     "collection_tries": 1,
@@ -58,11 +58,11 @@
   "current_run": {
     "attempt": "1",
     "event": "schedule",
-    "head_sha": "e06433408f573e91b0e19b45c2872841b304a90d",
-    "id": "42839037372",
+    "head_sha": "f39d1ca920cc694738e3bb3ed8731727b035910d",
+    "id": "42845021261",
     "outcomes": {
-      "collect": "success",
-      "early_cohort": "success",
+      "collect": "skipped",
+      "early_cohort": "skipped",
       "fast_recovery": "success",
       "safety": "success"
     },
@@ -97,8 +97,8 @@
   "early_cohort_id": "FX-EARLY-20261104-v1",
   "early_last_source_at": "2026-11-10T14:56:19Z",
   "early_observation_count": 87,
-  "elapsed_fast_targets_today": 32,
-  "fast_age_seconds": 8.091566,
+  "elapsed_fast_targets_today": 34,
+  "fast_age_seconds": 578.207372,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -116,16 +116,16 @@
     "valid_new_market_observations": 0,
     "verification_note": "workflow_dispatch may be manual; external scheduler origin/requests and missing provider calls cannot be verified from repository receipts alone. Four observed pair-specific events and two sessions are necessary, not sufficient, for sustained reliability."
   },
-  "fast_last_attempt_at": "2026-11-10T14:56:45.901197+00:00",
+  "fast_last_attempt_at": "2026-11-10T15:21:01.056751+00:00",
   "fast_observation_valid": true,
   "fast_run_failures": {
-    "failed": 0,
-    "sample": 2,
+    "failed": 1,
+    "sample": 3,
     "scope": "Latest 100 repository runs; process success is not observation success."
   },
-  "fast_source_at": "2026-11-10T14:56:45.254285+00:00",
+  "fast_source_at": "2026-11-10T15:21:00.364470+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 34.345851,
+  "full_age_seconds": 2059.571842,
   "full_collection_status": "OK",
   "full_fresh": true,
   "full_last_attempt_at": "2026-11-10T14:56:19Z",
@@ -133,26 +133,28 @@
   "last_completed_jobs": [
     {
       "conclusion": "failure",
-      "event": "push",
+      "event": "schedule",
+      "failed_steps": [
+        "Fail visibly after preserving observations"
+      ],
+      "run_id": 42843283044
+    },
+    {
+      "conclusion": "failure",
+      "event": "schedule",
       "failed_steps": [
         "Fail closed if any research or public dashboard step failed"
       ],
-      "run_id": 42832697969
-    },
-    {
-      "conclusion": "success",
-      "event": "push",
-      "failed_steps": [],
-      "run_id": 42813744825
+      "run_id": 42839037372
     }
   ],
   "previous_publication": {
-    "checked_at": "2026-11-10T14:19:40.855970Z",
+    "checked_at": "2026-11-10T15:21:03.637796Z",
     "public_feed_path": "docs/fx-feed.json",
     "public_repository": "rayyansorefan/standalone-wallet-paper-agent",
-    "reason": "Operational failure; market snapshot timestamp unchanged",
-    "snapshot_at": "2026-11-10T12:13:45Z",
-    "status": "PUBLISHED"
+    "reason": "ValueError: Public FX payload exceeds hard limit after safe compaction; publication refused",
+    "snapshot_at": null,
+    "status": "FAILED"
   },
   "recovery": "ONE_INLINE_FAST_ATTEMPT_PER_HOURLY_RUN_WHEN_DUE",
   "scheduled": {
@@ -170,7 +172,8 @@
         "failure",
         "failure",
         "success",
-        "success"
+        "success",
+        "failure"
       ],
       "created_at": [
         "2026-10-29T13:59:16Z",
@@ -185,7 +188,8 @@
         "2026-11-06T14:43:31Z",
         "2026-11-06T20:34:58Z",
         "2026-11-09T16:59:51Z",
-        "2026-11-10T00:33:18Z"
+        "2026-11-10T00:33:18Z",
+        "2026-11-10T15:20:21Z"
       ],
       "interval_seconds": [
         19868.0,
@@ -199,7 +203,8 @@
         62144.0,
         21087.0,
         246293.0,
-        27207.0
+        27207.0,
+        53223.0
       ],
       "note": "Run creation intervals only; exact intended dispatch identity is unavailable.",
       "run_ids": [
@@ -215,7 +220,8 @@
         42236467185,
         42289569936,
         42660284467,
-        42729184838
+        42729184838,
+        42843283044
       ]
     },
     "hourly": {
@@ -301,6 +307,7 @@
         "success",
         "success",
         "failure",
+        "failure",
         null
       ],
       "created_at": [
@@ -385,7 +392,8 @@
         "2026-11-10T00:50:06Z",
         "2026-11-10T01:28:28Z",
         "2026-11-10T09:41:41Z",
-        "2026-11-10T14:55:29Z"
+        "2026-11-10T14:55:29Z",
+        "2026-11-10T15:30:23Z"
       ],
       "interval_seconds": [
         14458.0,
@@ -468,7 +476,8 @@
         26673.0,
         2302.0,
         29593.0,
-        18828.0
+        18828.0,
+        2094.0
       ],
       "note": "Run creation intervals only; exact intended dispatch identity is unavailable.",
       "run_ids": [
@@ -553,7 +562,8 @@
         42731311021,
         42736022053,
         42792846276,
-        42839037372
+        42839037372,
+        42845021261
       ]
     }
   },
@@ -584,7 +594,8 @@
     "2026-11-10T13:32:00+00:00",
     "2026-11-10T13:47:00+00:00",
     "2026-11-10T14:02:00+00:00",
-    "2026-11-10T14:32:00+00:00"
+    "2026-11-10T14:32:00+00:00",
+    "2026-11-10T15:02:00+00:00"
   ],
   "workflow_registration": [
     {
