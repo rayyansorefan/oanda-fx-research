@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T04:16:00Z",
-  "completed_at": "2026-11-10T04:16:25.831Z",
+  "started_at": "2026-11-10T05:20:04Z",
+  "completed_at": "2026-11-10T05:22:06.203Z",
   "source_at": "2026-11-10T01:28:57Z",
   "source_commit": "3d3d4a4c8927b9a1072b7478edd1eb244230a849",
-  "source_age_seconds": 10048,
+  "source_age_seconds": 13989,
   "counts": {
     "discovered": 68,
     "usable_quoted_last_known": 65,
@@ -16,22 +16,32 @@
     "unusable_nontradeable": 3,
     "canonical_signals": 0,
     "admitted": 0,
-    "fast_actionable": 0
+    "fast_actionable": 0,
+    "rejected_routes": 130,
+    "rejection_reasons": {
+      "REVERSAL_OR_EXHAUSTION": 72,
+      "FOUR_FRAME_TREND_CONFLICT": 25,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 4,
+      "INVALID_BID_ASK_OR_SPREAD": 27,
+      "UNSUPPORTED_PAIR_OR_ROUTE": 2
+    },
+    "public_feed_quoted": 64
   },
   "findings": [
-    "Read current operations, roles registry and registered FX-OOS-20261104-v21 protocol; no changes to locked rules.",
-    "Last successfully persisted collector run 42736022053 at 01:28:57Z, 65/68 usable quotes, 3 TRY pairs non-tradeable. Universe reports 65 full/deep coverage, independently inspected 12 current manifest-listed top pair shards and verified primary M5/M15/H1/H4/D frames. Source is historical, not current.",
-    "Current signals.json has zero plans; admission audit active=0 and no admitted plans. Leading EUR_HKD LONG rejected reversal/exhaustion, EUR_CAD LONG trend conflict, GBP_CAD LONG spread/volatility. WAIT, no new paper entry or exit.",
-    "Macro role receipt at 04:08:20Z is PARTIAL, with additional official-event research. Machine news clearance remains partial. Fast audit last checked 00:33:28Z and actionable_count=0.",
-    "Private sanitized payload and public repository feed share exact blob SHA 95c6bc6c67ed1931f2f952fd1d75f1d1274d4971, snapshot 01:28:57Z. Attempt to fetch actual served Pages JSON failed; serving unverified.",
-    "Outside active London session, no collection recovery requested, no trading orders or changes to source rules."
+    "Read current five-task operations, role registry and locked FX-OOS-20261104-v21 protocol on main; no rule modifications.",
+    "Last valid full collection run 42736022053 at 01:28:57Z; 65 of 68 pairs usable then; EUR_TRY, TRY_JPY and USD_TRY excluded as non-tradeable. No current market observation verified.",
+    "Inspected 12 manifest-listed leading pair shards with actual bid/ask and historical source timestamps; independent verification remains 12/65, not complete all-pair audit.",
+    "Canonical signals and admission active count both zero; all candidate routes rejected. EUR_HKD LONG reversal/exhaustion, EUR_CAD LONG trend conflict, GBP_CAD LONG spread/volatility. WAIT; no simulated fill claimed.",
+    "Macro receipt PARTIAL, official event checks available, machine news clearance remains partial; fast entry audit stale and actionable_count zero.",
+    "Sanitized private/public repository payload blob SHA 95c6bc6c67ed1931f2f952fd1d75f1d1274d4971, source 01:28:57Z, 924620 bytes. Public feed coverage 64/67 differs from latest universe 65/68; serving on Pages not independently verified.",
+    "Quiet hours 23:00–07:00 London: no recovery requested; no user notification or broker order."
   ],
   "blockers": [
-    "Last verified source 10048 seconds old; exceeds 25-minute full-research threshold. No fresh 04:15 source observed.",
-    "Independent verification limited to 12/65 pair shards; reported all-pair coverage not independently confirmed.",
-    "data/summary.json and data/latest.json GitHub fetch returned empty content despite nonempty blob SHAs; complete contents not obtained.",
-    "Actual served GitHub Pages feed could not be fetched; publication to repository alone does not establish serving.",
-    "Fast observations stale; news clearance partial."
+    "Source 13989 seconds old; no verified new collection; full research threshold 25 minutes exceeded.",
+    "Independent pair-shard inspection 12/65; remaining 53 not independently verified.",
+    "GitHub fetch_file returned empty content for data/summary.json and data/latest.json despite nonempty SHAs; actual large blob contents unresolved.",
+    "Public served Pages feed not independently verified; published feed reports 64 quoted versus latest universe 65.",
+    "Fast observations stale and macro/news clearance partial."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -41,11 +51,11 @@
     "data/summary.json",
     "data/latest.json",
     "data/collection_attempt.json",
-    "data/monitoring_health.json",
     "data/fast_entry_audit.json",
+    "data/monitoring_health.json",
     "data/signal_admission_audit.json",
-    "signals.json",
     "data/hourly_assessment.json",
+    "signals.json",
     "data/task_runs/macro_events.json",
     "data/public_dashboard_payload.json",
     "data/pairs/EUR_HKD.json",
