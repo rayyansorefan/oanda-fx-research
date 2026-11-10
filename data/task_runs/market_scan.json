@@ -3,10 +3,10 @@
   "role": "market_scan",
   "status": "PARTIAL",
   "started_at": "2026-11-10T18:17:25Z",
-  "completed_at": "2026-11-10T18:18:23.428Z",
+  "completed_at": "2026-11-10T18:18:35.512Z",
   "source_at": "2026-11-10T17:46:03Z",
   "source_commit": "48543ebd978b2199b7586a53b82ddafe27eb0bfd",
-  "source_age_seconds": 1940,
+  "source_age_seconds": 1953,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs": 65,
@@ -30,7 +30,7 @@
   "findings": [
     "17:46:03Z collected source: 65/68 usable quotes, reported full five-frame contexts for 65; 3 TRY pairs non-tradeable. Twelve leading pair shards independently read, not all 65.",
     "Canonical admission 130/130 rejected; signals.json generated 17:46:56Z empty. WAIT. Hourly research run 42868077511 concluded failure despite COLLECTED attempt; publication not proven.",
-    "One current-main full recovery sequence 202 requested at 18:18Z and read back commit 403552e; resulting workflow/source/admission/publication pending verification.",
+    "One current-main full recovery sequence 202 requested 18:18Z and read back commit 403552e; associated Actions run 42873798557 in progress, companion 42873798554 completed successfully; resulting collection/admission/publication not yet verified.",
     "Private sanitized dashboard payload snapshot 12:13:45Z; actual public served feed not verified. Machine news PARTIAL (BLS feeds unavailable); macro receipt 08:05:50Z."
   ],
   "blockers": [
@@ -68,7 +68,8 @@
   ],
   "run_ids": [
     "42868077511",
-    "42862681256"
+    "42873798557",
+    "42873798554"
   ],
   "no_broker_orders": true
 }
