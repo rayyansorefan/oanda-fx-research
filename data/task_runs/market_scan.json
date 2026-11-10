@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T15:11:50Z",
-  "completed_at": "2026-11-10T15:12:53.379Z",
+  "started_at": "2026-11-10T16:12:07Z",
+  "completed_at": "2026-11-10T16:12:51.700Z",
   "source_at": "2026-11-10T14:56:19Z",
   "source_commit": "061029a2058f5fcdcc0cbaf309436c1eb9cdd060",
-  "source_age_seconds": 994,
+  "source_age_seconds": 4592,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs": 68,
@@ -18,26 +18,26 @@
     "admitted": 0,
     "canonical_signals": 0,
     "rejection_reasons": {
+      "ADX_TREND_STRENGTH": 4,
+      "FOUR_FRAME_TREND_CONFLICT": 21,
       "INVALID_BID_ASK_OR_SPREAD": 8,
       "NO_DECISIVE_COMPLETED_M15_IMPULSE": 2,
-      "FOUR_FRAME_TREND_CONFLICT": 21,
       "PRIMARY_NEWS_SOURCE_MISSING": 1,
       "REVERSAL_OR_EXHAUSTION": 98,
-      "UNSUPPORTED_PAIR_OR_ROUTE": 2,
-      "ADX_TREND_STRENGTH": 4
+      "UNSUPPORTED_PAIR_OR_ROUTE": 2
     }
   },
   "findings": [
-    "14:56:19Z full collection COLLECTED; 68/68 usable OANDA quoted pairs and 68/68 five-frame coverage reported in universe/latest; 12 top-ranked pair shards independently inspected, all had usable quotes and five required frames.",
-    "Canonical 14:56:19Z admission rejected 136/136 routes; signals.json empty. WAIT; no admitted conditional paper plans, completed triggers or simulated fills established.",
-    "Source collection run 42839037372 and source commit 061029a2058f5fcdcc0cbaf309436c1eb9cdd060 observed. Source was within 20 minutes at run start, so no recovery request was made.",
-    "Private sanitized dashboard payload remains snapshot 12:13:45Z, behind current source. Prior deployment evidence does not establish publication of 14:56:19Z source; actual served feed could not be independently retrieved.",
-    "Machine news_latest PARTIAL; macro_events receipt last checked 08:05:50Z. No news clearance inferred."
+    "Last confirmed full OANDA source 14:56:19Z; reported 68/68 usable quotes and five-frame contexts; 12 current pair shards retrieved, full independent 68-pair audit incomplete.",
+    "Canonical admission at 14:56:19Z rejected all 136 routes; current signals.json generated 15:21:00Z has zero signals. WAIT; no verified paper fill.",
+    "One full recovery request sequence 200 committed 9ba3a45bf9ca19bf6f40261ccec369dc8f000626 at 16:12:36Z and read back; subsequent collection, admission and publication not established.",
+    "Private sanitized payload snapshot remains 12:13:45Z; actual public serving not independently verified. News_latest PARTIAL; macro receipt checked 08:05:50Z."
   ],
   "blockers": [
-    "All 68 pair shards not independently inspected; top 12 only, despite complete reported machine coverage.",
-    "Current source not confirmed published to sanitized dashboard; actual served feed inaccessible/unverified.",
-    "Macro/news coverage remains PARTIAL; prior macro receipt predates latest source."
+    "Last source older than 20-minute active-session recovery threshold; requested recovery not yet verified as collected.",
+    "Only 12 of 68 pair shards independently inspected; no full per-pair independent coverage verification.",
+    "Sanitized payload stale and actual served feed not verified.",
+    "News coverage PARTIAL; macro receipt not contemporaneous."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -53,18 +53,18 @@
     "data/public_dashboard_payload.json",
     "data/task_runs/macro_events.json",
     "scripts/refresh_request.json",
-    "data/pairs/GBP_USD.json",
-    "data/pairs/USD_CAD.json",
-    "data/pairs/USD_NOK.json",
-    "data/pairs/CAD_HKD.json",
     "data/pairs/EUR_NOK.json",
-    "data/pairs/CHF_HKD.json",
-    "data/pairs/NZD_CHF.json",
-    "data/pairs/GBP_HKD.json",
-    "data/pairs/EUR_USD.json",
-    "data/pairs/EUR_CHF.json",
-    "data/pairs/EUR_PLN.json",
-    "data/pairs/EUR_GBP.json"
+    "data/pairs/AUD_NZD.json",
+    "data/pairs/AUD_SGD.json",
+    "data/pairs/AUD_CAD.json",
+    "data/pairs/EUR_AUD.json",
+    "data/pairs/USD_NOK.json",
+    "data/pairs/USD_CAD.json",
+    "data/pairs/AUD_HKD.json",
+    "data/pairs/EUR_CAD.json",
+    "data/pairs/NZD_SGD.json",
+    "data/pairs/CAD_HKD.json",
+    "data/pairs/EUR_USD.json"
   ],
   "run_ids": [
     "42839037372"
