@@ -2,62 +2,63 @@
   "active_canonical_plans": 0,
   "admission": {
     "rejected": {
-      "FOUR_FRAME_TREND_CONFLICT": 27,
-      "INVALID_BID_ASK_OR_SPREAD": 20,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
-      "REVERSAL_OR_EXHAUSTION": 78,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 8,
+      "FOUR_FRAME_TREND_CONFLICT": 31,
+      "INVALID_BID_ASK_OR_SPREAD": 24,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 2,
+      "REVERSAL_OR_EXHAUSTION": 69,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 7,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-11-10T07:19:35Z",
+    "source_at": "2026-11-10T08:19:01Z",
     "status": "NO_QUALIFIED_CONDITIONAL_PLAN"
   },
-  "checked_at": "2026-11-10T07:20:18.752487+00:00",
+  "checked_at": "2026-11-10T08:19:54.965414+00:00",
   "fast_pair_clocks": {
-    "EUR_CHF": {
-      "age_seconds": 26.4,
-      "at": "2026-11-10T07:19:52.324117079Z",
+    "AUD_CAD": {
+      "age_seconds": 37.3,
+      "at": "2026-11-10T08:19:17.674095330Z",
       "status": "CURRENT"
     },
-    "EUR_JPY": {
-      "age_seconds": 26.7,
-      "at": "2026-11-10T07:19:52.014080593Z",
+    "AUD_CHF": {
+      "age_seconds": 39.3,
+      "at": "2026-11-10T08:19:15.638341366Z",
+      "status": "CURRENT"
+    },
+    "EUR_CZK": {
+      "age_seconds": 33.6,
+      "at": "2026-11-10T08:19:21.391039817Z",
+      "status": "CURRENT"
+    },
+    "GBP_HKD": {
+      "age_seconds": 32.8,
+      "at": "2026-11-10T08:19:22.206765009Z",
+      "status": "CURRENT"
+    },
+    "GBP_USD": {
+      "age_seconds": 34.8,
+      "at": "2026-11-10T08:19:20.193416467Z",
       "status": "CURRENT"
     },
     "NZD_CHF": {
-      "age_seconds": 27.8,
-      "at": "2026-11-10T07:19:50.954766005Z",
+      "age_seconds": 34.0,
+      "at": "2026-11-10T08:19:20.954670095Z",
       "status": "CURRENT"
     },
-    "NZD_SGD": {
-      "age_seconds": 57.4,
-      "at": "2026-11-10T07:19:21.379685343Z",
+    "USD_CAD": {
+      "age_seconds": 34.0,
+      "at": "2026-11-10T08:19:20.924284237Z",
       "status": "CURRENT"
     },
-    "NZD_USD": {
-      "age_seconds": 27.2,
-      "at": "2026-11-10T07:19:51.525158137Z",
-      "status": "CURRENT"
-    },
-    "SGD_CHF": {
-      "age_seconds": 27.8,
-      "at": "2026-11-10T07:19:50.955581901Z",
-      "status": "CURRENT"
-    },
-    "USD_HKD": {
-      "age_seconds": 72.6,
-      "at": "2026-11-10T07:19:06.109244855Z",
-      "status": "CURRENT"
-    },
-    "USD_JPY": {
-      "age_seconds": 26.4,
-      "at": "2026-11-10T07:19:52.338674055Z",
+    "USD_SEK": {
+      "age_seconds": 34.6,
+      "at": "2026-11-10T08:19:20.323037331Z",
       "status": "CURRENT"
     }
   },
   "full_source": {
-    "age_seconds": 43.8,
-    "at": "2026-11-10T07:19:35Z",
+    "age_seconds": 54.0,
+    "at": "2026-11-10T08:19:01Z",
     "status": "CURRENT"
   },
   "no_broker_orders": true,
@@ -99,8 +100,8 @@
   "publication": {
     "note": "A verified fast publication may legitimately differ; validate fast pair clocks and exporter provenance separately.",
     "same_full_source": false,
-    "snapshot_at": "2026-11-10T01:28:57Z",
-    "status": "PUBLISHED"
+    "snapshot_at": null,
+    "status": "FAILED"
   },
   "quote_coverage": {
     "current": 68,
@@ -110,47 +111,46 @@
   "roles": [
     {
       "blockers": [
-        "The observed market source was 9563 seconds old at completion; source_at was preserved and not replaced by task time.",
-        "No current open or pending simulated position, canonical signal, unexpired paper candidate or unexpired research opportunity existed; macro mapping therefore used only the three leading rejected candidates.",
-        "Seven official items were date-only or boundary-uncertain on the checked pages, so exhaustive next-48-hour clock coverage was not established.",
-        "Future events had not occurred, so speaker substance, actuals and consensus were unavailable and were not invented.",
-        "Machine news coverage remained PARTIAL and was not altered or cleared by this role.",
-        "No role-specific GitHub Actions run ID or verified notification receipt was produced or claimed."
+        "data/news_latest.json remains PARTIAL; this role did not edit or clear machine news state.",
+        "The ECB Economic Bulletin Issue 7/2026 and several Eurostat calendar items are date-stamped without a verified publication time; boundary inclusion is recorded as uncertain.",
+        "Bank of Japan JGB-holdings and T-bill-purchases releases are scheduled only as around 17:00 JST.",
+        "No Pepperstone costs, fills, account equity or user-delivery receipt was available or inferred."
       ],
-      "completed_at": "2026-11-10T04:08:20Z",
+      "completed_at": "2026-11-10T08:05:50Z",
       "completion_clock": {
-        "age_seconds": 11518.8,
-        "at": "2026-11-10T04:08:20Z",
-        "status": "STALE"
+        "age_seconds": 845.0,
+        "at": "2026-11-10T08:05:50Z",
+        "status": "CURRENT"
       },
       "minute": 5,
       "receipt": "data/task_runs/macro_events.json",
       "role": "macro_events",
       "source_clock": {
-        "age_seconds": 21081.8,
-        "at": "2026-11-10T01:28:57Z",
+        "age_seconds": 3620.0,
+        "at": "2026-11-10T07:19:35Z",
         "status": "STALE"
       },
-      "status": "STALE_RECEIPT",
+      "status": "COMPLETE",
       "task_id": "6ad64bc84d288191bfe52acb0f27ab1a"
     },
     {
       "blockers": [
-        "Full source stale over 4h; latest and summary GitHub content empty despite SHA.",
-        "Independent 65-shard batch retrieval exceeded connector tool-call budget; all-pair independent inspection incomplete.",
-        "Macro partial; served Pages feed unverified."
+        "Market source stale; recovery run, fresh source, admission and publication not yet verified.",
+        "Full summary/latest GitHub fetch returned empty despite nonempty blob SHAs.",
+        "Independent all-65 shard inspection not completed; macro receipt partial.",
+        "Actual GitHub Pages serving unverified."
       ],
-      "completed_at": "2026-11-10T06:15:58.457Z",
+      "completed_at": "2026-11-10T07:19:20.060Z",
       "completion_clock": {
-        "age_seconds": 3860.3,
-        "at": "2026-11-10T06:15:58.457Z",
+        "age_seconds": 3634.9,
+        "at": "2026-11-10T07:19:20.060Z",
         "status": "CURRENT"
       },
       "minute": 15,
       "receipt": "data/task_runs/market_scan.json",
       "role": "market_scan",
       "source_clock": {
-        "age_seconds": 21081.8,
+        "age_seconds": 24658.0,
         "at": "2026-11-10T01:28:57Z",
         "status": "STALE"
       },
@@ -167,7 +167,7 @@
       ],
       "completed_at": "2026-11-10T04:35:06Z",
       "completion_clock": {
-        "age_seconds": 9912.8,
+        "age_seconds": 13489.0,
         "at": "2026-11-10T04:35:06Z",
         "status": "STALE"
       },
@@ -175,7 +175,7 @@
       "receipt": "data/task_runs/position_monitor.json",
       "role": "position_monitor",
       "source_clock": {
-        "age_seconds": 21081.8,
+        "age_seconds": 24658.0,
         "at": "2026-11-10T01:28:57Z",
         "status": "STALE"
       },
@@ -184,53 +184,53 @@
     },
     {
       "blockers": [
-        "The observed market snapshot was 8,108 seconds old at completion, so current price, spread, completed trigger and expiry economics could not be verified.",
-        "The latest fast audit was STALE_HOURLY_SOURCE with zero actionable observations and no verified user delivery.",
-        "The current macro-events receipt remained PARTIAL; exact clocks were missing for several date-only releases and machine news clearance was not changed.",
-        "No top candidate supplied a complete fresh registered entry, stop, target, expiry, trigger, allowed-spread and blackout package that survived current admission controls.",
-        "candidate_review is not authorized to trigger a stale whole-market recovery; only market_scan owns that recovery path.",
-        "No role-specific GitHub Actions run ID or notification receipt was produced or claimed."
+        "No route supplied a complete fresh registered entry, stop, target, expiry, completed trigger, allowed spread and blackout package that survived current admission controls.",
+        "The macro-events receipt is PARTIAL and does not fully cover USD or JPY for the refreshed leading set; news_latest is also PARTIAL.",
+        "The market_scan receipt was completed before the recovery collection finished and still describes the earlier stale state; candidate_review used the later verified collection_attempt, current admission audit and current pair shards instead.",
+        "The fast audit inspected 8 rotated pairs only and admitted none; it does not prove complete fast coverage of all 68 pairs.",
+        "Pepperstone symbol availability, executable spread, funding, commission and account equity remain unverified.",
+        "No verified user-delivery receipt was produced or claimed."
       ],
-      "completed_at": "2026-11-10T03:44:05Z",
+      "completed_at": "2026-11-10T07:38:29Z",
       "completion_clock": {
-        "age_seconds": 12973.8,
-        "at": "2026-11-10T03:44:05Z",
-        "status": "STALE"
+        "age_seconds": 2486.0,
+        "at": "2026-11-10T07:38:29Z",
+        "status": "CURRENT"
       },
       "minute": 40,
       "receipt": "data/task_runs/candidate_review.json",
       "role": "candidate_review",
       "source_clock": {
-        "age_seconds": 21081.8,
-        "at": "2026-11-10T01:28:57Z",
+        "age_seconds": 3620.0,
+        "at": "2026-11-10T07:19:35Z",
         "status": "STALE"
       },
-      "status": "STALE_RECEIPT",
+      "status": "PARTIAL",
       "task_id": "6ad64be7ad108191832ada8e2f57ccb0"
     },
     {
       "blockers": [
-        "The observed source was 8812 seconds old at completion, beyond the 25-minute full-research threshold and the 70-minute outer evidence limit.",
-        "Oversized data/paper_trade_ledger.json and data/strategy_comparison.json could not be independently reread: fetch_file returned zero content and fetch_blob ended with Transport closed. Derived outputs reconciled, but raw-row completeness remains unverified.",
-        "data/scheduled_task_health.json predates the current macro_events, market_scan, position_monitor and candidate_review receipts and must be regenerated by the existing pipeline rather than manually rewritten.",
-        "Current locked forward cohorts have zero scored exits and zero independent pair-days; minimum samples, net-cost expectancy, drawdown and paired exit-management tests are not met.",
-        "Actual GitHub Pages served-content readback, broker-specific costs and verified user delivery remain unavailable."
+        "data/paper_trade_ledger.json@d17d925253c8cbff1fb2819994acddd498fa2305 and data/strategy_comparison.json@efdb4cd049eb36f4ffff933ebae2369dbca40704 have nonempty current blob SHAs but returned no readable content through the connected GitHub file reader, preventing raw-row completeness reconciliation.",
+        "The public repository feed still serves source_at 2026-11-10T01:28:57Z rather than the current private 2026-11-10T07:19:35Z snapshot; actual Pages delivery remains unverified.",
+        "scheduled_task_health predates the latest candidate-review receipt and still contains stale peer-role/public-publication state.",
+        "macro_events, market_scan and position_monitor receipts are not source-aligned to the current collection; their PARTIAL status and gaps are preserved.",
+        "No independently scored forward exits, complete cost scenarios, verified broker costs, account equity or delivery receipts exist; expectancy, drawdown and fixed-versus-protection conclusions remain unavailable."
       ],
-      "completed_at": "2026-11-10T03:55:49Z",
+      "completed_at": "2026-11-10T07:49:24Z",
       "completion_clock": {
-        "age_seconds": 12269.8,
-        "at": "2026-11-10T03:55:49Z",
-        "status": "STALE"
+        "age_seconds": 1831.0,
+        "at": "2026-11-10T07:49:24Z",
+        "status": "CURRENT"
       },
       "minute": 50,
       "receipt": "data/task_runs/evidence_audit.json",
       "role": "evidence_audit",
       "source_clock": {
-        "age_seconds": 21081.8,
-        "at": "2026-11-10T01:28:57Z",
+        "age_seconds": 3620.0,
+        "at": "2026-11-10T07:19:35Z",
         "status": "STALE"
       },
-      "status": "STALE_RECEIPT",
+      "status": "PARTIAL",
       "task_id": "6ad7308041208191b46f38377742f784"
     }
   ],
