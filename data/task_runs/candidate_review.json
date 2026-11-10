@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "candidate_review",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T02:40:06Z",
-  "completed_at": "2026-11-10T02:42:09Z",
+  "started_at": "2026-11-10T03:42:22Z",
+  "completed_at": "2026-11-10T03:44:05Z",
   "source_at": "2026-11-10T01:28:57Z",
   "source_commit": "3d3d4a4c8927b9a1072b7478edd1eb244230a849",
-  "source_age_seconds": 4392,
+  "source_age_seconds": 8108,
   "counts": {
     "usable_quoted_pairs": 65,
     "admission_routes_reviewed": 130,
@@ -19,6 +19,7 @@
     "rejected_unsupported_pair_or_route": 2,
     "strongest_ranked_candidates_independently_challenged": 3,
     "pair_shards_directly_inspected": 3,
+    "complete_fresh_entry_stop_target_expiry_packages": 0,
     "canonical_signals": 0,
     "archived_signal_plan_ids": 8,
     "existing_paper_candidates": 44,
@@ -26,62 +27,74 @@
     "unexpired_paper_candidates": 0,
     "registered_research_opportunities": 279,
     "unexpired_research_opportunities": 0,
-    "new_paper_candidates_appended": 0
+    "new_paper_candidates_appended": 0,
+    "machine_news_clearance_changes": 0,
+    "broker_orders": 0
   },
   "findings": [
     {
       "scope": "admission and source gate",
-      "fact": "The 01:28:57Z snapshot screened 65 usable quoted pairs and evaluated 130 registered routes. All 130 were rejected and signals.json remained empty. At completion the source was 4,392 seconds old, beyond both the 25-minute full-research limit and the outer 70-minute maximum.",
-      "counter_evidence": "A directional ranking is screening evidence only; stale quotes cannot establish a current completed trigger, spread, entry economics or expiry window.",
-      "decision": "Rejected every new registration in this review. candidate_review has no authority to start a duplicate recovery."
+      "fact": "The persisted 01:28:57Z snapshot reported 65 usable quoted pairs and evaluated 130 registered routes. All 130 routes were rejected: 72 REVERSAL_OR_EXHAUSTION, 25 FOUR_FRAME_TREND_CONFLICT, 27 INVALID_BID_ASK_OR_SPREAD, 4 SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY and 2 UNSUPPORTED_PAIR_OR_ROUTE. signals.json remained empty.",
+      "counter_evidence": "At completion the source was 8,108 seconds old, beyond both the 25-minute full-research limit and the outer 70-minute execution-evidence ceiling. Historical completed candles cannot prove a fresh current trigger, current spread, or prospective expiry window.",
+      "decision": "REJECTED every new registration. candidate_review has no authority to request a duplicate full refresh."
     },
     {
       "scope": "EUR_HKD LONG, rank 1",
-      "fact": "M15/H1 direction was positive, but the frozen scan measured price 2.172 M15 ATR above EMA20, M15 MACD histogram was negative, H1 RSI14 was 70.62, and the daily frame retained lower highs/lows, price below the visible Ichimoku cloud and a DOWN Supertrend. Observed spread was 13.0 pips, 0.4306 of M15 ATR.",
-      "admission_reason": "REVERSAL_OR_EXHAUSTION on both momentum-continuation and EMA20-pullback routes.",
-      "decision": "REJECTED. No fresh pullback trigger, immutable entry/stop/target/expiry package or current macro clearance existed."
+      "fact": "The frozen pair shard showed 8.80430/8.80560 with a 13.0-pip spread, M15 ATR about 30.19 pips and M15/H1 positive directional structure. The 01:00Z completed M15 candle closed above the prior Donchian high with a 72.6% body, but M15 MACD histogram remained negative in the admission snapshot, H1 RSI14 was 70.62 and the move was materially extended above M15 EMA20.",
+      "counter_evidence": "D1 retained lower highs/lows, price below the visible Ichimoku cloud and DOWN Supertrend; H4 also retained lower highs/lows and DOWN Supertrend. The breakout is old relative to this review, the current route has no immutable entry/stop/target/expiry package, and HKD macro coverage remains partial around the 10 November SME release and 11 November tenders.",
+      "admission_reason": "REVERSAL_OR_EXHAUSTION for both MOMENTUM_CONTINUATION and EMA20_PULLBACK.",
+      "decision": "REJECTED. No backdated continuation trigger or chase entry was created."
     },
     {
       "scope": "EUR_CAD LONG, rank 2",
-      "fact": "H1 RSI14 was 80.86 and H4 RSI14 79.11 near 1.5852 resistance; H4 ADX14 was only 16.41, daily/H4 remained below longer EMAs, and M15 MACD histogram was negative. Observed spread was 2.9 pips, 0.5721 of M15 ATR.",
-      "admission_reason": "FOUR_FRAME_TREND_CONFLICT on both registered routes.",
-      "decision": "REJECTED. Shorter-frame strength did not cure the higher-frame conflict or establish a fresh completed trigger."
+      "fact": "The frozen pair shard showed 1.58482/1.58511 with a 2.9-pip spread. H1 RSI14 was 80.86 and H4 RSI14 79.11 near 1.5852 resistance; H4 ADX14 was 16.41, M15 MACD histogram was negative, and D1/H4 remained conflicted with longer-term trend measures.",
+      "counter_evidence": "Shorter-frame strength did not establish four-frame agreement, a new completed pullback or continuation trigger, or an immutable entry/stop/target/expiry package. ECB communication begins from 09:00Z and Bank of Canada deliberations are scheduled at 18:30Z; the macro receipt is PARTIAL and does not clear the pair.",
+      "admission_reason": "FOUR_FRAME_TREND_CONFLICT for both registered routes.",
+      "decision": "REJECTED. No threshold was relaxed and no paper watch was appended."
     },
     {
       "scope": "GBP_CAD LONG, rank 3",
-      "fact": "D/H4/H1 trend structure was constructive, but H4 RSI14 was 83.17 and H1 RSI14 79.55 near the 1.89858 resistance. M15 MACD histogram was negative and the observed 3.9-pip spread equalled 0.6318 of M15 ATR.",
-      "admission_reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY on both registered routes.",
-      "decision": "REJECTED. No threshold was relaxed and no chase entry was created."
+      "fact": "The frozen pair shard showed 1.89819/1.89858 with a 3.9-pip spread, equal to about 0.632 of M15 ATR. D1/H4/H1 structure was constructive, but H4 RSI14 was 83.17, H1 RSI14 79.55, price was testing 1.89858 resistance and M15 MACD histogram was negative.",
+      "counter_evidence": "The last registered GBP_CAD watch expired at 14:00Z on 9 November and had a frozen 3.2-pip spread cap; it cannot be revived or duplicated. The current routes provide no fresh immutable economics package, while Bank of England events begin at 08:30Z and Bank of Canada deliberations are scheduled at 18:30Z.",
+      "admission_reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY for both registered routes.",
+      "decision": "REJECTED. Existing expired terms were preserved and not reused."
     },
     {
-      "scope": "macro and correlation challenge",
-      "fact": "The macro receipt remained PARTIAL and was last completed at 22:12:05Z on 9 November. It identified scheduled 10 November risks including US CPI/real earnings at 13:30Z, Bank of England events, and Bank of Canada deliberations at 18:30Z, while HKD/CHF coverage gaps remained. Machine news coverage was also PARTIAL.",
-      "counter_evidence": "EUR_HKD and the two CAD crosses share material EUR/CAD exposure, and the two CAD ideas are correlated rather than independent opportunities.",
-      "decision": "No macro all-clear was inferred and no candidate quota was forced."
+      "scope": "correlation and macro challenge",
+      "fact": "The three leading ideas are not independent: EUR_HKD and EUR_CAD share long-EUR exposure, while EUR_CAD and GBP_CAD share short-CAD exposure. The current macro receipt is PARTIAL, checked eight official authorities and lists 24 timed events plus four date-only events for EUR, HKD, CAD and GBP over the next 48 hours.",
+      "counter_evidence": "A rank ordering across correlated ideas is not diversification or confirmation. Unknown future speaker substance, date-only release clocks and unchanged machine-news PARTIAL status prevent an event all-clear.",
+      "decision": "No correlated quota was filled and no macro clearance was inferred."
+    },
+    {
+      "scope": "trigger and economics integrity",
+      "fact": "The six top candidate-route records contain pair, direction, route and rejection reason only. They do not contain a prospective created_at, planned entry or zone, stop, TP1, expiry, precise trigger, allowed spread, or event blackout package.",
+      "counter_evidence": "Constructing those terms from stale candles would be a new invented plan, and treating an older candle as a current trigger would be backdating.",
+      "decision": "No candidate met the registered gross, spread-adjusted, trigger, news, spread and expiry safeguards. Zero new paper candidates were appended."
     },
     {
       "scope": "prospective registry integrity",
-      "fact": "paper-trade-candidates contained 44 unique IDs with zero duplicates and zero unexpired candidates; signal_plan_archive contained 8 historical IDs; entry_opportunity_ledger contained 279 registered observations with zero unexpired opportunities at the review cutoff.",
-      "decision": "No candidate was appended. Existing immutable, expired, unfilled and adverse records were preserved; signals.json was not modified."
+      "fact": "paper-trade-candidates contains 44 unique IDs with zero duplicates and zero unexpired candidates; signal_plan_archive contains 8 historical canonical IDs; entry_opportunity_ledger contains 279 registered observations with zero unexpired opportunities at the review cutoff.",
+      "decision": "All immutable, expired, unfilled, invalidated and adverse records were preserved. paper-trade-candidates and signals.json were not modified."
     }
   ],
   "blockers": [
-    "The observed market snapshot was 4,392 seconds old at completion, so current price, spread, completed trigger and expiry economics could not be verified.",
-    "The current macro-events receipt was PARTIAL and more than four hours old; HKD and CHF official-source coverage gaps remained, and machine news coverage was PARTIAL.",
-    "No candidate-review recovery is authorized by the registered operations contract; only market_scan owns a full stale-source request.",
-    "No current candidate supplied a complete fresh registered entry, stop, target, expiry and spread-sensitive economics package that survived admission controls."
+    "The observed market snapshot was 8,108 seconds old at completion, so current price, spread, completed trigger and expiry economics could not be verified.",
+    "The latest fast audit was STALE_HOURLY_SOURCE with zero actionable observations and no verified user delivery.",
+    "The current macro-events receipt remained PARTIAL; exact clocks were missing for several date-only releases and machine news clearance was not changed.",
+    "No top candidate supplied a complete fresh registered entry, stop, target, expiry, trigger, allowed-spread and blackout package that survived current admission controls.",
+    "candidate_review is not authorized to trigger a stale whole-market recovery; only market_scan owns that recovery path.",
+    "No role-specific GitHub Actions run ID or notification receipt was produced or claimed."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md@bbc5a5091c16425eceadda27867c284007487800",
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
-    "data/task_runs/market_scan.json@6357000c8a3b7a6228841d87ebbb9e8fd7c8b7f8",
-    "data/task_runs/macro_events.json@447587a47da0a6d0bcf289465d7052bb0366cd9f",
-    "data/task_runs/position_monitor.json@bcea4e92cde3d056095da3d42b73b7094d9f9b18",
-    "data/summary.json@fdcd7789fa929ad6ac6da4452bf268aa3b55b2e1",
+    "data/task_runs/market_scan.json@3e0178c5769974a5e6e879cc9a8d1a1033fe46c5",
+    "data/task_runs/macro_events.json@eac69bc032630e156b3713d104f622dec9994f11",
+    "data/task_runs/position_monitor.json@5e18dfcf57afdfbca3cd03b780207bb1286d363c",
     "data/signal_admission_audit.json@6d4bff200ac36940b5fd4adea64460cdd2dc593d",
     "data/fast_entry_audit.json@ddb4964163cdb9e283fc0587cc13c44a0f5cdbd0",
-    "data/news_latest.json@699b43c0ccc5ab5bd7ae4b56f39ef51d33170c8f",
+    "data/hourly_assessment.json@d277e3928801b3750e77329a176c139b65f42da9",
     "data/pairs/EUR_HKD.json@92cd2204a32d8b45186e9aa8f281cf0edcb02171",
     "data/pairs/EUR_CAD.json@4301311c965030bc0cdfd74d302e89fcbadd5d99",
     "data/pairs/GBP_CAD.json@cb6b6b5b2630ba7f5137d5fa4fdad92149c05439",
