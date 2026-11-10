@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T11:10:35Z",
-  "completed_at": "2026-11-10T11:11:21.643Z",
-  "source_at": "2026-11-10T10:19:53Z",
-  "source_commit": "e2f1796018524c1c4702c7a8a5facd961d5e8bd8",
-  "source_age_seconds": 3089,
+  "started_at": "2026-11-10T12:11:41Z",
+  "completed_at": "2026-11-10T12:12:35.058Z",
+  "source_at": "2026-11-10T11:11:52Z",
+  "source_commit": "235dd32f09d4231f465fdf1299d80af9773ed7a0",
+  "source_age_seconds": 3643,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs": 68,
@@ -17,25 +17,29 @@
     "admitted": 0,
     "canonical_signals": 0,
     "rejection_reasons": {
-      "REVERSAL_OR_EXHAUSTION": 85,
-      "FOUR_FRAME_TREND_CONFLICT": 23,
-      "INVALID_BID_ASK_OR_SPREAD": 18,
-      "ADX_TREND_STRENGTH": 8,
+      "FOUR_FRAME_TREND_CONFLICT": 38,
+      "REVERSAL_OR_EXHAUSTION": 69,
+      "INVALID_BID_ASK_OR_SPREAD": 19,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 2,
+      "RECENT_MATERIAL_HEADLINE_REVIEW": 1,
+      "PRIMARY_NEWS_SOURCE_MISSING": 1,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
+      "ADX_TREND_STRENGTH": 2,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     }
   },
   "findings": [
-    "10:19:53Z full collection COLLECTED with 68/68 usable quotes and reported five-frame coverage; twelve leading shard files independently checked for source time and required frame presence.",
-    "All 136 canonical routes rejected; signals.json empty. WAIT; no simulated entry/exit or profitability inferred.",
-    "Existing monitoring_health records previous public export hard-size failure; sanitized private payload remains snapshot 01:28:57Z.",
-    "One stale-source full recovery requested at 11:11:06Z sequence 197, commit 235dd32f09d4231f465fdf1299d80af9773ed7a0; request readback verified. Actions 42805375594 and 42805375359 queued at observation.",
-    "Macro receipt last checked 08:05:50Z; machine news remains PARTIAL, including scheduled USD CPI at 13:30Z."
+    "11:11:52Z full source: actual summary/latest recovered via GitHub Contents API, 68/68 quoted and reported five-frame coverage; top twelve pair shards independently checked for source and frame presence.",
+    "All 136 canonical routes rejected; signals.json empty. WAIT, no conditional paper plan, simulated fill or scored profit established.",
+    "One stale-source recovery requested at 12:12:11Z sequence 198, commit 157cfe5e95c32f875243fbb367c6315b245edde9; request readback verified. Actions 42813744825 and 42813744787 in progress at review.",
+    "Public repository docs/fx-feed.json remains snapshot 01:28:57Z; sanitized feed stale, actual GitHub Pages HTTP serving not verified.",
+    "Macro receipt last completed 08:05:50Z, machine news partial; scheduled USD CPI at 13:30Z is not a verified release outcome."
   ],
   "blockers": [
-    "Recovery runs queued; resulting new source, admission and publication not yet verified.",
-    "Full data/summary.json and data/latest.json responses empty despite nonempty SHA; full actual contents not obtained.",
-    "56 of 68 pair shards not independently inspected this review.",
-    "Public dashboard served feed and successful sanitized publication not verified; existing payload stale."
+    "Recovery Actions in progress; specific resulting collection/admission/publication not yet verified.",
+    "56 of 68 pair shards not independently inspected; reported coverage is not independent all-pair verification.",
+    "Public export remains stale and prior publication size failure unresolved; actual served feed inaccessible.",
+    "Macro receipt older than current source and machine news coverage partial."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -44,32 +48,34 @@
     "data/universe.json",
     "data/collection_attempt.json",
     "data/monitoring_health.json",
+    "data/summary.json",
+    "data/latest.json",
     "data/signal_admission_audit.json",
     "signals.json",
+    "data/news_latest.json",
     "data/task_runs/macro_events.json",
     "scripts/refresh_request.json",
     "data/public_dashboard_payload.json",
     "data/hourly_assessment.json",
-    "data/news_latest.json",
-    "data/summary.json",
-    "data/latest.json",
+    "https://github.com/rayyansorefan/standalone-wallet-paper-agent/blob/main/docs/fx-feed.json",
+    "data/pairs/GBP_USD.json",
     "data/pairs/EUR_GBP.json",
-    "data/pairs/EUR_CAD.json",
     "data/pairs/EUR_CHF.json",
-    "data/pairs/EUR_AUD.json",
-    "data/pairs/USD_MXN.json",
-    "data/pairs/CAD_SGD.json",
-    "data/pairs/NZD_CHF.json",
-    "data/pairs/CAD_JPY.json",
     "data/pairs/GBP_HKD.json",
-    "data/pairs/GBP_CHF.json",
-    "data/pairs/EUR_HUF.json",
-    "data/pairs/EUR_TRY.json"
+    "data/pairs/SGD_CHF.json",
+    "data/pairs/EUR_JPY.json",
+    "data/pairs/USD_NOK.json",
+    "data/pairs/CHF_HKD.json",
+    "data/pairs/USD_CHF.json",
+    "data/pairs/EUR_AUD.json",
+    "data/pairs/USD_PLN.json",
+    "data/pairs/CHF_JPY.json"
   ],
   "run_ids": [
-    "42798148166",
     "42805375594",
-    "42805375359"
+    "42805375359",
+    "42813744825",
+    "42813744787"
   ],
   "no_broker_orders": true
 }
