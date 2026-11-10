@@ -2,36 +2,30 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T07:18:30Z",
-  "completed_at": "2026-11-10T07:19:20.060Z",
-  "source_at": "2026-11-10T01:28:57Z",
-  "source_commit": "3d3d4a4c8927b9a1072b7478edd1eb244230a849",
-  "source_age_seconds": 21023,
+  "started_at": "2026-11-10T08:18:06Z",
+  "completed_at": "2026-11-10T08:18:51.204Z",
+  "source_at": "2026-11-10T07:19:35Z",
+  "source_commit": "2bb068028fbebb313d941cc54c3ca7673220f632",
+  "source_age_seconds": 3556,
   "counts": {
-    "discovered_last_known": 68,
-    "usable_quoted_last_known": 65,
-    "reported_m15_h1": 65,
-    "reported_deep_d1_h4_h1_m15_m5": 65,
-    "independently_inspected_pair_shards": 12,
-    "unusable_nontradeable": 3,
-    "canonical_signals": 0,
+    "discovered_pairs": 68,
+    "usable_quoted_pairs": 68,
+    "reported_full_multiframe_pairs": 68,
+    "admission_routes": 136,
     "admitted": 0,
-    "rejected_routes": 130,
-    "public_feed_quoted_last_known": 64
+    "canonical_signals": 0,
+    "independently_verified_all_pairs": false
   },
   "findings": [
-    "Read current five-task operations, role registry and locked v21 protocol.",
-    "Last successful source 01:28:57Z; 65/68 usable at that time, not current market evidence.",
-    "Canonical signals empty and all 130 admission routes rejected at source clock; WAIT.",
-    "Requested one current-main recovery sequence 193 at 07:18:54Z, commit 2bb068028fbebb313d941cc54c3ca7673220f632; collection not yet confirmed.",
-    "Twelve top/monitored pair shards retrieved with nonempty content; all source-stamped 01:28:57Z.",
-    "Public repository feed snapshot 01:28:57Z matches private export; served Pages fetch unavailable."
+    "07:19:35Z full collection succeeded, 68/68 usable quoted and five-frame coverage reported by universe manifest; current admission rejected all 136 routes; signals.json empty, WAIT.",
+    "One bounded full recovery requested at 08:18:31Z, sequence 194, commit 025819dcac5c4046d7b31299a56a8d5fe4fbc58b, request readback verified; resulting collection not verified.",
+    "Macro role completed 08:05:50Z; USD CPI scheduled 13:30Z, do not override machine news clearance."
   ],
   "blockers": [
-    "Market source stale; recovery run, fresh source, admission and publication not yet verified.",
-    "Full summary/latest GitHub fetch returned empty despite nonempty blob SHAs.",
-    "Independent all-65 shard inspection not completed; macro receipt partial.",
-    "Actual GitHub Pages serving unverified."
+    "New recovery run/source/admission/publication unverified.",
+    "All-pair shard independent verification interrupted by connector call limit.",
+    "Private dashboard payload still 01:28:57Z; actual served feed not verified.",
+    "Large summary/latest not retrieved."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -41,27 +35,13 @@
     "data/collection_attempt.json",
     "data/monitoring_health.json",
     "data/signal_admission_audit.json",
-    "data/hourly_assessment.json",
     "signals.json",
     "data/task_runs/macro_events.json",
     "scripts/refresh_request.json",
-    "data/public_dashboard_payload.json",
-    "data/pairs/EUR_HKD.json",
-    "data/pairs/EUR_CAD.json",
-    "data/pairs/GBP_CAD.json",
-    "data/pairs/GBP_HKD.json",
-    "data/pairs/EUR_USD.json",
-    "data/pairs/EUR_SGD.json",
-    "data/pairs/CAD_SGD.json",
-    "data/pairs/USD_SEK.json",
-    "data/pairs/NZD_USD.json",
-    "data/pairs/NZD_CAD.json",
-    "data/pairs/NZD_HKD.json",
-    "data/pairs/GBP_USD.json",
-    "rayyansorefan/standalone-wallet-paper-agent/docs/fx-feed.json"
+    "data/public_dashboard_payload.json"
   ],
   "run_ids": [
-    "42736022053"
+    "42774422355"
   ],
   "no_broker_orders": true
 }
