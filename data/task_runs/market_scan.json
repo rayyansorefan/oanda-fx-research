@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T00:16:00Z",
-  "completed_at": "2026-11-10T00:19:59.839Z",
-  "source_at": "2026-11-09T22:29:31Z",
-  "source_commit": "fb763623c511f5c182a3aa013b7443d29e39f99c",
-  "source_age_seconds": 6629,
+  "started_at": "2026-11-10T01:16:56Z",
+  "completed_at": "2026-11-10T01:17:28.831Z",
+  "source_at": "2026-11-10T00:51:01Z",
+  "source_commit": "15c631d938ffb22a154d37c308f220c103fd53c8",
+  "source_age_seconds": 1588,
   "counts": {
     "discovered": 68,
     "last_valid_quoted": 65,
@@ -16,20 +16,21 @@
     "canonical_signals": 0,
     "admitted": 0,
     "rejection_routes": 130,
-    "independently_inspected_pair_shards": 0
+    "independently_inspected_pair_shards": 4
   },
   "findings": [
-    "Read current operations, role registry and locked FX-OOS-20261104-v21 protocol. Retrieved actual summary/latest via blob SHA after empty fetch_file responses.",
-    "Last persisted full OANDA collection 2026-11-09T22:29:31Z, run 42712262259 COLLECTED; historical manifest shows 65/68 usable with full M15/H1 and D/H4/H1/M15/M5, but no fresh overnight observation and independent pair-shard validation not completed.",
-    "Canonical signals empty; 130 rejected routes (15 trend conflict, 66 spread/quote, 47 reversal/exhaustion, 2 unsupported). WAIT, no paper entry or profit inferred.",
-    "Private sanitized feed and public repository docs/fx-feed.json match SHA 01542531456dfc7b863f9a7cbec222dc9ba0e2c9; source 22:29:31Z. Actual served Pages feed could not be verified.",
-    "Macro receipt PARTIAL, news clearance incomplete. Quiet-hours run: no refresh request, no user bulletin."
+    "Read current five-task operations, registry and registered FX-OOS-20261104-v21 protocol on main; read full summary/latest through authenticated blob fetch because contents responses were empty.",
+    "Last verified collector attempt 2026-11-10T00:51:01Z COLLECTED, run 42731311021, 65/68 usable quoted pairs; EUR_TRY, TRY_JPY and USD_TRY non-tradeable. Persisted summary reports 65 M15/H1 and 65 D/H4/H1/M15/M5; independent inspection covered 4 of 65 shards, not a complete candle audit.",
+    "Current canonical signals empty, admission active=0, 130 rejected routes: 40 four-frame conflicts, 54 reversal/exhaustion, 30 spread/quote-related, 2 insufficient structure reward, 2 ADX, 2 unsupported. WAIT; no simulated entry or outcome asserted.",
+    "Macro-events receipt PARTIAL, official-event clearance not independently refreshed during this run. Fast audit 00:33:28Z stale hourly source and no actionable observations.",
+    "Private sanitized dashboard payload and public repository feed same blob SHA be34e2384e1943bb97447ed8a7493aeec5776f75, but feed snapshot_at remains 2026-11-09T22:29:31Z, older than fresh private 00:51:01Z. Actual served Pages JSON and exporter chronology not independently verified. Publication cannot be described as current.",
+    "Quiet hours: no recovery request, no user notification, no broker orders or rule changes."
   ],
   "blockers": [
-    "Last source older than full research 25-minute threshold; no current trade readiness",
-    "Independent per-pair candle audit not completed",
-    "Actual Pages served JSON inaccessible for verification",
-    "Macro clearance partial"
+    "Source exceeds 25-minute full research freshness threshold at review; 70-minute outer limit approaching/exceeded depending on completion.",
+    "Only 4/65 current pair shards independently inspected; measured deep candle verification incomplete.",
+    "Public repository feed still reflects 22:29:31Z while private source is 00:51:01Z; Pages serving unverified.",
+    "Macro receipt partial; no fresh independent event clearance."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -46,10 +47,14 @@
     "data/hourly_assessment.json",
     "data/task_runs/macro_events.json",
     "data/public_dashboard_payload.json",
+    "data/pairs/EUR_JPY.json",
+    "data/pairs/EUR_CAD.json",
+    "data/pairs/NZD_JPY.json",
+    "data/pairs/USD_CAD.json",
     "rayyansorefan/standalone-wallet-paper-agent/docs/fx-feed.json"
   ],
   "run_ids": [
-    "42712262259"
+    "42731311021"
   ],
   "no_broker_orders": true
 }
