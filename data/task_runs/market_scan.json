@@ -2,35 +2,36 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T02:19:20Z",
-  "completed_at": "2026-11-10T02:19:52.375Z",
+  "started_at": "2026-11-10T03:19:44Z",
+  "completed_at": "2026-11-10T03:20:16.306Z",
   "source_at": "2026-11-10T01:28:57Z",
   "source_commit": "3d3d4a4c8927b9a1072b7478edd1eb244230a849",
-  "source_age_seconds": 3055,
+  "source_age_seconds": 6679,
   "counts": {
     "discovered": 68,
     "usable_quoted": 65,
     "reported_m15_h1": 65,
     "reported_deep_d1_h4_h1_m15_m5": 65,
     "unusable_nontradeable": 3,
-    "independently_inspected_pair_shards": 8,
+    "independently_inspected_pair_shards": 12,
     "canonical_signals": 0,
     "admitted": 0,
     "fast_actionable": 0
   },
   "findings": [
-    "Read current operations, five-role registry and locked FX-OOS-20261104-v21 protocol before assessing.",
-    "Current 01:28:57Z full OANDA collector reports COLLECTED (run 42736022053); fetched actual 1.36MB summary and 1.20MB latest blobs because fetch_file returned empty text. 65/68 quotes usable; EUR_TRY, TRY_JPY, USD_TRY non-tradeable. 65 M15/H1 and five-frame chart sets reported, eight current manifest pair shards directly inspected; independent all-shard candle verification incomplete.",
-    "Canonical signals.json has zero plans; admission audit active=0. Strongest ranked EUR_HKD LONG rejected for reversal/exhaustion; EUR_CAD LONG rejected for trend conflict; GBP_CAD LONG rejected for spread/volatility. WAIT, no simulated fills inferred.",
-    "Fast audit 00:33:28Z has no valid actionable observations. Macro role receipt PARTIAL and machine news clearance PARTIAL; no independent new overnight official release verification.",
-    "Private sanitized payload and public repository feed blob SHA 95c6bc6c67ed1931f2f952fd1d75f1d1274d4971 match, source snapshot 01:28:57Z; published_at 01:29:27Z. Served GitHub Pages feed not independently accessible/verified.",
-    "Quiet hours: no stale recovery triggered, no notification, no broker orders, no strategy or cohort changes."
+    "Read current operations, role registry and registered FX-OOS-20261104-v21 protocol; source/rule lock unchanged.",
+    "Latest persisted collection attempt COLLECTED at 01:28:57Z, run 42736022053, 65/68 usable; EUR_TRY, TRY_JPY, USD_TRY non-tradeable. Full universe M15/H1 and five-frame coverage is collector-reported, not independently verified for all 65; directly inspected 12 manifest-listed leading pair shards, all five primary frames present.",
+    "Canonical signals.json empty and admission audit active=0; EUR_HKD LONG reversal/exhaustion, EUR_CAD LONG trend conflict, GBP_CAD LONG spread/volatility. WAIT; no prospective conditional paper plan or simulated fill.",
+    "Fast audit 00:33:28Z stale/no actionable observations; macro receipt 03:04:05Z PARTIAL with official event research, machine news clearance remains partial.",
+    "Private sanitized dashboard blob SHA 95c6bc6c67ed1931f2f952fd1d75f1d1274d4971 equals public repository feed blob SHA, snapshot 01:28:57Z. Actual served Pages feed not independently verified.",
+    "Outside active London session: no refresh requested; no broker orders or rule changes."
   ],
   "blockers": [
-    "Source exceeds 25-minute full-research freshness limit at this review; no current entry assessment.",
-    "Only 8 of 65 pair shards directly checked; reported full-universe coverage is not independent per-candle verification.",
-    "Actual served Pages JSON not verified; repository feed equality alone is insufficient.",
-    "Macro clearance PARTIAL and fast scan STALE_HOURLY_SOURCE."
+    "Last full source 6679 seconds old; exceeds 25-minute research freshness; no new market observation verified.",
+    "Independent all-65 pair candle verification incomplete (12 checked).",
+    "Actual served Pages feed not verified; repository publication does not prove serving.",
+    "Fast observations stale and news clearance partial.",
+    "Large summary/latest GitHub contents returned empty despite nonempty blob SHAs; their full payloads not independently extracted this run."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -50,11 +51,15 @@
     "data/pairs/EUR_HKD.json",
     "data/pairs/EUR_CAD.json",
     "data/pairs/GBP_CAD.json",
+    "data/pairs/GBP_HKD.json",
     "data/pairs/EUR_USD.json",
-    "data/pairs/USD_JPY.json",
+    "data/pairs/EUR_SGD.json",
+    "data/pairs/CAD_SGD.json",
+    "data/pairs/USD_SEK.json",
     "data/pairs/NZD_USD.json",
+    "data/pairs/NZD_CAD.json",
+    "data/pairs/NZD_HKD.json",
     "data/pairs/GBP_USD.json",
-    "data/pairs/CAD_JPY.json",
     "rayyansorefan/standalone-wallet-paper-agent/docs/fx-feed.json"
   ],
   "run_ids": [
