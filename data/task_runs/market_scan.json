@@ -2,13 +2,13 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T06:15:24Z",
-  "completed_at": "2026-11-10T06:15:58.457Z",
+  "started_at": "2026-11-10T07:18:30Z",
+  "completed_at": "2026-11-10T07:19:20.060Z",
   "source_at": "2026-11-10T01:28:57Z",
   "source_commit": "3d3d4a4c8927b9a1072b7478edd1eb244230a849",
-  "source_age_seconds": 17221,
+  "source_age_seconds": 21023,
   "counts": {
-    "discovered": 68,
+    "discovered_last_known": 68,
     "usable_quoted_last_known": 65,
     "reported_m15_h1": 65,
     "reported_deep_d1_h4_h1_m15_m5": 65,
@@ -16,43 +16,35 @@
     "unusable_nontradeable": 3,
     "canonical_signals": 0,
     "admitted": 0,
-    "fast_actionable": 0,
     "rejected_routes": 130,
-    "rejection_reasons": {
-      "REVERSAL_OR_EXHAUSTION": 72,
-      "FOUR_FRAME_TREND_CONFLICT": 25,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 4,
-      "INVALID_BID_ASK_OR_SPREAD": 27,
-      "UNSUPPORTED_PAIR_OR_ROUTE": 2
-    },
-    "public_feed_quoted": 64
+    "public_feed_quoted_last_known": 64
   },
   "findings": [
-    "Current five-task operations, registry and v21 registered protocol read; no rule changes.",
-    "Last verified collection 01:28:57Z (run 42736022053), 65/68 usable then; no new current quote confirmed.",
-    "Canonical signals empty; admission rejects all 130 routes. WAIT, no simulated fills.",
-    "Quiet hours: no recovery requested; public served feed unverified.",
-    "Current private sanitized feed snapshot 01:28:57Z, schema 1, 924620 bytes; public serving not independently checked."
+    "Read current five-task operations, role registry and locked v21 protocol.",
+    "Last successful source 01:28:57Z; 65/68 usable at that time, not current market evidence.",
+    "Canonical signals empty and all 130 admission routes rejected at source clock; WAIT.",
+    "Requested one current-main recovery sequence 193 at 07:18:54Z, commit 2bb068028fbebb313d941cc54c3ca7673220f632; collection not yet confirmed.",
+    "Twelve top/monitored pair shards retrieved with nonempty content; all source-stamped 01:28:57Z.",
+    "Public repository feed snapshot 01:28:57Z matches private export; served Pages fetch unavailable."
   ],
   "blockers": [
-    "Full source stale over 4h; latest and summary GitHub content empty despite SHA.",
-    "Independent 65-shard batch retrieval exceeded connector tool-call budget; all-pair independent inspection incomplete.",
-    "Macro partial; served Pages feed unverified."
+    "Market source stale; recovery run, fresh source, admission and publication not yet verified.",
+    "Full summary/latest GitHub fetch returned empty despite nonempty blob SHAs.",
+    "Independent all-65 shard inspection not completed; macro receipt partial.",
+    "Actual GitHub Pages serving unverified."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
     "config/scheduled_research_roles.json",
     "validation_protocol.json",
     "data/universe.json",
-    "data/summary.json",
-    "data/latest.json",
     "data/collection_attempt.json",
-    "data/fast_entry_audit.json",
     "data/monitoring_health.json",
     "data/signal_admission_audit.json",
     "data/hourly_assessment.json",
     "signals.json",
     "data/task_runs/macro_events.json",
+    "scripts/refresh_request.json",
     "data/public_dashboard_payload.json",
     "data/pairs/EUR_HKD.json",
     "data/pairs/EUR_CAD.json",
