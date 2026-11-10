@@ -1,7 +1,7 @@
 {
   "activated_at": "2026-11-06T09:47:09Z",
-  "last_evaluated_at": "2026-11-10T16:14:22Z",
-  "latest_source_at": "2026-11-10T16:13:55Z",
+  "last_evaluated_at": "2026-11-10T17:14:17Z",
+  "latest_source_at": "2026-11-10T17:13:52Z",
   "new_ids": [],
   "no_orders": true,
   "policy": "Only news-source-missing single-blocker pullback hypotheses; unrelated hard gates remain. No manual alerts, promotions or claims of an executable broker edge.",
@@ -364,11 +364,18 @@
           "candle_evidence_path": "data/replay_evidence/AUD_SGD-2b35015bec72a2ca1f7c81565592fbd06a59ffd38d80b47525b157b9b974262c.json",
           "pair_observation_count": 3,
           "status": "PENDING_TRIGGER"
+        },
+        {
+          "at": "2026-11-10T17:14:17Z",
+          "candle_evidence_path": "data/replay_evidence/AUD_SGD-da4ee6956b5cd79753d3b0b12bec4228c27bbafde5981fbd6b50e5b5492e91c7.json",
+          "pair_observation_count": 3,
+          "status": "UNTRIGGERED"
         }
       ],
       "result": {
+        "reason": "Expiry without verified entry",
         "scored": false,
-        "status": "PENDING_TRIGGER"
+        "status": "UNTRIGGERED"
       },
       "route": "EMA20_PULLBACK",
       "source_at": "2026-11-10T14:56:19Z",
@@ -381,8 +388,8 @@
     "new_this_run": 0,
     "outcomes": {
       "INVALIDATED_PRE_ENTRY": 2,
-      "PENDING_TRIGGER": 1,
-      "TRIGGERED_UNFILLED": 3
+      "TRIGGERED_UNFILLED": 3,
+      "UNTRIGGERED": 1
     },
     "registered": 6,
     "scored": 0
