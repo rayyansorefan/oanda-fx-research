@@ -2,24 +2,24 @@
   "schema": 1,
   "role": "position_monitor",
   "status": "PARTIAL",
-  "started_at": "2026-11-09T22:34:48Z",
-  "completed_at": "2026-11-09T22:39:10Z",
-  "source_at": "2026-11-09T22:29:31Z",
-  "source_commit": "3b3bc9ce0cce6938ea4b7e5f82ec988370f8934a",
-  "source_age_seconds": 579,
+  "started_at": "2026-11-10T02:33:59Z",
+  "completed_at": "2026-11-10T02:37:55Z",
+  "source_at": "2026-11-10T01:28:57Z",
+  "source_commit": "3d3d4a4c8927b9a1072b7478edd1eb244230a849",
+  "source_age_seconds": 4138,
   "counts": {
-    "lifecycle_plans": 65,
+    "lifecycle_plans": 66,
     "lifecycle_closed": 2,
     "lifecycle_expired_unfilled": 33,
-    "lifecycle_invalidated": 30,
+    "lifecycle_invalidated": 31,
     "open_simulated_positions": 0,
     "pending_simulated_fills": 0,
     "newly_verified_simulated_exits": 0,
-    "unexpired_research_only_opportunities": 3,
-    "research_only_patterns_observed": 3,
-    "research_only_entries_confirmed": 0,
+    "newly_resolved_pre_entry_invalidations": 1,
+    "unexpired_research_only_opportunities": 0,
+    "unexpired_paper_candidates": 0,
     "champion_forward_plans": 5,
-    "challenger_forward_plans": 19,
+    "challenger_forward_plans": 20,
     "champion_scored_exits": 0,
     "challenger_scored_exits": 0,
     "early_simple_plans": 2,
@@ -39,80 +39,65 @@
   "findings": [
     {
       "scope": "authoritative lifecycle and cohorts",
-      "fact": "The current lifecycle scorer has 65 terminal plans only: 2 CLOSED, 33 EXPIRED_UNFILLED and 30 INVALIDATED. The portfolio audit reports zero open simulated positions in both champion and challenger arms. Forward validation has 5 champion and 19 challenger plans with zero independently scored exits.",
+      "fact": "The current lifecycle scorer has 66 terminal plans only: 2 CLOSED, 33 EXPIRED_UNFILLED and 31 INVALIDATED. Portfolio and cohort outputs report zero open simulated positions, zero pending simulated fills and zero independently scored exits.",
       "chronology": "No current later fill exists to monitor, and no new stop, TP, expiry or time exit was independently verified in this run.",
-      "action": "Preserved all scorer states and did not rewrite any ledger."
+      "action": "Preserved all scorer states and did not rewrite any scored ledger."
     },
     {
-      "scope": "CHF_JPY research-only observation 202611091845-CHFJPY-SHORT-EMA20_PULLBACK",
-      "fact": "A completed M15 paper pattern at 19:45Z was detected at 20:16:59Z, but entry_confirmed remains false and tracking status remains FORWARD_PATTERN_OBSERVED_NO_APPROVED_FILL.",
-      "chronology": "First seen 19:14:07Z; latest short exit-side ask 192.970 at 22:29:10Z; frozen stop 192.666 and TP1 192.270; expiry 23:14:07Z. The observed adverse move is hypothetical because no separate later bid/ask fill was established.",
-      "action": "Withheld a scored loss despite the latest ask being beyond the frozen stop; an unproven fill cannot be converted into an outcome."
+      "scope": "AUD_CAD challenger plan AUTO-20261110T0051-AUD_CAD-L-B",
+      "fact": "The prospectively registered paper-only LONG required a future completed M15 trigger after 00:51:10Z at 0.97733, with frozen stop 0.97685, TP1 0.97878 and expiry 02:21:10Z. The lifecycle scorer records INVALIDATED_PRE_ENTRY and scored=false.",
+      "chronology": "The 00:45Z M15 candle opened before registration and therefore was not a valid future trigger; its bid/ask lows were already below the frozen stop. A later 01:00Z M15 rebound did not cure the earlier pre-entry invalidation, and no separate later bid/ask fill was established.",
+      "action": "Withheld fill, win and loss claims; retained the machine result as an unscored pre-entry invalidation."
     },
     {
-      "scope": "HKD_JPY research-only observation 202611092045-HKDJPY-SHORT-EMA20_PULLBACK",
-      "fact": "A completed M15 paper pattern at 21:30Z was detected at 22:18:29Z, but entry_confirmed remains false and tracking status remains FORWARD_PATTERN_OBSERVED_NO_APPROVED_FILL.",
-      "chronology": "First seen 21:14:01Z; latest short exit-side ask 20.14814 at 22:29:28Z; frozen stop 20.15243 and TP1 20.10606; expiry 01:14:01Z on 10 November. Observed OANDA spread was 171.5 pips.",
-      "action": "No fill, win, loss or exit was claimed."
-    },
-    {
-      "scope": "USD_JPY research-only observation 202611092045-USDJPY-SHORT-EMA20_PULLBACK",
-      "fact": "A completed M15 paper pattern at 21:30Z was detected at 22:18:29Z, but entry_confirmed remains false and tracking status remains FORWARD_PATTERN_OBSERVED_NO_APPROVED_FILL.",
-      "chronology": "First seen 21:14:01Z; latest short exit-side ask 157.986 at 22:29:10Z; frozen stop 158.034 and TP1 157.668; expiry 01:14:01Z on 10 November. Observed OANDA spread was 10.0 pips.",
-      "action": "No fill, win, loss or exit was claimed."
-    },
-    {
-      "scope": "pair evidence and recovery decision",
-      "fact": "CHF_JPY, HKD_JPY and USD_JPY shards were collected at 22:29:31Z with quote clocks at 22:29:10-22:29:28Z, completed M15 through 22:00Z and completed M5 through 22:20Z.",
-      "action": "No [fx-fast-check] recovery was requested because current pair-specific evidence existed and there was no open or confirmed pending simulated fill."
+      "scope": "current prospective coverage and recovery decision",
+      "fact": "At the 02:33:59Z review cutoff, entry_opportunity_ledger and paper-trade-candidates had zero unexpired opportunities or candidates, while signals.json was empty.",
+      "action": "No [fx-fast-check] recovery was requested. The role-owned recovery condition was absent because there was no actual open simulated position or prospectively pending simulated fill lacking pair evidence."
     },
     {
       "scope": "fixed versus profit-protection study",
-      "fact": "exit_management_research has zero registered paper entries, zero cases and zero paired scored comparisons. confirmed_momentum_execution also has zero records and zero paired exit cases.",
-      "action": "No arm was selected and no profitable path was inferred. The fixed and protection comparison remains unvalidated."
+      "fact": "exit_management_research has zero registered entries, zero cases and zero paired scored comparisons. confirmed_momentum_execution has zero records and zero paired exit cases.",
+      "action": "No exit arm was selected and no profitable path was inferred; the comparison remains unvalidated."
     },
     {
       "scope": "separate user-reported evidence",
-      "fact": "The manual early-entry test ledger remains separate from model cohorts and contains no current open broker position. No personal broker details were copied into this receipt.",
+      "fact": "The manual early-entry test remains separate from model cohorts and contains no current open broker position. No personal broker details were copied into this receipt.",
       "action": "No broker order was submitted, modified or closed."
     }
   ],
   "blockers": [
-    "GitHub fetch_file returned empty content for the 26.4 MB paper_trade_ledger.json and 19.9 MB strategy_comparison.json; fetch_blob transport also closed. Their current SHAs were observed, but raw rows could not be independently reread in this run.",
-    "Authoritative derived lifecycle, cohort, portfolio and validation outputs were current and internally reported zero open simulated positions, but the raw-ledger access gap prevents COMPLETE status.",
-    "The three unexpired early opportunities have completed paper patterns but no separately verified executable-side fill; outcomes remain unscored.",
+    "GitHub fetch_file returned empty content for the current 26.55 MB data/paper_trade_ledger.json and 20.14 MB data/strategy_comparison.json; a blob fetch attempt also closed transport. Their current SHAs were observed, but raw rows could not be independently reread in this run.",
+    "The authoritative derived lifecycle, portfolio, cohort and validation outputs were current to source_at and reported zero open or pending simulated positions, but the raw-ledger access gap prevents COMPLETE status.",
+    "The source snapshot was older than the 20-minute active-review standard at completion. A role-owned fast recovery was not authorized because there was no open or prospectively pending simulated plan requiring current pair evidence.",
+    "No independently scored simulated fills or exits exist, and the fixed-versus-protection comparison remains empty.",
     "Actual broker funding, fees and fills remain unverified and were not inferred."
   ],
   "evidence_paths": [
-    "docs/FIVE_TASK_OPERATIONS.md",
-    "config/scheduled_research_roles.json",
-    "validation_protocol.json",
-    "docs/PROFITABILITY_EXECUTION_REWORK.md",
-    "data/paper_trade_ledger.json@e19e29ff9ad0e2f61ef361e5227004d7e8da2bdd",
-    "data/strategy_comparison.json@89ee43a3bc75964116c67f6657d1f7f01cc2b2c4",
-    "data/lifecycle_ledger.json",
-    "data/paper_portfolio_audit.json",
-    "data/forward_validation.json",
-    "data/early_forward_validation.json",
-    "data/early_simple_paper_shadow.json",
-    "data/simple_paper_shadow.json",
-    "data/simple_paper_shadow_v2.json",
-    "data/liquid_momentum_shadow_v1.json",
-    "data/gate_forward_paper.json",
-    "data/confirmed_momentum_execution.json",
-    "data/exit_management_research.json",
-    "data/entry_opportunity_ledger.json",
+    "docs/FIVE_TASK_OPERATIONS.md@bbc5a5091c16425eceadda27867c284007487800",
+    "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
+    "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
+    "data/paper_trade_ledger.json@6cd7a4871297630c73334d5bc89997b86ee7c9b1",
+    "data/strategy_comparison.json@9ac192d279d21a1333be4212534911832a93e180",
+    "data/lifecycle_ledger.json@035e0055",
+    "data/paper_portfolio_audit.json@66314f",
+    "data/forward_validation.json@75a8e680",
+    "data/early_simple_paper_shadow.json@6b997",
+    "data/simple_paper_shadow.json@e69a",
+    "data/simple_paper_shadow_v2.json@c3e86",
+    "data/liquid_momentum_shadow_v1.json@aadfc",
+    "data/gate_forward_paper.json@567dc",
+    "data/confirmed_momentum_execution.json@01b744",
+    "data/exit_management_research.json@8d3a11",
+    "data/entry_opportunity_ledger.json@f608ec",
     "data/manual_early_entry_tests.json",
-    "data/pairs/CHF_JPY.json",
-    "data/pairs/HKD_JPY.json",
-    "data/pairs/USD_JPY.json",
-    "data/collection_attempt.json",
+    "data/pairs/AUD_CAD.json",
+    "data/collection_attempt.json@565cf009b4411c4cdc27ac7ef0b185057facec45",
     "data/monitoring_health.json",
-    "signals.json",
-    "paper-trade-candidates.json"
+    "signals.json@152c8fc",
+    "paper-trade-candidates.json@35daf9"
   ],
   "run_ids": [
-    "42712262259"
+    "42736022053"
   ],
   "no_broker_orders": true
 }
