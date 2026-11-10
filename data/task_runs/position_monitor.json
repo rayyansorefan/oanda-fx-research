@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "position_monitor",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T03:32:07Z",
-  "completed_at": "2026-11-10T03:34:22Z",
+  "started_at": "2026-11-10T04:32:01Z",
+  "completed_at": "2026-11-10T04:35:06Z",
   "source_at": "2026-11-10T01:28:57Z",
   "source_commit": "3d3d4a4c8927b9a1072b7478edd1eb244230a849",
-  "source_age_seconds": 7525,
+  "source_age_seconds": 11169,
   "counts": {
     "lifecycle_plans": 66,
     "lifecycle_closed": 2,
@@ -18,6 +18,7 @@
     "newly_resolved_pre_entry_invalidations": 0,
     "unexpired_research_only_opportunities": 0,
     "unexpired_paper_candidates": 0,
+    "canonical_signals": 0,
     "champion_forward_plans": 5,
     "challenger_forward_plans": 20,
     "champion_scored_exits": 0,
@@ -47,51 +48,46 @@
   "findings": [
     {
       "scope": "authoritative lifecycle and portfolio",
-      "fact": "The current lifecycle ledger has 66 terminal plans: 2 CLOSED, 33 EXPIRED_UNFILLED and 31 INVALIDATED. The portfolio audit reports zero open paper positions, zero open exposure pairs and zero eligible paper fills after portfolio limits in both champion and challenger arms.",
-      "chronology": "There is no current later trigger, separate later bid/ask fill, stop, TP, expiry or time exit requiring adjudication in this run.",
-      "action": "Preserved all scorer states and did not rewrite any scored or unscored ledger."
+      "fact": "The current lifecycle ledger retains 66 terminal plans: 2 CLOSED, 33 EXPIRED_UNFILLED and 31 INVALIDATED. The portfolio audit reports zero open paper positions, zero open exposure pairs and zero eligible paper fills after portfolio limits in both champion and challenger arms.",
+      "chronology": "No current later completed trigger, separate later executable-side bid/ask fill, stop, TP, expiry or time exit required adjudication.",
+      "action": "Preserved all machine-scorer states; no scored or unscored ledger was rewritten."
     },
     {
       "scope": "current prospective registries",
-      "fact": "signals.json contains zero canonical plans. paper-trade-candidates contains 44 preserved candidates with zero unexpired candidates, and entry_opportunity_ledger contains 279 preserved observations with zero unexpired opportunities at the 03:32:07Z review cutoff.",
-      "action": "No bounded [fx-fast-check] recovery was requested because the role-owned recovery condition requires an actual open or prospectively pending simulated plan lacking current pair evidence; none existed."
+      "fact": "signals.json has zero canonical plans. paper-trade-candidates preserves 44 candidates with zero unexpired candidates; entry_opportunity_ledger preserves 279 observations with zero unexpired opportunities at the 04:32:01Z cutoff.",
+      "action": "No bounded [fx-fast-check] recovery was requested because there was no actual open or prospectively pending simulated plan lacking pair-specific evidence."
     },
     {
-      "scope": "forward champion and challenger cohorts",
-      "fact": "The locked v21 forward champion has 5 plans and challenger has 20 plans. Both arms have zero independently scored exits and zero open positions. Recorded outcomes remain pre-entry invalidations, triggered-unfilled plans and untriggered plans only.",
-      "action": "No fill, win, loss, current movement or delivery receipt was inferred from favorable or adverse price paths."
+      "scope": "locked forward cohorts",
+      "fact": "The v21 champion retains 5 plans and challenger 20 plans, with zero independently scored exits and zero open positions. Outcomes remain 2/2/1 champion and 7/4/9 challenger for INVALIDATED_PRE_ENTRY/TRIGGERED_UNFILLED/UNTRIGGERED.",
+      "action": "No fill, win, loss, movement or delivery receipt was inferred from an unfilled path."
     },
     {
-      "scope": "early, simple, liquid and gate studies",
-      "fact": "The early simple shadow retains 2 EXPIRED_UNTRIGGERED plans and zero fills; simple v1 and v2 retain zero plans; liquid momentum retains one MISSED_ENTRY and zero fills; gate-forward paper retains 4 unscored plans comprising 2 INVALIDATED_PRE_ENTRY and 2 TRIGGERED_UNFILLED outcomes.",
-      "action": "Preserved every no-fill, expiry, invalidation and missed-entry record without reclassification."
+      "scope": "early simple liquid and gate studies",
+      "fact": "Early-forward retains 5 champion and 24 challenger plans with zero scored exits. Early-simple retains 2 EXPIRED_UNTRIGGERED plans and zero fills; simple v1/v2 retain zero plans; liquid momentum retains one MISSED_ENTRY and zero fills; gate-forward retains 2 INVALIDATED_PRE_ENTRY and 2 TRIGGERED_UNFILLED plans.",
+      "action": "All loss, no-fill, expiry, invalidation and missed-entry records were preserved without reclassification."
     },
     {
-      "scope": "fixed versus profit-protection research",
-      "fact": "exit_management_research has zero registered entries, zero cases and zero paired scored comparisons. confirmed_momentum_execution has zero records, zero fills and zero paired exit cases across EXISTING_EXTRA_CONFIRMATION, CONFIRMED_NEXT_OPEN and CONFIRMED_NEXT_OPEN_PROTECTED.",
-      "action": "No exit arm was selected, no trailing or breakeven path was retroactively applied, and no profitable path was claimed."
+      "scope": "fixed versus profit-protection",
+      "fact": "exit_management_research has zero registered entries, zero cases and zero paired scored comparisons. confirmed_momentum_execution has zero records, fills or paired exit cases across EXISTING_EXTRA_CONFIRMATION, CONFIRMED_NEXT_OPEN and CONFIRMED_NEXT_OPEN_PROTECTED.",
+      "action": "No exit arm was selected and no trailing, breakeven or profitable path was applied retrospectively."
     },
     {
-      "scope": "rejected development diagnostic",
-      "fact": "profitability_execution_development contains one fixed arm labelled OPEN for AUTO-20261109T1914-CAD_JPY-S-C inside the unconfirmed_with_floor retrospective_reserved trial. The report explicitly classifies that trial as RETROSPECTIVE_DIAGNOSTIC_NOT_PORTFOLIO_RETURN_OR_FORWARD_VALIDATION, sets decision REJECT_UNCONFIRMED_EARLY_ENTRY_FOR_DEPLOYMENT, profitability_established=false and existing_cohorts_modified=false.",
-      "action": "The diagnostic row was not treated as a current forward simulated position, was not refreshed or closed, and was not imported into any cohort."
-    },
-    {
-      "scope": "separate user-reported evidence",
-      "fact": "manual_early_entry_tests remains CLOSED_SCREENSHOT_CONFIRMED and separate from model cohorts. No current open user-reported position was identified, and no personal broker details were copied into this receipt.",
-      "action": "No real or practice broker order was submitted, modified or closed."
+      "scope": "development diagnostic and user evidence",
+      "fact": "profitability_execution_development still contains one OPEN fixed arm at trials.3.rows.18.arms.fixed, but the report classifies the trial as rejected retrospective diagnostic research, profitability_established=false and existing_cohorts_modified=false. manual_early_entry_tests remains CLOSED_SCREENSHOT_CONFIRMED and separate from model cohorts.",
+      "action": "The diagnostic arm was excluded from forward-position monitoring and was not refreshed, closed or imported; no personal broker details were copied."
     },
     {
       "scope": "source and raw-ledger coverage",
-      "fact": "The last collected market source remains 2026-11-10T01:28:57Z from verified collector run 42736022053. At completion it was 7,525 seconds old. GitHub fetch_file returned empty content for the nonempty 26.55 MB paper_trade_ledger and 20.14 MB strategy_comparison blobs; fetch_blob returned errors for both.",
-      "action": "Derived lifecycle, portfolio and cohort outputs were used for current state, while raw-row completeness remained unverified and PARTIAL status was retained."
+      "fact": "The last collected market source remains 2026-11-10T01:28:57Z from collector run 42736022053. At completion it was 11169 seconds old. GitHub fetch_file again returned empty content for the nonempty paper_trade_ledger and strategy_comparison blobs.",
+      "action": "Derived lifecycle, portfolio and cohort outputs were used for current state; raw-row completeness remains unverified, so status is PARTIAL."
     }
   ],
   "blockers": [
-    "The observed source snapshot was 7,525 seconds old at completion, beyond the 25-minute full-research limit and the outer 70-minute execution-evidence ceiling. No execution claim was made.",
-    "data/paper_trade_ledger.json and data/strategy_comparison.json have nonempty current blob SHAs but could not be independently read through fetch_file or fetch_blob in this run.",
+    "The observed source snapshot was 11169 seconds old at completion, beyond both the 25-minute full-research limit and 70-minute outer execution-evidence ceiling; no execution claim was made.",
+    "data/paper_trade_ledger.json and data/strategy_comparison.json have nonempty current blob SHAs but returned no readable content in this run.",
     "Because no open or prospectively pending simulated plan existed, position_monitor was not authorized to trigger a bounded fast recovery merely to refresh stale whole-market data.",
-    "No independently scored forward fills or exits exist, so fixed-versus-profit-protection evidence remains empty and unvalidated.",
+    "No independently scored forward fill or exit exists, so fixed-versus-profit-protection evidence remains empty and unvalidated.",
     "Actual broker fills, funding, commissions, swap and account equity remain unverified and were not inferred."
   ],
   "evidence_paths": [
@@ -100,6 +96,7 @@
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
     "docs/PROFITABILITY_EXECUTION_REWORK.md@e852a5d8cb3f509a0919ed7c48bdba220d5234f7",
     "data/collection_attempt.json@565cf009b4411c4cdc27ac7ef0b185057facec45",
+    "data/task_runs/market_scan.json@50dddcd5052ac1267fb6671215238180a21da2ff",
     "data/paper_trade_ledger.json@6cd7a4871297630c73334d5bc89997b86ee7c9b1",
     "data/strategy_comparison.json@9ac192d279d21a1333be4212534911832a93e180",
     "data/lifecycle_ledger.json@035e00550471726d2d0affdce1f6049b6b91eb8a",
