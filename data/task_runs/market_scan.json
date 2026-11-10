@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T19:18:24Z",
-  "completed_at": "2026-11-10T19:19:01.511Z",
-  "source_at": "2026-11-10T18:56:24Z",
-  "source_commit": "2a85272edd5a3de422f4b2aab7a420c6d1cc407e",
-  "source_age_seconds": 1358,
+  "started_at": "2026-11-10T20:15:43Z",
+  "completed_at": "2026-11-10T20:16:24.814Z",
+  "source_at": "2026-11-10T19:19:41Z",
+  "source_commit": "5f9467388c0930674203bf603e3b7f43ae52d81f",
+  "source_age_seconds": 3404,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs": 65,
@@ -15,31 +15,32 @@
     "independently_inspected_pair_shards_this_run": 12,
     "independently_verified_all_pairs": false,
     "admission_routes": 130,
-    "admitted": 0,
-    "canonical_signals": 0,
+    "admitted": 1,
+    "canonical_signals": 1,
+    "rejected_routes": 129,
     "rejection_reasons": {
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 6,
-      "RECENT_MATERIAL_HEADLINE_REVIEW": 2,
-      "FOUR_FRAME_TREND_CONFLICT": 54,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 2,
+      "ADX_TREND_STRENGTH": 2,
+      "FOUR_FRAME_TREND_CONFLICT": 57,
       "INVALID_BID_ASK_OR_SPREAD": 43,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 2,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 7,
       "PRIMARY_NEWS_SOURCE_MISSING": 2,
-      "REVERSAL_OR_EXHAUSTION": 15,
-      "ADX_TREND_STRENGTH": 4,
+      "RECENT_MATERIAL_HEADLINE_REVIEW": 2,
+      "REVERSAL_OR_EXHAUSTION": 12,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     }
   },
   "findings": [
-    "18:56:24Z full collection COLLECTED, 65/68 usable quotes and reported complete five-frame coverage; 3 TRY instruments non-tradeable. Twelve leading pair shards inspected independently; all-pair independent verification incomplete.",
-    "Canonical admission rejected 130/130 routes, signals.json empty at 18:56:37Z. WAIT; no verified simulated fills or conditional plans.",
-    "One current-main recovery sequence 203 requested 19:18:48Z, commit 5f9467388c0930674203bf603e3b7f43ae52d81f; exact request readback verified. Resulting collection/admission/publication not yet established.",
-    "Private dashboard payload snapshot 18:56:24Z but public serving unverified. Machine news PARTIAL; macro role last checked 08:05:50Z."
+    "19:19:41Z source reported 65/68 quoted/deep pairs; three TRY instruments non-tradeable. Twelve leading shards independently inspected; remaining 53 not independently inspected.",
+    "Canonical admission 1 conditional AUD_JPY SHORT EMA20_PULLBACK plan, expires 20:49:54Z, requires future completed M15 trigger; no observed trigger or fill established. 129/130 routes rejected. Treat as UNTRIGGERED WATCH, not simulated entry.",
+    "One full recovery sequence 204 requested 20:15:59Z on main commit c362a1a3fa9f44bb37183664fb0ead698e7c5369. CI run 42893584489 in progress at observation; collection/admission outcome pending.",
+    "Public raw GitHub feed readback docs/fx-feed.json snapshot 19:19:41Z with one conditional signal. Actual GitHub Pages served HTTP feed not independently verified. News remains PARTIAL; macro receipt 08:05:50Z."
   ],
   "blockers": [
-    "Full independent all-pair shard verification incomplete (12/65).",
-    "Source exceeded 20-minute active-session recovery threshold; recovery outcome unverified.",
-    "Sanitized public repository publication and actual served feed unverified.",
-    "Machine news PARTIAL and macro research receipt old."
+    "Stale full market source at review; requested recovery not yet confirmed collected.",
+    "Full independent 65-pair shard audit incomplete (12/65).",
+    "Actual GitHub Pages served feed unverified; raw repository feed readback only.",
+    "Macro/news coverage partial; no current refreshed macro receipt."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -50,26 +51,27 @@
     "data/universe.json",
     "data/signal_admission_audit.json",
     "signals.json",
-    "data/hourly_assessment.json",
     "data/news_latest.json",
     "data/task_runs/macro_events.json",
     "data/public_dashboard_payload.json",
     "scripts/refresh_request.json",
+    "https://raw.githubusercontent.com/rayyansorefan/standalone-wallet-paper-agent/main/docs/fx-feed.json",
+    "data/pairs/AUD_JPY.json",
     "data/pairs/EUR_USD.json",
     "data/pairs/GBP_USD.json",
-    "data/pairs/AUD_USD.json",
     "data/pairs/AUD_HKD.json",
+    "data/pairs/AUD_USD.json",
     "data/pairs/USD_CAD.json",
-    "data/pairs/GBP_HKD.json",
+    "data/pairs/EUR_HKD.json",
     "data/pairs/USD_CHF.json",
-    "data/pairs/EUR_CAD.json",
-    "data/pairs/CAD_HKD.json",
+    "data/pairs/GBP_HKD.json",
     "data/pairs/CHF_HKD.json",
-    "data/pairs/AUD_SGD.json",
-    "data/pairs/USD_DKK.json"
+    "data/pairs/CAD_HKD.json",
+    "data/pairs/USD_SEK.json"
   ],
   "run_ids": [
-    "42879957577"
+    "42884003696",
+    "42893584489"
   ],
   "no_broker_orders": true
 }
