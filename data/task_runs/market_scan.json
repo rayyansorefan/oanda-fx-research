@@ -2,42 +2,41 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T16:12:07Z",
-  "completed_at": "2026-11-10T16:12:51.700Z",
-  "source_at": "2026-11-10T14:56:19Z",
-  "source_commit": "061029a2058f5fcdcc0cbaf309436c1eb9cdd060",
-  "source_age_seconds": 4592,
+  "started_at": "2026-11-10T17:12:47Z",
+  "completed_at": "2026-11-10T17:13:28.131Z",
+  "source_at": "2026-11-10T16:13:55Z",
+  "source_commit": "6977b54fc521eaba96b48df4902840fc64c5855c",
+  "source_age_seconds": 3573,
   "counts": {
     "discovered_pairs": 68,
-    "usable_quoted_pairs": 68,
-    "reported_m15_h1_indicator_pairs": 68,
-    "reported_deep_five_frame_pairs": 68,
+    "usable_quoted_pairs": 65,
+    "reported_m15_h1_indicator_pairs": 65,
+    "reported_deep_five_frame_pairs": 65,
     "independently_inspected_pair_shards_this_run": 12,
     "independently_verified_all_pairs": false,
-    "admission_routes": 136,
+    "admission_routes": 130,
     "admitted": 0,
     "canonical_signals": 0,
     "rejection_reasons": {
-      "ADX_TREND_STRENGTH": 4,
-      "FOUR_FRAME_TREND_CONFLICT": 21,
-      "INVALID_BID_ASK_OR_SPREAD": 8,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 2,
-      "PRIMARY_NEWS_SOURCE_MISSING": 1,
-      "REVERSAL_OR_EXHAUSTION": 98,
-      "UNSUPPORTED_PAIR_OR_ROUTE": 2
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
+      "FOUR_FRAME_TREND_CONFLICT": 19,
+      "REVERSAL_OR_EXHAUSTION": 99,
+      "INVALID_BID_ASK_OR_SPREAD": 7,
+      "UNSUPPORTED_PAIR_OR_ROUTE": 2,
+      "ADX_TREND_STRENGTH": 2
     }
   },
   "findings": [
-    "Last confirmed full OANDA source 14:56:19Z; reported 68/68 usable quotes and five-frame contexts; 12 current pair shards retrieved, full independent 68-pair audit incomplete.",
-    "Canonical admission at 14:56:19Z rejected all 136 routes; current signals.json generated 15:21:00Z has zero signals. WAIT; no verified paper fill.",
-    "One full recovery request sequence 200 committed 9ba3a45bf9ca19bf6f40261ccec369dc8f000626 at 16:12:36Z and read back; subsequent collection, admission and publication not established.",
-    "Private sanitized payload snapshot remains 12:13:45Z; actual public serving not independently verified. News_latest PARTIAL; macro receipt checked 08:05:50Z."
+    "Last confirmed full source 16:13:55Z: 65/68 usable quoted pairs; 65 complete five-frame contexts, 3 TRY pairs non-tradeable. Twelve current pair shards independently inspected, not all 65.",
+    "Canonical admission for source 16:13:55Z rejected all 130 routes; signals.json empty at 16:14:49Z. WAIT; no verified simulated fills.",
+    "One full recovery sequence 201 requested 17:13:13Z and read back at commit 6977b54; resulting Actions collection run 42862681256 queued at observation, not yet verified.",
+    "Private sanitized dashboard payload snapshot remains 12:13:45Z; previous publication failed size limit, actual served feed not verified. Macro receipt 08:05:50Z; machine news PARTIAL."
   ],
   "blockers": [
-    "Last source older than 20-minute active-session recovery threshold; requested recovery not yet verified as collected.",
-    "Only 12 of 68 pair shards independently inspected; no full per-pair independent coverage verification.",
-    "Sanitized payload stale and actual served feed not verified.",
-    "News coverage PARTIAL; macro receipt not contemporaneous."
+    "Source older than 20min active-session threshold; recovery run queued and not completed/verified.",
+    "Independent per-pair audit only 12/65 usable shards.",
+    "Sanitized publication and actual public feed unverified; previous payload size failure.",
+    "News coverage partial; macro receipt not contemporaneous."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -53,21 +52,22 @@
     "data/public_dashboard_payload.json",
     "data/task_runs/macro_events.json",
     "scripts/refresh_request.json",
-    "data/pairs/EUR_NOK.json",
-    "data/pairs/AUD_NZD.json",
-    "data/pairs/AUD_SGD.json",
     "data/pairs/AUD_CAD.json",
+    "data/pairs/CAD_SGD.json",
     "data/pairs/EUR_AUD.json",
-    "data/pairs/USD_NOK.json",
-    "data/pairs/USD_CAD.json",
-    "data/pairs/AUD_HKD.json",
-    "data/pairs/EUR_CAD.json",
-    "data/pairs/NZD_SGD.json",
-    "data/pairs/CAD_HKD.json",
-    "data/pairs/EUR_USD.json"
+    "data/pairs/GBP_CAD.json",
+    "data/pairs/HKD_JPY.json",
+    "data/pairs/USD_JPY.json",
+    "data/pairs/AUD_SGD.json",
+    "data/pairs/EUR_NOK.json",
+    "data/pairs/EUR_USD.json",
+    "data/pairs/AUD_NZD.json",
+    "data/pairs/NZD_CAD.json",
+    "data/pairs/GBP_NZD.json"
   ],
   "run_ids": [
-    "42839037372"
+    "42852227974",
+    "42862681256"
   ],
   "no_broker_orders": true
 }
