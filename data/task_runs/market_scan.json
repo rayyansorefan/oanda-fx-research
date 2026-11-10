@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-10T05:20:04Z",
-  "completed_at": "2026-11-10T05:22:06.203Z",
+  "started_at": "2026-11-10T06:15:24Z",
+  "completed_at": "2026-11-10T06:18:00Z",
   "source_at": "2026-11-10T01:28:57Z",
   "source_commit": "3d3d4a4c8927b9a1072b7478edd1eb244230a849",
-  "source_age_seconds": 13989,
+  "source_age_seconds": 17343,
   "counts": {
     "discovered": 68,
     "usable_quoted_last_known": 65,
@@ -28,20 +28,15 @@
     "public_feed_quoted": 64
   },
   "findings": [
-    "Read current five-task operations, role registry and locked FX-OOS-20261104-v21 protocol on main; no rule modifications.",
-    "Last valid full collection run 42736022053 at 01:28:57Z; 65 of 68 pairs usable then; EUR_TRY, TRY_JPY and USD_TRY excluded as non-tradeable. No current market observation verified.",
-    "Inspected 12 manifest-listed leading pair shards with actual bid/ask and historical source timestamps; independent verification remains 12/65, not complete all-pair audit.",
-    "Canonical signals and admission active count both zero; all candidate routes rejected. EUR_HKD LONG reversal/exhaustion, EUR_CAD LONG trend conflict, GBP_CAD LONG spread/volatility. WAIT; no simulated fill claimed.",
-    "Macro receipt PARTIAL, official event checks available, machine news clearance remains partial; fast entry audit stale and actionable_count zero.",
-    "Sanitized private/public repository payload blob SHA 95c6bc6c67ed1931f2f952fd1d75f1d1274d4971, source 01:28:57Z, 924620 bytes. Public feed coverage 64/67 differs from latest universe 65/68; serving on Pages not independently verified.",
-    "Quiet hours 23:00–07:00 London: no recovery requested; no user notification or broker order."
+    "Current five-task operations, registry and v21 registered protocol read; no rule changes.",
+    "Last verified collection 01:28:57Z (run 42736022053), 65/68 usable then; no new current quote confirmed.",
+    "Canonical signals empty; admission rejects all 130 routes. WAIT, no simulated fills.",
+    "Quiet hours: no recovery requested; public served feed unverified."
   ],
   "blockers": [
-    "Source 13989 seconds old; no verified new collection; full research threshold 25 minutes exceeded.",
-    "Independent pair-shard inspection 12/65; remaining 53 not independently verified.",
-    "GitHub fetch_file returned empty content for data/summary.json and data/latest.json despite nonempty SHAs; actual large blob contents unresolved.",
-    "Public served Pages feed not independently verified; published feed reports 64 quoted versus latest universe 65.",
-    "Fast observations stale and macro/news clearance partial."
+    "Full source stale over 4h; latest and summary GitHub content empty despite SHA.",
+    "Independent 65-shard batch retrieval exceeded connector tool-call budget; all-pair independent inspection incomplete.",
+    "Macro partial; served Pages feed unverified."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
