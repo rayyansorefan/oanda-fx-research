@@ -1,10 +1,8 @@
 {
   "activated_at": "2026-11-06T09:47:09Z",
-  "last_evaluated_at": "2026-11-10T11:12:11Z",
-  "latest_source_at": "2026-11-10T11:11:52Z",
-  "new_ids": [
-    "FX-GATE-v1-20261110T111152-CAD_HKD-SHORT"
-  ],
+  "last_evaluated_at": "2026-11-10T12:14:16Z",
+  "latest_source_at": "2026-11-10T12:13:45Z",
+  "new_ids": [],
   "no_orders": true,
   "policy": "Only news-source-missing single-blocker pullback hypotheses; unrelated hard gates remain. No manual alerts, promotions or claims of an executable broker edge.",
   "protocol_id": "FX-GATE-20261106-v1",
@@ -293,10 +291,38 @@
       },
       "policy": "FX-GATE-20261106-v1",
       "registered_at": "2026-11-10T11:12:11Z",
-      "replay_attempts": [],
+      "replay_attempts": [
+        {
+          "at": "2026-11-10T12:14:16Z",
+          "candle_evidence_path": "data/replay_evidence/CAD_HKD-d98689b96b03f4a02da4d9bc5be882524ffbd287bd9435096560bfa35782f155.json",
+          "pair_observation_count": 1,
+          "status": "TRIGGERED_UNFILLED"
+        }
+      ],
       "result": {
+        "detected_at": "2026-11-10T12:13:45Z",
+        "entry_available_at": "2026-11-10T12:15:00Z",
+        "evidence": {
+          "confirmation": {
+            "ask": {
+              "c": 5.55347,
+              "h": 5.55451,
+              "l": 5.55297,
+              "o": 5.5543
+            },
+            "bid": {
+              "c": 5.5527,
+              "h": 5.55369,
+              "l": 5.55208,
+              "o": 5.55362
+            },
+            "open_at": "2026-11-10T11:15:00Z"
+          }
+        },
+        "route": "B",
         "scored": false,
-        "status": "PENDING_TRIGGER"
+        "status": "TRIGGERED_UNFILLED",
+        "triggered_at": "2026-11-10T11:30:00Z"
       },
       "route": "EMA20_PULLBACK",
       "source_at": "2026-11-10T11:11:52Z",
@@ -306,11 +332,10 @@
   "schema": 1,
   "status": "PAPER_ONLY_PROSPECTIVE_STUDY",
   "summary": {
-    "new_this_run": 1,
+    "new_this_run": 0,
     "outcomes": {
       "INVALIDATED_PRE_ENTRY": 2,
-      "PENDING_TRIGGER": 1,
-      "TRIGGERED_UNFILLED": 2
+      "TRIGGERED_UNFILLED": 3
     },
     "registered": 5,
     "scored": 0
