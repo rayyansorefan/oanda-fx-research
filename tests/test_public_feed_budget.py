@@ -181,5 +181,36 @@ class BudgetTests(unittest.TestCase):
                 self.assertLessEqual(len(structure["confirmed_swings"]["recent_highs"]), 2)
                 self.assertLessEqual(len(structure["confirmed_swings"]["recent_lows"]), 2)
 
+    def test_growing_public_index_is_losslessly_packed_when_budget_exceeded(self):
+        from unittest.mock import patch
+        import scripts.export_public_dashboard as exporter
+        rows = [{
+            "id": f"20261110-{i:05d}-EURUSD-L-C01",
+            "instrument": "EUR_USD", "direction": "LONG",
+            "created_at": f"2026-11-10T{(i // 60) % 24:02d}:{i % 60:02d}:00Z",
+            "status": "UNTRIGGERED", "entry": 1.10001 + i / 1000000,
+            "stop": 1.09901, "tp1": 1.10241,
+            "tracking": {"quote_at": "2026-11-10T18:00:00Z",
+                         "reference_price": 1.10001 + i / 1000000,
+                         "history": [{"at": "2026-11-10T18:00:00Z", "price": 1.101}]}
+        } for i in range(2000)]
+        payload = {"pairs": {}, "learning": {"paper_audit": {
+            "totals": {"candidates": len(rows)}, "candidates": rows}}}
+        with (patch.object(exporter, "PUBLIC_MAX_BYTES", 70000),
+              patch.object(exporter, "PUBLIC_HARD_MAX_BYTES", 80000)):
+            exporter.fit_public_feed_budget(payload)
+            audit = payload["learning"]["paper_audit"]
+            self.assertEqual(audit["candidate_index_encoding"], "zlib-base64-json-v1")
+            original = exporter.full_candidate_index(audit)
+            self.assertEqual(len(original), 2000)
+            self.assertEqual(original[0][0], rows[0]["id"])
+            self.assertEqual(original[-1][5], rows[-1]["entry"])
+            self.assertLessEqual(exporter.serialized_size(payload), 80000)
+            # Repeated budget passes must never silently replace the full
+            # archived index with only the 30 recent detailed rows.
+            exporter.fit_public_feed_budget(payload)
+            self.assertEqual(exporter.full_candidate_index(audit), original)
+            self.assertLessEqual(exporter.serialized_size(payload), 80000)
+
 if __name__=="__main__":
     unittest.main()
