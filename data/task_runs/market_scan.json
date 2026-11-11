@@ -3,10 +3,10 @@
   "role": "market_scan",
   "status": "PARTIAL",
   "started_at": "2026-11-11T08:12:36Z",
-  "completed_at": "2026-11-11T08:13:42.286Z",
+  "completed_at": "2026-11-11T08:13:51.031Z",
   "source_at": "2026-11-11T07:19:17Z",
   "source_commit": "a0df6a61ecf98b883c687273572ae9738e3c64b1",
-  "source_age_seconds": 3265,
+  "source_age_seconds": 3274,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs_reported": 68,
@@ -31,7 +31,8 @@
   "findings": [
     "07:19:17Z full OANDA collection run 42978582684 COLLECTED; 68/68 quoted and five-frame reported, top twelve pair shards inspected.",
     "One canonical EUR_USD SHORT EMA20_PULLBACK conditional research plan, ID AUTO-20261111T0719-EUR_USD-S-B; pending future completed M15 trigger, not a fill or real-order instruction. Fast audit 07:19:41Z recorded NO_QUALIFIED_PRICE_PATTERN.",
-    "One new stale-source recovery requested sequence 208 at 08:13:16Z commit a0df6a61ecf98b883c687273572ae9738e3c64b1; downstream outcome pending verification."
+    "One new stale-source recovery requested sequence 208 at 08:13:16Z commit a0df6a61ecf98b883c687273572ae9738e3c64b1; downstream outcome pending verification.",
+    "Recovery run 42985312221 observed IN_PROGRESS; associated offline verification run 42985312246 completed successfully. Neither proves recovered source/admission/public serving."
   ],
   "blockers": [
     "Full independent 68-pair shard verification incomplete; attempted bulk read exceeded connector call limit.",
@@ -55,7 +56,9 @@
     "data/public_dashboard_status.json"
   ],
   "run_ids": [
-    "42978582684"
+    "42978582684",
+    "42985312221",
+    "42985312246"
   ],
   "no_broker_orders": true
 }
