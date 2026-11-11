@@ -2,61 +2,62 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T13:19:18Z",
-  "completed_at": "2026-11-11T13:21:29.527Z",
-  "source_at": "2026-11-11T12:12:41Z",
-  "source_commit": "4b6c2b5cc1bd28a88f0a40335606572fd47209af",
-  "source_age_seconds": 4129,
+  "started_at": "2026-11-11T14:12:17Z",
+  "completed_at": "2026-11-11T14:12:54.014Z",
+  "source_at": "2026-11-11T14:10:54Z",
+  "source_commit": "b4c2baabd3283325640d5dff04cf21a5b84fcc53",
+  "source_age_seconds": 120,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs_reported": 68,
-    "summary_deep_pairs_reported": 68,
+    "summary_deep_pairs_reported": 67,
     "independently_verified_pair_shards": 12,
     "independently_verified_all_pair_shards": 0,
-    "canonical_routes_evaluated": 136,
-    "canonical_rejected_routes": 136,
+    "canonical_routes_evaluated": 134,
+    "canonical_rejected_routes": {
+      "FOUR_FRAME_TREND_CONFLICT": 19,
+      "INVALID_BID_ASK_OR_SPREAD": 14,
+      "REVERSAL_OR_EXHAUSTION": 93,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 6,
+      "UNSUPPORTED_PAIR_OR_ROUTE": 2
+    },
     "canonical_active_at_source": 0,
     "canonical_new_admitted": 0,
     "verified_simulated_fills": 0,
     "rejection_reasons": {
-      "INVALID_BID_ASK_OR_SPREAD": 35,
-      "FOUR_FRAME_TREND_CONFLICT": 34,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 5,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 2,
-      "RECENT_MATERIAL_HEADLINE_REVIEW": 2,
-      "REVERSAL_OR_EXHAUSTION": 54,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
-      "PRIMARY_NEWS_SOURCE_MISSING": 1,
+      "INVALID_BID_ASK_OR_SPREAD": 14,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 6,
+      "FOUR_FRAME_TREND_CONFLICT": 19,
+      "REVERSAL_OR_EXHAUSTION": 93,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     }
   },
   "findings": [
-    "12:12:41Z collector reported 68/68 quoted pairs and five-frame coverage; summary and latest obtained via actual GitHub blobs; top twelve pair shards independently retrieved, remaining 56 not verified.",
-    "Canonical 12:12:41Z admission rejected 136/136 routes; signals.json empty; WAIT, no verified fills.",
-    "One full stale-source recovery request sequence 213 committed 13:20:46Z at 312d9ea159553da1ec3f8fd29bda42f132553da2 and read back; subsequent collection/admission/publication not yet observed.",
-    "Prior 12:12:41Z public repository feed publication recorded PUBLISHED; actual HTTP served feed not verified."
+    "14:10:54Z full collector completed with PARTIAL coverage: 68/68 usable quoted pairs, 67/68 full five-frame deep pairs; USD_CHF candles failed with OANDA_HTTP_401_CANDLES while other candle requests succeeded.",
+    "Current canonical admission rejected all 134 routes, no admitted signals or paper fills: WAIT. Top 12 ranked individual pair shards retrieved and checked for bid/ask and five frames.",
+    "Full source was fresh at review; no stale-source recovery requested. Existing 14:10 collection run 43035901357 observed.",
+    "Public repository publication status PUBLISHED for 14:10:54Z snapshot; independently served HTTP feed not verified. Macro receipt reviewed; machine news coverage limited."
   ],
   "blockers": [
-    "Full source stale beyond 20/25-minute thresholds; recovery outcome pending.",
-    "56 individual pair shards not independently checked.",
-    "Actual public served feed unverified; machine news_latest status PARTIAL.",
-    "No specific Actions run ID yet verified for sequence 213."
+    "Remaining 55 deep pair shards not independently inspected; one quoted pair USD_CHF lacks full deep context.",
+    "Actual served public dashboard feed not independently verified; collection status PARTIAL due to USD_CHF candles error and machine news coverage incomplete.",
+    "Full independent all-pair shard screening incomplete; cannot mark COMPLETE."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
     "config/scheduled_research_roles.json",
     "validation_protocol.json",
-    "data/summary.json@80cf20ba9dc39ed2162947e8f2b4a0cbdeb417b1",
-    "data/latest.json@af5909c3d8a4ce3150c7309976f81a0cce5ad0b4",
-    "data/collection_attempt.json@bc7413f52c3bdf2aed01fad08f900b1e5452e3d0",
-    "data/signal_admission_audit.json@ff904911fc69acfe7f09d06af6acbcd47b3e19e8",
-    "signals.json@e8ed1a90fe4533be274c7e45d55747c5f9c478d8",
-    "data/task_runs/macro_events.json@79349652423bfbf7083f644e6ceeac7615288d09",
-    "data/public_dashboard_status.json@c868ef080ceda8c89df2fc44b21da8b73c47fa72",
-    "scripts/refresh_request.json@314491583b8b07d293879137bb68249020112ff4"
+    "data/summary.json@941bc0c8c403c15370ef9ceee01afe1f155da51c",
+    "data/latest.json@c65b6a2dca294657098e462823eaabc7f4bd1758",
+    "data/collection_attempt.json@22470feb4c7b9ba6aa16aff3f713082fedde214c",
+    "data/monitoring_health.json@08f8bfb5516379428080b851d868f2ad4ea67118",
+    "data/signal_admission_audit.json@e6a6719c6e1fda636ef42d8c0ae484e21e524f5a",
+    "signals.json@dfee41fd988a8eeca45c2e73dca15eacc601ba14",
+    "data/task_runs/macro_events.json@6dadec8b06bfde659d472003f2d7e80bd5b7fb68",
+    "data/public_dashboard_status.json@04e680e3ec4692cf281ac4290c58e25b0f1f8d9e"
   ],
   "run_ids": [
-    "43018293113"
+    "43035901357"
   ],
   "no_broker_orders": true
 }
