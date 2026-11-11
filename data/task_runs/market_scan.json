@@ -2,50 +2,51 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T08:12:36Z",
-  "completed_at": "2026-11-11T08:13:51.031Z",
-  "source_at": "2026-11-11T07:19:17Z",
+  "started_at": "2026-11-11T09:18:22Z",
+  "completed_at": "2026-11-11T09:19:17.243Z",
+  "source_at": "2026-11-11T08:13:40Z",
   "source_commit": "a0df6a61ecf98b883c687273572ae9738e3c64b1",
-  "source_age_seconds": 3274,
+  "source_age_seconds": 3937,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs_reported": 68,
     "deep_five_frame_pairs_reported": 68,
     "independently_inspected_pair_shards_this_run": 12,
     "independently_verified_all_pairs": false,
-    "canonical_routes_evaluated": 136,
-    "canonical_rejected_routes": 135,
-    "canonical_active": 1,
-    "canonical_admitted": 1,
+    "canonical_routes_evaluated": 134,
+    "canonical_rejected_routes": 134,
+    "canonical_active_at_source": 1,
+    "canonical_new_admitted": 0,
+    "unexpired_frozen_plans_at_task_time": 0,
+    "verified_simulated_fills": 0,
     "rejection_reasons": {
-      "FOUR_FRAME_TREND_CONFLICT": 35,
-      "INVALID_BID_ASK_OR_SPREAD": 30,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 2,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 3,
-      "REVERSAL_OR_EXHAUSTION": 49,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 14,
+      "REVERSAL_OR_EXHAUSTION": 83,
+      "FOUR_FRAME_TREND_CONFLICT": 24,
+      "INVALID_BID_ASK_OR_SPREAD": 19,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 4,
+      "ADX_TREND_STRENGTH": 2,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
-    },
-    "fast_actionable_count": 0
+    }
   },
   "findings": [
-    "07:19:17Z full OANDA collection run 42978582684 COLLECTED; 68/68 quoted and five-frame reported, top twelve pair shards inspected.",
-    "One canonical EUR_USD SHORT EMA20_PULLBACK conditional research plan, ID AUTO-20261111T0719-EUR_USD-S-B; pending future completed M15 trigger, not a fill or real-order instruction. Fast audit 07:19:41Z recorded NO_QUALIFIED_PRICE_PATTERN.",
-    "One new stale-source recovery requested sequence 208 at 08:13:16Z commit a0df6a61ecf98b883c687273572ae9738e3c64b1; downstream outcome pending verification.",
-    "Recovery run 42985312221 observed IN_PROGRESS; associated offline verification run 42985312246 completed successfully. Neither proves recovered source/admission/public serving."
+    "08:13:40Z source: collection run 42985312221 COLLECTED; 68/68 quoted with complete five-frame coverage reported in universe; 12 leading pair shards independently inspected, not all 68.",
+    "Canonical admission at 08:13:40Z: 134 rejected routes, one retained historical conditional EUR_USD SHORT plan; frozen expiry 08:49:29Z elapsed without verified completed trigger or fill. Classify WAIT at task time; lifecycle not manually relabelled.",
+    "At 09:18:49Z requested one current-main stale full recovery sequence 209, commit 129e103025cf02be6e125861a6deb4fb493ee1d6; resulting collection, admission and publication not yet verified.",
+    "08:13:40Z snapshot public repository publication recorded at 08:14:24Z; actual served feed unverified. Macro_events receipt completed 09:02:46Z but machine news remains PARTIAL."
   ],
   "blockers": [
-    "Full independent 68-pair shard verification incomplete; attempted bulk read exceeded connector call limit.",
-    "Recovery run/source/admission/publication not yet independently verified.",
-    "Macro receipt last completed 10 November; news coverage limited or unavailable for some currencies.",
-    "Public repository publication readback 07:20:06Z, actual served feed unverified."
+    "Source older than 20min at active London review; recovery downstream outcome unverified.",
+    "Independent full 68-pair shard verification not completed; 12/68 inspected.",
+    "data/summary.json fetch_file returned empty content despite nonempty blob SHA; full summary content not verified.",
+    "Public served dashboard feed not independently verified; publication is repository-only.",
+    "Machine news_latest PARTIAL; no news clearance inferred."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
     "config/scheduled_research_roles.json",
     "validation_protocol.json",
     "data/universe.json",
-    "data/summary.json",
+    "data/pairs/{instrument}.json (12 leading shards)",
     "data/collection_attempt.json",
     "data/monitoring_health.json",
     "data/signal_admission_audit.json",
@@ -56,9 +57,7 @@
     "data/public_dashboard_status.json"
   ],
   "run_ids": [
-    "42978582684",
-    "42985312221",
-    "42985312246"
+    "42985312221"
   ],
   "no_broker_orders": true
 }
