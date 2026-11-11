@@ -2,18 +2,16 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T22:10:39Z",
-  "completed_at": "2026-11-11T22:11:33.068Z",
+  "started_at": "2026-11-11T23:11:38Z",
+  "completed_at": "2026-11-11T23:12:08.851Z",
   "source_at": "2026-11-11T21:25:44Z",
   "source_commit": "c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85",
-  "source_age_seconds": 2749,
+  "source_age_seconds": 6384,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs": 65,
     "screened_pairs": 65,
     "deep_pairs_from_summary": 65,
-    "summary_pair_entries_independently_parsed": 65,
-    "latest_pair_entries_independently_parsed": 65,
     "individual_pair_shards_independently_verified": 12,
     "published_feed_pairs": 64,
     "published_feed_universe": 67,
@@ -23,28 +21,27 @@
     "currently_unexpired_canonical_signals": 0,
     "verified_simulated_fills": 0,
     "rejection_reasons": {
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 22,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 3,
       "FOUR_FRAME_TREND_CONFLICT": 34,
       "INVALID_BID_ASK_OR_SPREAD": 37,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 3,
       "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
       "REVERSAL_OR_EXHAUSTION": 31,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 22,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     }
   },
   "findings": [
-    "WAIT: canonical source at 21:25:44Z rejected all 130 routes, admitted zero plans and shows zero active signals; no later completed trigger or simulated fill verified.",
-    "Full collector reports 68 discovered, 65 quoted and five-timeframe complete; three TRY crosses nontradeable. Both large summary/latest blobs parsed with 65 pair entries; top 12 priority pair shards independently retrieved.",
-    "Sanitized exporter payload snapshot 21:25:44Z reports 64/67 quoted/deep, one fewer than collector. Public repository raw feed matches this snapshot; public GitHub Pages served feed could not be independently accessed.",
-    "Collection run 43102907264 COLLECTED at 21:25:44Z; full source is older than 25-minute threshold. Outside active London research session at this review, so no recovery request made; previous request sequence 220 remains unchanged.",
-    "Machine news PARTIAL; no clearance inferred. AUD/USD and EUR/USD earlier paper plans remain untriggered rather than wins."
+    "WAIT based on last observed 21:25:44Z source: canonical admission rejects all evaluated routes; no current signals, no verified simulated fill. No new source observation established.",
+    "Universe manifest reports 65/68 usable quotes and 65 five-timeframe complete; three TRY crosses nontradeable. All 12 priority individual pair shards retrieved and parsed; remaining 53 not individually inspected.",
+    "Sanitized publisher payload is older snapshot with 64/67 quoted/deep, differing from collector 65/68; actual served GitHub Pages feed not independently verified.",
+    "Outside active London research session (23:00-07:00); no full recovery requested. Existing refresh sequence 220 unchanged.",
+    "Macro receipt 23:10Z records upcoming GBP GDP at 07:00Z and other events; machine news remains partial."
   ],
   "blockers": [
-    "Source older than 25-minute full-research threshold; no current executable observation.",
-    "Collector vs sanitized published coverage discrepancy (65/68 versus 64/67).",
-    "53 of 65 individual pair shards not independently inspected.",
-    "Public served GitHub Pages feed and user delivery not independently verified.",
-    "Machine news coverage PARTIAL."
+    "Full source stale beyond 25-minute research limit.",
+    "53 individual pair shards not independently inspected; large summary/latest fetch_file returned empty content despite nonempty SHA.",
+    "Collector/publisher coverage discrepancy and actual public serving unverified.",
+    "Machine news partial; no current admission or fill evidence."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -64,7 +61,11 @@
     "data/public_dashboard_payload.json",
     "data/public_dashboard_status.json",
     "scripts/refresh_request.json",
-    "https://raw.githubusercontent.com/rayyansorefan/standalone-wallet-paper-agent/main/docs/fx-feed.json"
+    "https://raw.githubusercontent.com/rayyansorefan/standalone-wallet-paper-agent/main/docs/fx-feed.json",
+    "data/universe.json@c312703ab5e266e22c7bf26d9ac41db73979890f",
+    "data/signal_admission_audit.json@4369193e4cdc4fe9d50a05cbfd92b16f6e263502",
+    "signals.json@495bdc05ef63bf4ff17c1b234042eba607334ac4",
+    "data/public_dashboard_payload.json@1c4dc5cfff7a8f16f5c58352c6ec63cd261a8124"
   ],
   "run_ids": [
     "43102907264",
