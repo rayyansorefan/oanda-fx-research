@@ -2,187 +2,196 @@
   "schema": 1,
   "role": "macro_events",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T14:07:41Z",
-  "completed_at": "2026-11-11T14:11:30.604Z",
-  "source_at": "2026-11-11T13:21:38Z",
-  "source_commit": "c0a932083a0d003670184594477d045935b44178",
-  "source_age_seconds": 2992,
+  "started_at": "2026-11-11T18:05:19.000Z",
+  "completed_at": "2026-11-11T18:09:25.907Z",
+  "source_at": "2026-11-11T17:18:03.000Z",
+  "source_commit": "17970021150f83215e9c8eb53700456e15c02af4",
+  "source_age_seconds": 3082,
+  "locked_rule_hash": "040da6645e4d35f8c6313db7a72b29fd293a217684fd4287f0aff126320a3f26",
   "counts": {
     "current_paper_positions": 0,
-    "pending_simulated_fills": 0,
-    "current_canonical_signals": 0,
+    "pending_simulated_plan_unique_ids": 1,
+    "pending_simulated_plan_registrations": 2,
+    "active_canonical_signals_at_task_time": 0,
+    "expired_canonical_rows_at_task_time": 1,
     "unexpired_permanent_paper_candidates": 0,
-    "unexpired_research_setups_at_task_start": 1,
+    "unexpired_research_setups": 0,
     "leading_candidates_reviewed": 12,
-    "currencies_in_scope": 11,
-    "official_authorities_checked": 18,
-    "official_pages_checked": 24,
-    "verified_timed_events_next_48h": 25,
-    "verified_date_only_or_approximate_events": 9,
-    "current_policy_decisions_checked_or_reconfirmed": 4,
-    "newly_published_official_facts": 1,
+    "currencies_in_scope": 10,
+    "official_authorities_checked": 16,
+    "official_pages_checked": 27,
+    "verified_timed_events_next_48h": 16,
+    "verified_date_only_or_clock_gap_events": 7,
+    "current_policy_settings_reconfirmed": 6,
+    "newly_published_official_facts": 0,
     "machine_news_clearance_changes": 0,
     "broker_orders": 0
   },
   "findings": [
     {
       "scope": "engine and currency scope",
-      "checked_at": "2026-11-11T14:11:30.604Z",
-      "fact": "The 13:21:38Z engine snapshot has zero open or pending simulated positions, signals.json is empty, and the permanent paper-candidate register has no unexpired candidate. One served research-only setup was unexpired at task start: EUR_NOK LONG to 2026-11-11T14:51:56Z; it lacked a completed M15 bullish rejection, had a daily-frame conflict and was not approved.",
-      "candidates": "The twelve leading priorities were EUR_USD, GBP_USD, EUR_HKD, USD_CHF, GBP_CHF, USD_DKK, CHF_HKD, EUR_TRY, GBP_HKD, AUD_CHF, EUR_SGD and EUR_SEK. Together with EUR_NOK, scope covers EUR, USD, GBP, HKD, CHF, DKK, TRY, AUD, SGD, SEK and NOK.",
-      "conditional_scenario": "Macro evidence does not alter trigger, spread, expiry or lifecycle state. The full market source exceeded the locked 25-minute research freshness threshold during this run, so this receipt provides no trade clearance.",
+      "checked_at": "2026-11-11T18:09:25.907Z",
+      "fact": "The 17:18:03Z engine source has zero open simulated positions. One unique AUD_USD SHORT paper plan remains prospectively pending under two registered cohort arms until 2026-11-11T18:48:15Z; no completed trigger, separate bid/ask fill or outcome is asserted. The single signals.json row expired at 17:50:44Z, all permanent paper candidates are expired and no research_setup is served.",
+      "candidates": "The twelve current priorities are EUR_AUD, AUD_USD, USD_NOK, AUD_HKD, GBP_SGD, USD_ZAR, CAD_HKD, EUR_USD, EUR_CHF, GBP_CHF, GBP_USD and EUR_HKD. Currency scope is EUR, AUD, USD, NOK, HKD, GBP, SGD, ZAR, CAD and CHF.",
+      "conditional_scenario": "Macro evidence does not change trigger, spread, expiry, lifecycle or machine-news state. The market source was older than the locked 25-minute full-research threshold at completion, so this receipt supplies no trade clearance.",
       "sources": [
-        "data/lifecycle_ledger.json@55d1a7f14cd712fea6f013291e2d9bf6259bd11a",
-        "signals.json@24245e28751e722900fb851c0074a8d7236bd124",
+        "data/collection_attempt.json@9a39faa1d00ff0b69cf32bf071a723d7c3e40422",
+        "data/lifecycle_ledger.json@3fbd91b13bbc968b4fc9fccc2f12c696e073dd61",
+        "signals.json@55ef1d1b9a7d12c053f21d21223530ebf0a3bcca",
         "paper-trade-candidates.json@35daf9a27b23c9b67a2c45bbf870dcc5bb2ccf81",
-        "data/public_dashboard_payload.json@21194b8b9a76b16e3a88b0bb206937d74f427881"
+        "data/public_dashboard_payload.json@467e41532059d20c2dbbb4229bc24f9ab94457b2"
+      ]
+    },
+    {
+      "scope": "AUD",
+      "checked_at": "2026-11-11T18:09:25.907Z",
+      "publication_clocks": [
+        "2026-11-12T00:30:00Z ABS Overseas Arrivals and Departures, September 2026",
+        "2026-11-12T00:30:00Z ABS Water Account, Australia, 2024-25"
+      ],
+      "fact": "ABS confirms both releases for 11:30 AEDT. The RBA raised the cash-rate target by 25bp to 4.85% on 3 November; its current calendar shows no new monetary-policy decision inside the next 48 hours.",
+      "conditional_scenario": "These are lower-tier AUD releases. A material surprise can widen AUD volatility, but no directional effect, actual or consensus is assumed before publication.",
+      "sources": [
+        "https://www.abs.gov.au/release-calendar/future-releases/202611",
+        "https://www.abs.gov.au/statistics/industry/tourism-and-transport/overseas-arrivals-and-departures-australia",
+        "https://www.rba.gov.au/media-releases/2026/",
+        "https://www.rba.gov.au/schedules-events/calendar/"
       ]
     },
     {
       "scope": "GBP",
-      "checked_at": "2026-11-11T14:11:30.604Z",
+      "checked_at": "2026-11-11T18:09:25.907Z",
       "publication_clocks": [
-        "2026-11-12T07:00:00Z ONS September monthly GDP, Q3 first GDP, trade, production, services and construction cluster",
+        "2026-11-12T07:00:00Z ONS September monthly GDP, Q3 first GDP and services releases",
         "2026-11-12T09:30:00Z ONS provisional Q3 business investment"
       ],
-      "fact": "ONS marks both clocks confirmed. The Bank of England's 5 November decision raised Bank Rate by 25bp to 4.00%; the next decision is 17 December.",
-      "conditional_scenario": "The 07:00 cluster is a material gap and spread-risk window for GBP_USD and GBP crosses. Broadly stronger growth can support GBP and broad weakness can pressure it, but no actual or consensus is assumed before publication.",
+      "fact": "ONS marks the GDP releases confirmed. The Bank of England raised Bank Rate by 25bp to 4.00% on 5 November; the next policy decision is due 17 December.",
+      "conditional_scenario": "The 07:00 GDP cluster is a material GBP volatility window. Stronger growth can support GBP and broad weakness can pressure it, but no actual or consensus is assumed before publication.",
       "sources": [
         "https://www.ons.gov.uk/releases/gdpmonthlyestimateukseptember2026",
         "https://www.ons.gov.uk/releases/gdpfirstquarterlyestimateukjulytoseptember2026",
         "https://www.ons.gov.uk/releases/businessinvestmentintheukjulytoseptember2026provisionalresults",
-        "https://www.ons.gov.uk/releasecalendar?page=2&release-type=type-upcoming",
+        "https://www.ons.gov.uk/releasecalendar?keywords=GDP&release-type=type-upcoming&sort=date-newest",
         "https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2026/november-2026"
       ]
     },
     {
       "scope": "USD",
-      "checked_at": "2026-11-11T14:11:30.604Z",
+      "checked_at": "2026-11-11T18:09:25.907Z",
       "publication_clocks": [
-        "2026-11-12T15:00:00Z Federal Reserve Governor Barr speech",
+        "2026-11-12T15:00:00Z Federal Reserve Governor Barr speech on artificial intelligence and inequality",
         "2026-11-12T15:00:00Z Census October Business Formation Statistics",
-        "2026-11-13T13:30:00Z BLS October Producer Price Index"
+        "2026-11-13T13:30:00Z BLS October Producer Price Index",
+        "2026-11-13T15:50:00Z Federal Reserve Governor Bowman discussion"
       ],
-      "fact": "The Federal Reserve and Census calendars confirm the 12 November events. BLS confirms October PPI for 13 November at 08:30 ET, inside this run's 48-hour window. No PPI actual or consensus is recorded before release.",
-      "conditional_scenario": "A hotter PPI or hawkish communication can support USD; softer producer inflation or dovish communication can pressure it. Weekly claims were not counted because a dated 12 November primary DOL release page was not independently exposed.",
+      "fact": "BLS confirms October PPI for 13 November at 08:30 ET. Federal Reserve and Census official calendars provide the other clocks. No PPI actual or consensus is recorded before release.",
+      "conditional_scenario": "Hotter producer inflation or hawkish communication can support USD; softer inflation or dovish communication can pressure it. The machine BLS feeds remain partial and this role did not change clearance.",
       "sources": [
+        "https://www.bls.gov/schedule/news_release/ppi.htm",
+        "https://www.bls.gov/schedule/2026/11_sched_list.htm",
+        "https://www.federalreserve.gov/newsevents/calendar.htm",
         "https://www.federalreserve.gov/newsevents/2026-november.htm",
         "https://www.census.gov/econ/bfs/release_schedule.html",
-        "https://www.census.gov/economic-indicators/calendar-listview.html",
-        "https://www.bls.gov/schedule/news_release/ppi.htm",
-        "https://www.bls.gov/schedule/2026/"
+        "https://www.census.gov/economic-indicators/calendar-listview.html"
       ]
     },
     {
       "scope": "EUR",
-      "checked_at": "2026-11-11T14:11:30.604Z",
+      "checked_at": "2026-11-11T18:09:25.907Z",
       "publication_clocks": [
-        "2026-11-12 ECB Economic Bulletin Issue 7/2026, official date without a clock",
-        "2026-11-12 Eurostat Q3 flash GDP/employment and September international trade, official date without a reliably exposed clock",
+        "2026-11-12 ECB Economic Bulletin Issue 7/2026; official date, no publication clock exposed",
+        "2026-11-12 Eurostat Q3 flash GDP/employment and September international trade; official date, clock gap",
         "2026-11-12T15:30:00Z ECB Vujcic panel",
-        "2026-11-12T19:30:00Z ECB President Lagarde conversation",
-        "2026-11-13T06:50:00Z ECB Elderson panel",
-        "2026-11-13T07:10:00Z ECB Schnabel keynote",
-        "2026-11-13T09:00:00Z ECB securities-issues statistics"
+        "2026-11-12T19:30:00Z ECB President Lagarde conversation"
       ],
-      "fact": "The current Eurostat calendar places the GDP/employment and trade releases on 12 November, correcting the prior receipt's 13 November date. ECB key rates remain deposit 2.50%, main refinancing 2.65% and marginal lending 2.90%.",
+      "fact": "ECB and Eurostat official calendars place these items on 12 November. ECB policy rates remain deposit 2.50%, main refinancing 2.65% and marginal lending 2.90% following the 29 October decision.",
       "conditional_scenario": "Hawkish inflation language can support EUR; growth or financial-stability concern can pressure it. Date-only releases remain blackout uncertainty rather than clearance.",
       "sources": [
         "https://www.ecb.europa.eu/press/calendars/weekly/html/index.en.html",
+        "https://ec.europa.eu/eurostat/en/news/release-calendar",
+        "https://ec.europa.eu/eurostat/news/euro-indicators/release-calendar",
         "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/key_ecb_interest_rates/html/index.en.html",
-        "https://ec.europa.eu/eurostat/news/release-calendar"
+        "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp261029~9a493adf17.en.html"
       ]
     },
     {
-      "scope": "NOK, SEK and TRY",
-      "checked_at": "2026-11-11T14:11:30.604Z",
+      "scope": "NOK",
+      "checked_at": "2026-11-11T18:09:25.907Z",
       "publication_clocks": [
-        "2026-11-12T07:00:00Z Statistics Norway building statistics, wholesale/retail sales, oil/gas/manufacturing investment and job vacancies",
-        "2026-11-13T07:00:00Z Statistics Norway cash flows with abroad and residential construction-cost index",
-        "2026-11-12T07:00:00Z Statistics Sweden October CPI/CPIF regular release",
-        "2026-11-12T07:30:00Z CBRT Inflation Report 2026-IV briefing",
-        "2026-11-13 CBRT balance-of-payments statistics and market-participants survey, official dates but clocks not independently exposed"
+        "2026-11-12T07:00:00Z Statistics Norway building statistics, wholesale/retail sales, investment survey and job vacancies",
+        "2026-11-13T07:00:00Z Statistics Norway cash flows with abroad and residential construction-cost index"
       ],
-      "fact": "Statistics Norway publishes weekday releases at 08:00 local time. Statistics Sweden confirms the regular October CPI release at 08:00 local; its 5 November flash estimate reported CPI 0.9% y/y, with no new final actual invented. CBRT confirms its 10:30 local briefing. Riksbank's 2.00% rate applies from 11 November.",
-      "conditional_scenario": "Norwegian investment evidence can change NOK volatility, final Swedish inflation details can move SEK, and a material CBRT forecast change can move TRY. Date-only Turkish releases remain a coverage gap.",
+      "fact": "Statistics Norway lists these publications and states its regular weekday publication time is 08:00 local, equal to 07:00 UTC on these dates.",
+      "conditional_scenario": "Investment and activity evidence can change NOK volatility; no result or directional surprise is assumed in advance.",
       "sources": [
-        "https://www.ssb.no/en/kommende-publiseringer",
-        "https://www.scb.se/en/PR0101",
-        "https://www.scb.se/en/finding-statistics/statistics-by-subject-area/prices-and-economic-trends/price-statistics/consumer-price-index-cpi/pong/statistical-news/cpi-flash-estimate-october-2026/",
-        "https://www.riksbank.se/en-gb/monetary-policy/monetary-policy-report/2026/monetary-policy-decision-november-2026/",
-        "https://www.tcmb.gov.tr/wps/wcm/connect/en/tcmb+en/main+menu/announcements/press+releases/2026/ano2026-48",
-        "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Announcements/Calendar"
+        "https://www.ssb.no/en/kommende-publiseringer"
       ]
     },
     {
-      "scope": "AUD, HKD, SGD, CHF and DKK",
-      "checked_at": "2026-11-11T14:11:30.604Z",
+      "scope": "HKD and SGD",
+      "checked_at": "2026-11-11T18:09:25.907Z",
       "publication_clocks": [
-        "2026-11-12T00:30:00Z ABS overseas arrivals/departures and Water Account",
-        "2026-11-12 Hong Kong external-trade volume/price statistics, official date without a verified clock",
-        "2026-11-13 Hong Kong revised Q3 GDP, official date without a verified clock",
-        "2026-11-13 Singapore Central Bank Survey and MAS assets/liabilities, official dates without verified clocks"
+        "2026-11-12 Hong Kong external-trade volume/price statistics; official date, clock gap",
+        "2026-11-13 Hong Kong revised Q3 GDP; official date, clock gap",
+        "2026-11-13 Singapore Central Bank Survey and MAS assets/liabilities; official dates, clock gaps"
       ],
-      "fact": "ABS confirms both 11:30 AEDT publications. Hong Kong's official annual release schedules support the two dates but do not expose reliable clocks in the checked pages. SingStat and MAS confirm 13 November dates. No SNB Governing Board event is scheduled inside the window. Danmarks Nationalbank rates remain 2.10% for current account, certificates and discount, and 2.25% lending.",
-      "conditional_scenario": "Regional data can change volatility, but date-only items are not precise blackout boundaries. The two AUD releases are lower-tier; no directional effect is assumed and no CHF or DKK event is invented.",
+      "fact": "Hong Kong C&SD, SingStat and MAS official schedules support the dates but the checked pages do not expose reliable publication clocks. HKMA's October 2026 base rate is 4.25%; it is not a new next-48-hour event.",
+      "conditional_scenario": "Date-only items are event-risk gaps, not precise blackout boundaries. No actual, consensus or directional outcome is inferred.",
       "sources": [
-        "https://www.abs.gov.au/release-calendar/future-releases/202611",
         "https://www.censtatd.gov.hk/en/FileManger/outline_stat_dev/B3XX00012026AN26B0100.pdf",
         "https://www.censtatd.gov.hk/FileManager/EN/Common/Schedule_of_Regular_Press_Releases_on_Statistical_Data_in_2026.pdf",
+        "https://www.hkma.gov.hk/eng/data-publications-and-research/data-and-statistics/economic-financial-data-for-hong-kong/",
         "https://www.singstat.gov.sg/data-tools-services/advance-release-calendar",
-        "https://www.mas.gov.sg/monetary-policy/advance-release-calendar",
+        "https://www.mas.gov.sg/monetary-policy/advance-release-calendar"
+      ]
+    },
+    {
+      "scope": "CAD, CHF and ZAR",
+      "checked_at": "2026-11-11T18:09:25.907Z",
+      "publication_clocks": [],
+      "fact": "No new next-48-hour policy decision or named primary release was identified in the checked Bank of Canada, SNB and SARB calendars. The Bank of Canada target is 2.50% after the 28 October increase and its next decision is 9 December; SNB's next monetary-policy assessment is 10 December; SARB's next MPC announcement is 19 November at 15:00 local, outside this window.",
+      "conditional_scenario": "No event is invented for these currencies. Unscheduled official communication and headlines remain possible and existing engine safeguards continue to apply.",
+      "sources": [
+        "https://www.bankofcanada.ca/press/upcoming-events/",
+        "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/",
+        "https://www.bankofcanada.ca/2026/10/fad-press-release-2026-10-28/",
         "https://www.snb.ch/en/services-events/digital-services/event-schedule",
-        "https://www.nationalbanken.dk/en/what-we-do/stable-prices-monetary-policy-and-the-danish-economy/official-interest-rates"
+        "https://www.resbank.co.za/en/home/calendar/2021-ADVANCE-RELEASE-CALENDAR",
+        "https://www.resbank.co.za/en/home/what-we-do/monetary-policy/MPC-announcement-webcasts"
       ]
     },
     {
       "scope": "coverage and safeguards",
-      "checked_at": "2026-11-11T14:11:30.604Z",
-      "fact": "Primary official pages were checked for all eleven scoped currencies. data/news_latest.json remains PARTIAL, including unavailable BLS employment and inflation machine feeds; this role did not alter machine news clearance.",
-      "conditional_scenario": "All roles must retain the registered news, spread, expiry, trigger, cost and risk gates. This receipt is not a signal, order, fill, outcome, publication receipt or user-delivery receipt.",
+      "checked_at": "2026-11-11T18:09:25.907Z",
+      "fact": "Primary official sources were checked for all ten scoped currencies. data/news_latest.json remains PARTIAL, including unavailable machine BLS employment and inflation sources. No machine-news clearance, canonical signal, lifecycle outcome, paper score or public serving file was changed.",
+      "conditional_scenario": "Retain all registered news, spread, cost, expiry, trigger and risk gates. This receipt is not an order, fill, outcome, publication receipt or delivery receipt.",
       "sources": [
-        "data/news_latest.json@37ed615668b15eae49da2bc410833016237997cc",
+        "data/news_latest.json@c68102e5f8cedcd0750462c435d8f563deab8fe7",
         "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3"
       ]
     }
   ],
   "blockers": [
-    "The full market source was 2992 seconds old at completion, beyond the locked 25-minute full-research threshold; macro_events does not own recovery and did not claim current trade clearance.",
-    "data/news_latest.json remains PARTIAL; machine BLS employment and inflation sources were unavailable, and no machine news clearance was changed.",
-    "A dated primary DOL page for the 12 November weekly-claims instance was not independently exposed, so the normal Thursday cadence was not counted as a verified event.",
-    "ECB Bulletin, Eurostat, Hong Kong, Singapore and two CBRT releases provide official dates without independently verified publication clocks.",
-    "No Pepperstone quote, costs, fills, account equity, broker state or user-delivery receipt was accessed or inferred."
+    "The market source was 3082 seconds old at completion, beyond the locked 25-minute full-research freshness threshold; macro_events does not own a refresh and did not claim trade clearance.",
+    "data/news_latest.json remains PARTIAL; machine BLS employment and inflation sources were unavailable, and no machine-news clearance was changed.",
+    "ECB Bulletin, Eurostat, Hong Kong and Singapore official schedules expose dates without independently verified publication clocks.",
+    "The single canonical signals.json row had expired by task start while the later AUD_USD paper-plan registrations remained pending; no fill or outcome was inferred.",
+    "No Pepperstone quote, costs, fill, account state, broker order state or user-delivery receipt was accessed or inferred."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md@bbc5a5091c16425eceadda27867c284007487800",
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
-    "data/collection_attempt.json@d6bfd6b5c7c7a485ce4f992d12c740759297fe3b",
-    "data/lifecycle_ledger.json@55d1a7f14cd712fea6f013291e2d9bf6259bd11a",
-    "signals.json@24245e28751e722900fb851c0074a8d7236bd124",
+    "data/collection_attempt.json@9a39faa1d00ff0b69cf32bf071a723d7c3e40422",
+    "data/lifecycle_ledger.json@3fbd91b13bbc968b4fc9fccc2f12c696e073dd61",
+    "signals.json@55ef1d1b9a7d12c053f21d21223530ebf0a3bcca",
     "paper-trade-candidates.json@35daf9a27b23c9b67a2c45bbf870dcc5bb2ccf81",
-    "data/news_latest.json@37ed615668b15eae49da2bc410833016237997cc",
-    "data/public_dashboard_payload.json@21194b8b9a76b16e3a88b0bb206937d74f427881",
-    "https://www.ons.gov.uk/releases/gdpmonthlyestimateukseptember2026",
-    "https://www.ons.gov.uk/releases/businessinvestmentintheukjulytoseptember2026provisionalresults",
-    "https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2026/november-2026",
-    "https://www.bls.gov/schedule/news_release/ppi.htm",
-    "https://www.federalreserve.gov/newsevents/2026-november.htm",
-    "https://www.census.gov/economic-indicators/calendar-listview.html",
-    "https://www.ecb.europa.eu/press/calendars/weekly/html/index.en.html",
-    "https://ec.europa.eu/eurostat/news/release-calendar",
-    "https://www.ssb.no/en/kommende-publiseringer",
-    "https://www.scb.se/en/PR0101",
-    "https://www.tcmb.gov.tr/wps/wcm/connect/en/tcmb+en/main+menu/announcements/press+releases/2026/ano2026-48",
-    "https://www.abs.gov.au/release-calendar/future-releases/202611",
-    "https://www.censtatd.gov.hk/en/FileManger/outline_stat_dev/B3XX00012026AN26B0100.pdf",
-    "https://www.singstat.gov.sg/data-tools-services/advance-release-calendar",
-    "https://www.mas.gov.sg/monetary-policy/advance-release-calendar",
-    "https://www.snb.ch/en/services-events/digital-services/event-schedule",
-    "https://www.nationalbanken.dk/en/what-we-do/stable-prices-monetary-policy-and-the-danish-economy/official-interest-rates"
+    "data/news_latest.json@c68102e5f8cedcd0750462c435d8f563deab8fe7",
+    "data/public_dashboard_payload.json@467e41532059d20c2dbbb4229bc24f9ab94457b2",
+    "source_snapshot_commit:17970021150f83215e9c8eb53700456e15c02af4"
   ],
   "run_ids": [
-    "43028294363"
+    "43066717472"
   ],
   "no_broker_orders": true
 }
