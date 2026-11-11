@@ -1277,7 +1277,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_SGD-931ae7c443195b8cd8ef6f700ba4a669bb4cebd999ce06afdaa89cfe989a7de7.json",
+      "source_evidence": "data/replay_evidence/EUR_SGD-92d976653127cbcc9614c2d8e2555c45d5a832f676910e32b9e34dd70a714251.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1290,7 +1290,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_PLN-012b27bfb449c2e9b9a62c1fe2868eff1f421441c045490133edbd0127f259f7.json",
+      "source_evidence": "data/replay_evidence/USD_PLN-9603578f795e6ee99a3a2bc9c501a103d6fd8f1d678b8b36a7fec8a45f772703.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1303,7 +1303,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_SGD-b12f1673d09dec5a2bd68b1c879452159357d127af63ffc33378ec2a81223358.json",
+      "source_evidence": "data/replay_evidence/EUR_SGD-e84bc05d844e5607628eb99bcd01aab6e3d7e19c1d2e362e04ace739e30cf90e.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1412,7 +1412,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_PLN-ba12d803ad59af72ea2c180fc713eb5a4c0472f28041f849c89bfd8f5734f94c.json",
+      "source_evidence": "data/replay_evidence/USD_PLN-4182fbc9f913449888ac6d41e4ea32d689702cf01c6e4de45a139e9319794721.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -2192,8 +2192,20 @@
       "pattern_at": "2026-11-11T11:00:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_NOK-22540c1f11a98c56898ab355dac82e5a83afa1e22665dded3487b17efda0db31.json",
+      "source_evidence": "data/replay_evidence/USD_NOK-166bedb9a576883072a888cce02428d3c98c1b70b7edc710f9d1cc00fe7d7112.json",
       "status": "PAPER_WAITING_FOR_ENTRY",
+      "trade_executed": false
+    },
+    "202611111145-EURNOK-LONG-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "LONG",
+      "id": "202611111145-EURNOK-LONG-EMA20_PULLBACK",
+      "instrument": "EUR_NOK",
+      "pattern_at": "2026-11-11T13:15:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/EUR_NOK-f46754b516c173499e136cb612c48daa824b97119bf6f95a5631ff89ab9c2b6d.json",
+      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     }
   },
@@ -2215,6 +2227,14 @@
         "fill_precedes_detection": false,
         "id": "202611111000-USDNOK-LONG-EMA20_PULLBACK",
         "pattern_at": "2026-11-11T11:00:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-11T13:21:49.217927+00:00",
+        "detection_delay_minutes": 6.82,
+        "fill_precedes_detection": false,
+        "id": "202611111145-EURNOK-LONG-EMA20_PULLBACK",
+        "pattern_at": "2026-11-11T13:15:00+00:00"
       }
     ],
     "verified_profitable_missed_manual_entries": 0
@@ -2222,14 +2242,15 @@
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 2,
-  "today_forward_patterns": 2,
-  "today_registered": 5,
+  "today_distinct_pair_pattern_events": 3,
+  "today_forward_patterns": 3,
+  "today_registered": 6,
   "today_scored_hypothetical_entries": 0,
   "today_status_counts": {
+    "PAPER_NO_CONTIGUOUS_CANDLES": 1,
     "PAPER_PRE_ENTRY_INVALIDATED": 1,
     "PAPER_WAITING_FOR_ENTRY": 1
   },
   "today_uk": "2026-11-11",
-  "updated_at": "2026-11-11T12:12:53Z"
+  "updated_at": "2026-11-11T13:21:49Z"
 }
