@@ -2,56 +2,60 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T14:12:17Z",
-  "completed_at": "2026-11-11T14:12:58.960Z",
-  "source_at": "2026-11-11T14:10:54Z",
-  "source_commit": "b4c2baabd3283325640d5dff04cf21a5b84fcc53",
-  "source_age_seconds": 120,
+  "started_at": "2026-11-11T15:11:11Z",
+  "completed_at": "2026-11-11T15:12:07.232Z",
+  "source_at": "2026-11-11T14:26:53Z",
+  "source_commit": "c9c1e8b9fc5347ae9363abfb849eb7282792ce5d",
+  "source_age_seconds": 2714,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs_reported": 68,
-    "summary_deep_pairs_reported": 67,
-    "independently_verified_pair_shards": 12,
-    "independently_verified_all_pair_shards": 0,
-    "canonical_routes_evaluated": 134,
-    "canonical_rejected_routes": 134,
+    "summary_deep_pairs_reported": 68,
+    "summary_pairs_independently_parsed": 68,
+    "individually_retrieved_deep_pair_shards": 12,
+    "unverified_individual_pair_shards": 56,
+    "canonical_routes_evaluated": 136,
+    "canonical_rejected_routes": 136,
     "canonical_active_at_source": 0,
     "canonical_new_admitted": 0,
     "verified_simulated_fills": 0,
     "rejection_reasons": {
-      "INVALID_BID_ASK_OR_SPREAD": 14,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 6,
-      "FOUR_FRAME_TREND_CONFLICT": 19,
-      "REVERSAL_OR_EXHAUSTION": 93,
+      "REVERSAL_OR_EXHAUSTION": 109,
+      "FOUR_FRAME_TREND_CONFLICT": 14,
+      "INVALID_BID_ASK_OR_SPREAD": 6,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 5,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     }
   },
   "findings": [
-    "14:10:54Z full collector completed with PARTIAL coverage: 68/68 usable quoted pairs, 67/68 full five-frame deep pairs; USD_CHF candles failed with OANDA_HTTP_401_CANDLES while other candle requests succeeded.",
-    "Current canonical admission rejected all 134 routes, no admitted signals or paper fills: WAIT. Top 12 ranked individual pair shards retrieved and checked for bid/ask and five frames.",
-    "Full source was fresh at review; no stale-source recovery requested. Existing 14:10 collection run 43035901357 observed.",
-    "Public repository publication status PUBLISHED for 14:10:54Z snapshot; independently served HTTP feed not verified. Macro receipt reviewed; machine news coverage limited."
+    "14:26:53Z source collected: 68/68 quoted and all five required frames reported for 68/68. Parsed all 68 summary pair entries and retrieved top 12 individual shards; independent verification of 56 remaining shards outstanding.",
+    "Canonical 14:26:53Z admission rejected all 136 routes, zero active conditional plans; signals.json at 14:50:48Z remains empty. WAIT, no simulated fill inferred.",
+    "Full source stale beyond 20/25-minute thresholds at review; requested exactly one full recovery sequence 214 at 15:11:40Z, commit 05334d958f0ad6ba648ff8689814d8955bf74ef2. Matching Actions run 43045897535 observed in_progress, not counted as successful collection.",
+    "Last public-repository publication readback covers 14:26:53Z source; actual served HTTP feed not verified. Macro receipt reviewed, machine news coverage LIMITED/UNAVAILABLE for some pairs."
   ],
   "blockers": [
-    "Remaining 55 deep pair shards not independently inspected; one quoted pair USD_CHF lacks full deep context.",
-    "Actual served public dashboard feed not independently verified; collection status PARTIAL due to USD_CHF candles error and machine news coverage incomplete.",
-    "Full independent all-pair shard screening incomplete; cannot mark COMPLETE."
+    "Recovery Actions run 43045897535 in progress at check; resulting source/admission/publication unverified.",
+    "56 individual pair shards not independently verified; 68/68 coverage is collector-reported plus summary-parsed, not full shard readback.",
+    "Actual served public feed inaccessible to HTTP verification; no delivery receipt.",
+    "Machine news coverage incomplete; source stale at review."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
     "config/scheduled_research_roles.json",
     "validation_protocol.json",
-    "data/summary.json@941bc0c8c403c15370ef9ceee01afe1f155da51c",
-    "data/latest.json@c65b6a2dca294657098e462823eaabc7f4bd1758",
-    "data/collection_attempt.json@22470feb4c7b9ba6aa16aff3f713082fedde214c",
-    "data/monitoring_health.json@08f8bfb5516379428080b851d868f2ad4ea67118",
-    "data/signal_admission_audit.json@e6a6719c6e1fda636ef42d8c0ae484e21e524f5a",
-    "signals.json@dfee41fd988a8eeca45c2e73dca15eacc601ba14",
+    "data/summary.json@40cb3ebaa982d996926544e1ffb7657c23c6dac5",
+    "data/latest.json@568536882128590a375a33e199ad70aa5d363733",
+    "data/collection_attempt.json@4a14e0daf1c99289b72ca25819a9db9db392034c",
+    "data/monitoring_health.json@a25f2b7ed40a7bc01e92282b91444c5b2a4234e7",
+    "data/signal_admission_audit.json@0911e65fca03917ec0d2c383535f0d1a5678d51a",
+    "signals.json@5f0b2566259164a82ee64b2fe7fa876a9dcf7865",
     "data/task_runs/macro_events.json@6dadec8b06bfde659d472003f2d7e80bd5b7fb68",
-    "data/public_dashboard_status.json@04e680e3ec4692cf281ac4290c58e25b0f1f8d9e"
+    "data/public_dashboard_status.json@9a172031127b40b926c7baca4c01502e9ec32690",
+    "scripts/refresh_request.json sequence 214"
   ],
   "run_ids": [
-    "43035901357"
+    "43038484018",
+    "43045897535"
   ],
   "no_broker_orders": true
 }
