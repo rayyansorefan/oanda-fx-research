@@ -2,59 +2,60 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T17:17:07Z",
-  "completed_at": "2026-11-11T17:17:52.503Z",
-  "source_at": "2026-11-11T16:20:31Z",
-  "source_commit": "5618d55874765acea70aeb8c822c4d035da0b028",
-  "source_age_seconds": 3442,
+  "started_at": "2026-11-11T18:15:32Z",
+  "completed_at": "2026-11-11T18:17:26.520Z",
+  "source_at": "2026-11-11T17:18:03Z",
+  "source_commit": "1b06e37607edad9eb343c2c29e5732fe49e27bec",
+  "source_age_seconds": 3564,
   "counts": {
     "universe_pairs_in_last_public_payload": 67,
     "quoted_pairs_in_last_public_payload": 64,
     "screened_pairs_in_last_public_payload": 64,
     "deep_pairs_reported_in_last_public_payload": 64,
+    "summary_pair_entries_independently_parsed": 64,
     "individual_pair_shards_independently_verified": 0,
-    "canonical_routes_rejected": 129,
-    "canonical_active": 1,
-    "canonical_admitted": 1,
+    "canonical_routes_rejected": 128,
+    "canonical_active_at_source": 1,
+    "canonical_new_admitted": 0,
+    "currently_unexpired_canonical_signals": 0,
     "verified_simulated_fills": 0,
     "rejection_reasons": {
-      "FOUR_FRAME_TREND_CONFLICT": 28,
-      "INVALID_BID_ASK_OR_SPREAD": 20,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 7,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 6,
-      "REVERSAL_OR_EXHAUSTION": 63,
-      "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 1,
-      "PRIMARY_NEWS_SOURCE_MISSING": 1,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 1,
+      "FOUR_FRAME_TREND_CONFLICT": 34,
+      "INVALID_BID_ASK_OR_SPREAD": 15,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
+      "REVERSAL_OR_EXHAUSTION": 74,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     }
   },
   "findings": [
-    "Canonical 16:20:31Z admission contains one AUD_USD SHORT EMA20_PULLBACK conditional research plan, created 16:20:44Z, expiring 17:50:44Z. Fast 16:21:03Z assessment reports NO_QUALIFIED_PRICE_PATTERN; no completed trigger or fill established. Source is stale for a current decision.",
-    "Last public payload reports 64 quoted/screened/deep pairs out of 67, but summary/latest large-file connector responses empty and independent pair-shard coverage not completed.",
-    "One full stale-source recovery requested at 17:17:28Z, sequence 216, commit 1b06e37607edad9eb343c2c29e5732fe49e27bec; matching current-main runs 43066717472 and 43066717370 observed queued. Collection/admission/publication not yet verified.",
-    "Machine news partial; actual served public feed and delivery not verified. No orders."
+    "Last actual full source 17:18:03Z; 64/67 quoted, screened and deep pairs. All 64 public payload pair entries have bid/ask and M5/M15/H1/H4/D indicators; individual manifest-authorized shards not independently verified.",
+    "Canonical source admission: 128 rejected routes, zero newly admitted; one carried AUD_USD short conditional plan expired 17:50:44Z. No later completed trigger or simulated fill verified. WAIT for new entry.",
+    "One full recovery requested at 18:16:45Z, sequence 217, commit e13dffc4e3e0604cb6d564c059259a34f7de8799. Current-main research run 43076245856 observed queued; resulting source/admission/publication not yet verified.",
+    "Machine news partial, BLS employment and inflation unavailable. Previous repository payload published at 17:18:49Z; actual served public feed and user delivery unverified."
   ],
   "blockers": [
-    "Source exceeds 25-minute full research freshness limit.",
-    "Full 64-pair independent deep verification not completed; large summary/latest returned empty through fetch_file.",
-    "Recovery runs queued; new collection/admission/publication pending.",
-    "Public serving and independent user delivery not verified; machine-news partial."
+    "Full market source exceeds 25-minute freshness limit; recovery queued.",
+    "Individual 64 pair shards not independently read; summary/latest content not independently obtained.",
+    "New recovery collection/admission/publication and actual served feed unverified.",
+    "Machine news partial; independent delivery receipt absent."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md@bbc5a5091c16425eceadda27867c284007487800",
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
-    "data/signal_admission_audit.json@afd78e070f1bd618f76a96eca5533275c29e7987",
-    "signals.json@590c8f8169512a37c0a2870055eb346624fd8a61",
-    "data/public_dashboard_payload.json@efe6268bbd12fdc22b328c0a0b8ce5de27465bcb",
-    "data/fast_entry_audit.json@d0d7effcf2c038617014f90c8a7783a94246e2e4",
-    "scripts/refresh_request.json@662381f59389e382c4697cba862ed0010959dc02"
+    "data/collection_attempt.json@9a39faa1d00ff0b69cf32bf071a723d7c3e40422",
+    "data/monitoring_health.json@00f110d5bec8341f2ca62c53dc71d688e2ee5ac5",
+    "data/public_dashboard_payload.json@467e41532059d20c2dbbb4229bc24f9ab94457b2",
+    "data/signal_admission_audit.json@7dd839652bfdeda5342b3deed99d5c1f0210d9d8",
+    "signals.json@55ef1d1b9a7d12c053f21d21223530ebf0a3bcca",
+    "data/task_runs/macro_events.json@5fcf72c5bb0a468e78d7dc28dfb2cba730d5b018",
+    "scripts/refresh_request.json@631d3395382032295eda124b7025a1d9bc9252a3"
   ],
   "run_ids": [
-    "43057221429",
     "43066717472",
-    "43066717370"
+    "43076245856",
+    "43076245962"
   ],
   "no_broker_orders": true
 }
