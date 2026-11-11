@@ -2,17 +2,17 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T06:17:49Z",
-  "completed_at": "2026-11-11T06:18:17.121Z",
+  "started_at": "2026-11-11T07:18:18Z",
+  "completed_at": "2026-11-11T07:19:06.536Z",
   "source_at": "2026-11-11T06:04:17Z",
   "source_commit": "aec911c1662229258bc9733e47873426ae451def",
-  "source_age_seconds": 840,
+  "source_age_seconds": 4490,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs": 65,
     "reported_m15_h1_indicator_pairs": 65,
     "reported_deep_five_frame_pairs": 65,
-    "independently_inspected_pair_shards_this_run": 12,
+    "independently_inspected_pair_shards_this_run": 1,
     "independently_verified_all_pairs": false,
     "canonical_admission_rejected_routes": 130,
     "canonical_admission_active": 0,
@@ -27,31 +27,28 @@
     }
   },
   "findings": [
-    "Latest collected source 2026-11-11T06:04:17Z; collector reported 65 of 68 quoted tradeable pairs with five-frame data; three TRY instruments non-tradeable. Twelve named pair shards independently read, 53 not rechecked in this run.",
-    "Current canonical admission evaluated 2026-11-11T06:04:31.630258Z: all 130 routes rejected; signals.json empty. WAIT; no simulated entry, fill or exit established.",
-    "Collection attempt 42969794432 COLLECTED with no request failures; monitoring_health full_collection_status PARTIAL and persistence PENDING_AT_DIAGNOSTIC_CAPTURE. Dashboard repository publication recorded at 06:04:58Z for source 06:04:17Z, but actual served GitHub Pages feed not independently verified.",
-    "Macro role receipt remains dated 2026-11-10T08:05:50Z and machine news coverage LIMITED for sampled pairs. Outside active London session: no recovery requested and no routine notification."
+    "Current registered protocol and operations instructions reviewed; last full source 06:04:17Z; canonical 130 routes rejected, signals empty, WAIT.",
+    "Current summary.json retrieved via authenticated GitHub contents endpoint despite empty fetch_file response; 65/68 quoted pairs and five-frame coverage reported, three TRY pairs excluded.",
+    "One stale-source full recovery requested on current main at 07:18:47Z, sequence 207, commit 75df5cca15916805cb8e563a32caba84e68d20ff; downstream run, admission and publication not yet verified."
   ],
   "blockers": [
-    "Only 12/65 usable pair shards independently inspected this run; reported all-pair coverage not independently reverified.",
-    "data/summary.json and data/latest.json returned empty contents despite nonempty SHA; actual bytes unavailable via connected fetch_file.",
-    "Actual served public dashboard feed not verified; repository publication alone is insufficient.",
-    "Macro receipt outdated and news coverage LIMITED; collector persistence completion unverified."
+    "Full independent 65-shard verification not completed in this run.",
+    "Recovery resulting Actions run, fresh source, admission and public served feed unverified.",
+    "Macro receipt outdated and machine news coverage incomplete."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
     "config/scheduled_research_roles.json",
     "validation_protocol.json",
     "data/universe.json",
+    "data/summary.json",
     "data/collection_attempt.json",
     "data/monitoring_health.json",
     "data/signal_admission_audit.json",
     "signals.json",
-    "data/hourly_assessment.json",
     "data/task_runs/macro_events.json",
-    "data/news_latest.json",
-    "data/public_dashboard_status.json",
-    "data/pairs/{AUD_CAD,GBP_USD,EUR_USD,USD_JPY,EUR_CAD,EUR_JPY,USD_CAD,AUD_JPY,NZD_CAD,CAD_SGD,GBP_JPY,AUD_NZD}.json"
+    "scripts/refresh_request.json",
+    "data/public_dashboard_status.json"
   ],
   "run_ids": [
     "42969794432"
