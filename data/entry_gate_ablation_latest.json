@@ -2,87 +2,72 @@
   "counterfactual_arms": {
     "champion_all_gates": {
       "approval_allowed": true,
-      "counterfactual_pair_routes": 1,
+      "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 2
+      "unverifiable": 1
     },
     "paper_without_m15_adx_and_missing_primary_feed": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 1,
-      "paper_watch_examples": [
-        {
-          "direction": "SHORT",
-          "economics_at_observation": {
-            "entry_reference": 1.1160957305079395,
-            "gross_rr": 2.73296,
-            "nearest_target": 1.1151,
-            "net_rr": 1.98038,
-            "stop_reference": 1.1164600717900182
-          },
-          "news_status": "RESEARCH_CLEAR",
-          "pair": "EUR_USD",
-          "route": "EMA20_PULLBACK",
-          "status": "PAPER_ONLY_NOT_A_FUTURE_TRIGGER_OR_MANUAL_ENTRY"
-        }
-      ],
+      "counterfactual_pair_routes": 0,
+      "paper_watch_examples": [],
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 2
+      "unverifiable": 1
     },
     "without_daily_ema_paper": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 1,
+      "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 2
+      "unverifiable": 1
     },
     "without_m15_adx_paper": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 1,
+      "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 2
+      "unverifiable": 1
     },
     "without_nearest_target_economics_diagnostic_only": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 3,
+      "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
       "unverifiable": 0
     },
     "without_news_gate_diagnostic_only": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 1,
+      "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 2
+      "unverifiable": 1
     },
     "without_reversal_veto_paper": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 1,
+      "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 2
+      "unverifiable": 1
     }
   },
   "distinct_pairs": 68,
   "failures": {
     "absolute_spread_cap": 54,
-    "adx_H1": 32,
-    "adx_M15": 58,
+    "adx_H1": 30,
+    "adx_M15": 54,
     "direction_known": 0,
-    "dmi_H1": 20,
-    "dmi_M15": 36,
-    "gross_reward_minimum": 75,
-    "net_reward_minimum": 105,
-    "news_gate": 106,
-    "no_reversal_or_exhaustion": 52,
-    "observed_target_available": 2,
+    "dmi_H1": 12,
+    "dmi_M15": 18,
+    "gross_reward_minimum": 77,
+    "net_reward_minimum": 101,
+    "news_gate": 136,
+    "no_reversal_or_exhaustion": 90,
+    "observed_target_available": 1,
     "pair_supported": 2,
     "quote_timely_tradeable": 0,
     "recent_completed_history": 0,
-    "relative_spread_cap": 108,
-    "route_not_stretched": 60,
-    "route_pattern": 65,
-    "structural_stop_range": 17,
-    "trend_D": 60,
-    "trend_H1": 30,
-    "trend_H4": 58,
-    "trend_M15": 2,
+    "relative_spread_cap": 98,
+    "route_not_stretched": 99,
+    "route_pattern": 51,
+    "structural_stop_range": 35,
+    "trend_D": 58,
+    "trend_H1": 22,
+    "trend_H4": 56,
+    "trend_M15": 10,
     "valid_two_sided_quote": 0
   },
   "isolated_only_blocker": {
@@ -93,7 +78,7 @@
     "dmi_H1": 0,
     "dmi_M15": 0,
     "gross_reward_minimum": 0,
-    "net_reward_minimum": 2,
+    "net_reward_minimum": 0,
     "news_gate": 0,
     "no_reversal_or_exhaustion": 0,
     "observed_target_available": 0,
@@ -117,5 +102,5 @@
     "Pair-route observations share prices and currency exposure; they are not independent trade outcomes."
   ],
   "route_observations": 136,
-  "source_at": "2026-11-11T07:19:17Z"
+  "source_at": "2026-11-11T08:13:40Z"
 }

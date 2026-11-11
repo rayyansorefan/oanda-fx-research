@@ -719,7 +719,7 @@
       }
     ],
     "challenger": "PAPER_ONLY_NOT_VALIDATED",
-    "checked_at": "2026-11-11T07:19:32.593672+00:00",
+    "checked_at": "2026-11-11T08:13:53.872599+00:00",
     "favourable": 6,
     "flat": 0,
     "insufficient": 5,
@@ -729,9 +729,9 @@
     "sample_warning": "Directional movements are NOT filled trades, realised losses, success probabilities or evidence sufficient to change champion parameters.",
     "session_date_uk": "2026-11-10"
   },
-  "collected_at": "2026-11-11T07:19:32.593672+00:00",
+  "collected_at": "2026-11-11T08:13:53.872599+00:00",
   "counts": {
-    "need_news_review": 0,
+    "need_news_review": 1,
     "price_alerts": 0,
     "watchlist": 1
   },
@@ -936,31 +936,18 @@
       "win_rate_pct": 63.6
     },
     "paper_totals": {
-      "candidates": 1853,
+      "candidates": 1860,
       "losses": 3,
       "scored": 4,
       "wins": 1
     },
     "threshold": "Paper bias neutral until >=30 scored samples, >=10 days, >=3 pairs and conservative 99% mean-R bound excludes zero. Never relax execution, spread or news gates."
   },
-  "news_collected_at": "2026-11-11T07:19:17Z",
+  "news_collected_at": "2026-11-11T08:13:40Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-11-11T07:19:17Z",
+  "oanda_collected_at": "2026-11-11T08:13:40Z",
   "signals": [
     {
-      "adaptive_context": {
-        "block_new_alert": false,
-        "m15_ema_distance_atr": 0.535,
-        "reason": "No reversal or overextension warning on the available completed M15/H1 evidence.",
-        "status": "NO_NEW_TECHNICAL_WARNING"
-      },
-      "candle_timing": {
-        "last_late_candle_close": null,
-        "last_processed_bar_close": null,
-        "late_candles_skipped": 0,
-        "user_delivery_verified": false
-      },
-      "caution": "Some optional news feeds unavailable; calendar and required headline feeds checked. This is NOT an all-clear.",
       "created_at": "2026-11-11T07:19:29.179533Z",
       "direction": "SHORT",
       "expires_at": "2026-11-11T08:49:29.179533Z",
@@ -980,12 +967,39 @@
         ],
         "status": "LIMITED"
       },
-      "news_status": "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS",
-      "observed_price_reactions": [],
+      "news_status": "NEW_MATERIAL_HEADLINE_REVIEW",
+      "observed_price_reactions": [
+        {
+          "headline": "Forex Today: US Dollar shows resilience after US inflation data - FXStreet",
+          "observation": {
+            "change_pips": 2.2,
+            "from_bar_time": "2026-11-11T07:30:00.000000000Z",
+            "status": "OBSERVED_PRICE_MOVEMENT_NOT_CAUSAL",
+            "to_bar_time": "2026-11-11T07:45:00.000000000Z",
+            "vs_planned_direction": "OPPOSES"
+          }
+        }
+      ],
       "pair": "EUR_USD",
       "release_blackouts": [],
-      "relevant_headlines": [],
-      "status": "NO_QUALIFIED_PRICE_PATTERN",
+      "relevant_headlines": [
+        {
+          "classification_version": 2,
+          "currencies": [
+            "USD"
+          ],
+          "currency_source": "GLOBAL",
+          "global_macro_context": false,
+          "global_risk": false,
+          "id": "2ffbc6d4c3a85db636",
+          "published_at": "2026-11-11T07:59:28Z",
+          "severity": "HIGH",
+          "source": "Global markets aggregation",
+          "title": "Forex Today: US Dollar shows resilience after US inflation data - FXStreet",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxON3R1VXlRYVpubUlQQjd3Zlo5S1ZwN3JVVkdKMi1pb3RnYVdTUkduc0RSM0c3MjhRRVhJTlFUTHdja0l3RS1VNUhtRnFBQlYwZDJHZmhzV3pEbTRuaXo5X2hsYlFJMkRNYXpYc1dPb3Y4eWgzMUxlRnRPNHJfWWttS3NlQ25XNkNjLXhVY1U1UVA0c2VoMWd4bGtZUVo2ZW8zTk9QRmI1LTg?oc=5"
+        }
+      ],
+      "status": "REASSESS_NEWS_FIRST",
       "strategy_feedback": {
         "broker_observations_not_weighted": 11,
         "broker_positive_wins_not_weighted": 2,
@@ -1004,26 +1018,26 @@
         "strategy": "M15_REJECTION"
       },
       "technical_checkpoint": {
-        "h1_adx14": 37.0572683109952,
-        "h1_rsi14": 33.29573511408954,
-        "indicative_distance_to_stop_pips": 5.9,
-        "indicative_distance_to_target_pips": 7.7,
-        "indicative_remaining_rr_before_new_spread_adjustment": 1.31,
+        "h1_adx14": 37.69564165355676,
+        "h1_rsi14": 32.99437373103221,
+        "indicative_distance_to_stop_pips": 15.7,
+        "indicative_distance_to_target_pips": -2.1,
+        "indicative_remaining_rr_before_new_spread_adjustment": -0.13,
         "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
-        "latest_completed_m15_bar_start": "2026-11-11T07:00:00.000000000Z",
-        "m15_adx14": 25.505932427194626,
-        "m15_atr14": 0.00034699169721765655,
-        "m15_macd_histogram": -9.350323519104366e-05,
-        "m15_rsi14": 38.26644917761666,
+        "latest_completed_m15_bar_start": "2026-11-11T07:45:00.000000000Z",
+        "m15_adx14": 26.094284980414905,
+        "m15_atr14": 0.00037865916655743906,
+        "m15_macd_histogram": -6.628561560449183e-05,
+        "m15_rsi14": 38.84126025704112,
         "oanda_quote": {
-          "ask": 1.11595,
-          "bid": 1.11587,
+          "ask": 1.11496,
+          "bid": 1.11489,
           "pip_size": 0.0001,
-          "spread_pips": 0.8000000000008001,
-          "time": "2026-11-11T07:19:15.273609951Z",
+          "spread_pips": 0.700000000000145,
+          "time": "2026-11-11T08:13:38.617041369Z",
           "tradeable": true
         },
-        "price_reference": 1.11587,
+        "price_reference": 1.11489,
         "quote_is_tradeable": true,
         "vs_m15_ema20": "BELOW"
       }
