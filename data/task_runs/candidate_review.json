@@ -2,12 +2,11 @@
   "schema": 1,
   "role": "candidate_review",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T18:43:41.000Z",
-  "completed_at": "2026-11-11T18:48:51.690Z",
-  "source_at": "2026-11-11T18:21:39.000Z",
-  "source_commit": "29c105ba694e96a1d0bfc8c7019dd419c1253a83",
-  "source_age_seconds": 1632,
-  "locked_rule_hash": "040da6645e4d35f8c6313db7a72b29fd293a217684fd4287f0aff126320a3f26",
+  "started_at": "2026-11-11T23:44:39.000Z",
+  "completed_at": "2026-11-11T23:47:05.982Z",
+  "source_at": "2026-11-11T21:25:44.000Z",
+  "source_commit": "c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85",
+  "source_age_seconds": 8481,
   "counts": {
     "discovered_pairs": 68,
     "collector_usable_quoted_pairs": 65,
@@ -18,22 +17,21 @@
     "successful_candle_requests": 341,
     "collection_request_failures": 0,
     "admission_routes_reviewed": 130,
-    "admission_routes_admitted": 1,
-    "admission_routes_rejected": 129,
-    "rejected_adx_trend_strength": 2,
-    "rejected_four_frame_trend_conflict": 46,
-    "rejected_invalid_bid_ask_or_spread": 36,
-    "rejected_nearest_structure_target_reward_inadequate": 4,
-    "rejected_no_decisive_completed_m15_impulse": 5,
-    "rejected_reversal_or_exhaustion": 25,
-    "rejected_spread_too_high_relative_to_volatility": 9,
+    "admission_routes_admitted": 0,
+    "admission_routes_rejected": 130,
+    "rejected_four_frame_trend_conflict": 34,
+    "rejected_invalid_bid_ask_or_spread": 37,
+    "rejected_nearest_structure_target_reward_inadequate": 3,
+    "rejected_no_decisive_completed_m15_impulse": 1,
+    "rejected_reversal_or_exhaustion": 31,
+    "rejected_spread_too_high_relative_to_volatility": 22,
     "rejected_unsupported_pair_or_route": 2,
     "strongest_priority_pairs_independently_challenged": 12,
-    "engine_research_setups_independently_challenged": 3,
+    "engine_research_setups_independently_challenged": 12,
     "unique_pair_shards_directly_inspected": 12,
-    "canonical_signals": 1,
+    "canonical_signals": 0,
     "completed_new_triggers_verified": 0,
-    "archived_signal_plan_ids": 11,
+    "archived_signal_plan_ids": 12,
     "existing_paper_candidates": 44,
     "unexpired_permanent_paper_candidates_at_task_start": 0,
     "entry_opportunity_ledger_parseable": 0,
@@ -45,89 +43,100 @@
   },
   "findings": [
     {
-      "scope": "source and rule integrity",
-      "fact": "Collector run 43076245856 produced the 18:21:39Z snapshot with 341 successful candle requests, four pricing batches, 133 returned prices, three tradeable=false rows, zero missing bid/ask rows and no request failures. Protocol FX-OOS-20261104-v21 and locked rule hash 040da6645e4d35f8c6313db7a72b29fd293a217684fd4287f0aff126320a3f26 remain authoritative.",
-      "counter_evidence": "The public payload reports 67 total and 64 quoted pairs, while the collector receipt reports 68 discovered and 65 usable quoted instruments. The market_scan receipt is sourced at 17:18:03Z and is superseded for candidate evidence by the later collection, admission audit, public payload and pair shards.",
-      "decision": "Used the actual 18:21:39Z source clock and snapshot commit; no rule, cohort, lifecycle or machine-clearance change."
+      "scope": "source, rule lock and registration decision",
+      "fact": "The inspected source remains the successful 2026-11-11T21:25:44Z collector snapshot at commit c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85: 65 usable quoted pairs from 68 discovered, 341 successful candle requests and no collection failures. The locked protocol is FX-OOS-20261104-v21 with rule hash 040da6645e4d35f8c6313db7a72b29fd293a217684fd4287f0aff126320a3f26.",
+      "counter_evidence": "The source exceeded the 25-minute full-research freshness limit; candidate_review does not own refresh recovery. No current pair-specific fast receipt established a newer full multiframe observation.",
+      "decision": "No candidate was accepted or appended. This preserves the current 44 permanent paper candidates, 12 archived signal-plan IDs, zero unexpired permanent candidate and empty canonical signals.json."
     },
     {
-      "scope": "EUR_USD SHORT conditional admission",
-      "observed_evidence": "The canonical pipeline admitted AUTO-20261111T1821-EUR_USD-S-B as an EMA20 pullback with planned entry 1.10998, stop 1.11057, TP1 1.10826, expiry 19:51:50.419252Z and maximum OANDA spread 0.805 pips. At 18:21:38.836Z OANDA was bid 1.10921 / ask 1.10928 with 0.7-pip spread; D1/H4/H1/M15 trend and DMI were bearish.",
-      "counter_evidence": "The plan requires a future completed M15 bearish rejection. The latest available completed M15 candle opened 18:00Z, before the 18:21:50Z plan creation, and hourly assessment remained NO_QUALIFIED_PRICE_PATTERN. H1 RSI 21.85 was extended, M15 MACD histogram had turned positive and the continuation route failed NO_DECISIVE_COMPLETED_M15_IMPULSE.",
-      "decision": "ACCEPTED only as the existing untriggered canonical conditional plan; no simulated trigger, fill, duplicate paper append or outcome asserted."
+      "scope": "canonical admission reconciliation",
+      "fact": "All 130 registered route evaluations were rejected and none admitted. Rejections were FOUR_FRAME_TREND_CONFLICT 34, INVALID_BID_ASK_OR_SPREAD 37, NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE 3, NO_DECISIVE_COMPLETED_M15_IMPULSE 1, REVERSAL_OR_EXHAUSTION 31, SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY 22 and UNSUPPORTED_PAIR_OR_ROUTE 2.",
+      "counter_evidence": "The dashboard entry-gate summary independently reports zero of 64 routes with technical-and-cost gates clear and zero priced paper previews. A prior completed move beyond a scout reference is explicitly not an approved trigger or retrospective fill.",
+      "decision": "The canonical pipeline remains authoritative; signals.json was not edited."
     },
     {
-      "scope": "AUD_CHF LONG top-ranked idea rejected",
-      "observed_evidence": "At 18:21:39.096Z OANDA was bid 0.57078 / ask 0.57092 with 1.4-pip spread. H1 and M15 ADX/DMI, Supertrend and visible-cloud evidence were bullish.",
-      "counter_evidence": "D1 remained bearish below its visible cloud with negative DMI and MACD, while H4 EMA structure was still down and below cloud. Both registered routes failed FOUR_FRAME_TREND_CONFLICT; H1 RSI was 72.73 and the last completed M15 candle retreated.",
-      "decision": "REJECTED; priority rank did not override the registered four-frame rule."
+      "scope": "CAD_HKD and EUR_USD shorts",
+      "fact": "CAD_HKD retained bearish D/H4/H1/M15 EMA-DMI-Supertrend context, but the observed 9.5-pip spread failed the volatility-cost gate and H4/H1 RSI was 19.8/18.4, adding exhaustion risk. EUR_USD retained bearish H4/H1/M15 context with H1 ADX 60.1 and M15 ADX 55.1, but H4/H1 RSI was 28.9/22.2, M5 printed a bullish engulfing rebound and both registered routes failed nearest-structure reward economics.",
+      "decision": "Reject both as new paper registrations; no chase, no trigger inference and no fabricated stop/target."
     },
     {
-      "scope": "GBP_USD and EUR_HKD research setups rejected",
-      "observed_evidence": "GBP_USD H4/H1/M15 structure remained bearish, and EUR_HKD D1/H4/H1/M15 trend evidence was bearish.",
-      "counter_evidence": "GBP_USD had mixed/bullish daily Supertrend and inside-cloud context, so both routes failed FOUR_FRAME_TREND_CONFLICT. EUR_HKD showed a 12.9-pip observed spread and both routes failed INVALID_BID_ASK_OR_SPREAD; its served research estimate also remained below the locked cost-aware admission gate.",
-      "decision": "Both remain research-only counterexamples; no canonical promotion or paper append."
+      "scope": "GBP_USD and EUR_SGD shorts",
+      "fact": "GBP_USD H4/H1/M15 was bearish, but D1 remained mixed with Supertrend up and ADX 18.7 while H4/H1 RSI was 27.7/26.3; both routes failed four-frame alignment. EUR_SGD was broadly bearish, but H4 ADX was 18.0 and the observed 3.1-pip spread failed the volatility-cost gate.",
+      "decision": "Reject both. Their directional bias is insufficient to establish a qualified, priced, prospective paper watch."
     },
     {
-      "scope": "remaining top-twelve challenge",
-      "fact": "Direct shards and registered reasons were reconciled for GBP_HKD, USD_CAD, USD_DKK, NZD_USD, AUD_HKD, CAD_HKD, SGD_JPY and USD_CZK. GBP_HKD, USD_DKK, AUD_HKD and USD_CZK failed bid/ask-spread admission; USD_CAD and NZD_USD lacked a decisive completed M15 impulse and failed nearest-structure reward on pullback; CAD_HKD failed decisive impulse and nearest-structure reward; SGD_JPY failed four-frame alignment.",
-      "counter_evidence": "Several USD-long or HKD-cross ranks repeated correlated exposure. USD_CAD H4/H1 RSI exceeded 81, SGD_JPY H1 RSI was 82.51, and wide HKD/CZK/DKK spreads made price direction alone insufficient.",
-      "decision": "All eight rejected; no threshold relaxation, forced quota or inferred fill."
+      "scope": "USD_JPY and HKD_JPY longs",
+      "fact": "Both pairs showed H4/H1/M15 bullish momentum, but D1 was mixed with ADX below 10, H1 RSI exceeded 86, and M5 DMI turned negative with ADX near 13-14. USD_JPY failed four-frame alignment; HKD_JPY also carried a 29.0-pip observed spread and failed bid/ask-spread admission.",
+      "counter_evidence": "Official BOJ corporate-goods-price data was scheduled for 2026-11-11T23:50Z and a BOJ Board Member speech for 2026-11-12T01:30Z, adding near-term JPY event risk without assumed outcomes.",
+      "decision": "Reject both; no continuation candidate was registered."
     },
     {
-      "scope": "macro and news safeguards",
-      "fact": "The macro receipt records next-48-hour official event risk including the 12 November 07:00Z UK GDP cluster, 12 November 15:00Z Federal Reserve Barr, 13 November 13:30Z US PPI and lower-tier AUD releases at 12 November 00:30Z.",
-      "counter_evidence": "The macro receipt is sourced at 17:18:03Z and PARTIAL; ECB/Eurostat/HKD/SGD schedule clocks retain gaps. Machine news is also PARTIAL because BLS employment and inflation feeds are unavailable.",
-      "decision": "No actual, consensus or clearance was invented; macro gaps remained blockers."
+      "scope": "EUR_HKD, GBP_HKD and CHF_HKD shorts",
+      "fact": "Intraday bearish structure was visible, but observed spreads were respectively 13.8, 16.8 and 19.7 pips. GBP_HKD and CHF_HKD also retained D1 conflicts; EUR_HKD and CHF_HKD H1 RSI was near 22 and 19, increasing extension risk.",
+      "decision": "Reject all three on cost/structure evidence. No level was manufactured to force acceptable economics."
     },
     {
-      "scope": "archive and duplicate integrity",
-      "fact": "paper-trade-candidates remains unchanged at 44 records and signal_plan_archive contains 11 immutable IDs. The current EUR_USD idea is already canonical and lifecycle-registered; no other reviewed idea combined a genuinely new identity with a completed trigger, acceptable costs, macro coverage and registered entry/stop/target/expiry economics.",
-      "counter_evidence": "data/entry_opportunity_ledger.json has blob SHA 4b01f9c7f6ceb89596dc8909efdc7755747bb7e6 but authenticated fetch returned an empty body, preventing complete independent duplicate parsing. The source exceeded the locked 25-minute full-research freshness threshold before this review completed.",
-      "decision": "No candidate append; losses, no-fills, expiries and immutable plans preserved."
+      "scope": "USD_CHF and USD_CAD longs",
+      "fact": "USD_CHF H4/H1/M15 was bullish, but D1 Supertrend and swing structure remained bearish, H1 RSI was 81.5, M5 Supertrend/DMI turned down, and the registered routes failed decisive-impulse and structural-reward tests. USD_CAD was broadly bullish but H4/H1 RSI was 81.1/82.0 and the 2.0-pip spread failed the volatility-cost gate.",
+      "decision": "Reject both as overextended or economically unqualified; no pullback/continuation watch was appended."
+    },
+    {
+      "scope": "AUD_USD short",
+      "fact": "AUD_USD showed bearish D/H4/H1/M15 EMA-DMI-Supertrend alignment and an M15 Donchian downside break, but the engine classified both registered routes as REVERSAL_OR_EXHAUSTION. M5 RSI was 30.9 and the current scout explicitly required waiting rather than chasing.",
+      "decision": "Reject a new registration. The earlier frozen AUD_USD plan remains an expired/untriggered no-fill record and was not duplicated or reclassified."
+    },
+    {
+      "scope": "macro, correlation and coverage constraints",
+      "fact": "The macro receipt covers all nine currencies in the twelve priorities and records 19 verified timed events plus six date-only/clock-gap events in the next 48 hours. Material windows include UK GDP at 07:00Z on 12 November, Canada releases at 13:30Z, US PPI at 13:30Z on 13 November, BOJ releases/speech, and date-only EUR/HKD/SGD items.",
+      "counter_evidence": "Machine news remains PARTIAL, including two unavailable BLS feeds. USD-heavy and HKD/JPY-linked scouts are correlated expressions rather than independent evidence; accepting several would duplicate the same macro factor and cost risk.",
+      "decision": "No machine-news clearance changed, and no rate, actual, consensus, broker fill or directional event outcome was invented."
+    },
+    {
+      "scope": "schema and archive integrity",
+      "fact": "paper-trade-candidates.json schema_version 1 parsed with 44 preserved candidates; signal_plan_archive parsed with 12 IDs. data/entry_opportunity_ledger.json returned a nonempty current SHA but no authenticated body, so its rows could not be independently parsed.",
+      "decision": "No duplicate ID, incomplete candidate or untestable continuation was appended merely to satisfy a quota. Existing cohorts, expiry, losses and no-fill records remain unchanged."
     }
   ],
   "blockers": [
-    "Source age was 1632 seconds at completion, beyond the locked 25-minute full-research threshold; candidate_review does not own refresh recovery and did not claim fresh trade clearance.",
-    "data/entry_opportunity_ledger.json@4b01f9c7f6ceb89596dc8909efdc7755747bb7e6 returned an empty authenticated body, preventing complete independent duplicate parsing.",
-    "data/news_latest.json remains PARTIAL because BLS employment and inflation sources were unavailable; no machine-news clearance was altered.",
-    "The macro_events and market_scan receipts were sourced at 17:18:03Z; the later market snapshot superseded their market clocks, but their remaining macro/coverage gaps were preserved.",
-    "No reviewed noncanonical idea combined a new completed trigger with acceptable spread, current macro coverage and registered entry/stop/target/expiry economics.",
-    "No Pepperstone quote, broker account, real or practice order, fill, equity, personal broker detail or delivery receipt was accessed or inferred."
+    "The last full source observation was stale beyond the locked 25-minute threshold; candidate_review is not authorized to request duplicate full or fast recovery.",
+    "data/entry_opportunity_ledger.json@43a68b70e7aebc3caa834ab7d5437c812a145b25 returned an empty authenticated body, preventing independent row-level review.",
+    "data/news_latest.json remains PARTIAL with two unavailable BLS machine sources; no machine-news clearance was inferred.",
+    "Collector and sanitized public payload coverage differ at 65/68 versus 64/67, and actual public serving was not independently verified by this role.",
+    "No route had technical-and-cost gates clear or a priced paper preview; therefore no schema-valid prospective candidate could be appended without inventing levels or relaxing thresholds.",
+    "Pepperstone prices, costs, account state, fills, real/practice orders and user-delivery receipts were not accessed or inferred."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md@bbc5a5091c16425eceadda27867c284007487800",
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
-    "data/task_runs/market_scan.json@fee35f4a32309e88db16b4ef5ef8d48ddd98b2ef",
-    "data/task_runs/macro_events.json@5fcf72c5bb0a468e78d7dc28dfb2cba730d5b018",
-    "data/task_runs/position_monitor.json@28ef2a227a3ed384c2ec3f921361fa5981ca062b",
-    "data/collection_attempt.json@7804dea76dfe222be95a816205020b4f45aaef64",
-    "data/public_dashboard_payload.json@4ab7baae4d21ef315ae1dd18a4571b5802fccf47",
-    "data/signal_admission_audit.json@6e04d1a80aa17545a9e5b0cd953006d1d77f55d0",
-    "data/hourly_assessment.json@11cee4830510006dc1d3a85be62a26fd2cb66ebb",
-    "data/news_latest.json@a3a810718530d070cf1766bd3a1c7bb77b299701",
-    "signals.json@66a7df60349bef6caf01ef2145927bb620563386",
-    "data/signal_plan_archive.json@2b00a6abff4c84f4050351d98bad6333d38a9ebf",
+    "data/task_runs/market_scan.json@ccf784b6e6bec60828138c80fc8159e3af9ad35e",
+    "data/task_runs/macro_events.json@4ee47aface8db296af48b5cd74d25569a8aeddf6",
+    "data/signal_admission_audit.json@4369193e4cdc4fe9d50a05cbfd92b16f6e263502",
+    "data/hourly_assessment.json@be121f812b31a9e6ee8bb227135eeec6c81fcaea",
+    "data/public_dashboard_payload.json@1c4dc5cfff7a8f16f5c58352c6ec63cd261a8124",
     "paper-trade-candidates.json@35daf9a27b23c9b67a2c45bbf870dcc5bb2ccf81",
-    "data/entry_opportunity_ledger.json@4b01f9c7f6ceb89596dc8909efdc7755747bb7e6",
-    "data/pairs/AUD_CHF.json@c96f08949182bdace8e2160c03bf56d19d4e4abe",
-    "data/pairs/EUR_USD.json@c68bb303c5463040a37fc1d7bb5cf21c055e3975",
-    "data/pairs/GBP_USD.json@49b6d0cecbadf18d01a694723767de999ee40b18",
-    "data/pairs/EUR_HKD.json@5fdb62ab25fa60a19f6912194995e95e0bd9a340",
-    "data/pairs/GBP_HKD.json@0cb8abbcd8a80fe0b79ecc8e02e46493a9860b51",
-    "data/pairs/USD_CAD.json@e39694a614dd15b412879ddcfe4063eb6a43c76e",
-    "data/pairs/USD_DKK.json@5feafaf553ad777d41502bde3dd04346ca720465",
-    "data/pairs/NZD_USD.json@64c404656324ae74528804673c3ce0eb731ca2fa",
-    "data/pairs/AUD_HKD.json@5903d699ce4a516a4ce1decd8ac28e28220463ad",
-    "data/pairs/CAD_HKD.json@b70b00705be5d9317226f575951d9d14b14a02ad",
-    "data/pairs/SGD_JPY.json@ff95a2bcd5259f67a98b415ce821215e4ef8f883",
-    "data/pairs/USD_CZK.json@a39e6cf0d4046b758de2195d691245129e0682dc",
-    "commit:29c105ba694e96a1d0bfc8c7019dd419c1253a83",
-    "workflow_run:43076245856"
+    "data/signal_plan_archive.json@cbe28cc1dc5ce7a0ba8b023f2735d781fd140fa1",
+    "data/entry_opportunity_ledger.json@43a68b70e7aebc3caa834ab7d5437c812a145b25",
+    "signals.json@495bdc05ef63bf4ff17c1b234042eba607334ac4",
+    "data/collection_attempt.json@ca29b06dd6a85dd70c1703bb5855d88c624b245d",
+    "data/pairs/CAD_HKD.json@c9624c426c949ab145ee29bf52a730c60d09cf44",
+    "data/pairs/EUR_USD.json@2cc06efc44d5aa1d1ff1a32a25be14a7bd18b4cf",
+    "data/pairs/GBP_USD.json@8ea28cc046542a3761dbb1501eefa9434dc86c7b",
+    "data/pairs/EUR_SGD.json@38e8e68d165c7b40285dc9bebd230162124d5ae6",
+    "data/pairs/USD_JPY.json@25be666025dd9bfbb37085651b680e96ed5b39c8",
+    "data/pairs/HKD_JPY.json@f5f8f65d454513a3cd48e2c4d4eaefb095a09266",
+    "data/pairs/EUR_HKD.json@0732e9bd4ec293abd5f27ca8188faa5c9eac6ba4",
+    "data/pairs/GBP_HKD.json@8bff016d481051918de0689131b8ac0a558ceb7d",
+    "data/pairs/USD_CHF.json@f665b9f33160d39f39180adc1f6da887efaf2c50",
+    "data/pairs/AUD_USD.json@cd4584114a1dda7769fe2254376656a192efd6b2",
+    "data/pairs/USD_CAD.json@1861b06e9f32d4476e7b6527fdd754740711c521",
+    "data/pairs/CHF_HKD.json@fb729ff379a41ed99683ccc5b7e0798161c5db93",
+    "source_snapshot_commit:c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85"
   ],
   "run_ids": [
-    "43076245856"
+    "43102907264",
+    "43105088987",
+    "43105189085"
   ],
   "no_broker_orders": true
 }
