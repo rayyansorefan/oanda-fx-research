@@ -2,60 +2,64 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T18:15:32Z",
-  "completed_at": "2026-11-11T18:17:26.520Z",
-  "source_at": "2026-11-11T17:18:03Z",
-  "source_commit": "1b06e37607edad9eb343c2c29e5732fe49e27bec",
-  "source_age_seconds": 3564,
+  "started_at": "2026-11-11T19:10:25Z",
+  "completed_at": "2026-11-11T19:11:37.806Z",
+  "source_at": "2026-11-11T18:21:39Z",
+  "source_commit": "f7186749d64f9d8c9e205101f0e4e3dcbd1a1bbb",
+  "source_age_seconds": 2999,
   "counts": {
-    "universe_pairs_in_last_public_payload": 67,
-    "quoted_pairs_in_last_public_payload": 64,
-    "screened_pairs_in_last_public_payload": 64,
-    "deep_pairs_reported_in_last_public_payload": 64,
+    "universe_pairs": 67,
+    "quoted_pairs": 64,
+    "screened_pairs": 64,
+    "deep_pairs_from_payload": 64,
     "summary_pair_entries_independently_parsed": 64,
     "individual_pair_shards_independently_verified": 0,
-    "canonical_routes_rejected": 128,
-    "canonical_active_at_source": 1,
-    "canonical_new_admitted": 0,
-    "currently_unexpired_canonical_signals": 0,
+    "canonical_routes_rejected": 129,
+    "canonical_new_admitted": 1,
+    "currently_unexpired_canonical_signals": 1,
     "verified_simulated_fills": 0,
     "rejection_reasons": {
-      "FOUR_FRAME_TREND_CONFLICT": 34,
-      "INVALID_BID_ASK_OR_SPREAD": 15,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
-      "REVERSAL_OR_EXHAUSTION": 74,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
+      "ADX_TREND_STRENGTH": 2,
+      "FOUR_FRAME_TREND_CONFLICT": 46,
+      "INVALID_BID_ASK_OR_SPREAD": 36,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 4,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 5,
+      "REVERSAL_OR_EXHAUSTION": 25,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 9,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     }
   },
   "findings": [
-    "Last actual full source 17:18:03Z; 64/67 quoted, screened and deep pairs. All 64 public payload pair entries have bid/ask and M5/M15/H1/H4/D indicators; individual manifest-authorized shards not independently verified.",
-    "Canonical source admission: 128 rejected routes, zero newly admitted; one carried AUD_USD short conditional plan expired 17:50:44Z. No later completed trigger or simulated fill verified. WAIT for new entry.",
-    "One full recovery requested at 18:16:45Z, sequence 217, commit e13dffc4e3e0604cb6d564c059259a34f7de8799. Current-main research run 43076245856 observed queued; resulting source/admission/publication not yet verified.",
-    "Machine news partial, BLS employment and inflation unavailable. Previous repository payload published at 17:18:49Z; actual served public feed and user delivery unverified."
+    "18:21:39Z market source: 64/67 usable quoted pairs and complete M5/M15/H1/H4/D indicator entries in parsed published payload; three excluded, individual shards not independently read.",
+    "Canonical EUR_USD SHORT EMA20_PULLBACK conditional plan AUTO-20261111T1821-EUR_USD-S-B: frozen planned entry 1.10998, stop 1.11057, target 1.10826, expiry 19:51:50Z. Later hourly assessment NO_QUALIFIED_PRICE_PATTERN; no verified trigger or fill. Source stale at this review, so WAIT for current action.",
+    "129 rejected routes (sum of recorded rejection causes). News partial with BLS employment and inflation unavailable; no machine clearance override.",
+    "One full recovery sequence 218 requested and read back at commit f7186749d64f9d8c9e205101f0e4e3dcbd1a1bbb; matching Actions runs 43084845602 and 43084845780 queued at 19:11:22Z. Completion, new admission and publication pending.",
+    "Repository dashboard payload reports publication at 18:22:22Z, but actual served public feed and delivery receipt not independently verified."
   ],
   "blockers": [
-    "Full market source exceeds 25-minute freshness limit; recovery queued.",
-    "Individual 64 pair shards not independently read; summary/latest content not independently obtained.",
-    "New recovery collection/admission/publication and actual served feed unverified.",
-    "Machine news partial; independent delivery receipt absent."
+    "Source exceeds 25-minute research freshness threshold; recovery queued, outcome unverified.",
+    "Individual manifest-authorized pair shards not independently verified.",
+    "Actual public serving and user delivery unverified.",
+    "Machine news partial."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md@bbc5a5091c16425eceadda27867c284007487800",
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
-    "data/collection_attempt.json@9a39faa1d00ff0b69cf32bf071a723d7c3e40422",
-    "data/monitoring_health.json@00f110d5bec8341f2ca62c53dc71d688e2ee5ac5",
-    "data/public_dashboard_payload.json@467e41532059d20c2dbbb4229bc24f9ab94457b2",
-    "data/signal_admission_audit.json@7dd839652bfdeda5342b3deed99d5c1f0210d9d8",
-    "signals.json@55ef1d1b9a7d12c053f21d21223530ebf0a3bcca",
+    "data/collection_attempt.json@7804dea76dfe222be95a816205020b4f45aaef64",
+    "data/monitoring_health.json@0998a16cb0e0a1a95972057789511b24471d3675",
+    "data/public_dashboard_payload.json@4ab7baae4d21ef315ae1dd18a4571b5802fccf47",
+    "data/signal_admission_audit.json@6e04d1a80aa17545a9e5b0cd953006d1d77f55d0",
+    "signals.json@66a7df60349bef6caf01ef2145927bb620563386",
+    "data/hourly_assessment.json@11cee4830510006dc1d3a85be62a26fd2cb66ebb",
+    "data/news_latest.json@a3a810718530d070cf1766bd3a1c7bb77b299701",
     "data/task_runs/macro_events.json@5fcf72c5bb0a468e78d7dc28dfb2cba730d5b018",
-    "scripts/refresh_request.json@631d3395382032295eda124b7025a1d9bc9252a3"
+    "scripts/refresh_request.json@209df54ae96c4c21074ac55b2bb8b80ca426b2ad"
   ],
   "run_ids": [
-    "43066717472",
     "43076245856",
-    "43076245962"
+    "43084845602",
+    "43084845780"
   ],
   "no_broker_orders": true
 }
