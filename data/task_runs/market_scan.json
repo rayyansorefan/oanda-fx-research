@@ -2,39 +2,42 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T07:18:18Z",
-  "completed_at": "2026-11-11T07:19:06.536Z",
-  "source_at": "2026-11-11T06:04:17Z",
-  "source_commit": "aec911c1662229258bc9733e47873426ae451def",
-  "source_age_seconds": 4490,
+  "started_at": "2026-11-11T08:12:36Z",
+  "completed_at": "2026-11-11T08:13:42.286Z",
+  "source_at": "2026-11-11T07:19:17Z",
+  "source_commit": "a0df6a61ecf98b883c687273572ae9738e3c64b1",
+  "source_age_seconds": 3265,
   "counts": {
     "discovered_pairs": 68,
-    "usable_quoted_pairs": 65,
-    "reported_m15_h1_indicator_pairs": 65,
-    "reported_deep_five_frame_pairs": 65,
-    "independently_inspected_pair_shards_this_run": 1,
+    "usable_quoted_pairs_reported": 68,
+    "deep_five_frame_pairs_reported": 68,
+    "independently_inspected_pair_shards_this_run": 12,
     "independently_verified_all_pairs": false,
-    "canonical_admission_rejected_routes": 130,
-    "canonical_admission_active": 0,
-    "canonical_admission_new_admitted": 0,
-    "canonical_signals_file_count": 0,
+    "canonical_routes_evaluated": 136,
+    "canonical_rejected_routes": 135,
+    "canonical_active": 1,
+    "canonical_admitted": 1,
     "rejection_reasons": {
-      "FOUR_FRAME_TREND_CONFLICT": 44,
-      "INVALID_BID_ASK_OR_SPREAD": 36,
-      "REVERSAL_OR_EXHAUSTION": 36,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 12,
+      "FOUR_FRAME_TREND_CONFLICT": 35,
+      "INVALID_BID_ASK_OR_SPREAD": 30,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 2,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 3,
+      "REVERSAL_OR_EXHAUSTION": 49,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 14,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
-    }
+    },
+    "fast_actionable_count": 0
   },
   "findings": [
-    "Current registered protocol and operations instructions reviewed; last full source 06:04:17Z; canonical 130 routes rejected, signals empty, WAIT.",
-    "Current summary.json retrieved via authenticated GitHub contents endpoint despite empty fetch_file response; 65/68 quoted pairs and five-frame coverage reported, three TRY pairs excluded.",
-    "One stale-source full recovery requested on current main at 07:18:47Z, sequence 207, commit 75df5cca15916805cb8e563a32caba84e68d20ff; downstream run, admission and publication not yet verified."
+    "07:19:17Z full OANDA collection run 42978582684 COLLECTED; 68/68 quoted and five-frame reported, top twelve pair shards inspected.",
+    "One canonical EUR_USD SHORT EMA20_PULLBACK conditional research plan, ID AUTO-20261111T0719-EUR_USD-S-B; pending future completed M15 trigger, not a fill or real-order instruction. Fast audit 07:19:41Z recorded NO_QUALIFIED_PRICE_PATTERN.",
+    "One new stale-source recovery requested sequence 208 at 08:13:16Z commit a0df6a61ecf98b883c687273572ae9738e3c64b1; downstream outcome pending verification."
   ],
   "blockers": [
-    "Full independent 65-shard verification not completed in this run.",
-    "Recovery resulting Actions run, fresh source, admission and public served feed unverified.",
-    "Macro receipt outdated and machine news coverage incomplete."
+    "Full independent 68-pair shard verification incomplete; attempted bulk read exceeded connector call limit.",
+    "Recovery run/source/admission/publication not yet independently verified.",
+    "Macro receipt last completed 10 November; news coverage limited or unavailable for some currencies.",
+    "Public repository publication readback 07:20:06Z, actual served feed unverified."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -45,13 +48,14 @@
     "data/collection_attempt.json",
     "data/monitoring_health.json",
     "data/signal_admission_audit.json",
+    "data/fast_entry_audit.json",
     "signals.json",
     "data/task_runs/macro_events.json",
     "scripts/refresh_request.json",
     "data/public_dashboard_status.json"
   ],
   "run_ids": [
-    "42969794432"
+    "42978582684"
   ],
   "no_broker_orders": true
 }
