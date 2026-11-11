@@ -2,63 +2,61 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T12:11:23Z",
-  "completed_at": "2026-11-11T12:13:15.903Z",
-  "source_at": "2026-11-11T10:19:31Z",
-  "source_commit": "f13898ea1436c869cb73e8f7012359c250327ce3",
-  "source_age_seconds": 6824,
+  "started_at": "2026-11-11T13:19:18Z",
+  "completed_at": "2026-11-11T13:21:29.527Z",
+  "source_at": "2026-11-11T12:12:41Z",
+  "source_commit": "4b6c2b5cc1bd28a88f0a40335606572fd47209af",
+  "source_age_seconds": 4129,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs_reported": 68,
-    "independently_verified_summary_quoted_pairs": 68,
-    "independently_verified_summary_five_frame_pairs": 68,
-    "independently_verified_pair_shards": 0,
+    "summary_deep_pairs_reported": 68,
+    "independently_verified_pair_shards": 12,
+    "independently_verified_all_pair_shards": 0,
     "canonical_routes_evaluated": 136,
     "canonical_rejected_routes": 136,
     "canonical_active_at_source": 0,
     "canonical_new_admitted": 0,
     "verified_simulated_fills": 0,
     "rejection_reasons": {
-      "FOUR_FRAME_TREND_CONFLICT": 29,
-      "INVALID_BID_ASK_OR_SPREAD": 18,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 4,
-      "REVERSAL_OR_EXHAUSTION": 72,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 8,
-      "ADX_TREND_STRENGTH": 2,
+      "INVALID_BID_ASK_OR_SPREAD": 35,
+      "FOUR_FRAME_TREND_CONFLICT": 34,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 5,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 2,
+      "RECENT_MATERIAL_HEADLINE_REVIEW": 2,
+      "REVERSAL_OR_EXHAUSTION": 54,
       "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
+      "PRIMARY_NEWS_SOURCE_MISSING": 1,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     }
   },
   "findings": [
-    "Last observed source 10:19:31Z; summary.json blob retrieved and all 68 pair objects individually checked for tradeable bid<ask and D/H4/H1/M15/M5 frame presence; all 68 passed summary-level checks, not independently revalidated against pair shards.",
-    "Canonical admission rejected 136/136 routes at source, signals.json empty; WAIT only, no verified paper fills.",
-    "One current-main stale-source recovery request sequence 212 committed 12:11:23Z at 4b6c2b5cc1bd28a88f0a40335606572fd47209af; refresh file SHA read back, but no subsequent source/admission/publication verified.",
-    "Public dashboard repository publication for older 10:19:31Z snapshot reported at 10:20:22Z; actual served feed not verified."
+    "12:12:41Z collector reported 68/68 quoted pairs and five-frame coverage; summary and latest obtained via actual GitHub blobs; top twelve pair shards independently retrieved, remaining 56 not verified.",
+    "Canonical 12:12:41Z admission rejected 136/136 routes; signals.json empty; WAIT, no verified fills.",
+    "One full stale-source recovery request sequence 213 committed 13:20:46Z at 312d9ea159553da1ec3f8fd29bda42f132553da2 and read back; subsequent collection/admission/publication not yet observed.",
+    "Prior 12:12:41Z public repository feed publication recorded PUBLISHED; actual HTTP served feed not verified."
   ],
   "blockers": [
-    "Source older than 20 minutes in active London session; recovery outcome not yet verified.",
-    "Individual data/pairs/*.json shards not independently inspected; summary-level coverage only.",
-    "Public served feed not verified; macro receipt at 09:02Z and machine news coverage limited/partial.",
-    "No Actions run ID linked to recovery request independently verified."
+    "Full source stale beyond 20/25-minute thresholds; recovery outcome pending.",
+    "56 individual pair shards not independently checked.",
+    "Actual public served feed unverified; machine news_latest status PARTIAL.",
+    "No specific Actions run ID yet verified for sequence 213."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
     "config/scheduled_research_roles.json",
     "validation_protocol.json",
-    "data/summary.json@43ccb55627d753f8f0e64c0cc92721bcd85baec3",
-    "data/latest.json@59849134b55eb37b38495150a1af70d012385ebd",
-    "data/universe.json",
-    "data/collection_attempt.json",
-    "data/monitoring_health.json",
-    "data/signal_admission_audit.json",
-    "signals.json",
-    "data/news_latest.json",
-    "data/task_runs/macro_events.json",
-    "data/public_dashboard_status.json",
-    "scripts/refresh_request.json@bbf8bc16c4af9c1e3258d539992b67e0ea9cd9c5"
+    "data/summary.json@80cf20ba9dc39ed2162947e8f2b4a0cbdeb417b1",
+    "data/latest.json@af5909c3d8a4ce3150c7309976f81a0cce5ad0b4",
+    "data/collection_attempt.json@bc7413f52c3bdf2aed01fad08f900b1e5452e3d0",
+    "data/signal_admission_audit.json@ff904911fc69acfe7f09d06af6acbcd47b3e19e8",
+    "signals.json@e8ed1a90fe4533be274c7e45d55747c5f9c478d8",
+    "data/task_runs/macro_events.json@79349652423bfbf7083f644e6ceeac7615288d09",
+    "data/public_dashboard_status.json@c868ef080ceda8c89df2fc44b21da8b73c47fa72",
+    "scripts/refresh_request.json@314491583b8b07d293879137bb68249020112ff4"
   ],
   "run_ids": [
-    "43002586914"
+    "43018293113"
   ],
   "no_broker_orders": true
 }
