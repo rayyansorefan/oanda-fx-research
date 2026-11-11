@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T01:10:40Z",
-  "completed_at": "2026-11-11T01:12:00Z",
-  "source_at": "2026-11-10T23:14:36Z",
-  "source_commit": "308e186efa810b2ecc31f3728705c958586ea2fe",
-  "source_age_seconds": 7044,
+  "started_at": "2026-11-11T02:13:32Z",
+  "completed_at": "2026-11-11T02:14:03.500Z",
+  "source_at": "2026-11-11T01:26:12Z",
+  "source_commit": "11de4b89759336e5312319a6f3d4c54c12815e91",
+  "source_age_seconds": 2872,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs": 65,
@@ -19,29 +19,29 @@
     "canonical_admission_new_admitted": 0,
     "canonical_signals_file_count": 0,
     "rejection_reasons": {
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 2,
-      "INVALID_BID_ASK_OR_SPREAD": 32,
-      "FOUR_FRAME_TREND_CONFLICT": 36,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 6,
-      "CONTINUATION_PRICE_STRETCHED": 1,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 4,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 3,
+      "INVALID_BID_ASK_OR_SPREAD": 29,
       "RECENT_MATERIAL_HEADLINE_REVIEW": 1,
-      "REVERSAL_OR_EXHAUSTION": 50,
+      "FOUR_FRAME_TREND_CONFLICT": 25,
+      "REVERSAL_OR_EXHAUSTION": 66,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     }
   },
   "findings": [
-    "At 01:10-01:12 UTC, last current-main OANDA full observation remained 2026-11-10T23:14:36Z; universe reported 68 discovered, 65 usable quoted, 65 five-frame pairs; 3 TRY pairs nontradeable. No fresh source inferred.",
-    "Twelve current-main pair shards fetched and parsed with actual nonempty contents. Canonical admission evaluated 2026-11-10T23:14:49Z, all 130 routes rejected, zero active; signals.json empty. WAIT is last-known, not a fresh trading decision.",
-    "Collection_attempt 42921613190 COLLECTED; monitoring_health remained PARTIAL. Repository dashboard status PUBLISHED for 23:14:36Z snapshot; HTTP-served public feed not verified.",
-    "data/summary.json and data/latest.json fetch_file returned empty contents despite nonempty blob SHAs; their substantive contents could not be verified in this run.",
-    "Outside active London session and within 23:00-07:00 quiet hours: no full recovery requested and no routine user notification. Macro receipt last completed 2026-11-10T08:05:50Z; machine news coverage incomplete."
+    "At 2026-11-11T02:14:03.500Z latest available full source remains 2026-11-11T01:26:12Z (2872s old); reported 65/68 usable quoted and 65 complete five-frame pairs; 3 TRY pairs non-tradeable.",
+    "Canonical admission rejected 130/130 routes; signals.json empty. WAIT is last-known, not fresh executable evidence.",
+    "Twelve current-main pair shards fetched with nonempty contents; all 65 independently inspected is not established.",
+    "Collection_attempt 42938882448 COLLECTED at 01:26:12Z; monitoring_health full_collection_status PARTIAL, and persisted dashboard status still refers to 10 Nov 23:14:36Z snapshot.",
+    "Macro receipt last completed 10 Nov 08:05:50Z; machine news has LIMITED/UNAVAILABLE pair coverage.",
+    "Overnight 23:00-07:00 London: no recovery requested and no user notification."
   ],
   "blockers": [
-    "Source ~117 minutes old; no current market scan, and no recovery outside active London session.",
-    "Full independent shard coverage incomplete: 12 of 65 inspected; latest summary and latest data not retrieved despite nonempty SHAs.",
-    "Actual served dashboard feed not verified; publication status only proves repository readback.",
-    "Macro receipt stale and news coverage limited; no clearance inferred.",
-    "Source persistence commit beyond collection workflow head not independently verified."
+    "Full source stale for current decisions; no overnight recovery permitted.",
+    "Full independent pair inspection incomplete (12/65); data/summary.json and data/latest.json returned empty contents despite nonempty blob SHAs.",
+    "Latest public dashboard serving and matching latest-source publication unverified.",
+    "Macro receipt outdated; machine news coverage incomplete.",
+    "Source persistence commit after collection not independently verified; recorded source_commit is observed workflow head, not proven persistence commit."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -49,16 +49,15 @@
     "validation_protocol.json",
     "data/collection_attempt.json",
     "data/monitoring_health.json",
-    "data/summary.json",
-    "data/latest.json",
     "data/universe.json",
     "data/signal_admission_audit.json",
     "signals.json",
-    "data/task_runs/macro_events.json",
-    "data/public_dashboard_status.json",
     "data/hourly_assessment.json",
+    "data/task_runs/macro_events.json",
     "data/news_latest.json",
-    "scripts/refresh_request.json",
+    "data/public_dashboard_status.json",
+    "data/summary.json",
+    "data/latest.json",
     "data/pairs/USD_CAD.json",
     "data/pairs/EUR_GBP.json",
     "data/pairs/AUD_NZD.json",
@@ -73,7 +72,7 @@
     "data/pairs/USD_CHF.json"
   ],
   "run_ids": [
-    "42921613190"
+    "42938882448"
   ],
   "no_broker_orders": true
 }
