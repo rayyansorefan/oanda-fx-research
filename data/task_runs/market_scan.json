@@ -2,62 +2,55 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T09:18:22Z",
-  "completed_at": "2026-11-11T09:19:17.243Z",
-  "source_at": "2026-11-11T08:13:40Z",
-  "source_commit": "a0df6a61ecf98b883c687273572ae9738e3c64b1",
-  "source_age_seconds": 3937,
+  "started_at": "2026-11-11T11:13:11Z",
+  "completed_at": "2026-11-11T11:14:05.959Z",
+  "source_at": "2026-11-11T10:19:31Z",
+  "source_commit": "f13898ea1436c869cb73e8f7012359c250327ce3",
+  "source_age_seconds": 3275,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs_reported": 68,
     "deep_five_frame_pairs_reported": 68,
-    "independently_inspected_pair_shards_this_run": 12,
     "independently_verified_all_pairs": false,
-    "canonical_routes_evaluated": 134,
-    "canonical_rejected_routes": 134,
-    "canonical_active_at_source": 1,
+    "canonical_routes_evaluated": 136,
+    "canonical_rejected_routes": 136,
+    "canonical_active_at_source": 0,
     "canonical_new_admitted": 0,
-    "unexpired_frozen_plans_at_task_time": 0,
     "verified_simulated_fills": 0,
     "rejection_reasons": {
-      "REVERSAL_OR_EXHAUSTION": 83,
-      "FOUR_FRAME_TREND_CONFLICT": 24,
-      "INVALID_BID_ASK_OR_SPREAD": 19,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 4,
       "ADX_TREND_STRENGTH": 2,
+      "FOUR_FRAME_TREND_CONFLICT": 29,
+      "INVALID_BID_ASK_OR_SPREAD": 18,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 4,
+      "REVERSAL_OR_EXHAUSTION": 72,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 8,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     }
   },
   "findings": [
-    "08:13:40Z source: collection run 42985312221 COLLECTED; 68/68 quoted with complete five-frame coverage reported in universe; 12 leading pair shards independently inspected, not all 68.",
-    "Canonical admission at 08:13:40Z: 134 rejected routes, one retained historical conditional EUR_USD SHORT plan; frozen expiry 08:49:29Z elapsed without verified completed trigger or fill. Classify WAIT at task time; lifecycle not manually relabelled.",
-    "At 09:18:49Z requested one current-main stale full recovery sequence 209, commit 129e103025cf02be6e125861a6deb4fb493ee1d6; resulting collection, admission and publication not yet verified.",
-    "08:13:40Z snapshot public repository publication recorded at 08:14:24Z; actual served feed unverified. Macro_events receipt completed 09:02:46Z but machine news remains PARTIAL."
+    "10:19:31Z source: 68/68 quoted and five-timeframe covered as reported by universe; all-pair independent shard retrieval attempted but connector call ceiling prevented full verification.",
+    "Canonical admission 136/136 routes rejected, no admitted conditional plans; signals.json empty at 10:19:57Z.",
+    "10:19:31Z public repository publication readback recorded at 10:20:22Z; served feed not verified."
   ],
   "blockers": [
-    "Source older than 20min at active London review; recovery downstream outcome unverified.",
-    "Independent full 68-pair shard verification not completed; 12/68 inspected.",
-    "data/summary.json fetch_file returned empty content despite nonempty blob SHA; full summary content not verified.",
-    "Public served dashboard feed not independently verified; publication is repository-only.",
-    "Machine news_latest PARTIAL; no news clearance inferred."
+    "Source >20min old during active London review; recovery not requested because GitHub connector call ceiling was reached.",
+    "Full pair-shard verification incomplete.",
+    "Large data/summary.json returned empty content despite nonempty SHA.",
+    "Public served feed unverified; machine news coverage incomplete."
   ],
   "evidence_paths": [
-    "docs/FIVE_TASK_OPERATIONS.md",
-    "config/scheduled_research_roles.json",
     "validation_protocol.json",
     "data/universe.json",
-    "data/pairs/{instrument}.json (12 leading shards)",
     "data/collection_attempt.json",
     "data/monitoring_health.json",
     "data/signal_admission_audit.json",
-    "data/fast_entry_audit.json",
     "signals.json",
-    "data/task_runs/macro_events.json",
-    "scripts/refresh_request.json",
-    "data/public_dashboard_status.json"
+    "data/public_dashboard_status.json",
+    "data/task_runs/macro_events.json"
   ],
   "run_ids": [
-    "42985312221"
+    "43002586914"
   ],
   "no_broker_orders": true
 }
