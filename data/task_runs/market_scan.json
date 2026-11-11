@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T05:13:17Z",
-  "completed_at": "2026-11-11T05:14:06.416Z",
-  "source_at": "2026-11-11T01:26:12Z",
-  "source_commit": "11de4b89759336e5312319a6f3d4c54c12815e91",
-  "source_age_seconds": 13674,
+  "started_at": "2026-11-11T06:17:49Z",
+  "completed_at": "2026-11-11T06:18:17.121Z",
+  "source_at": "2026-11-11T06:04:17Z",
+  "source_commit": "aec911c1662229258bc9733e47873426ae451def",
+  "source_age_seconds": 840,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs": 65,
@@ -19,28 +19,24 @@
     "canonical_admission_new_admitted": 0,
     "canonical_signals_file_count": 0,
     "rejection_reasons": {
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 4,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 3,
-      "INVALID_BID_ASK_OR_SPREAD": 29,
-      "RECENT_MATERIAL_HEADLINE_REVIEW": 1,
-      "FOUR_FRAME_TREND_CONFLICT": 25,
-      "REVERSAL_OR_EXHAUSTION": 66,
+      "FOUR_FRAME_TREND_CONFLICT": 44,
+      "INVALID_BID_ASK_OR_SPREAD": 36,
+      "REVERSAL_OR_EXHAUSTION": 36,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 12,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     }
   },
   "findings": [
-    "At 2026-11-11T05:14:06.416Z, source remained 2026-11-11T01:26:12Z (13674s old). Collector-reported 65/68 usable, five-frame pairs; this review independently fetched 12 leading shards, all status OK. Remaining 53 shards were not rechecked in this review; prior receipt had checked 65/65.",
-    "Canonical historical admission: 130 rejected routes, zero active or admitted; signals.json empty. WAIT, not a fresh market determination.",
-    "Collection attempt 42938882448 recorded COLLECTED; monitoring_health PARTIAL. Public repository publication last recorded for 2026-11-10T23:14:36Z; actual served feed not independently verified.",
-    "Macro receipt dated 2026-11-10T08:05:50Z; machine news LIMITED/UNAVAILABLE for some pairs. Quiet London hours: no recovery and no routine user delivery."
+    "Latest collected source 2026-11-11T06:04:17Z; collector reported 65 of 68 quoted tradeable pairs with five-frame data; three TRY instruments non-tradeable. Twelve named pair shards independently read, 53 not rechecked in this run.",
+    "Current canonical admission evaluated 2026-11-11T06:04:31.630258Z: all 130 routes rejected; signals.json empty. WAIT; no simulated entry, fill or exit established.",
+    "Collection attempt 42969794432 COLLECTED with no request failures; monitoring_health full_collection_status PARTIAL and persistence PENDING_AT_DIAGNOSTIC_CAPTURE. Dashboard repository publication recorded at 06:04:58Z for source 06:04:17Z, but actual served GitHub Pages feed not independently verified.",
+    "Macro role receipt remains dated 2026-11-10T08:05:50Z and machine news coverage LIMITED for sampled pairs. Outside active London session: no recovery requested and no routine notification."
   ],
   "blockers": [
-    "Stale full market observation outside active London session; no recovery requested.",
-    "53 of 65 pair shards not independently rechecked in this run; collector coverage is reported, not fully verified.",
-    "Large summary.json and latest.json returned empty content despite nonempty blob SHAs; actual bytes not retrieved.",
-    "Actual served dashboard feed not verified.",
-    "Macro receipt outdated and news coverage incomplete.",
-    "Source persistence commit remains unverified; source_commit reflects workflow head SHA."
+    "Only 12/65 usable pair shards independently inspected this run; reported all-pair coverage not independently reverified.",
+    "data/summary.json and data/latest.json returned empty contents despite nonempty SHA; actual bytes unavailable via connected fetch_file.",
+    "Actual served public dashboard feed not verified; repository publication alone is insufficient.",
+    "Macro receipt outdated and news coverage LIMITED; collector persistence completion unverified."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -49,18 +45,16 @@
     "data/universe.json",
     "data/collection_attempt.json",
     "data/monitoring_health.json",
-    "data/summary.json",
-    "data/latest.json",
     "data/signal_admission_audit.json",
     "signals.json",
     "data/hourly_assessment.json",
     "data/task_runs/macro_events.json",
     "data/news_latest.json",
     "data/public_dashboard_status.json",
-    "data/pairs/{12 leading pair shards}.json"
+    "data/pairs/{AUD_CAD,GBP_USD,EUR_USD,USD_JPY,EUR_CAD,EUR_JPY,USD_CAD,AUD_JPY,NZD_CAD,CAD_SGD,GBP_JPY,AUD_NZD}.json"
   ],
   "run_ids": [
-    "42938882448"
+    "42969794432"
   ],
   "no_broker_orders": true
 }
