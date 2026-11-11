@@ -2,62 +2,61 @@
   "active_canonical_plans": 0,
   "admission": {
     "rejected": {
-      "FOUR_FRAME_TREND_CONFLICT": 32,
-      "INVALID_BID_ASK_OR_SPREAD": 18,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
-      "REVERSAL_OR_EXHAUSTION": 82,
+      "FOUR_FRAME_TREND_CONFLICT": 19,
+      "INVALID_BID_ASK_OR_SPREAD": 14,
+      "REVERSAL_OR_EXHAUSTION": 93,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 6,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-11-11T13:21:38Z",
+    "source_at": "2026-11-11T14:10:54Z",
     "status": "NO_QUALIFIED_CONDITIONAL_PLAN"
   },
-  "checked_at": "2026-11-11T13:22:35.857523+00:00",
+  "checked_at": "2026-11-11T14:11:50.657562+00:00",
   "fast_pair_clocks": {
-    "AUD_CHF": {
-      "age_seconds": 39.2,
-      "at": "2026-11-11T13:21:56.703467846Z",
+    "CHF_JPY": {
+      "age_seconds": 37.8,
+      "at": "2026-11-11T14:11:12.867018330Z",
       "status": "CURRENT"
     },
-    "AUD_HKD": {
-      "age_seconds": 41.5,
-      "at": "2026-11-11T13:21:54.332308712Z",
+    "EUR_CHF": {
+      "age_seconds": 35.9,
+      "at": "2026-11-11T14:11:14.728179107Z",
       "status": "CURRENT"
     },
-    "CAD_JPY": {
-      "age_seconds": 39.2,
-      "at": "2026-11-11T13:21:56.673077969Z",
+    "EUR_GBP": {
+      "age_seconds": 32.7,
+      "at": "2026-11-11T14:11:17.912910663Z",
       "status": "CURRENT"
     },
-    "CHF_ZAR": {
-      "age_seconds": 39.4,
-      "at": "2026-11-11T13:21:56.463352528Z",
+    "EUR_PLN": {
+      "age_seconds": 35.6,
+      "at": "2026-11-11T14:11:15.063772635Z",
       "status": "CURRENT"
     },
-    "EUR_CAD": {
-      "age_seconds": 39.9,
-      "at": "2026-11-11T13:21:55.950177230Z",
+    "GBP_PLN": {
+      "age_seconds": 37.5,
+      "at": "2026-11-11T14:11:13.141377477Z",
       "status": "CURRENT"
     },
-    "EUR_NOK": {
-      "age_seconds": 39.8,
-      "at": "2026-11-11T13:21:56.029802222Z",
+    "NZD_JPY": {
+      "age_seconds": 37.5,
+      "at": "2026-11-11T14:11:13.141170693Z",
       "status": "CURRENT"
     },
-    "GBP_CHF": {
-      "age_seconds": 41.4,
-      "at": "2026-11-11T13:21:54.411887836Z",
+    "USD_NOK": {
+      "age_seconds": 37.4,
+      "at": "2026-11-11T14:11:13.251371346Z",
       "status": "CURRENT"
     },
-    "SGD_JPY": {
-      "age_seconds": 39.2,
-      "at": "2026-11-11T13:21:56.680930153Z",
+    "USD_THB": {
+      "age_seconds": 118.7,
+      "at": "2026-11-11T14:09:51.979596884Z",
       "status": "CURRENT"
     }
   },
   "full_source": {
-    "age_seconds": 57.9,
-    "at": "2026-11-11T13:21:38Z",
+    "age_seconds": 56.7,
+    "at": "2026-11-11T14:10:54Z",
     "status": "CURRENT"
   },
   "no_broker_orders": true,
@@ -99,12 +98,12 @@
   "publication": {
     "note": "A verified fast publication may legitimately differ; validate fast pair clocks and exporter provenance separately.",
     "same_full_source": true,
-    "snapshot_at": "2026-11-11T13:21:38Z",
+    "snapshot_at": "2026-11-11T14:10:54Z",
     "status": "PUBLISHED"
   },
   "quote_coverage": {
-    "current": 68,
-    "reported": 68,
+    "current": 67,
+    "reported": 67,
     "stale_or_invalid": []
   },
   "roles": [
@@ -119,7 +118,7 @@
       ],
       "completed_at": "2026-11-11T13:08:10Z",
       "completion_clock": {
-        "age_seconds": 865.9,
+        "age_seconds": 3820.7,
         "at": "2026-11-11T13:08:10Z",
         "status": "CURRENT"
       },
@@ -127,7 +126,7 @@
       "receipt": "data/task_runs/macro_events.json",
       "role": "macro_events",
       "source_clock": {
-        "age_seconds": 4194.9,
+        "age_seconds": 7149.7,
         "at": "2026-11-11T12:12:41Z",
         "status": "STALE"
       },
@@ -136,23 +135,23 @@
     },
     {
       "blockers": [
-        "Source older than 20 minutes in active London session; recovery outcome not yet verified.",
-        "Individual data/pairs/*.json shards not independently inspected; summary-level coverage only.",
-        "Public served feed not verified; macro receipt at 09:02Z and machine news coverage limited/partial.",
-        "No Actions run ID linked to recovery request independently verified."
+        "Full source stale beyond 20/25-minute thresholds; recovery outcome pending.",
+        "56 individual pair shards not independently checked.",
+        "Actual public served feed unverified; machine news_latest status PARTIAL.",
+        "No specific Actions run ID yet verified for sequence 213."
       ],
-      "completed_at": "2026-11-11T12:13:15.903Z",
+      "completed_at": "2026-11-11T13:21:29.527Z",
       "completion_clock": {
-        "age_seconds": 4160.0,
-        "at": "2026-11-11T12:13:15.903Z",
+        "age_seconds": 3021.1,
+        "at": "2026-11-11T13:21:29.527Z",
         "status": "CURRENT"
       },
       "minute": 15,
       "receipt": "data/task_runs/market_scan.json",
       "role": "market_scan",
       "source_clock": {
-        "age_seconds": 10984.9,
-        "at": "2026-11-11T10:19:31Z",
+        "age_seconds": 7149.7,
+        "at": "2026-11-11T12:12:41Z",
         "status": "STALE"
       },
       "status": "PARTIAL",
@@ -160,49 +159,47 @@
     },
     {
       "blockers": [
-        "data/paper_trade_ledger.json and data/strategy_comparison.json have nonempty current blob SHAs but returned no readable content through authenticated file reads; direct blob reads ended with a closed transport.",
-        "The current EUR_USD plan remains untriggered; no separate later executable-side fill exists, so no stop, target, time-exit or profit-protection outcome can be scored.",
-        "No independently scored forward entry exists for the fixed-versus-profit-protection study.",
-        "Pepperstone fills, funding, commissions, swap, account equity and user-delivery receipt remain unverified and were not inferred."
+        "data/paper_trade_ledger.json and data/strategy_comparison.json remained unreadable through both authenticated file and blob reads despite nonempty current SHAs.",
+        "No current simulated entry exists, so stop/TP/expiry/time-exit and fixed-versus-profit-protection chronology cannot produce a new paired outcome.",
+        "Actual broker fills, commissions, funding, account equity and user-delivery receipt remain unverified and were not inferred."
       ],
-      "completed_at": "2026-11-11T08:33:32Z",
+      "completed_at": "2026-11-11T13:33:46.059Z",
       "completion_clock": {
-        "age_seconds": 17343.9,
-        "at": "2026-11-11T08:33:32Z",
-        "status": "STALE"
+        "age_seconds": 2284.6,
+        "at": "2026-11-11T13:33:46.059Z",
+        "status": "CURRENT"
       },
       "minute": 30,
       "receipt": "data/task_runs/position_monitor.json",
       "role": "position_monitor",
       "source_clock": {
-        "age_seconds": 18512.2,
-        "at": "2026-11-11T08:14:03.678187Z",
+        "age_seconds": 3012.7,
+        "at": "2026-11-11T13:21:38Z",
         "status": "STALE"
       },
-      "status": "STALE_RECEIPT",
+      "status": "PARTIAL",
       "task_id": "6ad73063edc8819180df9ee118759289"
     },
     {
       "blockers": [
-        "The full 12:12:41Z research source was 1,868 seconds old at completion, beyond the protocol's 25-minute limit; this role cannot request recovery.",
-        "data/news_latest.json remained PARTIAL and BLS employment/inflation sources were unavailable; no machine clearance was altered.",
-        "The macro_events receipt was complete for its earlier run but its observed market-source clock predates the current snapshot.",
-        "data/entry_opportunity_ledger.json had a nonempty current SHA but returned no parseable content through authenticated fetch_file.",
-        "No reviewed setup had both a newly completed trigger and current cost/news/expiry evidence sufficient for a new prospective registration.",
-        "No Pepperstone quote, spread, commission, account equity, broker fill or user-delivery receipt was accessed or inferred."
+        "data/entry_opportunity_ledger.json@95f2722fc1dba6e82efee6824bf69d0ba08771b3 returned no readable content, preventing independent parsing of its complete duplicate set.",
+        "data/summary.json and data/latest.json returned no readable content through authenticated fetch_file; current public payload, admission audit and 13 direct pair shards were used instead.",
+        "data/news_latest.json remained PARTIAL because BLS employment and inflation sources were unavailable; no machine clearance was altered.",
+        "No reviewed setup combined a new completed trigger with registered spread, macro, stop/target and expiry economics sufficient for prospective append.",
+        "No broker quote, order, fill, commission, account equity or user-delivery receipt was accessed or inferred."
       ],
-      "completed_at": "2026-11-11T12:43:49Z",
+      "completed_at": "2026-11-11T13:40:04.958Z",
       "completion_clock": {
-        "age_seconds": 2326.9,
-        "at": "2026-11-11T12:43:49Z",
+        "age_seconds": 1905.7,
+        "at": "2026-11-11T13:40:04.958Z",
         "status": "CURRENT"
       },
       "minute": 40,
       "receipt": "data/task_runs/candidate_review.json",
       "role": "candidate_review",
       "source_clock": {
-        "age_seconds": 4194.9,
-        "at": "2026-11-11T12:12:41Z",
+        "age_seconds": 3012.7,
+        "at": "2026-11-11T13:21:38Z",
         "status": "STALE"
       },
       "status": "PARTIAL",
@@ -210,24 +207,24 @@
     },
     {
       "blockers": [
-        "data/paper_trade_ledger.json@c1d2873d5c65ed8a5ed9e513db4181acf6bb642e and data/strategy_comparison.json@d19024f0f074b7c12db9f0647f18da61d60be5bf returned zero readable bytes through authenticated fetch_file; a direct authenticated fetch_blob for the paper ledger failed with Transport closed. Full raw paper/strategy ID reconciliation is therefore incomplete.",
-        "data/entry_opportunity_ledger.json@e38f08def44f752288694661a6de8bdd6da2369d returned zero parseable bytes, so private opportunity ID-level coverage is incomplete.",
-        "data/scheduled_task_health.json@3a23248f7f4f4e300ab4cd908d5c561a149cc102 predates the current market_scan, candidate_review and evidence_audit receipts; current five-role health is not established.",
-        "The full market source was 2321 seconds old at completion, beyond the 25-minute full-research threshold; evidence_audit is not authorised to request recovery.",
+        "data/paper_trade_ledger.json@6d46276ca23efb30788f82a8b2c744654dd19461 and data/strategy_comparison.json@1a6fc1cc2ed6b228a204f06c58c26c12dea6555a returned no readable file content and direct authenticated blob reads ended with Transport closed; full raw paper/strategy ID reconciliation remains incomplete.",
+        "data/scheduled_task_health.json@7250e59264e978d4b46839cf8d232546941f0181 predates three current peer receipts and does not yet establish current five-role health.",
+        "macro_events and market_scan receipts remain tied to the pre-recovery 12:12:41Z source; evidence_audit cannot mark them complete.",
+        "The 13:21:38Z full source exceeded the locked 25-minute full-research threshold before this audit completed; evidence_audit does not own recovery.",
         "Actual GitHub Pages HTTP delivery, user delivery, Pepperstone fills, commission, swap, funding, account equity and independently scored v21 exits remain unverified."
       ],
-      "completed_at": "2026-11-11T12:51:22Z",
+      "completed_at": "2026-11-11T13:57:28.069Z",
       "completion_clock": {
-        "age_seconds": 1873.9,
-        "at": "2026-11-11T12:51:22Z",
+        "age_seconds": 862.6,
+        "at": "2026-11-11T13:57:28.069Z",
         "status": "CURRENT"
       },
       "minute": 50,
       "receipt": "data/task_runs/evidence_audit.json",
       "role": "evidence_audit",
       "source_clock": {
-        "age_seconds": 4194.9,
-        "at": "2026-11-11T12:12:41Z",
+        "age_seconds": 3012.7,
+        "at": "2026-11-11T13:21:38Z",
         "status": "STALE"
       },
       "status": "PARTIAL",

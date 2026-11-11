@@ -1277,7 +1277,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_SGD-92d976653127cbcc9614c2d8e2555c45d5a832f676910e32b9e34dd70a714251.json",
+      "source_evidence": "data/replay_evidence/EUR_SGD-cf6b1d7e299322275f1bbd6042a4f53e4ddf4acd6e9132c9d7a560cd01360eeb.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1290,7 +1290,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_PLN-9603578f795e6ee99a3a2bc9c501a103d6fd8f1d678b8b36a7fec8a45f772703.json",
+      "source_evidence": "data/replay_evidence/USD_PLN-127c3dc325d5107b8a0b63f5b375ae422f51843a906f69d21815b3b4e22c8644.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1303,7 +1303,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_SGD-e84bc05d844e5607628eb99bcd01aab6e3d7e19c1d2e362e04ace739e30cf90e.json",
+      "source_evidence": "data/replay_evidence/EUR_SGD-75334186b6cc836c55d1c14d4474ae4dd2901fb0cc71e97e15fb2582db43f60f.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1412,7 +1412,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_PLN-4182fbc9f913449888ac6d41e4ea32d689702cf01c6e4de45a139e9319794721.json",
+      "source_evidence": "data/replay_evidence/USD_PLN-fe71a04e08e541cab79d7232fc953e84d480ac82f13b510fa6fad3329ab6b6c6.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -2192,20 +2192,22 @@
       "pattern_at": "2026-11-11T11:00:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_NOK-166bedb9a576883072a888cce02428d3c98c1b70b7edc710f9d1cc00fe7d7112.json",
+      "source_evidence": "data/replay_evidence/USD_NOK-bf70cb8cc8c59a809cb1a6a125fde45c6008b4ad05485f9ccf0354d7a09203c7.json",
       "status": "PAPER_WAITING_FOR_ENTRY",
       "trade_executed": false
     },
     "202611111145-EURNOK-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
+      "fill_at": "2026-11-11T13:30:00Z",
       "id": "202611111145-EURNOK-LONG-EMA20_PULLBACK",
       "instrument": "EUR_NOK",
       "pattern_at": "2026-11-11T13:15:00+00:00",
+      "reason": "Fill and exit level appear in same OHLC bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_NOK-f46754b516c173499e136cb612c48daa824b97119bf6f95a5631ff89ab9c2b6d.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/EUR_NOK-91e0d114925d01bef73f457ca5919b8d7304e442acb04e3b67b7f0e081aa6675.json",
+      "status": "PAPER_AMBIGUOUS_FILL_BAR",
       "trade_executed": false
     }
   },
@@ -2247,10 +2249,10 @@
   "today_registered": 6,
   "today_scored_hypothetical_entries": 0,
   "today_status_counts": {
-    "PAPER_NO_CONTIGUOUS_CANDLES": 1,
+    "PAPER_AMBIGUOUS_FILL_BAR": 1,
     "PAPER_PRE_ENTRY_INVALIDATED": 1,
     "PAPER_WAITING_FOR_ENTRY": 1
   },
   "today_uk": "2026-11-11",
-  "updated_at": "2026-11-11T13:21:49Z"
+  "updated_at": "2026-11-11T14:11:04Z"
 }
