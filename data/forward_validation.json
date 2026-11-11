@@ -38,33 +38,43 @@
   "automatic_promotion_allowed": false,
   "coverage": {
     "count_note": "Rejection categories overlap; route counts and per-reason pair counts must not be summed into independent trades.",
-    "deep_pairs": 68,
-    "distinct_evaluated_pairs": 68,
+    "deep_pairs": 36,
+    "distinct_evaluated_pairs": 50,
     "distinct_pairs_by_rejection": {
       "FOUR_FRAME_TREND_CONFLICT": 8,
-      "INVALID_BID_ASK_OR_SPREAD": 4,
-      "REVERSAL_OR_EXHAUSTION": 57,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 3,
+      "INVALID_BID_ASK_OR_SPREAD": 7,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 3,
+      "RECENT_MATERIAL_HEADLINE_REVIEW": 1,
+      "REQUIRED_FRAME_HISTORY_MISSING:D": 4,
+      "REVERSAL_OR_EXHAUSTION": 34,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
     "paper_prequalified": [
+      "CAD_HKD",
       "CHF_JPY",
-      "NZD_CHF"
+      "NZD_CHF",
+      "USD_CAD"
     ],
     "paper_prequalified_missing_deep": [],
-    "quoted_pairs": 68,
-    "route_evaluations": 136,
+    "quoted_pairs": 50,
+    "route_evaluations": 100,
     "route_rejections": {
-      "FOUR_FRAME_TREND_CONFLICT": 14,
-      "INVALID_BID_ASK_OR_SPREAD": 6,
-      "REVERSAL_OR_EXHAUSTION": 109,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 5,
+      "FOUR_FRAME_TREND_CONFLICT": 13,
+      "INVALID_BID_ASK_OR_SPREAD": 13,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 3,
+      "RECENT_MATERIAL_HEADLINE_REVIEW": 1,
+      "REQUIRED_FRAME_HISTORY_MISSING:D": 6,
+      "REVERSAL_OR_EXHAUSTION": 61,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-11-11T14:26:53Z",
+    "source_at": "2026-11-11T15:13:31Z",
     "strict_prequalified": [
-      "CHF_JPY"
+      "CAD_HKD",
+      "CHF_JPY",
+      "USD_CAD"
     ],
     "strict_prequalified_missing_deep": []
   },
@@ -91,5 +101,5 @@
     "statistical_improvement_established": false
   },
   "status": "COLLECTING_HOLDOUT",
-  "updated_at": "2026-11-11T14:50:49.699996+00:00"
+  "updated_at": "2026-11-11T15:13:52.418292+00:00"
 }
