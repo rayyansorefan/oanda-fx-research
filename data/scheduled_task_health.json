@@ -1,62 +1,64 @@
 {
-  "active_canonical_plans": 0,
+  "active_canonical_plans": 1,
   "admission": {
     "rejected": {
-      "FOUR_FRAME_TREND_CONFLICT": 44,
-      "INVALID_BID_ASK_OR_SPREAD": 36,
-      "REVERSAL_OR_EXHAUSTION": 36,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 12,
+      "FOUR_FRAME_TREND_CONFLICT": 35,
+      "INVALID_BID_ASK_OR_SPREAD": 30,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 2,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 3,
+      "REVERSAL_OR_EXHAUSTION": 49,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 14,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-11-11T06:04:17Z",
-    "status": "NO_QUALIFIED_CONDITIONAL_PLAN"
+    "source_at": "2026-11-11T07:19:17Z",
+    "status": "RESEARCH_PLANS_FROZEN"
   },
-  "checked_at": "2026-11-11T06:04:58.714916+00:00",
+  "checked_at": "2026-11-11T07:20:06.675731+00:00",
   "fast_pair_clocks": {
-    "AUD_NZD": {
-      "age_seconds": 28198.0,
-      "at": "2026-11-10T22:15:00.699994249Z",
-      "status": "STALE"
+    "EUR_HKD": {
+      "age_seconds": 32.8,
+      "at": "2026-11-11T07:19:33.869239636Z",
+      "status": "CURRENT"
     },
-    "CHF_HKD": {
-      "age_seconds": 28198.4,
-      "at": "2026-11-10T22:15:00.323860733Z",
-      "status": "STALE"
-    },
-    "EUR_GBP": {
-      "age_seconds": 28195.4,
-      "at": "2026-11-10T22:15:03.265986247Z",
-      "status": "STALE"
-    },
-    "EUR_JPY": {
-      "age_seconds": 28198.6,
-      "at": "2026-11-10T22:15:00.124601906Z",
-      "status": "STALE"
+    "EUR_TRY": {
+      "age_seconds": 32.8,
+      "at": "2026-11-11T07:19:33.865585586Z",
+      "status": "CURRENT"
     },
     "EUR_USD": {
-      "age_seconds": 28198.6,
-      "at": "2026-11-10T22:15:00.074110218Z",
-      "status": "STALE"
+      "age_seconds": 32.8,
+      "at": "2026-11-11T07:19:33.888306489Z",
+      "status": "CURRENT"
     },
-    "GBP_JPY": {
-      "age_seconds": 28194.1,
-      "at": "2026-11-10T22:15:04.638245000Z",
-      "status": "STALE"
+    "GBP_HKD": {
+      "age_seconds": 32.8,
+      "at": "2026-11-11T07:19:33.846044008Z",
+      "status": "CURRENT"
     },
-    "USD_CZK": {
-      "age_seconds": 28194.4,
-      "at": "2026-11-10T22:15:04.318851566Z",
-      "status": "STALE"
+    "HKD_JPY": {
+      "age_seconds": 32.8,
+      "at": "2026-11-11T07:19:33.896097745Z",
+      "status": "CURRENT"
     },
-    "USD_SEK": {
-      "age_seconds": 28195.6,
-      "at": "2026-11-10T22:15:03.144986505Z",
-      "status": "STALE"
+    "USD_CAD": {
+      "age_seconds": 36.9,
+      "at": "2026-11-11T07:19:29.773331049Z",
+      "status": "CURRENT"
+    },
+    "USD_HKD": {
+      "age_seconds": 74.5,
+      "at": "2026-11-11T07:18:52.214733568Z",
+      "status": "CURRENT"
+    },
+    "USD_HUF": {
+      "age_seconds": 32.6,
+      "at": "2026-11-11T07:19:34.076540995Z",
+      "status": "CURRENT"
     }
   },
   "full_source": {
-    "age_seconds": 41.7,
-    "at": "2026-11-11T06:04:17Z",
+    "age_seconds": 49.7,
+    "at": "2026-11-11T07:19:17Z",
     "status": "CURRENT"
   },
   "no_broker_orders": true,
@@ -98,12 +100,12 @@
   "publication": {
     "note": "A verified fast publication may legitimately differ; validate fast pair clocks and exporter provenance separately.",
     "same_full_source": true,
-    "snapshot_at": "2026-11-11T06:04:17Z",
+    "snapshot_at": "2026-11-11T07:19:17Z",
     "status": "PUBLISHED"
   },
   "quote_coverage": {
-    "current": 65,
-    "reported": 65,
+    "current": 68,
+    "reported": 68,
     "stale_or_invalid": []
   },
   "roles": [
@@ -116,7 +118,7 @@
       ],
       "completed_at": "2026-11-10T08:05:50Z",
       "completion_clock": {
-        "age_seconds": 79148.7,
+        "age_seconds": 83656.7,
         "at": "2026-11-10T08:05:50Z",
         "status": "STALE"
       },
@@ -124,7 +126,7 @@
       "receipt": "data/task_runs/macro_events.json",
       "role": "macro_events",
       "source_clock": {
-        "age_seconds": 81923.7,
+        "age_seconds": 86431.7,
         "at": "2026-11-10T07:19:35Z",
         "status": "STALE"
       },
@@ -133,25 +135,23 @@
     },
     {
       "blockers": [
-        "Stale full market observation outside active London session; no recovery requested.",
-        "53 of 65 pair shards not independently rechecked in this run; collector coverage is reported, not fully verified.",
-        "Large summary.json and latest.json returned empty content despite nonempty blob SHAs; actual bytes not retrieved.",
-        "Actual served dashboard feed not verified.",
-        "Macro receipt outdated and news coverage incomplete.",
-        "Source persistence commit remains unverified; source_commit reflects workflow head SHA."
+        "Only 12/65 usable pair shards independently inspected this run; reported all-pair coverage not independently reverified.",
+        "data/summary.json and data/latest.json returned empty contents despite nonempty SHA; actual bytes unavailable via connected fetch_file.",
+        "Actual served public dashboard feed not verified; repository publication alone is insufficient.",
+        "Macro receipt outdated and news coverage LIMITED; collector persistence completion unverified."
       ],
-      "completed_at": "2026-11-11T05:14:06.416Z",
+      "completed_at": "2026-11-11T06:18:17.121Z",
       "completion_clock": {
-        "age_seconds": 3052.3,
-        "at": "2026-11-11T05:14:06.416Z",
+        "age_seconds": 3709.6,
+        "at": "2026-11-11T06:18:17.121Z",
         "status": "CURRENT"
       },
       "minute": 15,
       "receipt": "data/task_runs/market_scan.json",
       "role": "market_scan",
       "source_clock": {
-        "age_seconds": 16726.7,
-        "at": "2026-11-11T01:26:12Z",
+        "age_seconds": 4549.7,
+        "at": "2026-11-11T06:04:17Z",
         "status": "STALE"
       },
       "status": "PARTIAL",
@@ -166,7 +166,7 @@
       ],
       "completed_at": "2026-11-10T08:31:11Z",
       "completion_clock": {
-        "age_seconds": 77627.7,
+        "age_seconds": 82135.7,
         "at": "2026-11-10T08:31:11Z",
         "status": "STALE"
       },
@@ -174,7 +174,7 @@
       "receipt": "data/task_runs/position_monitor.json",
       "role": "position_monitor",
       "source_clock": {
-        "age_seconds": 78357.7,
+        "age_seconds": 82865.7,
         "at": "2026-11-10T08:19:01Z",
         "status": "STALE"
       },
@@ -192,7 +192,7 @@
       ],
       "completed_at": "2026-11-10T07:38:29Z",
       "completion_clock": {
-        "age_seconds": 80789.7,
+        "age_seconds": 85297.7,
         "at": "2026-11-10T07:38:29Z",
         "status": "STALE"
       },
@@ -200,7 +200,7 @@
       "receipt": "data/task_runs/candidate_review.json",
       "role": "candidate_review",
       "source_clock": {
-        "age_seconds": 81923.7,
+        "age_seconds": 86431.7,
         "at": "2026-11-10T07:19:35Z",
         "status": "STALE"
       },
@@ -217,7 +217,7 @@
       ],
       "completed_at": "2026-11-10T07:49:24Z",
       "completion_clock": {
-        "age_seconds": 80134.7,
+        "age_seconds": 84642.7,
         "at": "2026-11-10T07:49:24Z",
         "status": "STALE"
       },
@@ -225,7 +225,7 @@
       "receipt": "data/task_runs/evidence_audit.json",
       "role": "evidence_audit",
       "source_clock": {
-        "age_seconds": 81923.7,
+        "age_seconds": 86431.7,
         "at": "2026-11-10T07:19:35Z",
         "status": "STALE"
       },
