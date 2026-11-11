@@ -2,61 +2,61 @@
   "active_canonical_plans": 0,
   "admission": {
     "rejected": {
-      "FOUR_FRAME_TREND_CONFLICT": 19,
-      "INVALID_BID_ASK_OR_SPREAD": 14,
-      "REVERSAL_OR_EXHAUSTION": 93,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 6,
+      "FOUR_FRAME_TREND_CONFLICT": 14,
+      "INVALID_BID_ASK_OR_SPREAD": 6,
+      "REVERSAL_OR_EXHAUSTION": 109,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 5,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-11-11T14:10:54Z",
+    "source_at": "2026-11-11T14:26:53Z",
     "status": "NO_QUALIFIED_CONDITIONAL_PLAN"
   },
-  "checked_at": "2026-11-11T14:11:50.657562+00:00",
+  "checked_at": "2026-11-11T14:27:56.576116+00:00",
   "fast_pair_clocks": {
     "CHF_JPY": {
-      "age_seconds": 37.8,
-      "at": "2026-11-11T14:11:12.867018330Z",
+      "age_seconds": 39.1,
+      "at": "2026-11-11T14:27:17.465270806Z",
       "status": "CURRENT"
     },
-    "EUR_CHF": {
-      "age_seconds": 35.9,
-      "at": "2026-11-11T14:11:14.728179107Z",
+    "CHF_ZAR": {
+      "age_seconds": 44.7,
+      "at": "2026-11-11T14:27:11.840894045Z",
+      "status": "CURRENT"
+    },
+    "EUR_CAD": {
+      "age_seconds": 39.2,
+      "at": "2026-11-11T14:27:17.382932078Z",
       "status": "CURRENT"
     },
     "EUR_GBP": {
-      "age_seconds": 32.7,
-      "at": "2026-11-11T14:11:17.912910663Z",
+      "age_seconds": 39.4,
+      "at": "2026-11-11T14:27:17.156123253Z",
       "status": "CURRENT"
     },
-    "EUR_PLN": {
-      "age_seconds": 35.6,
-      "at": "2026-11-11T14:11:15.063772635Z",
+    "GBP_NZD": {
+      "age_seconds": 39.4,
+      "at": "2026-11-11T14:27:17.215712164Z",
       "status": "CURRENT"
     },
-    "GBP_PLN": {
-      "age_seconds": 37.5,
-      "at": "2026-11-11T14:11:13.141377477Z",
+    "NZD_CHF": {
+      "age_seconds": 44.7,
+      "at": "2026-11-11T14:27:11.870311073Z",
       "status": "CURRENT"
     },
     "NZD_JPY": {
-      "age_seconds": 37.5,
-      "at": "2026-11-11T14:11:13.141170693Z",
+      "age_seconds": 39.1,
+      "at": "2026-11-11T14:27:17.469315841Z",
       "status": "CURRENT"
     },
-    "USD_NOK": {
-      "age_seconds": 37.4,
-      "at": "2026-11-11T14:11:13.251371346Z",
-      "status": "CURRENT"
-    },
-    "USD_THB": {
-      "age_seconds": 118.7,
-      "at": "2026-11-11T14:09:51.979596884Z",
+    "USD_MXN": {
+      "age_seconds": 39.3,
+      "at": "2026-11-11T14:27:17.325602565Z",
       "status": "CURRENT"
     }
   },
   "full_source": {
-    "age_seconds": 56.7,
-    "at": "2026-11-11T14:10:54Z",
+    "age_seconds": 63.6,
+    "at": "2026-11-11T14:26:53Z",
     "status": "CURRENT"
   },
   "no_broker_orders": true,
@@ -98,36 +98,35 @@
   "publication": {
     "note": "A verified fast publication may legitimately differ; validate fast pair clocks and exporter provenance separately.",
     "same_full_source": true,
-    "snapshot_at": "2026-11-11T14:10:54Z",
+    "snapshot_at": "2026-11-11T14:26:53Z",
     "status": "PUBLISHED"
   },
   "quote_coverage": {
-    "current": 67,
-    "reported": 67,
+    "current": 68,
+    "reported": 68,
     "stale_or_invalid": []
   },
   "roles": [
     {
       "blockers": [
-        "The full market source was 3329 seconds old at completion, beyond the locked 25-minute full-research threshold; macro_events does not own recovery and did not claim current trade clearance.",
-        "data/news_latest.json remains PARTIAL; BLS employment and inflation machine sources were unavailable, and no machine news clearance was changed.",
-        "The 12 November DOL weekly-claims instance was not exposed on a dated official page; only the normal Thursday 08:30 ET cadence is retained as qualified.",
-        "ECB Economic Bulletin, Eurostat, Hong Kong, Singapore and some CBRT calendars provide dates without independently verified release clocks.",
-        "BOJ JGB-holdings and T-bill-purchase releases are scheduled only as around 17:00 JST.",
+        "The full market source was 2992 seconds old at completion, beyond the locked 25-minute full-research threshold; macro_events does not own recovery and did not claim current trade clearance.",
+        "data/news_latest.json remains PARTIAL; machine BLS employment and inflation sources were unavailable, and no machine news clearance was changed.",
+        "A dated primary DOL page for the 12 November weekly-claims instance was not independently exposed, so the normal Thursday cadence was not counted as a verified event.",
+        "ECB Bulletin, Eurostat, Hong Kong, Singapore and two CBRT releases provide official dates without independently verified publication clocks.",
         "No Pepperstone quote, costs, fills, account equity, broker state or user-delivery receipt was accessed or inferred."
       ],
-      "completed_at": "2026-11-11T13:08:10Z",
+      "completed_at": "2026-11-11T14:11:30.604Z",
       "completion_clock": {
-        "age_seconds": 3820.7,
-        "at": "2026-11-11T13:08:10Z",
+        "age_seconds": 986.0,
+        "at": "2026-11-11T14:11:30.604Z",
         "status": "CURRENT"
       },
       "minute": 5,
       "receipt": "data/task_runs/macro_events.json",
       "role": "macro_events",
       "source_clock": {
-        "age_seconds": 7149.7,
-        "at": "2026-11-11T12:12:41Z",
+        "age_seconds": 3978.6,
+        "at": "2026-11-11T13:21:38Z",
         "status": "STALE"
       },
       "status": "PARTIAL",
@@ -135,24 +134,23 @@
     },
     {
       "blockers": [
-        "Full source stale beyond 20/25-minute thresholds; recovery outcome pending.",
-        "56 individual pair shards not independently checked.",
-        "Actual public served feed unverified; machine news_latest status PARTIAL.",
-        "No specific Actions run ID yet verified for sequence 213."
+        "Remaining 55 deep pair shards not independently inspected; one quoted pair USD_CHF lacks full deep context.",
+        "Actual served public dashboard feed not independently verified; collection status PARTIAL due to USD_CHF candles error and machine news coverage incomplete.",
+        "Full independent all-pair shard screening incomplete; cannot mark COMPLETE."
       ],
-      "completed_at": "2026-11-11T13:21:29.527Z",
+      "completed_at": "2026-11-11T14:12:58.960Z",
       "completion_clock": {
-        "age_seconds": 3021.1,
-        "at": "2026-11-11T13:21:29.527Z",
+        "age_seconds": 897.6,
+        "at": "2026-11-11T14:12:58.960Z",
         "status": "CURRENT"
       },
       "minute": 15,
       "receipt": "data/task_runs/market_scan.json",
       "role": "market_scan",
       "source_clock": {
-        "age_seconds": 7149.7,
-        "at": "2026-11-11T12:12:41Z",
-        "status": "STALE"
+        "age_seconds": 1022.6,
+        "at": "2026-11-11T14:10:54Z",
+        "status": "CURRENT"
       },
       "status": "PARTIAL",
       "task_id": "6ad87aeea2008191a5d2795b4c9343a7"
@@ -165,7 +163,7 @@
       ],
       "completed_at": "2026-11-11T13:33:46.059Z",
       "completion_clock": {
-        "age_seconds": 2284.6,
+        "age_seconds": 3250.5,
         "at": "2026-11-11T13:33:46.059Z",
         "status": "CURRENT"
       },
@@ -173,7 +171,7 @@
       "receipt": "data/task_runs/position_monitor.json",
       "role": "position_monitor",
       "source_clock": {
-        "age_seconds": 3012.7,
+        "age_seconds": 3978.6,
         "at": "2026-11-11T13:21:38Z",
         "status": "STALE"
       },
@@ -190,7 +188,7 @@
       ],
       "completed_at": "2026-11-11T13:40:04.958Z",
       "completion_clock": {
-        "age_seconds": 1905.7,
+        "age_seconds": 2871.6,
         "at": "2026-11-11T13:40:04.958Z",
         "status": "CURRENT"
       },
@@ -198,7 +196,7 @@
       "receipt": "data/task_runs/candidate_review.json",
       "role": "candidate_review",
       "source_clock": {
-        "age_seconds": 3012.7,
+        "age_seconds": 3978.6,
         "at": "2026-11-11T13:21:38Z",
         "status": "STALE"
       },
@@ -215,7 +213,7 @@
       ],
       "completed_at": "2026-11-11T13:57:28.069Z",
       "completion_clock": {
-        "age_seconds": 862.6,
+        "age_seconds": 1828.5,
         "at": "2026-11-11T13:57:28.069Z",
         "status": "CURRENT"
       },
@@ -223,7 +221,7 @@
       "receipt": "data/task_runs/evidence_audit.json",
       "role": "evidence_audit",
       "source_clock": {
-        "age_seconds": 3012.7,
+        "age_seconds": 3978.6,
         "at": "2026-11-11T13:21:38Z",
         "status": "STALE"
       },
