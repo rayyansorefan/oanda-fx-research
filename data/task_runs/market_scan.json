@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T02:13:32Z",
-  "completed_at": "2026-11-11T02:14:03.500Z",
+  "started_at": "2026-11-11T03:18:00Z",
+  "completed_at": "2026-11-11T03:18:35.563Z",
   "source_at": "2026-11-11T01:26:12Z",
   "source_commit": "11de4b89759336e5312319a6f3d4c54c12815e91",
-  "source_age_seconds": 2872,
+  "source_age_seconds": 6744,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs": 65,
@@ -29,19 +29,18 @@
     }
   },
   "findings": [
-    "At 2026-11-11T02:14:03.500Z latest available full source remains 2026-11-11T01:26:12Z (2872s old); reported 65/68 usable quoted and 65 complete five-frame pairs; 3 TRY pairs non-tradeable.",
-    "Canonical admission rejected 130/130 routes; signals.json empty. WAIT is last-known, not fresh executable evidence.",
-    "Twelve current-main pair shards fetched with nonempty contents; all 65 independently inspected is not established.",
-    "Collection_attempt 42938882448 COLLECTED at 01:26:12Z; monitoring_health full_collection_status PARTIAL, and persisted dashboard status still refers to 10 Nov 23:14:36Z snapshot.",
-    "Macro receipt last completed 10 Nov 08:05:50Z; machine news has LIMITED/UNAVAILABLE pair coverage.",
-    "Overnight 23:00-07:00 London: no recovery requested and no user notification."
+    "At 2026-11-11T03:18:35.563Z, last full observed source 2026-11-11T01:26:12Z (6744s old), 65/68 quoted pairs and reported 65 five-frame pairs; EUR_TRY, TRY_JPY, USD_TRY non-tradeable.",
+    "Canonical admission 130 routes rejected, 0 active, signals.json empty; WAIT based on stale source, not current executable evidence.",
+    "Actual contents of data/summary.json and data/latest.json retrieved via blob fallback (nonempty); 12 top ranked pair shards fetched with nonempty contents; all 65 independent shard checks not established.",
+    "Collection_attempt run 42938882448 COLLECTED; monitoring_health status PARTIAL. Published repository snapshot 2026-11-10T23:14:36Z does not establish latest source publication or served feed.",
+    "Macro receipt last completed 2026-11-10T08:05:50Z; machine news LIMITED/UNAVAILABLE for some pairs. Overnight: no full recovery or user notification."
   ],
   "blockers": [
-    "Full source stale for current decisions; no overnight recovery permitted.",
-    "Full independent pair inspection incomplete (12/65); data/summary.json and data/latest.json returned empty contents despite nonempty blob SHAs.",
-    "Latest public dashboard serving and matching latest-source publication unverified.",
-    "Macro receipt outdated; machine news coverage incomplete.",
-    "Source persistence commit after collection not independently verified; recorded source_commit is observed workflow head, not proven persistence commit."
+    "Source stale; recovery forbidden outside active London session.",
+    "Independent pair-shard verification 12/65 only; collector reports full coverage but this is not independent confirmation.",
+    "Actual public served dashboard feed not verified; last recorded published snapshot older than source.",
+    "Macro receipt outdated and machine news coverage incomplete.",
+    "Source persistence commit not independently verified; source_commit is observed workflow head SHA."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -50,26 +49,26 @@
     "data/collection_attempt.json",
     "data/monitoring_health.json",
     "data/universe.json",
+    "data/summary.json",
+    "data/latest.json",
     "data/signal_admission_audit.json",
     "signals.json",
     "data/hourly_assessment.json",
     "data/task_runs/macro_events.json",
     "data/news_latest.json",
     "data/public_dashboard_status.json",
-    "data/summary.json",
-    "data/latest.json",
+    "data/pairs/CAD_SGD.json",
     "data/pairs/USD_CAD.json",
-    "data/pairs/EUR_GBP.json",
-    "data/pairs/AUD_NZD.json",
-    "data/pairs/GBP_USD.json",
+    "data/pairs/EUR_HKD.json",
+    "data/pairs/CHF_HKD.json",
     "data/pairs/EUR_USD.json",
-    "data/pairs/GBP_JPY.json",
-    "data/pairs/AUD_JPY.json",
+    "data/pairs/CAD_HKD.json",
+    "data/pairs/EUR_SGD.json",
+    "data/pairs/GBP_SGD.json",
     "data/pairs/USD_JPY.json",
-    "data/pairs/EUR_CAD.json",
-    "data/pairs/AUD_USD.json",
-    "data/pairs/NZD_USD.json",
-    "data/pairs/USD_CHF.json"
+    "data/pairs/HKD_JPY.json",
+    "data/pairs/USD_DKK.json",
+    "data/pairs/SGD_CHF.json"
   ],
   "run_ids": [
     "42938882448"
