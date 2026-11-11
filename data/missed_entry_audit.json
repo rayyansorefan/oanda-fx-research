@@ -1303,7 +1303,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_SGD-349ac195ba351980aa6988aa8944341715462d95b1ea4b74506d2f1579f4c69b.json",
+      "source_evidence": "data/replay_evidence/EUR_SGD-5d9ddd2cf4fa8fb15e7770532d58346f9abbbb0055e0f4fd0caf1d74270d4066.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -1412,7 +1412,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_PLN-12059cf966631d39e69c3ea4e8ea859951579dc2f1c45deff88ec6de8ad47a10.json",
+      "source_evidence": "data/replay_evidence/USD_PLN-8f5aa45e86337bc1b5edeae8483fd38254b64a854aca075e89c4cf10b84b1d5f.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -2210,16 +2210,42 @@
       "status": "PAPER_AMBIGUOUS_FILL_BAR",
       "trade_executed": false
     },
+    "202611111800-USDSEK-LONG-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "LONG",
+      "id": "202611111800-USDSEK-LONG-EMA20_PULLBACK",
+      "instrument": "USD_SEK",
+      "pattern_at": "2026-11-11T20:45:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/USD_SEK-90ca6cb39d10a804ee3dad436e8e2b373b1a09014872d52f88dc4747075d9f1a.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
+      "trade_executed": false
+    },
+    "202611111845-USDCZK-LONG-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "LONG",
+      "id": "202611111845-USDCZK-LONG-EMA20_PULLBACK",
+      "instrument": "USD_CZK",
+      "pattern_at": "2026-11-11T20:45:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/USD_CZK-8c475703ac78a48799a7c535a7349c39febbf6cc801ba3d2e8414bbfb56c5400.json",
+      "status": "PAPER_WAITING_FOR_ENTRY",
+      "trade_executed": false
+    },
     "202611111845-USDSEK-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
+      "fill_at": "2026-11-11T20:00:00Z",
       "id": "202611111845-USDSEK-LONG-EMA20_PULLBACK",
       "instrument": "USD_SEK",
+      "paper_entry": 9.97497,
       "pattern_at": "2026-11-11T20:00:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_SEK-29cd510ba134d369e97225f3897d3242db515ff792f2f57c252d3d5727dc0e87.json",
-      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
+      "source_evidence": "data/replay_evidence/USD_SEK-da17444461c246c5fb1a890da2192434fc47c4cc7360bfba2c630283d12b3dcf.json",
+      "status": "PAPER_OPEN_UNRESOLVED",
       "trade_executed": false
     }
   },
@@ -2252,9 +2278,25 @@
       },
       {
         "after_alert_fill_verified": false,
+        "detected_at": "2026-11-11T21:12:35.482688+00:00",
+        "detection_delay_minutes": 27.59,
+        "fill_precedes_detection": false,
+        "id": "202611111800-USDSEK-LONG-EMA20_PULLBACK",
+        "pattern_at": "2026-11-11T20:45:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-11T21:12:35.482688+00:00",
+        "detection_delay_minutes": 27.59,
+        "fill_precedes_detection": false,
+        "id": "202611111845-USDCZK-LONG-EMA20_PULLBACK",
+        "pattern_at": "2026-11-11T20:45:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
         "detected_at": "2026-11-11T20:14:56.230516+00:00",
         "detection_delay_minutes": 14.94,
-        "fill_precedes_detection": false,
+        "fill_precedes_detection": true,
         "id": "202611111845-USDSEK-LONG-EMA20_PULLBACK",
         "pattern_at": "2026-11-11T20:00:00+00:00"
       }
@@ -2264,16 +2306,17 @@
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 4,
-  "today_forward_patterns": 4,
+  "today_distinct_pair_pattern_events": 6,
+  "today_forward_patterns": 6,
   "today_registered": 19,
   "today_scored_hypothetical_entries": 0,
   "today_status_counts": {
     "PAPER_AMBIGUOUS_FILL_BAR": 1,
     "PAPER_NOT_FILLED_BEFORE_EXPIRY": 1,
-    "PAPER_NO_CONTIGUOUS_CANDLES": 1,
-    "PAPER_PRE_ENTRY_INVALIDATED": 1
+    "PAPER_OPEN_UNRESOLVED": 1,
+    "PAPER_PRE_ENTRY_INVALIDATED": 1,
+    "PAPER_WAITING_FOR_ENTRY": 2
   },
   "today_uk": "2026-11-11",
-  "updated_at": "2026-11-11T20:14:56Z"
+  "updated_at": "2026-11-11T21:12:35Z"
 }
