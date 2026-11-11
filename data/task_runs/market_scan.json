@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T00:13:32Z",
-  "completed_at": "2026-11-11T00:14:09.669Z",
+  "started_at": "2026-11-11T01:10:40Z",
+  "completed_at": "2026-11-11T01:12:00Z",
   "source_at": "2026-11-10T23:14:36Z",
   "source_commit": "308e186efa810b2ecc31f3728705c958586ea2fe",
-  "source_age_seconds": 3573,
+  "source_age_seconds": 7044,
   "counts": {
     "discovered_pairs": 68,
     "usable_quoted_pairs": 65,
@@ -30,18 +30,18 @@
     }
   },
   "findings": [
-    "Last verified OANDA full source at 2026-11-10T23:14:36Z: 68 discovered, 65 usable quoted, reported five-frame deep coverage 65; EUR_TRY, TRY_JPY and USD_TRY excluded as non-tradeable. Independently inspected twelve current-main pair shards, each with D/H4/H1/M15/M5 keys; remaining 53 not independently inspected.",
-    "Canonical admission evaluated 2026-11-10T23:14:49Z: all 130 routes rejected, zero active/admitted; signals.json empty. WAIT; no completed trigger, paper fill or outcome inferred.",
-    "Collection attempt 42921613190 reports COLLECTED; monitoring health full_collection_status PARTIAL, with source clock retained. Collection run head SHA recorded as source_commit; actual post-collection persistence commit not independently resolved.",
-    "Public repository readback status PUBLISHED for snapshot 2026-11-10T23:14:36Z at 23:15:14Z; actual served GitHub Pages HTTP feed not independently verified.",
-    "Outside active London review session at 00:13 UTC: no full recovery requested; quiet hours, no user notification. Macro receipt last completed 08:05:50Z and news coverage remains limited."
+    "At 01:10-01:12 UTC, last current-main OANDA full observation remained 2026-11-10T23:14:36Z; universe reported 68 discovered, 65 usable quoted, 65 five-frame pairs; 3 TRY pairs nontradeable. No fresh source inferred.",
+    "Twelve current-main pair shards fetched and parsed with actual nonempty contents. Canonical admission evaluated 2026-11-10T23:14:49Z, all 130 routes rejected, zero active; signals.json empty. WAIT is last-known, not a fresh trading decision.",
+    "Collection_attempt 42921613190 COLLECTED; monitoring_health remained PARTIAL. Repository dashboard status PUBLISHED for 23:14:36Z snapshot; HTTP-served public feed not verified.",
+    "data/summary.json and data/latest.json fetch_file returned empty contents despite nonempty blob SHAs; their substantive contents could not be verified in this run.",
+    "Outside active London session and within 23:00-07:00 quiet hours: no full recovery requested and no routine user notification. Macro receipt last completed 2026-11-10T08:05:50Z; machine news coverage incomplete."
   ],
   "blockers": [
-    "All-pair independent shard verification incomplete (12/65).",
-    "Actual HTTP-served dashboard feed unverified; publication status proves repository readback only.",
-    "Macro receipt stale; news coverage limited/unavailable for some currencies.",
-    "Source observation approximately one hour old; outside active London session, no recovery requested.",
-    "Exact post-collection source persistence commit not independently resolved."
+    "Source ~117 minutes old; no current market scan, and no recovery outside active London session.",
+    "Full independent shard coverage incomplete: 12 of 65 inspected; latest summary and latest data not retrieved despite nonempty SHAs.",
+    "Actual served dashboard feed not verified; publication status only proves repository readback.",
+    "Macro receipt stale and news coverage limited; no clearance inferred.",
+    "Source persistence commit beyond collection workflow head not independently verified."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
