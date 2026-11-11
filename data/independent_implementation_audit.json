@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-11T18:22:07.831108+00:00",
+  "checked_at": "2026-11-11T19:12:17.256158+00:00",
   "eur_aud": {
     "active_issues": [],
     "broker_execution_verified": false,
@@ -181,6 +181,18 @@
   "pages_runs": [
     {
       "conclusion": "success",
+      "created_at": "2026-11-11T18:22:31Z",
+      "event": "push",
+      "head_sha": "8a16790da66f215fd84de8226c8313700f9fb427",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/43077153634",
+      "id": 43077153634,
+      "name": "FX HTML dashboard deployment",
+      "run_started_at": "2026-11-11T18:22:31Z",
+      "status": "completed",
+      "updated_at": "2026-11-11T18:22:50Z"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-11-11T17:19:01Z",
       "event": "push",
       "head_sha": "dcb02c75d5307ba491739156ddfd902ae7ca3981",
@@ -286,356 +298,11 @@
       "run_started_at": "2026-11-11T13:22:36Z",
       "status": "completed",
       "updated_at": "2026-11-11T13:23:01Z"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-11-11T12:13:38Z",
-      "event": "push",
-      "head_sha": "5600fd1a0f67ecceea6e8216189f81835f60c5b6",
-      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/43018502004",
-      "id": 43018502004,
-      "name": "FX HTML dashboard deployment",
-      "run_started_at": "2026-11-11T12:13:38Z",
-      "status": "completed",
-      "updated_at": "2026-11-11T12:14:03Z"
     }
   ],
   "performance_validated": false,
   "protocol_id": "FX-OOS-20261104-v21",
   "recent_job_steps": {
-    "43045897535": [
-      {
-        "conclusion": "success",
-        "id": 130609614490,
-        "steps": [
-          {
-            "completed_at": "2026-11-11T15:11:50Z",
-            "conclusion": "success",
-            "name": "Set up job",
-            "number": 1,
-            "started_at": "2026-11-11T15:11:49Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:11:59Z",
-            "conclusion": "success",
-            "name": "Run actions/checkout@v5",
-            "number": 2,
-            "started_at": "2026-11-11T15:11:50Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:11:59Z",
-            "conclusion": "success",
-            "name": "Run actions/setup-python@v6",
-            "number": 3,
-            "started_at": "2026-11-11T15:11:59Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:11:59Z",
-            "conclusion": "success",
-            "name": "Record run provenance",
-            "number": 4,
-            "started_at": "2026-11-11T15:11:59Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:31Z",
-            "conclusion": "success",
-            "name": "Fetch OANDA raw data (GET only)",
-            "number": 5,
-            "started_at": "2026-11-11T15:11:59Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:36Z",
-            "conclusion": "success",
-            "name": "Monitor economic releases and new market headlines (free public sources)",
-            "number": 6,
-            "started_at": "2026-11-11T15:13:31Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:40Z",
-            "conclusion": "success",
-            "name": "Offline safety tests (block signals, not collection)",
-            "number": 7,
-            "started_at": "2026-11-11T15:13:36Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:41Z",
-            "conclusion": "success",
-            "name": "Evaluate frozen shortlisted FX paper trades against subsequent bid/ask bars",
-            "number": 8,
-            "started_at": "2026-11-11T15:13:40Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:42Z",
-            "conclusion": "success",
-            "name": "Register and compare prospective momentum and pullback research opportunities",
-            "number": 9,
-            "started_at": "2026-11-11T15:13:41Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:47Z",
-            "conclusion": "success",
-            "name": "Audit missed forward FX research entries with actual later OANDA bid-ask candles",
-            "number": 10,
-            "started_at": "2026-11-11T15:13:42Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:48Z",
-            "conclusion": "success",
-            "name": "Record every independent admission gate and hidden news blockers",
-            "number": 11,
-            "started_at": "2026-11-11T15:13:47Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:48Z",
-            "conclusion": "success",
-            "name": "Freeze qualified prospective conditional manual FX signals",
-            "number": 12,
-            "started_at": "2026-11-11T15:13:48Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:50Z",
-            "conclusion": "success",
-            "name": "Compare frozen champion and challenger paper cohorts (never live promotion)",
-            "number": 13,
-            "started_at": "2026-11-11T15:13:48Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:51Z",
-            "conclusion": "success",
-            "name": "Evaluate separately frozen simple momentum/pullback paper shadow (no orders)",
-            "number": 14,
-            "started_at": "2026-11-11T15:13:50Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:51Z",
-            "conclusion": "success",
-            "name": "Register and score contextual-news paper challenger, separately frozen",
-            "number": 15,
-            "started_at": "2026-11-11T15:13:51Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:51Z",
-            "conclusion": "success",
-            "name": "Score new liquid-major momentum paper challenger independently",
-            "number": 16,
-            "started_at": "2026-11-11T15:13:51Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:51Z",
-            "conclusion": "success",
-            "name": "Compare confirmed-momentum paper entries and profit-protection exits",
-            "number": 17,
-            "started_at": "2026-11-11T15:13:51Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:51Z",
-            "conclusion": "success",
-            "name": "Collect separately locked 4 November early forward paper cohort",
-            "number": 18,
-            "started_at": "2026-11-11T15:13:51Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:51Z",
-            "conclusion": "success",
-            "name": "Explain frozen simple-paper research blockers without inventing trades",
-            "number": 19,
-            "started_at": "2026-11-11T15:13:51Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:51Z",
-            "conclusion": "success",
-            "name": "Audit prospective paper portfolio limits and additional cost stress",
-            "number": 20,
-            "started_at": "2026-11-11T15:13:51Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:52Z",
-            "conclusion": "success",
-            "name": "Forward-test FX exit management on confirmed OANDA paper entries",
-            "number": 21,
-            "started_at": "2026-11-11T15:13:51Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:52Z",
-            "conclusion": "success",
-            "name": "Reassess approved setups against price AND news/event risk",
-            "number": 22,
-            "started_at": "2026-11-11T15:13:52Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:52Z",
-            "conclusion": "success",
-            "name": "Audit locked forward validation, coverage and actual delivery evidence",
-            "number": 23,
-            "started_at": "2026-11-11T15:13:52Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:53Z",
-            "conclusion": "success",
-            "name": "Independently audit admission filters and holdout strategy evidence",
-            "number": 24,
-            "started_at": "2026-11-11T15:13:52Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:13:53Z",
-            "conclusion": "success",
-            "name": "Register and score prospective news-source-gap counterfactuals (paper only)",
-            "number": 25,
-            "started_at": "2026-11-11T15:13:53Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:14:19Z",
-            "conclusion": "success",
-            "name": "Recover missing fast observation once using unchanged frozen scanner",
-            "number": 26,
-            "started_at": "2026-11-11T15:13:53Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:14:19Z",
-            "conclusion": "success",
-            "name": "Reconcile unique frozen FX plans and paper-trade lifecycles",
-            "number": 27,
-            "started_at": "2026-11-11T15:14:19Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:14:24Z",
-            "conclusion": "success",
-            "name": "Record independent economic reconciliation and actual workflow clocks",
-            "number": 28,
-            "started_at": "2026-11-11T15:14:19Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:14:31Z",
-            "conclusion": "success",
-            "name": "Record monitoring gaps and actual scheduler evidence",
-            "number": 29,
-            "started_at": "2026-11-11T15:14:24Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:14:31Z",
-            "conclusion": "success",
-            "name": "Refresh private manual execution loss review independent of OANDA availability",
-            "number": 30,
-            "started_at": "2026-11-11T15:14:31Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:14:35Z",
-            "conclusion": "success",
-            "name": "Publish sanitized FX research to existing HTML dashboard",
-            "number": 31,
-            "started_at": "2026-11-11T15:14:31Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:14:35Z",
-            "conclusion": "skipped",
-            "name": "Mark deployed FX assessment unavailable on collection or publication failure",
-            "number": 32,
-            "started_at": "2026-11-11T15:14:35Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:14:35Z",
-            "conclusion": "success",
-            "name": "Audit five distinct ChatGPT research roles without fabricating task receipts",
-            "number": 33,
-            "started_at": "2026-11-11T15:14:35Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:14:41Z",
-            "conclusion": "success",
-            "name": "Save timestamped snapshot and watcher state",
-            "number": 34,
-            "started_at": "2026-11-11T15:14:35Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:14:41Z",
-            "conclusion": "skipped",
-            "name": "Preserve evidence artifact if repository persistence fails",
-            "number": 35,
-            "started_at": "2026-11-11T15:14:41Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:14:41Z",
-            "conclusion": "skipped",
-            "name": "Fail visibly when monitoring recovery or diagnostics failed",
-            "number": 36,
-            "started_at": "2026-11-11T15:14:41Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:14:41Z",
-            "conclusion": "skipped",
-            "name": "Fail closed if any research or public dashboard step failed",
-            "number": 37,
-            "started_at": "2026-11-11T15:14:41Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:14:41Z",
-            "conclusion": "success",
-            "name": "Post Run actions/setup-python@v6",
-            "number": 73,
-            "started_at": "2026-11-11T15:14:41Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:14:41Z",
-            "conclusion": "success",
-            "name": "Post Run actions/checkout@v5",
-            "number": 74,
-            "started_at": "2026-11-11T15:14:41Z",
-            "status": "completed"
-          },
-          {
-            "completed_at": "2026-11-11T15:14:41Z",
-            "conclusion": "success",
-            "name": "Complete job",
-            "number": 75,
-            "started_at": "2026-11-11T15:14:41Z",
-            "status": "completed"
-          }
-        ]
-      },
-      {
-        "conclusion": "skipped",
-        "id": 130609617374,
-        "steps": []
-      }
-    ],
     "43057221429": [
       {
         "conclusion": "success",
@@ -1309,8 +976,654 @@
         "steps": []
       },
       {
-        "conclusion": null,
+        "conclusion": "success",
         "id": 130718467357,
+        "steps": [
+          {
+            "completed_at": "2026-11-11T18:21:16Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "started_at": "2026-11-11T18:21:15Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:21Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v5",
+            "number": 2,
+            "started_at": "2026-11-11T18:21:16Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:21Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v6",
+            "number": 3,
+            "started_at": "2026-11-11T18:21:21Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:21Z",
+            "conclusion": "success",
+            "name": "Record run provenance",
+            "number": 4,
+            "started_at": "2026-11-11T18:21:21Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:39Z",
+            "conclusion": "success",
+            "name": "Fetch OANDA raw data (GET only)",
+            "number": 5,
+            "started_at": "2026-11-11T18:21:21Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:43Z",
+            "conclusion": "success",
+            "name": "Monitor economic releases and new market headlines (free public sources)",
+            "number": 6,
+            "started_at": "2026-11-11T18:21:39Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:47Z",
+            "conclusion": "success",
+            "name": "Offline safety tests (block signals, not collection)",
+            "number": 7,
+            "started_at": "2026-11-11T18:21:43Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:49Z",
+            "conclusion": "success",
+            "name": "Evaluate frozen shortlisted FX paper trades against subsequent bid/ask bars",
+            "number": 8,
+            "started_at": "2026-11-11T18:21:47Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:49Z",
+            "conclusion": "success",
+            "name": "Register and compare prospective momentum and pullback research opportunities",
+            "number": 9,
+            "started_at": "2026-11-11T18:21:49Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:50Z",
+            "conclusion": "success",
+            "name": "Audit missed forward FX research entries with actual later OANDA bid-ask candles",
+            "number": 10,
+            "started_at": "2026-11-11T18:21:49Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:50Z",
+            "conclusion": "success",
+            "name": "Record every independent admission gate and hidden news blockers",
+            "number": 11,
+            "started_at": "2026-11-11T18:21:50Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:50Z",
+            "conclusion": "success",
+            "name": "Freeze qualified prospective conditional manual FX signals",
+            "number": 12,
+            "started_at": "2026-11-11T18:21:50Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:52Z",
+            "conclusion": "success",
+            "name": "Compare frozen champion and challenger paper cohorts (never live promotion)",
+            "number": 13,
+            "started_at": "2026-11-11T18:21:50Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:52Z",
+            "conclusion": "success",
+            "name": "Evaluate separately frozen simple momentum/pullback paper shadow (no orders)",
+            "number": 14,
+            "started_at": "2026-11-11T18:21:52Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:52Z",
+            "conclusion": "success",
+            "name": "Register and score contextual-news paper challenger, separately frozen",
+            "number": 15,
+            "started_at": "2026-11-11T18:21:52Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:53Z",
+            "conclusion": "success",
+            "name": "Score new liquid-major momentum paper challenger independently",
+            "number": 16,
+            "started_at": "2026-11-11T18:21:52Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:53Z",
+            "conclusion": "success",
+            "name": "Compare confirmed-momentum paper entries and profit-protection exits",
+            "number": 17,
+            "started_at": "2026-11-11T18:21:53Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:53Z",
+            "conclusion": "success",
+            "name": "Collect separately locked 4 November early forward paper cohort",
+            "number": 18,
+            "started_at": "2026-11-11T18:21:53Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:53Z",
+            "conclusion": "success",
+            "name": "Explain frozen simple-paper research blockers without inventing trades",
+            "number": 19,
+            "started_at": "2026-11-11T18:21:53Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:53Z",
+            "conclusion": "success",
+            "name": "Audit prospective paper portfolio limits and additional cost stress",
+            "number": 20,
+            "started_at": "2026-11-11T18:21:53Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:53Z",
+            "conclusion": "success",
+            "name": "Forward-test FX exit management on confirmed OANDA paper entries",
+            "number": 21,
+            "started_at": "2026-11-11T18:21:53Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:54Z",
+            "conclusion": "success",
+            "name": "Reassess approved setups against price AND news/event risk",
+            "number": 22,
+            "started_at": "2026-11-11T18:21:53Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:54Z",
+            "conclusion": "success",
+            "name": "Audit locked forward validation, coverage and actual delivery evidence",
+            "number": 23,
+            "started_at": "2026-11-11T18:21:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:54Z",
+            "conclusion": "success",
+            "name": "Independently audit admission filters and holdout strategy evidence",
+            "number": 24,
+            "started_at": "2026-11-11T18:21:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:21:55Z",
+            "conclusion": "success",
+            "name": "Register and score prospective news-source-gap counterfactuals (paper only)",
+            "number": 25,
+            "started_at": "2026-11-11T18:21:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:22:07Z",
+            "conclusion": "success",
+            "name": "Recover missing fast observation once using unchanged frozen scanner",
+            "number": 26,
+            "started_at": "2026-11-11T18:21:55Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:22:07Z",
+            "conclusion": "success",
+            "name": "Reconcile unique frozen FX plans and paper-trade lifecycles",
+            "number": 27,
+            "started_at": "2026-11-11T18:22:07Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:22:13Z",
+            "conclusion": "success",
+            "name": "Record independent economic reconciliation and actual workflow clocks",
+            "number": 28,
+            "started_at": "2026-11-11T18:22:07Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:22:21Z",
+            "conclusion": "success",
+            "name": "Record monitoring gaps and actual scheduler evidence",
+            "number": 29,
+            "started_at": "2026-11-11T18:22:13Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:22:21Z",
+            "conclusion": "success",
+            "name": "Refresh private manual execution loss review independent of OANDA availability",
+            "number": 30,
+            "started_at": "2026-11-11T18:22:21Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:22:29Z",
+            "conclusion": "success",
+            "name": "Publish sanitized FX research to existing HTML dashboard",
+            "number": 31,
+            "started_at": "2026-11-11T18:22:21Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:22:29Z",
+            "conclusion": "skipped",
+            "name": "Mark deployed FX assessment unavailable on collection or publication failure",
+            "number": 32,
+            "started_at": "2026-11-11T18:22:29Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:22:29Z",
+            "conclusion": "success",
+            "name": "Audit five distinct ChatGPT research roles without fabricating task receipts",
+            "number": 33,
+            "started_at": "2026-11-11T18:22:29Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:22:35Z",
+            "conclusion": "success",
+            "name": "Save timestamped snapshot and watcher state",
+            "number": 34,
+            "started_at": "2026-11-11T18:22:29Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:22:35Z",
+            "conclusion": "skipped",
+            "name": "Preserve evidence artifact if repository persistence fails",
+            "number": 35,
+            "started_at": "2026-11-11T18:22:35Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:22:35Z",
+            "conclusion": "skipped",
+            "name": "Fail visibly when monitoring recovery or diagnostics failed",
+            "number": 36,
+            "started_at": "2026-11-11T18:22:35Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:22:35Z",
+            "conclusion": "skipped",
+            "name": "Fail closed if any research or public dashboard step failed",
+            "number": 37,
+            "started_at": "2026-11-11T18:22:35Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:22:35Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v6",
+            "number": 73,
+            "started_at": "2026-11-11T18:22:35Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:22:36Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v5",
+            "number": 74,
+            "started_at": "2026-11-11T18:22:35Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T18:22:36Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 75,
+            "started_at": "2026-11-11T18:22:36Z",
+            "status": "completed"
+          }
+        ]
+      }
+    ],
+    "43084845602": [
+      {
+        "conclusion": null,
+        "id": 130746426509,
+        "steps": [
+          {
+            "completed_at": "2026-11-11T19:11:26Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "started_at": "2026-11-11T19:11:25Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:11:32Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v5",
+            "number": 2,
+            "started_at": "2026-11-11T19:11:26Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:11:32Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v6",
+            "number": 3,
+            "started_at": "2026-11-11T19:11:32Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:11:32Z",
+            "conclusion": "success",
+            "name": "Record run provenance",
+            "number": 4,
+            "started_at": "2026-11-11T19:11:32Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:11:47Z",
+            "conclusion": "success",
+            "name": "Fetch OANDA raw data (GET only)",
+            "number": 5,
+            "started_at": "2026-11-11T19:11:32Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:11:51Z",
+            "conclusion": "success",
+            "name": "Monitor economic releases and new market headlines (free public sources)",
+            "number": 6,
+            "started_at": "2026-11-11T19:11:47Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:11:55Z",
+            "conclusion": "success",
+            "name": "Offline safety tests (block signals, not collection)",
+            "number": 7,
+            "started_at": "2026-11-11T19:11:51Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:11:57Z",
+            "conclusion": "success",
+            "name": "Evaluate frozen shortlisted FX paper trades against subsequent bid/ask bars",
+            "number": 8,
+            "started_at": "2026-11-11T19:11:55Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:11:57Z",
+            "conclusion": "success",
+            "name": "Register and compare prospective momentum and pullback research opportunities",
+            "number": 9,
+            "started_at": "2026-11-11T19:11:57Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:11:58Z",
+            "conclusion": "success",
+            "name": "Audit missed forward FX research entries with actual later OANDA bid-ask candles",
+            "number": 10,
+            "started_at": "2026-11-11T19:11:57Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:11:58Z",
+            "conclusion": "success",
+            "name": "Record every independent admission gate and hidden news blockers",
+            "number": 11,
+            "started_at": "2026-11-11T19:11:58Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:11:58Z",
+            "conclusion": "success",
+            "name": "Freeze qualified prospective conditional manual FX signals",
+            "number": 12,
+            "started_at": "2026-11-11T19:11:58Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:12:01Z",
+            "conclusion": "success",
+            "name": "Compare frozen champion and challenger paper cohorts (never live promotion)",
+            "number": 13,
+            "started_at": "2026-11-11T19:11:58Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:12:02Z",
+            "conclusion": "success",
+            "name": "Evaluate separately frozen simple momentum/pullback paper shadow (no orders)",
+            "number": 14,
+            "started_at": "2026-11-11T19:12:01Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:12:02Z",
+            "conclusion": "success",
+            "name": "Register and score contextual-news paper challenger, separately frozen",
+            "number": 15,
+            "started_at": "2026-11-11T19:12:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:12:02Z",
+            "conclusion": "success",
+            "name": "Score new liquid-major momentum paper challenger independently",
+            "number": 16,
+            "started_at": "2026-11-11T19:12:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:12:02Z",
+            "conclusion": "success",
+            "name": "Compare confirmed-momentum paper entries and profit-protection exits",
+            "number": 17,
+            "started_at": "2026-11-11T19:12:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:12:02Z",
+            "conclusion": "success",
+            "name": "Collect separately locked 4 November early forward paper cohort",
+            "number": 18,
+            "started_at": "2026-11-11T19:12:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:12:02Z",
+            "conclusion": "success",
+            "name": "Explain frozen simple-paper research blockers without inventing trades",
+            "number": 19,
+            "started_at": "2026-11-11T19:12:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:12:02Z",
+            "conclusion": "success",
+            "name": "Audit prospective paper portfolio limits and additional cost stress",
+            "number": 20,
+            "started_at": "2026-11-11T19:12:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:12:03Z",
+            "conclusion": "success",
+            "name": "Forward-test FX exit management on confirmed OANDA paper entries",
+            "number": 21,
+            "started_at": "2026-11-11T19:12:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:12:03Z",
+            "conclusion": "success",
+            "name": "Reassess approved setups against price AND news/event risk",
+            "number": 22,
+            "started_at": "2026-11-11T19:12:03Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:12:03Z",
+            "conclusion": "success",
+            "name": "Audit locked forward validation, coverage and actual delivery evidence",
+            "number": 23,
+            "started_at": "2026-11-11T19:12:03Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:12:04Z",
+            "conclusion": "success",
+            "name": "Independently audit admission filters and holdout strategy evidence",
+            "number": 24,
+            "started_at": "2026-11-11T19:12:03Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:12:04Z",
+            "conclusion": "success",
+            "name": "Register and score prospective news-source-gap counterfactuals (paper only)",
+            "number": 25,
+            "started_at": "2026-11-11T19:12:04Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:12:16Z",
+            "conclusion": "success",
+            "name": "Recover missing fast observation once using unchanged frozen scanner",
+            "number": 26,
+            "started_at": "2026-11-11T19:12:04Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-11T19:12:17Z",
+            "conclusion": "success",
+            "name": "Reconcile unique frozen FX plans and paper-trade lifecycles",
+            "number": 27,
+            "started_at": "2026-11-11T19:12:16Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Record independent economic reconciliation and actual workflow clocks",
+            "number": 28,
+            "started_at": "2026-11-11T19:12:17Z",
+            "status": "in_progress"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Record monitoring gaps and actual scheduler evidence",
+            "number": 29,
+            "started_at": null,
+            "status": "pending"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Refresh private manual execution loss review independent of OANDA availability",
+            "number": 30,
+            "started_at": null,
+            "status": "pending"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Publish sanitized FX research to existing HTML dashboard",
+            "number": 31,
+            "started_at": null,
+            "status": "pending"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Mark deployed FX assessment unavailable on collection or publication failure",
+            "number": 32,
+            "started_at": null,
+            "status": "pending"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Audit five distinct ChatGPT research roles without fabricating task receipts",
+            "number": 33,
+            "started_at": null,
+            "status": "pending"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Save timestamped snapshot and watcher state",
+            "number": 34,
+            "started_at": null,
+            "status": "pending"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Preserve evidence artifact if repository persistence fails",
+            "number": 35,
+            "started_at": null,
+            "status": "pending"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Fail visibly when monitoring recovery or diagnostics failed",
+            "number": 36,
+            "started_at": null,
+            "status": "pending"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Fail closed if any research or public dashboard step failed",
+            "number": 37,
+            "started_at": null,
+            "status": "pending"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Post Run actions/setup-python@v6",
+            "number": 73,
+            "started_at": null,
+            "status": "pending"
+          },
+          {
+            "completed_at": null,
+            "conclusion": null,
+            "name": "Post Run actions/checkout@v5",
+            "number": 74,
+            "started_at": null,
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "conclusion": "skipped",
+        "id": 130746428715,
         "steps": []
       }
     ]
@@ -1369,8 +1682,32 @@
     "plans": 0,
     "scored_exits": 0
   },
-  "source_at": "2026-11-11T18:21:39Z",
+  "source_at": "2026-11-11T19:11:47Z",
   "workflow_runs": [
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-11T19:11:22Z",
+      "event": "push",
+      "head_sha": "f7186749d64f9d8c9e205101f0e4e3dcbd1a1bbb",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/43084845780",
+      "id": 43084845780,
+      "name": "FX research offline PR verification",
+      "run_started_at": "2026-11-11T19:11:22Z",
+      "status": "completed",
+      "updated_at": "2026-11-11T19:11:36Z"
+    },
+    {
+      "conclusion": null,
+      "created_at": "2026-11-11T19:11:22Z",
+      "event": "push",
+      "head_sha": "f7186749d64f9d8c9e205101f0e4e3dcbd1a1bbb",
+      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/43084845602",
+      "id": 43084845602,
+      "name": "OANDA FX read-only research data",
+      "run_started_at": "2026-11-11T19:11:22Z",
+      "status": "in_progress",
+      "updated_at": "2026-11-11T19:11:25Z"
+    },
     {
       "conclusion": "success",
       "created_at": "2026-11-11T18:16:48Z",
@@ -1384,7 +1721,7 @@
       "updated_at": "2026-11-11T18:17:01Z"
     },
     {
-      "conclusion": null,
+      "conclusion": "success",
       "created_at": "2026-11-11T18:16:48Z",
       "event": "push",
       "head_sha": "e13dffc4e3e0604cb6d564c059259a34f7de8799",
@@ -1392,8 +1729,8 @@
       "id": 43076245856,
       "name": "OANDA FX read-only research data",
       "run_started_at": "2026-11-11T18:16:48Z",
-      "status": "queued",
-      "updated_at": "2026-11-11T18:20:01Z"
+      "status": "completed",
+      "updated_at": "2026-11-11T18:25:25Z"
     },
     {
       "conclusion": "success",
@@ -2546,30 +2883,6 @@
       "run_started_at": "2026-11-09T16:16:35Z",
       "status": "completed",
       "updated_at": "2026-11-09T16:16:50Z"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-11-09T15:45:39Z",
-      "event": "push",
-      "head_sha": "fe678dd759e43e3c854c1e89038be36f81414ade",
-      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/42647887308",
-      "id": 42647887308,
-      "name": "FX research offline PR verification",
-      "run_started_at": "2026-11-09T15:45:39Z",
-      "status": "completed",
-      "updated_at": "2026-11-09T15:45:53Z"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-11-09T15:45:39Z",
-      "event": "push",
-      "head_sha": "fe678dd759e43e3c854c1e89038be36f81414ade",
-      "html_url": "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/42647887265",
-      "id": 42647887265,
-      "name": "OANDA FX read-only research data",
-      "run_started_at": "2026-11-09T15:45:39Z",
-      "status": "completed",
-      "updated_at": "2026-11-09T15:47:47Z"
     }
   ]
 }
