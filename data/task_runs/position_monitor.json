@@ -2,152 +2,128 @@
   "schema": 1,
   "role": "position_monitor",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T14:26:02Z",
-  "completed_at": "2026-11-11T14:29:25.019Z",
-  "source_at": "2026-11-11T14:10:54Z",
-  "source_commit": "ebf30debcbf5a78b497d92e4c6d623b17358a993",
-  "source_age_seconds": 1111,
+  "started_at": "2026-11-11T18:25:11.000Z",
+  "completed_at": "2026-11-11T18:31:15.332Z",
+  "source_at": "2026-11-11T18:21:39.000Z",
+  "source_commit": "29c105ba694e96a1d0bfc8c7019dd419c1253a83",
+  "source_age_seconds": 576,
   "counts": {
-    "lifecycle_plans": 91,
+    "lifecycle_plans": 104,
     "lifecycle_closed": 2,
-    "lifecycle_expired_unfilled": 43,
+    "lifecycle_expired_unfilled": 49,
     "lifecycle_invalidated": 46,
-    "lifecycle_active_or_pending": 0,
+    "lifecycle_qualified_pending_trigger_registrations": 7,
+    "pending_unique_frozen_intents": 4,
     "open_simulated_positions": 0,
     "pending_simulated_fills": 0,
     "completed_new_triggers_verified": 0,
     "newly_verified_simulated_entries": 0,
     "newly_verified_simulated_exits": 0,
-    "newly_resolved_expired_pending_registrations": 0,
-    "canonical_signals": 0,
-    "unexpired_permanent_paper_candidates": 0,
-    "champion_forward_plans": 8,
-    "challenger_forward_plans": 40,
-    "champion_scored_exits": 0,
-    "challenger_scored_exits": 0,
-    "early_forward_champion_plans": 8,
-    "early_forward_challenger_plans": 44,
+    "newly_resolved_expired_unfilled_registrations_since_previous_monitor": 6,
+    "current_canonical_signals": 1,
+    "current_canonical_signals_triggered": 0,
+    "active_pair_shards_checked": 4,
+    "current_source_quoted_pairs": 65,
+    "current_source_discovered_pairs": 68,
+    "champion_plans_total": 16,
+    "champion_filled": 0,
+    "challenger_plans_total": 76,
+    "challenger_filled": 0,
+    "early_forward_champion_plans": 11,
+    "early_forward_challenger_plans": 52,
     "early_simple_plans": 2,
     "early_simple_fills": 0,
+    "simple_v1_plans": 0,
+    "simple_v2_plans": 0,
     "liquid_momentum_plans": 1,
     "liquid_momentum_fills": 0,
-    "gate_forward_plans": 7,
+    "gate_forward_plans": 8,
     "gate_forward_scored": 0,
     "confirmed_momentum_records": 0,
     "confirmed_momentum_fills": 0,
     "exit_study_registered_entries": 0,
     "exit_study_paired_scored": 0,
-    "exit_study_fixed_wins": 0,
-    "exit_study_fixed_losses": 0,
-    "historical_scored_stop_losses_preserved": 2,
-    "oversized_raw_ledgers_attempted": 2,
-    "oversized_raw_ledgers_readable": 0,
-    "full_collection_workflow_successes": 1,
-    "partial_candle_request_failures": 1,
-    "fast_recovery_requests": 0,
+    "fixed_stop_target_paired_cases": 0,
+    "profit_protection_paired_cases": 0,
+    "raw_oversized_ledgers_attempted": 2,
+    "raw_oversized_ledgers_readable": 0,
     "broker_orders": 0
   },
   "findings": [
     {
-      "scope": "current lifecycle and recovery decision",
-      "fact": "At the 14:10:54Z source, the authoritative lifecycle still has 91 registered arms: 2 CLOSED, 43 EXPIRED_UNFILLED and 46 INVALIDATED. There are zero open or pending states; the portfolio audit independently reports zero open paper positions and zero eligible fills. signals.json is empty and no permanent paper candidate has a future expiry.",
-      "decision": "No bounded [fx-fast-check] recovery was requested because no actual open or prospectively pending simulated position remained.",
-      "evidence": [
-        "data/lifecycle_ledger.json@74919abe8a3f12ba3801ffd6a8980f8ec3392df1",
-        "data/paper_portfolio_audit.json@b22186f1c13297cc2c8f46d08e5e34624bc40eda",
-        "signals.json@dfee41fd988a8eeca45c2e73dca15eacc601ba14",
-        "paper-trade-candidates.json@35daf9a27b23c9b67a2c45bbf870dcc5bb2ccf81"
-      ]
+      "scope": "current source and recovery decision",
+      "fact": "Collector run 43076245856 completed successfully at 2026-11-11T18:21:39Z with 65 usable quoted FX pairs out of 68 discovered. Four pricing batches returned 133 prices, three tradeable=false and none missing bid/ask. The source was fresh for this review, so position_monitor did not issue a bounded fast recovery or modify scripts/refresh_request.json.",
+      "decision": "Use the completed current-main snapshot only; source time remains 18:21:39Z and is not replaced by task time."
     },
     {
-      "scope": "new trigger, fill and exit chronology",
-      "fact": "No new completed trigger, separate later executable-side simulated fill, stop, target, expiry exit or time exit was verified in the 14:10:54Z lifecycle. No ambiguous bar was resolved in favour of a profitable path, and no machine-scored ledger was rewritten.",
-      "evidence": [
-        "data/lifecycle_ledger.json@74919abe8a3f12ba3801ffd6a8980f8ec3392df1",
-        "data/paper_portfolio_audit.json@b22186f1c13297cc2c8f46d08e5e34624bc40eda"
-      ]
+      "scope": "open and pending simulated chronology",
+      "fact": "There are zero open simulated positions and zero pending fills. Seven QUALIFIED_PENDING_TRIGGER registrations represent four unique frozen intents: AUD_USD SHORT AUTO-20261111T1718-AUD_USD-S-B in champion and challenger arms; EUR_USD SHORT AUTO-20261111T1821-EUR_USD-S-B as one canonical plus champion and challenger registrations; CHF_JPY SHORT challenger; and GBP_USD SHORT challenger.",
+      "chronology": "AUD_USD was created at 17:18:15Z and expires 18:48:15Z. Completed bid/ask M15 bars at 17:30, 17:45 and 18:00 were available, and the automated lifecycle scorer still records no trigger and no entry. The 18:21 EUR_USD, CHF_JPY and GBP_USD intents were created after the latest completed M15 opening timestamp of 18:00; no later completed M15 candle existed in the source, so current quotes cannot retrospectively establish their future trigger.",
+      "quote_evidence": "At 18:21:38Z OANDA showed AUD_USD 0.68499/0.68513 versus frozen entry 0.68541; EUR_USD 1.10921/1.10928 versus 1.10998; CHF_JPY 191.789/191.827 versus 191.871; GBP_USD 1.32774/1.32787 versus 1.32841. These are hypothetical movements without a verified trigger or fill."
     },
     {
-      "scope": "preserved scored chronology",
-      "fact": "The only two CLOSED lifecycle plans remain unchanged machine-scored LOSS_STOP outcomes. EUR_AUD SHORT triggered at 2026-10-29T03:45:00Z, entered at 04:00Z and stopped at 06:30Z. EUR_CHF SHORT triggered at 2026-11-06T08:30:00Z, entered at 08:45Z and stopped at 09:15Z. Each remains net -1R; no later favourable path or broker result was substituted.",
-      "evidence": [
-        "data/lifecycle_ledger.json@74919abe8a3f12ba3801ffd6a8980f8ec3392df1"
-      ]
+      "scope": "resolved pending and expiry records",
+      "fact": "Since the prior position_monitor source, six lifecycle registrations moved to EXPIRED_UNFILLED: the canonical AUD_USD 16:20 plan, champion and challenger paper registrations for that AUD_USD plan, and challenger CHF_JPY, AUD_CHF and EUR_AUD registrations. No fill, stop, target or time exit was minted from those expiries.",
+      "auxiliary": "The separate gate-forward AUD_HKD SHORT paper case expired at 17:50:51Z and is now UNTRIGGERED after its 18:21 replay. Gate-forward totals are eight plans: two invalidated pre-entry, three triggered-unfilled and three untriggered; zero scored."
     },
     {
-      "scope": "fixed versus profit-protection study",
-      "fact": "exit_management_research remains empty: zero registered paper entries, zero paired scored cases, zero fixed-arm wins or losses and no profit-protection outcome. confirmed_momentum_execution also has zero records and zero fills in all three arms, so there is no paired exit evidence and no path to choose.",
-      "evidence": [
-        "data/exit_management_research.json@5b644cb53bcf16043cb1abf1921d4cca42f0d8f3",
-        "data/confirmed_momentum_execution.json@6ef7b687e2a711e445aace543544004693ff5e51",
-        "docs/PROFITABILITY_EXECUTION_REWORK.md@e852a5d8cb3f509a0919ed7c48bdba220d5234f7",
-        "data/profitability_execution_development.json@f9cba96d501933c4bbd37e0ed866e3c4bdc2bbfd"
-      ]
+      "scope": "champion, challenger and paper audit",
+      "fact": "Current strategy comparison retains 16 champion and 76 challenger plans with zero fills, zero TP1 outcomes and zero stops. Champion outcomes are 7 invalidated pre-entry, 4 not replayed, 3 triggered-unfilled and 2 untriggered; challenger outcomes are 34 invalidated, 13 not replayed, 9 triggered-unfilled and 20 untriggered.",
+      "limitation": "The public legacy Route-B audit remains a separate four-case replay with one win and three losses; it is not a v21 fill record and was not reclassified."
     },
     {
-      "scope": "forward and auxiliary cohorts",
-      "fact": "V21 retains 8 champion and 40 challenger plans with zero independent scored exits; early-forward retains 8 champion and 44 challenger plans, also zero scored. Early-simple has two expired-untriggered plans, liquid momentum has one missed entry, and the news-gap gate cohort has seven plans with three triggered-unfilled, two invalidated-pre-entry and two untriggered; none is scored.",
-      "evidence": [
-        "data/forward_validation.json@68feba65b24a603581f518a157245c313cf05042",
-        "data/early_forward_validation.json@8c54893aaa1725f8346aa5e5b8ace5b51c33e561",
-        "data/early_simple_paper_shadow.json@630c7b8beb9d25786cf1ce183af5dd6ba6b03640",
-        "data/liquid_momentum_shadow_v1.json@66af47bd33bb426e6ad65b6ce83497e6f9b306c9",
-        "data/gate_forward_paper.json@8e0a41588fe7cb0eb804db08b3cf06c759578c17"
-      ]
+      "scope": "early, simple, liquid and confirmed-momentum cohorts",
+      "fact": "Early-forward holds 11 champion and 52 challenger plans with zero independent scored pair-days. Early-simple retains two expired-untriggered plans and no fills. Simple v1 and v2 have zero plans. Liquid momentum retains one MISSED_ENTRY and no fill. Confirmed momentum has zero records and zero fills in EXISTING_EXTRA_CONFIRMATION, CONFIRMED_NEXT_OPEN and CONFIRMED_NEXT_OPEN_PROTECTED.",
+      "decision": "No cohort outcome was promoted, relabelled or selected for profitability."
     },
     {
-      "scope": "source and workflow verification",
-      "fact": "Workflow run 43035901357 completed its snapshot and scoring job successfully and persisted commit ebf30debcbf5a78b497d92e4c6d623b17358a993. The collector returned 135 tradeable two-sided pricing records across four batches and completed 351 candle requests, but recorded one OANDA_HTTP_401_CANDLES failure and one fewer quoted pair than the prior full source. This is partial candle coverage, not proof that the account or all OANDA access failed.",
-      "evidence": [
-        "data/collection_attempt.json@22470feb4c7b9ba6aa16aff3f713082fedde214c",
-        "data/monitoring_health.json@08f8bfb5516379428080b851d868f2ad4ea67118",
-        "workflow_run:43035901357",
-        "commit:ebf30debcbf5a78b497d92e4c6d623b17358a993"
-      ]
+      "scope": "fixed versus profit-protection exits",
+      "fact": "exit_management_research has zero registered paper entries, zero paired scored cases and zero independent pair-days. FIXED_STOP_TARGET and PROFIT_PROTECTION remain null at 0/0.25/0.5-pip-per-side stress, with no arm wins or losses.",
+      "rule_check": "The current implementation applies protective actions only at the next bar open, treats adverse stop gaps at the worse opening price and leaves a bar touching both stop and target ambiguous. With no verified entry, neither arm can be evaluated or preferred."
     },
     {
-      "scope": "raw-ledger coverage gap",
-      "fact": "Current paper_trade_ledger and strategy_comparison are nonempty by blob SHA, but authenticated fetch_file returned empty content again. Their detailed rows could not be independently reread. Derived lifecycle, portfolio, validation, cohort and exit-study artifacts were inspected without rewriting either raw ledger.",
-      "evidence": [
-        "data/paper_trade_ledger.json@c6dd9ddc923253d4397653a7a049a2cb7103d579",
-        "data/strategy_comparison.json@5bd52df2e80f47ab2468841606d5728d04a8439e"
-      ]
+      "scope": "coverage gaps and authority",
+      "fact": "The authenticated contents endpoint returned current blob SHAs but empty content for data/paper_trade_ledger.json and data/strategy_comparison.json; direct authenticated blob reads closed transport. Their current sanitized metrics were therefore cross-checked through lifecycle_ledger, public_dashboard_payload, early/forward cohort files and the current scorer outputs, but raw-row readback was not complete.",
+      "decision": "Status remains PARTIAL. No scored ledger, canonical signal, immutable plan, loss/no-fill record, machine news clearance, broker state or public feed was manually rewritten."
     }
   ],
   "blockers": [
-    "data/paper_trade_ledger.json and data/strategy_comparison.json remained unreadable through authenticated file reads despite nonempty current SHAs.",
-    "The current collection recorded one OANDA_HTTP_401_CANDLES failure; derived current artifacts were available, but pair-candle coverage was partial.",
-    "No current simulated entry exists, so stop/TP/expiry/time-exit and fixed-versus-profit-protection chronology cannot produce a new paired outcome.",
-    "Actual broker fills, commissions, funding, account equity and user-delivery receipts remain unverified and were not inferred."
+    "Complete raw-row inspection of data/paper_trade_ledger.json@bfe3604767015b94182c42bff61d21ab0ad97942 and data/strategy_comparison.json@4ef7d48698e176165846ddfccf0874b48295be35 was unavailable because authenticated contents returned empty bodies and direct blob transport closed.",
+    "The three intents created at 18:21 have no later completed M15 candle in the 18:21:39Z source; their trigger, separate later fill and any exit remain unproven.",
+    "The AUD_USD 17:18 intent remains pending without a completed trigger or fill and expires at 18:48:15Z; current favourable movement is hypothetical only.",
+    "No registered paper entry exists for the fixed-versus-profit-protection study, so both exit arms remain unevaluable.",
+    "Pepperstone prices, commissions, swap/funding, account equity, broker fills, real/practice orders and user-delivery receipts were not accessed or inferred."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md@bbc5a5091c16425eceadda27867c284007487800",
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
-    "docs/PROFITABILITY_EXECUTION_REWORK.md@e852a5d8cb3f509a0919ed7c48bdba220d5234f7",
-    "data/profitability_execution_development.json@f9cba96d501933c4bbd37e0ed866e3c4bdc2bbfd",
-    "data/collection_attempt.json@22470feb4c7b9ba6aa16aff3f713082fedde214c",
-    "data/monitoring_health.json@08f8bfb5516379428080b851d868f2ad4ea67118",
-    "signals.json@dfee41fd988a8eeca45c2e73dca15eacc601ba14",
-    "paper-trade-candidates.json@35daf9a27b23c9b67a2c45bbf870dcc5bb2ccf81",
-    "data/lifecycle_ledger.json@74919abe8a3f12ba3801ffd6a8980f8ec3392df1",
-    "data/paper_trade_ledger.json@c6dd9ddc923253d4397653a7a049a2cb7103d579",
-    "data/strategy_comparison.json@5bd52df2e80f47ab2468841606d5728d04a8439e",
-    "data/paper_portfolio_audit.json@b22186f1c13297cc2c8f46d08e5e34624bc40eda",
-    "data/exit_management_research.json@5b644cb53bcf16043cb1abf1921d4cca42f0d8f3",
-    "data/confirmed_momentum_execution.json@6ef7b687e2a711e445aace543544004693ff5e51",
-    "data/forward_validation.json@68feba65b24a603581f518a157245c313cf05042",
-    "data/early_forward_validation.json@8c54893aaa1725f8346aa5e5b8ace5b51c33e561",
-    "data/early_simple_paper_shadow.json@630c7b8beb9d25786cf1ce183af5dd6ba6b03640",
-    "data/simple_paper_shadow.json@39ef6d197eaba952d7712ecff3ac4d931c68e8e1",
-    "data/simple_paper_shadow_v2.json@3edabb4204ba943a159c23d0b5f484f9280f5741",
-    "data/liquid_momentum_shadow_v1.json@66af47bd33bb426e6ad65b6ce83497e6f9b306c9",
-    "data/gate_forward_paper.json@8e0a41588fe7cb0eb804db08b3cf06c759578c17",
-    "commit:ebf30debcbf5a78b497d92e4c6d623b17358a993",
-    "workflow_run:43035901357"
+    "scripts/lifecycle_audit.py@ff64d2b8a04ca1ccdb63f74c44f80416e73f0f0e",
+    "scripts/paper_trade_audit.py@2b2db0118607055bf3f0f9bc4116263500bbf24e",
+    "scripts/strategy_comparison.py@a6b77719aa2e762b425fd650d95a2e5a67a7680e",
+    "scripts/exit_management_research.py@2d2dccdfa9b89083fc9d5b1bdcd363691d3af38c",
+    "data/collection_attempt.json@7804dea76dfe222be95a816205020b4f45aaef64",
+    "data/lifecycle_ledger.json@6df89d26d291942bc427e82ca2eb947d24b4936a",
+    "signals.json@66a7df60349bef6caf01ef2145927bb620563386",
+    "data/pairs/AUD_USD.json@a224a9d6166bb12ee37ba476e29da55f269606c5",
+    "data/pairs/EUR_USD.json@c68bb303c5463040a37fc1d7bb5cf21c055e3975",
+    "data/pairs/CHF_JPY.json@1a5e9e1813c96e83afc25d183fad44af5296472f",
+    "data/pairs/GBP_USD.json@49b6d0cecbadf18d01a694723767de999ee40b18",
+    "data/public_dashboard_payload.json@4ab7baae4d21ef315ae1dd18a4571b5802fccf47",
+    "data/early_forward_validation.json@51341707a60d2931181a85e8a58df7aa662ab951",
+    "data/early_simple_paper_shadow.json@8ab76511653e18c735b4bb3a3b9e6c44ad9cd6cf",
+    "data/simple_paper_shadow.json@426495b4511777ba89d602b56d7805e765bd84a6",
+    "data/simple_paper_shadow_v2.json@65f6a21952bcdc4a32fe35c9959a2220bda7ee1b",
+    "data/liquid_momentum_shadow_v1.json@73f49fc9ce26b515e1b42176699eaa6608eecb27",
+    "data/gate_forward_paper.json@8f9a514c7633588c74a8598a1ba3a385360929b1",
+    "data/confirmed_momentum_execution.json@ccb4a81b211e4444d665f314b5f0c6f3edc61692",
+    "data/exit_management_research.json@2722b8e5526211cf88236d05c0ca75972ad1ef3a",
+    "data/paper_trade_ledger.json@bfe3604767015b94182c42bff61d21ab0ad97942",
+    "data/strategy_comparison.json@4ef7d48698e176165846ddfccf0874b48295be35",
+    "source_snapshot_commit:29c105ba694e96a1d0bfc8c7019dd419c1253a83"
   ],
   "run_ids": [
-    "43035901357"
+    "43076245856"
   ],
   "no_broker_orders": true
 }
