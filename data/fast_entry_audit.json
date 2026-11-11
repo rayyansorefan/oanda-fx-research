@@ -1,11 +1,39 @@
 {
   "actionable_count": 0,
   "admission": {
-    "active": 1,
+    "active": 0,
     "admitted": [],
     "candidate_routes": [
       {
         "direction": "SHORT",
+        "pair": "EUR_USD",
+        "reason": "NO_DECISIVE_COMPLETED_M15_IMPULSE",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "EUR_USD",
+        "reason": "RECENT_MATERIAL_HEADLINE_REVIEW",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "LONG",
+        "pair": "USD_JPY",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "LONG",
+        "pair": "USD_JPY",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
         "pair": "GBP_USD",
         "reason": "FOUR_FRAME_TREND_CONFLICT",
         "route": "MOMENTUM_CONTINUATION",
@@ -19,274 +47,243 @@
         "status": "REJECTED"
       },
       {
+        "direction": "LONG",
+        "pair": "NZD_JPY",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "LONG",
+        "pair": "NZD_JPY",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "LONG",
+        "pair": "USD_CNH",
+        "reason": "INVALID_BID_ASK_OR_SPREAD",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "LONG",
+        "pair": "USD_CNH",
+        "reason": "INVALID_BID_ASK_OR_SPREAD",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
         "direction": "SHORT",
-        "pair": "EUR_HKD",
+        "pair": "EUR_ZAR",
         "reason": "INVALID_BID_ASK_OR_SPREAD",
         "route": "MOMENTUM_CONTINUATION",
         "status": "REJECTED"
       },
       {
         "direction": "SHORT",
-        "pair": "EUR_HKD",
+        "pair": "EUR_ZAR",
         "reason": "INVALID_BID_ASK_OR_SPREAD",
         "route": "EMA20_PULLBACK",
         "status": "REJECTED"
       },
       {
         "direction": "LONG",
-        "pair": "GBP_JPY",
+        "pair": "GBP_NZD",
         "reason": "FOUR_FRAME_TREND_CONFLICT",
         "route": "MOMENTUM_CONTINUATION",
         "status": "REJECTED"
       },
       {
         "direction": "LONG",
-        "pair": "GBP_JPY",
-        "reason": "FOUR_FRAME_TREND_CONFLICT",
-        "route": "EMA20_PULLBACK",
-        "status": "REJECTED"
-      },
-      {
-        "direction": "SHORT",
-        "pair": "AUD_SGD",
-        "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
-        "route": "MOMENTUM_CONTINUATION",
-        "status": "REJECTED"
-      },
-      {
-        "direction": "SHORT",
-        "pair": "AUD_SGD",
-        "reason": "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY",
-        "route": "EMA20_PULLBACK",
-        "status": "REJECTED"
-      },
-      {
-        "direction": "SHORT",
-        "pair": "GBP_AUD",
-        "reason": "FOUR_FRAME_TREND_CONFLICT",
-        "route": "MOMENTUM_CONTINUATION",
-        "status": "REJECTED"
-      },
-      {
-        "direction": "SHORT",
-        "pair": "GBP_AUD",
+        "pair": "GBP_NZD",
         "reason": "FOUR_FRAME_TREND_CONFLICT",
         "route": "EMA20_PULLBACK",
         "status": "REJECTED"
       },
       {
         "direction": "LONG",
-        "pair": "AUD_NZD",
+        "pair": "EUR_JPY",
         "reason": "FOUR_FRAME_TREND_CONFLICT",
         "route": "MOMENTUM_CONTINUATION",
         "status": "REJECTED"
       },
       {
         "direction": "LONG",
-        "pair": "AUD_NZD",
+        "pair": "EUR_JPY",
         "reason": "FOUR_FRAME_TREND_CONFLICT",
-        "route": "EMA20_PULLBACK",
-        "status": "REJECTED"
-      },
-      {
-        "direction": "SHORT",
-        "pair": "CHF_JPY",
-        "reason": "ADX_TREND_STRENGTH",
-        "route": "MOMENTUM_CONTINUATION",
-        "status": "REJECTED"
-      },
-      {
-        "direction": "SHORT",
-        "pair": "CHF_JPY",
-        "reason": "ADX_TREND_STRENGTH",
         "route": "EMA20_PULLBACK",
         "status": "REJECTED"
       }
     ],
-    "evaluated_at": "2026-11-11T19:12:15.586110+00:00",
+    "evaluated_at": "2026-11-11T20:15:25.254259+00:00",
     "rejected": {
-      "ADX_TREND_STRENGTH": 2,
-      "FOUR_FRAME_TREND_CONFLICT": 8,
-      "INVALID_BID_ASK_OR_SPREAD": 2,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2
+      "FOUR_FRAME_TREND_CONFLICT": 10,
+      "INVALID_BID_ASK_OR_SPREAD": 4,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
+      "RECENT_MATERIAL_HEADLINE_REVIEW": 1
     },
-    "source_at": "2026-11-11T19:12:15.586110+00:00",
-    "status": "RESEARCH_PLANS_FROZEN"
+    "source_at": "2026-11-11T20:15:25.254259+00:00",
+    "status": "NO_QUALIFIED_CONDITIONAL_PLAN"
   },
   "analysed": 8,
   "candidate_count": 8,
-  "checked_at": "2026-11-11T19:12:16.318667+00:00",
+  "checked_at": "2026-11-11T20:15:26.092184+00:00",
   "collector_endpoint": "practice",
   "event": "push",
   "manual_pepperstone_check_required": true,
-  "observations": [
-    {
-      "alert_detected_at": null,
-      "direction": "SHORT",
-      "entry": 1.10998,
-      "expires_at": "2026-11-11T19:51:50.419252Z",
-      "id": "AUTO-20261111T1821-EUR_USD-S-B",
-      "pair": "EUR_USD",
-      "reason": null,
-      "requires_manual_pepperstone_check": true,
-      "route": null,
-      "status": "REASSESS_NEWS_FIRST",
-      "stop": 1.11057,
-      "tp1": 1.10826,
-      "trigger_bar_open_time": null,
-      "user_delivery_verified": false
-    }
-  ],
+  "observations": [],
   "omitted_due_to_cap": [
-    "USD_CAD",
-    "GBP_HKD",
-    "AUD_HKD",
-    "USD_DKK",
-    "AUD_USD",
-    "USD_SEK",
-    "CAD_HKD",
-    "USD_CZK",
-    "NZD_USD",
-    "CAD_JPY",
-    "AUD_JPY",
-    "AUD_CHF",
-    "NZD_HKD",
-    "GBP_CHF",
-    "CAD_CHF",
-    "EUR_CHF",
-    "USD_NOK",
-    "EUR_SGD",
-    "GBP_SGD",
-    "SGD_CHF",
-    "USD_JPY",
-    "USD_PLN",
     "HKD_JPY",
-    "USD_ZAR",
-    "NZD_SGD",
     "USD_CHF",
-    "EUR_CAD",
     "CHF_HKD",
-    "USD_HUF",
+    "EUR_HKD",
+    "GBP_HKD",
+    "USD_CAD",
+    "AUD_USD",
+    "AUD_HKD",
     "SGD_JPY",
+    "USD_DKK",
+    "AUD_JPY",
+    "CAD_HKD",
+    "AUD_CHF",
+    "NZD_USD",
+    "NZD_HKD",
+    "SGD_CHF",
+    "EUR_SGD",
+    "GBP_CHF",
+    "GBP_SGD",
+    "USD_NOK",
     "USD_SGD",
-    "GBP_CAD",
+    "USD_PLN",
+    "CAD_JPY",
+    "NZD_SGD",
+    "CAD_SGD",
+    "EUR_AUD",
+    "EUR_CHF",
+    "AUD_NZD",
+    "USD_SEK",
+    "CAD_CHF",
+    "AUD_SGD",
+    "USD_CZK",
     "EUR_PLN",
     "NZD_CAD",
-    "NZD_CHF",
-    "EUR_SEK",
-    "GBP_PLN",
-    "CHF_ZAR",
-    "EUR_AUD",
-    "USD_MXN",
-    "USD_CNH",
-    "EUR_NOK",
-    "USD_HKD",
     "EUR_GBP",
-    "CAD_SGD",
-    "USD_THB",
+    "GBP_JPY",
+    "USD_ZAR",
+    "CHF_ZAR",
+    "GBP_PLN",
+    "EUR_CAD",
+    "USD_HUF",
+    "EUR_SEK",
     "AUD_CAD",
-    "EUR_CZK",
-    "NZD_JPY",
-    "GBP_NZD",
-    "EUR_JPY",
+    "GBP_CAD",
+    "GBP_AUD",
+    "NZD_CHF",
+    "USD_THB",
+    "CHF_JPY",
+    "USD_HKD",
+    "USD_MXN",
     "EUR_HUF",
     "ZAR_JPY",
-    "EUR_ZAR",
+    "EUR_CZK",
     "EUR_NZD",
+    "EUR_NOK",
     "EUR_DKK"
   ],
   "pair_evidence": {
-    "AUD_NZD": {
+    "EUR_JPY": {
       "completed_candle_open_times": {
         "D": "2026-11-09T22:00:00.000000000Z",
-        "H1": "2026-11-11T18:00:00.000000000Z",
+        "H1": "2026-11-11T19:00:00.000000000Z",
         "H4": "2026-11-11T14:00:00.000000000Z",
-        "M15": "2026-11-11T18:45:00.000000000Z",
-        "M5": "2026-11-11T19:05:00.000000000Z"
+        "M15": "2026-11-11T20:00:00.000000000Z",
+        "M5": "2026-11-11T20:10:00.000000000Z"
       },
-      "quote_at": "2026-11-11T19:12:04.533030415Z"
-    },
-    "AUD_SGD": {
-      "completed_candle_open_times": {
-        "D": "2026-11-09T22:00:00.000000000Z",
-        "H1": "2026-11-11T18:00:00.000000000Z",
-        "H4": "2026-11-11T14:00:00.000000000Z",
-        "M15": "2026-11-11T18:45:00.000000000Z",
-        "M5": "2026-11-11T19:05:00.000000000Z"
-      },
-      "quote_at": "2026-11-11T19:12:03.220917370Z"
-    },
-    "CHF_JPY": {
-      "completed_candle_open_times": {
-        "D": "2026-11-09T22:00:00.000000000Z",
-        "H1": "2026-11-11T18:00:00.000000000Z",
-        "H4": "2026-11-11T14:00:00.000000000Z",
-        "M15": "2026-11-11T18:45:00.000000000Z",
-        "M5": "2026-11-11T19:05:00.000000000Z"
-      },
-      "quote_at": "2026-11-11T19:11:50.334817959Z"
-    },
-    "EUR_HKD": {
-      "completed_candle_open_times": {
-        "D": "2026-11-09T22:00:00.000000000Z",
-        "H1": "2026-11-11T18:00:00.000000000Z",
-        "H4": "2026-11-11T14:00:00.000000000Z",
-        "M15": "2026-11-11T18:45:00.000000000Z",
-        "M5": "2026-11-11T19:05:00.000000000Z"
-      },
-      "quote_at": "2026-11-11T19:12:02.151012136Z"
+      "quote_at": "2026-11-11T20:15:00.993979789Z"
     },
     "EUR_USD": {
       "completed_candle_open_times": {
         "D": "2026-11-09T22:00:00.000000000Z",
-        "H1": "2026-11-11T18:00:00.000000000Z",
+        "H1": "2026-11-11T19:00:00.000000000Z",
         "H4": "2026-11-11T14:00:00.000000000Z",
-        "M15": "2026-11-11T18:45:00.000000000Z",
-        "M5": "2026-11-11T19:05:00.000000000Z"
+        "M15": "2026-11-11T19:45:00.000000000Z",
+        "M5": "2026-11-11T20:05:00.000000000Z"
       },
-      "quote_at": "2026-11-11T19:12:03.815131974Z"
+      "quote_at": "2026-11-11T20:14:53.006394302Z"
     },
-    "GBP_AUD": {
+    "EUR_ZAR": {
       "completed_candle_open_times": {
         "D": "2026-11-09T22:00:00.000000000Z",
-        "H1": "2026-11-11T18:00:00.000000000Z",
+        "H1": "2026-11-11T19:00:00.000000000Z",
         "H4": "2026-11-11T14:00:00.000000000Z",
-        "M15": "2026-11-11T18:45:00.000000000Z",
-        "M5": "2026-11-11T19:05:00.000000000Z"
+        "M15": "2026-11-11T20:00:00.000000000Z",
+        "M5": "2026-11-11T20:10:00.000000000Z"
       },
-      "quote_at": "2026-11-11T19:12:04.360943434Z"
+      "quote_at": "2026-11-11T20:15:02.663036027Z"
     },
-    "GBP_JPY": {
+    "GBP_NZD": {
       "completed_candle_open_times": {
         "D": "2026-11-09T22:00:00.000000000Z",
-        "H1": "2026-11-11T18:00:00.000000000Z",
+        "H1": "2026-11-11T19:00:00.000000000Z",
         "H4": "2026-11-11T14:00:00.000000000Z",
-        "M15": "2026-11-11T18:45:00.000000000Z",
-        "M5": "2026-11-11T19:05:00.000000000Z"
+        "M15": "2026-11-11T20:00:00.000000000Z",
+        "M5": "2026-11-11T20:10:00.000000000Z"
       },
-      "quote_at": "2026-11-11T19:12:03.086098323Z"
+      "quote_at": "2026-11-11T20:13:37.639308378Z"
     },
     "GBP_USD": {
       "completed_candle_open_times": {
         "D": "2026-11-09T22:00:00.000000000Z",
-        "H1": "2026-11-11T18:00:00.000000000Z",
+        "H1": "2026-11-11T19:00:00.000000000Z",
         "H4": "2026-11-11T14:00:00.000000000Z",
-        "M15": "2026-11-11T18:45:00.000000000Z",
-        "M5": "2026-11-11T19:05:00.000000000Z"
+        "M15": "2026-11-11T20:00:00.000000000Z",
+        "M5": "2026-11-11T20:10:00.000000000Z"
       },
-      "quote_at": "2026-11-11T19:12:04.672997182Z"
+      "quote_at": "2026-11-11T20:15:03.516703111Z"
+    },
+    "NZD_JPY": {
+      "completed_candle_open_times": {
+        "D": "2026-11-09T22:00:00.000000000Z",
+        "H1": "2026-11-11T19:00:00.000000000Z",
+        "H4": "2026-11-11T14:00:00.000000000Z",
+        "M15": "2026-11-11T20:00:00.000000000Z",
+        "M5": "2026-11-11T20:10:00.000000000Z"
+      },
+      "quote_at": "2026-11-11T20:13:21.688589866Z"
+    },
+    "USD_CNH": {
+      "completed_candle_open_times": {
+        "D": "2026-11-09T22:00:00.000000000Z",
+        "H1": "2026-11-11T19:00:00.000000000Z",
+        "H4": "2026-11-11T14:00:00.000000000Z",
+        "M15": "2026-11-11T20:00:00.000000000Z",
+        "M5": "2026-11-11T20:10:00.000000000Z"
+      },
+      "quote_at": "2026-11-11T20:14:50.356577210Z"
+    },
+    "USD_JPY": {
+      "completed_candle_open_times": {
+        "D": "2026-11-09T22:00:00.000000000Z",
+        "H1": "2026-11-11T19:00:00.000000000Z",
+        "H4": "2026-11-11T14:00:00.000000000Z",
+        "M15": "2026-11-11T20:00:00.000000000Z",
+        "M5": "2026-11-11T20:10:00.000000000Z"
+      },
+      "quote_at": "2026-11-11T20:15:01.744123106Z"
     }
   },
   "problems": {},
   "research_only": true,
   "rotation": {
     "claim_of_complete_fast_coverage": false,
-    "cursor_after": 471,
-    "cursor_before": 466,
+    "cursor_after": 476,
+    "cursor_before": 471,
     "slots_advanced": 5
   },
-  "run_id": "43084845602",
-  "source_at": "2026-11-11T19:12:15.586110+00:00",
+  "run_id": "43094605973",
+  "source_at": "2026-11-11T20:15:25.254259+00:00",
   "status": "FAST_RESEARCH_CHECK_COMPLETE",
   "user_delivery_verified": false
 }
