@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "position_monitor",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T23:28:36.000Z",
-  "completed_at": "2026-11-11T23:30:51.351Z",
+  "started_at": "2026-11-12T00:31:23.000Z",
+  "completed_at": "2026-11-12T00:34:08.997Z",
   "source_at": "2026-11-11T21:25:44.000Z",
   "source_commit": "c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85",
-  "source_age_seconds": 7507,
+  "source_age_seconds": 11304,
   "counts": {
     "lifecycle_plans": 104,
     "lifecycle_closed": 2,
@@ -19,7 +19,7 @@
     "completed_new_triggers_verified": 0,
     "newly_verified_simulated_entries": 0,
     "newly_verified_simulated_exits": 0,
-    "newly_resolved_expired_unfilled_registrations_since_previous_monitor": 7,
+    "newly_resolved_expired_unfilled_registrations_since_previous_monitor": 0,
     "current_canonical_signals": 0,
     "current_canonical_signals_triggered": 0,
     "active_pair_shards_checked": 0,
@@ -30,8 +30,10 @@
     "champion_filled": 0,
     "challenger_plans_total": 76,
     "challenger_filled": 0,
+    "forward_champion_plans": 11,
+    "forward_challenger_plans": 48,
     "early_forward_champion_plans": 11,
-    "early_forward_challenger_plans": 48,
+    "early_forward_challenger_plans": 52,
     "early_simple_plans": 2,
     "early_simple_fills": 0,
     "simple_v1_plans": 0,
@@ -53,44 +55,39 @@
   "findings": [
     {
       "scope": "current source and recovery decision",
-      "fact": "Collector run 43102907264 completed successfully at 2026-11-11T21:25:44Z with 65 usable quoted FX pairs out of 68 discovered. Four pricing batches returned 133 price objects, three tradeable=false and none missing bid/ask.",
-      "decision": "The observation was stale at task time, but lifecycle and canonical records contained zero OPEN or pending simulated positions, so the bounded [fx-fast-check] position-recovery condition was not met. scripts/refresh_request.json remained unchanged; source time was not replaced by task time."
+      "fact": "Collector run 43102907264 remains the latest verified collection, completed at 2026-11-11T21:25:44Z with 65 usable quoted FX pairs out of 68 discovered. Four pricing batches returned 133 price objects, three tradeable=false and none missing bid/ask.",
+      "decision": "The observation was stale at task time, but lifecycle and canonical records contained zero OPEN or pending simulated positions. The bounded [fx-fast-check] position-recovery condition was not met, so scripts/refresh_request.json sequence 220 remained unchanged and task time did not replace source time."
     },
     {
       "scope": "open and pending simulated chronology",
-      "fact": "The lifecycle ledger contains zero QUALIFIED_PENDING_TRIGGER registrations, zero open simulated positions and zero pending fills. signals.json is empty.",
-      "chronology": "All seven registrations that were pending in the prior position-monitor receipt are now EXPIRED_UNFILLED: champion and challenger AUD_USD registrations, canonical plus champion and challenger EUR_USD registrations, challenger CHF_JPY, and challenger GBP_USD. These represent four unique frozen intents. No later completed trigger, separate executable-side fill, stop, target, expiry exit or time exit was verified.",
-      "decision": "Expiry without a verified fill remains no-fill evidence; no favourable path or broker outcome was inferred."
+      "fact": "The lifecycle ledger remains terminal at 104 registrations: 2 CLOSED historical records, 56 EXPIRED_UNFILLED and 46 INVALIDATED. There are zero currently qualified-pending registrations, zero open simulated positions, zero pending fills and signals.json is empty.",
+      "chronology": "Relative to the preceding position-monitor receipt, no new completed trigger, separate executable-side bid/ask fill, simulated entry, stop, target, expiry/time exit or expired-unfilled resolution was established.",
+      "decision": "Historical event rows containing earlier pending or triggered states were not treated as current positions. No favourable path or broker outcome was inferred."
     },
     {
-      "scope": "lifecycle reconciliation",
-      "fact": "Current lifecycle states reconcile to 104 registrations: 2 CLOSED legacy/manual records, 56 EXPIRED_UNFILLED and 46 INVALIDATED. Relative to the previous position-monitor receipt, seven registrations resolved to expired-unfilled and no new simulated entry or exit was established.",
-      "limitation": "The two CLOSED records were preserved as historical ledger states and were not interpreted as current broker positions or newly verified outcomes."
-    },
-    {
-      "scope": "champion, challenger and paper cohorts",
-      "fact": "Strategy comparison retains 16 champion and 76 challenger plans with zero fills and zero scored TP1/stop outcomes. Champion states are 7 invalidated, 4 not replayed, 3 triggered-unfilled and 2 untriggered; challenger states are 34 invalidated, 13 not replayed, 9 triggered-unfilled and 20 untriggered.",
-      "decision": "No cohort, no-fill, loss or ambiguous record was promoted, relabelled or selected for profitability."
-    },
-    {
-      "scope": "early, simple, liquid, gate and confirmed-momentum cohorts",
-      "fact": "Early-forward contains 11 champion and 48 challenger forward plans with zero scored outcomes. Early-simple retains two expired-untriggered plans and no fills. Simple v1/v2 contain zero plans. Liquid momentum retains one MISSED_ENTRY and no fill. Gate-forward has eight plans and zero scored outcomes. Confirmed momentum has zero records and zero fills across all registered arms.",
-      "decision": "No unfilled or unscored plan was treated as a position or outcome."
+      "scope": "champion, challenger and auxiliary cohorts",
+      "fact": "Sanitized strategy comparison retains 16 champion and 76 challenger plans with zero fills and zero scored TP1/stop outcomes. Forward validation retains 11 champion and 48 challenger plans; early-forward retains 11 champion and 52 challenger plans, all with zero scored pair-days. Early-simple has two expired-untriggered plans; simple v1/v2 have zero plans; liquid momentum has one MISSED_ENTRY; gate-forward has eight unscored plans.",
+      "decision": "No no-fill, loss, ambiguous, missed or unscored record was promoted, relabelled or counted as a position."
     },
     {
       "scope": "fixed versus profit-protection exits",
-      "fact": "exit_management_research has zero registered paper entries, zero paired scored cases and zero independent pair-days. FIXED_STOP_TARGET and PROFIT_PROTECTION both remain unevaluable with zero paired cases.",
-      "decision": "Neither exit arm was preferred. No ambiguous same-bar chronology was resolved manually."
+      "fact": "exit_management_research still has zero registered paper entries, zero paired scored cases and zero independent pair-days. Confirmed-momentum execution has zero records and zero fills in EXISTING_EXTRA_CONFIRMATION, CONFIRMED_NEXT_OPEN and CONFIRMED_NEXT_OPEN_PROTECTED.",
+      "decision": "FIXED_STOP_TARGET and PROFIT_PROTECTION remain unevaluable; neither arm was preferred and no ambiguous same-bar chronology was resolved manually."
+    },
+    {
+      "scope": "development evidence preserved",
+      "fact": "The registered profitability development decision remains REJECT_UNCONFIRMED_EARLY_ENTRY_FOR_DEPLOYMENT. Confirmed-next-open development produced no admissible fills, while the separate unconfirmed-entry diagnostic was negative after costs; it was not imported into the forward cohort.",
+      "decision": "No rejected rule, threshold, immutable plan, scored ledger or strategy was changed."
     },
     {
       "scope": "coverage gaps and authority",
-      "fact": "Authenticated contents returned current blob SHAs but empty bodies for data/paper_trade_ledger.json and data/strategy_comparison.json. Reconciliation therefore used lifecycle_ledger, the sanitized dashboard payload and current cohort/scorer outputs, but raw-row inspection of those two oversized ledgers was incomplete.",
-      "decision": "Status remains PARTIAL. No scored ledger, immutable plan, signal, machine-news clearance, public serving, broker state or delivery receipt was rewritten."
+      "fact": "Authenticated contents again returned current blob SHAs but empty bodies for data/paper_trade_ledger.json and data/strategy_comparison.json. Reconciliation used lifecycle_ledger, the sanitized dashboard payload and current cohort/scorer outputs, but raw-row inspection of those two oversized ledgers remained incomplete.",
+      "decision": "Status remains PARTIAL. Machine scorers retain outcome authority; no machine-news clearance, public serving state, broker state or delivery receipt was rewritten or inferred."
     }
   ],
   "blockers": [
-    "The 21:25:44Z market source was stale beyond the 25-minute research threshold at task time; no OPEN or pending simulated position existed to authorize position-monitor fast recovery.",
-    "Complete raw-row inspection of data/paper_trade_ledger.json@4be27abcb3f871dae31246dd0d1f88c0622b993f and data/strategy_comparison.json@2e4c793315259092d00e36dd5334db9636167913 was unavailable because authenticated contents returned empty bodies.",
+    "The 2026-11-11T21:25:44Z market source was stale beyond the 25-minute research threshold at task time; no OPEN or pending simulated position existed to authorize position-monitor fast recovery.",
+    "Complete raw-row inspection of data/paper_trade_ledger.json@4be27abcb3f871dae31246dd0d1f88c0622b993f and data/strategy_comparison.json@2e4c793315259092d00e36dd5334db9636167913 remained unavailable because authenticated contents returned empty bodies.",
     "Collector coverage reports 65 usable quoted pairs while the sanitized published payload contains 64; actual public serving was not independently verified by this role.",
     "No registered paper entry exists for fixed-versus-profit-protection comparison, so both exit arms remain unevaluable.",
     "Broker prices, commissions, swaps, account equity, real/practice orders and user-delivery receipts were not accessed or inferred."
@@ -99,11 +96,15 @@
     "docs/FIVE_TASK_OPERATIONS.md@bbc5a5091c16425eceadda27867c284007487800",
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
-    "data/task_runs/market_scan.json@ccf784b6e6bec60828138c80fc8159e3af9ad35e",
+    "docs/PROFITABILITY_EXECUTION_REWORK.md@e852a5d8cb3f509a0919ed7c48bdba220d5234f7",
+    "data/profitability_execution_development.json@f9cba96d501933c4bbd37e0ed866e3c4bdc2bbfd",
+    "data/task_runs/market_scan.json@a2b400d5399137addd8fa01e2041ade7fb75fd32",
+    "data/task_runs/macro_events.json@5cb6117a105793191e0ec4b95ca6e134ef9397d5",
     "data/collection_attempt.json@ca29b06dd6a85dd70c1703bb5855d88c624b245d",
     "data/lifecycle_ledger.json@68ccd0c612343cbe982761a36ca5dbaa9e357146",
     "signals.json@495bdc05ef63bf4ff17c1b234042eba607334ac4",
     "data/public_dashboard_payload.json@1c4dc5cfff7a8f16f5c58352c6ec63cd261a8124",
+    "data/forward_validation.json@003dd77d8bba94ae5f59793b035d47d49a621fde",
     "data/early_forward_validation.json@acad2049fac0527e27356b5c42f3651d1416ce6f",
     "data/early_simple_paper_shadow.json@c3f2901e5b279e71e8a7b9aa7dfabf941c56fa07",
     "data/simple_paper_shadow.json@97329d0326b9da23ebededf62ecebbb912238050",
@@ -120,7 +121,8 @@
   "run_ids": [
     "43102907264",
     "43105088987",
-    "43105189085"
+    "43105189085",
+    "43106705691"
   ],
   "no_broker_orders": true
 }
