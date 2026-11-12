@@ -1,12 +1,12 @@
 {
   "active_london_day": false,
-  "checked_at": "2026-11-12T02:56:24.305605+00:00",
+  "checked_at": "2026-11-12T04:31:56.176626+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-12T02:55:57Z",
+    "checked_at": "2026-11-12T04:31:48Z",
     "collection_tries": 1,
     "collector_endpoint": "practice",
     "error": null,
-    "event": "schedule",
+    "event": "push",
     "first_attempt_error": null,
     "last_valid_source_preserved": false,
     "recovered_on_second_try": false,
@@ -49,26 +49,34 @@
         "PRICING": 4
       }
     },
-    "run_id": "43144702155",
-    "started_at": "2026-11-12T02:55:42Z",
+    "run_id": "43155351044",
+    "started_at": "2026-11-12T04:31:35Z",
     "status": "COLLECTED"
   },
   "consecutive_unobserved_fast_targets": 0,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
-    "event": "schedule",
-    "head_sha": "cbaa7f223b4f3ae280b0e863f97af44aeeac2dcd",
-    "id": "43144702155",
+    "event": "push",
+    "head_sha": "a9c9ee92dc76bbfde9983d12bd1d3c236e19b1d8",
+    "id": "43155351044",
     "outcomes": {
-      "collect": "success",
-      "early_cohort": "success",
+      "collect": "skipped",
+      "early_cohort": "skipped",
       "fast_recovery": "success",
       "safety": "success"
     },
     "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
   },
   "dashboard_deployments": [
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-12T02:56:40Z",
+      "head_sha": "0221d11bffb0056126379456695d334b56220f1c",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/43144825303",
+      "id": 43144825303,
+      "status": "completed"
+    },
     {
       "conclusion": "success",
       "created_at": "2026-11-11T22:41:58Z",
@@ -84,21 +92,13 @@
       "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/43105189085",
       "id": 43105189085,
       "status": "completed"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-11-11T21:26:35Z",
-      "head_sha": "c81885b9e55923ad94b898941a0a78abcde19724",
-      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/43103082070",
-      "id": 43103082070,
-      "status": "completed"
     }
   ],
   "early_cohort_id": "FX-EARLY-20261104-v1",
-  "early_last_source_at": "2026-11-12T02:55:57Z",
-  "early_observation_count": 118,
+  "early_last_source_at": "2026-11-12T04:31:48Z",
+  "early_observation_count": 119,
   "elapsed_fast_targets_today": 0,
-  "fast_age_seconds": 18937.896233,
+  "fast_age_seconds": 24669.767254,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -125,31 +125,31 @@
   },
   "fast_source_at": "2026-11-11T21:40:46.409372+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 27.305605,
+  "full_age_seconds": 8.176626,
   "full_collection_status": "PARTIAL",
   "full_fresh": true,
-  "full_last_attempt_at": "2026-11-12T02:55:57Z",
-  "full_source_at": "2026-11-12T02:55:57Z",
+  "full_last_attempt_at": "2026-11-12T04:31:48Z",
+  "full_source_at": "2026-11-12T04:31:48Z",
   "last_completed_jobs": [
     {
       "conclusion": "success",
       "event": "schedule",
       "failed_steps": [],
-      "run_id": 43143914648
+      "run_id": 43144702155
     },
     {
       "conclusion": "success",
       "event": "schedule",
       "failed_steps": [],
-      "run_id": 43106705691
+      "run_id": 43143914648
     }
   ],
   "previous_publication": {
-    "checked_at": "2026-11-11T21:40:58.202322Z",
+    "checked_at": "2026-11-12T02:56:39.226343Z",
     "public_feed_path": "docs/fx-feed.json",
     "public_repository": "rayyansorefan/standalone-wallet-paper-agent",
     "reason": "Public repository contents readback verified.",
-    "snapshot_at": "2026-11-11T21:25:44Z",
+    "snapshot_at": "2026-11-12T02:55:57Z",
     "status": "PUBLISHED"
   },
   "recovery": "ONE_INLINE_FAST_ATTEMPT_PER_HOURLY_RUN_WHEN_DUE",
@@ -316,7 +316,7 @@
         "success",
         "success",
         "success",
-        null
+        "success"
       ],
       "created_at": [
         "2026-10-23T13:49:52Z",
