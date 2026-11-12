@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T01:16:58.254Z",
-  "completed_at": "2026-11-12T01:16:58.258Z",
+  "started_at": "2026-11-12T02:17:53.051Z",
+  "completed_at": "2026-11-12T02:17:53.451Z",
   "source_at": "2026-11-11T21:25:44Z",
   "source_commit": "c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85",
-  "source_age_seconds": 13874,
+  "source_age_seconds": 17529,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs": 65,
@@ -31,16 +31,16 @@
     }
   },
   "findings": [
-    "WAIT: no new full market observation verified; canonical audit at 2026-11-11T21:25:44Z rejected 130 routes, zero admitted or active plans, signals.json empty.",
-    "Current universe reports 65/68 usable quoted pairs and five-frame coverage for 65; 3 TRY crosses nontradeable. Full summary/latest content could not be independently retrieved: GitHub returned empty content despite nonempty blob SHA, and raw fetch failed; coverage is collector-reported, not freshly re-parsed.",
-    "Canonical audit and universe read; dashboard payload remains 64/67 pairs, published repository readback confirmed at 21:40Z, actual served feed unverified.",
-    "London quiet hours 23:00–07:00: no recovery request; sequence 220 unchanged. Macro receipt 01:02Z flags 07:00Z GBP GDP and partial machine news."
+    "WAIT: full observation 2026-11-11T21:25:44Z is stale; 65/65 quoted pairs parsed independently from actual summary and latest Git blobs; all 130 canonical routes rejected, no admitted plans or signals.",
+    "All 12 priority individual pair shards independently parsed at the same collection timestamp. Three TRY crosses were nontradeable; no current executable research quote.",
+    "Dashboard exporter payload 64/67 versus collector 65/68, machine-news PARTIAL and source news clearance blocked for all 12 priorities. Repository publication readback recorded at 21:40:58Z; actual served feed not verified.",
+    "London quiet hours 23:00-07:00: no recovery requested, refresh sequence 220 unchanged. GBP GDP release scheduled for 07:00Z per macro receipt."
   ],
   "blockers": [
-    "Full source stale beyond 25-minute gate.",
-    "Large summary/latest blobs inaccessible through GitHub file/raw endpoints in this run; independent all-pair screening and individual shard checks not completed.",
-    "Collector/publisher coverage mismatch 65/68 versus 64/67; served feed unverified.",
-    "Machine news PARTIAL; no current simulated entry/fill evidence."
+    "Full source older than 25-minute freshness gate; quiet-hours recovery not authorized.",
+    "Publisher/collector 64/67 versus 65/68 mismatch and actual public serving not independently verified.",
+    "Machine news partial and priority clearance blocked; no current paper entry/fill evidence.",
+    "Individual shards beyond top 12 not independently inspected; full 65-pair summary/latest parsed."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -49,8 +49,9 @@
     "data/collection_attempt.json",
     "data/monitoring_health.json",
     "data/universe.json",
-    "data/summary.json@13330e14c1e4ca1bfef1fe9058b7064342d4097b (content unavailable)",
-    "data/latest.json@83f8d3fdb87b4ae1a15c6af3c2a79496590310b9 (content unavailable)",
+    "data/summary.json@13330e14c1e4ca1bfef1fe9058b7064342d4097b (Git blob parsed)",
+    "data/latest.json@83f8d3fdb87b4ae1a15c6af3c2a79496590310b9 (Git blob parsed)",
+    "data/pairs/{12_priority_pairs}.json",
     "data/signal_admission_audit.json",
     "signals.json",
     "data/hourly_assessment.json",
