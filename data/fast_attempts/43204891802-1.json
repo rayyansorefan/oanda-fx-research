@@ -1,0 +1,297 @@
+{
+  "actionable_count": 0,
+  "admission": {
+    "active": 1,
+    "admitted": [],
+    "candidate_routes": [
+      {
+        "direction": "SHORT",
+        "pair": "GBP_PLN",
+        "reason": "INVALID_BID_ASK_OR_SPREAD",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "GBP_PLN",
+        "reason": "INVALID_BID_ASK_OR_SPREAD",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "SGD_CHF",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "SGD_CHF",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "LONG",
+        "pair": "EUR_USD",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "LONG",
+        "pair": "EUR_USD",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "AUD_CAD",
+        "reason": "ADX_TREND_STRENGTH",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "AUD_CAD",
+        "reason": "ADX_TREND_STRENGTH",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "AUD_CHF",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "AUD_CHF",
+        "reason": "FOUR_FRAME_TREND_CONFLICT",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "USD_NOK",
+        "reason": "REVERSAL_OR_EXHAUSTION",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "USD_NOK",
+        "reason": "REVERSAL_OR_EXHAUSTION",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "AUD_SGD",
+        "reason": "NO_DECISIVE_COMPLETED_M15_IMPULSE",
+        "route": "MOMENTUM_CONTINUATION",
+        "status": "REJECTED"
+      },
+      {
+        "direction": "SHORT",
+        "pair": "AUD_SGD",
+        "reason": "PRIMARY_NEWS_SOURCE_MISSING",
+        "route": "EMA20_PULLBACK",
+        "status": "REJECTED"
+      }
+    ],
+    "evaluated_at": "2026-11-12T10:58:34.465232+00:00",
+    "rejected": {
+      "ADX_TREND_STRENGTH": 2,
+      "FOUR_FRAME_TREND_CONFLICT": 6,
+      "INVALID_BID_ASK_OR_SPREAD": 2,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
+      "PRIMARY_NEWS_SOURCE_MISSING": 1,
+      "REVERSAL_OR_EXHAUSTION": 2
+    },
+    "source_at": "2026-11-12T10:58:34.465232+00:00",
+    "status": "RESEARCH_PLANS_FROZEN"
+  },
+  "analysed": 8,
+  "candidate_count": 8,
+  "checked_at": "2026-11-12T10:58:35.142531+00:00",
+  "collector_endpoint": "practice",
+  "event": "schedule",
+  "manual_pepperstone_check_required": true,
+  "observations": [
+    {
+      "alert_detected_at": null,
+      "direction": "SHORT",
+      "entry": 109.071,
+      "expires_at": "2026-11-12T12:28:08.548998Z",
+      "id": "AUTO-20261112T1058-AUD_JPY-S-B",
+      "pair": "AUD_JPY",
+      "reason": null,
+      "requires_manual_pepperstone_check": true,
+      "route": null,
+      "status": "NO_QUALIFIED_PRICE_PATTERN",
+      "stop": 109.158,
+      "tp1": 108.796,
+      "trigger_bar_open_time": null,
+      "user_delivery_verified": false
+    }
+  ],
+  "omitted_due_to_cap": [
+    "USD_CZK",
+    "GBP_CAD",
+    "CHF_HKD",
+    "HKD_JPY",
+    "AUD_NZD",
+    "USD_CHF",
+    "USD_JPY",
+    "EUR_PLN",
+    "EUR_AUD",
+    "EUR_HKD",
+    "USD_SEK",
+    "USD_DKK",
+    "EUR_HUF",
+    "EUR_SGD",
+    "USD_HUF",
+    "USD_CNH",
+    "GBP_JPY",
+    "USD_PLN",
+    "CHF_ZAR",
+    "SGD_JPY",
+    "EUR_SEK",
+    "GBP_NZD",
+    "EUR_GBP",
+    "GBP_CHF",
+    "NZD_HKD",
+    "CAD_HKD",
+    "GBP_AUD",
+    "GBP_USD",
+    "NZD_USD",
+    "AUD_USD",
+    "AUD_HKD",
+    "USD_CAD",
+    "GBP_HKD",
+    "USD_MXN",
+    "USD_HKD",
+    "EUR_CZK",
+    "CAD_SGD",
+    "EUR_NOK",
+    "EUR_CAD",
+    "CAD_CHF",
+    "NZD_JPY",
+    "GBP_SGD",
+    "EUR_NZD",
+    "NZD_SGD",
+    "ZAR_JPY",
+    "EUR_TRY",
+    "USD_ZAR",
+    "EUR_ZAR",
+    "CAD_JPY",
+    "EUR_CHF",
+    "USD_SGD",
+    "EUR_JPY",
+    "CHF_JPY",
+    "NZD_CAD",
+    "NZD_CHF",
+    "USD_THB",
+    "TRY_JPY",
+    "USD_TRY",
+    "EUR_DKK"
+  ],
+  "pair_evidence": {
+    "AUD_CAD": {
+      "completed_candle_open_times": {
+        "D": "2026-11-10T22:00:00.000000000Z",
+        "H1": "2026-11-12T09:00:00.000000000Z",
+        "H4": "2026-11-12T06:00:00.000000000Z",
+        "M15": "2026-11-12T10:30:00.000000000Z",
+        "M5": "2026-11-12T10:50:00.000000000Z"
+      },
+      "quote_at": "2026-11-12T10:58:11.236670319Z"
+    },
+    "AUD_CHF": {
+      "completed_candle_open_times": {
+        "D": "2026-11-10T22:00:00.000000000Z",
+        "H1": "2026-11-12T09:00:00.000000000Z",
+        "H4": "2026-11-12T06:00:00.000000000Z",
+        "M15": "2026-11-12T10:30:00.000000000Z",
+        "M5": "2026-11-12T10:50:00.000000000Z"
+      },
+      "quote_at": "2026-11-12T10:57:57.743610262Z"
+    },
+    "AUD_JPY": {
+      "completed_candle_open_times": {
+        "D": "2026-11-10T22:00:00.000000000Z",
+        "H1": "2026-11-12T09:00:00.000000000Z",
+        "H4": "2026-11-12T06:00:00.000000000Z",
+        "M15": "2026-11-12T10:30:00.000000000Z",
+        "M5": "2026-11-12T10:50:00.000000000Z"
+      },
+      "quote_at": "2026-11-12T10:58:16.557032415Z"
+    },
+    "AUD_SGD": {
+      "completed_candle_open_times": {
+        "D": "2026-11-10T22:00:00.000000000Z",
+        "H1": "2026-11-12T09:00:00.000000000Z",
+        "H4": "2026-11-12T06:00:00.000000000Z",
+        "M15": "2026-11-12T10:30:00.000000000Z",
+        "M5": "2026-11-12T10:50:00.000000000Z"
+      },
+      "quote_at": "2026-11-12T10:58:01.790595730Z"
+    },
+    "EUR_USD": {
+      "completed_candle_open_times": {
+        "D": "2026-11-10T22:00:00.000000000Z",
+        "H1": "2026-11-12T09:00:00.000000000Z",
+        "H4": "2026-11-12T06:00:00.000000000Z",
+        "M15": "2026-11-12T10:30:00.000000000Z",
+        "M5": "2026-11-12T10:50:00.000000000Z"
+      },
+      "quote_at": "2026-11-12T10:58:18.834231825Z"
+    },
+    "GBP_PLN": {
+      "completed_candle_open_times": {
+        "D": "2026-11-10T22:00:00.000000000Z",
+        "H1": "2026-11-12T09:00:00.000000000Z",
+        "H4": "2026-11-12T06:00:00.000000000Z",
+        "M15": "2026-11-12T10:30:00.000000000Z",
+        "M5": "2026-11-12T10:50:00.000000000Z"
+      },
+      "quote_at": "2026-11-12T10:58:12.164605888Z"
+    },
+    "SGD_CHF": {
+      "completed_candle_open_times": {
+        "D": "2026-11-10T22:00:00.000000000Z",
+        "H1": "2026-11-12T09:00:00.000000000Z",
+        "H4": "2026-11-12T06:00:00.000000000Z",
+        "M15": "2026-11-12T10:30:00.000000000Z",
+        "M5": "2026-11-12T10:50:00.000000000Z"
+      },
+      "quote_at": "2026-11-12T10:58:11.246112405Z"
+    },
+    "USD_NOK": {
+      "completed_candle_open_times": {
+        "D": "2026-11-10T22:00:00.000000000Z",
+        "H1": "2026-11-12T09:00:00.000000000Z",
+        "H4": "2026-11-12T06:00:00.000000000Z",
+        "M15": "2026-11-12T10:30:00.000000000Z",
+        "M5": "2026-11-12T10:50:00.000000000Z"
+      },
+      "quote_at": "2026-11-12T10:58:18.812331381Z"
+    }
+  },
+  "problems": {},
+  "research_only": true,
+  "rotation": {
+    "claim_of_complete_fast_coverage": false,
+    "cursor_after": 526,
+    "cursor_before": 521,
+    "slots_advanced": 5
+  },
+  "run_id": "43204891802",
+  "source_at": "2026-11-12T10:58:34.465232+00:00",
+  "status": "FAST_RESEARCH_CHECK_COMPLETE",
+  "user_delivery_verified": false
+}

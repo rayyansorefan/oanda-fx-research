@@ -654,7 +654,7 @@
       }
     ],
     "challenger": "PAPER_ONLY_NOT_VALIDATED",
-    "checked_at": "2026-11-12T10:33:29.466573+00:00",
+    "checked_at": "2026-11-12T10:58:35.142531+00:00",
     "favourable": 27,
     "flat": 0,
     "insufficient": 6,
@@ -664,7 +664,7 @@
     "sample_warning": "Directional movements are NOT filled trades, realised losses, success probabilities or evidence sufficient to change champion parameters.",
     "session_date_uk": "2026-11-11"
   },
-  "collected_at": "2026-11-12T10:33:29.466573+00:00",
+  "collected_at": "2026-11-12T10:58:35.142531+00:00",
   "counts": {
     "need_news_review": 0,
     "price_alerts": 0,
@@ -871,35 +871,35 @@
       "win_rate_pct": 63.6
     },
     "paper_totals": {
-      "candidates": 1983,
+      "candidates": 1989,
       "losses": 3,
       "scored": 4,
       "wins": 1
     },
     "threshold": "Paper bias neutral until >=30 scored samples, >=10 days, >=3 pairs and conservative 99% mean-R bound excludes zero. Never relax execution, spread or news gates."
   },
-  "news_collected_at": "2026-11-12T10:33:24Z",
+  "news_collected_at": "2026-11-12T10:58:30Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-11-12T10:33:28.841206+00:00",
+  "oanda_collected_at": "2026-11-12T10:58:34.465232+00:00",
   "signals": [
     {
       "adaptive_context": {
         "block_new_alert": false,
-        "m15_ema_distance_atr": -0.06,
+        "m15_ema_distance_atr": 0.253,
         "reason": "Momentum is mixed; require the original completed-candle trigger, not directional bias alone.",
         "status": "CAUTION_MIXED_MOMENTUM"
       },
       "candle_timing": {
-        "last_late_candle_close": "2026-11-12T10:15:00+00:00",
-        "last_processed_bar_close": "2026-11-12T10:30:00+00:00",
-        "late_candles_skipped": 3,
+        "last_late_candle_close": null,
+        "last_processed_bar_close": null,
+        "late_candles_skipped": 0,
         "user_delivery_verified": false
       },
       "caution": "Some optional news feeds unavailable; calendar and required headline feeds checked. This is NOT an all-clear.",
-      "created_at": "2026-11-12T09:18:02.397242Z",
+      "created_at": "2026-11-12T10:58:08.548998Z",
       "direction": "SHORT",
-      "expires_at": "2026-11-12T10:48:02.397242Z",
-      "id": "AUTO-20261112T0918-AUD_JPY-S-B",
+      "expires_at": "2026-11-12T12:28:08.548998Z",
+      "id": "AUTO-20261112T1058-AUD_JPY-S-B",
       "news_source_coverage": {
         "currencies_without_supported_official_feed": [],
         "missing_required": [],
@@ -941,26 +941,26 @@
       "technical_checkpoint": {
         "h1_adx14": 24.76363668889204,
         "h1_rsi14": 39.513179749587756,
-        "indicative_distance_to_stop_pips": 12.6,
-        "indicative_distance_to_target_pips": 26.9,
-        "indicative_remaining_rr_before_new_spread_adjustment": 2.13,
+        "indicative_distance_to_stop_pips": 11.9,
+        "indicative_distance_to_target_pips": 24.3,
+        "indicative_remaining_rr_before_new_spread_adjustment": 2.04,
         "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
-        "latest_completed_m15_bar_start": "2026-11-12T10:15:00.000000000Z",
-        "m15_adx14": 29.266007779521704,
-        "m15_atr14": 0.08545294018284906,
-        "m15_macd_histogram": 0.012142982150616738,
-        "m15_rsi14": 46.153997526213416,
+        "latest_completed_m15_bar_start": "2026-11-12T10:30:00.000000000Z",
+        "m15_adx14": 28.252216105327363,
+        "m15_atr14": 0.08270630153049141,
+        "m15_macd_histogram": 0.015424237732558244,
+        "m15_rsi14": 47.387519353658675,
         "oanda_quote": {
-          "ask": 109.088,
-          "bid": 109.065,
+          "ask": 109.062,
+          "bid": 109.039,
           "pip_size": 0.01,
           "spread_pips": 2.2999999999996135,
-          "time": "2026-11-12T10:33:12.629527813Z",
+          "time": "2026-11-12T10:58:16.557032415Z",
           "tradeable": true
         },
-        "price_reference": 109.065,
+        "price_reference": 109.039,
         "quote_is_tradeable": true,
-        "vs_m15_ema20": "ABOVE"
+        "vs_m15_ema20": "BELOW"
       }
     }
   ],
