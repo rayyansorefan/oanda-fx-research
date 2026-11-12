@@ -2,37 +2,36 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T16:16:46.000Z",
-  "completed_at": "2026-11-12T16:17:26.372Z",
-  "source_at": "2026-11-12T15:18:47Z",
-  "source_commit": "031beb478b6aad3f93fcaf0947d389c38d9f332e",
-  "source_age_seconds": 3519,
+  "started_at": "2026-11-12T17:13:33.000Z",
+  "completed_at": "2026-11-12T17:14:34.987Z",
+  "source_at": "2026-11-12T16:17:57Z",
+  "source_commit": "1d9bf294a6cea26e6e3649d54f609614a12242b7",
+  "source_age_seconds": 3398,
   "counts": {
     "universe_pairs": 68,
-    "quoted_pairs_reported": 68,
-    "full_five_frame_pairs_reported": 68,
-    "pair_shards_independently_verified": 12,
-    "priority_pair_shards_independently_verified": 12,
-    "canonical_screened_pairs": 68,
-    "canonical_routes_evaluated": 136,
-    "canonical_routes_rejected": 136,
-    "canonical_new_conditional_admitted": 0,
-    "current_canonical_signals": 0,
+    "quoted_pairs_reported": 65,
+    "full_five_frame_pairs_reported": 65,
+    "pair_shards_independently_verified": 2,
+    "priority_pair_shards_independently_verified": 2,
+    "canonical_routes_evaluated": 132,
+    "canonical_routes_rejected": 130,
+    "canonical_new_conditional_admitted": 2,
+    "current_canonical_signals": 2,
     "verified_simulated_fills_this_run": 0,
-    "public_payload_pairs": 67,
+    "public_payload_pairs": 64,
     "full_recovery_requests": 1,
     "broker_orders": 0
   },
   "findings": [
-    "15:18:47Z full source collected by Actions run 43246270613, 68 usable quoted pairs and reported 68 complete D/H4/H1/M15/M5; top 12 individual pair shards parsed and verified, remaining 56 not independently checked.",
-    "Canonical admission at 15:18:47Z: 136 routes/68 pairs; all rejected. Reversal/exhaustion 93, four-frame trend conflict 23, invalid spread/bid/ask 11, ADX 4, spread/volatility 2, unsupported 2, stretched continuation 1. No canonical signals. WAIT.",
-    "One full stale-source request sequence 233 at 16:17:08.736Z, commit 2aed559ac541b6e043dfb11dd77944b990fdc286; matching current-main push runs 43256989725 and 43256989580 in progress. No new collection, admission or publication yet verified.",
-    "Sanitized repository payload snapshot 15:18:47Z covers 67/67 published pairs vs 68 collected; repository status PUBLISHED. Public serving unverified; machine news PARTIAL and macro receipt from 10:06Z. No user delivery receipt."
+    "16:17:57Z full source reports 65 usable quotes and 65 five-frame pair contexts out of 68 discovered; 3 nontradeable/excluded. AUD_CAD and AUD_JPY individual pair files independently parsed; bulk 68-shard fetch exceeded connector call limit, so 65 full contexts not independently verified.",
+    "Canonical admission at 16:18:16Z: 132 evaluated routes, 130 rejected and 2 new conditional SHORT research plans AUD_CAD and AUD_JPY, both expire 17:48:16Z. Latest hourly assessment says NO_QUALIFIED_PRICE_PATTERN for both; no verified completed trigger, paper fill or user delivery. WAIT.",
+    "One full recovery sequence 234 requested 17:14:02Z at commit 8cd36e0d9c99c76fe81b8021d3437e8e21c7dfb2; matching current-main push runs 43267235560 in progress and 43267235545 queued at verification. No subsequent source/admission/publication outcome verified.",
+    "Repository sanitized publication PUBLISHED for 16:17:57Z source, payload contains 64 pair records against 65 quoted; machine-news PARTIAL. Actual served public feed not independently verified."
   ],
   "blockers": [
-    "Full source stale over 20/25 minutes; current-main recovery pending.",
-    "56 individual pair shards not independently verified; public served feed not independently verified.",
-    "Machine-news partial; macro receipt outdated."
+    "Full source >20 minutes stale at task execution; recovery pending, not proven collected.",
+    "Only 2 of 65 usable pair shards independently parsed; large summary/latest recovered via Git blob but all-pair shard verification incomplete.",
+    "Machine-news partial; macro receipt from 10:06Z; public website serving and user delivery unverified."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -41,21 +40,22 @@
     "data/collection_attempt.json",
     "data/monitoring_health.json",
     "data/universe.json",
-    "data/summary.json",
-    "data/latest.json",
+    "data/summary.json (Git blob e26f3391)",
+    "data/latest.json (Git blob 1729fd74)",
     "data/signal_admission_audit.json",
     "signals.json",
     "data/hourly_assessment.json",
     "data/task_runs/macro_events.json",
     "data/public_dashboard_status.json",
     "data/public_dashboard_payload.json",
-    "data/pairs/{top12}.json",
-    "scripts/refresh_request.json@2aed559ac541b6e043dfb11dd77944b990fdc286"
+    "data/pairs/AUD_CAD.json",
+    "data/pairs/AUD_JPY.json",
+    "scripts/refresh_request.json@8cd36e0d9c99c76fe81b8021d3437e8e21c7dfb2"
   ],
   "run_ids": [
-    "43246270613",
-    "43256989725",
-    "43256989580"
+    "43256989580",
+    "43267235560",
+    "43267235545"
   ],
   "no_broker_orders": true
 }
