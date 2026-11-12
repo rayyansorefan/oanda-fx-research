@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "evidence_audit",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T04:49:32.000Z",
-  "completed_at": "2026-11-12T04:53:06.436Z",
+  "started_at": "2026-11-12T05:46:38.000Z",
+  "completed_at": "2026-11-12T05:49:56.283Z",
   "source_at": "2026-11-12T04:31:48.000Z",
   "source_commit": "a8ab37e83f3b1fbed6b4e623bc25e0826e93f1b4",
-  "source_age_seconds": 1278,
+  "source_age_seconds": 4688,
   "counts": {
     "lifecycle_registrations": 105,
     "lifecycle_unique_plan_keys": 105,
@@ -74,70 +74,64 @@
   },
   "findings": [
     {
-      "scope": "locked protocol and registered identity reconciliation",
-      "fact": "validation_protocol.json remains FX-OOS-20261104-v21 with rule hash 040da6645e4d35f8c6313db7a72b29fd293a217684fd4287f0aff126320a3f26 and no_orders=true. The lifecycle contains 105 unique plan keys across 78 underlying IDs. All 12 immutable signal-plan archive IDs are represented in lifecycle records.",
-      "decision": "No registered ID, policy, threshold, immutable plan or historical cohort was changed or reclassified."
+      "scope": "registered rule lock",
+      "fact": "validation_protocol.json remains FX-OOS-20261104-v21 with rule_sha256 040da6645e4d35f8c6313db7a72b29fd293a217684fd4287f0aff126320a3f26, holdout start 2026-11-05T07:00:00Z, unchanged 100 independent pair-days/20 London days review floors and no_orders=true. Forward and early-forward records report rules_unchanged=true; no strategy or threshold was altered.",
+      "decision": "The locked protocol remains authoritative and performance_validated=false."
     },
     {
-      "scope": "complete lifecycle outcome balance",
-      "fact": "The machine lifecycle remains source-stamped 2026-11-12T02:55:57Z with 2 CLOSED, 56 EXPIRED_UNFILLED, 46 INVALIDATED and 1 QUALIFIED_PENDING_TRIGGER registration. The two scored lifecycle records are both LOSS_STOP; there are zero lifecycle wins. Other registration results remain 27 UNTRIGGERED, 46 INVALIDATED_PRE_ENTRY, 12 TRIGGERED_UNFILLED and 18 null.",
-      "counter_evidence": "Event history separately preserves 29 DATA_GAP, 2 SOURCE_UNAVAILABLE and 34 UNVERIFIABLE states. Historical triggered events are not current fills, and the two closed losses are not open broker positions.",
-      "decision": "Win, loss, unfilled, expired, ambiguous, missing and source-gap evidence was preserved without manual scoring."
+      "scope": "registered ID and lifecycle reconciliation",
+      "fact": "The lifecycle ledger contains 105 unique plan keys representing 78 underlying IDs. All 12 immutable archived signal IDs are present; the permanent shortlist contains 44 unique IDs; the opportunity ledger contains 377 unique rows. Lifecycle states remain 2 CLOSED, 56 EXPIRED_UNFILLED, 46 INVALIDATED and 1 QUALIFIED_PENDING_TRIGGER.",
+      "counter_evidence": "Result fields preserve 2 LOSS_STOP, 27 UNTRIGGERED, 46 INVALIDATED_PRE_ENTRY, 12 TRIGGERED_UNFILLED and 18 null results. Event history also retains 29 DATA_GAP, 2 SOURCE_UNAVAILABLE and 34 UNVERIFIABLE states. No win, null outcome or unresolved event was reclassified.",
+      "decision": "Complete reconciliation is established only across readable lifecycle, archive, shortlist and opportunity sources; raw paper and strategy ledgers remain separately blocked."
     },
     {
-      "scope": "EUR_AUD pending-row discrepancy",
-      "fact": "The lifecycle still labels AUTO-20261112T0248-EUR_AUD-S-B QUALIFIED_PENDING_TRIGGER. The position-monitor receipt independently inspected six eligible post-registration completed M15 bars through expiry and found no trigger, no later fill, no stop and no TP; a successful bounded recovery observed the pair at 2026-11-12T04:31:48Z after its 04:18:51Z expiry.",
-      "counter_evidence": "The later chronology supports expired-untriggered, but the lifecycle scorer has not ingested it and this audit is prohibited from manually relabelling the row.",
-      "retry_context": "The existing lifecycle/scoring pipeline must ingest data/pairs/EUR_AUD.json@4cbd7dda6a00df2ecdf39087e565d590b70f6f2a and source commit a8ab37e83f3b1fbed6b4e623bc25e0826e93f1b4, then deterministically reconcile the original trigger, fill and expiry chronology.",
-      "decision": "The row remains pending machine reconciliation and is not counted as a scored exit."
-    },
-    {
-      "scope": "like-for-like v21 forward cohorts and costs",
-      "fact": "Forward validation contains 11 champion and 49 challenger plans; early-forward contains 11 champion and 55 challenger plans. Every arm has zero independent scored pair-days and zero distinct scored days. All 0/0.25/0.5-pip cost arrays are empty.",
+      "scope": "like-for-like v21 forward cohorts",
+      "fact": "forward_validation contains 11 champion and 49 challenger plans; early_forward_validation contains 11 champion and 55 challenger plans. Every arm has zero independent scored pair-days and zero distinct scored days, and all 0/0.25/0.5-pip cost arrays are empty.",
       "counter_evidence": "Early-simple retains two expired-untriggered plans, simple v1/v2 remain empty, liquid momentum retains one MISSED_ENTRY, and gate-forward retains eight plans split 2 invalidated, 3 triggered-unfilled and 3 untriggered, with zero scored outcomes.",
-      "decision": "Net-of-cost expectancy, win rate and drawdown cannot be calculated for the v21 forward cohorts. Performance remains unvalidated and no promotion is supported."
+      "decision": "Net-of-cost expectancy, win rate and drawdown cannot be calculated for the v21 forward cohorts. The sample is unvalidated and no promotion is supported."
     },
     {
       "scope": "development evidence kept separate",
-      "fact": "The registered development decision remains REJECT_UNCONFIRMED_EARLY_ENTRY_FOR_DEPLOYMENT with profitability_established=false and existing_cohorts_modified=false. The broad unconfirmed-next-open diagnostic lost -10.1177R fixed and -9.0881R protected across nine model fills; the retrospective-reserved floor diagnostic remained -4.1337R.",
-      "counter_evidence": "These are retrospective/development diagnostics with overlapping currency exposure and incomplete historical cost/news evidence, not untouched v21 forward outcomes.",
-      "decision": "Negative development evidence remains visible but is not mixed into forward cohort performance or used to alter rules."
+      "fact": "The registered development decision remains REJECT_UNCONFIRMED_EARLY_ENTRY_FOR_DEPLOYMENT with profitability_established=false and existing_cohorts_modified=false. The unconfirmed-next-open development diagnostic lost -10.1177R fixed and -9.0881R protected across nine model fills; the retrospective-reserved floor diagnostic remained -4.1337R.",
+      "counter_evidence": "The small development floor variant was positive in-sample, but these trials are retrospective/development diagnostics with overlapping currency exposure and incomplete historical cost/news evidence, not untouched v21 forward outcomes.",
+      "decision": "All negative and favorable development rows remain visible but are not mixed into forward performance or used to alter rules."
     },
     {
       "scope": "fixed versus profit-protection paired evidence",
-      "fact": "exit_management_research has zero registered paper entries, zero paired scored cases and zero independent pair-days. Confirmed-momentum execution has zero records and fills in EXISTING_EXTRA_CONFIRMATION, CONFIRMED_NEXT_OPEN and CONFIRMED_NEXT_OPEN_PROTECTED; all drawdown and net-R fields are null.",
-      "decision": "Neither FIXED_STOP_TARGET nor PROFIT_PROTECTION is preferred. No profitable path or ambiguous same-bar outcome was chosen."
+      "fact": "exit_management_research has zero registered paper entries, zero paired scored cases and zero independent pair-days. confirmed_momentum_execution has zero records and fills in EXISTING_EXTRA_CONFIRMATION, CONFIRMED_NEXT_OPEN and CONFIRMED_NEXT_OPEN_PROTECTED; all drawdown and net-R fields are null.",
+      "decision": "Neither FIXED_STOP_TARGET nor PROFIT_PROTECTION is preferred. No favorable arm or ambiguous same-bar path was selected."
     },
     {
       "scope": "public serving reconciliation",
-      "fact": "Authenticated readback of standalone-wallet-paper-agent/docs/fx-feed.json has blob 1a964ff922fc581e4deaac087663b97762b6ad68, exactly matching the private public_dashboard_payload blob. The served snapshot is 2026-11-12T02:55:57Z and publishes 1,958 paper candidates with four older scored outcomes: one win and three losses, plus 377 opportunity rows.",
-      "counter_evidence": "The four older public paper scores are not v21 forward exits. Public detail windows contain 30 paper rows and 12 opportunity rows; the served snapshot predates the successful 04:31:48Z recovery and does not prove user receipt or live page delivery.",
-      "decision": "Repository-level publication is verified only for the 02:55:57Z snapshot; no delivery receipt or current-source publication is inferred."
+      "fact": "Authenticated readback of rayyansorefan/standalone-wallet-paper-agent/docs/fx-feed.json has blob 1a964ff922fc581e4deaac087663b97762b6ad68, exactly matching the private public_dashboard_payload blob. The repository-served snapshot is 2026-11-12T02:55:57Z and publishes 1,958 paper candidates, four older scored outcomes (1 win, 3 losses), and 377 opportunity rows.",
+      "counter_evidence": "Those four older public paper scores are not v21 forward exits. Public detail windows contain 30 paper rows and 12 opportunity rows; the snapshot predates the successful 04:31:48Z recovery and does not prove live page delivery or user receipt.",
+      "decision": "Repository-level publication is verified only for the 02:55:57Z snapshot; current-source publication and delivery remain unverified."
     },
     {
       "scope": "peer-role and scheduled-health reconciliation",
-      "fact": "All four current peer receipts were read. macro_events, market_scan, position_monitor and candidate_review are each PARTIAL and retain no_broker_orders=true. Position_monitor and candidate_review observed the 04:31:48Z source; market_scan remains on 02:55:57Z and macro_events retains the older 21:25:44Z market-source clock.",
-      "counter_evidence": "data/scheduled_task_health.json was generated at 02:56:39Z and still reports the older 02:09-02:44 peer receipts and the previous evidence-audit receipt. It predates the current 04:15 market scan, 04:35 position monitor and 04:43 candidate review.",
-      "retry_context": "The existing scheduled-task audit pipeline must regenerate data/scheduled_task_health.json from receipt blobs d32e05a34c0a2f659cd83b63f40d4f78e41bae7d, 6c3d0ccc21374f2548eab2f68cc6ba30f0d39aa7, c6355296835c95655ccefaf7c5d5e4c6f60f86fe, 7fea21ab47b90d92176583ff746660904796f49a and this new evidence-audit receipt. This role did not mark another role complete.",
-      "decision": "Health remains stale and PARTIAL until the existing pipeline regenerates it."
+      "fact": "All four current peer receipts were read: macro_events@ea4bb75ab898b1f9cd698e6b652a190e5ec51dfd, market_scan@5b21d1f52facf7a7c384c09c9b758d2294cf8765, position_monitor@79bc410bb809b3e0e3e981f471b193edd3812d0e and candidate_review@06cd985993e30e42660c4e2525c593c16fbd8462. Each is PARTIAL, no_broker_orders=true and observes source 2026-11-12T04:31:48Z at commit a8ab37e83f3b1fbed6b4e623bc25e0826e93f1b4.",
+      "counter_evidence": "data/scheduled_task_health.json@24259ad0da334d9babd364a6807621a90ba008d9 was generated at 02:56:39Z and still embeds older receipts for all five roles.",
+      "retry_context": "Run the existing scripts/scheduled_task_audit.py pipeline on current main after this receipt commit. It must read the four exact peer receipt blobs listed above plus the new evidence_audit.json, retain source_at 2026-11-12T04:31:48Z, and regenerate data/scheduled_task_health.json without marking any role COMPLETE on its behalf.",
+      "decision": "Health is stale and PARTIAL; this role did not mark another role complete."
     },
     {
       "scope": "raw-ledger coverage limitation",
-      "fact": "The 377-row entry_opportunity_ledger was retrieved by exact blob and all IDs were unique. Authenticated contents and blob retrieval still failed to return readable bodies for data/paper_trade_ledger.json@f28f3c468a212cced266a4172743c2df3cf0b1bc and data/strategy_comparison.json@4bd4c28ec88af69ac3793268bfa01790bb2ccb7a.",
-      "retry_context": "Retry the two exact current blobs through the existing repository audit/export path or a readable current checkout; preserve IDs and do not bulk-rewrite either ledger. Re-run ID reconciliation only after exact contents are readable.",
-      "decision": "Status remains PARTIAL; missing raw rows were not inferred from compact public aggregates."
+      "fact": "The 377-row entry_opportunity_ledger was retrieved by exact blob and all IDs were unique. Authenticated contents and exact-blob retrieval still failed to return readable bodies for data/paper_trade_ledger.json@f28f3c468a212cced266a4172743c2df3cf0b1bc and data/strategy_comparison.json@4bd4c28ec88af69ac3793268bfa01790bb2ccb7a.",
+      "retry_context": "Retry those two exact current blobs through the existing repository audit/export path or a readable current checkout; preserve every ID and do not bulk-rewrite either ledger. Resume raw ID reconciliation only after exact contents are readable.",
+      "decision": "Status remains PARTIAL; compact public aggregates were not substituted for unreadable raw rows."
     }
   ],
   "blockers": [
-    "Complete raw ID-by-ID reconciliation remains unavailable because data/paper_trade_ledger.json@f28f3c468a212cced266a4172743c2df3cf0b1bc and data/strategy_comparison.json@4bd4c28ec88af69ac3793268bfa01790bb2ccb7a returned empty contents and blob retrieval errors.",
+    "Complete raw ID-by-ID reconciliation remains unavailable because data/paper_trade_ledger.json@f28f3c468a212cced266a4172743c2df3cf0b1bc and data/strategy_comparison.json@4bd4c28ec88af69ac3793268bfa01790bb2ccb7a returned empty contents and exact-blob errors.",
     "data/lifecycle_ledger.json@2811554920c21756210d9acd765fa67406b010c6 remains at 2026-11-12T02:55:57Z and has not machine-reconciled the expired-untriggered EUR_AUD row supported by the 04:31:48Z pair evidence.",
-    "data/scheduled_task_health.json@24259ad0da334d9babd364a6807621a90ba008d9 predates the current market_scan, position_monitor, candidate_review and this evidence-audit receipt.",
+    "data/scheduled_task_health.json@24259ad0da334d9babd364a6807621a90ba008d9 predates all current role receipts.",
     "The public feed is repository-verified only at snapshot 2026-11-12T02:55:57Z and does not include the 04:31:48Z recovery.",
     "All four peer receipts are PARTIAL; evidence_audit cannot mark another role complete.",
     "No independently scored v21 exit, complete stressed cost array, drawdown sample, paired exit case, verified broker cost, verified user delivery or verified account equity exists."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md@bbc5a5091c16425eceadda27867c284007487800",
+    "docs/PROFITABILITY_EXECUTION_REWORK.md@e852a5d8cb3f509a0919ed7c48bdba220d5234f7",
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
     "data/lifecycle_ledger.json@2811554920c21756210d9acd765fa67406b010c6",
@@ -161,10 +155,10 @@
     "data/public_dashboard_status.json@af387481da1adad0b3155916397af3bef928b424",
     "public:rayyansorefan/standalone-wallet-paper-agent/docs/fx-feed.json@1a964ff922fc581e4deaac087663b97762b6ad68",
     "data/scheduled_task_health.json@24259ad0da334d9babd364a6807621a90ba008d9",
-    "data/task_runs/macro_events.json@d32e05a34c0a2f659cd83b63f40d4f78e41bae7d",
-    "data/task_runs/market_scan.json@6c3d0ccc21374f2548eab2f68cc6ba30f0d39aa7",
-    "data/task_runs/position_monitor.json@c6355296835c95655ccefaf7c5d5e4c6f60f86fe",
-    "data/task_runs/candidate_review.json@7fea21ab47b90d92176583ff746660904796f49a",
+    "data/task_runs/macro_events.json@ea4bb75ab898b1f9cd698e6b652a190e5ec51dfd",
+    "data/task_runs/market_scan.json@5b21d1f52facf7a7c384c09c9b758d2294cf8765",
+    "data/task_runs/position_monitor.json@79bc410bb809b3e0e3e981f471b193edd3812d0e",
+    "data/task_runs/candidate_review.json@06cd985993e30e42660c4e2525c593c16fbd8462",
     "data/pairs/EUR_AUD.json@4cbd7dda6a00df2ecdf39087e565d590b70f6f2a",
     "source_snapshot_commit:a8ab37e83f3b1fbed6b4e623bc25e0826e93f1b4"
   ],
