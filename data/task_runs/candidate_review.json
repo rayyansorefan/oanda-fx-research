@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "candidate_review",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T00:44:57.000Z",
-  "completed_at": "2026-11-12T00:46:31.866Z",
+  "started_at": "2026-11-12T01:40:22.000Z",
+  "completed_at": "2026-11-12T01:41:07.865Z",
   "source_at": "2026-11-11T21:25:44.000Z",
   "source_commit": "c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85",
-  "source_age_seconds": 12047,
+  "source_age_seconds": 15323,
   "counts": {
     "discovered_pairs": 68,
     "collector_usable_quoted_pairs": 65,
@@ -46,8 +46,8 @@
   "findings": [
     {
       "scope": "source, rule lock and registration decision",
-      "fact": "The inspected source remains the successful 2026-11-11T21:25:44Z collector snapshot at commit c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85: 65 usable quoted pairs from 68 discovered, 341 successful candle requests and no collection failures. The locked protocol is FX-OOS-20261104-v21 with rule hash 040da6645e4d35f8c6313db7a72b29fd293a217684fd4287f0aff126320a3f26.",
-      "counter_evidence": "The source exceeded the 25-minute full-research freshness limit; candidate_review does not own refresh recovery. No current pair-specific fast receipt established a newer multiframe observation.",
+      "fact": "The inspected source remains the successful 2026-11-11T21:25:44Z collector snapshot at commit c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85: 65 usable quoted pairs from 68 discovered, 341 successful candle requests and no collection failures. The locked protocol remains FX-OOS-20261104-v21 with rule hash 040da6645e4d35f8c6313db7a72b29fd293a217684fd4287f0aff126320a3f26.",
+      "counter_evidence": "The source exceeded the 25-minute full-research freshness limit; candidate_review does not own refresh recovery. The 01:15 market receipt confirmed no newer full or pair-specific multiframe observation.",
       "decision": "No candidate was accepted or appended. This preserves all 44 permanent paper candidates, 12 archived signal-plan IDs, zero unexpired permanent candidates and empty canonical signals.json."
     },
     {
@@ -100,9 +100,9 @@
     },
     {
       "scope": "current-run delta",
-      "fact": "The market, admission, macro, archive and candidate sources contain no new completed trigger, priced paper preview, canonical admission or unexpired paper candidate relative to the preceding candidate review.",
-      "counter_evidence": "Dashboard rank is a research priority, not an admission. Current scouts explicitly retain NO_APPROVED_TRIGGER and associated cost, structure, higher-frame, exhaustion or news blockers.",
-      "decision": "Zero additions is the completed registration decision for this run; paper-trade-candidates.json and signals.json were left byte-for-byte unchanged."
+      "fact": "The 12 priority pair shards, 130-route admission audit, public entry-gate summary, signal archive and candidate file are unchanged from the preceding review. The current macro receipt adds one published lower-tier AUD fact but does not clear any route or create registered economics.",
+      "counter_evidence": "All routes remain rejected; zero of 64 published routes has technical-and-cost gates clear, and there are zero priced paper previews.",
+      "decision": "Zero additions is the completed registration decision for this run. paper-trade-candidates.json and signals.json remain byte-for-byte unchanged."
     }
   ],
   "blockers": [
@@ -117,7 +117,7 @@
     "docs/FIVE_TASK_OPERATIONS.md@bbc5a5091c16425eceadda27867c284007487800",
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
-    "data/task_runs/market_scan.json@a2b400d5399137addd8fa01e2041ade7fb75fd32",
+    "data/task_runs/market_scan.json@cecd8d7255774a7c71144de60b9d6439bd7dcc06",
     "data/task_runs/macro_events.json@5cb6117a105793191e0ec4b95ca6e134ef9397d5",
     "data/signal_admission_audit.json@4369193e4cdc4fe9d50a05cbfd92b16f6e263502",
     "data/hourly_assessment.json@be121f812b31a9e6ee8bb227135eeec6c81fcaea",
