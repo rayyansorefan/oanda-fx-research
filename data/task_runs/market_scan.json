@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T23:11:38Z",
-  "completed_at": "2026-11-11T23:12:08.851Z",
+  "started_at": "2026-11-12T00:16:08.437Z",
+  "completed_at": "2026-11-12T00:16:10.931Z",
   "source_at": "2026-11-11T21:25:44Z",
   "source_commit": "c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85",
-  "source_age_seconds": 6384,
+  "source_age_seconds": 10227,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs": 65,
@@ -31,17 +31,17 @@
     }
   },
   "findings": [
-    "WAIT based on last observed 21:25:44Z source: canonical admission rejects all evaluated routes; no current signals, no verified simulated fill. No new source observation established.",
-    "Universe manifest reports 65/68 usable quotes and 65 five-timeframe complete; three TRY crosses nontradeable. All 12 priority individual pair shards retrieved and parsed; remaining 53 not individually inspected.",
-    "Sanitized publisher payload is older snapshot with 64/67 quoted/deep, differing from collector 65/68; actual served GitHub Pages feed not independently verified.",
-    "Outside active London research session (23:00-07:00); no full recovery requested. Existing refresh sequence 220 unchanged.",
-    "Macro receipt 23:10Z records upcoming GBP GDP at 07:00Z and other events; machine news remains partial."
+    "WAIT: last full observation 2026-11-11T21:25:44Z; canonical admission rejected all 130 routes; no admitted or active paper signals. No new market observation established.",
+    "All 65/68 quoted pairs parsed from current summary/latest blobs; 65 have reported five-frame coverage; three TRY crosses nontradeable. Top 12 individual pair shards independently parsed; remaining 53 not individually inspected.",
+    "Sanitized public payload 64/67 differs from collector 65/68; repository publication recorded but actual served GitHub Pages feed not independently verified.",
+    "Quiet hours 23:00-07:00 London: no stale-source recovery requested; existing refresh sequence 220 unchanged.",
+    "Macro receipt at 00:07Z identifies GBP GDP 07:00Z, other event risks and partial machine-news coverage. No news clearance inferred."
   ],
   "blockers": [
-    "Full source stale beyond 25-minute research limit.",
-    "53 individual pair shards not independently inspected; large summary/latest fetch_file returned empty content despite nonempty SHA.",
+    "Full source stale beyond 25-minute research freshness gate.",
+    "53 individual pair shards not independently verified.",
     "Collector/publisher coverage discrepancy and actual public serving unverified.",
-    "Machine news partial; no current admission or fill evidence."
+    "Machine-news coverage PARTIAL; no fresh admission or simulated fill evidence."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -49,23 +49,16 @@
     "validation_protocol.json",
     "data/summary.json@13330e14c1e4ca1bfef1fe9058b7064342d4097b",
     "data/latest.json@83f8d3fdb87b4ae1a15c6af3c2a79496590310b9",
-    "data/universe.json",
+    "data/universe.json@c312703ab5e266e22c7bf26d9ac41db73979890f",
     "data/collection_attempt.json",
     "data/monitoring_health.json",
-    "data/signal_admission_audit.json",
-    "data/hourly_assessment.json",
-    "data/fast_entry_assessment.json",
+    "data/signal_admission_audit.json@4369193e4cdc4fe9d50a05cbfd92b16f6e263502",
     "signals.json",
-    "data/news_latest.json",
-    "data/task_runs/macro_events.json",
-    "data/public_dashboard_payload.json",
+    "data/task_runs/macro_events.json@5cb6117a105793191e0ec4b95ca6e134ef9397d5",
+    "data/public_dashboard_payload.json@1c4dc5cfff7a8f16f5c58352c6ec63cd261a8124",
     "data/public_dashboard_status.json",
     "scripts/refresh_request.json",
-    "https://raw.githubusercontent.com/rayyansorefan/standalone-wallet-paper-agent/main/docs/fx-feed.json",
-    "data/universe.json@c312703ab5e266e22c7bf26d9ac41db73979890f",
-    "data/signal_admission_audit.json@4369193e4cdc4fe9d50a05cbfd92b16f6e263502",
-    "signals.json@495bdc05ef63bf4ff17c1b234042eba607334ac4",
-    "data/public_dashboard_payload.json@1c4dc5cfff7a8f16f5c58352c6ec63cd261a8124"
+    "https://raw.githubusercontent.com/rayyansorefan/standalone-wallet-paper-agent/main/docs/fx-feed.json"
   ],
   "run_ids": [
     "43102907264",
