@@ -2,48 +2,50 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T06:12:39.000Z",
-  "completed_at": "2026-11-12T06:13:18.915Z",
+  "started_at": "2026-11-12T07:13:43.000Z",
+  "completed_at": "2026-11-12T07:14:54.323Z",
   "source_at": "2026-11-12T04:31:48Z",
   "source_commit": "a8ab37e83f3b1fbed6b4e623bc25e0826e93f1b4",
-  "source_age_seconds": 6090,
+  "source_age_seconds": 9786,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs": 65,
     "screened_pairs_from_canonical_audit": 65,
-    "deep_pairs_from_individual_shards_this_run": 12,
-    "deep_pairs_reported_in_manifest": 65,
+    "deep_priority_pair_shards_verified": 12,
+    "additional_individual_shards_verified": 10,
+    "manifest_deep_pairs": 65,
     "nontradeable_pairs": 3,
     "canonical_routes_rejected": 130,
     "canonical_new_admitted": 0,
     "canonical_active_at_source": 0,
     "canonical_rejection_reasons": {
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 8,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 7,
-      "INVALID_BID_ASK_OR_SPREAD": 42,
-      "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 1,
-      "FOUR_FRAME_TREND_CONFLICT": 39,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 7,
-      "REVERSAL_OR_EXHAUSTION": 20,
       "ADX_TREND_STRENGTH": 4,
+      "FOUR_FRAME_TREND_CONFLICT": 39,
+      "INVALID_BID_ASK_OR_SPREAD": 42,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 7,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 8,
+      "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 1,
+      "REVERSAL_OR_EXHAUSTION": 20,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 7,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
     "published_feed_pairs": 64,
     "published_feed_universe": 67,
-    "verified_simulated_fills_this_run": 0
+    "verified_simulated_fills_this_run": 0,
+    "full_recovery_requests": 1
   },
   "findings": [
-    "WAIT: current main canonical admission rejects 130/130 routes; signals.json empty; no verified new simulated entry, exit or fill.",
-    "Current main collector observation is 04:31:48Z from successful run 43155351044. Universe manifest reports 65/68 usable quoted pairs and D/H4/H1/M15/M5 coverage for 65; canonical audit covers 130 routes. Twelve priority individual pair shards were fetched and parsed in this run; all 65 individual shards were independently verified in previous market_scan receipt, not repeated here.",
-    "EUR_TRY, TRY_JPY, USD_TRY nontradeable. Rejections: {\"NO_DECISIVE_COMPLETED_M15_IMPULSE\":8,\"NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE\":7,\"INVALID_BID_ASK_OR_SPREAD\":42,\"PULLBACK_PRICE_TOO_FAR_FROM_ZONE\":1,\"FOUR_FRAME_TREND_CONFLICT\":39,\"SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY\":7,\"REVERSAL_OR_EXHAUSTION\":20,\"ADX_TREND_STRENGTH\":4,\"UNSUPPORTED_PAIR_OR_ROUTE\":2}.",
-    "Machine macro receipt PARTIAL; UK GDP and Swedish CPI scheduled for 07:00Z. Public dashboard repository status PUBLISHED only for older 02:55:57Z 64/67 feed; served GitHub Pages feed not independently verified.",
-    "No recovery requested during 23:00-07:00 London quiet hours; no notification receipt inferred."
+    "WAIT: 04:31:48Z canonical observation rejected all 130 routes and signals.json was empty; no new verified simulated fills.",
+    "Manifest reports 65/68 usable quotes and five-timeframe deep context for 65. Canonical audit covers all 65 quoted pairs; 12 priority and 10 additional individual pair shards independently parsed this run.",
+    "One active-session full recovery requested via sequence 222 at 07:14:09Z; GitHub Actions run 43173761864 confirmed in progress. No new collection/admission/publication outcome yet.",
+    "Machine macro coverage remains partial, including 07:00Z UK GDP release; no inferred clearance. Repository dashboard publication remains 02:55:57Z with 64/67 pairs; actual served feed not verified."
   ],
   "blockers": [
-    "Full source older than 25min at review; London quiet hours prohibit recovery request.",
-    "Large summary/latest GitHub fetch_file contents empty despite nonempty SHAs; prior run verified all 65 shards, current run individually inspected top12.",
-    "Dashboard 02:55:57Z feed is older than 04:31:48Z market source and differs in pair coverage; actual public serving unverified.",
-    "Machine news partial; EUR_AUD lifecycle pending reconciliation with independently evidenced untriggered expiry."
+    "Full source stale beyond 20/25min; requested recovery remains in progress and is not a new observation.",
+    "Large summary/latest fetch_file responses empty despite nonempty blob SHA; canonical audit and individual pair shards independently inspected instead.",
+    "Public dashboard older than source and actual served feed not verified.",
+    "Only 22/65 individual pair shards independently parsed in this run; all 65 covered by canonical route audit.",
+    "Macro/news clearance partial and pending EUR_AUD lifecycle machine reconciliation."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -54,17 +56,21 @@
     "data/monitoring_health.json",
     "data/summary.json@b6e0fdcb1bb06740928667e602f2414e5a294d1f",
     "data/latest.json@23ed47491566a53a5c78dc00980ac2774498bfe1",
+    "data/admission_full_gate_audit.json",
     "data/signal_admission_audit.json",
     "signals.json",
-    "data/public_dashboard_payload.json",
-    "data/public_dashboard_status.json",
+    "data/news_latest.json",
     "data/task_runs/macro_events.json",
     "data/task_runs/position_monitor.json",
-    "data/pairs/{top_12_priority}.json",
-    "scripts/refresh_request.json"
+    "data/public_dashboard_payload.json",
+    "data/public_dashboard_status.json",
+    "data/pairs/{22_checked}.json",
+    "scripts/refresh_request.json",
+    "https://github.com/rayyansorefan/oanda-fx-research/actions/runs/43173761864"
   ],
   "run_ids": [
-    "43155351044"
+    "43155351044",
+    "43173761864"
   ],
   "no_broker_orders": true
 }
