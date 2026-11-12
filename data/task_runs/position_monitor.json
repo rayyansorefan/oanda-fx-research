@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "position_monitor",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T01:30:52.000Z",
-  "completed_at": "2026-11-12T01:31:58.933Z",
+  "started_at": "2026-11-12T02:29:42.000Z",
+  "completed_at": "2026-11-12T02:31:07.808Z",
   "source_at": "2026-11-11T21:25:44.000Z",
   "source_commit": "c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85",
-  "source_age_seconds": 14774,
+  "source_age_seconds": 18323,
   "counts": {
     "lifecycle_plans": 104,
     "lifecycle_closed": 2,
@@ -86,7 +86,7 @@
     },
     {
       "scope": "current-run delta",
-      "fact": "The collection, lifecycle, canonical signal, cohort, confirmed-momentum and exit-study blobs are unchanged from the preceding monitor.",
+      "fact": "The collection, lifecycle, canonical signal, forward/auxiliary cohort, confirmed-momentum and exit-study blobs are unchanged from the preceding monitor. The newer market_scan and macro_events receipts remain PARTIAL and source-aligned to 2026-11-11T21:25:44Z; neither establishes a new trigger, fill or exit.",
       "decision": "Zero new chronology is the verified outcome for this run; machine-scored ledgers and immutable plans were not manually rewritten."
     }
   ],
@@ -103,8 +103,8 @@
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
     "docs/PROFITABILITY_EXECUTION_REWORK.md@e852a5d8cb3f509a0919ed7c48bdba220d5234f7",
     "data/profitability_execution_development.json@f9cba96d501933c4bbd37e0ed866e3c4bdc2bbfd",
-    "data/task_runs/market_scan.json@a2b400d5399137addd8fa01e2041ade7fb75fd32",
-    "data/task_runs/macro_events.json@30e9d6102abdcea878951b496e19e9988eecfbf1",
+    "data/task_runs/market_scan.json@101f4ded1e60f1445185bc588fd933d38df1568e",
+    "data/task_runs/macro_events.json@d32e05a34c0a2f659cd83b63f40d4f78e41bae7d",
     "data/collection_attempt.json@ca29b06dd6a85dd70c1703bb5855d88c624b245d",
     "data/lifecycle_ledger.json@68ccd0c612343cbe982761a36ca5dbaa9e357146",
     "signals.json@495bdc05ef63bf4ff17c1b234042eba607334ac4",
