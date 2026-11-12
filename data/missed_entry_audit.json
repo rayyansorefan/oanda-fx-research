@@ -1412,7 +1412,7 @@
       "reason": "Missing intervening complete M15 bar",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_PLN-1d5bdef5c79ddf104f02ed1d004edbd3e531061c609247d416e7afafb7859cb3.json",
+      "source_evidence": "data/replay_evidence/USD_PLN-aad931358c259aa542c331e32fc1a6a1a748e486466ebbdaf1517285c86dc234.json",
       "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
@@ -2213,110 +2213,92 @@
     "202611111800-USDSEK-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
+      "exit_at": "2026-11-11T22:00:00Z",
+      "fill_at": "2026-11-11T21:45:00Z",
       "id": "202611111800-USDSEK-LONG-EMA20_PULLBACK",
       "instrument": "USD_SEK",
+      "paper_entry": 9.97293,
+      "paper_exit": 9.96182,
       "pattern_at": "2026-11-11T20:45:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/USD_SEK-dd02680c536f3c05c3a21ead13c3408abefc0d048fc10f9317249e7a543403d9.json",
-      "status": "PAPER_WAITING_FOR_ENTRY",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/USD_SEK-876e9ee3ab905cddd52f02bf5d2e649512299fb78c8c73c6a938c46427ed49d4.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.1114
     },
     "202611111845-USDCZK-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
       "id": "202611111845-USDCZK-LONG-EMA20_PULLBACK",
       "instrument": "USD_CZK",
+      "invalidated_at": "2026-11-11T22:00:00Z",
       "pattern_at": "2026-11-11T20:45:00+00:00",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_CZK-7f9df91d676ef9ee6c3cccdb0307d29144e70d3e03e5a974467334a2ed1080a4.json",
-      "status": "PAPER_WAITING_FOR_ENTRY",
+      "source_evidence": "data/replay_evidence/USD_CZK-658c1f70bb3c07daa0262218ce63debcc38a095bea66e6c5096280d020ee0f32.json",
+      "status": "PAPER_PRE_ENTRY_INVALIDATED",
       "trade_executed": false
     },
     "202611111845-USDSEK-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
+      "exit_at": "2026-11-11T22:00:00Z",
       "fill_at": "2026-11-11T20:00:00Z",
       "id": "202611111845-USDSEK-LONG-EMA20_PULLBACK",
       "instrument": "USD_SEK",
       "paper_entry": 9.97497,
+      "paper_exit": 9.96501,
       "pattern_at": "2026-11-11T20:00:00+00:00",
       "route": "EMA20_PULLBACK",
+      "scored": true,
+      "source_evidence": "data/replay_evidence/USD_SEK-457586952a100a45410d22693dbdb240f0de74ad4dce0907c2657dae788ec123.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.09985
+    },
+    "202611111945-EURUSD-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202611111945-EURUSD-SHORT-EMA20_PULLBACK",
+      "instrument": "EUR_USD",
+      "invalidated_at": "2026-11-11T23:15:00Z",
+      "pattern_at": "2026-11-12T00:00:00+00:00",
+      "reason": "Frozen stop breached before pattern confirmation",
+      "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/USD_SEK-1ef6bee99163339331e225c003564677c2beab12e869005ae1aa1bc13ec87a1d.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
+      "source_evidence": "data/replay_evidence/EUR_USD-3de786e35b7dffad9e890628caccc1744876f57e85ad9e8fa5cd2b43be0f8efc.json",
+      "status": "PAPER_PRE_ENTRY_INVALIDATED",
+      "trade_executed": false
+    },
+    "202611111945-GBPUSD-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202611111945-GBPUSD-SHORT-EMA20_PULLBACK",
+      "instrument": "GBP_USD",
+      "invalidated_at": "2026-11-11T22:15:00Z",
+      "pattern_at": "2026-11-11T23:30:00+00:00",
+      "reason": "Frozen stop breached before pattern confirmation",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/GBP_USD-72e148666eb567cbe19719d033a8f26ad3b9ebcd946eb10bc6c1aafac41611a7.json",
+      "status": "PAPER_PRE_ENTRY_INVALIDATED",
       "trade_executed": false
     }
   },
   "latency_audit": {
     "method": "Legacy replay assumes pattern-close availability; no actual delivered alert or subsequent manual fill is established.",
-    "records": [
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-11T12:12:53.419270+00:00",
-        "detection_delay_minutes": 72.89,
-        "fill_precedes_detection": false,
-        "id": "202611110915-EURNOK-LONG-EMA20_PULLBACK",
-        "pattern_at": "2026-11-11T11:00:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-11T12:12:53.419270+00:00",
-        "detection_delay_minutes": 72.89,
-        "fill_precedes_detection": false,
-        "id": "202611111000-USDNOK-LONG-EMA20_PULLBACK",
-        "pattern_at": "2026-11-11T11:00:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-11T13:21:49.217927+00:00",
-        "detection_delay_minutes": 6.82,
-        "fill_precedes_detection": false,
-        "id": "202611111145-EURNOK-LONG-EMA20_PULLBACK",
-        "pattern_at": "2026-11-11T13:15:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-11T21:12:35.482688+00:00",
-        "detection_delay_minutes": 27.59,
-        "fill_precedes_detection": false,
-        "id": "202611111800-USDSEK-LONG-EMA20_PULLBACK",
-        "pattern_at": "2026-11-11T20:45:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-11T21:12:35.482688+00:00",
-        "detection_delay_minutes": 27.59,
-        "fill_precedes_detection": false,
-        "id": "202611111845-USDCZK-LONG-EMA20_PULLBACK",
-        "pattern_at": "2026-11-11T20:45:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-11T20:14:56.230516+00:00",
-        "detection_delay_minutes": 14.94,
-        "fill_precedes_detection": true,
-        "id": "202611111845-USDSEK-LONG-EMA20_PULLBACK",
-        "pattern_at": "2026-11-11T20:00:00+00:00"
-      }
-    ],
+    "records": [],
     "verified_profitable_missed_manual_entries": 0
   },
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 6,
-  "today_forward_patterns": 6,
-  "today_registered": 19,
+  "today_distinct_pair_pattern_events": 0,
+  "today_forward_patterns": 0,
+  "today_registered": 1,
   "today_scored_hypothetical_entries": 0,
-  "today_status_counts": {
-    "PAPER_AMBIGUOUS_FILL_BAR": 1,
-    "PAPER_NOT_FILLED_BEFORE_EXPIRY": 1,
-    "PAPER_OPEN_UNRESOLVED": 1,
-    "PAPER_PRE_ENTRY_INVALIDATED": 1,
-    "PAPER_WAITING_FOR_ENTRY": 2
-  },
-  "today_uk": "2026-11-11",
-  "updated_at": "2026-11-11T21:25:55Z"
+  "today_status_counts": {},
+  "today_uk": "2026-11-12",
+  "updated_at": "2026-11-12T02:56:08Z"
 }
