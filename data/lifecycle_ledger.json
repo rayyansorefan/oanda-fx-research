@@ -4,7 +4,8 @@
     "CLOSED": 2,
     "EXPIRED_UNFILLED": 62,
     "INVALIDATED": 46,
-    "QUALIFIED_PENDING_TRIGGER": 7
+    "QUALIFIED_PENDING_TRIGGER": 12,
+    "TRIGGERED": 1
   },
   "events": {
     "007237f4babcd1bcdc3d2c874734d1c1": {
@@ -627,6 +628,26 @@
       "state": "INVALIDATED",
       "triggered_at": null
     },
+    "3ee2e63c838ea54f4646aef9faacb7d8": {
+      "entry_at": null,
+      "evidence_type": "FORWARD_EXPERIMENT",
+      "exit_at": null,
+      "plan_key": "paper:champion:AUTO-20261112T1121-GBP_AUD-L-B",
+      "result_status": null,
+      "source_at": "2026-11-12T11:21:18Z",
+      "state": "QUALIFIED_PENDING_TRIGGER",
+      "triggered_at": null
+    },
+    "3fa343d68a9df6860fb31c467d4abfaf": {
+      "entry_at": null,
+      "evidence_type": "FORWARD_EXPERIMENT",
+      "exit_at": null,
+      "plan_key": "paper:challenger_v1:AUTO-20261112T1121-AUD_CAD-S-B",
+      "result_status": null,
+      "source_at": "2026-11-12T11:21:18Z",
+      "state": "QUALIFIED_PENDING_TRIGGER",
+      "triggered_at": null
+    },
     "40bd737e12ce14fea3d2416bf2c633e2": {
       "entry_at": null,
       "evidence_type": "FORWARD_EXPERIMENT",
@@ -645,6 +666,16 @@
       "result_status": "TRIGGERED_UNFILLED",
       "source_at": "2026-11-06T11:16:59Z",
       "state": "EXPIRED_UNFILLED",
+      "triggered_at": null
+    },
+    "439cb0fe0be86453f54af90bc6c76270": {
+      "entry_at": null,
+      "evidence_type": "FROZEN_CONDITIONAL",
+      "exit_at": null,
+      "plan_key": "conditional:champion:AUTO-20261112T1121-GBP_AUD-L-B",
+      "result_status": null,
+      "source_at": "2026-11-12T11:21:18Z",
+      "state": "QUALIFIED_PENDING_TRIGGER",
       "triggered_at": null
     },
     "43ebe824d7086112c0195e86b0f67de9": {
@@ -675,6 +706,16 @@
       "result_status": "SOURCE_UNAVAILABLE",
       "source_at": "2026-11-12T08:16:29Z",
       "state": "UNVERIFIABLE",
+      "triggered_at": null
+    },
+    "46460aeb9913684db731bd7229301081": {
+      "entry_at": null,
+      "evidence_type": "FORWARD_EXPERIMENT",
+      "exit_at": null,
+      "plan_key": "paper:champion:AUTO-20261112T1121-AUD_JPY-S-B",
+      "result_status": null,
+      "source_at": "2026-11-12T11:21:18Z",
+      "state": "QUALIFIED_PENDING_TRIGGER",
       "triggered_at": null
     },
     "4707cc75113185e51c52255fce5670e6": {
@@ -864,6 +905,16 @@
       "plan_key": "paper:champion:AUTO-20261111T1718-AUD_USD-S-B",
       "result_status": null,
       "source_at": "2026-11-11T17:18:03Z",
+      "state": "QUALIFIED_PENDING_TRIGGER",
+      "triggered_at": null
+    },
+    "67cab7ecd0180b172651c5d9fca15e85": {
+      "entry_at": null,
+      "evidence_type": "FORWARD_EXPERIMENT",
+      "exit_at": null,
+      "plan_key": "paper:challenger_v1:AUTO-20261112T1121-GBP_AUD-L-B",
+      "result_status": null,
+      "source_at": "2026-11-12T11:21:18Z",
       "state": "QUALIFIED_PENDING_TRIGGER",
       "triggered_at": null
     },
@@ -1577,6 +1628,16 @@
       "state": "UNVERIFIABLE",
       "triggered_at": null
     },
+    "a597a6ddf634f753bcb5bb002e026e36": {
+      "entry_at": null,
+      "evidence_type": "FORWARD_EXPERIMENT",
+      "exit_at": null,
+      "plan_key": "paper:challenger_v1:AUTO-20261112T1121-AUD_JPY-S-B",
+      "result_status": null,
+      "source_at": "2026-11-12T11:21:18Z",
+      "state": "QUALIFIED_PENDING_TRIGGER",
+      "triggered_at": null
+    },
     "a82f8682031e7f26d57c269fb4b14fd5": {
       "entry_at": null,
       "evidence_type": "FORWARD_EXPERIMENT",
@@ -2177,6 +2238,16 @@
       "state": "QUALIFIED_PENDING_TRIGGER",
       "triggered_at": null
     },
+    "f28a4d484bddecb2f67d5a886e30e39f": {
+      "entry_at": null,
+      "evidence_type": "FROZEN_CONDITIONAL",
+      "exit_at": null,
+      "plan_key": "conditional:champion:AUTO-20261112T1058-AUD_JPY-S-B",
+      "result_status": "TRIGGERED_UNFILLED",
+      "source_at": "2026-11-12T11:21:18Z",
+      "state": "TRIGGERED",
+      "triggered_at": "2026-11-12T11:15:00Z"
+    },
     "f3bc10283dafb5d2589dac71ca05f275": {
       "entry_at": null,
       "evidence_type": "FORWARD_EXPERIMENT",
@@ -2286,7 +2357,7 @@
       "evidence_type": "FROZEN_CONDITIONAL",
       "id": "AUTO-20261029T0321-EUR_AUD-S-B",
       "key": "conditional:champion:AUTO-20261029T0321-EUR_AUD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "net_r": -1.0,
       "original": {
         "account_equity_verified": false,
@@ -2343,7 +2414,7 @@
       "evidence_type": "FROZEN_CONDITIONAL",
       "id": "AUTO-20261103T0640-AUD_USD-S-B",
       "key": "conditional:champion:AUTO-20261103T0640-AUD_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -2414,7 +2485,7 @@
       "evidence_type": "FROZEN_CONDITIONAL",
       "id": "AUTO-20261103T0913-EUR_CHF-S-B",
       "key": "conditional:champion:AUTO-20261103T0913-EUR_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -2485,7 +2556,7 @@
       "evidence_type": "FROZEN_CONDITIONAL",
       "id": "AUTO-20261103T1154-AUD_CAD-S-B",
       "key": "conditional:champion:AUTO-20261103T1154-AUD_CAD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -2556,7 +2627,7 @@
       "evidence_type": "FROZEN_CONDITIONAL",
       "id": "AUTO-20261106T0814-EUR_CHF-S-B",
       "key": "conditional:champion:AUTO-20261106T0814-EUR_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "net_r": -1.0,
       "original": {
         "account_equity_verified": false,
@@ -2629,7 +2700,7 @@
       "evidence_type": "FROZEN_CONDITIONAL",
       "id": "AUTO-20261106T1117-AUD_CAD-S-B",
       "key": "conditional:champion:AUTO-20261106T1117-AUD_CAD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -2713,7 +2784,7 @@
       "evidence_type": "FROZEN_CONDITIONAL",
       "id": "AUTO-20261106T1117-GBP_AUD-L-B",
       "key": "conditional:champion:AUTO-20261106T1117-GBP_AUD-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -2784,7 +2855,7 @@
       "evidence_type": "FROZEN_CONDITIONAL",
       "id": "AUTO-20261109T1914-CAD_JPY-S-C",
       "key": "conditional:champion:AUTO-20261109T1914-CAD_JPY-S-C",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -2856,7 +2927,7 @@
       "evidence_type": "FROZEN_CONDITIONAL",
       "id": "AUTO-20261110T1919-AUD_JPY-S-B",
       "key": "conditional:champion:AUTO-20261110T1919-AUD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -2927,7 +2998,7 @@
       "evidence_type": "FROZEN_CONDITIONAL",
       "id": "AUTO-20261111T0719-EUR_USD-S-B",
       "key": "conditional:champion:AUTO-20261111T0719-EUR_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -2998,7 +3069,7 @@
       "evidence_type": "FROZEN_CONDITIONAL",
       "id": "AUTO-20261111T1620-AUD_USD-S-B",
       "key": "conditional:champion:AUTO-20261111T1620-AUD_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -3069,7 +3140,7 @@
       "evidence_type": "FROZEN_CONDITIONAL",
       "id": "AUTO-20261111T1821-EUR_USD-S-B",
       "key": "conditional:champion:AUTO-20261111T1821-EUR_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -3140,7 +3211,7 @@
       "evidence_type": "FROZEN_CONDITIONAL",
       "id": "AUTO-20261112T0918-AUD_JPY-S-B",
       "key": "conditional:champion:AUTO-20261112T0918-AUD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -3207,11 +3278,11 @@
       "source_kind": "champion_manual_plan"
     },
     "conditional:champion:AUTO-20261112T1058-AUD_JPY-S-B": {
-      "current_state": "QUALIFIED_PENDING_TRIGGER",
+      "current_state": "TRIGGERED",
       "evidence_type": "FROZEN_CONDITIONAL",
       "id": "AUTO-20261112T1058-AUD_JPY-S-B",
       "key": "conditional:champion:AUTO-20261112T1058-AUD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -3272,9 +3343,81 @@
       "original_sha256": "aef3ae63391a03a23079305b6e6a4719c85f6e7d9b6051acf8e2d26bf512707a",
       "policy": "champion",
       "registered_at": "2026-11-12T10:58:08.548998Z",
-      "result_status": null,
+      "result_status": "TRIGGERED_UNFILLED",
       "scored": false,
       "source_at": "2026-11-12T10:57:55Z",
+      "source_kind": "champion_manual_plan",
+      "trigger_seen": true
+    },
+    "conditional:champion:AUTO-20261112T1121-GBP_AUD-L-B": {
+      "current_state": "QUALIFIED_PENDING_TRIGGER",
+      "evidence_type": "FROZEN_CONDITIONAL",
+      "id": "AUTO-20261112T1121-GBP_AUD-L-B",
+      "key": "conditional:champion:AUTO-20261112T1121-GBP_AUD-L-B",
+      "last_observed_at": "2026-11-12T11:21:18Z",
+      "original": {
+        "account_equity_verified": false,
+        "admission_policy": "champion",
+        "alert_b": 1.94291,
+        "broker_verified": false,
+        "created_at": "2026-11-12T11:21:31.897539Z",
+        "decision_status": "CONDITIONAL_PENDING_NEW_M15_TRIGGER",
+        "direction": "LONG",
+        "entry_route": "EMA20_PULLBACK",
+        "event_blackouts_utc": [],
+        "expires_at": "2026-11-12T12:51:31.897539Z",
+        "gross_rr_at_creation": 3.415,
+        "id": "AUTO-20261112T1121-GBP_AUD-L-B",
+        "instrument": "GBP_AUD",
+        "manual_broker_check_required": true,
+        "max_equity_risk_fraction": 0.0025,
+        "max_oanda_spread_pips": 5.635,
+        "net_rr_at_spread_cap": 2.065,
+        "oanda_snapshot_at": "2026-11-12T11:21:18Z",
+        "paper_only": false,
+        "pip_size": 0.0001,
+        "planned_entry": 1.94291,
+        "research_only": true,
+        "source_quote_at": "2026-11-12T11:21:17.969740813Z",
+        "stop": 1.94163,
+        "target_basis": "nearest completed M15/H1/H4/D 20-bar support/resistance",
+        "technical_context": {
+          "admission_policy": "champion",
+          "conditional_daily_exception": false,
+          "conditional_weak_h4_exception": false,
+          "continuation_min_body": 0.5,
+          "continuation_min_close": 0.7,
+          "daily_frame_conflict": false,
+          "extension_cap_atr": 2.0,
+          "extension_exception": false,
+          "full_frame_alignment": true,
+          "h1_adx": 28.092499088980112,
+          "h1_minus_di": 19.54265802067322,
+          "h1_plus_di": 26.835308695134707,
+          "m15_adx": 28.061140124984412,
+          "m15_atr": 0.0012181399649690572,
+          "m15_minus_di": 18.191076663748895,
+          "m15_plus_di": 23.808190479074185,
+          "momentum_adx_minimum": 20,
+          "source_bar_time": "2026-11-12T11:00:00.000000000Z",
+          "timeframes_aligned": [
+            "M15",
+            "H1",
+            "H4",
+            "D"
+          ],
+          "trigger_timeframe": "M15"
+        },
+        "tp1": 1.94728,
+        "trigger_basis": "future completed M15 only",
+        "trigger_timeframe": "M15"
+      },
+      "original_sha256": "67000eccad2158d37f7a0191d5b73c1bb68b674c55c1cfded6f0ae1156c4507e",
+      "policy": "champion",
+      "registered_at": "2026-11-12T11:21:31.897539Z",
+      "result_status": null,
+      "scored": false,
+      "source_at": "2026-11-12T11:21:18Z",
       "source_kind": "champion_manual_plan"
     },
     "paper:challenger_v1:AUTO-20261029T0321-EUR_AUD-S-B": {
@@ -3282,7 +3425,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261029T0321-EUR_AUD-S-B",
       "key": "paper:challenger_v1:AUTO-20261029T0321-EUR_AUD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -3337,7 +3480,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261029T0515-EUR_AUD-S-B",
       "key": "paper:challenger_v1:AUTO-20261029T0515-EUR_AUD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -3392,7 +3535,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261029T0621-EUR_AUD-S-B",
       "key": "paper:challenger_v1:AUTO-20261029T0621-EUR_AUD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -3447,7 +3590,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261029T0621-EUR_USD-S-B",
       "key": "paper:challenger_v1:AUTO-20261029T0621-EUR_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -3502,7 +3645,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261029T1306-CAD_JPY-L-B",
       "key": "paper:challenger_v1:AUTO-20261029T1306-CAD_JPY-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -3557,7 +3700,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261029T1706-GBP_AUD-L-B",
       "key": "paper:challenger_v1:AUTO-20261029T1706-GBP_AUD-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -3612,7 +3755,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261029T2217-USD_CAD-S-B",
       "key": "paper:challenger_v1:AUTO-20261029T2217-USD_CAD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -3667,7 +3810,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261030T0016-AUD_USD-S-B",
       "key": "paper:challenger_v1:AUTO-20261030T0016-AUD_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -3722,7 +3865,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261030T0515-AUD_CHF-S-B",
       "key": "paper:challenger_v1:AUTO-20261030T0515-AUD_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -3777,7 +3920,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261030T1919-USD_CAD-S-B",
       "key": "paper:challenger_v1:AUTO-20261030T1919-USD_CAD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -3843,7 +3986,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261102T1408-AUD_USD-S-C",
       "key": "paper:challenger_v1:AUTO-20261102T1408-AUD_USD-S-C",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -3913,7 +4056,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261102T1408-CHF_JPY-L-B",
       "key": "paper:challenger_v1:AUTO-20261102T1408-CHF_JPY-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -3984,7 +4127,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261102T1411-AUD_USD-S-B",
       "key": "paper:challenger_v1:AUTO-20261102T1411-AUD_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -4054,7 +4197,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261102T1541-AUD_CHF-S-B",
       "key": "paper:challenger_v1:AUTO-20261102T1541-AUD_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -4124,7 +4267,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261102T1541-CHF_JPY-L-B",
       "key": "paper:challenger_v1:AUTO-20261102T1541-CHF_JPY-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -4194,7 +4337,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261102T1601-AUD_CHF-S-B",
       "key": "paper:challenger_v1:AUTO-20261102T1601-AUD_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -4264,7 +4407,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261102T1631-AUD_CHF-S-B",
       "key": "paper:challenger_v1:AUTO-20261102T1631-AUD_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -4333,7 +4476,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261103T0640-AUD_USD-S-B",
       "key": "paper:challenger_v1:AUTO-20261103T0640-AUD_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -4404,7 +4547,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261103T0728-AUD_USD-S-B",
       "key": "paper:challenger_v1:AUTO-20261103T0728-AUD_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -4475,7 +4618,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261103T0913-CHF_JPY-L-B",
       "key": "paper:challenger_v1:AUTO-20261103T0913-CHF_JPY-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -4545,7 +4688,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261103T0913-EUR_CHF-S-B",
       "key": "paper:challenger_v1:AUTO-20261103T0913-EUR_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -4616,7 +4759,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261103T1154-AUD_CAD-S-B",
       "key": "paper:challenger_v1:AUTO-20261103T1154-AUD_CAD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -4687,7 +4830,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261103T1154-CHF_JPY-L-B",
       "key": "paper:challenger_v1:AUTO-20261103T1154-CHF_JPY-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -4757,7 +4900,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261104T1255-AUD_JPY-L-B",
       "key": "paper:challenger_v1:AUTO-20261104T1255-AUD_JPY-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -4826,7 +4969,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261104T1829-GBP_USD-L-B",
       "key": "paper:challenger_v1:AUTO-20261104T1829-GBP_USD-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -4896,7 +5039,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261104T2016-GBP_JPY-L-B",
       "key": "paper:challenger_v1:AUTO-20261104T2016-GBP_JPY-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -4966,7 +5109,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261104T2022-AUD_JPY-L-B",
       "key": "paper:challenger_v1:AUTO-20261104T2022-AUD_JPY-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -5036,7 +5179,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261104T2032-GBP_JPY-L-B",
       "key": "paper:challenger_v1:AUTO-20261104T2032-GBP_JPY-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -5106,7 +5249,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261105T2038-CAD_CHF-S-B",
       "key": "paper:challenger_v1:AUTO-20261105T2038-CAD_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -5176,7 +5319,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261105T2038-USD_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261105T2038-USD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -5246,7 +5389,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261106T0814-EUR_CHF-S-B",
       "key": "paper:challenger_v1:AUTO-20261106T0814-EUR_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -5318,7 +5461,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261106T0814-GBP_CHF-S-B",
       "key": "paper:challenger_v1:AUTO-20261106T0814-GBP_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -5389,7 +5532,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261106T0919-EUR_CHF-S-B",
       "key": "paper:challenger_v1:AUTO-20261106T0919-EUR_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -5460,7 +5603,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261106T0919-GBP_CHF-S-B",
       "key": "paper:challenger_v1:AUTO-20261106T0919-GBP_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -5530,7 +5673,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261106T1117-AUD_CAD-S-B",
       "key": "paper:challenger_v1:AUTO-20261106T1117-AUD_CAD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -5614,7 +5757,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261106T1117-EUR_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261106T1117-EUR_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -5684,7 +5827,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261106T1117-GBP_AUD-L-B",
       "key": "paper:challenger_v1:AUTO-20261106T1117-GBP_AUD-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -5755,7 +5898,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261106T1820-AUD_CHF-S-B",
       "key": "paper:challenger_v1:AUTO-20261106T1820-AUD_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -5826,7 +5969,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261106T1917-AUD_CHF-S-B",
       "key": "paper:challenger_v1:AUTO-20261106T1917-AUD_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -5897,7 +6040,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261106T1917-CAD_CHF-S-B",
       "key": "paper:challenger_v1:AUTO-20261106T1917-CAD_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -5967,7 +6110,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261106T1917-CAD_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261106T1917-CAD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -6037,7 +6180,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261109T0013-EUR_AUD-L-B",
       "key": "paper:challenger_v1:AUTO-20261109T0013-EUR_AUD-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -6107,7 +6250,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261109T1204-GBP_AUD-L-B",
       "key": "paper:challenger_v1:AUTO-20261109T1204-GBP_AUD-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -6178,7 +6321,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261109T1726-CHF_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261109T1726-CHF_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -6248,7 +6391,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261109T1814-CHF_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261109T1814-CHF_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -6318,7 +6461,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261109T1814-EUR_CHF-L-B",
       "key": "paper:challenger_v1:AUTO-20261109T1814-EUR_CHF-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -6387,7 +6530,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261109T1914-CHF_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261109T1914-CHF_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -6458,7 +6601,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T0051-AUD_CAD-L-B",
       "key": "paper:challenger_v1:AUTO-20261110T0051-AUD_CAD-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -6527,7 +6670,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T0917-EUR_JPY-L-B",
       "key": "paper:challenger_v1:AUTO-20261110T0917-EUR_JPY-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -6598,7 +6741,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T1456-EUR_AUD-L-B",
       "key": "paper:challenger_v1:AUTO-20261110T1456-EUR_AUD-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -6669,7 +6812,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T1614-EUR_AUD-L-B",
       "key": "paper:challenger_v1:AUTO-20261110T1614-EUR_AUD-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -6739,7 +6882,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T1714-CAD_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261110T1714-CAD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -6810,7 +6953,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T1746-CAD_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261110T1746-CAD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -6881,7 +7024,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T1819-AUD_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261110T1819-AUD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -6952,7 +7095,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T1819-CHF_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261110T1819-CHF_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -7022,7 +7165,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T1856-AUD_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261110T1856-AUD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -7093,7 +7236,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T1856-CHF_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261110T1856-CHF_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -7163,7 +7306,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T1919-AUD_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261110T1919-AUD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -7234,7 +7377,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T1919-CHF_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261110T1919-CHF_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -7304,7 +7447,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T1919-GBP_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261110T1919-GBP_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -7374,7 +7517,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T2017-AUD_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261110T2017-AUD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -7445,7 +7588,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T2017-CHF_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261110T2017-CHF_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -7515,7 +7658,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T2017-GBP_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261110T2017-GBP_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -7585,7 +7728,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T2114-GBP_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261110T2114-GBP_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -7655,7 +7798,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T0719-EUR_USD-S-B",
       "key": "paper:challenger_v1:AUTO-20261111T0719-EUR_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -7726,7 +7869,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T0919-AUD_CHF-L-B",
       "key": "paper:challenger_v1:AUTO-20261111T0919-AUD_CHF-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -7795,7 +7938,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T0931-AUD_CHF-L-B",
       "key": "paper:challenger_v1:AUTO-20261111T0931-AUD_CHF-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -7864,7 +8007,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T1019-CHF_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261111T1019-CHF_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -7934,7 +8077,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T1427-CHF_JPY-S-C",
       "key": "paper:challenger_v1:AUTO-20261111T1427-CHF_JPY-S-C",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -8004,7 +8147,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T1620-AUD_CHF-L-C",
       "key": "paper:challenger_v1:AUTO-20261111T1620-AUD_CHF-L-C",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -8073,7 +8216,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T1620-AUD_USD-S-B",
       "key": "paper:challenger_v1:AUTO-20261111T1620-AUD_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -8144,7 +8287,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T1620-EUR_AUD-S-B",
       "key": "paper:challenger_v1:AUTO-20261111T1620-EUR_AUD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -8214,7 +8357,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T1718-AUD_USD-S-B",
       "key": "paper:challenger_v1:AUTO-20261111T1718-AUD_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -8285,7 +8428,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T1821-CHF_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261111T1821-CHF_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -8356,7 +8499,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T1821-EUR_USD-S-B",
       "key": "paper:challenger_v1:AUTO-20261111T1821-EUR_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -8427,7 +8570,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T1821-GBP_USD-S-B",
       "key": "paper:challenger_v1:AUTO-20261111T1821-GBP_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -8497,7 +8640,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261112T0248-EUR_AUD-S-B",
       "key": "paper:challenger_v1:AUTO-20261112T0248-EUR_AUD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -8567,7 +8710,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261112T0431-EUR_CAD-S-B",
       "key": "paper:challenger_v1:AUTO-20261112T0431-EUR_CAD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -8637,7 +8780,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261112T0431-EUR_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261112T0431-EUR_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -8707,7 +8850,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261112T0918-AUD_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261112T0918-AUD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -8778,7 +8921,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261112T1013-AUD_CAD-S-B",
       "key": "paper:challenger_v1:AUTO-20261112T1013-AUD_CAD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -8849,7 +8992,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261112T1013-AUD_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261112T1013-AUD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -8920,7 +9063,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261112T1058-AUD_CAD-S-B",
       "key": "paper:challenger_v1:AUTO-20261112T1058-AUD_CAD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -8991,7 +9134,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261112T1058-AUD_JPY-S-B",
       "key": "paper:challenger_v1:AUTO-20261112T1058-AUD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "challenger_v1",
@@ -9057,12 +9200,225 @@
       "source_at": "2026-11-12T10:57:55Z",
       "source_kind": "paper_comparison"
     },
+    "paper:challenger_v1:AUTO-20261112T1121-AUD_CAD-S-B": {
+      "current_state": "QUALIFIED_PENDING_TRIGGER",
+      "evidence_type": "FORWARD_EXPERIMENT",
+      "id": "AUTO-20261112T1121-AUD_CAD-S-B",
+      "key": "paper:challenger_v1:AUTO-20261112T1121-AUD_CAD-S-B",
+      "last_observed_at": "2026-11-12T11:21:18Z",
+      "original": {
+        "account_equity_verified": false,
+        "admission_policy": "challenger_v1",
+        "alert_b": 0.97325,
+        "broker_verified": false,
+        "created_at": "2026-11-12T11:21:32Z",
+        "decision_status": "CONDITIONAL_PENDING_NEW_M15_TRIGGER",
+        "direction": "SHORT",
+        "entry_route": "EMA20_PULLBACK",
+        "event_blackouts_utc": [],
+        "expires_at": "2026-11-12T12:51:32Z",
+        "gross_rr_at_creation": 3.138,
+        "id": "AUTO-20261112T1121-AUD_CAD-S-B",
+        "instrument": "AUD_CAD",
+        "manual_broker_check_required": true,
+        "max_equity_risk_fraction": 0.0025,
+        "max_oanda_spread_pips": 2.76,
+        "net_rr_at_spread_cap": 1.804,
+        "oanda_snapshot_at": "2026-11-12T11:21:18Z",
+        "paper_only": true,
+        "pip_size": 0.0001,
+        "planned_entry": 0.97325,
+        "research_only": true,
+        "source_quote_at": "2026-11-12T11:20:48.074720443Z",
+        "stop": 0.97383,
+        "target_basis": "nearest completed M15/H1/H4/D 20-bar support/resistance",
+        "technical_context": {
+          "admission_policy": "challenger_v1",
+          "conditional_daily_exception": false,
+          "conditional_weak_h4_exception": false,
+          "continuation_min_body": 0.55,
+          "continuation_min_close": 0.72,
+          "daily_frame_conflict": false,
+          "extension_cap_atr": 1.85,
+          "extension_exception": false,
+          "full_frame_alignment": false,
+          "h1_adx": 19.776671180799543,
+          "h1_minus_di": 28.652348212509935,
+          "h1_plus_di": 13.640009556121958,
+          "m15_adx": 32.12172489886836,
+          "m15_atr": 0.0005527419970039331,
+          "m15_minus_di": 26.82010112018561,
+          "m15_plus_di": 18.62404861125889,
+          "momentum_adx_minimum": 18,
+          "source_bar_time": "2026-11-12T11:00:00.000000000Z",
+          "timeframes_aligned": [
+            "M15",
+            "H1",
+            "H4",
+            "D"
+          ],
+          "trigger_timeframe": "M15"
+        },
+        "tp1": 0.97143,
+        "trigger_basis": "future completed M15 only",
+        "trigger_timeframe": "M15"
+      },
+      "original_sha256": "f66ec4808489ea381df1e6c2df6260dba08aee8c89136c6748fb1aa5cce73678",
+      "policy": "challenger_v1",
+      "registered_at": "2026-11-12T11:21:32Z",
+      "result_status": null,
+      "scored": false,
+      "source_at": "2026-11-12T11:21:18Z",
+      "source_kind": "paper_comparison"
+    },
+    "paper:challenger_v1:AUTO-20261112T1121-AUD_JPY-S-B": {
+      "current_state": "QUALIFIED_PENDING_TRIGGER",
+      "evidence_type": "FORWARD_EXPERIMENT",
+      "id": "AUTO-20261112T1121-AUD_JPY-S-B",
+      "key": "paper:challenger_v1:AUTO-20261112T1121-AUD_JPY-S-B",
+      "last_observed_at": "2026-11-12T11:21:18Z",
+      "original": {
+        "account_equity_verified": false,
+        "admission_policy": "challenger_v1",
+        "alert_b": 109.069,
+        "broker_verified": false,
+        "created_at": "2026-11-12T11:21:32Z",
+        "decision_status": "CONDITIONAL_PENDING_NEW_M15_TRIGGER",
+        "direction": "SHORT",
+        "entry_route": "EMA20_PULLBACK",
+        "event_blackouts_utc": [],
+        "expires_at": "2026-11-12T12:51:32Z",
+        "gross_rr_at_creation": 3.356,
+        "id": "AUTO-20261112T1121-AUD_JPY-S-B",
+        "instrument": "AUD_JPY",
+        "manual_broker_check_required": true,
+        "max_equity_risk_fraction": 0.0025,
+        "max_oanda_spread_pips": 2.645,
+        "net_rr_at_spread_cap": 2.287,
+        "oanda_snapshot_at": "2026-11-12T11:21:18Z",
+        "paper_only": true,
+        "pip_size": 0.01,
+        "planned_entry": 109.069,
+        "research_only": true,
+        "source_quote_at": "2026-11-12T11:21:17.061097185Z",
+        "stop": 109.15,
+        "target_basis": "nearest completed M15/H1/H4/D 20-bar support/resistance",
+        "technical_context": {
+          "admission_policy": "challenger_v1",
+          "conditional_daily_exception": false,
+          "conditional_weak_h4_exception": false,
+          "continuation_min_body": 0.55,
+          "continuation_min_close": 0.72,
+          "daily_frame_conflict": false,
+          "extension_cap_atr": 1.85,
+          "extension_exception": false,
+          "full_frame_alignment": false,
+          "h1_adx": 25.71884750983703,
+          "h1_minus_di": 28.70087795589545,
+          "h1_plus_di": 12.8534794129212,
+          "m15_adx": 27.09312029439849,
+          "m15_atr": 0.07750696409512756,
+          "m15_minus_di": 24.860557280125988,
+          "m15_plus_di": 16.268488921352574,
+          "momentum_adx_minimum": 18,
+          "source_bar_time": "2026-11-12T11:00:00.000000000Z",
+          "timeframes_aligned": [
+            "M15",
+            "H1",
+            "H4",
+            "D"
+          ],
+          "trigger_timeframe": "M15"
+        },
+        "tp1": 108.796,
+        "trigger_basis": "future completed M15 only",
+        "trigger_timeframe": "M15"
+      },
+      "original_sha256": "0f830cfaa3103207a6afc841da625cd32247f31f4c1b6c1c8dc2e2590b91fb5c",
+      "policy": "challenger_v1",
+      "registered_at": "2026-11-12T11:21:32Z",
+      "result_status": null,
+      "scored": false,
+      "source_at": "2026-11-12T11:21:18Z",
+      "source_kind": "paper_comparison"
+    },
+    "paper:challenger_v1:AUTO-20261112T1121-GBP_AUD-L-B": {
+      "current_state": "QUALIFIED_PENDING_TRIGGER",
+      "evidence_type": "FORWARD_EXPERIMENT",
+      "id": "AUTO-20261112T1121-GBP_AUD-L-B",
+      "key": "paper:challenger_v1:AUTO-20261112T1121-GBP_AUD-L-B",
+      "last_observed_at": "2026-11-12T11:21:18Z",
+      "original": {
+        "account_equity_verified": false,
+        "admission_policy": "challenger_v1",
+        "alert_b": 1.94291,
+        "broker_verified": false,
+        "created_at": "2026-11-12T11:21:32Z",
+        "decision_status": "CONDITIONAL_PENDING_NEW_M15_TRIGGER",
+        "direction": "LONG",
+        "entry_route": "EMA20_PULLBACK",
+        "event_blackouts_utc": [],
+        "expires_at": "2026-11-12T12:51:32Z",
+        "gross_rr_at_creation": 3.415,
+        "id": "AUTO-20261112T1121-GBP_AUD-L-B",
+        "instrument": "GBP_AUD",
+        "manual_broker_check_required": true,
+        "max_equity_risk_fraction": 0.0025,
+        "max_oanda_spread_pips": 5.635,
+        "net_rr_at_spread_cap": 2.065,
+        "oanda_snapshot_at": "2026-11-12T11:21:18Z",
+        "paper_only": true,
+        "pip_size": 0.0001,
+        "planned_entry": 1.94291,
+        "research_only": true,
+        "source_quote_at": "2026-11-12T11:21:17.969740813Z",
+        "stop": 1.94163,
+        "target_basis": "nearest completed M15/H1/H4/D 20-bar support/resistance",
+        "technical_context": {
+          "admission_policy": "challenger_v1",
+          "conditional_daily_exception": false,
+          "conditional_weak_h4_exception": false,
+          "continuation_min_body": 0.55,
+          "continuation_min_close": 0.72,
+          "daily_frame_conflict": false,
+          "extension_cap_atr": 1.85,
+          "extension_exception": false,
+          "full_frame_alignment": false,
+          "h1_adx": 28.092499088980112,
+          "h1_minus_di": 19.54265802067322,
+          "h1_plus_di": 26.835308695134707,
+          "m15_adx": 28.061140124984412,
+          "m15_atr": 0.0012181399649690572,
+          "m15_minus_di": 18.191076663748895,
+          "m15_plus_di": 23.808190479074185,
+          "momentum_adx_minimum": 18,
+          "source_bar_time": "2026-11-12T11:00:00.000000000Z",
+          "timeframes_aligned": [
+            "M15",
+            "H1",
+            "H4",
+            "D"
+          ],
+          "trigger_timeframe": "M15"
+        },
+        "tp1": 1.94728,
+        "trigger_basis": "future completed M15 only",
+        "trigger_timeframe": "M15"
+      },
+      "original_sha256": "dff5e90576d2e94f008e1f06cf61ca43e230b3c7330e2c6914cffe83af9409f2",
+      "policy": "challenger_v1",
+      "registered_at": "2026-11-12T11:21:32Z",
+      "result_status": null,
+      "scored": false,
+      "source_at": "2026-11-12T11:21:18Z",
+      "source_kind": "paper_comparison"
+    },
     "paper:champion:AUTO-20261029T0321-EUR_AUD-S-B": {
       "current_state": "EXPIRED_UNFILLED",
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261029T0321-EUR_AUD-S-B",
       "key": "paper:champion:AUTO-20261029T0321-EUR_AUD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -9117,7 +9473,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261103T0640-AUD_USD-S-B",
       "key": "paper:champion:AUTO-20261103T0640-AUD_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -9188,7 +9544,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261103T0728-AUD_USD-S-B",
       "key": "paper:champion:AUTO-20261103T0728-AUD_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -9259,7 +9615,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261103T0913-EUR_CHF-S-B",
       "key": "paper:champion:AUTO-20261103T0913-EUR_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -9330,7 +9686,7 @@
       "evidence_type": "HISTORICAL_OR_DEVELOPMENT",
       "id": "AUTO-20261103T1154-AUD_CAD-S-B",
       "key": "paper:champion:AUTO-20261103T1154-AUD_CAD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -9401,7 +9757,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261106T0814-EUR_CHF-S-B",
       "key": "paper:champion:AUTO-20261106T0814-EUR_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -9473,7 +9829,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261106T0919-EUR_CHF-S-B",
       "key": "paper:champion:AUTO-20261106T0919-EUR_CHF-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -9544,7 +9900,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261106T1117-AUD_CAD-S-B",
       "key": "paper:champion:AUTO-20261106T1117-AUD_CAD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -9628,7 +9984,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261106T1117-GBP_AUD-L-B",
       "key": "paper:champion:AUTO-20261106T1117-GBP_AUD-L-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -9699,7 +10055,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261109T1914-CAD_JPY-S-C",
       "key": "paper:champion:AUTO-20261109T1914-CAD_JPY-S-C",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -9771,7 +10127,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T1919-AUD_JPY-S-B",
       "key": "paper:champion:AUTO-20261110T1919-AUD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -9842,7 +10198,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261110T2017-AUD_JPY-S-B",
       "key": "paper:champion:AUTO-20261110T2017-AUD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -9913,7 +10269,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T0719-EUR_USD-S-B",
       "key": "paper:champion:AUTO-20261111T0719-EUR_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -9984,7 +10340,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T1620-AUD_USD-S-B",
       "key": "paper:champion:AUTO-20261111T1620-AUD_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -10055,7 +10411,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T1718-AUD_USD-S-B",
       "key": "paper:champion:AUTO-20261111T1718-AUD_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -10126,7 +10482,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261111T1821-EUR_USD-S-B",
       "key": "paper:champion:AUTO-20261111T1821-EUR_USD-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -10197,7 +10553,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261112T0918-AUD_JPY-S-B",
       "key": "paper:champion:AUTO-20261112T0918-AUD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -10268,7 +10624,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261112T1013-AUD_JPY-S-B",
       "key": "paper:champion:AUTO-20261112T1013-AUD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -10339,7 +10695,7 @@
       "evidence_type": "FORWARD_EXPERIMENT",
       "id": "AUTO-20261112T1058-AUD_JPY-S-B",
       "key": "paper:champion:AUTO-20261112T1058-AUD_JPY-S-B",
-      "last_observed_at": "2026-11-12T10:57:55Z",
+      "last_observed_at": "2026-11-12T11:21:18Z",
       "original": {
         "account_equity_verified": false,
         "admission_policy": "champion",
@@ -10404,46 +10760,188 @@
       "scored": false,
       "source_at": "2026-11-12T10:57:55Z",
       "source_kind": "paper_comparison"
+    },
+    "paper:champion:AUTO-20261112T1121-AUD_JPY-S-B": {
+      "current_state": "QUALIFIED_PENDING_TRIGGER",
+      "evidence_type": "FORWARD_EXPERIMENT",
+      "id": "AUTO-20261112T1121-AUD_JPY-S-B",
+      "key": "paper:champion:AUTO-20261112T1121-AUD_JPY-S-B",
+      "last_observed_at": "2026-11-12T11:21:18Z",
+      "original": {
+        "account_equity_verified": false,
+        "admission_policy": "champion",
+        "alert_b": 109.069,
+        "broker_verified": false,
+        "created_at": "2026-11-12T11:21:32Z",
+        "decision_status": "CONDITIONAL_PENDING_NEW_M15_TRIGGER",
+        "direction": "SHORT",
+        "entry_route": "EMA20_PULLBACK",
+        "event_blackouts_utc": [],
+        "expires_at": "2026-11-12T12:51:32Z",
+        "gross_rr_at_creation": 3.356,
+        "id": "AUTO-20261112T1121-AUD_JPY-S-B",
+        "instrument": "AUD_JPY",
+        "manual_broker_check_required": true,
+        "max_equity_risk_fraction": 0.0025,
+        "max_oanda_spread_pips": 2.645,
+        "net_rr_at_spread_cap": 2.287,
+        "oanda_snapshot_at": "2026-11-12T11:21:18Z",
+        "paper_only": false,
+        "pip_size": 0.01,
+        "planned_entry": 109.069,
+        "research_only": true,
+        "source_quote_at": "2026-11-12T11:21:17.061097185Z",
+        "stop": 109.15,
+        "target_basis": "nearest completed M15/H1/H4/D 20-bar support/resistance",
+        "technical_context": {
+          "admission_policy": "champion",
+          "conditional_daily_exception": false,
+          "conditional_weak_h4_exception": false,
+          "continuation_min_body": 0.5,
+          "continuation_min_close": 0.7,
+          "daily_frame_conflict": false,
+          "extension_cap_atr": 2.0,
+          "extension_exception": false,
+          "full_frame_alignment": true,
+          "h1_adx": 25.71884750983703,
+          "h1_minus_di": 28.70087795589545,
+          "h1_plus_di": 12.8534794129212,
+          "m15_adx": 27.09312029439849,
+          "m15_atr": 0.07750696409512756,
+          "m15_minus_di": 24.860557280125988,
+          "m15_plus_di": 16.268488921352574,
+          "momentum_adx_minimum": 20,
+          "source_bar_time": "2026-11-12T11:00:00.000000000Z",
+          "timeframes_aligned": [
+            "M15",
+            "H1",
+            "H4",
+            "D"
+          ],
+          "trigger_timeframe": "M15"
+        },
+        "tp1": 108.796,
+        "trigger_basis": "future completed M15 only",
+        "trigger_timeframe": "M15"
+      },
+      "original_sha256": "f5020b815ab4e907fa653aa64604779ce67cf780725b67ce9c4d042325de1c08",
+      "policy": "champion",
+      "registered_at": "2026-11-12T11:21:32Z",
+      "result_status": null,
+      "scored": false,
+      "source_at": "2026-11-12T11:21:18Z",
+      "source_kind": "paper_comparison"
+    },
+    "paper:champion:AUTO-20261112T1121-GBP_AUD-L-B": {
+      "current_state": "QUALIFIED_PENDING_TRIGGER",
+      "evidence_type": "FORWARD_EXPERIMENT",
+      "id": "AUTO-20261112T1121-GBP_AUD-L-B",
+      "key": "paper:champion:AUTO-20261112T1121-GBP_AUD-L-B",
+      "last_observed_at": "2026-11-12T11:21:18Z",
+      "original": {
+        "account_equity_verified": false,
+        "admission_policy": "champion",
+        "alert_b": 1.94291,
+        "broker_verified": false,
+        "created_at": "2026-11-12T11:21:32Z",
+        "decision_status": "CONDITIONAL_PENDING_NEW_M15_TRIGGER",
+        "direction": "LONG",
+        "entry_route": "EMA20_PULLBACK",
+        "event_blackouts_utc": [],
+        "expires_at": "2026-11-12T12:51:32Z",
+        "gross_rr_at_creation": 3.415,
+        "id": "AUTO-20261112T1121-GBP_AUD-L-B",
+        "instrument": "GBP_AUD",
+        "manual_broker_check_required": true,
+        "max_equity_risk_fraction": 0.0025,
+        "max_oanda_spread_pips": 5.635,
+        "net_rr_at_spread_cap": 2.065,
+        "oanda_snapshot_at": "2026-11-12T11:21:18Z",
+        "paper_only": false,
+        "pip_size": 0.0001,
+        "planned_entry": 1.94291,
+        "research_only": true,
+        "source_quote_at": "2026-11-12T11:21:17.969740813Z",
+        "stop": 1.94163,
+        "target_basis": "nearest completed M15/H1/H4/D 20-bar support/resistance",
+        "technical_context": {
+          "admission_policy": "champion",
+          "conditional_daily_exception": false,
+          "conditional_weak_h4_exception": false,
+          "continuation_min_body": 0.5,
+          "continuation_min_close": 0.7,
+          "daily_frame_conflict": false,
+          "extension_cap_atr": 2.0,
+          "extension_exception": false,
+          "full_frame_alignment": true,
+          "h1_adx": 28.092499088980112,
+          "h1_minus_di": 19.54265802067322,
+          "h1_plus_di": 26.835308695134707,
+          "m15_adx": 28.061140124984412,
+          "m15_atr": 0.0012181399649690572,
+          "m15_minus_di": 18.191076663748895,
+          "m15_plus_di": 23.808190479074185,
+          "momentum_adx_minimum": 20,
+          "source_bar_time": "2026-11-12T11:00:00.000000000Z",
+          "timeframes_aligned": [
+            "M15",
+            "H1",
+            "H4",
+            "D"
+          ],
+          "trigger_timeframe": "M15"
+        },
+        "tp1": 1.94728,
+        "trigger_basis": "future completed M15 only",
+        "trigger_timeframe": "M15"
+      },
+      "original_sha256": "2b8b2c6e2a78acc05774d83b351a9d1c17f07c89467bdd0630e1949d6f0c90c7",
+      "policy": "champion",
+      "registered_at": "2026-11-12T11:21:32Z",
+      "result_status": null,
+      "scored": false,
+      "source_at": "2026-11-12T11:21:18Z",
+      "source_kind": "paper_comparison"
     }
   },
   "schema": 1,
-  "source_at": "2026-11-12T10:57:55Z",
+  "source_at": "2026-11-12T11:21:18Z",
   "summary": {
     "active_evidence_conflicts": 0,
-    "conditional_frozen_plans": 14,
-    "distinct_unadmitted_watch_observations": 383,
+    "conditional_frozen_plans": 15,
+    "distinct_unadmitted_watch_observations": 386,
     "interpretation": "Unique frozen plans, not snapshot-level candidate rows. Only independently scored bid/ask exits enter a performance sample.",
     "manual_broker_trades_verified": 0,
     "not_independent_trades": true,
     "paper_strategy_comparison": {
       "challenger_v1": {
-        "forward_experimental": 56,
+        "forward_experimental": 59,
         "historical_or_development": 28,
-        "plans": 84,
+        "plans": 87,
         "scored": 0,
         "states": {
           "EXPIRED_UNFILLED": 46,
           "INVALIDATED": 34,
-          "QUALIFIED_PENDING_TRIGGER": 4
+          "QUALIFIED_PENDING_TRIGGER": 7
         },
         "triggered": 7
       },
       "champion": {
-        "forward_experimental": 14,
+        "forward_experimental": 16,
         "historical_or_development": 5,
-        "plans": 19,
+        "plans": 21,
         "scored": 0,
         "states": {
           "EXPIRED_UNFILLED": 10,
           "INVALIDATED": 7,
-          "QUALIFIED_PENDING_TRIGGER": 2
+          "QUALIFIED_PENDING_TRIGGER": 4
         },
         "triggered": 2
       }
     },
     "ranked_observations": 68,
-    "source_at": "2026-11-12T10:57:55Z",
+    "source_at": "2026-11-12T11:21:18Z",
     "verified_user_delivery_receipts": 0
   },
-  "updated_at": "2026-11-12T10:58:35.789225+00:00"
+  "updated_at": "2026-11-12T11:21:51.785441+00:00"
 }
