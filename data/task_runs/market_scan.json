@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T03:19:24.255Z",
-  "completed_at": "2026-11-12T03:19:24.260Z",
+  "started_at": "2026-11-12T04:15:24.882Z",
+  "completed_at": "2026-11-12T04:15:24.886Z",
   "source_at": "2026-11-12T02:55:57Z",
   "source_commit": "cbaa7f223b4f3ae280b0e863f97af44aeeac2dcd",
-  "source_age_seconds": 1407,
+  "source_age_seconds": 4767,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs": 65,
@@ -19,32 +19,19 @@
     "canonical_new_admitted": 0,
     "canonical_active_at_source": 0,
     "currently_unexpired_canonical_signals": 0,
-    "verified_simulated_fills": 0,
-    "rejection_reasons": {
-      "ADX_TREND_STRENGTH": 6,
-      "DMI_DIRECTION_CONFLICT": 4,
-      "FOUR_FRAME_TREND_CONFLICT": 27,
-      "INVALID_BID_ASK_OR_SPREAD": 29,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 1,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
-      "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 1,
-      "REVERSAL_OR_EXHAUSTION": 51,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 6,
-      "UNREALISTIC_STRUCTURAL_STOP": 2,
-      "UNSUPPORTED_PAIR_OR_ROUTE": 2
-    }
+    "verified_simulated_fills": 0
   },
   "findings": [
-    "WAIT: new full OANDA source 2026-11-12T02:55:57Z successfully collected (run 43144702155); 65/68 usable quoted pairs, all 65 independently parsed from actual large summary/latest Git blobs with five-frame context; 3 TRY crosses nontradeable.",
-    "All 12 current priority individual pair shards independently retrieved and parsed with matching source timestamp; 130/130 canonical routes rejected and zero signals, no verified simulated fill.",
-    "Repository publication status PUBLISHED at 02:56:39Z for snapshot 02:55:57Z, but sanitized payload still lists 64/67 rather than collector 65/68; public served feed not independently verified.",
-    "Machine-news status PARTIAL, priority news clearance BLOCKED; GBP GDP cluster at 07:00Z remains upcoming according to macro receipt. London quiet hours: no recovery requested."
+    "WAIT: verified collected source 2026-11-12T02:55:57Z, run 43144702155; parsed actual Git blobs summary and latest, all 65 usable quoted pairs with D/H4/H1/M15/M5 coverage; three TRY crosses nontradeable.",
+    "Independently retrieved all 12 priority pair shards, each matching 02:55:57Z source; canonical admission 130 rejected, zero admitted, signals.json empty. No simulated fill claimed.",
+    "Publisher receipt PUBLISHED 02:56:39Z for this snapshot; sanitized payload 64/67 versus collector 65/68, actual served feed not independently verified.",
+    "News PARTIAL and all 12 priority clearance BLOCKED; 07:00Z UK GDP cluster upcoming per macro receipt. Quiet London hours: no recovery request."
   ],
   "blockers": [
-    "Outside active London session; source age exceeds 25-minute current-research gate; no recovery during quiet hours.",
-    "Collector/publisher pair-count mismatch 65/68 versus 64/67; public served feed unverified.",
-    "Machine-news partial and all 12 priority news clearance blocked.",
-    "Only priority 12 individual pair shards independently checked; remaining 53 verified through complete summary/latest blobs."
+    "Source exceeds 25-minute full research freshness; outside active London session (04:xx UTC), no recovery requested.",
+    "Public feed 64/67 differs from collector 65/68; actual served response unverified.",
+    "Machine-news partial; all 12 priority news clearance blocked.",
+    "Only top 12 individual pair shards independently checked; all 65 assessed from complete summary/latest blobs."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -53,9 +40,9 @@
     "data/collection_attempt.json",
     "data/monitoring_health.json",
     "data/universe.json",
-    "data/summary.json@e3a901692146f4dad9880f4195fc57e5b8756fbb (blob parsed)",
-    "data/latest.json@2cc870b600a30519c13e8a5dda4752c71e744bd0 (blob parsed)",
-    "data/pairs/{12_priority_pairs}.json",
+    "data/summary.json@e3a901692146f4dad9880f4195fc57e5b8756fbb",
+    "data/latest.json@2cc870b600a30519c13e8a5dda4752c71e744bd0",
+    "data/pairs/{12_current_priority_pairs}.json",
     "data/signal_admission_audit.json",
     "signals.json",
     "data/hourly_assessment.json",
