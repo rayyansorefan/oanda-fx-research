@@ -4,41 +4,26 @@
       "approval_allowed": true,
       "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 4
+      "unverifiable": 2
     },
     "paper_without_m15_adx_and_missing_primary_feed": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 1,
-      "paper_watch_examples": [
-        {
-          "direction": "SHORT",
-          "economics_at_observation": {
-            "entry_reference": 0.877496202351299,
-            "gross_rr": 3.20597,
-            "nearest_target": 0.87582,
-            "net_rr": 1.83441,
-            "stop_reference": 0.878019039545801
-          },
-          "news_status": "SOURCE_UNVERIFIED",
-          "pair": "AUD_SGD",
-          "route": "EMA20_PULLBACK",
-          "status": "PAPER_ONLY_NOT_A_FUTURE_TRIGGER_OR_MANUAL_ENTRY"
-        }
-      ],
+      "counterfactual_pair_routes": 0,
+      "paper_watch_examples": [],
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 4
+      "unverifiable": 2
     },
     "without_daily_ema_paper": {
       "approval_allowed": false,
       "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 4
+      "unverifiable": 2
     },
     "without_m15_adx_paper": {
       "approval_allowed": false,
       "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 4
+      "unverifiable": 2
     },
     "without_nearest_target_economics_diagnostic_only": {
       "approval_allowed": false,
@@ -48,41 +33,41 @@
     },
     "without_news_gate_diagnostic_only": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 1,
+      "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 4
+      "unverifiable": 2
     },
     "without_reversal_veto_paper": {
       "approval_allowed": false,
       "counterfactual_pair_routes": 0,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 4
+      "unverifiable": 2
     }
   },
   "distinct_pairs": 68,
   "failures": {
     "absolute_spread_cap": 54,
     "adx_H1": 30,
-    "adx_M15": 52,
+    "adx_M15": 46,
     "direction_known": 0,
-    "dmi_H1": 26,
-    "dmi_M15": 26,
-    "gross_reward_minimum": 75,
-    "net_reward_minimum": 95,
+    "dmi_H1": 14,
+    "dmi_M15": 24,
+    "gross_reward_minimum": 86,
+    "net_reward_minimum": 110,
     "news_gate": 136,
-    "no_reversal_or_exhaustion": 92,
-    "observed_target_available": 4,
+    "no_reversal_or_exhaustion": 34,
+    "observed_target_available": 2,
     "pair_supported": 2,
     "quote_timely_tradeable": 0,
     "recent_completed_history": 0,
-    "relative_spread_cap": 60,
-    "route_not_stretched": 70,
-    "route_pattern": 36,
-    "structural_stop_range": 26,
-    "trend_D": 32,
-    "trend_H1": 26,
-    "trend_H4": 56,
-    "trend_M15": 36,
+    "relative_spread_cap": 32,
+    "route_not_stretched": 30,
+    "route_pattern": 63,
+    "structural_stop_range": 6,
+    "trend_D": 40,
+    "trend_H1": 30,
+    "trend_H4": 58,
+    "trend_M15": 10,
     "valid_two_sided_quote": 0
   },
   "isolated_only_blocker": {
@@ -94,7 +79,7 @@
     "dmi_M15": 0,
     "gross_reward_minimum": 0,
     "net_reward_minimum": 0,
-    "news_gate": 1,
+    "news_gate": 0,
     "no_reversal_or_exhaustion": 0,
     "observed_target_available": 0,
     "pair_supported": 0,
@@ -117,5 +102,5 @@
     "Pair-route observations share prices and currency exposure; they are not independent trade outcomes."
   ],
   "route_observations": 136,
-  "source_at": "2026-11-12T13:16:08Z"
+  "source_at": "2026-11-12T14:16:56Z"
 }
