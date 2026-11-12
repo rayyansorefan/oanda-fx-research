@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "position_monitor",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T00:31:23.000Z",
-  "completed_at": "2026-11-12T00:34:08.997Z",
+  "started_at": "2026-11-12T01:30:52.000Z",
+  "completed_at": "2026-11-12T01:31:58.933Z",
   "source_at": "2026-11-11T21:25:44.000Z",
   "source_commit": "c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85",
-  "source_age_seconds": 11304,
+  "source_age_seconds": 14774,
   "counts": {
     "lifecycle_plans": 104,
     "lifecycle_closed": 2,
@@ -55,12 +55,12 @@
   "findings": [
     {
       "scope": "current source and recovery decision",
-      "fact": "Collector run 43102907264 remains the latest verified collection, completed at 2026-11-11T21:25:44Z with 65 usable quoted FX pairs out of 68 discovered. Four pricing batches returned 133 price objects, three tradeable=false and none missing bid/ask.",
-      "decision": "The observation was stale at task time, but lifecycle and canonical records contained zero OPEN or pending simulated positions. The bounded [fx-fast-check] position-recovery condition was not met, so scripts/refresh_request.json sequence 220 remained unchanged and task time did not replace source time."
+      "fact": "Collector run 43102907264 remains the latest verified collection, completed at 2026-11-11T21:25:44Z with 65 usable quoted FX pairs out of 68 discovered. No newer collection or pair-specific fast receipt was persisted.",
+      "decision": "The observation was stale at task time, but lifecycle and canonical records still contained zero OPEN or pending simulated positions. The bounded [fx-fast-check] recovery condition was not met, so scripts/refresh_request.json sequence 220 remained unchanged and task time did not replace source time."
     },
     {
       "scope": "open and pending simulated chronology",
-      "fact": "The lifecycle ledger remains terminal at 104 registrations: 2 CLOSED historical records, 56 EXPIRED_UNFILLED and 46 INVALIDATED. There are zero currently qualified-pending registrations, zero open simulated positions, zero pending fills and signals.json is empty.",
+      "fact": "The lifecycle ledger remains terminal at 104 registrations: 2 CLOSED historical records, 56 EXPIRED_UNFILLED and 46 INVALIDATED. There are zero currently qualified-pending registrations, zero open simulated positions, zero pending fills and signals.json remains empty.",
       "chronology": "Relative to the preceding position-monitor receipt, no new completed trigger, separate executable-side bid/ask fill, simulated entry, stop, target, expiry/time exit or expired-unfilled resolution was established.",
       "decision": "Historical event rows containing earlier pending or triggered states were not treated as current positions. No favourable path or broker outcome was inferred."
     },
@@ -83,6 +83,11 @@
       "scope": "coverage gaps and authority",
       "fact": "Authenticated contents again returned current blob SHAs but empty bodies for data/paper_trade_ledger.json and data/strategy_comparison.json. Reconciliation used lifecycle_ledger, the sanitized dashboard payload and current cohort/scorer outputs, but raw-row inspection of those two oversized ledgers remained incomplete.",
       "decision": "Status remains PARTIAL. Machine scorers retain outcome authority; no machine-news clearance, public serving state, broker state or delivery receipt was rewritten or inferred."
+    },
+    {
+      "scope": "current-run delta",
+      "fact": "The collection, lifecycle, canonical signal, cohort, confirmed-momentum and exit-study blobs are unchanged from the preceding monitor.",
+      "decision": "Zero new chronology is the verified outcome for this run; machine-scored ledgers and immutable plans were not manually rewritten."
     }
   ],
   "blockers": [
@@ -99,7 +104,7 @@
     "docs/PROFITABILITY_EXECUTION_REWORK.md@e852a5d8cb3f509a0919ed7c48bdba220d5234f7",
     "data/profitability_execution_development.json@f9cba96d501933c4bbd37e0ed866e3c4bdc2bbfd",
     "data/task_runs/market_scan.json@a2b400d5399137addd8fa01e2041ade7fb75fd32",
-    "data/task_runs/macro_events.json@5cb6117a105793191e0ec4b95ca6e134ef9397d5",
+    "data/task_runs/macro_events.json@30e9d6102abdcea878951b496e19e9988eecfbf1",
     "data/collection_attempt.json@ca29b06dd6a85dd70c1703bb5855d88c624b245d",
     "data/lifecycle_ledger.json@68ccd0c612343cbe982761a36ca5dbaa9e357146",
     "signals.json@495bdc05ef63bf4ff17c1b234042eba607334ac4",
