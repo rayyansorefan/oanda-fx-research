@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "macro_events",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T05:01:00.000Z",
-  "completed_at": "2026-11-12T05:06:53.780Z",
+  "started_at": "2026-11-12T06:02:36.000Z",
+  "completed_at": "2026-11-12T06:06:43.505Z",
   "source_at": "2026-11-12T04:31:48.000Z",
   "source_commit": "a8ab37e83f3b1fbed6b4e623bc25e0826e93f1b4",
-  "source_age_seconds": 2106,
+  "source_age_seconds": 5695,
   "counts": {
     "current_paper_positions": 0,
     "pending_simulated_plan_unique_ids": 1,
@@ -15,111 +15,112 @@
     "leading_candidates_reviewed": 12,
     "currencies_in_scope": 10,
     "official_authorities_checked": 19,
-    "official_pages_checked": 36,
-    "verified_timed_events_next_48h": 31,
+    "official_pages_checked": 28,
+    "verified_timed_events_next_48h": 29,
     "verified_date_only_or_clock_gap_events": 5,
-    "scheduled_release_clock_passed_actual_not_retrievable": 1,
-    "newly_published_official_facts": 0,
+    "published_official_facts_observed": 2,
+    "newly_published_official_facts_since_previous_receipt": 1,
+    "scheduled_release_clock_passed_actual_not_retrievable": 0,
     "machine_news_clearance_changes": 0,
     "broker_orders": 0
   },
   "findings": [
     {
       "scope": "engine and currency scope",
-      "checked_at": "2026-11-12T05:06:53.780Z",
-      "fact": "Current source ranks EUR_USD, GBP_USD, EUR_HKD, CHF_HKD, USD_CHF, GBP_HKD, USD_CAD, USD_DKK, EUR_SGD, EUR_CAD, SGD_CHF and USD_SEK as the twelve leading research candidates. signals.json is empty and there are zero OPEN simulated positions. The lifecycle ledger still labels one EUR_AUD frozen intent QUALIFIED_PENDING_TRIGGER, while the current position-monitor receipt independently supports expiry without trigger and awaits machine reconciliation. Scope therefore covers EUR, USD, GBP, HKD, CHF, CAD, DKK, SGD, SEK and AUD.",
-      "conditional_scenario": "These macro observations do not change admission, trigger, spread, expiry, lifecycle or machine-news state and provide no broker execution clearance.",
+      "checked_at": "2026-11-12T06:06:43.505Z",
+      "fact": "Current source ranks EUR_USD, GBP_USD, EUR_HKD, CHF_HKD, USD_CHF, GBP_HKD, USD_CAD, USD_DKK, EUR_SGD, EUR_CAD, SGD_CHF and USD_SEK as the twelve leading research candidates. signals.json is empty and there are zero OPEN simulated positions. The lifecycle ledger still labels one EUR_AUD frozen intent QUALIFIED_PENDING_TRIGGER, while the current position-monitor receipt supports expiry without trigger and awaits machine reconciliation. Scope covers EUR, USD, GBP, HKD, CHF, CAD, DKK, SGD, SEK and AUD.",
+      "conditional_scenario": "Macro observations do not change admission, trigger, spread, expiry, lifecycle or machine-news state and provide no broker execution clearance.",
       "sources": [
-        "data/summary.json@b6e0fdcb1bb06740928667e602f2414e5a294d1f",
-        "data/latest.json@23ed47491566a53a5c78dc00980ac2774498bfe1",
         "data/lifecycle_ledger.json@2811554920c21756210d9acd765fa67406b010c6",
         "signals.json@cbbae8e9c1f630f21bfb019f251f4ca82018fba2",
-        "data/task_runs/position_monitor.json@c6355296835c95655ccefaf7c5d5e4c6f60f86fe",
-        "data/task_runs/candidate_review.json@7fea21ab47b90d92176583ff746660904796f49a"
+        "data/task_runs/market_scan.json@5b21d1f52facf7a7c384c09c9b758d2294cf8765",
+        "data/task_runs/position_monitor.json@79bc410bb809b3e0e3e981f471b193edd3812d0e",
+        "data/task_runs/candidate_review.json@06cd985993e30e42660c4e2525c593c16fbd8462"
       ]
     },
     {
       "scope": "GBP",
-      "checked_at": "2026-11-12T05:06:53.780Z",
+      "checked_at": "2026-11-12T06:06:43.505Z",
       "publication_clocks": [
         "2026-11-12T07:00:00Z ONS September monthly GDP and Q3 first quarterly GDP cluster",
         "2026-11-12T09:30:00Z ONS provisional Q3 business investment"
       ],
-      "fact": "ONS confirms the 07:00Z growth cluster and 09:30Z business-investment release. At the check clock the monthly GDP page still states that the release is not yet published; no actual or consensus is recorded.",
+      "fact": "ONS confirms both clocks. At the 06:05Z check, the releases were not yet published; no actual or consensus is recorded.",
       "conditional_scenario": "A broad upside growth surprise may support GBP and a broad downside surprise may pressure it, but no outcome is assumed before publication.",
       "sources": [
         "https://www.ons.gov.uk/releases/gdpmonthlyestimateukseptember2026",
         "https://www.ons.gov.uk/releases/gdpfirstquarterlyestimateukjulytoseptember2026",
         "https://www.ons.gov.uk/releases/businessinvestmentintheukjulytoseptember2026provisionalresults",
-        "https://www.ons.gov.uk/releasecalendar?release-type=type-upcoming"
+        "https://www.ons.gov.uk/releasecalendar?keywords=GDP&release-type=type-upcoming&sort=date-newest"
       ]
     },
     {
       "scope": "USD",
-      "checked_at": "2026-11-12T05:06:53.780Z",
+      "checked_at": "2026-11-12T06:06:43.505Z",
       "publication_clocks": [
-        "2026-11-12T13:30:00Z US weekly unemployment-insurance claims recurring Thursday release",
+        "2026-11-12T13:30:00Z US weekly unemployment-insurance claims",
         "2026-11-12T15:00:00Z Census October Business Formation Statistics",
         "2026-11-12T15:00:00Z Federal Reserve Governor Barr event",
         "2026-11-13T13:30:00Z BLS October Producer Price Index",
         "2026-11-13T15:50:00Z Federal Reserve Vice Chair for Supervision Bowman event",
         "2026-11-14T00:00:00Z Federal Reserve Vice Chair Jefferson event"
       ],
-      "fact": "BLS confirms October PPI for 13 November at 08:30 ET. Census confirms October Business Formation Statistics for 12 November at 10:00 ET. The Federal Reserve November calendar confirms the listed policy-speaker clocks. No PPI, claims or business-formation actual or consensus is recorded before publication.",
+      "fact": "BLS confirms October PPI for 13 November at 08:30 ET; Census confirms October Business Formation Statistics for 12 November at 10:00 ET; the Federal Reserve calendar confirms the listed policy-speaker clocks. No PPI, claims or business-formation actual or consensus is recorded before publication.",
       "conditional_scenario": "Firmer inflation or more hawkish policy communication may support USD; softer inflation or dovish communication may pressure it. These are conditional scenarios only.",
       "sources": [
         "https://www.bls.gov/schedule/news_release/ppi.htm",
         "https://www.bls.gov/schedule/2026/11_sched_list.htm",
         "https://www.dol.gov/newsroom/economicdata",
         "https://www.census.gov/econ/bfs/release_schedule.html",
-        "https://www.census.gov/about/event-calendar.html",
+        "https://www.census.gov/economic-indicators/calendar-listview.html",
         "https://www.federalreserve.gov/newsevents/2026-November.htm",
         "https://www.federalreserve.gov/newsevents/calendar.htm"
       ]
     },
     {
       "scope": "EUR",
-      "checked_at": "2026-11-12T05:06:53.780Z",
+      "checked_at": "2026-11-12T06:06:43.505Z",
       "publication_clocks": [
         "2026-11-12 ECB Economic Bulletin Issue 7/2026 — official date, no dependable publication clock exposed",
-        "2026-11-12 Eurostat Q3 GDP/employment and September international trade — official date, no dependable publication clock exposed",
+        "2026-11-12 Eurostat Q3 GDP/employment and September international trade — official date, no dependable publication clocks exposed",
         "2026-11-12T15:30:00Z ECB Vujcic panel",
         "2026-11-12T19:30:00Z ECB President Lagarde conversation",
         "2026-11-13T06:50:00Z ECB Elderson panel",
         "2026-11-13T07:10:00Z ECB Schnabel keynote/panel",
         "2026-11-13T09:00:00Z ECB securities-issues statistics"
       ],
-      "fact": "The ECB weekly schedule confirms the bulletin date and speaker/statistical clocks. Eurostat confirms the two 12 November euro-indicator releases and states that its calendar uses Luxembourg time, but the checked calendar does not expose dependable event clocks.",
+      "fact": "The ECB weekly schedule confirms the bulletin date and speaker/statistical clocks. Eurostat confirms the two 12 November euro-indicator releases and that its calendar uses Luxembourg time, but the checked calendar exposes no dependable event clocks.",
       "conditional_scenario": "Growth/trade evidence and central-bank language may alter EUR volatility. Date-only events remain timing gaps and are not converted into fabricated blackout boundaries.",
       "sources": [
         "https://www.ecb.europa.eu/press/calendars/weekly/html/index.en.html",
         "https://www.ecb.europa.eu/press/economic-bulletin/html/index.en.html",
         "https://ec.europa.eu/eurostat/news/release-calendar",
-        "https://ec.europa.eu/eurostat/news/euro-indicators/release-calendar"
+        "https://ec.europa.eu/eurostat/en/news/euro-indicators/release-calendar"
       ]
     },
     {
       "scope": "CAD",
-      "checked_at": "2026-11-12T05:06:53.780Z",
+      "checked_at": "2026-11-12T06:06:43.505Z",
       "publication_clocks": [
         "2026-11-12T13:30:00Z Statistics Canada September building permits and October international-arrivals advance indicator",
         "2026-11-13T13:30:00Z Statistics Canada September manufacturing sales and wholesale trade"
       ],
-      "fact": "Statistics Canada's official upcoming list states that The Daily is published at 08:30 ET and schedules the listed releases. No actual or consensus is recorded before publication.",
+      "fact": "Statistics Canada confirms the release dates and states that The Daily is normally published at 08:30 ET. The Bank of Canada calendar shows no policy event inside this 48-hour window. No actual or consensus is recorded before publication.",
       "conditional_scenario": "Activity surprises may change CAD volatility; no direction is inferred before release.",
       "sources": [
         "https://www150.statcan.gc.ca/n1/dai-quo/upcoming-a_venir-eng.pdf",
-        "https://www150.statcan.gc.ca/n1/en/release-diffusion/2026-eng.pdf",
+        "https://www150.statcan.gc.ca/n1/daily-quotidien/261014/dq261014a-eng.htm",
+        "https://www150.statcan.gc.ca/n1/daily-quotidien/261015/dq261015b-eng.htm",
         "https://www.bankofcanada.ca/press/upcoming-events/"
       ]
     },
     {
       "scope": "CHF",
-      "checked_at": "2026-11-12T05:06:53.780Z",
+      "checked_at": "2026-11-12T06:06:43.505Z",
       "publication_clocks": [
         "2026-11-13T07:30:00Z Swiss FSO October Producer and Import Price Index"
       ],
-      "fact": "The Swiss FSO schedule confirms the October index for 13 November at 08:30 CET. The SNB schedule shows its next monetary-policy assessment on 10 December, outside this window. No October price actual is assumed.",
+      "fact": "The Swiss FSO schedule confirms the October index for 13 November at 08:30 CET. The SNB schedule shows its next monetary-policy assessment on 10 December, outside the window. No October price actual is assumed.",
       "conditional_scenario": "A material producer/import-price surprise may change CHF volatility; no consensus or directional response is assumed.",
       "sources": [
         "https://dam-api.bfs.admin.ch/hub/api/dam/assets/36390871/master",
@@ -129,78 +130,76 @@
     },
     {
       "scope": "AUD",
-      "checked_at": "2026-11-12T05:06:53.780Z",
+      "checked_at": "2026-11-12T06:06:43.505Z",
       "publication_clocks": [
-        "2026-11-12T00:30:00Z ABS September overseas arrivals/departures — published before this review window",
-        "2026-11-12T00:30:00Z ABS 2024-25 Water Account — scheduled; official result not independently retrieved",
+        "2026-11-12T00:30:00Z ABS September overseas arrivals/departures — published before this review",
+        "2026-11-12T00:30:00Z ABS 2024-25 Water Account — newly retrievable",
         "2026-11-13T05:30:00Z RBA weekly balance-sheet statistics"
       ],
-      "fact": "ABS published September overseas-arrivals/departures: 703,480 short-term visitor arrivals (+1.0% y/y), 1,066,070 short-term resident returns (+1.5%), 1,839,170 total arrivals (+0.5%) and 1,941,450 total departures (+1.0%). The Water Account page still presents the item as a future release. The listed RBA event on 12 November was cancelled and there is no RBA policy decision inside the window.",
-      "conditional_scenario": "The arrivals and balance-sheet releases are lower-tier and do not establish an AUD direction. The missing Water Account result remains a coverage gap.",
+      "fact": "ABS reports September short-term visitor arrivals 703,480 (+1.0% y/y), short-term resident returns 1,066,070 (+1.5%), total arrivals 1,839,170 (+0.5%) and total departures 1,941,450 (+1.0%). The previously missing Water Account is now published: total water use fell 2.2% to 76,957 GL, consumption rose 0.1% to 17,163 GL, reuse supply rose 5.5% and desalinated supply rose 16%. The RBA schedule confirms its weekly balance sheet for 13 November at 16:30 AEDT; no RBA policy decision is inside the window.",
+      "conditional_scenario": "These lower-tier releases do not establish an AUD direction; the prior Water Account retrieval gap is resolved without changing machine clearance.",
       "sources": [
         "https://www.abs.gov.au/statistics/industry/tourism-and-transport/overseas-arrivals-and-departures-australia/sep-2026",
-        "https://www.abs.gov.au/statistics/environment/environmental-accounts/water-account-australia",
+        "https://www.abs.gov.au/statistics/environment/environmental-accounts/water-account-australia/2024-25",
         "https://www.abs.gov.au/release-calendar/future-releases",
-        "https://www.rba.gov.au/media/",
-        "https://www.rba.gov.au/schedules-events/schedule.html",
-        "https://www.rba.gov.au/schedules-events/frequency-statistical-releases.html"
+        "https://www.rba.gov.au/schedules-events/schedule.html"
       ]
     },
     {
       "scope": "DKK",
-      "checked_at": "2026-11-12T05:06:53.780Z",
+      "checked_at": "2026-11-12T06:06:43.505Z",
       "publication_clocks": [
         "2026-11-12T07:00:00Z Statistics Denmark September tourist nights and 2025 personal income tax",
         "2026-11-13T07:00:00Z Statistics Denmark Q3 construction activity"
       ],
-      "fact": "Statistics Denmark marks the listed releases confirmed at 08:00 local CET. No actuals or consensus are recorded before publication.",
-      "conditional_scenario": "These are secondary DKK activity releases; they may affect volatility but do not by themselves clear or reject USD_DKK research.",
+      "fact": "Statistics Denmark marks the listed releases confirmed at 08:00 local CET. No actual or consensus is recorded before publication.",
+      "conditional_scenario": "These are secondary DKK activity releases; they may affect volatility but do not independently clear or reject USD_DKK research.",
       "sources": [
         "https://www.dst.dk/en/Statistik/planlagte"
       ]
     },
     {
       "scope": "SEK",
-      "checked_at": "2026-11-12T05:06:53.780Z",
+      "checked_at": "2026-11-12T06:06:43.505Z",
       "publication_clocks": [
         "2026-11-12T07:00:00Z Statistics Sweden October CPI",
         "2026-11-12T08:30:00Z Riksbank Governor Thedeen presentation",
         "2026-11-12T12:15:00Z Riksbank First Deputy Governor Bunge economic/policy speech",
-        "2026-11-12T14:00:00Z Riksbank Deputy Governor Seim panel",
-        "2026-11-12T15:00:00Z Riksbank Bunge digital-sovereignty panel"
+        "2026-11-12T14:00:00Z Riksbank Deputy Governor Seim panel"
       ],
-      "fact": "Statistics Sweden schedules October CPI for 12 November and states its standard weekday publication time is 08:00 local CET. The Riksbank calendar confirms the four listed appearances, including a published summary for Bunge's economic/policy speech. No CPI actual or consensus is recorded before publication.",
-      "conditional_scenario": "CPI and policy communication may materially change SEK volatility; no directional outcome is assumed.",
+      "fact": "Statistics Sweden confirms the regular October CPI at 08:00 CET; its flash estimate was 0.9% y/y and 0.0% m/m, but the final release is not assumed. The Riksbank calendar confirms the listed appearances.",
+      "conditional_scenario": "Final CPI and policy communication may materially change SEK volatility; no directional outcome is assumed.",
       "sources": [
+        "https://www.scb.se/en/finding-statistics/statistics-by-subject-area/prices-and-economic-trends/price-statistics/consumer-price-index-cpi/",
         "https://www.scb.se/en/finding-statistics/publishing-calendar/?paging=0&period=Forward1Year&prodKod=PR0101",
         "https://www.riksbank.se/en-gb/press-and-published/calendar/"
       ]
     },
     {
       "scope": "HKD",
-      "checked_at": "2026-11-12T05:06:53.780Z",
+      "checked_at": "2026-11-12T06:06:43.505Z",
       "publication_clocks": [
         "2026-11-12T08:30:00Z Hong Kong September external-merchandise-trade volume/price statistics",
         "2026-11-13T08:30:00Z Hong Kong revised Q3 GDP",
         "2026-11-13 HKMA analytical accounts of the Exchange Fund — official date, no publication clock exposed"
       ],
-      "fact": "Hong Kong C&SD schedules the trade-volume/price release on 12 November and revised Q3 GDP on 13 November; its annual schedule states regular press releases are issued at 16:30 Hong Kong time. The 3 November advance estimate reported Q3 real GDP +5.2% y/y and +1.9% q/q seasonally adjusted; the revised figures are not assumed. HKMA confirms the analytical-accounts date but not a clock.",
+      "fact": "Hong Kong C&SD confirms the 12 November trade release and 13 November revised Q3 GDP. The 3 November advance estimate reported Q3 real GDP +5.2% y/y and +1.9% q/q seasonally adjusted; revised figures are not assumed. HKMA confirms the analytical-accounts date but no clock.",
       "conditional_scenario": "Revisions or trade evidence may change HKD-cross volatility. The HKMA date-only item remains a timing gap.",
       "sources": [
+        "https://www.censtatd.gov.hk/en/scode230.html?productCode=B1120001",
         "https://www.censtatd.gov.hk/FileManager/EN/Common/Schedule_of_Regular_Press_Releases_on_Statistical_Data_in_2026.pdf",
-        "https://www.info.gov.hk/gia/general/202509/15/P2025091200738.htm",
         "https://www.info.gov.hk/gia/general/202611/03/P2026110300410p.htm",
         "https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/11/20261106-3/"
       ]
     },
     {
       "scope": "SGD",
-      "checked_at": "2026-11-12T05:06:53.780Z",
+      "checked_at": "2026-11-12T06:06:43.505Z",
       "publication_clocks": [
         "2026-11-13 MAS October assets and liabilities — official date, no publication clock exposed",
         "2026-11-13 Singapore central-bank survey for October — official date, no publication clock exposed"
       ],
-      "fact": "MAS and Singapore Department of Statistics both confirm 13 November dates, but the checked calendars do not expose reliable clocks. No values or consensus are inferred.",
+      "fact": "MAS and Singapore Department of Statistics confirm 13 November dates, but the checked calendars do not expose reliable clocks. No values or consensus are inferred.",
       "conditional_scenario": "Date-only items remain coverage gaps and do not establish a precise blackout boundary or SGD direction.",
       "sources": [
         "https://www.mas.gov.sg/monetary-policy/advance-release-calendar",
@@ -209,8 +208,8 @@
     },
     {
       "scope": "machine-news boundary",
-      "checked_at": "2026-11-12T05:06:53.780Z",
-      "fact": "data/news_latest.json remains PARTIAL at the same 2026-11-12T04:31:48Z source: ten configured source groups are available and BLS employment and inflation feeds are unavailable. This independent primary-source review does not alter machine clearance.",
+      "checked_at": "2026-11-12T06:06:43.505Z",
+      "fact": "data/news_latest.json remains PARTIAL at source 2026-11-12T04:31:48Z: ten configured source groups are available and BLS employment and inflation feeds are unavailable. This independent primary-source review does not alter machine clearance.",
       "conditional_scenario": "Admission, blackout and machine-news decisions remain owned by current registered code and stored receipts.",
       "sources": [
         "data/news_latest.json@97c1b0ac573a6b792a8d09235b569b15613647c4"
@@ -221,7 +220,6 @@
     "data/lifecycle_ledger.json@2811554920c21756210d9acd765fa67406b010c6 still labels one EUR_AUD plan pending at source 2026-11-12T02:55:57Z; the newer position-monitor receipt supports expired-untriggered but the machine ledger has not reconciled it.",
     "data/news_latest.json@97c1b0ac573a6b792a8d09235b569b15613647c4 remains PARTIAL with BLS employment and inflation machine feeds unavailable; no machine-news clearance was changed.",
     "ECB Bulletin, Eurostat GDP/trade, HKMA analytical accounts, MAS assets/liabilities and Singapore central-bank survey have official dates but no dependable publication clocks on the checked pages.",
-    "The ABS Water Account release clock passed but the official result was not independently retrievable; no result is recorded.",
     "No release actual or consensus was fabricated for events not yet published at the check clock.",
     "No broker quote, cost, fill, account state, real/practice order or user-delivery receipt was accessed or inferred."
   ],
@@ -230,46 +228,48 @@
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
     "data/summary.json@b6e0fdcb1bb06740928667e602f2414e5a294d1f",
-    "data/latest.json@23ed47491566a53a5c78dc00980ac2774498bfe1",
     "data/news_latest.json@97c1b0ac573a6b792a8d09235b569b15613647c4",
+    "data/signal_admission_audit.json@6422ecbbfad9a9b605fcf8147c81628ea77161c9",
+    "data/hourly_assessment.json@de3f20ff2db7b92623beb57f8ce4d94189f6bdeb",
     "signals.json@cbbae8e9c1f630f21bfb019f251f4ca82018fba2",
     "data/lifecycle_ledger.json@2811554920c21756210d9acd765fa67406b010c6",
-    "data/task_runs/position_monitor.json@c6355296835c95655ccefaf7c5d5e4c6f60f86fe",
-    "data/task_runs/candidate_review.json@7fea21ab47b90d92176583ff746660904796f49a",
-    "data/task_runs/evidence_audit.json@f7ec5b32d49976ea53cc654b3872c0b5b17247b8",
+    "data/task_runs/market_scan.json@5b21d1f52facf7a7c384c09c9b758d2294cf8765",
+    "data/task_runs/position_monitor.json@79bc410bb809b3e0e3e981f471b193edd3812d0e",
+    "data/task_runs/candidate_review.json@06cd985993e30e42660c4e2525c593c16fbd8462",
+    "data/task_runs/evidence_audit.json@3955ee22517c354b6a2c5d86eca50878c85cb4f5",
     "source_snapshot_commit:a8ab37e83f3b1fbed6b4e623bc25e0826e93f1b4",
     "https://www.ons.gov.uk/releases/gdpmonthlyestimateukseptember2026",
     "https://www.ons.gov.uk/releases/gdpfirstquarterlyestimateukjulytoseptember2026",
     "https://www.ons.gov.uk/releases/businessinvestmentintheukjulytoseptember2026provisionalresults",
-    "https://www.ons.gov.uk/releasecalendar?release-type=type-upcoming",
+    "https://www.ons.gov.uk/releasecalendar?keywords=GDP&release-type=type-upcoming&sort=date-newest",
     "https://www.bls.gov/schedule/news_release/ppi.htm",
     "https://www.bls.gov/schedule/2026/11_sched_list.htm",
     "https://www.dol.gov/newsroom/economicdata",
     "https://www.census.gov/econ/bfs/release_schedule.html",
-    "https://www.census.gov/about/event-calendar.html",
+    "https://www.census.gov/economic-indicators/calendar-listview.html",
     "https://www.federalreserve.gov/newsevents/2026-November.htm",
     "https://www.federalreserve.gov/newsevents/calendar.htm",
     "https://www.ecb.europa.eu/press/calendars/weekly/html/index.en.html",
     "https://www.ecb.europa.eu/press/economic-bulletin/html/index.en.html",
     "https://ec.europa.eu/eurostat/news/release-calendar",
-    "https://ec.europa.eu/eurostat/news/euro-indicators/release-calendar",
-    "https://www150.statcan.gc.ca/n1/dai-quo/upcoming-a_venir-eng.pdf",
-    "https://www150.statcan.gc.ca/n1/en/release-diffusion/2026-eng.pdf",
+    "https://ec.europa.eu/eurostat/en/news/euro-indicators/release-calendar",
+    "https://www150.statcan.gc.ca/n1/dai-quo/upcoming_a_venir-eng.pdf",
+    "https://www150.statcan.gc.ca/n1/daily-quotidien/261014/dq261014a-eng.htm",
+    "https://www150.statcan.gc.ca/n1/daily-quotidien/261015/dq261015b-eng.htm",
     "https://www.bankofcanada.ca/press/upcoming-events/",
     "https://dam-api.bfs.admin.ch/hub/api/dam/assets/36390871/master",
     "https://www.bfs.admin.ch/en/press-releases",
     "https://www.snb.ch/en/services-events/digital-services/event-schedule",
     "https://www.abs.gov.au/statistics/industry/tourism-and-transport/overseas-arrivals-and-departures-australia/sep-2026",
-    "https://www.abs.gov.au/statistics/environment/environmental-accounts/water-account-australia",
+    "https://www.abs.gov.au/statistics/environment/environmental-accounts/water-account-australia/2024-25",
     "https://www.abs.gov.au/release-calendar/future-releases",
-    "https://www.rba.gov.au/media/",
     "https://www.rba.gov.au/schedules-events/schedule.html",
-    "https://www.rba.gov.au/schedules-events/frequency-statistical-releases.html",
     "https://www.dst.dk/en/Statistik/planlagte",
+    "https://www.scb.se/en/finding-statistics/statistics-by-subject-area/prices-and-economic-trends/price-statistics/consumer-price-index-cpi/",
     "https://www.scb.se/en/finding-statistics/publishing-calendar/?paging=0&period=Forward1Year&prodKod=PR0101",
     "https://www.riksbank.se/en-gb/press-and-published/calendar/",
+    "https://www.censtatd.gov.hk/en/scode230.html?productCode=B1120001",
     "https://www.censtatd.gov.hk/FileManager/EN/Common/Schedule_of_Regular_Press_Releases_on_Statistical_Data_in_2026.pdf",
-    "https://www.info.gov.hk/gia/general/202509/15/P2025091200738.htm",
     "https://www.info.gov.hk/gia/general/202611/03/P2026110300410p.htm",
     "https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/11/20261106-3/",
     "https://www.mas.gov.sg/monetary-policy/advance-release-calendar",
