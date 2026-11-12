@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T22:17:50Z",
-  "completed_at": "2026-11-12T22:18:21.811Z",
+  "started_at": "2026-11-12T23:20:09.300Z",
+  "completed_at": "2026-11-12T23:20:09.303Z",
   "source_at": "2026-11-12T22:11:36Z",
   "source_commit": "e34eb32c0fbd4c27fed4b6be9ed9b743753d16bf",
-  "source_age_seconds": 406,
+  "source_age_seconds": 4113,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs_reported": 65,
@@ -21,15 +21,15 @@
     "broker_orders": 0
   },
   "findings": [
-    "22:11:36Z collection_attempt COLLECTED (Actions run 43317526547); universe reports 65/68 usable quoted pairs with D/H4/H1/M15/M5; EUR_TRY, TRY_JPY, USD_TRY nontradeable.",
-    "Canonical admission at source 22:11:36Z rejected all 130 routes; reasons: invalid bid/ask or spread 73, reversal/exhaustion 41, spread too high relative to volatility 10, four-frame trend conflict 4, unsupported pair/route 2. signals.json empty; WAIT, no new conditional plan.",
-    "Top 12 priority pair shards parsed individually; source bulk summary.json and latest.json returned empty GitHub contents despite nonempty SHA. Full independent 65-pair bulk parsing not achieved.",
-    "No recovery requested: full source was under 20 minutes old. Repository public_dashboard_status reports PUBLISHED at 22:11:36Z; sanitized payload 64 pairs vs 65 source quoted, news PARTIAL. Actual served feed/user delivery not verified."
+    "Quiet-hours review: last confirmed collection 2026-11-12T22:11:36Z, run 43317526547; no fresh collection requested outside active London session.",
+    "Canonical signals.json contains zero signals; last admission rejected 130/130 routes. WAIT; no simulated fill established.",
+    "Universe reports 65/68 usable pairs and five-frame coverage; 12 leading individual shards parsed successfully. Full 65-shard independent check and bulk summary/latest retrieval remain incomplete.",
+    "Repository dashboard status PUBLISHED for 22:11:36Z; sanitized payload reports 64 quoted vs 65 source quoted. Public serving and delivery not verified; machine news PARTIAL."
   ],
   "blockers": [
-    "Bulk source contents not independently retrieved; full independent coverage incomplete.",
-    "Sanitized public feed has 64/65 discrepancy; actual served feed not verified.",
-    "Machine news PARTIAL and macro role receipt remains from 10:06Z; no independent fresh macro clearance."
+    "Source stale outside active session; no new observation.",
+    "Full bulk summary/latest contents unavailable via fetch_file; full independent shard verification incomplete.",
+    "Public served feed and delivery unverified; 64/65 publication discrepancy; machine news partial; macro receipt stale."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
