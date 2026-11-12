@@ -1,8 +1,8 @@
 {
-  "active_london_day": false,
-  "checked_at": "2026-11-12T04:31:56.176626+00:00",
+  "active_london_day": true,
+  "checked_at": "2026-11-12T07:15:31.296967+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-12T04:31:48Z",
+    "checked_at": "2026-11-12T07:14:41Z",
     "collection_tries": 1,
     "collector_endpoint": "practice",
     "error": null,
@@ -16,16 +16,16 @@
         {
           "missing_bid_ask": 0,
           "returned_prices": 35,
-          "tradeable_false": 1,
+          "tradeable_false": 0,
           "tradeable_missing": 0,
-          "tradeable_true": 34
+          "tradeable_true": 35
         },
         {
           "missing_bid_ask": 0,
           "returned_prices": 33,
-          "tradeable_false": 2,
+          "tradeable_false": 0,
           "tradeable_missing": 0,
-          "tradeable_true": 31
+          "tradeable_true": 33
         },
         {
           "missing_bid_ask": 0,
@@ -36,21 +36,21 @@
         },
         {
           "missing_bid_ask": 0,
-          "returned_prices": 30,
+          "returned_prices": 33,
           "tradeable_false": 0,
           "tradeable_missing": 0,
-          "tradeable_true": 30
+          "tradeable_true": 33
         }
       ],
       "successful_requests": {
         "ACCOUNTS": 1,
-        "CANDLES": 341,
+        "CANDLES": 356,
         "INSTRUMENTS": 1,
         "PRICING": 4
       }
     },
-    "run_id": "43155351044",
-    "started_at": "2026-11-12T04:31:35Z",
+    "run_id": "43173761864",
+    "started_at": "2026-11-12T07:14:22Z",
     "status": "COLLECTED"
   },
   "consecutive_unobserved_fast_targets": 0,
@@ -58,17 +58,25 @@
   "current_run": {
     "attempt": "1",
     "event": "push",
-    "head_sha": "a9c9ee92dc76bbfde9983d12bd1d3c236e19b1d8",
-    "id": "43155351044",
+    "head_sha": "1277b56a080ad611a20b5e6e5dcfcaac0b3a4c32",
+    "id": "43173761864",
     "outcomes": {
-      "collect": "skipped",
-      "early_cohort": "skipped",
+      "collect": "success",
+      "early_cohort": "success",
       "fast_recovery": "success",
       "safety": "success"
     },
     "persistence": "PENDING_AT_DIAGNOSTIC_CAPTURE"
   },
   "dashboard_deployments": [
+    {
+      "conclusion": "success",
+      "created_at": "2026-11-12T07:08:13Z",
+      "head_sha": "b5fcac9c82e5fabd357627ba54fda84c144c4a91",
+      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/43173037632",
+      "id": 43173037632,
+      "status": "completed"
+    },
     {
       "conclusion": "success",
       "created_at": "2026-11-12T02:56:40Z",
@@ -84,21 +92,13 @@
       "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/43113926282",
       "id": 43113926282,
       "status": "completed"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-11-11T21:40:59Z",
-      "head_sha": "7b9808573a291a7dbaad723312fe98523fa75d21",
-      "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/43105189085",
-      "id": 43105189085,
-      "status": "completed"
     }
   ],
   "early_cohort_id": "FX-EARLY-20261104-v1",
-  "early_last_source_at": "2026-11-12T04:31:48Z",
-  "early_observation_count": 119,
-  "elapsed_fast_targets_today": 0,
-  "fast_age_seconds": 24669.767254,
+  "early_last_source_at": "2026-11-12T07:14:41Z",
+  "early_observation_count": 120,
+  "elapsed_fast_targets_today": 1,
+  "fast_age_seconds": 8.228661,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
     "dispatch_attempt_receipts": 0,
@@ -116,32 +116,32 @@
     "valid_new_market_observations": 0,
     "verification_note": "workflow_dispatch may be manual; external scheduler origin/requests and missing provider calls cannot be verified from repository receipts alone. Four observed pair-specific events and two sessions are necessary, not sufficient, for sustained reliability."
   },
-  "fast_last_attempt_at": "2026-11-11T21:40:47.161481+00:00",
-  "fast_observation_valid": false,
+  "fast_last_attempt_at": "2026-11-12T07:15:23.888082+00:00",
+  "fast_observation_valid": true,
   "fast_run_failures": {
     "failed": 1,
     "sample": 6,
     "scope": "Latest 100 repository runs; process success is not observation success."
   },
-  "fast_source_at": "2026-11-11T21:40:46.409372+00:00",
+  "fast_source_at": "2026-11-12T07:15:23.068306+00:00",
   "fast_status": "FAST_RESEARCH_CHECK_COMPLETE",
-  "full_age_seconds": 8.176626,
-  "full_collection_status": "PARTIAL",
+  "full_age_seconds": 50.296967,
+  "full_collection_status": "OK",
   "full_fresh": true,
-  "full_last_attempt_at": "2026-11-12T04:31:48Z",
-  "full_source_at": "2026-11-12T04:31:48Z",
+  "full_last_attempt_at": "2026-11-12T07:14:41Z",
+  "full_source_at": "2026-11-12T07:14:41Z",
   "last_completed_jobs": [
     {
       "conclusion": "success",
-      "event": "schedule",
+      "event": "push",
       "failed_steps": [],
-      "run_id": 43144702155
+      "run_id": 43155351044
     },
     {
       "conclusion": "success",
       "event": "schedule",
       "failed_steps": [],
-      "run_id": 43143914648
+      "run_id": 43144702155
     }
   ],
   "previous_publication": {
