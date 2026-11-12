@@ -654,7 +654,7 @@
       }
     ],
     "challenger": "PAPER_ONLY_NOT_VALIDATED",
-    "checked_at": "2026-11-12T08:16:56.696579+00:00",
+    "checked_at": "2026-11-12T09:18:21.491358+00:00",
     "favourable": 27,
     "flat": 0,
     "insufficient": 6,
@@ -664,11 +664,11 @@
     "sample_warning": "Directional movements are NOT filled trades, realised losses, success probabilities or evidence sufficient to change champion parameters.",
     "session_date_uk": "2026-11-11"
   },
-  "collected_at": "2026-11-12T08:16:56.696579+00:00",
+  "collected_at": "2026-11-12T09:18:21.491358+00:00",
   "counts": {
     "need_news_review": 0,
     "price_alerts": 0,
-    "watchlist": 0
+    "watchlist": 1
   },
   "data_policy": "Research-only, no orders. OANDA quotes are not Pepperstone executable prices; prepared alerts are not confirmed deliveries.",
   "feedback_summary": {
@@ -871,16 +871,98 @@
       "win_rate_pct": 63.6
     },
     "paper_totals": {
-      "candidates": 1970,
+      "candidates": 1976,
       "losses": 3,
       "scored": 4,
       "wins": 1
     },
     "threshold": "Paper bias neutral until >=30 scored samples, >=10 days, >=3 pairs and conservative 99% mean-R bound excludes zero. Never relax execution, spread or news gates."
   },
-  "news_collected_at": "2026-11-12T08:16:30Z",
+  "news_collected_at": "2026-11-12T09:17:50Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-11-12T08:16:29Z",
-  "signals": [],
+  "oanda_collected_at": "2026-11-12T09:17:50Z",
+  "signals": [
+    {
+      "adaptive_context": {
+        "block_new_alert": false,
+        "m15_ema_distance_atr": 0.915,
+        "reason": "No reversal or overextension warning on the available completed M15/H1 evidence.",
+        "status": "NO_NEW_TECHNICAL_WARNING"
+      },
+      "candle_timing": {
+        "last_late_candle_close": null,
+        "last_processed_bar_close": null,
+        "late_candles_skipped": 0,
+        "user_delivery_verified": false
+      },
+      "caution": "Some optional news feeds unavailable; calendar and required headline feeds checked. This is NOT an all-clear.",
+      "created_at": "2026-11-12T09:18:02.397242Z",
+      "direction": "SHORT",
+      "expires_at": "2026-11-12T10:48:02.397242Z",
+      "id": "AUTO-20261112T0918-AUD_JPY-S-B",
+      "news_source_coverage": {
+        "currencies_without_supported_official_feed": [],
+        "missing_required": [],
+        "note": "LIMITED means selected official and aggregate sources plus the calendar responded, but not every optional source. Never interpret this as complete global-news or real-time event coverage.",
+        "other_unavailable": [
+          "BLS employment",
+          "BLS inflation"
+        ],
+        "required_sources": [
+          "BoJ updates",
+          "Global markets aggregation",
+          "RBA press"
+        ],
+        "status": "LIMITED"
+      },
+      "news_status": "NO_NEW_NEWS_FLAG_IN_CHECKED_SOURCES_WITH_GAPS",
+      "observed_price_reactions": [],
+      "pair": "AUD_JPY",
+      "release_blackouts": [],
+      "relevant_headlines": [],
+      "status": "NO_QUALIFIED_PRICE_PATTERN",
+      "strategy_feedback": {
+        "broker_observations_not_weighted": 11,
+        "broker_positive_wins_not_weighted": 0,
+        "early_entry_study_available": false,
+        "execution_review": "Recent stop-loss followed execution of a non-approved paper watch on this pair. Recheck completed-candle trigger, spread-adjusted reward/risk, and trend conflict; do not assume this is a new entry approval.",
+        "manual_execution_review_required": true,
+        "positive_broker_pattern_review_available": false,
+        "priority_bias": 0,
+        "routes": [
+          "B"
+        ],
+        "scored_route_samples": {
+          "B": 4
+        },
+        "status": "NEUTRAL_INSUFFICIENT_OR_MIXED_EVIDENCE",
+        "strategy": "M15_REJECTION"
+      },
+      "technical_checkpoint": {
+        "h1_adx14": 23.420222945276542,
+        "h1_rsi14": 34.96629110145747,
+        "indicative_distance_to_stop_pips": 20.0,
+        "indicative_distance_to_target_pips": 19.5,
+        "indicative_remaining_rr_before_new_spread_adjustment": 0.97,
+        "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
+        "latest_completed_m15_bar_start": "2026-11-12T09:00:00.000000000Z",
+        "m15_adx14": 30.421811899810752,
+        "m15_atr14": 0.09590431331676108,
+        "m15_macd_histogram": -0.016272295291480582,
+        "m15_rsi14": 40.747347834934615,
+        "oanda_quote": {
+          "ask": 109.015,
+          "bid": 108.991,
+          "pip_size": 0.01,
+          "spread_pips": 2.400000000000091,
+          "time": "2026-11-12T09:17:50.271865972Z",
+          "tradeable": true
+        },
+        "price_reference": 108.991,
+        "quote_is_tradeable": true,
+        "vs_m15_ema20": "BELOW"
+      }
+    }
+  ],
   "status": "OK"
 }
