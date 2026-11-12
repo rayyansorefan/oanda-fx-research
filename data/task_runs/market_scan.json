@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T19:10:11.000Z",
-  "completed_at": "2026-11-12T19:11:07.244Z",
+  "started_at": "2026-11-12T20:14:28.000Z",
+  "completed_at": "2026-11-12T20:15:20.667Z",
   "source_at": "2026-11-12T18:52:53Z",
   "source_commit": "0b13f1df1dfdac81cf422c585c9b0418fe8f0f9e",
-  "source_age_seconds": 1094,
+  "source_age_seconds": 4948,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs_reported": 65,
@@ -14,25 +14,28 @@
     "bulk_pair_records_parsed": 0,
     "priority_pair_shards_independently_verified": 12,
     "existing_plan_pair_shards_independently_verified": 2,
+    "distinct_pair_shards_verified": 13,
     "canonical_routes_evaluated": 126,
     "canonical_routes_rejected": 126,
     "canonical_new_conditional_admitted": 0,
-    "retained_conditional_plans": 2,
+    "retained_conditional_plans_expired": 2,
     "verified_simulated_fills_this_run": 0,
     "public_payload_pairs": 64,
     "full_recovery_requests": 0,
     "broker_orders": 0
   },
   "findings": [
-    "18:52:53Z successful full collection run 43284316161: 65/68 usable quoted pairs and 65 reported complete five-timeframe pairs; EUR_TRY, TRY_JPY, USD_TRY nontradeable. Independently inspected 12 leading pair shards plus AUD_CAD (13 distinct), each with D/H4/H1/M15/M5 and 249 complete candles per frame.",
-    "Canonical admission 18:53:10Z rejected all 126 new routes; 44 reversal/exhaustion, 29 invalid bid/ask/spread, 29 four-frame trend conflict, 8 weak ADX, remaining 16 other causes. Two previously admitted AUD_JPY SHORT and AUD_CAD SHORT conditional plans retained, expiring 19:49:58Z; neither is a verified simulated fill. WAIT for completed trigger.",
-    "No stale-source recovery requested: source age below 20 minutes at review; existing 18:52 collection successful.",
-    "Sanitized repository publication PUBLISHED at 18:53:56Z for 18:52:53Z snapshot; payload 64 quoted/deep pairs versus 65 collected. Machine news PARTIAL. Actual served website and user delivery not verified."
+    "Last independently available full source 2026-11-12T18:52:53Z, collection run 43284316161; 65/68 quoted with reported complete D/H4/H1/M15/M5; EUR_TRY, TRY_JPY, USD_TRY nontradeable. At this review source is stale; no current execution evidence.",
+    "Independently fetched 12 leading pair shards and AUD_CAD (13 distinct); all source clocks match 18:52:53Z. Bulk data/summary.json and data/latest.json still return empty content even in base64 mode, so 65/65 bulk verification is not claimed.",
+    "Canonical 18:53 admission: 126/126 routes rejected, 0 newly admitted. Two older conditional AUD_JPY and AUD_CAD shorts expired at 19:49:58Z; no later trigger/fill verified. WAIT.",
+    "No full recovery requested at 20:14-20:15 London: outside the active daytime monitoring window; no fresh current-main collection/run observed. Do not confuse task completion with source observation.",
+    "Sanitized repository publication status PUBLISHED for 18:52:53Z snapshot, public payload 64/65 quoted pairs; actual served website/user receipt not verified. Machine news PARTIAL; macro receipt 10:06Z stale."
   ],
   "blockers": [
-    "Large data/summary.json and data/latest.json returned empty content despite nonempty blob SHAs; 65 bulk records could not be independently parsed through connected fetch; per-pair verification bounded to 13 distinct shards.",
-    "Public payload excludes one collected quoted pair; reason not independently established.",
-    "Machine news PARTIAL and macro_events receipt last completed at 10:06Z; actual served website and user delivery unverified."
+    "Full source is more than 80 minutes old; current entry/exit status unverified. No eligible daytime stale-source recovery during this review.",
+    "Large data/summary.json and data/latest.json return empty GitHub contents with nonempty blob SHAs, including base64 request; only 13 individual pair shards independently inspected.",
+    "Published payload 64 pairs vs 65 usable quotes; cause not established; actual served public feed and user delivery unverified.",
+    "Machine news PARTIAL and macro receipt from 10:06Z; no new official-event clearance verified."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -48,9 +51,10 @@
     "signals.json",
     "data/hourly_assessment.json",
     "data/task_runs/macro_events.json",
+    "data/news_latest.json",
     "data/public_dashboard_status.json",
     "data/public_dashboard_payload.json",
-    "data/pairs/{12 leading pairs}.json",
+    "data/pairs/{12 priority shards}.json",
     "data/pairs/AUD_CAD.json",
     "scripts/refresh_request.json"
   ],
