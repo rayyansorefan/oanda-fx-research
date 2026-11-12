@@ -2,17 +2,18 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T04:15:24.882Z",
-  "completed_at": "2026-11-12T04:15:24.886Z",
-  "source_at": "2026-11-12T02:55:57Z",
-  "source_commit": "cbaa7f223b4f3ae280b0e863f97af44aeeac2dcd",
-  "source_age_seconds": 4767,
+  "started_at": "2026-11-12T05:12:01.000Z",
+  "completed_at": "2026-11-12T05:14:09.368Z",
+  "source_at": "2026-11-12T04:31:48Z",
+  "source_commit": "a8ab37e83f3b1fbed6b4e623bc25e0826e93f1b4",
+  "source_age_seconds": 2541,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs": 65,
     "screened_pairs": 65,
-    "deep_pairs_from_summary": 65,
-    "individual_pair_shards_independently_verified": 12,
+    "deep_pairs_from_individual_shards": 65,
+    "individual_pair_shards_independently_verified": 65,
+    "nontradeable_pairs": 3,
     "published_feed_pairs": 64,
     "published_feed_universe": 67,
     "canonical_routes_rejected": 130,
@@ -22,16 +23,17 @@
     "verified_simulated_fills": 0
   },
   "findings": [
-    "WAIT: verified collected source 2026-11-12T02:55:57Z, run 43144702155; parsed actual Git blobs summary and latest, all 65 usable quoted pairs with D/H4/H1/M15/M5 coverage; three TRY crosses nontradeable.",
-    "Independently retrieved all 12 priority pair shards, each matching 02:55:57Z source; canonical admission 130 rejected, zero admitted, signals.json empty. No simulated fill claimed.",
-    "Publisher receipt PUBLISHED 02:56:39Z for this snapshot; sanitized payload 64/67 versus collector 65/68, actual served feed not independently verified.",
-    "News PARTIAL and all 12 priority clearance BLOCKED; 07:00Z UK GDP cluster upcoming per macro receipt. Quiet London hours: no recovery request."
+    "WAIT: current canonical 04:31:48Z observation rejects 130/130 routes, zero admitted and signals.json empty. No simulated entry/fill/exit inferred.",
+    "Independently fetched and parsed all 65 current manifest pair shards, each with D/H4/H1/M15/M5 indicator context at the 04:31:48Z source. EUR_TRY, TRY_JPY and USD_TRY nontradeable; all 65/68 quoted pairs screened.",
+    "Rejection reasons: invalid bid/ask or spread 42; four-frame trend conflict 39; reversal/exhaustion 20; no completed M15 impulse 8; inadequate structure reward 7; spread too high 7; ADX 4; unsupported route 2; pullback zone 1.",
+    "Source collection run 43155351044 succeeded and persisted source at 04:31:48Z. Existing fast recovery sequence 221 was position_monitor-owned; no duplicate full recovery during 05:xx London quiet hours.",
+    "Public exporter/status still reports snapshot 02:55:57Z with 64/67 pairs, not the newer 04:31:48Z 65/68 collector. Public Pages actual served feed unverified; machine news PARTIAL and GBP GDP 07:00Z forthcoming. EUR_AUD expired-untriggered evidence pending machine lifecycle reconciliation."
   ],
   "blockers": [
-    "Source exceeds 25-minute full research freshness; outside active London session (04:xx UTC), no recovery requested.",
-    "Public feed 64/67 differs from collector 65/68; actual served response unverified.",
-    "Machine-news partial; all 12 priority news clearance blocked.",
-    "Only top 12 individual pair shards independently checked; all 65 assessed from complete summary/latest blobs."
+    "Full research source older than 25 minutes at review; outside active London research session, no market_scan recovery requested.",
+    "Large summary.json and latest.json fetch_file returned empty contents despite nonempty blob SHA; 65 individual current pair shards retrieved as fallback, canonical audit checked.",
+    "Public dashboard publication lags new source and covers 64/67 vs 65/68; served feed could not be independently retrieved.",
+    "Machine-news PARTIAL; 12 priority clearances BLOCKED in last published payload; EUR_AUD pending machine lifecycle reconciliation."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -40,20 +42,20 @@
     "data/collection_attempt.json",
     "data/monitoring_health.json",
     "data/universe.json",
-    "data/summary.json@e3a901692146f4dad9880f4195fc57e5b8756fbb",
-    "data/latest.json@2cc870b600a30519c13e8a5dda4752c71e744bd0",
-    "data/pairs/{12_current_priority_pairs}.json",
+    "data/summary.json@b6e0fdcb1bb06740928667e602f2414e5a294d1f",
+    "data/latest.json@23ed47491566a53a5c78dc00980ac2774498bfe1",
+    "data/pairs/{all_65_manifest_pairs}.json",
     "data/signal_admission_audit.json",
     "signals.json",
     "data/hourly_assessment.json",
     "data/public_dashboard_payload.json",
     "data/public_dashboard_status.json",
-    "data/news_latest.json",
     "data/task_runs/macro_events.json",
+    "data/task_runs/position_monitor.json",
     "scripts/refresh_request.json"
   ],
   "run_ids": [
-    "43144702155"
+    "43155351044"
   ],
   "no_broker_orders": true
 }
