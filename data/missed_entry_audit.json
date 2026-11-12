@@ -2484,16 +2484,19 @@
     "202611121200-EURAUD-LONG-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "LONG",
+      "exit_at": "2026-11-12T17:30:00Z",
       "fill_at": "2026-11-12T14:30:00Z",
       "id": "202611121200-EURAUD-LONG-EMA20_PULLBACK",
       "instrument": "EUR_AUD",
       "paper_entry": 1.62418,
+      "paper_exit": 1.62289,
       "pattern_at": "2026-11-12T14:00:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/EUR_AUD-5176bfb9512683843dea555f4a3222a19bb01b9d698ced5903d935e154344f65.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/EUR_AUD-5c40ffea6112f52bd2bb3b77c44b9c08e54d27d3761de84176b74cc999bac4fd.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.07942
     },
     "202611121300-AUDHKD-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
@@ -2518,10 +2521,11 @@
       "id": "202611121400-CADCHF-LONG-EMA20_PULLBACK",
       "instrument": "CAD_CHF",
       "pattern_at": "2026-11-12T14:45:00+00:00",
+      "reason": "Final pre-expiry M15 candle not yet observed",
       "route": "EMA20_PULLBACK",
       "scored": false,
-      "source_evidence": "data/replay_evidence/CAD_CHF-b12762bc880a16222868195a359948dcaba5f40c96c77500ac710ab15be2709d.json",
-      "status": "PAPER_WAITING_FOR_ENTRY",
+      "source_evidence": "data/replay_evidence/CAD_CHF-b398fa22b95930dee6a002f26aa96ee7f37d845a4a08bf03d846c75668567c38.json",
+      "status": "PAPER_NO_CONTIGUOUS_CANDLES",
       "trade_executed": false
     },
     "202611121400-EURCAD-SHORT-EMA20_PULLBACK": {
@@ -2678,16 +2682,15 @@
   "schema": 1,
   "today_distinct_pair_pattern_events": 14,
   "today_forward_patterns": 16,
-  "today_registered": 23,
-  "today_scored_hypothetical_entries": 11,
+  "today_registered": 28,
+  "today_scored_hypothetical_entries": 12,
   "today_status_counts": {
     "PAPER_NOT_FILLED_BEFORE_EXPIRY": 1,
-    "PAPER_OPEN_UNRESOLVED": 1,
+    "PAPER_NO_CONTIGUOUS_CANDLES": 1,
     "PAPER_PRE_ENTRY_INVALIDATED": 2,
-    "PAPER_STOP_AFTER_FILL": 1,
-    "PAPER_TP1_AFTER_FILL": 10,
-    "PAPER_WAITING_FOR_ENTRY": 1
+    "PAPER_STOP_AFTER_FILL": 2,
+    "PAPER_TP1_AFTER_FILL": 10
   },
   "today_uk": "2026-11-12",
-  "updated_at": "2026-11-12T17:14:55Z"
+  "updated_at": "2026-11-12T18:19:58Z"
 }

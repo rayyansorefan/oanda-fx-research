@@ -10,11 +10,11 @@
       "independent_scored_pair_days": 0,
       "outcomes": {
         "INVALIDATED_PRE_ENTRY": 19,
-        "NOT_REPLAYED": 26,
+        "NOT_REPLAYED": 29,
         "TRIGGERED_UNFILLED": 6,
         "UNTRIGGERED": 10
       },
-      "prospective_plans": 61,
+      "prospective_plans": 64,
       "verified_user_deliveries": 0
     },
     "champion": {
@@ -27,11 +27,11 @@
       "independent_scored_pair_days": 0,
       "outcomes": {
         "INVALIDATED_PRE_ENTRY": 4,
-        "NOT_REPLAYED": 11,
+        "NOT_REPLAYED": 13,
         "TRIGGERED_UNFILLED": 2,
         "UNTRIGGERED": 1
       },
-      "prospective_plans": 18,
+      "prospective_plans": 20,
       "verified_user_deliveries": 0
     }
   },
@@ -39,69 +39,80 @@
   "coverage": {
     "count_note": "Rejection categories overlap; route counts and per-reason pair counts must not be summed into independent trades.",
     "deep_pairs": 65,
-    "distinct_evaluated_pairs": 63,
+    "distinct_evaluated_pairs": 65,
     "distinct_pairs_by_rejection": {
-      "ADX_TREND_STRENGTH": 5,
-      "FOUR_FRAME_TREND_CONFLICT": 12,
-      "INVALID_BID_ASK_OR_SPREAD": 16,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 3,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 9,
-      "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 1,
-      "RECENT_MATERIAL_HEADLINE_REVIEW": 1,
-      "REVERSAL_OR_EXHAUSTION": 32,
+      "ADX_TREND_STRENGTH": 2,
+      "FOUR_FRAME_TREND_CONFLICT": 16,
+      "INVALID_BID_ASK_OR_SPREAD": 18,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 2,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 11,
+      "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 4,
+      "RECENT_MATERIAL_HEADLINE_REVIEW": 2,
+      "REVERSAL_OR_EXHAUSTION": 22,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 1,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
     "paper_prequalified": [
+      "AUD_CAD",
       "AUD_JPY",
       "AUD_NZD",
       "AUD_SGD",
       "AUD_USD",
+      "EUR_JPY",
+      "EUR_SGD",
+      "EUR_USD",
       "GBP_AUD",
       "GBP_CAD",
       "GBP_CHF",
+      "GBP_JPY",
       "GBP_SGD",
       "GBP_USD",
-      "NZD_CAD",
-      "NZD_SGD",
       "NZD_USD",
       "USD_SGD"
     ],
     "paper_prequalified_missing_deep": [],
     "quoted_pairs": 65,
-    "route_evaluations": 126,
+    "route_evaluations": 129,
     "route_rejections": {
-      "ADX_TREND_STRENGTH": 10,
-      "FOUR_FRAME_TREND_CONFLICT": 22,
-      "INVALID_BID_ASK_OR_SPREAD": 26,
-      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 3,
-      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 9,
-      "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 1,
-      "RECENT_MATERIAL_HEADLINE_REVIEW": 1,
-      "REVERSAL_OR_EXHAUSTION": 52,
+      "ADX_TREND_STRENGTH": 4,
+      "FOUR_FRAME_TREND_CONFLICT": 30,
+      "INVALID_BID_ASK_OR_SPREAD": 32,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 2,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 11,
+      "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 4,
+      "RECENT_MATERIAL_HEADLINE_REVIEW": 2,
+      "REVERSAL_OR_EXHAUSTION": 38,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-11-12T17:14:42Z",
+    "source_at": "2026-11-12T18:19:45Z",
     "strict_prequalified": [
+      "AUD_CAD",
       "AUD_HKD",
       "AUD_JPY",
-      "AUD_NZD",
       "AUD_SGD",
       "AUD_USD",
-      "CHF_ZAR",
+      "EUR_HKD",
+      "EUR_JPY",
+      "EUR_SGD",
+      "EUR_USD",
       "GBP_CAD",
+      "GBP_CHF",
       "GBP_HKD",
+      "GBP_JPY",
       "GBP_SGD",
       "GBP_USD",
-      "NZD_CAD",
       "NZD_HKD",
       "NZD_USD",
-      "USD_NOK",
+      "USD_CZK",
+      "USD_DKK",
+      "USD_PLN",
       "USD_SGD"
     ],
     "strict_prequalified_missing_deep": []
   },
-  "delivery_events_recorded": 17,
+  "delivery_events_recorded": 19,
   "evidence_ready_for_independent_review": false,
   "excluded": {
     "DEVELOPMENT_OR_LEGACY_TIMING": 33
@@ -124,5 +135,5 @@
     "statistical_improvement_established": false
   },
   "status": "COLLECTING_HOLDOUT",
-  "updated_at": "2026-11-12T17:15:02.018576+00:00"
+  "updated_at": "2026-11-12T18:20:02.695665+00:00"
 }
