@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "candidate_review",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T04:39:23.000Z",
-  "completed_at": "2026-11-12T04:43:04.322Z",
+  "started_at": "2026-11-12T05:37:00.000Z",
+  "completed_at": "2026-11-12T05:40:38.393Z",
   "source_at": "2026-11-12T04:31:48.000Z",
   "source_commit": "a8ab37e83f3b1fbed6b4e623bc25e0826e93f1b4",
-  "source_age_seconds": 676,
+  "source_age_seconds": 4130,
   "counts": {
     "discovered_pairs": 68,
     "collector_usable_quoted_pairs": 65,
@@ -32,6 +32,8 @@
     "canonical_signals": 0,
     "archived_signal_plan_ids": 12,
     "existing_paper_candidates": 44,
+    "unique_existing_paper_candidate_ids": 44,
+    "duplicate_existing_paper_candidate_ids": 0,
     "existing_opportunity_rows": 377,
     "unexpired_opportunity_rows_at_review": 0,
     "newly_appended_paper_candidates": 0,
@@ -39,15 +41,16 @@
     "machine_news_sources_unavailable": 2,
     "priority_pair_news_coverage_limited": 5,
     "priority_pair_news_coverage_unavailable": 7,
-    "verified_macro_events_next_48h_from_current_macro_receipt": 19,
-    "verified_macro_date_or_clock_gaps_next_48h": 6,
+    "verified_macro_events_next_48h_from_current_macro_receipt": 31,
+    "verified_macro_date_or_clock_gaps_next_48h": 5,
     "broker_orders": 0
   },
   "findings": [
     {
       "scope": "source, rule lock and registration decision",
-      "fact": "The inspected source is the successful 2026-11-12T04:31:48Z OANDA research snapshot persisted at commit a8ab37e83f3b1fbed6b4e623bc25e0826e93f1b4: 68 discovered pairs, 65 usable quoted pairs and complete D/H4/H1/M15/M5 shards for all 65 usable pairs. The locked protocol remains FX-OOS-20261104-v21 with rule hash 040da6645e4d35f8c6313db7a72b29fd293a217684fd4287f0aff126320a3f26 and no_orders=true.",
-      "decision": "Twelve current priority shards were independently inspected. No canonical signal or new permanent paper candidate was created."
+      "fact": "The inspected market source is the successful 2026-11-12T04:31:48Z OANDA research snapshot persisted at commit a8ab37e83f3b1fbed6b4e623bc25e0826e93f1b4: 68 discovered pairs, 65 usable quoted pairs and complete D/H4/H1/M15/M5 shards for all 65 usable pairs. The locked protocol remains FX-OOS-20261104-v21 with rule hash 040da6645e4d35f8c6313db7a72b29fd293a217684fd4287f0aff126320a3f26 and no_orders=true.",
+      "counter_evidence": "At completion the source exceeded the 25-minute full-review freshness threshold. Candidate_review is not authorized to request recovery, and the current market_scan receipt records no refresh outside the active London session.",
+      "decision": "Twelve current priority shards were independently inspected, but no canonical signal or new permanent paper candidate was created."
     },
     {
       "scope": "canonical admission reconciliation",
@@ -56,39 +59,40 @@
     },
     {
       "scope": "EUR_USD and GBP_USD short counter-evidence",
-      "fact": "Both pairs retained strong bearish M15/H1/H4 price-and-indicator alignment at 04:31Z. EUR_USD M15 ADX was 41.07 and GBP_USD 42.03, with bearish EMA stacks, -DI dominance, price below cloud and Supertrend down.",
-      "counter_evidence": "Neither latest completed M15 candle was a decisive bearish impulse; both were bullish recovery candles, H1 RSI was near 25, and the admission engine rejected momentum continuation for NO_DECISIVE_COMPLETED_M15_IMPULSE and pullbacks for NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE. The official macro receipt also identifies the UK GDP cluster at 07:00Z, so GBP exposure carries a near scheduled-event risk.",
+      "fact": "Both pairs retained bearish M15/H1/H4 alignment at 04:31Z. EUR_USD M15 ADX was 41.07 and GBP_USD 42.03, with bearish EMA stacks and -DI dominance.",
+      "counter_evidence": "Neither latest completed M15 candle was a decisive bearish impulse; both were bullish recovery candles, H1 RSI was near 25, and the admission engine rejected continuation for NO_DECISIVE_COMPLETED_M15_IMPULSE and pullbacks for NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE. The official macro receipt identifies the UK GDP cluster at 07:00Z.",
       "decision": "Directional research bias only; no fresh entry/stop/target watch was registered."
     },
     {
-      "scope": "USD and proxy-cross long cluster",
-      "fact": "USD_CHF, USD_DKK and USD_SEK ranked as long-biased while USD_CHF and USD_DKK showed strong M15/H1 bullish trend evidence.",
-      "counter_evidence": "USD_CHF failed both the decisive-impulse and structure-reward tests, with H1 RSI 73.04 and the latest M15 candle bearish. USD_DKK and USD_SEK failed executable bid/ask or spread validation; the observed USD_SEK spread was 38.3 pips. These ideas share substantial USD directional exposure and were not treated as independent confirmations.",
+      "scope": "USD long cluster",
+      "fact": "USD_CHF, USD_CAD, USD_DKK and USD_SEK ranked as long-biased.",
+      "counter_evidence": "USD_CHF failed decisive-impulse and structure-reward tests with H1 RSI 73.04 and a bearish latest M15 candle. USD_CAD H1 RSI was 76.78 and H4 RSI 81.25 while its pullback was too far from zone. USD_DKK and USD_SEK failed executable bid/ask or spread validation; USD_SEK spread was 38.3 pips. The four ideas share substantial USD exposure and are not independent confirmations.",
       "decision": "No correlated duplicate watch was appended."
     },
     {
-      "scope": "HKD, SGD and CAD cross challenges",
-      "fact": "EUR_HKD, CHF_HKD and GBP_HKD had directional screen support, but both registered routes for the HKD pairs failed INVALID_BID_ASK_OR_SPREAD. EUR_SGD failed decisive-impulse and structure-reward gates; SGD_CHF failed spread-to-volatility; EUR_CAD failed four-frame trend alignment.",
-      "counter_evidence": "Machine news coverage is unavailable for HKD, SGD, DKK and SEK-dependent priority pairs, while EUR_CAD H4/D evidence conflicts with the M15/H1 short thesis.",
-      "decision": "Spread, macro-coverage and frame-conflict evidence overrode directional ranking; no paper watch was forced."
+      "scope": "cross and cost challenges",
+      "fact": "EUR_HKD, CHF_HKD and GBP_HKD had directional screen support, while EUR_SGD, EUR_CAD and SGD_CHF also reached the priority set.",
+      "counter_evidence": "All HKD routes failed INVALID_BID_ASK_OR_SPREAD. EUR_SGD failed decisive-impulse and structure-reward gates; EUR_CAD failed four-frame alignment; SGD_CHF failed spread-to-volatility. Machine news coverage is unavailable for HKD, SGD, DKK and SEK-dependent priority pairs.",
+      "decision": "Cost, coverage and frame-conflict evidence overrode rank; no paper watch was forced."
     },
     {
       "scope": "macro and news receipts",
-      "fact": "data/news_latest.json is PARTIAL at 04:31:48Z with 10 available sources and 2 unavailable sources. Across the twelve priority pairs, five have LIMITED machine-news coverage and seven are UNAVAILABLE. The current macro receipt separately verified 19 timed next-48-hour events and six date-only or clock-gap events from official sources.",
-      "counter_evidence": "The machine layer did not clear missing BLS employment/inflation sources or unsupported HKD/SGD/DKK/SEK coverage, and candidate_review does not alter machine news clearance.",
-      "decision": "Event and coverage uncertainty remains an explicit blocker, not an inferred all-clear."
+      "fact": "data/news_latest.json is PARTIAL at 04:31:48Z with 10 available and 2 unavailable source groups. The current macro receipt independently records 31 timed next-48-hour events and five date-only or clock-gap items from primary sources.",
+      "counter_evidence": "BLS employment and inflation groups remain unavailable, unsupported currency coverage remains partial, and candidate_review does not alter machine news clearance.",
+      "decision": "Event and coverage uncertainty remains a blocker rather than an inferred all-clear."
     },
     {
       "scope": "prospective identity and duplicate control",
-      "fact": "The signal-plan archive contains 12 immutable IDs, the permanent paper file contains 44 candidates, and the opportunity ledger contains 377 forward-only rows. At review time all 377 opportunity rows had expired, and signals.json contained zero signals.",
-      "counter_evidence": "The newest recorded opportunity was an already expired GBP_SGD short. The current source did not supply a newly admitted route with a completed trigger and validated entry/stop/target/expiry economics.",
+      "fact": "The signal-plan archive contains 12 immutable IDs, the permanent paper file contains 44 candidates with 44 unique IDs, and the opportunity ledger contains 377 forward-only rows.",
+      "counter_evidence": "All 377 opportunity rows were expired at review, signals.json contained zero signals, and the current source supplied no newly admitted route with a completed trigger and validated entry/stop/target/expiry economics.",
       "decision": "Zero candidates were appended; no duplicate, backdated, incomplete-as-approved or unsupported continuation candidate was manufactured."
     }
   ],
   "blockers": [
-    "data/news_latest.json@97c1b0ac573a6b792a8d09235b569b15613647c4 remains PARTIAL: 2 sources are unavailable, and 7 of the 12 priority pairs have UNAVAILABLE machine-news coverage because one currency lacks supported official-feed coverage.",
+    "The 2026-11-12T04:31:48Z market source exceeded the 25-minute full-review freshness threshold by completion; candidate_review is not authorized to request recovery.",
+    "data/news_latest.json@97c1b0ac573a6b792a8d09235b569b15613647c4 remains PARTIAL: 2 source groups are unavailable and 7 of the 12 priority pairs have UNAVAILABLE machine-news coverage.",
     "data/entry_opportunity_ledger.json@c672cc1f1bc4b4b8e3e9612b6139581496d09c19 is source-stamped 2026-11-12T02:55:57Z; all 377 registered opportunity rows were expired at this review.",
-    "The current admission audit admitted zero of 130 routes, so no fresh candidate had a completed trigger plus registered entry, stop, target, expiry, spread-sensitive economics and news clearance suitable for append.",
+    "The admission audit admitted zero of 130 routes, so no candidate had a completed trigger plus registered entry, stop, target, expiry, spread-sensitive economics and news clearance suitable for append.",
     "No Pepperstone quote, broker fill, account state, real/practice order, personal broker detail or user-delivery receipt was accessed or inferred."
   ],
   "evidence_paths": [
@@ -104,9 +108,9 @@
     "data/lifecycle_ledger.json@2811554920c21756210d9acd765fa67406b010c6",
     "paper-trade-candidates.json@35daf9a27b23c9b67a2c45bbf870dcc5bb2ccf81",
     "signals.json@cbbae8e9c1f630f21bfb019f251f4ca82018fba2",
-    "data/task_runs/market_scan.json@6c3d0ccc21374f2548eab2f68cc6ba30f0d39aa7",
-    "data/task_runs/macro_events.json@d32e05a34c0a2f659cd83b63f40d4f78e41bae7d",
-    "data/task_runs/position_monitor.json@c6355296835c95655ccefaf7c5d5e4c6f60f86fe",
+    "data/task_runs/market_scan.json@5b21d1f52facf7a7c384c09c9b758d2294cf8765",
+    "data/task_runs/macro_events.json@ea4bb75ab898b1f9cd698e6b652a190e5ec51dfd",
+    "data/task_runs/position_monitor.json@79bc410bb809b3e0e3e981f471b193edd3812d0e",
     "data/pairs/EUR_USD.json@cf4058033c7fa9ba599c7f2cc779d852047e0c44",
     "data/pairs/GBP_USD.json@079b9e165ba0d55d3d23e2790317b82cf6fa4c41",
     "data/pairs/EUR_HKD.json@1b986764c7b84ac1bf7d4b5c0ae8568ff9b10f08",
