@@ -1,7 +1,7 @@
 {
   "automatic_promotion_allowed": false,
   "broker_orders_submitted": 0,
-  "checked_at": "2026-11-12T18:20:01Z",
+  "checked_at": "2026-11-12T18:53:14Z",
   "holdout_start_at": "2026-11-06T10:03:14Z",
   "metrics": {
     "additional_paper_approvals": 0,
@@ -10,16 +10,17 @@
     "independent_scored_pair_days": 0,
     "net_total_r_bidask": null,
     "net_total_r_cost_stress": null,
-    "news_uncertainty_plans": 9,
+    "news_uncertainty_plans": 11,
     "outcomes": {
       "EXPIRED_UNTRIGGERED": 1,
       "INVALIDATED_PRE_ENTRY": 6,
-      "MISSED_ENTRY": 2
+      "MISSED_ENTRY": 2,
+      "PENDING_TRIGGER": 2
     },
     "paper_only": true,
     "performance_validated": false,
-    "plans": 9,
-    "relaxed_news_gate_plans": 9,
+    "plans": 11,
+    "relaxed_news_gate_plans": 11,
     "scored_exits": 0,
     "verified_user_deliveries": 0
   },
@@ -118,7 +119,8 @@
       "2026-11-12T15:19:02Z",
       "2026-11-12T16:18:23Z",
       "2026-11-12T17:15:00Z",
-      "2026-11-12T18:20:01Z"
+      "2026-11-12T18:20:01Z",
+      "2026-11-12T18:53:14Z"
     ],
     "EUR_GBP": [
       "2026-11-06T11:17:16Z",
@@ -211,7 +213,8 @@
       "2026-11-12T15:19:02Z",
       "2026-11-12T16:18:23Z",
       "2026-11-12T17:15:00Z",
-      "2026-11-12T18:20:01Z"
+      "2026-11-12T18:20:01Z",
+      "2026-11-12T18:53:14Z"
     ],
     "EUR_JPY": [
       "2026-11-06T11:17:16Z",
@@ -304,7 +307,8 @@
       "2026-11-12T15:19:02Z",
       "2026-11-12T16:18:23Z",
       "2026-11-12T17:15:00Z",
-      "2026-11-12T18:20:01Z"
+      "2026-11-12T18:20:01Z",
+      "2026-11-12T18:53:14Z"
     ],
     "EUR_USD": [
       "2026-11-06T10:03:14Z",
@@ -396,7 +400,8 @@
       "2026-11-12T15:19:02Z",
       "2026-11-12T16:18:23Z",
       "2026-11-12T17:15:00Z",
-      "2026-11-12T18:20:01Z"
+      "2026-11-12T18:20:01Z",
+      "2026-11-12T18:53:14Z"
     ],
     "GBP_JPY": [
       "2026-11-06T11:17:16Z",
@@ -490,7 +495,8 @@
       "2026-11-12T15:19:02Z",
       "2026-11-12T16:18:23Z",
       "2026-11-12T17:15:00Z",
-      "2026-11-12T18:20:01Z"
+      "2026-11-12T18:20:01Z",
+      "2026-11-12T18:53:14Z"
     ],
     "GBP_USD": [
       "2026-11-06T11:17:16Z",
@@ -585,7 +591,8 @@
       "2026-11-12T15:19:02Z",
       "2026-11-12T16:18:23Z",
       "2026-11-12T17:15:00Z",
-      "2026-11-12T18:20:01Z"
+      "2026-11-12T18:20:01Z",
+      "2026-11-12T18:53:14Z"
     ],
     "NZD_USD": [
       "2026-11-06T11:17:16Z",
@@ -680,7 +687,8 @@
       "2026-11-12T15:19:02Z",
       "2026-11-12T16:18:23Z",
       "2026-11-12T17:15:00Z",
-      "2026-11-12T18:20:01Z"
+      "2026-11-12T18:20:01Z",
+      "2026-11-12T18:53:14Z"
     ],
     "USD_CAD": [
       "2026-11-06T10:03:14Z",
@@ -775,7 +783,8 @@
       "2026-11-12T15:19:02Z",
       "2026-11-12T16:18:23Z",
       "2026-11-12T17:15:00Z",
-      "2026-11-12T18:20:01Z"
+      "2026-11-12T18:20:01Z",
+      "2026-11-12T18:53:14Z"
     ],
     "USD_CHF": [
       "2026-11-06T11:17:16Z",
@@ -868,7 +877,8 @@
       "2026-11-12T15:19:02Z",
       "2026-11-12T16:18:23Z",
       "2026-11-12T17:15:00Z",
-      "2026-11-12T18:20:01Z"
+      "2026-11-12T18:20:01Z",
+      "2026-11-12T18:53:14Z"
     ],
     "USD_JPY": [
       "2026-11-06T11:17:16Z",
@@ -963,7 +973,8 @@
       "2026-11-12T15:19:02Z",
       "2026-11-12T16:18:23Z",
       "2026-11-12T17:15:00Z",
-      "2026-11-12T18:20:01Z"
+      "2026-11-12T18:20:01Z",
+      "2026-11-12T18:53:14Z"
     ]
   },
   "records": {
@@ -1353,6 +1364,88 @@
         "source_evidence": "data/replay_evidence/GBP_USD-b7e47f30fbabed63764109a7578630275776e721622c3d715a5fc14974ebde35.json",
         "status": "EXPIRED_UNTRIGGERED"
       }
+    },
+    "contextual-news-shadow-v1-20261112T185314Z-GBP_USD-MOMENTUM_CONTINUATION": {
+      "plan": {
+        "approved_entry": false,
+        "atr_at_decision": 0.0008552477855487192,
+        "broker_order_permitted": false,
+        "comparison_news_gate": "RECENT_MATERIAL_HEADLINE_REVIEW",
+        "created_at": "2026-11-12T18:53:14Z",
+        "direction": "SHORT",
+        "economic_levels_unchanged_from_simple_v2": true,
+        "entry_condition": "NEXT_COMPLETED_M15_CLOSE_BEYOND_FROZEN_TRIGGER",
+        "estimated_net_rr_before_slippage": 1.5339,
+        "experimental_paper_only": true,
+        "expires_at": "2026-11-12T20:23:14Z",
+        "gross_rr": 1.7944,
+        "id": "contextual-news-shadow-v1-20261112T185314Z-GBP_USD-MOMENTUM_CONTINUATION",
+        "indicative_entry": 1.32277,
+        "instrument": "GBP_USD",
+        "invalidation": "PREENTRY_STOP_TOUCH_OR_EXPIRY",
+        "last_source_bar_at": "2026-11-12T18:30:00Z",
+        "manual_response_seconds": 60,
+        "max_chase_atr": 0.35,
+        "max_spread_pips": 1.375,
+        "news_policy": "CONTEXTUAL_PAPER_RISK_TAGGED",
+        "pip_size": 0.0001,
+        "policy": "contextual-news-shadow-v1",
+        "setup_type": "MOMENTUM_CONTINUATION",
+        "source_at": "2026-11-12T18:52:53Z",
+        "stop": 1.32384,
+        "tp1": 1.32085,
+        "trigger": 1.32279,
+        "unverified_news": [
+          "MATERIAL_HEADLINE_REVIEW_UNVERIFIED",
+          "NEWS_COVERAGE_PARTIAL_OR_UNVERIFIED"
+        ]
+      },
+      "result": {
+        "scored": false,
+        "source_evidence": "data/replay_evidence/GBP_USD-52b106a892f1e508b4747811661bda82f2d48f5844cdf0f03830c123b257741c.json",
+        "status": "PENDING_TRIGGER"
+      }
+    },
+    "contextual-news-shadow-v1-20261112T185314Z-USD_JPY-TREND_PULLBACK": {
+      "plan": {
+        "approved_entry": false,
+        "atr_at_decision": 0.11830978977834347,
+        "broker_order_permitted": false,
+        "comparison_news_gate": "RECENT_MATERIAL_HEADLINE_REVIEW",
+        "created_at": "2026-11-12T18:53:14Z",
+        "direction": "LONG",
+        "economic_levels_unchanged_from_simple_v2": true,
+        "entry_condition": "NEXT_COMPLETED_M15_CLOSE_BEYOND_FROZEN_TRIGGER",
+        "estimated_net_rr_before_slippage": 1.5399,
+        "experimental_paper_only": true,
+        "expires_at": "2026-11-12T20:23:14Z",
+        "gross_rr": 1.7973,
+        "id": "contextual-news-shadow-v1-20261112T185314Z-USD_JPY-TREND_PULLBACK",
+        "indicative_entry": 159.842,
+        "instrument": "USD_JPY",
+        "invalidation": "PREENTRY_STOP_TOUCH_OR_EXPIRY",
+        "last_source_bar_at": "2026-11-12T18:30:00Z",
+        "manual_response_seconds": 60,
+        "max_chase_atr": 0.35,
+        "max_spread_pips": 1.875,
+        "news_policy": "CONTEXTUAL_PAPER_RISK_TAGGED",
+        "pip_size": 0.01,
+        "policy": "contextual-news-shadow-v1",
+        "setup_type": "TREND_PULLBACK",
+        "source_at": "2026-11-12T18:52:53Z",
+        "stop": 159.694,
+        "tp1": 160.108,
+        "trigger": 159.821,
+        "unverified_news": [
+          "MATERIAL_HEADLINE_REVIEW_UNVERIFIED",
+          "NEWS_COVERAGE_PARTIAL_OR_UNVERIFIED"
+        ]
+      },
+      "result": {
+        "scored": false,
+        "source_evidence": "data/replay_evidence/USD_JPY-895ec75fe020db782b8c3c257b9f6584f22b818095e8d3de35b77e9247c8bfae.json",
+        "status": "PENDING_TRIGGER"
+      }
     }
   },
   "registered_at": "2026-11-06T10:03:14Z",
@@ -1466,7 +1559,8 @@
     "2026-11-12T15:18:47Z",
     "2026-11-12T16:17:57Z",
     "2026-11-12T17:14:42Z",
-    "2026-11-12T18:19:45Z"
+    "2026-11-12T18:19:45Z",
+    "2026-11-12T18:52:53Z"
   ],
   "status": "FORWARD_PAPER_ONLY",
   "study_version": "contextual-news-shadow-v1"
