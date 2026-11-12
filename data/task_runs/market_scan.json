@@ -2,18 +2,17 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T14:15:02.000Z",
-  "completed_at": "2026-11-12T14:16:34.599Z",
-  "source_at": "2026-11-12T13:16:08Z",
-  "source_commit": "cd2d6869a99815ab92f938628efc2399ad3dbd0e",
-  "source_age_seconds": 3627,
+  "started_at": "2026-11-12T15:15:31.000Z",
+  "completed_at": "2026-11-12T15:16:39.536Z",
+  "source_at": "2026-11-12T14:16:56Z",
+  "source_commit": "0b66c561a9f01a473a2510b2d4af691c084030b6",
+  "source_age_seconds": 3584,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs_reported": 68,
     "full_five_frame_pairs_reported": 68,
-    "pair_shards_independently_verified": 68,
-    "pair_shards_with_five_frames": 68,
-    "priority_pair_shards_independently_verified": 12,
+    "pair_shards_independently_verified": 0,
+    "priority_pair_shards_independently_verified": 0,
     "canonical_screened_pairs": 68,
     "canonical_routes_evaluated": 136,
     "canonical_routes_rejected": 136,
@@ -25,41 +24,35 @@
     "broker_orders": 0
   },
   "findings": [
-    "13:16:08Z source was successfully collected by GitHub Actions run 43225484656; both full data/summary.json and data/latest.json were recovered via authenticated GitHub git/blob fetch and parsed, rather than treating empty fetch_file responses as empty markets.",
-    "68/68 source pairs have usable quoted and full D/H4/H1/M15/M5 coverage; all 68 individual current-manifest pair shards independently fetched and checked, including all 12 ranked priorities.",
-    "Canonical admission at 13:16 source assessed 136 routes across 68 pairs; 136 rejected, 0 admitted, current signals.json empty. Rejection counts: reversal/exhaustion 79, four-frame trend conflict 33, invalid spread/bid-ask 14, ADX trend strength 4, recent material headline 2, incomplete completed M15 impulse 2, unsupported route 2. Full gate audit shows news_gate failed 136/136; 5 economically feasible observations still not admitted. Decision WAIT; no verified new simulated entry.",
-    "Stale-source recovery requested once through scripts/refresh_request.json sequence 231 at 14:15:02Z, exact SHA write commit 3687ceee3b092811e9238a47f72d8c7f6ef609f1. Matching Actions run 43235307773 was still in progress at 14:16:22Z; associated run 43235307969 completed successfully but does not prove a new source.",
-    "Sanitized repository publication status PUBLISHED for 13:16:08Z snapshot, public payload 67/67 versus source 68/68. Machine-news status PARTIAL and all 12 priority news clearances blocked. Repository readback is not verified served public HTTP or user delivery."
+    "Latest collected source 2026-11-12T14:16:56Z, collection run 43235307773 COLLECTED; current universe and summary report 68/68 usable quotes and complete five-frame coverage; independent pair-shard parsing not completed in this run.",
+    "Canonical admission source 14:16:56Z evaluated 136 routes across 68 pairs; rejected all 136: invalid bid/ask/spread 38, trend conflict 42, reversal/exhaustion 27, spread/volatility 7, completed impulse 6, inadequate structure reward 6, ADX 6, DMI 2, unsupported 2. signals.json empty. WAIT.",
+    "One current-main full stale recovery request at 15:16:03Z, sequence 232 commit 0b66c561a9f01a473a2510b2d4af691c084030b6; matching Actions run 43245942121 confirmed in progress, new source/admission/publication pending.",
+    "Repository sanitized publication PUBLISHED for 14:16:56Z; public serving and delivery not verified. Machine news remains incomplete; macro receipt is from 10:06Z."
   ],
   "blockers": [
-    "Full source age exceeds 25 minutes; new recovery run 43235307773 pending; no new collection/admission/publication verified.",
-    "Sanitized published payload has 67 pairs against 68 collected; excluded pair not assumed admitted.",
-    "Actual served public feed and notification receipt not verified; machine news incomplete.",
-    "No new simulated trigger/fill verified."
+    "Source older than 25 minutes; new recovery in progress, not yet verified.",
+    "Individual 68 pair shards and top12 deep files not independently verified in this review.",
+    "Actual public served feed and user receipt unverified; machine-news coverage incomplete."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
     "config/scheduled_research_roles.json",
     "validation_protocol.json",
-    "data/collection_attempt.json@0ad78cb539b3280f138b83419d177d747ed70a41",
-    "data/monitoring_health.json@8e83288c39d4e66e3d7bf7166f94eb332336d933",
-    "data/summary.json@5a94d2777e796f421744f03e56706b561e003090",
-    "data/latest.json@ddbb6bc404aab2d3e2e4e5006c295421fbe0bf90",
-    "data/universe.json@82513ea08a9467d8f87e452d55abe5d1e707c68f",
-    "data/pairs/{all 68 current manifest deep_pairs}.json",
-    "data/signal_admission_audit.json@3ef3c6600ad29c6bafb47795d2a6857a088eae0a",
-    "data/admission_full_gate_audit.json",
-    "signals.json@177f077d876ef01a2d3debd2871181f0bf4995a9",
-    "data/task_runs/macro_events.json@ea46754234fe1e70a5c653ed4a7580d3d55b9e3e",
-    "data/news_latest.json@dfc0b361aacd899655475d481ac431a94fc2160a",
-    "data/public_dashboard_payload.json@f3c5a76624ec1ab47a0219f2fa53ac053d4fe59a",
-    "data/public_dashboard_status.json@1a97d006fbdea02840bd3d6e7a87c734b2bae38d",
-    "scripts/refresh_request.json@a87438d7b6bc7012aea6cc0e907ab3bff8a4ea43"
+    "data/collection_attempt.json",
+    "data/monitoring_health.json",
+    "data/universe.json",
+    "data/summary.json",
+    "data/latest.json",
+    "data/signal_admission_audit.json",
+    "signals.json",
+    "data/task_runs/macro_events.json",
+    "data/public_dashboard_status.json",
+    "data/public_dashboard_payload.json",
+    "scripts/refresh_request.json@2a610b6edd1486a6c36deb34ca8714ed83ba13a1"
   ],
   "run_ids": [
-    "43225484656",
     "43235307773",
-    "43235307969"
+    "43245942121"
   ],
   "no_broker_orders": true
 }
