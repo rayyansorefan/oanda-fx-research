@@ -654,7 +654,7 @@
       }
     ],
     "challenger": "PAPER_ONLY_NOT_VALIDATED",
-    "checked_at": "2026-11-12T10:13:24.466567+00:00",
+    "checked_at": "2026-11-12T10:33:29.466573+00:00",
     "favourable": 27,
     "flat": 0,
     "insufficient": 6,
@@ -664,7 +664,7 @@
     "sample_warning": "Directional movements are NOT filled trades, realised losses, success probabilities or evidence sufficient to change champion parameters.",
     "session_date_uk": "2026-11-11"
   },
-  "collected_at": "2026-11-12T10:13:24.466567+00:00",
+  "collected_at": "2026-11-12T10:33:29.466573+00:00",
   "counts": {
     "need_news_review": 0,
     "price_alerts": 0,
@@ -878,21 +878,21 @@
     },
     "threshold": "Paper bias neutral until >=30 scored samples, >=10 days, >=3 pairs and conservative 99% mean-R bound excludes zero. Never relax execution, spread or news gates."
   },
-  "news_collected_at": "2026-11-12T10:13:21Z",
+  "news_collected_at": "2026-11-12T10:33:24Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-11-12T10:13:23.749515+00:00",
+  "oanda_collected_at": "2026-11-12T10:33:28.841206+00:00",
   "signals": [
     {
       "adaptive_context": {
         "block_new_alert": false,
-        "m15_ema_distance_atr": 0.686,
+        "m15_ema_distance_atr": -0.06,
         "reason": "Momentum is mixed; require the original completed-candle trigger, not directional bias alone.",
         "status": "CAUTION_MIXED_MOMENTUM"
       },
       "candle_timing": {
-        "last_late_candle_close": null,
-        "last_processed_bar_close": null,
-        "late_candles_skipped": 0,
+        "last_late_candle_close": "2026-11-12T10:15:00+00:00",
+        "last_processed_bar_close": "2026-11-12T10:30:00+00:00",
+        "late_candles_skipped": 3,
         "user_delivery_verified": false
       },
       "caution": "Some optional news feeds unavailable; calendar and required headline feeds checked. This is NOT an all-clear.",
@@ -941,26 +941,26 @@
       "technical_checkpoint": {
         "h1_adx14": 24.76363668889204,
         "h1_rsi14": 39.513179749587756,
-        "indicative_distance_to_stop_pips": 18.7,
-        "indicative_distance_to_target_pips": 20.8,
-        "indicative_remaining_rr_before_new_spread_adjustment": 1.11,
+        "indicative_distance_to_stop_pips": 12.6,
+        "indicative_distance_to_target_pips": 26.9,
+        "indicative_remaining_rr_before_new_spread_adjustment": 2.13,
         "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
-        "latest_completed_m15_bar_start": "2026-11-12T09:45:00.000000000Z",
-        "m15_adx14": 30.35570826145939,
-        "m15_atr14": 0.08848388338146565,
-        "m15_macd_histogram": 0.003988950112206055,
-        "m15_rsi14": 42.85221460815571,
+        "latest_completed_m15_bar_start": "2026-11-12T10:15:00.000000000Z",
+        "m15_adx14": 29.266007779521704,
+        "m15_atr14": 0.08545294018284906,
+        "m15_macd_histogram": 0.012142982150616738,
+        "m15_rsi14": 46.153997526213416,
         "oanda_quote": {
-          "ask": 109.026,
-          "bid": 109.004,
+          "ask": 109.088,
+          "bid": 109.065,
           "pip_size": 0.01,
-          "spread_pips": 2.199999999999136,
-          "time": "2026-11-12T10:13:14.447173051Z",
+          "spread_pips": 2.2999999999996135,
+          "time": "2026-11-12T10:33:12.629527813Z",
           "tradeable": true
         },
-        "price_reference": 109.004,
+        "price_reference": 109.065,
         "quote_is_tradeable": true,
-        "vs_m15_ema20": "BELOW"
+        "vs_m15_ema20": "ABOVE"
       }
     }
   ],
