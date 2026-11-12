@@ -2,61 +2,56 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T21:13:44.000Z",
-  "completed_at": "2026-11-12T21:14:10.847Z",
-  "source_at": "2026-11-12T18:52:53Z",
-  "source_commit": "0b13f1df1dfdac81cf422c585c9b0418fe8f0f9e",
-  "source_age_seconds": 8478,
+  "started_at": "2026-11-12T22:17:50Z",
+  "completed_at": "2026-11-12T22:18:21.811Z",
+  "source_at": "2026-11-12T22:11:36Z",
+  "source_commit": "e34eb32c0fbd4c27fed4b6be9ed9b743753d16bf",
+  "source_age_seconds": 406,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs_reported": 65,
     "full_five_frame_pairs_reported": 65,
-    "bulk_pair_records_parsed": 0,
-    "priority_pair_shards_independently_verified": 0,
-    "canonical_routes_evaluated": 126,
-    "canonical_routes_rejected": 126,
+    "priority_pair_shards_independently_verified": 12,
+    "canonical_routes_evaluated": 130,
+    "canonical_routes_rejected": 130,
     "canonical_new_conditional_admitted": 0,
-    "expired_conditional_signals": 2,
     "verified_simulated_fills_this_run": 0,
     "public_payload_pairs": 64,
     "full_recovery_requests": 0,
     "broker_orders": 0
   },
   "findings": [
-    "Latest current-main collection_attempt remains COLLECTED for Actions run 43284316161, source 2026-11-12T18:52:53Z; source clock is not task clock. 65/68 usable quoted pairs reported with complete D/H4/H1/M15/M5, three TRY pairs nontradeable.",
-    "Canonical source-time admission rejected all 126 evaluated routes; separate full-gate diagnostics have 130 rows and are not admission decisions. Top canonical rejection reasons: reversal/exhaustion 46, trend conflict 29, invalid bid/ask or spread 29.",
-    "Two older AUD_JPY and AUD_CAD conditional research plans expired at 19:49:58Z without independently verified subsequent trigger or paper fill. Current decision WAIT; no fresh execution evidence.",
-    "No full recovery initiated at 21:13 London, outside active daytime monitoring window. Existing refresh_request sequence 235 unchanged.",
-    "Repository publication PUBLISHED for 18:52:53Z snapshot; sanitized payload reports 64 quoted/screened/deep against 65 source usable. Actual served public feed and user receipt not verified. News PARTIAL; macro role receipt last completed 10:06Z."
+    "22:11:36Z collection_attempt COLLECTED (Actions run 43317526547); universe reports 65/68 usable quoted pairs with D/H4/H1/M15/M5; EUR_TRY, TRY_JPY, USD_TRY nontradeable.",
+    "Canonical admission at source 22:11:36Z rejected all 130 routes; reasons: invalid bid/ask or spread 73, reversal/exhaustion 41, spread too high relative to volatility 10, four-frame trend conflict 4, unsupported pair/route 2. signals.json empty; WAIT, no new conditional plan.",
+    "Top 12 priority pair shards parsed individually; source bulk summary.json and latest.json returned empty GitHub contents despite nonempty SHA. Full independent 65-pair bulk parsing not achieved.",
+    "No recovery requested: full source was under 20 minutes old. Repository public_dashboard_status reports PUBLISHED at 22:11:36Z; sanitized payload 64 pairs vs 65 source quoted, news PARTIAL. Actual served feed/user delivery not verified."
   ],
   "blockers": [
-    "Full source is stale by over two hours; no valid current trade decision beyond WAIT.",
-    "Large summary.json/latest.json GitHub content empty despite nonempty SHAs; no independently parsed bulk coverage or individual shard verification this run.",
-    "Published 64/65 discrepancy and public served-feed verification outstanding.",
-    "Machine news PARTIAL and macro receipt stale; no new official clearance."
+    "Bulk source contents not independently retrieved; full independent coverage incomplete.",
+    "Sanitized public feed has 64/65 discrepancy; actual served feed not verified.",
+    "Machine news PARTIAL and macro role receipt remains from 10:06Z; no independent fresh macro clearance."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
     "config/scheduled_research_roles.json",
     "validation_protocol.json",
-    "data/task_runs/market_scan.json",
     "data/collection_attempt.json",
     "data/monitoring_health.json",
-    "data/summary.json",
-    "data/latest.json",
     "data/universe.json",
     "data/signal_admission_audit.json",
-    "data/admission_full_gate_audit.json",
     "signals.json",
     "data/hourly_assessment.json",
-    "data/task_runs/macro_events.json",
     "data/news_latest.json",
     "data/public_dashboard_status.json",
     "data/public_dashboard_payload.json",
+    "data/task_runs/macro_events.json",
+    "data/pairs/{top_12_priority_pairs}.json",
+    "data/summary.json",
+    "data/latest.json",
     "scripts/refresh_request.json"
   ],
   "run_ids": [
-    "43284316161"
+    "43317526547"
   ],
   "no_broker_orders": true
 }
