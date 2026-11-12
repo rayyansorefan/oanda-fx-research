@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "candidate_review",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T23:44:39.000Z",
-  "completed_at": "2026-11-11T23:47:05.982Z",
+  "started_at": "2026-11-12T00:44:57.000Z",
+  "completed_at": "2026-11-12T00:46:31.866Z",
   "source_at": "2026-11-11T21:25:44.000Z",
   "source_commit": "c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85",
-  "source_age_seconds": 8481,
+  "source_age_seconds": 12047,
   "counts": {
     "discovered_pairs": 68,
     "collector_usable_quoted_pairs": 65,
@@ -39,14 +39,16 @@
     "machine_news_sources_available": 10,
     "machine_news_sources_unavailable": 2,
     "machine_news_clearance_changes": 0,
-    "broker_orders": 0
+    "broker_orders": 0,
+    "verified_macro_events_next_48h": 20,
+    "verified_macro_date_or_clock_gaps_next_48h": 6
   },
   "findings": [
     {
       "scope": "source, rule lock and registration decision",
       "fact": "The inspected source remains the successful 2026-11-11T21:25:44Z collector snapshot at commit c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85: 65 usable quoted pairs from 68 discovered, 341 successful candle requests and no collection failures. The locked protocol is FX-OOS-20261104-v21 with rule hash 040da6645e4d35f8c6313db7a72b29fd293a217684fd4287f0aff126320a3f26.",
-      "counter_evidence": "The source exceeded the 25-minute full-research freshness limit; candidate_review does not own refresh recovery. No current pair-specific fast receipt established a newer full multiframe observation.",
-      "decision": "No candidate was accepted or appended. This preserves the current 44 permanent paper candidates, 12 archived signal-plan IDs, zero unexpired permanent candidate and empty canonical signals.json."
+      "counter_evidence": "The source exceeded the 25-minute full-research freshness limit; candidate_review does not own refresh recovery. No current pair-specific fast receipt established a newer multiframe observation.",
+      "decision": "No candidate was accepted or appended. This preserves all 44 permanent paper candidates, 12 archived signal-plan IDs, zero unexpired permanent candidates and empty canonical signals.json."
     },
     {
       "scope": "canonical admission reconciliation",
@@ -87,7 +89,7 @@
     },
     {
       "scope": "macro, correlation and coverage constraints",
-      "fact": "The macro receipt covers all nine currencies in the twelve priorities and records 19 verified timed events plus six date-only/clock-gap events in the next 48 hours. Material windows include UK GDP at 07:00Z on 12 November, Canada releases at 13:30Z, US PPI at 13:30Z on 13 November, BOJ releases/speech, and date-only EUR/HKD/SGD items.",
+      "fact": "The current macro receipt covers all nine currencies in the twelve priorities and records 20 verified timed events plus six date-only or clock-gap events in the next 48 hours. Material windows include UK GDP at 07:00Z on 12 November, Canada releases at 13:30Z, US PPI at 13:30Z on 13 November, BOJ releases and speech, and date-only EUR/HKD/SGD items.",
       "counter_evidence": "Machine news remains PARTIAL, including two unavailable BLS feeds. USD-heavy and HKD/JPY-linked scouts are correlated expressions rather than independent evidence; accepting several would duplicate the same macro factor and cost risk.",
       "decision": "No machine-news clearance changed, and no rate, actual, consensus, broker fill or directional event outcome was invented."
     },
@@ -95,6 +97,12 @@
       "scope": "schema and archive integrity",
       "fact": "paper-trade-candidates.json schema_version 1 parsed with 44 preserved candidates; signal_plan_archive parsed with 12 IDs. data/entry_opportunity_ledger.json returned a nonempty current SHA but no authenticated body, so its rows could not be independently parsed.",
       "decision": "No duplicate ID, incomplete candidate or untestable continuation was appended merely to satisfy a quota. Existing cohorts, expiry, losses and no-fill records remain unchanged."
+    },
+    {
+      "scope": "current-run delta",
+      "fact": "The market, admission, macro, archive and candidate sources contain no new completed trigger, priced paper preview, canonical admission or unexpired paper candidate relative to the preceding candidate review.",
+      "counter_evidence": "Dashboard rank is a research priority, not an admission. Current scouts explicitly retain NO_APPROVED_TRIGGER and associated cost, structure, higher-frame, exhaustion or news blockers.",
+      "decision": "Zero additions is the completed registration decision for this run; paper-trade-candidates.json and signals.json were left byte-for-byte unchanged."
     }
   ],
   "blockers": [
@@ -109,8 +117,8 @@
     "docs/FIVE_TASK_OPERATIONS.md@bbc5a5091c16425eceadda27867c284007487800",
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
-    "data/task_runs/market_scan.json@ccf784b6e6bec60828138c80fc8159e3af9ad35e",
-    "data/task_runs/macro_events.json@4ee47aface8db296af48b5cd74d25569a8aeddf6",
+    "data/task_runs/market_scan.json@a2b400d5399137addd8fa01e2041ade7fb75fd32",
+    "data/task_runs/macro_events.json@5cb6117a105793191e0ec4b95ca6e134ef9397d5",
     "data/signal_admission_audit.json@4369193e4cdc4fe9d50a05cbfd92b16f6e263502",
     "data/hourly_assessment.json@be121f812b31a9e6ee8bb227135eeec6c81fcaea",
     "data/public_dashboard_payload.json@1c4dc5cfff7a8f16f5c58352c6ec63cd261a8124",
