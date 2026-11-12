@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "evidence_audit",
   "status": "PARTIAL",
-  "started_at": "2026-11-11T23:48:18.000Z",
-  "completed_at": "2026-11-11T23:51:48.101Z",
+  "started_at": "2026-11-12T00:54:24.000Z",
+  "completed_at": "2026-11-12T00:56:29.591Z",
   "source_at": "2026-11-11T21:25:44.000Z",
   "source_commit": "c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85",
-  "source_age_seconds": 8764,
+  "source_age_seconds": 12645,
   "counts": {
     "locked_protocols_checked": 1,
     "locked_rule_hash_matches": 1,
@@ -95,88 +95,75 @@
   },
   "findings": [
     {
-      "scope": "registered rule lock",
-      "fact": "validation_protocol.json remains FX-OOS-20261104-v21 with locked rule hash 040da6645e4d35f8c6313db7a72b29fd293a217684fd4287f0aff126320a3f26, no_orders true, 100 independent scored pair-days per arm and 20 scored days per arm required before review.",
-      "decision": "The lock matches current forward-validation evidence. No threshold, cohort, risk, spread, news, expiry, trigger or promotion rule was changed."
+      "scope": "locked protocol and registered identity reconciliation",
+      "fact": "validation_protocol.json remains FX-OOS-20261104-v21 with rule hash 040da6645e4d35f8c6313db7a72b29fd293a217684fd4287f0aff126320a3f26 and no_orders=true. All 12 archived signal IDs remain represented in the 104 lifecycle registrations; 104 plan keys resolve to 77 unique underlying IDs plus 27 policy/cohort registrations.",
+      "decision": "The rule lock matches and no historical cohort, ID, threshold, risk gate or result was reclassified."
     },
     {
-      "scope": "registered ID and lifecycle reconciliation",
-      "fact": "The lifecycle ledger contains 104 registration keys representing 77 unique immutable IDs and 27 extra policy/cohort registrations. All 12 signal-plan archive IDs are present in lifecycle and the archive has no duplicate IDs. Current states are 2 CLOSED, 56 EXPIRED_UNFILLED and 46 INVALIDATED; there are no current pending or open states.",
-      "outcome_balance": "Plan result statuses preserve 2 LOSS_STOP, 27 UNTRIGGERED, 46 INVALIDATED_PRE_ENTRY, 12 TRIGGERED_UNFILLED and 17 missing/unscored results. The 205 lifecycle events retain 14 pending-trigger observations, 27 untriggered, 46 invalidated-pre-entry, 29 data gaps, 12 triggered-unfilled, 2 loss-stop, 2 source-unavailable and 73 missing result statuses; 34 event states are UNVERIFIABLE.",
-      "decision": "No missing, ambiguous, expired, no-fill or loss record was reclassified. The two historical CLOSED/LOSS_STOP records are not v21 evidence of current performance."
+      "scope": "complete lifecycle outcome balance",
+      "fact": "The lifecycle terminal counts remain 2 CLOSED, 56 EXPIRED_UNFILLED and 46 INVALIDATED, with zero currently qualified-pending registrations. Event evidence retains 2 LOSS_STOP, 27 UNTRIGGERED, 46 INVALIDATED_PRE_ENTRY, 12 TRIGGERED_UNFILLED, 29 DATA_GAP, 2 SOURCE_UNAVAILABLE and 73 null result fields; 34 event states remain UNVERIFIABLE.",
+      "counter_evidence": "The two CLOSED legacy/manual records are losses, not current broker positions. Historical pending/triggered event rows are chronology, not active states.",
+      "decision": "Wins remain zero in the lifecycle cohort. Missing, ambiguous, unfilled, expired and loss records were preserved."
     },
     {
-      "scope": "historical issues and permanent candidates",
-      "fact": "There are zero active evidence conflicts. Four preserved PAPER_ECONOMICS_MISMATCH issues are explicitly historical-only. paper-trade-candidates.json contains 44 permanent candidates with zero duplicate IDs.",
-      "decision": "Historical mismatches remain visible and do not alter current admission or forward cohorts."
+      "scope": "like-for-like forward cohorts and costs",
+      "fact": "V21 forward validation remains 11 champion and 48 challenger plans with zero independently scored exits, zero scored days and empty 0/0.25/0.5-pip cost arrays. Early-forward remains 11 champion and 52 challenger plans with zero independently scored exits. Early-simple has two expired-untriggered plans; simple v1/v2 have zero plans; liquid momentum retains one MISSED_ENTRY; gate-forward retains eight plans (2 invalidated, 3 triggered-unfilled, 3 untriggered) and zero scored outcomes.",
+      "decision": "No expectancy, drawdown, win rate or strategy improvement can be computed for the forward cohorts; no promotion is supported."
     },
     {
-      "scope": "like-for-like v21 forward cohorts",
-      "fact": "The v21 champion arm has 11 prospective plans: 4 invalidated pre-entry, 4 not replayed, 2 triggered-unfilled and 1 untriggered. Challenger_v1 has 48: 19 invalidated pre-entry, 13 not replayed, 6 triggered-unfilled and 10 untriggered. Both arms have zero independent scored pair-days, zero scored days and empty 0/0.25/0.5-pip cost arrays.",
-      "costs_and_drawdown": "Net R, stressed expectancy and maximum drawdown remain null for both arms because there are no eligible fills or scored exits. Pepperstone commission, swap/funding and verified user delivery are absent.",
-      "decision": "The cohorts are comparable only as unfilled forward registrations; no statistical improvement, expectancy, drawdown advantage or promotion is established."
+      "scope": "development evidence and confirmed-momentum separation",
+      "fact": "The registered development decision remains REJECT_UNCONFIRMED_EARLY_ENTRY_FOR_DEPLOYMENT. Its unconfirmed next-open diagnostic lost -10.1177R fixed and -9.0881R protected across nine model fills; the small floor variant's retrospective-reserved interval remained -4.1337R. Confirmed momentum has zero prospective records, fills, scored days or paired exit cases.",
+      "counter_evidence": "Development and retrospective diagnostics are not untouched forward evidence and are not mixed into v21.",
+      "decision": "The negative and no-fill evidence remains preserved; no automatic rule or threshold change was made."
     },
     {
-      "scope": "early, simple, liquid, gate and confirmed-momentum cohorts",
-      "fact": "Early-forward preserves 11 champion and 52 challenger plans with zero scored exits. Early-simple has 2 expired-untriggered plans and no fill. Simple v1/v2 have zero plans. Liquid momentum has 1 MISSED_ENTRY and no fill. Gate-forward retains 8 plans: 2 invalidated pre-entry, 3 triggered-unfilled and 3 untriggered, with zero scored. Confirmed momentum contains zero records, zero fills and zero paired exit cases in all three registered arms.",
-      "decision": "No unfilled, missed, invalidated or retrospective diagnostic case was promoted into a win, fill or forward-performance sample."
+      "scope": "fixed versus profit-protection evidence",
+      "fact": "exit_management_research has zero registered paper entries, zero paired scored cases, zero independent pair-days and null stressed results for both FIXED_STOP_TARGET and PROFIT_PROTECTION. Confirmed-next-open and confirmed-next-open-protected also have zero records.",
+      "decision": "Neither exit arm is preferred; no favorable path was chosen and no same-bar ambiguity was manually resolved."
     },
     {
-      "scope": "retrospective profitability diagnostics",
-      "fact": "profitability_execution_development retains the decision REJECT_UNCONFIRMED_EARLY_ENTRY_FOR_DEPLOYMENT. Its modeled retrospective variants are diagnostics with overlapping exposures and incomplete historical news/broker costs, not untouched forward evidence.",
-      "decision": "Those modeled fixed/protection results remain outside the v21 forward sample and were not used to select a profitable path."
+      "scope": "public serving and legacy paper evidence",
+      "fact": "Authenticated GitHub readback of standalone-wallet-paper-agent/docs/fx-feed.json has blob 1c4dc5cfff7a8f16f5c58352c6ec63cd261a8124, exactly matching the private public_dashboard_payload blob and source snapshot 2026-11-11T21:25:44Z. The served feed reports 1,952 paper candidates with four older scored outcomes: one win and three losses, plus 376 opportunity rows with zero verified fills.",
+      "counter_evidence": "The four older scores are not v21 forward exits. Compact serving exposes 30 detailed paper rows and 12 detailed opportunity rows; detail windows do not replace raw ledger reconciliation.",
+      "decision": "Publication readback is verified at repository level only; actual user receipt and live page delivery remain unverified."
     },
     {
-      "scope": "fixed versus profit-protection paired evidence",
-      "fact": "exit_management_research has zero registered paper entries, zero paired scored cases and zero independent pair-days. FIXED_STOP_TARGET and PROFIT_PROTECTION each have paired_count 0, null mean/total R and null 0/0.25/0.5-pip stress results; fixed wins/losses are 0/0.",
-      "decision": "Neither exit arm can be compared or preferred, and the study remains unapproved for live exit advice."
+      "scope": "upstream role health and retry context",
+      "fact": "All four upstream receipts were read from current main and are PARTIAL but aligned to source 2026-11-11T21:25:44Z: macro_events completed 00:07:56Z, market_scan 00:16:10Z, position_monitor 00:34:08Z and candidate_review 00:46:31Z. None reported a broker order.",
+      "counter_evidence": "data/scheduled_task_health.json was generated at 21:26:37Z and still embeds older receipts for all five roles.",
+      "retry_context": "The existing scheduled-task audit pipeline must regenerate data/scheduled_task_health.json from current receipt blobs; evidence_audit did not mark any other role complete or rewrite health."
     },
     {
-      "scope": "research-opportunity audit",
-      "fact": "The published lossless opportunity index contains 376 forward watches: 356 expired without verified fill, 325 ever meaningfully favourable, 353 ever meaningfully adverse and 303 both favourable and adverse. Verified fills and scored outcomes are zero.",
-      "decision": "Favourable movement is not a win, and overlapping watches are not independent trades or probabilities. All adverse and expired cases remain included."
-    },
-    {
-      "scope": "public paper evidence and serving",
-      "fact": "The private public_dashboard_payload and current public repository docs/fx-feed.json have the same blob SHA 1c4dc5cfff7a8f16f5c58352c6ec63cd261a8124, snapshot 2026-11-11T21:25:44Z and publication clock 2026-11-11T21:40:49.116006Z. The public feed exposes 1952 total paper candidates, 4 scored legacy Route-B cases, 1 win and 3 losses, plus 30 detailed paper rows and the complete 376-row compressed opportunity index with 12 detailed rows.",
-      "limitation": "Repository publication readback is verified; this does not prove browser delivery, notification receipt or that compact detailed windows contain every raw private row.",
-      "decision": "The public 1W/3L legacy sample remains separate from v21, is insufficient for reinforcement and was not reclassified."
-    },
-    {
-      "scope": "peer role health",
-      "fact": "macro_events, market_scan, position_monitor and candidate_review are all PARTIAL and all four are aligned to source 2026-11-11T21:25:44Z at commit c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85. Their receipts preserve stale-source, partial-news, raw-ledger and coverage blockers.",
-      "decision": "No other role was marked complete. evidence_audit records their actual states only."
-    },
-    {
-      "scope": "scheduled task-health retry context",
-      "fact": "data/scheduled_task_health.json was generated at 2026-11-11T21:26:37Z and embeds older rows for all four peer roles plus the prior evidence_audit row. Its market source/publication snapshot remains internally consistent, but its task receipt status view is outdated.",
-      "retry_context": "Allow the existing scripts/scheduled_task_audit.py pipeline to run after the current five receipts, using source commit c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85 and current receipt SHAs macro 4ee47aface8db296af48b5cd74d25569a8aeddf6, market ccf784b6e6bec60828138c80fc8159e3af9ad35e, position b2a6e4cdda4a38131b25a4c9ecee6178f2ca8bda and candidate 2b14cb409848bfceb00aeb18ddb71cc05b446a96. Do not backfill or mark roles complete manually."
-    },
-    {
-      "scope": "raw-ledger retry context",
-      "fact": "Authenticated fetch_file returned nonempty current SHAs but empty bodies for data/paper_trade_ledger.json, data/strategy_comparison.json and data/entry_opportunity_ledger.json.",
-      "retry_context": "On the next evidence audit, retry those exact paths from current main and reconcile only if the returned body is readable; start from SHAs 4be27abcb3f871dae31246dd0d1f88c0622b993f, 2e4c793315259092d00e36dd5334db9636167913 and 43a68b70e7aebc3caa834ab7d5437c812a145b25. Do not infer empty ledgers or bulk rewrite them."
+      "scope": "raw-ledger coverage limitation",
+      "fact": "Authenticated contents still returned nonempty SHAs but empty bodies for paper_trade_ledger.json, strategy_comparison.json and entry_opportunity_ledger.json. Lifecycle, archived IDs, cohort ledgers and the lossless compressed public opportunity index provided cross-checks, but full raw ID-by-ID comparison across those three files could not be repeated.",
+      "decision": "Status remains PARTIAL; no bulk ledger rewrite or inferred completion was performed."
     }
   ],
   "blockers": [
-    "Complete raw ID-by-ID reconciliation is unavailable because three oversized authenticated file reads returned empty bodies despite nonempty SHAs.",
+    "Complete raw ID-by-ID reconciliation is unavailable because data/paper_trade_ledger.json@4be27abcb3f871dae31246dd0d1f88c0622b993f, data/strategy_comparison.json@2e4c793315259092d00e36dd5334db9636167913 and data/entry_opportunity_ledger.json@43a68b70e7aebc3caa834ab7d5437c812a145b25 returned empty authenticated bodies.",
     "All four peer role receipts are PARTIAL; evidence_audit cannot mark another role complete.",
-    "data/scheduled_task_health.json@5bdbe926be21e1cf4c2a52d21f8c045fb79af03b predates all current five-task receipts and must be regenerated by the existing audit pipeline.",
-    "The 21:25:44Z market source is stale beyond the locked 25-minute full-research threshold; evidence_audit does not own collection recovery.",
-    "Public detailed windows are intentionally compact: 30 of 1952 paper candidates and 12 of 376 opportunity rows are directly detailed, though the compressed opportunity index is lossless.",
+    "data/scheduled_task_health.json@5bdbe926be21e1cf4c2a52d21f8c045fb79af03b predates all current five-task receipts and requires regeneration by the existing audit pipeline.",
+    "The 2026-11-11T21:25:44Z market source is stale beyond the locked 25-minute full-research threshold; evidence_audit does not own collection recovery.",
+    "Public detailed windows are intentionally compact: 30 of 1,952 paper candidates and 12 of 376 opportunity rows are directly detailed, though the compressed opportunity index is lossless.",
     "No independently scored v21 exit, complete cost array, drawdown observation, paired exit case, verified user delivery, Pepperstone fill, commission, swap/funding or verified account equity is available."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md@bbc5a5091c16425eceadda27867c284007487800",
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
-    "data/task_runs/macro_events.json@4ee47aface8db296af48b5cd74d25569a8aeddf6",
-    "data/task_runs/market_scan.json@ccf784b6e6bec60828138c80fc8159e3af9ad35e",
-    "data/task_runs/position_monitor.json@b2a6e4cdda4a38131b25a4c9ecee6178f2ca8bda",
-    "data/task_runs/candidate_review.json@2b14cb409848bfceb00aeb18ddb71cc05b446a96",
+    "docs/PROFITABILITY_EXECUTION_REWORK.md@e852a5d8cb3f509a0919ed7c48bdba220d5234f7",
+    "data/profitability_execution_development.json@f9cba96d501933c4bbd37e0ed866e3c4bdc2bbfd",
+    "data/task_runs/macro_events.json@5cb6117a105793191e0ec4b95ca6e134ef9397d5",
+    "data/task_runs/market_scan.json@a2b400d5399137addd8fa01e2041ade7fb75fd32",
+    "data/task_runs/position_monitor.json@f99d5d040a50ef3ce22dee1819c829ef6b219aa4",
+    "data/task_runs/candidate_review.json@20ce547101df9b2f36324dd3f744f8833bb570da",
     "data/scheduled_task_health.json@5bdbe926be21e1cf4c2a52d21f8c045fb79af03b",
-    "data/collection_attempt.json@ca29b06dd6a85dd70c1703bb5855d88c624b245d",
     "data/lifecycle_ledger.json@68ccd0c612343cbe982761a36ca5dbaa9e357146",
+    "data/signal_plan_archive.json@cbe28cc1dc5ce7a0ba8b023f2735d781fd140fa1",
+    "signals.json@495bdc05ef63bf4ff17c1b234042eba607334ac4",
+    "paper-trade-candidates.json@35daf9a27b23c9b67a2c45bbf870dcc5bb2ccf81",
+    "data/public_dashboard_payload.json@1c4dc5cfff7a8f16f5c58352c6ec63cd261a8124",
+    "standalone-wallet-paper-agent/docs/fx-feed.json@1c4dc5cfff7a8f16f5c58352c6ec63cd261a8124",
     "data/forward_validation.json@003dd77d8bba94ae5f59793b035d47d49a621fde",
     "data/early_forward_validation.json@acad2049fac0527e27356b5c42f3651d1416ce6f",
     "data/early_simple_paper_shadow.json@c3f2901e5b279e71e8a7b9aa7dfabf941c56fa07",
@@ -186,16 +173,9 @@
     "data/gate_forward_paper.json@739f961582a1ea0e7291539adb56449a830c54e9",
     "data/confirmed_momentum_execution.json@0183d2861179c023f3b440e56a4ee4c31be130ef",
     "data/exit_management_research.json@02edbabd89169ee9bff80bcb7fe9e25bfea02221",
-    "data/profitability_execution_development.json@f9cba96d501933c4bbd37e0ed866e3c4bdc2bbfd",
-    "paper-trade-candidates.json@35daf9a27b23c9b67a2c45bbf870dcc5bb2ccf81",
-    "data/signal_plan_archive.json@cbe28cc1dc5ce7a0ba8b023f2735d781fd140fa1",
-    "data/entry_opportunity_ledger.json@43a68b70e7aebc3caa834ab7d5437c812a145b25",
     "data/paper_trade_ledger.json@4be27abcb3f871dae31246dd0d1f88c0622b993f",
     "data/strategy_comparison.json@2e4c793315259092d00e36dd5334db9636167913",
-    "data/public_dashboard_payload.json@1c4dc5cfff7a8f16f5c58352c6ec63cd261a8124",
-    "data/public_dashboard_status.json@fa45ebf4310788ce8c2324beab603b9842c323a4",
-    "rayyansorefan/standalone-wallet-paper-agent:docs/fx-feed.json@1c4dc5cfff7a8f16f5c58352c6ec63cd261a8124",
-    "signals.json@495bdc05ef63bf4ff17c1b234042eba607334ac4",
+    "data/entry_opportunity_ledger.json@43a68b70e7aebc3caa834ab7d5437c812a145b25",
     "source_snapshot_commit:c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85"
   ],
   "run_ids": [
