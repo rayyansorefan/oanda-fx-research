@@ -2284,21 +2284,69 @@
       "source_evidence": "data/replay_evidence/GBP_USD-72e148666eb567cbe19719d033a8f26ad3b9ebcd946eb10bc6c1aafac41611a7.json",
       "status": "PAPER_PRE_ENTRY_INVALIDATED",
       "trade_executed": false
+    },
+    "202611120945-AUDUSD-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202611120945-AUDUSD-SHORT-EMA20_PULLBACK",
+      "instrument": "AUD_USD",
+      "invalidated_at": "2026-11-12T10:30:00Z",
+      "pattern_at": "2026-11-12T11:30:00+00:00",
+      "reason": "Frozen stop breached before pattern confirmation",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/AUD_USD-8c2f0a2c47fea9b207c6866648283c92d9c74ece4eb8252e928f1b35c09fdbdd.json",
+      "status": "PAPER_PRE_ENTRY_INVALIDATED",
+      "trade_executed": false
+    },
+    "202611121030-AUDSGD-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "fill_at": "2026-11-12T12:00:00Z",
+      "id": "202611121030-AUDSGD-SHORT-EMA20_PULLBACK",
+      "instrument": "AUD_SGD",
+      "paper_entry": 0.87745,
+      "pattern_at": "2026-11-12T11:30:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/AUD_SGD-d815100fb56ba361d22558fc7eb24bc5a00b2c351cf6a4c87d09e50a8b8d16ee.json",
+      "status": "PAPER_OPEN_UNRESOLVED",
+      "trade_executed": false
     }
   },
   "latency_audit": {
     "method": "Legacy replay assumes pattern-close availability; no actual delivered alert or subsequent manual fill is established.",
-    "records": [],
+    "records": [
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-12T12:21:42.438356+00:00",
+        "detection_delay_minutes": 51.71,
+        "fill_precedes_detection": false,
+        "id": "202611120945-AUDUSD-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-11-12T11:30:00+00:00"
+      },
+      {
+        "after_alert_fill_verified": false,
+        "detected_at": "2026-11-12T12:21:42.438356+00:00",
+        "detection_delay_minutes": 51.71,
+        "fill_precedes_detection": true,
+        "id": "202611121030-AUDSGD-SHORT-EMA20_PULLBACK",
+        "pattern_at": "2026-11-12T11:30:00+00:00"
+      }
+    ],
     "verified_profitable_missed_manual_entries": 0
   },
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 0,
-  "today_forward_patterns": 0,
-  "today_registered": 10,
+  "today_distinct_pair_pattern_events": 2,
+  "today_forward_patterns": 2,
+  "today_registered": 16,
   "today_scored_hypothetical_entries": 0,
-  "today_status_counts": {},
+  "today_status_counts": {
+    "PAPER_OPEN_UNRESOLVED": 1,
+    "PAPER_PRE_ENTRY_INVALIDATED": 1
+  },
   "today_uk": "2026-11-12",
-  "updated_at": "2026-11-12T11:21:27Z"
+  "updated_at": "2026-11-12T12:21:42Z"
 }
