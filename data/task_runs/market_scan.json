@@ -2,37 +2,37 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T18:18:54.000Z",
-  "completed_at": "2026-11-12T18:20:01.197Z",
-  "source_at": "2026-11-12T17:14:42Z",
-  "source_commit": "0f0b4e922f9b3af12997af114e7879a5e34fab20",
-  "source_age_seconds": 3919,
+  "started_at": "2026-11-12T19:10:11.000Z",
+  "completed_at": "2026-11-12T19:11:07.244Z",
+  "source_at": "2026-11-12T18:52:53Z",
+  "source_commit": "0b13f1df1dfdac81cf422c585c9b0418fe8f0f9e",
+  "source_age_seconds": 1094,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs_reported": 65,
     "full_five_frame_pairs_reported": 65,
-    "bulk_pair_records_parsed": 65,
+    "bulk_pair_records_parsed": 0,
     "priority_pair_shards_independently_verified": 12,
     "existing_plan_pair_shards_independently_verified": 2,
     "canonical_routes_evaluated": 126,
     "canonical_routes_rejected": 126,
     "canonical_new_conditional_admitted": 0,
-    "existing_expired_conditional_plans": 2,
+    "retained_conditional_plans": 2,
     "verified_simulated_fills_this_run": 0,
     "public_payload_pairs": 64,
-    "full_recovery_requests": 1,
+    "full_recovery_requests": 0,
     "broker_orders": 0
   },
   "findings": [
-    "17:14:42Z full source: 65/68 usable tradeable quotes and complete D/H4/H1/M15/M5 reported; EUR_TRY, TRY_JPY, USD_TRY nontradeable. Recovered and parsed nonempty large summary/latest blobs (65 pair records); independently parsed 12 leading pair shards and AUD_CAD.",
-    "Canonical admission 17:14:57Z: 126/126 evaluated routes rejected; no new admissions. Two retained AUD_CAD/AUD_JPY conditional plans expired at 17:48:16Z; no verified later simulated fill. Favorable movement is not profit. WAIT.",
-    "Stale-source recovery sequence 235 requested 18:19:15Z, exact current-main commit 0f0b4e922f9b3af12997af114e7879a5e34fab20. Matching Actions 43278593041 and 43278593616 confirmed in progress; new observation, admission and publication not verified.",
-    "Sanitized repository publication PUBLISHED for 17:14:42Z snapshot; payload 64 pairs versus 65 quoted, news PARTIAL. Actual served website and user delivery unverified."
+    "18:52:53Z successful full collection run 43284316161: 65/68 usable quoted pairs and 65 reported complete five-timeframe pairs; EUR_TRY, TRY_JPY, USD_TRY nontradeable. Independently inspected 12 leading pair shards plus AUD_CAD (13 distinct), each with D/H4/H1/M15/M5 and 249 complete candles per frame.",
+    "Canonical admission 18:53:10Z rejected all 126 new routes; 44 reversal/exhaustion, 29 invalid bid/ask/spread, 29 four-frame trend conflict, 8 weak ADX, remaining 16 other causes. Two previously admitted AUD_JPY SHORT and AUD_CAD SHORT conditional plans retained, expiring 19:49:58Z; neither is a verified simulated fill. WAIT for completed trigger.",
+    "No stale-source recovery requested: source age below 20 minutes at review; existing 18:52 collection successful.",
+    "Sanitized repository publication PUBLISHED at 18:53:56Z for 18:52:53Z snapshot; payload 64 quoted/deep pairs versus 65 collected. Machine news PARTIAL. Actual served website and user delivery not verified."
   ],
   "blockers": [
-    "Source stale by >60 minutes during active London session; recovery still in progress at check.",
-    "Remaining usable individual pair shards not all independently parsed; 65/65 bulk pair records parsed and 12 leading shards verified.",
-    "Machine-news partial; macro receipt last completed 10:06Z; public served feed and delivery unverified."
+    "Large data/summary.json and data/latest.json returned empty content despite nonempty blob SHAs; 65 bulk records could not be independently parsed through connected fetch; per-pair verification bounded to 13 distinct shards.",
+    "Public payload excludes one collected quoted pair; reason not independently established.",
+    "Machine news PARTIAL and macro_events receipt last completed at 10:06Z; actual served website and user delivery unverified."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -50,14 +50,12 @@
     "data/task_runs/macro_events.json",
     "data/public_dashboard_status.json",
     "data/public_dashboard_payload.json",
-    "data/pairs/{12 ranked pairs}.json",
+    "data/pairs/{12 leading pairs}.json",
     "data/pairs/AUD_CAD.json",
     "scripts/refresh_request.json"
   ],
   "run_ids": [
-    "43267235545",
-    "43278593041",
-    "43278593616"
+    "43284316161"
   ],
   "no_broker_orders": true
 }
