@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "evidence_audit",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T00:54:24.000Z",
-  "completed_at": "2026-11-12T00:56:29.591Z",
+  "started_at": "2026-11-12T01:49:36.000Z",
+  "completed_at": "2026-11-12T01:51:55.991Z",
   "source_at": "2026-11-11T21:25:44.000Z",
   "source_commit": "c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85",
-  "source_age_seconds": 12645,
+  "source_age_seconds": 15971,
   "counts": {
     "locked_protocols_checked": 1,
     "locked_rule_hash_matches": 1,
@@ -129,9 +129,9 @@
     },
     {
       "scope": "upstream role health and retry context",
-      "fact": "All four upstream receipts were read from current main and are PARTIAL but aligned to source 2026-11-11T21:25:44Z: macro_events completed 00:07:56Z, market_scan 00:16:10Z, position_monitor 00:34:08Z and candidate_review 00:46:31Z. None reported a broker order.",
-      "counter_evidence": "data/scheduled_task_health.json was generated at 21:26:37Z and still embeds older receipts for all five roles.",
-      "retry_context": "The existing scheduled-task audit pipeline must regenerate data/scheduled_task_health.json from current receipt blobs; evidence_audit did not mark any other role complete or rewrite health."
+      "fact": "All four upstream receipts were read from current main and are PARTIAL but aligned to source 2026-11-11T21:25:44Z: macro_events completed 2026-11-12T01:02:51.365Z, market_scan 2026-11-12T01:16:58.258Z, position_monitor 2026-11-12T01:31:58.933Z and candidate_review 2026-11-12T01:41:07.865Z. All retain no_broker_orders=true.",
+      "counter_evidence": "data/scheduled_task_health.json was generated at 2026-11-11T21:26:37.268108Z and predates all current five-task receipts.",
+      "retry_context": "The existing scheduled-task audit pipeline must regenerate data/scheduled_task_health.json from the current receipt blobs; evidence_audit did not mark any other role complete or rewrite health."
     },
     {
       "scope": "raw-ledger coverage limitation",
@@ -153,10 +153,11 @@
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
     "docs/PROFITABILITY_EXECUTION_REWORK.md@e852a5d8cb3f509a0919ed7c48bdba220d5234f7",
     "data/profitability_execution_development.json@f9cba96d501933c4bbd37e0ed866e3c4bdc2bbfd",
-    "data/task_runs/macro_events.json@5cb6117a105793191e0ec4b95ca6e134ef9397d5",
-    "data/task_runs/market_scan.json@a2b400d5399137addd8fa01e2041ade7fb75fd32",
-    "data/task_runs/position_monitor.json@f99d5d040a50ef3ce22dee1819c829ef6b219aa4",
-    "data/task_runs/candidate_review.json@20ce547101df9b2f36324dd3f744f8833bb570da",
+    "data/task_runs/macro_events.json@30e9d6102abdcea878951b496e19e9988eecfbf1",
+    "data/task_runs/market_scan.json@cecd8d7255774a7c71144de60b9d6439bd7dcc06",
+    "data/task_runs/position_monitor.json@2f2ea77737550736c3d79446506adeb11371034f",
+    "data/task_runs/candidate_review.json@71092086895d89fbe5a545acc3d4394e162aeeb7",
+    "data/collection_attempt.json@ca29b06dd6a85dd70c1703bb5855d88c624b245d",
     "data/scheduled_task_health.json@5bdbe926be21e1cf4c2a52d21f8c045fb79af03b",
     "data/lifecycle_ledger.json@68ccd0c612343cbe982761a36ca5dbaa9e357146",
     "data/signal_plan_archive.json@cbe28cc1dc5ce7a0ba8b023f2735d781fd140fa1",
