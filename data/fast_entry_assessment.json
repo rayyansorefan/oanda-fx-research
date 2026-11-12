@@ -654,7 +654,7 @@
       }
     ],
     "challenger": "PAPER_ONLY_NOT_VALIDATED",
-    "checked_at": "2026-11-12T09:37:23.727131+00:00",
+    "checked_at": "2026-11-12T10:13:24.466567+00:00",
     "favourable": 27,
     "flat": 0,
     "insufficient": 6,
@@ -664,7 +664,7 @@
     "sample_warning": "Directional movements are NOT filled trades, realised losses, success probabilities or evidence sufficient to change champion parameters.",
     "session_date_uk": "2026-11-11"
   },
-  "collected_at": "2026-11-12T09:37:23.727131+00:00",
+  "collected_at": "2026-11-12T10:13:24.466567+00:00",
   "counts": {
     "need_news_review": 0,
     "price_alerts": 0,
@@ -871,23 +871,23 @@
       "win_rate_pct": 63.6
     },
     "paper_totals": {
-      "candidates": 1976,
+      "candidates": 1983,
       "losses": 3,
       "scored": 4,
       "wins": 1
     },
     "threshold": "Paper bias neutral until >=30 scored samples, >=10 days, >=3 pairs and conservative 99% mean-R bound excludes zero. Never relax execution, spread or news gates."
   },
-  "news_collected_at": "2026-11-12T09:37:18Z",
+  "news_collected_at": "2026-11-12T10:13:21Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-11-12T09:37:23.052069+00:00",
+  "oanda_collected_at": "2026-11-12T10:13:23.749515+00:00",
   "signals": [
     {
       "adaptive_context": {
         "block_new_alert": false,
-        "m15_ema_distance_atr": 0.295,
-        "reason": "No reversal or overextension warning on the available completed M15/H1 evidence.",
-        "status": "NO_NEW_TECHNICAL_WARNING"
+        "m15_ema_distance_atr": 0.686,
+        "reason": "Momentum is mixed; require the original completed-candle trigger, not directional bias alone.",
+        "status": "CAUTION_MIXED_MOMENTUM"
       },
       "candle_timing": {
         "last_late_candle_close": null,
@@ -939,26 +939,26 @@
         "strategy": "M15_REJECTION"
       },
       "technical_checkpoint": {
-        "h1_adx14": 23.420222945276542,
-        "h1_rsi14": 34.96629110145747,
-        "indicative_distance_to_stop_pips": 14.5,
-        "indicative_distance_to_target_pips": 25.0,
-        "indicative_remaining_rr_before_new_spread_adjustment": 1.72,
+        "h1_adx14": 24.76363668889204,
+        "h1_rsi14": 39.513179749587756,
+        "indicative_distance_to_stop_pips": 18.7,
+        "indicative_distance_to_target_pips": 20.8,
+        "indicative_remaining_rr_before_new_spread_adjustment": 1.11,
         "interpretation": "Monitoring checkpoint, not full technical/macro assessment or execution instruction.",
-        "latest_completed_m15_bar_start": "2026-11-12T09:15:00.000000000Z",
-        "m15_adx14": 31.0766911606345,
-        "m15_atr14": 0.09276829089299869,
-        "m15_macd_histogram": -0.008448235086941216,
-        "m15_rsi14": 41.800204383073854,
+        "latest_completed_m15_bar_start": "2026-11-12T09:45:00.000000000Z",
+        "m15_adx14": 30.35570826145939,
+        "m15_atr14": 0.08848388338146565,
+        "m15_macd_histogram": 0.003988950112206055,
+        "m15_rsi14": 42.85221460815571,
         "oanda_quote": {
-          "ask": 109.067,
-          "bid": 109.046,
+          "ask": 109.026,
+          "bid": 109.004,
           "pip_size": 0.01,
-          "spread_pips": 2.0999999999986585,
-          "time": "2026-11-12T09:36:57.526322066Z",
+          "spread_pips": 2.199999999999136,
+          "time": "2026-11-12T10:13:14.447173051Z",
           "tradeable": true
         },
-        "price_reference": 109.046,
+        "price_reference": 109.004,
         "quote_is_tradeable": true,
         "vs_m15_ema20": "BELOW"
       }

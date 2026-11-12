@@ -1,8 +1,10 @@
 {
   "activated_at": "2026-11-06T09:47:09Z",
-  "last_evaluated_at": "2026-11-12T09:18:22Z",
-  "latest_source_at": "2026-11-12T09:17:50Z",
-  "new_ids": [],
+  "last_evaluated_at": "2026-11-12T10:13:13Z",
+  "latest_source_at": "2026-11-12T10:12:39Z",
+  "new_ids": [
+    "FX-GATE-v1-20261112T101239-AUD_SGD-SHORT"
+  ],
   "no_orders": true,
   "policy": "Only news-source-missing single-blocker pullback hypotheses; unrelated hard gates remain. No manual alerts, promotions or claims of an executable broker edge.",
   "protocol_id": "FX-GATE-20261106-v1",
@@ -492,18 +494,58 @@
       "route": "EMA20_PULLBACK",
       "source_at": "2026-11-11T16:20:31Z",
       "source_lineage": "CURRENT_FULL_MARKET_SNAPSHOT"
+    },
+    "FX-GATE-v1-20261112T101239-AUD_SGD-SHORT": {
+      "failed_gate": "news_gate",
+      "id": "FX-GATE-v1-20261112T101239-AUD_SGD-SHORT",
+      "news_reason": "PRIMARY_NEWS_SOURCE_MISSING",
+      "no_live_entry": true,
+      "original_gate_row_sha256": "289c02a1c2430e3525e3d9356750093c74fd89312be2584c0952e09aa391331c",
+      "pair": "AUD_SGD",
+      "plan": {
+        "alert_b": 0.8774703629843382,
+        "created_at": "2026-11-12T10:13:13Z",
+        "direction": "SHORT",
+        "event_blackouts_utc": [],
+        "expires_at": "2026-11-12T11:43:13Z",
+        "id": "FX-GATE-v1-20261112T101239-AUD_SGD-SHORT",
+        "instrument": "AUD_SGD",
+        "max_oanda_spread_pips": 3.3,
+        "original_note": "News source UNVERIFIED; paper-only; neither approval nor a broker entry",
+        "pip_size": 0.0001,
+        "planned_entry": 0.8774703629843382,
+        "source": "OANDA_READ_ONLY",
+        "source_ref": "2026-11-12T10:12:39Z",
+        "stop": 0.8780547534297045,
+        "strategy": "PROSPECTIVE_NEWS_COVERAGE_ABLATION_PAPER",
+        "technical_context": {
+          "source_bar_time": "2026-11-12T09:45:00.000000000Z"
+        },
+        "tp1": 0.87582
+      },
+      "policy": "FX-GATE-20261106-v1",
+      "registered_at": "2026-11-12T10:13:13Z",
+      "replay_attempts": [],
+      "result": {
+        "scored": false,
+        "status": "PENDING_TRIGGER"
+      },
+      "route": "EMA20_PULLBACK",
+      "source_at": "2026-11-12T10:12:39Z",
+      "source_lineage": "CURRENT_FULL_MARKET_SNAPSHOT"
     }
   },
   "schema": 1,
   "status": "PAPER_ONLY_PROSPECTIVE_STUDY",
   "summary": {
-    "new_this_run": 0,
+    "new_this_run": 1,
     "outcomes": {
       "INVALIDATED_PRE_ENTRY": 2,
+      "PENDING_TRIGGER": 1,
       "TRIGGERED_UNFILLED": 3,
       "UNTRIGGERED": 3
     },
-    "registered": 8,
+    "registered": 9,
     "scored": 0
   }
 }

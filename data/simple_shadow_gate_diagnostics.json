@@ -1,5 +1,5 @@
 {
-  "last_source_at": "2026-11-12T09:37:23.052069+00:00",
+  "last_source_at": "2026-11-12T10:12:39Z",
   "no_broker_orders": true,
   "observations": [
     {
@@ -2712,21 +2712,45 @@
       },
       "paper_plans_not_inferred": true,
       "source_at": "2026-11-12T09:37:23.052069+00:00"
+    },
+    {
+      "evaluated_at": "2026-11-12T10:13:12Z",
+      "first_blocker_counts": {
+        "M15_H1_EMA_DIRECTION_CONFLICT": 2,
+        "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW": 3,
+        "SPREAD_RELATIVE_TO_ATR": 3,
+        "SPREAD_TOO_WIDE": 2
+      },
+      "observation_kind": "HOURLY",
+      "pair_reasons": {
+        "AUD_USD": "SPREAD_RELATIVE_TO_ATR",
+        "EUR_GBP": "M15_H1_EMA_DIRECTION_CONFLICT",
+        "EUR_JPY": "SPREAD_TOO_WIDE",
+        "EUR_USD": "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW",
+        "GBP_JPY": "SPREAD_TOO_WIDE",
+        "GBP_USD": "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW",
+        "NZD_USD": "SPREAD_RELATIVE_TO_ATR",
+        "USD_CAD": "SPREAD_RELATIVE_TO_ATR",
+        "USD_CHF": "M15_H1_EMA_DIRECTION_CONFLICT",
+        "USD_JPY": "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW"
+      },
+      "paper_plans_not_inferred": true,
+      "source_at": "2026-11-12T10:12:39Z"
     }
   ],
   "performance_validated": false,
   "registered_cohort": "FX-EARLY-20261104-v1",
   "scope": "FIRST_BLOCKER_DIAGNOSTIC_NOT_AN_ELIGIBLE_FILL",
-  "total_evaluated_snapshots": 116,
+  "total_evaluated_snapshots": 117,
   "total_pair_gate_counts": {
     "COMPLETED_M15_FRAME_MISSING_OR_STALE": 30,
     "FORMED_PAPER_SETUP_REQUIRES_PROSPECTIVE_REGISTRATION": 1,
-    "M15_H1_EMA_DIRECTION_CONFLICT": 300,
+    "M15_H1_EMA_DIRECTION_CONFLICT": 302,
     "NEWS_EVENT_CALENDAR_OR_BLACKOUT": 17,
-    "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW": 162,
+    "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW": 165,
     "NO_COMPLETED_MOMENTUM_OR_PULLBACK_SETUP": 15,
     "PAIR_SOURCE_MISSING": 43,
-    "SPREAD_RELATIVE_TO_ATR": 391,
-    "SPREAD_TOO_WIDE": 171
+    "SPREAD_RELATIVE_TO_ATR": 394,
+    "SPREAD_TOO_WIDE": 173
   }
 }
