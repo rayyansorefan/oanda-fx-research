@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "candidate_review",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T01:40:22.000Z",
-  "completed_at": "2026-11-12T01:41:07.865Z",
+  "started_at": "2026-11-12T02:42:27.000Z",
+  "completed_at": "2026-11-12T02:44:10.447Z",
   "source_at": "2026-11-11T21:25:44.000Z",
   "source_commit": "c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85",
-  "source_age_seconds": 15323,
+  "source_age_seconds": 19106,
   "counts": {
     "discovered_pairs": 68,
     "collector_usable_quoted_pairs": 65,
@@ -40,14 +40,14 @@
     "machine_news_sources_unavailable": 2,
     "machine_news_clearance_changes": 0,
     "broker_orders": 0,
-    "verified_macro_events_next_48h": 20,
+    "verified_macro_events_next_48h": 19,
     "verified_macro_date_or_clock_gaps_next_48h": 6
   },
   "findings": [
     {
       "scope": "source, rule lock and registration decision",
       "fact": "The inspected source remains the successful 2026-11-11T21:25:44Z collector snapshot at commit c776b7ad82bd981e09e33ba00bd1dd6a8eedcf85: 65 usable quoted pairs from 68 discovered, 341 successful candle requests and no collection failures. The locked protocol remains FX-OOS-20261104-v21 with rule hash 040da6645e4d35f8c6313db7a72b29fd293a217684fd4287f0aff126320a3f26.",
-      "counter_evidence": "The source exceeded the 25-minute full-research freshness limit; candidate_review does not own refresh recovery. The 01:15 market receipt confirmed no newer full or pair-specific multiframe observation.",
+      "counter_evidence": "The source exceeded the 25-minute full-research freshness limit; candidate_review does not own refresh recovery. The 02:15 market receipt confirmed no newer full or pair-specific multiframe observation and quiet-hours recovery remained withheld.",
       "decision": "No candidate was accepted or appended. This preserves all 44 permanent paper candidates, 12 archived signal-plan IDs, zero unexpired permanent candidates and empty canonical signals.json."
     },
     {
@@ -69,7 +69,7 @@
     {
       "scope": "USD_JPY and HKD_JPY longs",
       "fact": "Both pairs showed H4/H1/M15 bullish momentum, but D1 was mixed with ADX below 10, H1 RSI exceeded 86, and M5 DMI turned negative with ADX near 13-14. USD_JPY failed four-frame alignment; HKD_JPY also carried a 29.0-pip observed spread and failed bid/ask-spread admission.",
-      "counter_evidence": "Official BOJ corporate-goods-price data was scheduled for 2026-11-11T23:50Z and a BOJ Board Member speech for 2026-11-12T01:30Z, adding near-term JPY event risk without assumed outcomes.",
+      "counter_evidence": "BOJ has now published October CGPI at +0.7% m/m and +7.1% y/y for domestic corporate goods prices, with yen-basis import prices +3.3% m/m and +24.8% y/y. Board Member Asada urged due consideration of the pace of further hikes. These official facts add event volatility but do not cure D1 conflict, H1 overextension, weak M5 reversal evidence or HKD_JPY spread failure.",
       "decision": "Reject both; no continuation candidate was registered."
     },
     {
@@ -89,9 +89,9 @@
     },
     {
       "scope": "macro, correlation and coverage constraints",
-      "fact": "The current macro receipt covers all nine currencies in the twelve priorities and records 20 verified timed events plus six date-only or clock-gap events in the next 48 hours. Material windows include UK GDP at 07:00Z on 12 November, Canada releases at 13:30Z, US PPI at 13:30Z on 13 November, BOJ releases and speech, and date-only EUR/HKD/SGD items.",
+      "fact": "The current macro receipt covers all nine currencies in the twelve priorities and records 19 verified future timed events plus six date-only or clock-gap events in the next 48 hours. Material windows include UK GDP at 07:00Z on 12 November, Canada releases at 13:30Z, US PPI at 13:30Z on 13 November, and date-only EUR/HKD/SGD items. BOJ October CGPI and the Asada speech are now published official facts.",
       "counter_evidence": "Machine news remains PARTIAL, including two unavailable BLS feeds. USD-heavy and HKD/JPY-linked scouts are correlated expressions rather than independent evidence; accepting several would duplicate the same macro factor and cost risk.",
-      "decision": "No machine-news clearance changed, and no rate, actual, consensus, broker fill or directional event outcome was invented."
+      "decision": "No machine-news clearance changed, and no rate, consensus, broker fill or directional event outcome was invented."
     },
     {
       "scope": "schema and archive integrity",
@@ -100,7 +100,7 @@
     },
     {
       "scope": "current-run delta",
-      "fact": "The 12 priority pair shards, 130-route admission audit, public entry-gate summary, signal archive and candidate file are unchanged from the preceding review. The current macro receipt adds one published lower-tier AUD fact but does not clear any route or create registered economics.",
+      "fact": "The 12 priority pair shards, 130-route admission audit, public entry-gate summary, signal archive and candidate file are unchanged from the preceding review. The current macro receipt adds published BOJ price and policy facts and corrects the Fed Barr date, but it does not clear any route or create registered economics.",
       "counter_evidence": "All routes remain rejected; zero of 64 published routes has technical-and-cost gates clear, and there are zero priced paper previews.",
       "decision": "Zero additions is the completed registration decision for this run. paper-trade-candidates.json and signals.json remain byte-for-byte unchanged."
     }
@@ -117,8 +117,8 @@
     "docs/FIVE_TASK_OPERATIONS.md@bbc5a5091c16425eceadda27867c284007487800",
     "config/scheduled_research_roles.json@6db7ded9537e16cdd0af9ff60d8c92366fd62909",
     "validation_protocol.json@ff3b84b4348cf6b62863ed5c3cc60d8652021fe3",
-    "data/task_runs/market_scan.json@cecd8d7255774a7c71144de60b9d6439bd7dcc06",
-    "data/task_runs/macro_events.json@5cb6117a105793191e0ec4b95ca6e134ef9397d5",
+    "data/task_runs/market_scan.json@101f4ded1e60f1445185bc588fd933d38df1568e",
+    "data/task_runs/macro_events.json@d32e05a34c0a2f659cd83b63f40d4f78e41bae7d",
     "data/signal_admission_audit.json@4369193e4cdc4fe9d50a05cbfd92b16f6e263502",
     "data/hourly_assessment.json@be121f812b31a9e6ee8bb227135eeec6c81fcaea",
     "data/public_dashboard_payload.json@1c4dc5cfff7a8f16f5c58352c6ec63cd261a8124",
