@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-13T07:20:09Z",
-  "completed_at": "2026-11-13T07:23:02.666Z",
-  "source_at": "2026-11-13T07:21:18Z",
-  "source_commit": "b608525ffba00f6114d03136984b788d54dd97a9",
-  "source_age_seconds": 105,
+  "started_at": "2026-11-13T08:18:41Z",
+  "completed_at": "2026-11-13T08:21:06.138Z",
+  "source_at": "2026-11-13T08:19:26Z",
+  "source_commit": "0c2d2978028d78e7ac8c42f448eef53b74ea50ad",
+  "source_age_seconds": 100,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs_reported": 68,
@@ -23,15 +23,14 @@
     "broker_orders": 0
   },
   "findings": [
-    "Active London session stale source recovery requested once at 07:20:36Z via current-main scripts/refresh_request.json sequence 236; Actions run 43385075985 completed successfully. Collection source 07:21:18Z; collection_attempt status COLLECTED. Request/commit alone was not counted as observation.",
-    "Recovered actual bulk summary/latest via GitHub blob API after empty file-content responses; both contain 68 quoted pairs and report 68/68 five-timeframe deep coverage. Independently parsed 12 current leading pair shards plus AUD_CAD and NZD_CAD (14/68); EUR_TRY now quoted tradeable but spread 205.5 pips, not an admitted plan.",
-    "Canonical admission evaluated 136 routes, rejected all: 59 reversal/exhaustion, 25 invalid bid/ask/spread, 25 four-frame trend conflict, 10 high relative spread, 6 no decisive completed M15 impulse, 4 ADX, 3 inadequate structure reward, 2 material-headline review, 2 unsupported. signals.json empty. Decision WAIT, no new conditional simulated plan or verified fill.",
-    "Sanitized repository payload at 07:21:18Z read back, status OK, coverage 67 quoted versus 68 source. Publication status PUBLISHED at 07:22:16Z; this is repository evidence, not independent public website serving or user delivery. Macro receipt dated 12 Nov 10:06Z, machine-news coverage not independently complete."
+    "Requested exactly one current-main stale-source recovery at 08:18:57Z, sequence 237; GitHub Actions run 43392264671 completed successfully. Collection_attempt COLLECTED with source at 08:19:26Z. Verified current-main universe, admission, signals, publication and recovered full summary/latest via blob API after empty fetch_file responses.",
+    "Full summary/latest parsed: 68/68 usable quoted pairs with reported complete D/H4/H1/M15/M5 coverage; independently parsed top 12 ranked pair shards plus NZD_CAD and GBP_USD (14/68). Canonical 136 route assessments rejected: 57 reversal/exhaustion, 30 invalid spread/bid-ask, 25 four-frame trend conflicts, 8 ADX, 6 incomplete M15 impulse, 4 structure reward, 4 high relative spread, 2 unsupported. No admitted plan; WAIT.",
+    "Current source at 08:19:26Z, signals generated at 08:19:49Z with zero signals. Sanitized payload source 08:19:26Z has 67 pairs vs 68 source; public repository publication status PUBLISHED with readback, but independent actual served website and user receipt not verified. Machine news status PARTIAL; macro receipt last completed 12 Nov 10:06Z."
   ],
   "blockers": [
-    "Independent deep shard parsing only 14/68; reported complete coverage and canonical all-pair screening verified through bulk files/admission, not individually audited all 68 shards.",
-    "Sanitized public payload reports 67 quoted against 68 in source; actual website served feed and user receipt not independently verified.",
-    "Macro receipt stale; incomplete machine-news coverage cannot be treated as full clearance."
+    "Independent deep shard inspection 14/68; bulk source and canonical admission cover all 68, but every shard not independently audited.",
+    "Sanitized payload 67 quoted vs source 68; actual public served feed and user delivery not independently verified.",
+    "Machine-news status PARTIAL and macro-events receipt stale; no assumption of complete clearance."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -53,19 +52,19 @@
     "data/pairs/AUD_USD.json",
     "data/pairs/AUD_HKD.json",
     "data/pairs/AUD_SGD.json",
-    "data/pairs/AUD_CAD.json",
-    "data/pairs/EUR_TRY.json",
-    "data/pairs/EUR_AUD.json",
     "data/pairs/AUD_NZD.json",
-    "data/pairs/EUR_GBP.json",
+    "data/pairs/AUD_CAD.json",
     "data/pairs/CHF_JPY.json",
-    "data/pairs/USD_ZAR.json",
+    "data/pairs/EUR_TRY.json",
+    "data/pairs/USD_SEK.json",
+    "data/pairs/AUD_CHF.json",
     "data/pairs/USD_SGD.json",
+    "data/pairs/EUR_AUD.json",
     "data/pairs/NZD_CAD.json",
     "data/pairs/GBP_USD.json"
   ],
   "run_ids": [
-    "43385075985"
+    "43392264671"
   ],
   "no_broker_orders": true
 }
