@@ -2,9 +2,9 @@
   "counterfactual_arms": {
     "champion_all_gates": {
       "approval_allowed": true,
-      "counterfactual_pair_routes": 0,
+      "counterfactual_pair_routes": 1,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 11
+      "unverifiable": 14
     },
     "paper_without_m15_adx_and_missing_primary_feed": {
       "approval_allowed": false,
@@ -13,32 +13,32 @@
         {
           "direction": "SHORT",
           "economics_at_observation": {
-            "entry_reference": 0.7117,
-            "gross_rr": 2.50229,
-            "nearest_target": 0.7088,
-            "net_rr": 1.87473,
-            "stop_reference": 0.7128589379859841
+            "entry_reference": 0.9667941708782651,
+            "gross_rr": 2.45792,
+            "nearest_target": 0.9651,
+            "net_rr": 1.4692,
+            "stop_reference": 0.9674834402354612
           },
-          "news_status": "SOURCE_UNVERIFIED",
-          "pair": "NZD_SGD",
-          "route": "MOMENTUM_CONTINUATION",
+          "news_status": "RESEARCH_CLEAR",
+          "pair": "AUD_CAD",
+          "route": "EMA20_PULLBACK",
           "status": "PAPER_ONLY_NOT_A_FUTURE_TRIGGER_OR_MANUAL_ENTRY"
         }
       ],
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 11
+      "unverifiable": 14
     },
     "without_daily_ema_paper": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 0,
+      "counterfactual_pair_routes": 2,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 11
+      "unverifiable": 14
     },
     "without_m15_adx_paper": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 0,
+      "counterfactual_pair_routes": 1,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 11
+      "unverifiable": 14
     },
     "without_nearest_target_economics_diagnostic_only": {
       "approval_allowed": false,
@@ -48,40 +48,40 @@
     },
     "without_news_gate_diagnostic_only": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 1,
+      "counterfactual_pair_routes": 2,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 11
+      "unverifiable": 14
     },
     "without_reversal_veto_paper": {
       "approval_allowed": false,
-      "counterfactual_pair_routes": 0,
+      "counterfactual_pair_routes": 1,
       "test_scope": "SAME_SNAPSHOT_FILTER_DIAGNOSTIC_NOT_FORWARDED_FILLS",
-      "unverifiable": 11
+      "unverifiable": 14
     }
   },
   "distinct_pairs": 65,
   "failures": {
     "absolute_spread_cap": 50,
     "adx_H1": 38,
-    "adx_M15": 60,
+    "adx_M15": 54,
     "direction_known": 0,
-    "dmi_H1": 20,
-    "dmi_M15": 34,
-    "gross_reward_minimum": 81,
-    "net_reward_minimum": 95,
+    "dmi_H1": 28,
+    "dmi_M15": 40,
+    "gross_reward_minimum": 70,
+    "net_reward_minimum": 92,
     "news_gate": 100,
-    "no_reversal_or_exhaustion": 54,
-    "observed_target_available": 11,
+    "no_reversal_or_exhaustion": 46,
+    "observed_target_available": 14,
     "pair_supported": 2,
     "quote_timely_tradeable": 0,
     "recent_completed_history": 0,
     "relative_spread_cap": 30,
-    "route_not_stretched": 23,
-    "route_pattern": 57,
+    "route_not_stretched": 38,
+    "route_pattern": 60,
     "structural_stop_range": 2,
-    "trend_D": 38,
-    "trend_H1": 10,
-    "trend_H4": 24,
+    "trend_D": 36,
+    "trend_H1": 4,
+    "trend_H4": 22,
     "trend_M15": 10,
     "valid_two_sided_quote": 0
   },
@@ -101,12 +101,12 @@
     "quote_timely_tradeable": 0,
     "recent_completed_history": 0,
     "relative_spread_cap": 0,
-    "route_not_stretched": 0,
+    "route_not_stretched": 1,
     "route_pattern": 1,
     "structural_stop_range": 0,
-    "trend_D": 0,
+    "trend_D": 1,
     "trend_H1": 0,
-    "trend_H4": 0,
+    "trend_H4": 1,
     "trend_M15": 0,
     "valid_two_sided_quote": 0
   },
@@ -117,5 +117,5 @@
     "Pair-route observations share prices and currency exposure; they are not independent trade outcomes."
   ],
   "route_observations": 130,
-  "source_at": "2026-11-13T16:16:05Z"
+  "source_at": "2026-11-13T17:14:37Z"
 }
