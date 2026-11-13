@@ -2621,16 +2621,19 @@
     "202611130700-AUDNZD-SHORT-EMA20_PULLBACK": {
       "broker_verified": false,
       "direction": "SHORT",
+      "exit_at": "2026-11-13T09:15:00Z",
       "fill_at": "2026-11-13T08:30:00Z",
       "id": "202611130700-AUDNZD-SHORT-EMA20_PULLBACK",
       "instrument": "AUD_NZD",
       "paper_entry": 1.22683,
+      "paper_exit": 1.22768,
       "pattern_at": "2026-11-13T08:15:00+00:00",
       "route": "EMA20_PULLBACK",
-      "scored": false,
-      "source_evidence": "data/replay_evidence/AUD_NZD-d018e9fc5c7130794eb46bba9abd7c6d46ffa09f49a80b4d127169e8b830ef7c.json",
-      "status": "PAPER_OPEN_UNRESOLVED",
-      "trade_executed": false
+      "scored": true,
+      "source_evidence": "data/replay_evidence/AUD_NZD-3d158be8b3fcd1e4edb0a396ad2acc95ba347334105f6593d93d89dc03b8599e.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.06928
     }
   },
   "latency_audit": {
@@ -2652,11 +2655,11 @@
   "schema": 1,
   "today_distinct_pair_pattern_events": 1,
   "today_forward_patterns": 1,
-  "today_registered": 2,
-  "today_scored_hypothetical_entries": 0,
+  "today_registered": 3,
+  "today_scored_hypothetical_entries": 1,
   "today_status_counts": {
-    "PAPER_OPEN_UNRESOLVED": 1
+    "PAPER_STOP_AFTER_FILL": 1
   },
   "today_uk": "2026-11-13",
-  "updated_at": "2026-11-13T09:14:41Z"
+  "updated_at": "2026-11-13T10:19:14Z"
 }
