@@ -2,16 +2,16 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-12T23:20:09.300Z",
-  "completed_at": "2026-11-12T23:20:09.303Z",
+  "started_at": "2026-11-13T00:15:41.000Z",
+  "completed_at": "2026-11-13T00:17:25.162Z",
   "source_at": "2026-11-12T22:11:36Z",
   "source_commit": "e34eb32c0fbd4c27fed4b6be9ed9b743753d16bf",
-  "source_age_seconds": 4113,
+  "source_age_seconds": 7549,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs_reported": 65,
     "full_five_frame_pairs_reported": 65,
-    "priority_pair_shards_independently_verified": 12,
+    "priority_pair_shards_independently_verified": 0,
     "canonical_routes_evaluated": 130,
     "canonical_routes_rejected": 130,
     "canonical_new_conditional_admitted": 0,
@@ -21,15 +21,16 @@
     "broker_orders": 0
   },
   "findings": [
-    "Quiet-hours review: last confirmed collection 2026-11-12T22:11:36Z, run 43317526547; no fresh collection requested outside active London session.",
-    "Canonical signals.json contains zero signals; last admission rejected 130/130 routes. WAIT; no simulated fill established.",
-    "Universe reports 65/68 usable pairs and five-frame coverage; 12 leading individual shards parsed successfully. Full 65-shard independent check and bulk summary/latest retrieval remain incomplete.",
-    "Repository dashboard status PUBLISHED for 22:11:36Z; sanitized payload reports 64 quoted vs 65 source quoted. Public serving and delivery not verified; machine news PARTIAL."
+    "Quiet-hours source-only review: collection_attempt COLLECTED at 2026-11-12T22:11:36Z (run 43317526547), but observation is stale; no current-session market decision is asserted.",
+    "Universe reports 65/68 quoted and five-frame deep pairs; EUR_TRY, TRY_JPY and USD_TRY non-tradeable. Full independent per-pair shard check not performed this run.",
+    "Canonical admission at 2026-11-12T22:11:44Z rejected 130/130 routes; signals.json has zero conditional plans. Last-known WAIT, not a current verified entry or fill.",
+    "Sanitized payload snapshot 2026-11-12T22:11:36Z contains 64 quoted pairs; repository publication PUBLISHED but actual served website and delivery unverified. Machine news PARTIAL.",
+    "No recovery outside 07:00-23:00 London daytime reporting/recovery window; no broker orders or rule changes."
   ],
   "blockers": [
-    "Source stale outside active session; no new observation.",
-    "Full bulk summary/latest contents unavailable via fetch_file; full independent shard verification incomplete.",
-    "Public served feed and delivery unverified; 64/65 publication discrepancy; machine news partial; macro receipt stale."
+    "Stale source at quiet-hours review; no live full scan.",
+    "Bulk summary.json and latest.json fetch_file returned empty contents even with base64; current blob contents not independently obtained.",
+    "65 pair shards not individually verified this run; public payload 64 vs 65 quoted; public serving unverified; macro receipt outdated."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -45,7 +46,6 @@
     "data/public_dashboard_status.json",
     "data/public_dashboard_payload.json",
     "data/task_runs/macro_events.json",
-    "data/pairs/{top_12_priority_pairs}.json",
     "data/summary.json",
     "data/latest.json",
     "scripts/refresh_request.json"
