@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-13T09:13:20Z",
-  "completed_at": "2026-11-13T09:14:20.535Z",
-  "source_at": "2026-11-13T08:19:26Z",
-  "source_commit": "76132f6176d94edf735771e579e1bced990f984f",
-  "source_age_seconds": 3295,
+  "started_at": "2026-11-13T10:17:46Z",
+  "completed_at": "2026-11-13T10:19:31.358Z",
+  "source_at": "2026-11-13T09:14:28Z",
+  "source_commit": "005237295e2e9008b68695c128535f8b789017e3",
+  "source_age_seconds": 3903,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs_reported_last_source": 68,
@@ -21,15 +21,16 @@
     "broker_orders": 0
   },
   "findings": [
-    "Current-main operations, role registry, protocol and canonical admission code read. At start, latest source 08:19:26Z was over 20 minutes old; coalescing check found no in-flight full collection. Requested exactly one full recovery at 09:13:46Z sequence 238, commit 84c68e3102fcc7396176e64989dbc13272da87b4, resulting Actions run 43399558232 observed in progress. Do not count as a new market observation until source/admission publication verified.",
-    "Last verified source reported 68/68 usable quoted pairs and D/H4/H1/M15/M5 coverage. Fourteen priority/monitored shards independently parsed with matching source clocks; bulk summary/latest fetch_file returned empty despite nonempty blobs and GitHub blob/raw fetch could not retrieve content. Full independent bulk coverage therefore unverified this run.",
-    "Last verified canonical admission rejected 136/136 routes, zero signals, no verified paper fills: last-known WAIT, not a fresh 09:13 signal. News status PARTIAL and macro_events receipt stale at 12 Nov 10:06Z.",
-    "Last verified sanitized publication snapshot 08:19:26Z contains 67 pairs versus 68 quoted; repository readback PUBLISHED but actual served feed/user delivery unverified."
+    "Read current main operations, role registry, validation protocol, registered admission script, universe, collection attempt, monitoring health, canonical audit, signals, macro receipt, news and publication status. Previous recovery Actions run 43399558232 completed successfully and persisted source 09:14:28Z; latest canonical signals generated 09:14:56Z are empty.",
+    "Last verified collection reported 68/68 usable quoted pairs and complete D/H4/H1/M15/M5 coverage. All 136 canonical candidate routes rejected: reversal/exhaustion 51, invalid bid/ask/spread 32, trend conflicts 25, relative spread 8, ADX 6, structure reward 5, M15 impulse 5, stale/untradeable 2, unsupported 2. Last-known WAIT; no confirmed fresh conditional plans or fills.",
+    "Independently parsed 12 priority plus AUD_JPY and GBP_USD monitored shards (14/68); each matched 09:14:28Z and had five primary frames. Large summary/latest fetch_file and base64 returned empty despite nonempty SHA; full independent bulk parsing unavailable.",
+    "At 10:18:27Z requested exactly one new full recovery, refresh sequence 239 commit e6b869da3d9e0dc2ebb307e520b88469f9ce1b35. Actions run 43408159288 observed in progress, not a verified new market source.",
+    "Sanitized publication readback PUBLISHED at snapshot 09:14:28Z, but payload reports 67 pairs versus 68 quoted. Actual website served feed and user delivery unverified. News PARTIAL; macro receipt dated 12 Nov is stale."
   ],
   "blockers": [
-    "Recovery Actions run 43399558232 pending at last check; fresh source, canonical admission and matching publication not yet verified.",
-    "Bulk summary/latest too large for connected GitHub file/blob/raw retrieval; no invented parsing or full independent coverage.",
-    "Sanitized 67/68 discrepancy, actual website serving not verified, machine news partial and macro receipt stale."
+    "Current full recovery run 43408159288 in progress at last verification; fresh source/admission/publication not yet established.",
+    "Large summary/latest retrieval empty despite nonempty blob; independent full 68-pair deep inspection incomplete.",
+    "Sanitized 67/68 mismatch, actual served website not verified, machine news partial, macro receipt stale."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -50,24 +51,24 @@
     "data/task_runs/macro_events.json",
     "data/public_dashboard_payload.json",
     "data/public_dashboard_status.json",
-    "data/pairs/AUD_JPY.json",
-    "data/pairs/AUD_USD.json",
-    "data/pairs/AUD_HKD.json",
-    "data/pairs/AUD_SGD.json",
-    "data/pairs/AUD_NZD.json",
-    "data/pairs/AUD_CAD.json",
-    "data/pairs/CHF_JPY.json",
-    "data/pairs/EUR_TRY.json",
-    "data/pairs/USD_SEK.json",
-    "data/pairs/AUD_CHF.json",
-    "data/pairs/USD_SGD.json",
-    "data/pairs/EUR_AUD.json",
     "data/pairs/NZD_CAD.json",
+    "data/pairs/CHF_HKD.json",
+    "data/pairs/USD_SEK.json",
+    "data/pairs/GBP_AUD.json",
+    "data/pairs/AUD_CAD.json",
+    "data/pairs/USD_HUF.json",
+    "data/pairs/EUR_AUD.json",
+    "data/pairs/EUR_TRY.json",
+    "data/pairs/NZD_JPY.json",
+    "data/pairs/EUR_NOK.json",
+    "data/pairs/USD_SGD.json",
+    "data/pairs/USD_CZK.json",
+    "data/pairs/AUD_JPY.json",
     "data/pairs/GBP_USD.json"
   ],
   "run_ids": [
-    "43392264671",
-    "43399558232"
+    "43399558232",
+    "43408159288"
   ],
   "no_broker_orders": true
 }
