@@ -2,17 +2,17 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-13T14:23:24Z",
-  "completed_at": "2026-11-13T14:24:25.883Z",
-  "source_at": "2026-11-13T13:12:52Z",
-  "source_commit": "cd4b25c0f893e6c7fcf398f30374a164aa0b614e",
-  "source_age_seconds": 4294,
+  "started_at": "2026-11-13T15:19:55Z",
+  "completed_at": "2026-11-13T15:20:41.024Z",
+  "source_at": "2026-11-13T14:37:43Z",
+  "source_commit": "4cb0b7079ff4bf8dd13d941947f0338f8f22cc86",
+  "source_age_seconds": 2578,
   "counts": {
     "universe_pairs": 68,
     "usable_quotes_reported": 68,
     "full_five_frame_pairs_reported": 68,
     "canonical_pairs_independently_assessed": 68,
-    "priority_and_monitored_shards_verified": 14,
+    "priority_and_monitored_shards_verified": 13,
     "canonical_routes_evaluated": 136,
     "canonical_routes_rejected": 136,
     "new_conditional_plans": 0,
@@ -22,17 +22,17 @@
     "broker_orders": 0
   },
   "findings": [
-    "Read current main operations, registry and registered v21 protocol; preserved rule lock and existing cohorts.",
-    "Last verified full source 13:12:52Z: universe reports 68/68 usable quoted pairs with five-frame coverage; 14 top/monitored pair shards individually parsed. Canonical audit assessed 136 pair-routes across 68 pairs, rejecting all 136 (47 reversal/exhaustion, 36 invalid bid/ask or spread, 25 four-frame conflicts, 8 ADX, 8 spread/volatility, 6 impulse, 4 target reward, 2 unsupported).",
-    "signals.json empty at 13:13:22Z; last-known WAIT, not a fresh signal or fill.",
-    "One stale-source full recovery sequence 243 requested on current main at 14:23:24Z, commit cd6dc1652f7b22ade42e4164e49f2756f24c7829; matching research Actions run 43442314582 and offline verification 43442314755 were in progress at check. No new source/admission/publication outcome claimed.",
-    "Repository publication PUBLISHED for source 13:12:52Z with 67 quoted pairs versus 68 source pairs. Actual served website and user receipt unverified. News status PARTIAL; macro role receipt remains from 12 Nov."
+    "Current main operations, registry, v21 protocol and rule digest read; unchanged admission rules and historical cohorts preserved.",
+    "14:37:43Z source: 68/68 quoted pairs with reported complete five-frame coverage; independently parsed 13 leading/monitored pair shards. Canonical admission rejected 136/136 pair-routes; first rejections {\"ADX_TREND_STRENGTH\":4,\"FOUR_FRAME_TREND_CONFLICT\":22,\"INVALID_BID_ASK_OR_SPREAD\":24,\"NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE\":3,\"NO_DECISIVE_COMPLETED_M15_IMPULSE\":5,\"PULLBACK_PRICE_TOO_FAR_FROM_ZONE\":1,\"RECENT_MATERIAL_HEADLINE_REVIEW\":1,\"REVERSAL_OR_EXHAUSTION\":68,\"SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY\":6,\"UNSUPPORTED_PAIR_OR_ROUTE\":2}.",
+    "signals.json contains no active plans (fast observation 15:16:45Z is pair-specific, not a fresh all-pair source); last-known decision WAIT; no new fills verified.",
+    "One stale-source recovery sequence 244 requested 15:20:13Z on current main at commit bbf710207e5647822844a9bc8ec4d3f9dadbc3f4; research run 43451592684 and CI run 43451592773 in progress at last observation. No recovery result claimed.",
+    "Sanitized repository publication snapshot 14:37:43Z covers 67 of 68 source pairs. News PARTIAL; macro role receipt last updated 12 Nov; public website served feed and user delivery unverified."
   ],
   "blockers": [
-    "Fresh recovery in progress; do not treat collection attempt as fresh source.",
-    "Sanitized publication 67/68; actual served website and delivery receipt unverified.",
-    "News coverage partial and macro research receipt stale; no current clearance inferred.",
-    "Large summary/latest content not returned by fetch_file; full independent bulk reparse not established this run."
+    "Recovery run still processing; current full market observation >20min old.",
+    "Large data/summary.json and data/latest.json returned empty via GitHub file connector; raw URL fetch also rejected as oversized; full independent bulk reparse incomplete.",
+    "Public payload 67/68 source quotes; actual served website and user receipt not verified.",
+    "Machine news PARTIAL and macro receipt stale."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -52,26 +52,25 @@
     "data/task_runs/macro_events.json",
     "data/public_dashboard_status.json",
     "data/public_dashboard_payload.json",
-    "data/pairs/AUD_HKD.json",
-    "data/pairs/AUD_SGD.json",
-    "data/pairs/USD_SEK.json",
-    "data/pairs/USD_CZK.json",
-    "data/pairs/GBP_USD.json",
-    "data/pairs/NZD_CAD.json",
-    "data/pairs/EUR_USD.json",
-    "data/pairs/AUD_USD.json",
-    "data/pairs/GBP_HKD.json",
-    "data/pairs/USD_PLN.json",
-    "data/pairs/CHF_HKD.json",
+    "data/pairs/CAD_CHF.json",
     "data/pairs/USD_CHF.json",
     "data/pairs/AUD_CAD.json",
-    "data/pairs/AUD_JPY.json"
+    "data/pairs/EUR_USD.json",
+    "data/pairs/GBP_USD.json",
+    "data/pairs/NZD_CAD.json",
+    "data/pairs/AUD_JPY.json",
+    "data/pairs/GBP_CHF.json",
+    "data/pairs/USD_SEK.json",
+    "data/pairs/EUR_SEK.json",
+    "data/pairs/CHF_ZAR.json",
+    "data/pairs/EUR_CAD.json",
+    "data/pairs/AUD_USD.json"
   ],
   "run_ids": [
-    "43431662146",
-    "43431662081",
-    "43442314582",
-    "43442314755"
+    "43444440994",
+    "43450863648",
+    "43451592684",
+    "43451592773"
   ],
   "no_broker_orders": true
 }
