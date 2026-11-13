@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-13T16:18:44Z",
-  "completed_at": "2026-11-13T16:19:27.819Z",
+  "started_at": "2026-11-13T17:13:33Z",
+  "completed_at": "2026-11-13T17:14:19.470Z",
   "source_at": "2026-11-13T16:16:05Z",
   "source_commit": "12c2049a462b2eb055b89e131821418ca61cc3fd",
-  "source_age_seconds": 203,
+  "source_age_seconds": 3494,
   "counts": {
     "universe_pairs": 68,
     "usable_quotes_reported": 65,
@@ -18,26 +18,28 @@
     "new_conditional_plans": 0,
     "verified_simulated_fills": 0,
     "public_payload_quoted_pairs": 64,
-    "full_recovery_requests": 0,
+    "full_recovery_requests": 1,
     "broker_orders": 0
   },
   "findings": [
-    "Read current main operations, registry and v21 validation protocol; locked admission unchanged.",
-    "16:16:05Z scheduled source collected successfully (run 43460790257); 65/68 usable quoted pairs and 65/65 complete D/H4/H1/M15/M5 context; EUR_TRY, TRY_JPY and USD_TRY non-tradeable. Independently inspected 12 priority pair shards.",
-    "Canonical admission at 16:16:20Z rejected 130/130 routes: reversal/exhaustion 49, invalid spread/quote 31, four-frame trend conflict 20, ADX 16, other 14. Five economically feasible route observations failed additional admission gates; none approved.",
-    "signals.json at 16:16:47Z has zero active conditional plans; hourly assessment has zero watchlist/alerts. Decision WAIT; no verified simulated fill.",
-    "Fresh source under 20min; no full recovery requested. Sanitized repository payload snapshot 16:16:05Z published 16:17:05Z; repository publication readback PUBLISHED at 16:17:14Z, but 64/65 usable pairs displayed and actual served website/user delivery not verified.",
-    "Machine news PARTIAL; macro_events receipt from 12 November remains stale. Fast pair-specific observation 16:16:47Z is not replacement for full source."
+    "Read current main operations, role registry, registered v21 validation protocol and existing canonical admission, signals, universe, source and news records.",
+    "Last verified full source 2026-11-13T16:16:05Z from Actions run 43460790257: 65/68 usable pairs, 65 reported complete D/H4/H1/M15/M5; EUR_TRY, TRY_JPY and USD_TRY non-tradeable. Twelve top pair shards independently inspected.",
+    "Last canonical admission rejected all 130 routes; signals.json at 16:16:47Z contains zero conditional plans. WAIT is last-known, not a fresh decision.",
+    "One current-main stale-source recovery requested at 17:13:54.688Z, sequence 245, request commit 9fa32336b90fe3bb1f384eb34fed8e5a6fe1d888; specific Actions run 43470731847 confirmed in progress, not yet a successful market observation.",
+    "Last sanitized repository payload snapshot 16:16:05Z had 64 quoted of 65 usable; repository publication readback at 16:17:14Z, actual served website and user delivery unverified.",
+    "Machine news PARTIAL and macro_events research receipt stale (12 November); no news clearance inferred."
   ],
   "blockers": [
-    "Bulk data/summary.json and data/latest.json returned empty content despite nonempty SHA; complete independent bulk reparse unavailable, although 65 canonical pairs assessed and 12 priority shards inspected.",
-    "Public payload 64 quoted versus 65 usable source quotes; actual website serving and user delivery unverified.",
-    "Machine news PARTIAL and macro research receipt stale."
+    "New full recovery Actions run 43470731847 in progress at last check; source/admission/publication from this request not yet verified.",
+    "Bulk summary.json and latest.json returned empty GitHub fetch_file contents despite nonempty blob SHAs; independently parsed only 12 top pair shards, so complete independent bulk verification unavailable.",
+    "Sanitized public payload missing one usable pair (64/65); actual served feed and delivery unverified.",
+    "Machine news partial; macro receipt stale."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
     "config/scheduled_research_roles.json",
     "validation_protocol.json",
+    "scripts/refresh_request.json",
     "data/collection_attempt.json",
     "data/monitoring_health.json",
     "data/universe.json",
@@ -65,7 +67,8 @@
     "data/pairs/NZD_USD.json"
   ],
   "run_ids": [
-    "43460790257"
+    "43460790257",
+    "43470731847"
   ],
   "no_broker_orders": true
 }
