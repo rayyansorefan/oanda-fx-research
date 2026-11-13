@@ -2,37 +2,37 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-13T02:19:04.000Z",
-  "completed_at": "2026-11-13T02:19:51.844Z",
-  "source_at": "2026-11-13T00:16:57Z",
-  "source_commit": "da4550b37372a2a2de5dd3da04b22f107e05c8d8",
-  "source_age_seconds": 7375,
+  "started_at": "2026-11-13T03:10:37.000Z",
+  "completed_at": "2026-11-13T03:11:18.387Z",
+  "source_at": "2026-11-13T02:39:52Z",
+  "source_commit": "7ea24f1baf7401de6d83746793fe3f0e7e8599c5",
+  "source_age_seconds": 1886,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs_reported": 65,
-    "full_five_frame_pairs_reported": 65,
     "bulk_summary_pairs_parsed": 65,
     "bulk_latest_pairs_parsed": 65,
-    "priority_pair_shards_independently_verified": 12,
+    "full_five_frame_pairs_reported": 65,
+    "priority_pair_shards_independently_verified": 13,
     "canonical_routes_evaluated": 130,
     "canonical_routes_rejected": 130,
     "canonical_new_conditional_admitted": 0,
     "verified_simulated_fills_this_run": 0,
-    "public_payload_pairs": 64,
+    "last_verified_public_payload_pairs": 64,
     "full_recovery_requests": 0,
     "broker_orders": 0
   },
   "findings": [
-    "Quiet-hours historical source review only: last successful collected source 2026-11-13T00:16:57Z (run 43335602028), now stale; no current-price entry inference.",
-    "Recovered nonempty bulk data/summary.json and data/latest.json through authenticated blob SHA fetch; parsed all 65 usable pairs in both, with 65/68 reported D/H4/H1/M15/M5 coverage. Independently parsed top 12 pair shards at same source clock. Three TRY crosses reported non-tradeable.",
-    "Canonical admission evaluated and rejected 130 routes: reversal/exhaustion 53, invalid bid/ask/spread 29, four-frame trend conflict 22, spread/volatility 16, ADX 6, other 4. No canonical signals; last-known WAIT, no simulated fills verified.",
-    "Sanitized publication status PUBLISHED with repository readback for 00:16:57Z, but payload contains 64 pairs vs 65 usable source pairs; actual served feed and user receipt not verified. Machine-news status PARTIAL; macro role receipt stale.",
-    "No recovery requested during London 23:00–07:00 quiet hours; no broker orders, code/rule changes or new tasks."
+    "Quiet-hours historical review only. New collected source 2026-11-13T02:39:52Z from run 43353688203; collection status COLLECTED, full monitoring status PARTIAL; no fresh executable inference.",
+    "Authenticated GitHub blob reads recovered actual summary/latest contents and parsed all 65 quoted pairs, reported full D/H4/H1/M15/M5 coverage; independently parsed 12 leading route pair shards plus monitored AUD_CAD (13). Three TRY crosses non-tradeable.",
+    "Canonical admission at 02:39:52Z rejected all 130 routes (reversal/exhaustion 66, invalid bid/ask/spread 26, four-frame trend conflict 18, spread/volatility 10, ADX 6, DMI conflict 2, unsupported 2). signals.json empty: last-known WAIT, no verified new paper fills.",
+    "Sanitized dashboard repository status PUBLISHED applies to older 00:16:57Z source, not new 02:39:52Z collection; older payload 64 quoted pairs versus then 65. Actual served public feed and user receipt unverified. Machine news coverage partial; macro_events receipt last completed 12 Nov 10:06:47Z.",
+    "No recovery requested during London 23:00–07:00 quiet hours. No broker orders, code/rule changes or new tasks."
   ],
   "blockers": [
-    "Source observation is stale (quiet hours); no fresh market decision.",
-    "Only top 12 of 65 pair shards independently inspected; full 65 bulk records were parsed but not all individual shards.",
-    "Public sanitized payload excludes one usable pair (64 vs 65), actual served website unverified; machine-news partial and macro receipt last completed 2026-11-12T10:06:47Z."
+    "Full 65 individual pair shards not independently inspected; all 65 bulk records were parsed.",
+    "Current 02:39:52Z source has no verified matching sanitized dashboard publication or served feed; prior published payload omitted one quoted pair.",
+    "Machine news incomplete and macro_events receipt stale; website serving/user delivery not verified."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -51,21 +51,22 @@
     "data/public_dashboard_payload.json",
     "data/task_runs/macro_events.json",
     "scripts/refresh_request.json",
+    "data/pairs/SGD_CHF.json",
+    "data/pairs/GBP_HKD.json",
+    "data/pairs/GBP_SGD.json",
+    "data/pairs/USD_CNH.json",
+    "data/pairs/AUD_JPY.json",
+    "data/pairs/SGD_JPY.json",
+    "data/pairs/USD_JPY.json",
     "data/pairs/GBP_USD.json",
     "data/pairs/EUR_JPY.json",
-    "data/pairs/GBP_HKD.json",
-    "data/pairs/SGD_CHF.json",
-    "data/pairs/EUR_USD.json",
-    "data/pairs/AUD_USD.json",
-    "data/pairs/GBP_JPY.json",
-    "data/pairs/AUD_HKD.json",
-    "data/pairs/AUD_JPY.json",
-    "data/pairs/EUR_HKD.json",
-    "data/pairs/USD_SGD.json",
-    "data/pairs/USD_ZAR.json"
+    "data/pairs/HKD_JPY.json",
+    "data/pairs/CAD_CHF.json",
+    "data/pairs/NZD_CAD.json",
+    "data/pairs/AUD_CAD.json"
   ],
   "run_ids": [
-    "43335602028"
+    "43353688203"
   ],
   "no_broker_orders": true
 }
