@@ -1,0 +1,54 @@
+{
+  "checked_at": "2026-11-13T18:16:40Z",
+  "collection_tries": 2,
+  "collector_endpoint": "practice",
+  "error": null,
+  "event": "push",
+  "first_attempt_error": "OANDA_HTTP_504_ACCOUNTS",
+  "last_valid_source_preserved": false,
+  "recovered_on_second_try": true,
+  "request_diagnostics": {
+    "failures": [
+      "OANDA_HTTP_401_CANDLES"
+    ],
+    "pricing_batches": [
+      {
+        "missing_bid_ask": 0,
+        "returned_prices": 35,
+        "tradeable_false": 1,
+        "tradeable_missing": 0,
+        "tradeable_true": 34
+      },
+      {
+        "missing_bid_ask": 0,
+        "returned_prices": 33,
+        "tradeable_false": 2,
+        "tradeable_missing": 0,
+        "tradeable_true": 31
+      },
+      {
+        "missing_bid_ask": 0,
+        "returned_prices": 35,
+        "tradeable_false": 0,
+        "tradeable_missing": 0,
+        "tradeable_true": 35
+      },
+      {
+        "missing_bid_ask": 0,
+        "returned_prices": 29,
+        "tradeable_false": 0,
+        "tradeable_missing": 0,
+        "tradeable_true": 29
+      }
+    ],
+    "successful_requests": {
+      "ACCOUNTS": 1,
+      "CANDLES": 336,
+      "INSTRUMENTS": 1,
+      "PRICING": 4
+    }
+  },
+  "run_id": "43480862668",
+  "started_at": "2026-11-13T18:15:49Z",
+  "status": "COLLECTED"
+}

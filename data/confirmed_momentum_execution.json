@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-11-13T17:14:53Z",
-  "last_workflow_run_id": "43470731847",
+  "checked_at": "2026-11-13T18:16:53Z",
+  "last_workflow_run_id": "43480862668",
   "limitations": [
     "Next-bar fills are contingent-order model assumptions, not timely user delivery or broker fills.",
     "Inherited contextual news may be incomplete; uncertainty is retained and known event blackouts remain.",
@@ -40,7 +40,7 @@
         "mean_net_r": null,
         "net_r": null,
         "outcomes": {
-          "PENDING_TRIGGER": 1
+          "MISSED_ENTRY": 1
         },
         "scored": 0,
         "scored_london_days": 0
@@ -128,7 +128,8 @@
       "2026-11-13T14:37:42Z",
       "2026-11-13T15:21:10Z",
       "2026-11-13T16:16:04Z",
-      "2026-11-13T17:14:36Z"
+      "2026-11-13T17:14:36Z",
+      "2026-11-13T18:16:37Z"
     ],
     "EUR_JPY": [
       "2026-11-09T22:29:10Z",
@@ -200,7 +201,8 @@
       "2026-11-13T14:37:42Z",
       "2026-11-13T15:21:12Z",
       "2026-11-13T16:16:04Z",
-      "2026-11-13T17:14:36Z"
+      "2026-11-13T17:14:36Z",
+      "2026-11-13T18:16:39Z"
     ],
     "EUR_USD": [
       "2026-11-09T22:29:29Z",
@@ -343,7 +345,8 @@
       "2026-11-13T14:37:42Z",
       "2026-11-13T15:21:12Z",
       "2026-11-13T16:16:04Z",
-      "2026-11-13T17:14:37Z"
+      "2026-11-13T17:14:37Z",
+      "2026-11-13T18:16:39Z"
     ],
     "NZD_USD": [
       "2026-11-09T22:29:15Z",
@@ -413,7 +416,8 @@
       "2026-11-13T14:37:42Z",
       "2026-11-13T15:21:11Z",
       "2026-11-13T16:16:04Z",
-      "2026-11-13T17:14:37Z"
+      "2026-11-13T17:14:37Z",
+      "2026-11-13T18:16:39Z"
     ],
     "USD_CAD": [
       "2026-11-09T22:29:28Z",
@@ -485,7 +489,8 @@
       "2026-11-13T14:37:42Z",
       "2026-11-13T15:21:12Z",
       "2026-11-13T16:16:02Z",
-      "2026-11-13T17:14:33Z"
+      "2026-11-13T17:14:33Z",
+      "2026-11-13T18:16:39Z"
     ],
     "USD_CHF": [
       "2026-11-09T22:28:54Z",
@@ -555,7 +560,8 @@
       "2026-11-13T14:37:42Z",
       "2026-11-13T15:21:12Z",
       "2026-11-13T16:16:02Z",
-      "2026-11-13T17:14:37Z"
+      "2026-11-13T17:14:37Z",
+      "2026-11-13T18:16:39Z"
     ],
     "USD_JPY": [
       "2026-11-09T22:29:10Z",
@@ -628,7 +634,8 @@
       "2026-11-13T15:16:12Z",
       "2026-11-13T15:21:12Z",
       "2026-11-13T16:16:05Z",
-      "2026-11-13T17:14:37Z"
+      "2026-11-13T17:14:37Z",
+      "2026-11-13T18:16:36Z"
     ]
   },
   "records": {
@@ -638,7 +645,7 @@
         "CONFIRMED_NEXT_OPEN_PROTECTED": {},
         "EXISTING_EXTRA_CONFIRMATION": {}
       },
-      "last_checked_at": "2026-11-13T17:14:53Z",
+      "last_checked_at": "2026-11-13T18:16:53Z",
       "plan": {
         "approved_entry": false,
         "atr_at_decision": 0.0008958686865082168,
@@ -692,9 +699,12 @@
           "status": "ENTRY_REJECTED"
         },
         "EXISTING_EXTRA_CONFIRMATION": {
+          "detected_at": "2026-11-13T18:16:39Z",
+          "reason": "LATE_OBSERVATION",
           "scored": false,
-          "source_evidence": "data/replay_evidence/GBP_USD-103c81f4a7a31e5cc2c6420a2c3c663d6c6500d8f408c26fd96fe72278bd0d5c.json",
-          "status": "PENDING_TRIGGER"
+          "source_evidence": "data/replay_evidence/GBP_USD-ee02fa6c5691a9112c732b89fec8c8eac130ad7742eb8dbcb7820912340e8637.json",
+          "status": "MISSED_ENTRY",
+          "triggered_at": "2026-11-13T17:30:00Z"
         }
       }
     }
