@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-11-13T15:21:26Z",
-  "last_workflow_run_id": "43451592684",
+  "checked_at": "2026-11-13T16:16:26Z",
+  "last_workflow_run_id": "43460790257",
   "limitations": [
     "Next-bar fills are contingent-order model assumptions, not timely user delivery or broker fills.",
     "Inherited contextual news may be incomplete; uncertainty is retained and known event blackouts remain.",
@@ -15,7 +15,9 @@
         "max_drawdown_r": null,
         "mean_net_r": null,
         "net_r": null,
-        "outcomes": {},
+        "outcomes": {
+          "PENDING_ENTRY": 1
+        },
         "scored": 0,
         "scored_london_days": 0
       },
@@ -25,7 +27,9 @@
         "max_drawdown_r": null,
         "mean_net_r": null,
         "net_r": null,
-        "outcomes": {},
+        "outcomes": {
+          "PENDING_ENTRY": 1
+        },
         "scored": 0,
         "scored_london_days": 0
       },
@@ -35,7 +39,9 @@
         "max_drawdown_r": null,
         "mean_net_r": null,
         "net_r": null,
-        "outcomes": {},
+        "outcomes": {
+          "PENDING_TRIGGER": 1
+        },
         "scored": 0,
         "scored_london_days": 0
       }
@@ -120,7 +126,8 @@
       "2026-11-13T13:12:49Z",
       "2026-11-13T14:24:25Z",
       "2026-11-13T14:37:42Z",
-      "2026-11-13T15:21:10Z"
+      "2026-11-13T15:21:10Z",
+      "2026-11-13T16:16:04Z"
     ],
     "EUR_JPY": [
       "2026-11-09T22:29:10Z",
@@ -190,7 +197,8 @@
       "2026-11-13T13:12:51Z",
       "2026-11-13T14:24:25Z",
       "2026-11-13T14:37:42Z",
-      "2026-11-13T15:21:12Z"
+      "2026-11-13T15:21:12Z",
+      "2026-11-13T16:16:04Z"
     ],
     "EUR_USD": [
       "2026-11-09T22:29:29Z",
@@ -260,7 +268,8 @@
       "2026-11-13T13:12:50Z",
       "2026-11-13T14:24:24Z",
       "2026-11-13T14:37:42Z",
-      "2026-11-13T15:21:12Z"
+      "2026-11-13T15:21:12Z",
+      "2026-11-13T16:16:02Z"
     ],
     "GBP_USD": [
       "2026-11-09T22:29:29Z",
@@ -329,7 +338,8 @@
       "2026-11-13T13:12:47Z",
       "2026-11-13T14:24:24Z",
       "2026-11-13T14:37:42Z",
-      "2026-11-13T15:21:12Z"
+      "2026-11-13T15:21:12Z",
+      "2026-11-13T16:16:04Z"
     ],
     "NZD_USD": [
       "2026-11-09T22:29:15Z",
@@ -397,7 +407,8 @@
       "2026-11-13T13:12:42Z",
       "2026-11-13T14:24:19Z",
       "2026-11-13T14:37:42Z",
-      "2026-11-13T15:21:11Z"
+      "2026-11-13T15:21:11Z",
+      "2026-11-13T16:16:04Z"
     ],
     "USD_CAD": [
       "2026-11-09T22:29:28Z",
@@ -467,7 +478,8 @@
       "2026-11-13T13:12:49Z",
       "2026-11-13T14:24:25Z",
       "2026-11-13T14:37:42Z",
-      "2026-11-13T15:21:12Z"
+      "2026-11-13T15:21:12Z",
+      "2026-11-13T16:16:02Z"
     ],
     "USD_CHF": [
       "2026-11-09T22:28:54Z",
@@ -535,7 +547,8 @@
       "2026-11-13T13:12:41Z",
       "2026-11-13T14:24:24Z",
       "2026-11-13T14:37:42Z",
-      "2026-11-13T15:21:12Z"
+      "2026-11-13T15:21:12Z",
+      "2026-11-13T16:16:02Z"
     ],
     "USD_JPY": [
       "2026-11-09T22:29:10Z",
@@ -606,10 +619,76 @@
       "2026-11-13T14:24:23Z",
       "2026-11-13T14:37:43Z",
       "2026-11-13T15:16:12Z",
-      "2026-11-13T15:21:12Z"
+      "2026-11-13T15:21:12Z",
+      "2026-11-13T16:16:05Z"
     ]
   },
-  "records": {},
+  "records": {
+    "confirmed-momentum-execution-v1-GBP_USD-2026-11-13T16:00:00Z": {
+      "arm_evidence": {
+        "CONFIRMED_NEXT_OPEN": {},
+        "CONFIRMED_NEXT_OPEN_PROTECTED": {},
+        "EXISTING_EXTRA_CONFIRMATION": {}
+      },
+      "last_checked_at": "2026-11-13T16:16:26Z",
+      "plan": {
+        "approved_entry": false,
+        "atr_at_decision": 0.0008958686865082168,
+        "broker_order_permitted": false,
+        "created_at": "2026-11-13T16:16:26Z",
+        "direction": "SHORT",
+        "entry_condition": "FUTURE_COMPLETED_M15_CLOSE_BEYOND_FROZEN_TRIGGER",
+        "estimated_net_rr_before_slippage": 1.5333,
+        "event_blackouts_utc": [],
+        "execution_cost_assumption": "OANDA bid-ask plus illustrative 0.5 pip stress",
+        "execution_test_only": true,
+        "experimental_paper_only": true,
+        "expires_at": "2026-11-13T17:46:26Z",
+        "gross_rr": 1.8012,
+        "id": "confirmed-momentum-execution-v1-GBP_USD-2026-11-13T16:00:00Z",
+        "indicative_entry": 1.32178,
+        "instrument": "GBP_USD",
+        "invalidation": "PREENTRY_STOP_TOUCH_OR_EXPIRY",
+        "last_source_bar_at": "2026-11-13T16:00:00Z",
+        "manual_response_seconds": 60,
+        "max_chase_atr": 0.35,
+        "max_spread_pips": 1.95,
+        "news_uncertainty": [
+          "MATERIAL_HEADLINE_REVIEW_UNVERIFIED",
+          "NEWS_COVERAGE_PARTIAL_OR_UNVERIFIED"
+        ],
+        "pip_size": 0.0001,
+        "policy": "confirmed-momentum-execution-v1",
+        "setup_type": "MOMENTUM_CONTINUATION",
+        "source_at": "2026-11-13T16:16:05Z",
+        "source_setup_version": "liquid-momentum-shadow-v1",
+        "stop": 1.32349,
+        "study_started_at": "2026-11-09T22:24:14Z",
+        "tp1": 1.3187,
+        "trigger": 1.32154,
+        "user_delivery_verified": false
+      },
+      "plan_sha256": "e53d04581e7ad4307231e1a34f079bad416809739b41636a59b5118c990782af",
+      "registered_at": "2026-11-13T16:16:26Z",
+      "results": {
+        "CONFIRMED_NEXT_OPEN": {
+          "scored": false,
+          "source_evidence": "data/replay_evidence/GBP_USD-3ce93089f7431fb6fdf778fc6573ae79aff0d10b2a5ebb94dd0ab080fae26cb4.json",
+          "status": "PENDING_ENTRY"
+        },
+        "CONFIRMED_NEXT_OPEN_PROTECTED": {
+          "scored": false,
+          "source_evidence": "data/replay_evidence/GBP_USD-3ce93089f7431fb6fdf778fc6573ae79aff0d10b2a5ebb94dd0ab080fae26cb4.json",
+          "status": "PENDING_ENTRY"
+        },
+        "EXISTING_EXTRA_CONFIRMATION": {
+          "scored": false,
+          "source_evidence": "data/replay_evidence/GBP_USD-3ce93089f7431fb6fdf778fc6573ae79aff0d10b2a5ebb94dd0ab080fae26cb4.json",
+          "status": "PENDING_TRIGGER"
+        }
+      }
+    }
+  },
   "risk_policy": {
     "account_equity_verified": false,
     "maximum_open": 3,

@@ -38,43 +38,60 @@
   "automatic_promotion_allowed": false,
   "coverage": {
     "count_note": "Rejection categories overlap; route counts and per-reason pair counts must not be summed into independent trades.",
-    "deep_pairs": 68,
-    "distinct_evaluated_pairs": 68,
+    "deep_pairs": 65,
+    "distinct_evaluated_pairs": 65,
     "distinct_pairs_by_rejection": {
-      "ADX_TREND_STRENGTH": 4,
-      "FOUR_FRAME_TREND_CONFLICT": 12,
-      "INVALID_BID_ASK_OR_SPREAD": 15,
-      "REVERSAL_OR_EXHAUSTION": 41,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 1,
+      "ADX_TREND_STRENGTH": 8,
+      "FOUR_FRAME_TREND_CONFLICT": 11,
+      "INVALID_BID_ASK_OR_SPREAD": 17,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 2,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 3,
+      "RECENT_MATERIAL_HEADLINE_REVIEW": 1,
+      "REVERSAL_OR_EXHAUSTION": 27,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 3,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
     "paper_prequalified": [
-      "AUD_HKD",
+      "AUD_JPY",
+      "AUD_NZD",
       "AUD_SGD",
       "AUD_USD",
-      "EUR_AUD",
-      "EUR_USD",
-      "GBP_CAD",
-      "NZD_CAD"
+      "CAD_CHF",
+      "CHF_JPY",
+      "EUR_GBP",
+      "GBP_AUD",
+      "GBP_USD",
+      "NZD_JPY",
+      "NZD_SGD",
+      "NZD_USD",
+      "USD_CHF"
     ],
     "paper_prequalified_missing_deep": [],
-    "quoted_pairs": 68,
-    "route_evaluations": 136,
+    "quoted_pairs": 65,
+    "route_evaluations": 130,
     "route_rejections": {
-      "ADX_TREND_STRENGTH": 8,
+      "ADX_TREND_STRENGTH": 16,
       "FOUR_FRAME_TREND_CONFLICT": 20,
-      "INVALID_BID_ASK_OR_SPREAD": 28,
-      "REVERSAL_OR_EXHAUSTION": 76,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 2,
+      "INVALID_BID_ASK_OR_SPREAD": 31,
+      "NEAREST_STRUCTURE_TARGET_REWARD_INADEQUATE": 2,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 3,
+      "RECENT_MATERIAL_HEADLINE_REVIEW": 1,
+      "REVERSAL_OR_EXHAUSTION": 49,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 6,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-11-13T15:21:12Z",
+    "source_at": "2026-11-13T16:16:05Z",
     "strict_prequalified": [
-      "EUR_ZAR",
+      "AUD_NZD",
+      "CAD_CHF",
+      "CHF_HKD",
+      "CHF_JPY",
+      "CHF_ZAR",
       "GBP_ZAR",
-      "NZD_CAD",
+      "USD_CHF",
       "USD_CZK",
+      "USD_PLN",
       "USD_ZAR"
     ],
     "strict_prequalified_missing_deep": []
@@ -102,5 +119,5 @@
     "statistical_improvement_established": false
   },
   "status": "COLLECTING_HOLDOUT",
-  "updated_at": "2026-11-13T15:21:27.884033+00:00"
+  "updated_at": "2026-11-13T16:16:28.580300+00:00"
 }
