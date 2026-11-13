@@ -2,18 +2,18 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-13T03:10:37.000Z",
-  "completed_at": "2026-11-13T03:11:18.387Z",
+  "started_at": "2026-11-13T04:17:01.000Z",
+  "completed_at": "2026-11-13T04:17:33.569Z",
   "source_at": "2026-11-13T02:39:52Z",
-  "source_commit": "7ea24f1baf7401de6d83746793fe3f0e7e8599c5",
-  "source_age_seconds": 1886,
+  "source_commit": "e03f238d61ee3052eee3c54dbc0b61304f6da36c",
+  "source_age_seconds": 5862,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs_reported": 65,
-    "bulk_summary_pairs_parsed": 65,
-    "bulk_latest_pairs_parsed": 65,
+    "bulk_summary_pairs_parsed_previous_verified_run": 65,
+    "bulk_latest_pairs_parsed_previous_verified_run": 65,
     "full_five_frame_pairs_reported": 65,
-    "priority_pair_shards_independently_verified": 13,
+    "priority_pair_shards_independently_verified_this_run": 13,
     "canonical_routes_evaluated": 130,
     "canonical_routes_rejected": 130,
     "canonical_new_conditional_admitted": 0,
@@ -23,16 +23,16 @@
     "broker_orders": 0
   },
   "findings": [
-    "Quiet-hours historical review only. New collected source 2026-11-13T02:39:52Z from run 43353688203; collection status COLLECTED, full monitoring status PARTIAL; no fresh executable inference.",
-    "Authenticated GitHub blob reads recovered actual summary/latest contents and parsed all 65 quoted pairs, reported full D/H4/H1/M15/M5 coverage; independently parsed 12 leading route pair shards plus monitored AUD_CAD (13). Three TRY crosses non-tradeable.",
-    "Canonical admission at 02:39:52Z rejected all 130 routes (reversal/exhaustion 66, invalid bid/ask/spread 26, four-frame trend conflict 18, spread/volatility 10, ADX 6, DMI conflict 2, unsupported 2). signals.json empty: last-known WAIT, no verified new paper fills.",
-    "Sanitized dashboard repository status PUBLISHED applies to older 00:16:57Z source, not new 02:39:52Z collection; older payload 64 quoted pairs versus then 65. Actual served public feed and user receipt unverified. Machine news coverage partial; macro_events receipt last completed 12 Nov 10:06:47Z.",
-    "No recovery requested during London 23:00–07:00 quiet hours. No broker orders, code/rule changes or new tasks."
+    "Quiet-hours historical review. Latest source 2026-11-13T02:39:52Z, collection_attempt COLLECTED run 43353688203; current source is stale for executable inference.",
+    "Current universe manifest reports 65 usable quoted pairs of 68, D/H4/H1/M15/M5 for 65; three TRY crosses non-tradeable. Re-fetched and parsed 13 priority/monitored pair shards. Prior receipt independently parsed 65 bulk summary/latest records; current fetch_file bulk responses were empty and cannot be independently reconfirmed this run.",
+    "Canonical signal_admission_audit rejected 130/130 routes, zero admitted. signals.json has zero signals. Last-known decision WAIT, not a fresh paper entry, exit or fill.",
+    "Machine news remains PARTIAL; macro_events receipt last completed 2026-11-12T10:06:47Z. Public_dashboard_status PUBLISHED only for older 2026-11-13T00:16:57Z snapshot, 64 quoted pairs; no matching publication for 02:39:52Z and no verified actual served feed or user receipt.",
+    "No full recovery requested during 23:00-07:00 London quiet hours; no broker orders or rule changes."
   ],
   "blockers": [
-    "Full 65 individual pair shards not independently inspected; all 65 bulk records were parsed.",
-    "Current 02:39:52Z source has no verified matching sanitized dashboard publication or served feed; prior published payload omitted one quoted pair.",
-    "Machine news incomplete and macro_events receipt stale; website serving/user delivery not verified."
+    "Bulk summary/latest fetch_file returned empty despite nonempty SHA; prior verified bulk parse remains historical, not a fresh independent parse.",
+    "No matching sanitized publication for latest source; actual served feed unverified; older feed has 64 quoted pairs versus 65 current source pairs.",
+    "Machine news PARTIAL and macro_events receipt stale; individual inspection covers 13/65 usable pair shards."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
