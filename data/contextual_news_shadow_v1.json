@@ -1,7 +1,7 @@
 {
   "automatic_promotion_allowed": false,
   "broker_orders_submitted": 0,
-  "checked_at": "2026-11-13T14:38:02Z",
+  "checked_at": "2026-11-13T15:16:46Z",
   "holdout_start_at": "2026-11-06T10:03:14Z",
   "metrics": {
     "additional_paper_approvals": 0,
@@ -13,9 +13,8 @@
     "news_uncertainty_plans": 19,
     "outcomes": {
       "EXPIRED_UNTRIGGERED": 3,
-      "INVALIDATED_PRE_ENTRY": 11,
-      "MISSED_ENTRY": 3,
-      "PENDING_TRIGGER": 2
+      "INVALIDATED_PRE_ENTRY": 13,
+      "MISSED_ENTRY": 3
     },
     "paper_only": true,
     "performance_validated": false,
@@ -1107,7 +1106,8 @@
       "2026-11-13T12:19:55Z",
       "2026-11-13T13:13:10Z",
       "2026-11-13T14:24:42Z",
-      "2026-11-13T14:38:02Z"
+      "2026-11-13T14:38:02Z",
+      "2026-11-13T15:16:46Z"
     ]
   },
   "records": {
@@ -1875,9 +1875,11 @@
         ]
       },
       "result": {
+        "at": "2026-11-13T14:45:00Z",
+        "reason": "STOP_BEFORE_TRIGGER",
         "scored": false,
-        "source_evidence": "data/replay_evidence/GBP_USD-cccc638d2931dfcd1f4783306dc42efccdc1207ae71d2306771fe9c1d68ffdff.json",
-        "status": "PENDING_TRIGGER"
+        "source_evidence": "data/replay_evidence/GBP_USD-917a1d46fc2a09ab1694b506c07311674289152a4fa5720d8239a83025939d76.json",
+        "status": "INVALIDATED_PRE_ENTRY"
       }
     },
     "contextual-news-shadow-v1-20261113T142442Z-GBP_USD-TREND_PULLBACK": {
@@ -1916,9 +1918,11 @@
         ]
       },
       "result": {
+        "at": "2026-11-13T14:45:00Z",
+        "reason": "STOP_BEFORE_TRIGGER",
         "scored": false,
-        "source_evidence": "data/replay_evidence/GBP_USD-d85830c95cc8b75b6fafe6826b9eb0c436835428e5c0d1793045bb869b04b63d.json",
-        "status": "PENDING_TRIGGER"
+        "source_evidence": "data/replay_evidence/GBP_USD-f895ec7928e45bc3426cba2e76b377d0a337cb69f6a26133c13471cf5c36befa.json",
+        "status": "INVALIDATED_PRE_ENTRY"
       }
     }
   },
@@ -2048,7 +2052,8 @@
     "2026-11-13T12:19:40Z",
     "2026-11-13T13:12:52Z",
     "2026-11-13T14:24:25Z",
-    "2026-11-13T14:37:43Z"
+    "2026-11-13T14:37:43Z",
+    "2026-11-13T15:16:45.099199+00:00"
   ],
   "status": "FORWARD_PAPER_ONLY",
   "study_version": "contextual-news-shadow-v1"
