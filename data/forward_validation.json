@@ -10,11 +10,11 @@
       "independent_scored_pair_days": 0,
       "outcomes": {
         "INVALIDATED_PRE_ENTRY": 19,
-        "NOT_REPLAYED": 32,
+        "NOT_REPLAYED": 34,
         "TRIGGERED_UNFILLED": 6,
         "UNTRIGGERED": 10
       },
-      "prospective_plans": 67,
+      "prospective_plans": 69,
       "verified_user_deliveries": 0
     },
     "champion": {
@@ -41,26 +41,43 @@
     "deep_pairs": 65,
     "distinct_evaluated_pairs": 65,
     "distinct_pairs_by_rejection": {
-      "FOUR_FRAME_TREND_CONFLICT": 2,
-      "INVALID_BID_ASK_OR_SPREAD": 38,
-      "REVERSAL_OR_EXHAUSTION": 22,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 5,
+      "ADX_TREND_STRENGTH": 3,
+      "FOUR_FRAME_TREND_CONFLICT": 11,
+      "INVALID_BID_ASK_OR_SPREAD": 17,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
+      "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 1,
+      "REVERSAL_OR_EXHAUSTION": 29,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 8,
       "UNSUPPORTED_PAIR_OR_ROUTE": 1
     },
     "paper_prequalification_measured": true,
-    "paper_prequalified": [],
+    "paper_prequalified": [
+      "AUD_JPY",
+      "AUD_USD",
+      "EUR_JPY",
+      "EUR_USD",
+      "GBP_JPY",
+      "GBP_USD"
+    ],
     "paper_prequalified_missing_deep": [],
     "quoted_pairs": 65,
     "route_evaluations": 130,
     "route_rejections": {
-      "FOUR_FRAME_TREND_CONFLICT": 4,
-      "INVALID_BID_ASK_OR_SPREAD": 73,
-      "REVERSAL_OR_EXHAUSTION": 41,
-      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 10,
+      "ADX_TREND_STRENGTH": 6,
+      "FOUR_FRAME_TREND_CONFLICT": 22,
+      "INVALID_BID_ASK_OR_SPREAD": 29,
+      "NO_DECISIVE_COMPLETED_M15_IMPULSE": 1,
+      "PULLBACK_PRICE_TOO_FAR_FROM_ZONE": 1,
+      "REVERSAL_OR_EXHAUSTION": 53,
+      "SPREAD_TOO_HIGH_RELATIVE_TO_VOLATILITY": 16,
       "UNSUPPORTED_PAIR_OR_ROUTE": 2
     },
-    "source_at": "2026-11-12T22:11:36Z",
-    "strict_prequalified": [],
+    "source_at": "2026-11-13T00:16:57Z",
+    "strict_prequalified": [
+      "EUR_JPY",
+      "EUR_USD",
+      "GBP_JPY"
+    ],
     "strict_prequalified_missing_deep": []
   },
   "delivery_events_recorded": 19,
@@ -86,5 +103,5 @@
     "statistical_improvement_established": false
   },
   "status": "COLLECTING_HOLDOUT",
-  "updated_at": "2026-11-12T22:11:54.266003+00:00"
+  "updated_at": "2026-11-13T00:17:23.513126+00:00"
 }

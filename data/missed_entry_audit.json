@@ -2540,155 +2540,92 @@
       "source_evidence": "data/replay_evidence/EUR_CAD-5c71cf26ca7c5bbb75b7b2e6d8fed8fa35874a95c3d5c470f636cec363f86cd8.json",
       "status": "PAPER_PRE_ENTRY_INVALIDATED",
       "trade_executed": false
+    },
+    "202611121800-AUDJPY-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "fill_at": "2026-11-12T21:45:00Z",
+      "id": "202611121800-AUDJPY-SHORT-EMA20_PULLBACK",
+      "instrument": "AUD_JPY",
+      "paper_entry": 108.822,
+      "pattern_at": "2026-11-12T21:15:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/AUD_JPY-69459dce9c438e5b84fc85dd34f80adc703b2d51ea3a3836f51214a56c5c64d4.json",
+      "status": "PAPER_OPEN_UNRESOLVED",
+      "trade_executed": false
+    },
+    "202611121800-EURJPY-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "id": "202611121800-EURJPY-SHORT-EMA20_PULLBACK",
+      "instrument": "EUR_JPY",
+      "pattern_at": "2026-11-12T21:15:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/EUR_JPY-29de73a771b3704faa1ed798568e1eade04716b5e65aa329082773ced03a62c0.json",
+      "status": "PAPER_NOT_FILLED_BEFORE_EXPIRY",
+      "trade_executed": false
+    },
+    "202611121830-AUDJPY-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "exit_at": "2026-11-12T22:00:00Z",
+      "fill_at": "2026-11-12T21:30:00Z",
+      "id": "202611121830-AUDJPY-SHORT-EMA20_PULLBACK",
+      "instrument": "AUD_JPY",
+      "paper_entry": 108.807,
+      "paper_exit": 108.953,
+      "pattern_at": "2026-11-12T21:15:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": true,
+      "source_evidence": "data/replay_evidence/AUD_JPY-d95cee18ba9181742e135cd57c67ba1ac7bdc1296809944bc12b3a008c0dece5.json",
+      "status": "PAPER_STOP_AFTER_FILL",
+      "trade_executed": false,
+      "underlying_move_pct": -0.13418
+    },
+    "202611121830-CHFJPY-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "fill_at": "2026-11-12T22:00:00Z",
+      "id": "202611121830-CHFJPY-SHORT-EMA20_PULLBACK",
+      "instrument": "CHF_JPY",
+      "pattern_at": "2026-11-12T21:15:00+00:00",
+      "reason": "Fill and exit level appear in same OHLC bar",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/CHF_JPY-146148857a4c7b5e6c12465dc160aeda6382ca989b096a3365fe2c7ff3eb4713.json",
+      "status": "PAPER_AMBIGUOUS_FILL_BAR",
+      "trade_executed": false
+    },
+    "202611121830-EURJPY-SHORT-EMA20_PULLBACK": {
+      "broker_verified": false,
+      "direction": "SHORT",
+      "fill_at": "2026-11-12T20:30:00Z",
+      "id": "202611121830-EURJPY-SHORT-EMA20_PULLBACK",
+      "instrument": "EUR_JPY",
+      "paper_entry": 176.717,
+      "pattern_at": "2026-11-12T19:45:00+00:00",
+      "route": "EMA20_PULLBACK",
+      "scored": false,
+      "source_evidence": "data/replay_evidence/EUR_JPY-3967b7bcfd5751614fefce19dbe02acf1acb566db2ba177bdccdf69afac3b092.json",
+      "status": "PAPER_OPEN_UNRESOLVED",
+      "trade_executed": false
     }
   },
   "latency_audit": {
     "method": "Legacy replay assumes pattern-close availability; no actual delivered alert or subsequent manual fill is established.",
-    "records": [
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T14:17:05.325153+00:00",
-        "detection_delay_minutes": 17.09,
-        "fill_precedes_detection": false,
-        "id": "202611120945-AUDJPY-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T14:00:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T12:21:42.438356+00:00",
-        "detection_delay_minutes": 51.71,
-        "fill_precedes_detection": false,
-        "id": "202611120945-AUDUSD-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T11:30:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T14:17:05.325153+00:00",
-        "detection_delay_minutes": 17.09,
-        "fill_precedes_detection": false,
-        "id": "202611121030-AUDJPY-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T14:00:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T12:21:42.438356+00:00",
-        "detection_delay_minutes": 51.71,
-        "fill_precedes_detection": true,
-        "id": "202611121030-AUDSGD-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T11:30:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T13:16:18.819860+00:00",
-        "detection_delay_minutes": 46.31,
-        "fill_precedes_detection": false,
-        "id": "202611121100-AUDJPY-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T12:30:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T13:16:18.819860+00:00",
-        "detection_delay_minutes": 46.31,
-        "fill_precedes_detection": true,
-        "id": "202611121100-AUDSGD-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T12:30:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T13:16:18.819860+00:00",
-        "detection_delay_minutes": 46.31,
-        "fill_precedes_detection": true,
-        "id": "202611121100-AUDUSD-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T12:30:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T13:16:18.819860+00:00",
-        "detection_delay_minutes": 1.31,
-        "fill_precedes_detection": false,
-        "id": "202611121200-AUDCAD-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T13:15:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T13:16:18.819860+00:00",
-        "detection_delay_minutes": 1.31,
-        "fill_precedes_detection": false,
-        "id": "202611121200-AUDHKD-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T13:15:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T14:17:05.325153+00:00",
-        "detection_delay_minutes": 17.09,
-        "fill_precedes_detection": false,
-        "id": "202611121200-AUDJPY-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T14:00:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T13:16:18.819860+00:00",
-        "detection_delay_minutes": 1.31,
-        "fill_precedes_detection": true,
-        "id": "202611121200-AUDSGD-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T13:15:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T13:16:18.819860+00:00",
-        "detection_delay_minutes": 1.31,
-        "fill_precedes_detection": false,
-        "id": "202611121200-AUDUSD-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T13:15:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T14:17:05.325153+00:00",
-        "detection_delay_minutes": 17.09,
-        "fill_precedes_detection": false,
-        "id": "202611121200-EURAUD-LONG-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T14:00:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T14:17:05.325153+00:00",
-        "detection_delay_minutes": 2.09,
-        "fill_precedes_detection": true,
-        "id": "202611121300-AUDHKD-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T14:15:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T15:17:02.966974+00:00",
-        "detection_delay_minutes": 32.05,
-        "fill_precedes_detection": false,
-        "id": "202611121400-CADCHF-LONG-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T14:45:00+00:00"
-      },
-      {
-        "after_alert_fill_verified": false,
-        "detected_at": "2026-11-12T15:17:02.966974+00:00",
-        "detection_delay_minutes": 2.05,
-        "fill_precedes_detection": false,
-        "id": "202611121400-EURCAD-SHORT-EMA20_PULLBACK",
-        "pattern_at": "2026-11-12T15:15:00+00:00"
-      }
-    ],
+    "records": [],
     "verified_profitable_missed_manual_entries": 0
   },
   "policy": "Prospectively logged research patterns; no broker orders. M15 bid/ask replay AFTER confirmation with frozen worst entry zone and fixed stop/TP. Ambiguity and gaps never count as wins.",
   "replay_method_version": 2,
   "schema": 1,
-  "today_distinct_pair_pattern_events": 14,
-  "today_forward_patterns": 16,
-  "today_registered": 31,
-  "today_scored_hypothetical_entries": 12,
-  "today_status_counts": {
-    "PAPER_NOT_FILLED_BEFORE_EXPIRY": 2,
-    "PAPER_PRE_ENTRY_INVALIDATED": 2,
-    "PAPER_STOP_AFTER_FILL": 2,
-    "PAPER_TP1_AFTER_FILL": 10
-  },
-  "today_uk": "2026-11-12",
-  "updated_at": "2026-11-12T18:53:07Z"
+  "today_distinct_pair_pattern_events": 0,
+  "today_forward_patterns": 0,
+  "today_registered": 0,
+  "today_scored_hypothetical_entries": 0,
+  "today_status_counts": {},
+  "today_uk": "2026-11-13",
+  "updated_at": "2026-11-13T00:17:12Z"
 }

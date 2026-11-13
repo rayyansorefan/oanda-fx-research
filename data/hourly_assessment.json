@@ -1,6 +1,6 @@
 {
   "afternoon_audit": {
-    "adverse": 2,
+    "adverse": 3,
     "candidates": [
       {
         "classification": "FAVOURABLE_DIRECTIONAL_MOVEMENT",
@@ -29,29 +29,29 @@
         "reference_type": "ORIGINAL_PLANNED_ENTRY"
       },
       {
-        "classification": "INSUFFICIENT_HISTORY",
+        "classification": "ADVERSE_DIRECTIONAL_MOVEMENT",
         "created_at": "2026-11-12T18:19:58.831865Z",
         "direction": "SHORT",
-        "directional_move_pct_from_frozen_reference": -0.02063,
+        "directional_move_pct_from_frozen_reference": -0.04126,
         "first_observed_at": "2026-11-12T18:52:48Z",
         "id": "AUTO-20261112T1819-AUD_CAD-S-C",
-        "last_observed_at": "2026-11-12T18:52:48Z",
-        "observations": 1,
+        "last_observed_at": "2026-11-12T19:00:00Z",
+        "observations": 2,
         "pair": "AUD_CAD",
-        "paper_status": "PENDING_TRIGGER",
+        "paper_status": "UNTRIGGERED",
         "reference_type": "ORIGINAL_PLANNED_ENTRY"
       },
       {
-        "classification": "INSUFFICIENT_HISTORY",
+        "classification": "FAVOURABLE_DIRECTIONAL_MOVEMENT",
         "created_at": "2026-11-12T18:19:58.831865Z",
         "direction": "SHORT",
-        "directional_move_pct_from_frozen_reference": 0.10842,
+        "directional_move_pct_from_frozen_reference": 0.07718,
         "first_observed_at": "2026-11-12T18:52:53Z",
         "id": "AUTO-20261112T1819-AUD_JPY-S-B",
-        "last_observed_at": "2026-11-12T18:52:53Z",
-        "observations": 1,
+        "last_observed_at": "2026-11-12T19:00:00Z",
+        "observations": 2,
         "pair": "AUD_JPY",
-        "paper_status": "PENDING_TRIGGER",
+        "paper_status": "UNTRIGGERED",
         "reference_type": "ORIGINAL_PLANNED_ENTRY"
       },
       {
@@ -511,17 +511,17 @@
       }
     ],
     "challenger": "PAPER_ONLY_NOT_VALIDATED",
-    "checked_at": "2026-11-12T22:11:44.578648+00:00",
-    "favourable": 27,
+    "checked_at": "2026-11-13T00:17:23.122383+00:00",
+    "favourable": 28,
     "flat": 0,
-    "insufficient": 8,
+    "insufficient": 6,
     "missing": 2,
     "registered": 39,
     "rule_under_test": "M15 DMI/MACD reversal and >1.55 ATR EMA20 extension",
     "sample_warning": "Directional movements are NOT filled trades, realised losses, success probabilities or evidence sufficient to change champion parameters.",
     "session_date_uk": "2026-11-12"
   },
-  "collected_at": "2026-11-12T22:11:44.578648+00:00",
+  "collected_at": "2026-11-13T00:17:23.122383+00:00",
   "counts": {
     "need_news_review": 0,
     "price_alerts": 0,
@@ -728,16 +728,16 @@
       "win_rate_pct": 63.6
     },
     "paper_totals": {
-      "candidates": 2053,
+      "candidates": 2059,
       "losses": 3,
       "scored": 4,
       "wins": 1
     },
     "threshold": "Paper bias neutral until >=30 scored samples, >=10 days, >=3 pairs and conservative 99% mean-R bound excludes zero. Never relax execution, spread or news gates."
   },
-  "news_collected_at": "2026-11-12T22:11:36Z",
+  "news_collected_at": "2026-11-13T00:16:57Z",
   "news_coverage": "PARTIAL",
-  "oanda_collected_at": "2026-11-12T22:11:36Z",
+  "oanda_collected_at": "2026-11-13T00:16:57Z",
   "signals": [],
   "status": "OK"
 }
