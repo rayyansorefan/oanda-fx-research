@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-13T22:14:29.485Z",
-  "completed_at": "2026-11-13T22:14:29.864Z",
+  "started_at": "2026-11-13T23:18:03.069Z",
+  "completed_at": "2026-11-13T23:18:03.283Z",
   "source_at": "2026-11-13T18:16:40Z",
   "source_commit": "beb281b861748e3f514a027f3b6a1d7e60b758ba",
-  "source_age_seconds": 14270,
+  "source_age_seconds": 18083,
   "counts": {
     "universe_pairs": 68,
     "usable_quotes_reported": 65,
@@ -22,18 +22,18 @@
     "broker_orders": 0
   },
   "findings": [
-    "Read current main operations, role registry and v21 validation protocol; no rule changes.",
-    "Last source observation 2026-11-13T18:16:40Z; universe reports 68 instruments, 65 usable quotes, 64 complete five-frame pairs. Large summary/latest content returned empty and was not independently re-parsed this run.",
-    "Canonical admission audit at source rejected 126 of 126 routes, with zero new admissions. Existing AUD_CAD SHORT signal expired at 18:44:50Z and hourly assessment records TRIGGERED_UNFILLED, not a fill. Decision WAIT.",
-    "Latest collection attempt 21:27:31Z run 43510801435 failed with OANDA_HTTP_401_ACCOUNTS. Previous recovery run 43508301599 also confirmed failed. No fresh market observation.",
-    "Sanitized repository payload retains 18:16:40Z snapshot and 63 quoted pairs; actual served website and delivery unverified. News partial, macro receipt stale. No additional recovery requested outside active London trading session."
+    "Current main operations, registry and validation protocol v21 read and preserved.",
+    "Latest observed full-market source remains 2026-11-13T18:16:40Z; 68 instruments, 65 usable quoted pairs and 64 complete five-timeframe pairs reported by source universe, not independently deep-verified this run.",
+    "Canonical admission audit at old source contains 126 rejected routes, zero newly admitted; earlier AUD_CAD conditional plan expired unfilled. Decision WAIT, no fresh entry evidence.",
+    "Latest 2026-11-13T22:34:53Z collection attempt run 43520375590 DATA_UNAVAILABLE after OANDA_HTTP_401_ACCOUNTS; last valid source preserved.",
+    "Sanitized payload snapshot remains 18:16:40Z, 63 quoted pairs, partial news; repository publication status PUBLISHED but actual served feed and delivery unverified. No recovery outside active London session; quiet hours observed."
   ],
   "blockers": [
-    "Latest 21:27Z full collection failed provider authentication; source remains stale.",
-    "Large summary/latest contents not recovered and no independent priority shard inspection in this review.",
-    "EUR_USD missing candle context, three TRY crosses nontradeable.",
-    "Public repository snapshot missing two usable quoted pairs; actual served feed and user delivery unverified.",
-    "Machine news partial and macro receipt stale."
+    "Latest full collection failed provider authentication; no new market observation.",
+    "Large summary/latest returned empty content despite nonempty SHA; full independent bulk and priority-shard assessment not completed.",
+    "EUR_USD candle gap and three TRY nontradeable quotes in last valid source.",
+    "Sanitized feed has 63 quoted pairs against 65 usable source pairs; served website unverified.",
+    "Macro receipt stale; machine news partial."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -54,8 +54,7 @@
     "data/public_dashboard_payload.json"
   ],
   "run_ids": [
-    "43508301599",
-    "43510801435"
+    "43520375590"
   ],
   "no_broker_orders": true
 }
