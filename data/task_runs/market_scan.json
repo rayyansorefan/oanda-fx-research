@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-13T19:17:58Z",
-  "completed_at": "2026-11-13T19:19:02.721Z",
+  "started_at": "2026-11-13T20:19:39Z",
+  "completed_at": "2026-11-13T20:20:36.664Z",
   "source_at": "2026-11-13T18:16:40Z",
   "source_commit": "beb281b861748e3f514a027f3b6a1d7e60b758ba",
-  "source_age_seconds": 3743,
+  "source_age_seconds": 7437,
   "counts": {
     "universe_pairs": 68,
     "usable_quotes_reported": 65,
@@ -14,7 +14,7 @@
     "canonical_routes_evaluated": 126,
     "canonical_routes_rejected": 126,
     "new_admitted_plans": 0,
-    "retained_prior_signals": 1,
+    "expired_prior_signals": 1,
     "priority_shards_verified": 12,
     "public_payload_quoted_pairs": 63,
     "full_recovery_requests": 1,
@@ -22,18 +22,20 @@
     "broker_orders": 0
   },
   "findings": [
-    "Read current main operations, role registry and locked v21 validation protocol; no code/rule changes.",
-    "18:16:40Z full source: 68 instruments, 65 usable quoted pairs, 64 with full D/H4/H1/M15/M5 coverage; EUR_USD chart failed HTTP 401 and three TRY crosses nontradeable. Recovered and parsed large summary/latest blobs; independently inspected 12 leading/monitored pair shards.",
-    "Canonical admission 18:16:40Z rejected all 126 newly assessed routes. Leading reasons reversal/exhaustion 43, invalid quote/spread 32, four-frame conflict 22; one earlier AUD_CAD conditional signal retained in signals.json, expires 18:44:50Z and cannot be treated as current entry; hourly assessment records TRIGGERED_UNFILLED, not a fill.",
-    "Requested one full current-main recovery sequence 247 at 19:18:37Z, commit e0b1c34fa540ae15580662c426e32d5b21bb89e0; exact request readback verified. New source/admission/publication not yet observed.",
-    "Sanitized repository publication status PUBLISHED for 18:16:40Z snapshot; public payload 63 quoted against 65 usable, 63 deep against 64 deep source; actual served feed and user receipt not verified.",
-    "Machine news PARTIAL and macro_events receipt last completed 12 November; no fabricated clearance."
+    "Read current main operations, role registry and registered v21 protocol; registered rules unchanged.",
+    "Last valid full source 18:16:40Z: recovered actual summary/latest Git blobs; 68 discovered, 65 usable quoted, 64 complete five-frame; EUR_USD candle HTTP 401, three TRY pairs nontradeable. Twelve priority pair shards independently parsed.",
+    "Canonical audit 18:16:40Z: all 126 new routes rejected. signals.json retains one AUD_CAD conditional plan expiring 18:44:50Z; hourly assessment marks TRIGGERED_UNFILLED, not an executable-side fill. At review time it is expired. Decision WAIT.",
+    "19:19:15Z collection run 43490984525 failed DATA_UNAVAILABLE after account/instrument HTTP 401; did not advance source time.",
+    "Requested exactly one new full recovery sequence 248 at 20:20:09Z; exact refresh file readback verified at commit be21eb2b51dfb8426bff0860df2aecd422b236cf. GitHub collection run 43500605001 observed in progress; no new source/admission/publication verified.",
+    "Sanitized repository payload remains 18:16:40Z snapshot with 63 quoted versus 65 source usable; status PUBLISHED means repository publication only, not served website or notification receipt.",
+    "Machine news PARTIAL at 18:16:40Z; macro_events last receipt 12 November; no fabricated event clearance."
   ],
   "blockers": [
-    "Requested recovery has not yet yielded verified new source, canonical admission or publication.",
-    "One usable quoted pair lacks complete five-frame context (EUR_USD); three TRY crosses nontradeable.",
-    "Sanitized publication omits two usable quoted pairs; actual served feed and user delivery unverified.",
-    "Machine-news coverage partial; macro research receipt stale."
+    "New collection run 43500605001 still in progress at last verification; its outcome, source and admission cannot be claimed.",
+    "Source over two hours old and previous recovery failed provider authorization checks; no fresh conditional paper plan can be admitted from old quotes.",
+    "One quoted pair EUR_USD lacks five-frame context and three TRY pairs are nontradeable.",
+    "Sanitized payload omits two usable quoted pairs; actual served feed and user delivery not verified.",
+    "Machine news partial and macro receipt stale."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -45,29 +47,30 @@
     "data/universe.json",
     "data/summary.json",
     "data/latest.json",
-    "signals.json",
-    "data/signal_admission_audit.json",
-    "data/admission_full_gate_audit.json",
-    "data/hourly_assessment.json",
-    "data/news_latest.json",
-    "data/task_runs/macro_events.json",
-    "data/public_dashboard_status.json",
-    "data/public_dashboard_payload.json",
-    "data/pairs/AUD_CAD.json",
     "data/pairs/AUD_USD.json",
     "data/pairs/AUD_HKD.json",
     "data/pairs/AUD_SGD.json",
     "data/pairs/GBP_USD.json",
+    "data/pairs/AUD_CAD.json",
     "data/pairs/CAD_CHF.json",
-    "data/pairs/EUR_CAD.json",
-    "data/pairs/AUD_JPY.json",
-    "data/pairs/USD_SEK.json",
     "data/pairs/EUR_HKD.json",
-    "data/pairs/NZD_CAD.json",
-    "data/pairs/USD_CHF.json"
+    "data/pairs/AUD_JPY.json",
+    "data/pairs/EUR_CAD.json",
+    "data/pairs/USD_SEK.json",
+    "data/pairs/USD_DKK.json",
+    "data/pairs/NZD_HKD.json",
+    "signals.json",
+    "data/signal_admission_audit.json",
+    "data/admission_full_gate_audit.json",
+    "data/hourly_assessment.json",
+    "data/task_runs/macro_events.json",
+    "data/news_latest.json",
+    "data/public_dashboard_status.json",
+    "data/public_dashboard_payload.json"
   ],
   "run_ids": [
-    "43480862668"
+    "43490984525",
+    "43500605001"
   ],
   "no_broker_orders": true
 }
