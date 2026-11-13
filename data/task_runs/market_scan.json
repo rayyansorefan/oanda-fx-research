@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-13T20:19:39Z",
-  "completed_at": "2026-11-13T20:20:36.664Z",
+  "started_at": "2026-11-13T21:10:04.000Z",
+  "completed_at": "2026-11-13T21:10:55.545Z",
   "source_at": "2026-11-13T18:16:40Z",
   "source_commit": "beb281b861748e3f514a027f3b6a1d7e60b758ba",
-  "source_age_seconds": 7437,
+  "source_age_seconds": 10456,
   "counts": {
     "universe_pairs": 68,
     "usable_quotes_reported": 65,
@@ -15,27 +15,26 @@
     "canonical_routes_rejected": 126,
     "new_admitted_plans": 0,
     "expired_prior_signals": 1,
-    "priority_shards_verified": 12,
+    "priority_shards_verified_this_run": 0,
     "public_payload_quoted_pairs": 63,
     "full_recovery_requests": 1,
     "verified_simulated_fills": 0,
     "broker_orders": 0
   },
   "findings": [
-    "Read current main operations, role registry and registered v21 protocol; registered rules unchanged.",
-    "Last valid full source 18:16:40Z: recovered actual summary/latest Git blobs; 68 discovered, 65 usable quoted, 64 complete five-frame; EUR_USD candle HTTP 401, three TRY pairs nontradeable. Twelve priority pair shards independently parsed.",
-    "Canonical audit 18:16:40Z: all 126 new routes rejected. signals.json retains one AUD_CAD conditional plan expiring 18:44:50Z; hourly assessment marks TRIGGERED_UNFILLED, not an executable-side fill. At review time it is expired. Decision WAIT.",
-    "19:19:15Z collection run 43490984525 failed DATA_UNAVAILABLE after account/instrument HTTP 401; did not advance source time.",
-    "Requested exactly one new full recovery sequence 248 at 20:20:09Z; exact refresh file readback verified at commit be21eb2b51dfb8426bff0860df2aecd422b236cf. GitHub collection run 43500605001 observed in progress; no new source/admission/publication verified.",
-    "Sanitized repository payload remains 18:16:40Z snapshot with 63 quoted versus 65 source usable; status PUBLISHED means repository publication only, not served website or notification receipt.",
-    "Machine news PARTIAL at 18:16:40Z; macro_events last receipt 12 November; no fabricated event clearance."
+    "Read current main five-task operations, role registry and locked validation protocol v21; no rule changes.",
+    "Recovered full actual contents of summary.json and latest.json using GitHub blob SHAs: 18:16:40Z source, 68 instruments, 65 usable quotes, 64 complete five-frame; EUR_USD candle error and three TRY pairs nontradeable. No fresh independent deep shard review this run.",
+    "Canonical 18:16:40Z audit rejected all 126 routes; earlier AUD_CAD conditional signal expired at 18:44:50Z with no verified fill. Decision WAIT.",
+    "20:20:41Z collection attempt run 43500605001 failed with OANDA_HTTP_401_ACCOUNTS after two tries; preserved source timestamp.",
+    "One current-main full recovery sequence 249 requested; refresh readback verified at commit b7cb62ac666e3dc6350290fa145b076b6c5b4999; Actions run 43508301599 in progress at last check, no new source admitted.",
+    "Sanitized repository payload at 18:16:40Z contains 63 quoted pairs versus 65 source usable. Actual served website and user delivery unverified. News partial and macro receipt dated 12 November."
   ],
   "blockers": [
-    "New collection run 43500605001 still in progress at last verification; its outcome, source and admission cannot be claimed.",
-    "Source over two hours old and previous recovery failed provider authorization checks; no fresh conditional paper plan can be admitted from old quotes.",
-    "One quoted pair EUR_USD lacks five-frame context and three TRY pairs are nontradeable.",
-    "Sanitized payload omits two usable quoted pairs; actual served feed and user delivery not verified.",
-    "Machine news partial and macro receipt stale."
+    "New full collection run 43508301599 still in progress at last observation; fresh quotes, admission and publication cannot be verified.",
+    "Prior provider account authentication HTTP 401; market source stale beyond 20 minutes.",
+    "EUR_USD lacks complete candle context; three TRY crosses nontradeable; full independent deep review not repeated.",
+    "Public repository payload omits two usable pairs; actual served feed and user receipt unverified.",
+    "Machine news partial and macro research receipt stale."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -44,21 +43,9 @@
     "scripts/refresh_request.json",
     "data/collection_attempt.json",
     "data/monitoring_health.json",
-    "data/universe.json",
     "data/summary.json",
     "data/latest.json",
-    "data/pairs/AUD_USD.json",
-    "data/pairs/AUD_HKD.json",
-    "data/pairs/AUD_SGD.json",
-    "data/pairs/GBP_USD.json",
-    "data/pairs/AUD_CAD.json",
-    "data/pairs/CAD_CHF.json",
-    "data/pairs/EUR_HKD.json",
-    "data/pairs/AUD_JPY.json",
-    "data/pairs/EUR_CAD.json",
-    "data/pairs/USD_SEK.json",
-    "data/pairs/USD_DKK.json",
-    "data/pairs/NZD_HKD.json",
+    "data/universe.json",
     "signals.json",
     "data/signal_admission_audit.json",
     "data/admission_full_gate_audit.json",
@@ -69,8 +56,8 @@
     "data/public_dashboard_payload.json"
   ],
   "run_ids": [
-    "43490984525",
-    "43500605001"
+    "43500605001",
+    "43508301599"
   ],
   "no_broker_orders": true
 }
