@@ -1,8 +1,8 @@
 {
   "active_london_day": true,
-  "checked_at": "2026-11-13T21:27:35.668371+00:00",
+  "checked_at": "2026-11-13T22:34:56.948099+00:00",
   "collection_attempt": {
-    "checked_at": "2026-11-13T21:27:31Z",
+    "checked_at": "2026-11-13T22:34:53Z",
     "collection_tries": 2,
     "collector_endpoint": "practice",
     "error": "OANDA_HTTP_401_ACCOUNTS",
@@ -17,19 +17,19 @@
       "pricing_batches": [],
       "successful_requests": {}
     },
-    "run_id": "43510801435",
-    "started_at": "2026-11-13T21:27:19Z",
+    "run_id": "43520375590",
+    "started_at": "2026-11-13T22:34:40Z",
     "status": "DATA_UNAVAILABLE"
   },
-  "consecutive_unobserved_fast_targets": 12,
+  "consecutive_unobserved_fast_targets": 16,
   "continuity_note": "No backfill. Missing observations do not identify GitHub's internal drop/delay cause.",
   "current_run": {
     "attempt": "1",
     "event": "schedule",
-    "head_sha": "58d0abf4ad787f387f8f67987dc7d64a2283f5d0",
-    "id": "43510801435",
+    "head_sha": "007c185125c46552eafa6130ff944a0f60b1e38d",
+    "id": "43520375590",
     "outcomes": {
-      "collect": "skipped",
+      "collect": "failure",
       "early_cohort": "skipped",
       "fast_recovery": "skipped",
       "safety": "success"
@@ -38,12 +38,12 @@
   },
   "dashboard_deployments": [
     {
-      "conclusion": null,
+      "conclusion": "failure",
       "created_at": "2026-11-13T21:27:36Z",
       "head_sha": "c0d0615f63d8fcb57c1f781b64238845ebb4a432",
       "html_url": "https://github.com/rayyansorefan/standalone-wallet-paper-agent/actions/runs/43510871223",
       "id": 43510871223,
-      "status": "queued"
+      "status": "completed"
     },
     {
       "conclusion": "failure",
@@ -65,7 +65,7 @@
   "early_cohort_id": "FX-EARLY-20261104-v1",
   "early_last_source_at": "2026-11-13T18:16:40Z",
   "early_observation_count": 151,
-  "elapsed_fast_targets_today": 58,
+  "elapsed_fast_targets_today": 62,
   "fast_age_seconds": null,
   "fast_dispatch_evidence": {
     "actual_intervals_seconds": [],
@@ -93,25 +93,26 @@
   },
   "fast_source_at": null,
   "fast_status": "STALE_HOURLY_SOURCE",
-  "full_age_seconds": 11455.668371,
+  "full_age_seconds": 15496.948099,
   "full_collection_status": "PARTIAL",
   "full_fresh": false,
-  "full_last_attempt_at": "2026-11-13T21:27:31Z",
+  "full_last_attempt_at": "2026-11-13T22:34:53Z",
   "full_source_at": "2026-11-13T18:16:40Z",
   "last_completed_jobs": [
+    {
+      "conclusion": "failure",
+      "event": "schedule",
+      "failed_steps": [
+        "Restore source coverage if hourly OANDA schedule was missed",
+        "Fail closed if backup, publication, or persistence failed"
+      ],
+      "run_id": 43510801435
+    },
     {
       "conclusion": "success",
       "event": "schedule",
       "failed_steps": [],
       "run_id": 43508630344
-    },
-    {
-      "conclusion": "failure",
-      "event": "push",
-      "failed_steps": [
-        "Fail closed if any research or public dashboard step failed"
-      ],
-      "run_id": 43508301599
     }
   ],
   "previous_publication": {
@@ -222,7 +223,6 @@
       "conclusions": [
         "success",
         "success",
-        "success",
         "failure",
         "success",
         "failure",
@@ -298,10 +298,10 @@
         "success",
         "success",
         "success",
+        "failure",
         null
       ],
       "created_at": [
-        "2026-10-28T08:22:34Z",
         "2026-10-28T12:58:45Z",
         "2026-10-28T15:58:49Z",
         "2026-10-28T20:59:57Z",
@@ -379,10 +379,10 @@
         "2026-11-13T14:37:09Z",
         "2026-11-13T15:16:01Z",
         "2026-11-13T16:14:57Z",
-        "2026-11-13T21:27:07Z"
+        "2026-11-13T21:27:07Z",
+        "2026-11-13T22:34:26Z"
       ],
       "interval_seconds": [
-        16571.0,
         10804.0,
         18068.0,
         13907.0,
@@ -459,11 +459,11 @@
         24281.0,
         2332.0,
         3536.0,
-        18730.0
+        18730.0,
+        4039.0
       ],
       "note": "Run creation intervals only; exact intended dispatch identity is unavailable.",
       "run_ids": [
-        40656326445,
         40692312996,
         40721390989,
         40768176638,
@@ -541,7 +541,8 @@
         43444440994,
         43450863648,
         43460790257,
-        43510801435
+        43510801435,
+        43520375590
       ]
     }
   },
@@ -593,7 +594,11 @@
     "2026-11-13T20:32:00+00:00",
     "2026-11-13T20:47:00+00:00",
     "2026-11-13T21:02:00+00:00",
-    "2026-11-13T21:17:00+00:00"
+    "2026-11-13T21:17:00+00:00",
+    "2026-11-13T21:32:00+00:00",
+    "2026-11-13T21:47:00+00:00",
+    "2026-11-13T22:02:00+00:00",
+    "2026-11-13T22:17:00+00:00"
   ],
   "workflow_registration": [
     {
