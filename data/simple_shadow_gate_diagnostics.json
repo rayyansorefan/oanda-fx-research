@@ -1,5 +1,5 @@
 {
-  "last_source_at": "2026-11-13T14:24:25Z",
+  "last_source_at": "2026-11-13T14:37:43Z",
   "no_broker_orders": true,
   "observations": [
     {
@@ -3256,22 +3256,46 @@
       },
       "paper_plans_not_inferred": true,
       "source_at": "2026-11-13T14:24:25Z"
+    },
+    {
+      "evaluated_at": "2026-11-13T14:38:03Z",
+      "first_blocker_counts": {
+        "M15_H1_EMA_DIRECTION_CONFLICT": 1,
+        "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW": 2,
+        "SPREAD_RELATIVE_TO_ATR": 6,
+        "SPREAD_TOO_WIDE": 1
+      },
+      "observation_kind": "HOURLY",
+      "pair_reasons": {
+        "AUD_USD": "SPREAD_RELATIVE_TO_ATR",
+        "EUR_GBP": "SPREAD_RELATIVE_TO_ATR",
+        "EUR_JPY": "SPREAD_RELATIVE_TO_ATR",
+        "EUR_USD": "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW",
+        "GBP_JPY": "SPREAD_TOO_WIDE",
+        "GBP_USD": "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW",
+        "NZD_USD": "SPREAD_RELATIVE_TO_ATR",
+        "USD_CAD": "M15_H1_EMA_DIRECTION_CONFLICT",
+        "USD_CHF": "SPREAD_RELATIVE_TO_ATR",
+        "USD_JPY": "SPREAD_RELATIVE_TO_ATR"
+      },
+      "paper_plans_not_inferred": true,
+      "source_at": "2026-11-13T14:37:43Z"
     }
   ],
   "performance_validated": false,
   "registered_cohort": "FX-EARLY-20261104-v1",
   "scope": "FIRST_BLOCKER_DIAGNOSTIC_NOT_AN_ELIGIBLE_FILL",
-  "total_evaluated_snapshots": 140,
+  "total_evaluated_snapshots": 141,
   "total_pair_gate_counts": {
     "COMPLETED_M15_FRAME_MISSING_OR_STALE": 48,
     "FORMED_PAPER_SETUP_REQUIRES_PROSPECTIVE_REGISTRATION": 1,
-    "M15_H1_EMA_DIRECTION_CONFLICT": 330,
+    "M15_H1_EMA_DIRECTION_CONFLICT": 331,
     "NEWS_EVENT_CALENDAR_OR_BLACKOUT": 19,
     "NEWS_PRIMARY_NEWS_SOURCE_MISSING": 2,
-    "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW": 197,
+    "NEWS_RECENT_MATERIAL_HEADLINE_REVIEW": 199,
     "NO_COMPLETED_MOMENTUM_OR_PULLBACK_SETUP": 16,
     "PAIR_SOURCE_MISSING": 44,
-    "SPREAD_RELATIVE_TO_ATR": 499,
-    "SPREAD_TOO_WIDE": 199
+    "SPREAD_RELATIVE_TO_ATR": 505,
+    "SPREAD_TOO_WIDE": 200
   }
 }
