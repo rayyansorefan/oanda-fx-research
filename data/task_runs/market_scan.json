@@ -2,36 +2,36 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-13T12:18:47Z",
-  "completed_at": "2026-11-13T12:19:38.159Z",
-  "source_at": "2026-11-13T11:14:45Z",
-  "source_commit": "ed72a68401e8513bf2ca1d18faa129378541a4e6",
-  "source_age_seconds": 3893,
+  "started_at": "2026-11-13T13:11:55Z",
+  "completed_at": "2026-11-13T13:14:05Z",
+  "source_at": "2026-11-13T12:19:40Z",
+  "source_commit": "cd4b25c0f893e6c7fcf398f30374a164aa0b614e",
+  "source_age_seconds": 3265,
   "counts": {
     "universe_pairs": 68,
     "usable_quotes_reported": 68,
     "full_five_frame_pairs_reported": 68,
+    "bulk_pairs_independently_parsed": 68,
     "priority_shards_independently_verified": 12,
     "canonical_routes_evaluated": 136,
     "canonical_routes_rejected": 136,
     "new_conditional_plans": 0,
-    "previous_conditional_plans_expired_by_review": 1,
     "verified_simulated_fills": 0,
     "public_payload_quoted_pairs": 67,
     "full_recovery_requests": 1,
     "broker_orders": 0
   },
   "findings": [
-    "Current main operations, role registry and v21 protocol inspected before recovery; rule lock unchanged.",
-    "Last independently verified full observation 11:14:45Z, 68 usable OANDA pairs and reported 68 complete D/H4/H1/M15/M5 pair shards. Parsed 12 leading pair shards; full independent all-pair verification and bulk summary/latest recovery remain incomplete.",
-    "Canonical full gate audit: 136 route assessments, 136 rejected. Fast signals.json still lists older AUD_CAD SHORT conditional plan created 10:19:15Z, expired 11:49:15Z; no new conditional entry, trigger or fill verified. Decision WAIT on last-known data, not fresh market evidence.",
-    "One current-main recovery requested via scripts/refresh_request.json sequence 241 at 12:19Z, commit 1b1364400dd1fe7b963ada3dc4dd4513ff1a8fc8. Matching Actions run 43424148152 observed in progress, resulting source/admission/publication not verified.",
-    "Sanitized repository publication status PUBLISHED for source 11:14:45Z; payload 67/68 quoted, actual served website and user receipt unverified. News PARTIAL; macro receipt last checked 12 Nov."
+    "Current operations, role registry and v21 registered rule lock read before work; no rule changes.",
+    "Last confirmed full source 12:19:40Z; recovered both large summary/latest blobs through GitHub blob fetch and parsed 68/68 quoted pairs, with 68/68 reported five-frame coverage; 12 priority/monitored pair shards independently inspected.",
+    "Canonical admission at 12:19:40Z rejected 136/136 routes (68 reversal/exhaustion, 23 four-frame conflict, 22 bid/ask or spread, other 23). signals.json has zero conditional plans; last-known WAIT, not a current quote.",
+    "One full current-main recovery requested via scripts/refresh_request.json sequence 242, commit cd4b25c0f893e6c7fcf398f30374a164aa0b614e; matching Actions runs 43431662146 and 43431662081 were in progress when checked. No fresh source/admission result yet.",
+    "Repository publication readback PUBLISHED for 12:19:40Z, sanitized payload 67 quoted versus 68 source; actual website serving/user receipt not verified. Machine news PARTIAL and macro role receipt from 12 Nov."
   ],
   "blockers": [
-    "Full recovery still in progress, so fresh source and admission cannot be claimed.",
-    "Large data/summary.json and data/latest.json return empty content despite nonempty SHAs; independent complete all-pair screening not established.",
-    "Public feed coverage 67/68, actual served feed unverified, macro receipt stale and news partial."
+    "Fresh recovery Actions runs in progress; collection and admission outcomes unverified.",
+    "Sanitized public payload 67/68; actual website serving and user delivery unverified.",
+    "Machine news partial; macro research receipt stale; no current news clearance inferred."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -49,22 +49,23 @@
     "data/task_runs/macro_events.json",
     "data/public_dashboard_status.json",
     "data/public_dashboard_payload.json",
+    "data/pairs/CHF_JPY.json",
     "data/pairs/GBP_USD.json",
     "data/pairs/AUD_USD.json",
-    "data/pairs/EUR_TRY.json",
-    "data/pairs/AUD_HKD.json",
-    "data/pairs/GBP_HKD.json",
-    "data/pairs/AUD_SGD.json",
     "data/pairs/EUR_USD.json",
-    "data/pairs/NZD_CAD.json",
-    "data/pairs/AUD_JPY.json",
+    "data/pairs/GBP_HKD.json",
     "data/pairs/AUD_CAD.json",
+    "data/pairs/AUD_JPY.json",
     "data/pairs/EUR_HKD.json",
-    "data/pairs/EUR_ZAR.json"
+    "data/pairs/AUD_HKD.json",
+    "data/pairs/NZD_CAD.json",
+    "data/pairs/EUR_ZAR.json",
+    "data/pairs/AUD_SGD.json"
   ],
   "run_ids": [
-    "43415426750",
-    "43424148152"
+    "43424148152",
+    "43431662146",
+    "43431662081"
   ],
   "no_broker_orders": true
 }
