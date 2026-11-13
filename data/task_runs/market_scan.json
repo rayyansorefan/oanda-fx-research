@@ -2,15 +2,17 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-13T01:10:25.000Z",
-  "completed_at": "2026-11-13T01:10:54.843Z",
+  "started_at": "2026-11-13T02:19:04.000Z",
+  "completed_at": "2026-11-13T02:19:51.844Z",
   "source_at": "2026-11-13T00:16:57Z",
   "source_commit": "da4550b37372a2a2de5dd3da04b22f107e05c8d8",
-  "source_age_seconds": 3238,
+  "source_age_seconds": 7375,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs_reported": 65,
     "full_five_frame_pairs_reported": 65,
+    "bulk_summary_pairs_parsed": 65,
+    "bulk_latest_pairs_parsed": 65,
     "priority_pair_shards_independently_verified": 12,
     "canonical_routes_evaluated": 130,
     "canonical_routes_rejected": 130,
@@ -21,16 +23,16 @@
     "broker_orders": 0
   },
   "findings": [
-    "Quiet-hours source-only review: successful collection run 43335602028 observed 2026-11-13T00:16:57Z; source is stale for current decisions and must not be represented as a fresh scan.",
-    "Universe reports 65/68 usable quoted pairs with D/H4/H1/M15/M5 coverage; EUR_TRY, TRY_JPY and USD_TRY excluded as non-tradeable. Twelve leading pair shards were independently retrieved and parsed.",
-    "Canonical admission at 2026-11-13T00:17:16Z rejected all 130 routes, including reversal/exhaustion 53, invalid bid/ask or spread 29, four-frame trend conflict 22, high spread relative to volatility 16. signals.json empty: last-known WAIT; no verified paper fills.",
-    "Sanitized publication status PUBLISHED for source 00:16:57Z, but payload covers 64 pairs against 65 quoted; news status PARTIAL; actual served feed and user delivery not verified.",
-    "No recovery during London quiet hours 23:00-07:00; no broker orders, rule changes or new scheduled tasks."
+    "Quiet-hours historical source review only: last successful collected source 2026-11-13T00:16:57Z (run 43335602028), now stale; no current-price entry inference.",
+    "Recovered nonempty bulk data/summary.json and data/latest.json through authenticated blob SHA fetch; parsed all 65 usable pairs in both, with 65/68 reported D/H4/H1/M15/M5 coverage. Independently parsed top 12 pair shards at same source clock. Three TRY crosses reported non-tradeable.",
+    "Canonical admission evaluated and rejected 130 routes: reversal/exhaustion 53, invalid bid/ask/spread 29, four-frame trend conflict 22, spread/volatility 16, ADX 6, other 4. No canonical signals; last-known WAIT, no simulated fills verified.",
+    "Sanitized publication status PUBLISHED with repository readback for 00:16:57Z, but payload contains 64 pairs vs 65 usable source pairs; actual served feed and user receipt not verified. Machine-news status PARTIAL; macro role receipt stale.",
+    "No recovery requested during London 23:00–07:00 quiet hours; no broker orders, code/rule changes or new tasks."
   ],
   "blockers": [
-    "Source observation is stale during quiet hours; no fresh market decision.",
-    "Bulk data/summary.json and data/latest.json returned empty connector contents; actual bulk data not independently parsed.",
-    "Only 12 of 65 pair shards individually inspected; sanitized public feed 64 vs 65 usable pairs; actual website serving unverified; macro receipt dated 2026-11-12T10:06:47Z."
+    "Source observation is stale (quiet hours); no fresh market decision.",
+    "Only top 12 of 65 pair shards independently inspected; full 65 bulk records were parsed but not all individual shards.",
+    "Public sanitized payload excludes one usable pair (64 vs 65), actual served website unverified; machine-news partial and macro receipt last completed 2026-11-12T10:06:47Z."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -39,6 +41,8 @@
     "data/collection_attempt.json",
     "data/monitoring_health.json",
     "data/universe.json",
+    "data/summary.json",
+    "data/latest.json",
     "data/signal_admission_audit.json",
     "signals.json",
     "data/hourly_assessment.json",
@@ -46,8 +50,6 @@
     "data/public_dashboard_status.json",
     "data/public_dashboard_payload.json",
     "data/task_runs/macro_events.json",
-    "data/summary.json",
-    "data/latest.json",
     "scripts/refresh_request.json",
     "data/pairs/GBP_USD.json",
     "data/pairs/EUR_JPY.json",
