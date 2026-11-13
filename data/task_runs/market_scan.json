@@ -2,16 +2,16 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-13T00:15:41.000Z",
-  "completed_at": "2026-11-13T00:17:25.162Z",
-  "source_at": "2026-11-12T22:11:36Z",
-  "source_commit": "e34eb32c0fbd4c27fed4b6be9ed9b743753d16bf",
-  "source_age_seconds": 7549,
+  "started_at": "2026-11-13T01:10:25.000Z",
+  "completed_at": "2026-11-13T01:10:54.843Z",
+  "source_at": "2026-11-13T00:16:57Z",
+  "source_commit": "da4550b37372a2a2de5dd3da04b22f107e05c8d8",
+  "source_age_seconds": 3238,
   "counts": {
     "universe_pairs": 68,
     "quoted_pairs_reported": 65,
     "full_five_frame_pairs_reported": 65,
-    "priority_pair_shards_independently_verified": 0,
+    "priority_pair_shards_independently_verified": 12,
     "canonical_routes_evaluated": 130,
     "canonical_routes_rejected": 130,
     "canonical_new_conditional_admitted": 0,
@@ -21,16 +21,16 @@
     "broker_orders": 0
   },
   "findings": [
-    "Quiet-hours source-only review: collection_attempt COLLECTED at 2026-11-12T22:11:36Z (run 43317526547), but observation is stale; no current-session market decision is asserted.",
-    "Universe reports 65/68 quoted and five-frame deep pairs; EUR_TRY, TRY_JPY and USD_TRY non-tradeable. Full independent per-pair shard check not performed this run.",
-    "Canonical admission at 2026-11-12T22:11:44Z rejected 130/130 routes; signals.json has zero conditional plans. Last-known WAIT, not a current verified entry or fill.",
-    "Sanitized payload snapshot 2026-11-12T22:11:36Z contains 64 quoted pairs; repository publication PUBLISHED but actual served website and delivery unverified. Machine news PARTIAL.",
-    "No recovery outside 07:00-23:00 London daytime reporting/recovery window; no broker orders or rule changes."
+    "Quiet-hours source-only review: successful collection run 43335602028 observed 2026-11-13T00:16:57Z; source is stale for current decisions and must not be represented as a fresh scan.",
+    "Universe reports 65/68 usable quoted pairs with D/H4/H1/M15/M5 coverage; EUR_TRY, TRY_JPY and USD_TRY excluded as non-tradeable. Twelve leading pair shards were independently retrieved and parsed.",
+    "Canonical admission at 2026-11-13T00:17:16Z rejected all 130 routes, including reversal/exhaustion 53, invalid bid/ask or spread 29, four-frame trend conflict 22, high spread relative to volatility 16. signals.json empty: last-known WAIT; no verified paper fills.",
+    "Sanitized publication status PUBLISHED for source 00:16:57Z, but payload covers 64 pairs against 65 quoted; news status PARTIAL; actual served feed and user delivery not verified.",
+    "No recovery during London quiet hours 23:00-07:00; no broker orders, rule changes or new scheduled tasks."
   ],
   "blockers": [
-    "Stale source at quiet-hours review; no live full scan.",
-    "Bulk summary.json and latest.json fetch_file returned empty contents even with base64; current blob contents not independently obtained.",
-    "65 pair shards not individually verified this run; public payload 64 vs 65 quoted; public serving unverified; macro receipt outdated."
+    "Source observation is stale during quiet hours; no fresh market decision.",
+    "Bulk data/summary.json and data/latest.json returned empty connector contents; actual bulk data not independently parsed.",
+    "Only 12 of 65 pair shards individually inspected; sanitized public feed 64 vs 65 usable pairs; actual website serving unverified; macro receipt dated 2026-11-12T10:06:47Z."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
@@ -48,10 +48,22 @@
     "data/task_runs/macro_events.json",
     "data/summary.json",
     "data/latest.json",
-    "scripts/refresh_request.json"
+    "scripts/refresh_request.json",
+    "data/pairs/GBP_USD.json",
+    "data/pairs/EUR_JPY.json",
+    "data/pairs/GBP_HKD.json",
+    "data/pairs/SGD_CHF.json",
+    "data/pairs/EUR_USD.json",
+    "data/pairs/AUD_USD.json",
+    "data/pairs/GBP_JPY.json",
+    "data/pairs/AUD_HKD.json",
+    "data/pairs/AUD_JPY.json",
+    "data/pairs/EUR_HKD.json",
+    "data/pairs/USD_SGD.json",
+    "data/pairs/USD_ZAR.json"
   ],
   "run_ids": [
-    "43317526547"
+    "43335602028"
   ],
   "no_broker_orders": true
 }
