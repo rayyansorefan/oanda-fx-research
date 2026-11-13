@@ -2,49 +2,51 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-13T08:18:41Z",
-  "completed_at": "2026-11-13T08:21:06.138Z",
+  "started_at": "2026-11-13T09:13:20Z",
+  "completed_at": "2026-11-13T09:14:20.535Z",
   "source_at": "2026-11-13T08:19:26Z",
   "source_commit": "76132f6176d94edf735771e579e1bced990f984f",
-  "source_age_seconds": 100,
+  "source_age_seconds": 3295,
   "counts": {
     "universe_pairs": 68,
-    "quoted_pairs_reported": 68,
-    "full_five_frame_pairs_reported": 68,
-    "bulk_summary_pairs_parsed": 68,
-    "bulk_latest_pairs_parsed": 68,
+    "quoted_pairs_reported_last_source": 68,
+    "full_five_frame_pairs_reported_last_source": 68,
     "priority_and_monitored_shards_independently_verified": 14,
-    "canonical_routes_evaluated": 136,
-    "canonical_routes_rejected": 136,
-    "canonical_new_conditional_admitted": 0,
+    "canonical_routes_evaluated_last_source": 136,
+    "canonical_routes_rejected_last_source": 136,
+    "canonical_new_conditional_admitted_last_source": 0,
     "verified_simulated_fills": 0,
-    "public_payload_quoted_pairs": 67,
+    "public_payload_quoted_pairs_last_source": 67,
     "full_recovery_requests": 1,
     "broker_orders": 0
   },
   "findings": [
-    "Requested exactly one current-main stale-source recovery at 08:18:57Z, sequence 237; GitHub Actions run 43392264671 completed successfully. Collection_attempt COLLECTED with source at 08:19:26Z. Verified current-main universe, admission, signals, publication and recovered full summary/latest via blob API after empty fetch_file responses.",
-    "Full summary/latest parsed: 68/68 usable quoted pairs with reported complete D/H4/H1/M15/M5 coverage; independently parsed top 12 ranked pair shards plus NZD_CAD and GBP_USD (14/68). Canonical 136 route assessments rejected: 57 reversal/exhaustion, 30 invalid spread/bid-ask, 25 four-frame trend conflicts, 8 ADX, 6 incomplete M15 impulse, 4 structure reward, 4 high relative spread, 2 unsupported. No admitted plan; WAIT.",
-    "Current source at 08:19:26Z, signals generated at 08:19:49Z with zero signals. Sanitized payload source 08:19:26Z has 67 pairs vs 68 source; public repository publication status PUBLISHED with readback, but independent actual served website and user receipt not verified. Machine news status PARTIAL; macro receipt last completed 12 Nov 10:06Z."
+    "Current-main operations, role registry, protocol and canonical admission code read. At start, latest source 08:19:26Z was over 20 minutes old; coalescing check found no in-flight full collection. Requested exactly one full recovery at 09:13:46Z sequence 238, commit 84c68e3102fcc7396176e64989dbc13272da87b4, resulting Actions run 43399558232 observed in progress. Do not count as a new market observation until source/admission publication verified.",
+    "Last verified source reported 68/68 usable quoted pairs and D/H4/H1/M15/M5 coverage. Fourteen priority/monitored shards independently parsed with matching source clocks; bulk summary/latest fetch_file returned empty despite nonempty blobs and GitHub blob/raw fetch could not retrieve content. Full independent bulk coverage therefore unverified this run.",
+    "Last verified canonical admission rejected 136/136 routes, zero signals, no verified paper fills: last-known WAIT, not a fresh 09:13 signal. News status PARTIAL and macro_events receipt stale at 12 Nov 10:06Z.",
+    "Last verified sanitized publication snapshot 08:19:26Z contains 67 pairs versus 68 quoted; repository readback PUBLISHED but actual served feed/user delivery unverified."
   ],
   "blockers": [
-    "Independent deep shard inspection 14/68; bulk source and canonical admission cover all 68, but every shard not independently audited.",
-    "Sanitized payload 67 quoted vs source 68; actual public served feed and user delivery not independently verified.",
-    "Machine-news status PARTIAL and macro-events receipt stale; no assumption of complete clearance."
+    "Recovery Actions run 43399558232 pending at last check; fresh source, canonical admission and matching publication not yet verified.",
+    "Bulk summary/latest too large for connected GitHub file/blob/raw retrieval; no invented parsing or full independent coverage.",
+    "Sanitized 67/68 discrepancy, actual website serving not verified, machine news partial and macro receipt stale."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
     "config/scheduled_research_roles.json",
     "validation_protocol.json",
+    "scripts/signal_admission.py",
     "scripts/refresh_request.json",
     "data/collection_attempt.json",
     "data/monitoring_health.json",
     "data/universe.json",
     "data/summary.json",
     "data/latest.json",
+    "data/admission_full_gate_audit.json",
     "data/signal_admission_audit.json",
     "signals.json",
     "data/news_latest.json",
+    "data/hourly_assessment.json",
     "data/task_runs/macro_events.json",
     "data/public_dashboard_payload.json",
     "data/public_dashboard_status.json",
@@ -64,7 +66,8 @@
     "data/pairs/GBP_USD.json"
   ],
   "run_ids": [
-    "43392264671"
+    "43392264671",
+    "43399558232"
   ],
   "no_broker_orders": true
 }
