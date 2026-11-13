@@ -2,37 +2,36 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-13T04:17:01.000Z",
-  "completed_at": "2026-11-13T04:17:33.569Z",
+  "started_at": "2026-11-13T05:11:40.000Z",
+  "completed_at": "2026-11-13T05:12:15.747Z",
   "source_at": "2026-11-13T02:39:52Z",
-  "source_commit": "e03f238d61ee3052eee3c54dbc0b61304f6da36c",
-  "source_age_seconds": 5862,
+  "source_commit": "7ea24f1baf7401de6d83746793fe3f0e7e8599c5",
+  "source_age_seconds": 9144,
   "counts": {
     "universe_pairs": 68,
-    "quoted_pairs_reported": 65,
-    "bulk_summary_pairs_parsed_previous_verified_run": 65,
-    "bulk_latest_pairs_parsed_previous_verified_run": 65,
+    "quoted_pairs_bulk_parsed": 65,
+    "bulk_summary_pairs_parsed": 65,
+    "bulk_latest_pairs_parsed": 65,
     "full_five_frame_pairs_reported": 65,
-    "priority_pair_shards_independently_verified_this_run": 13,
+    "priority_pair_shards_independently_verified": 13,
     "canonical_routes_evaluated": 130,
     "canonical_routes_rejected": 130,
     "canonical_new_conditional_admitted": 0,
-    "verified_simulated_fills_this_run": 0,
+    "verified_simulated_fills": 0,
     "last_verified_public_payload_pairs": 64,
     "full_recovery_requests": 0,
     "broker_orders": 0
   },
   "findings": [
-    "Quiet-hours historical review. Latest source 2026-11-13T02:39:52Z, collection_attempt COLLECTED run 43353688203; current source is stale for executable inference.",
-    "Current universe manifest reports 65 usable quoted pairs of 68, D/H4/H1/M15/M5 for 65; three TRY crosses non-tradeable. Re-fetched and parsed 13 priority/monitored pair shards. Prior receipt independently parsed 65 bulk summary/latest records; current fetch_file bulk responses were empty and cannot be independently reconfirmed this run.",
-    "Canonical signal_admission_audit rejected 130/130 routes, zero admitted. signals.json has zero signals. Last-known decision WAIT, not a fresh paper entry, exit or fill.",
-    "Machine news remains PARTIAL; macro_events receipt last completed 2026-11-12T10:06:47Z. Public_dashboard_status PUBLISHED only for older 2026-11-13T00:16:57Z snapshot, 64 quoted pairs; no matching publication for 02:39:52Z and no verified actual served feed or user receipt.",
-    "No full recovery requested during 23:00-07:00 London quiet hours; no broker orders or rule changes."
+    "Quiet-hours review: source 2026-11-13T02:39:52Z from collected Actions run 43353688203, stale for any present entry decision; no recovery outside 07:00-23:00 active monitoring.",
+    "Recovered actual content of both summary/latest blobs through GitHub git/blobs SHA and parsed 65 pair records each; universe reports 65/68 usable pairs with D/H4/H1/M15/M5, three TRY crosses nontradeable. Independently parsed 13 leading/monitored pair shards with five frames.",
+    "Canonical admission 130/130 rejected, zero signals. Reasons: 66 reversal/exhaustion, 26 invalid bid/ask/spread, 18 four-frame conflict, 10 high spread relative to volatility, 6 ADX, 2 DMI and 2 unsupported. WAIT is last-known classification, not a current quote or simulated fill.",
+    "Machine news incomplete and macro receipt last updated 2026-11-12T10:06:47Z. Last verified sanitized publication is 00:16:57Z, 64 pairs; no evidence matching latest source or actual served feed. No broker orders or rule changes."
   ],
   "blockers": [
-    "Bulk summary/latest fetch_file returned empty despite nonempty SHA; prior verified bulk parse remains historical, not a fresh independent parse.",
-    "No matching sanitized publication for latest source; actual served feed unverified; older feed has 64 quoted pairs versus 65 current source pairs.",
-    "Machine news PARTIAL and macro_events receipt stale; individual inspection covers 13/65 usable pair shards."
+    "Source >2h stale; current entry decision impossible without later verified observation.",
+    "Independent pair-shard inspection 13/65, despite 65/65 bulk summary/latest records parsed and canonical route coverage.",
+    "Latest-source public publication and actual served feed unverified; machine news partial and macro receipt stale."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
