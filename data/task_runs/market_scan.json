@@ -2,11 +2,11 @@
   "schema": 1,
   "role": "market_scan",
   "status": "PARTIAL",
-  "started_at": "2026-11-13T21:10:04.000Z",
-  "completed_at": "2026-11-13T21:10:55.545Z",
+  "started_at": "2026-11-13T22:14:29.485Z",
+  "completed_at": "2026-11-13T22:14:29.864Z",
   "source_at": "2026-11-13T18:16:40Z",
   "source_commit": "beb281b861748e3f514a027f3b6a1d7e60b758ba",
-  "source_age_seconds": 10456,
+  "source_age_seconds": 14270,
   "counts": {
     "universe_pairs": 68,
     "usable_quotes_reported": 65,
@@ -17,30 +17,28 @@
     "expired_prior_signals": 1,
     "priority_shards_verified_this_run": 0,
     "public_payload_quoted_pairs": 63,
-    "full_recovery_requests": 1,
+    "full_recovery_requests": 0,
     "verified_simulated_fills": 0,
     "broker_orders": 0
   },
   "findings": [
-    "Read current main five-task operations, role registry and locked validation protocol v21; no rule changes.",
-    "Recovered full actual contents of summary.json and latest.json using GitHub blob SHAs: 18:16:40Z source, 68 instruments, 65 usable quotes, 64 complete five-frame; EUR_USD candle error and three TRY pairs nontradeable. No fresh independent deep shard review this run.",
-    "Canonical 18:16:40Z audit rejected all 126 routes; earlier AUD_CAD conditional signal expired at 18:44:50Z with no verified fill. Decision WAIT.",
-    "20:20:41Z collection attempt run 43500605001 failed with OANDA_HTTP_401_ACCOUNTS after two tries; preserved source timestamp.",
-    "One current-main full recovery sequence 249 requested; refresh readback verified at commit b7cb62ac666e3dc6350290fa145b076b6c5b4999; Actions run 43508301599 in progress at last check, no new source admitted.",
-    "Sanitized repository payload at 18:16:40Z contains 63 quoted pairs versus 65 source usable. Actual served website and user delivery unverified. News partial and macro receipt dated 12 November."
+    "Read current main operations, role registry and v21 validation protocol; no rule changes.",
+    "Last source observation 2026-11-13T18:16:40Z; universe reports 68 instruments, 65 usable quotes, 64 complete five-frame pairs. Large summary/latest content returned empty and was not independently re-parsed this run.",
+    "Canonical admission audit at source rejected 126 of 126 routes, with zero new admissions. Existing AUD_CAD SHORT signal expired at 18:44:50Z and hourly assessment records TRIGGERED_UNFILLED, not a fill. Decision WAIT.",
+    "Latest collection attempt 21:27:31Z run 43510801435 failed with OANDA_HTTP_401_ACCOUNTS. Previous recovery run 43508301599 also confirmed failed. No fresh market observation.",
+    "Sanitized repository payload retains 18:16:40Z snapshot and 63 quoted pairs; actual served website and delivery unverified. News partial, macro receipt stale. No additional recovery requested outside active London trading session."
   ],
   "blockers": [
-    "New full collection run 43508301599 still in progress at last observation; fresh quotes, admission and publication cannot be verified.",
-    "Prior provider account authentication HTTP 401; market source stale beyond 20 minutes.",
-    "EUR_USD lacks complete candle context; three TRY crosses nontradeable; full independent deep review not repeated.",
-    "Public repository payload omits two usable pairs; actual served feed and user receipt unverified.",
-    "Machine news partial and macro research receipt stale."
+    "Latest 21:27Z full collection failed provider authentication; source remains stale.",
+    "Large summary/latest contents not recovered and no independent priority shard inspection in this review.",
+    "EUR_USD missing candle context, three TRY crosses nontradeable.",
+    "Public repository snapshot missing two usable quoted pairs; actual served feed and user delivery unverified.",
+    "Machine news partial and macro receipt stale."
   ],
   "evidence_paths": [
     "docs/FIVE_TASK_OPERATIONS.md",
     "config/scheduled_research_roles.json",
     "validation_protocol.json",
-    "scripts/refresh_request.json",
     "data/collection_attempt.json",
     "data/monitoring_health.json",
     "data/summary.json",
@@ -56,8 +54,8 @@
     "data/public_dashboard_payload.json"
   ],
   "run_ids": [
-    "43500605001",
-    "43508301599"
+    "43508301599",
+    "43510801435"
   ],
   "no_broker_orders": true
 }
