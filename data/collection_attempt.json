@@ -1,20 +1,37 @@
 {
-  "checked_at": "2026-11-13T22:34:53Z",
-  "collection_tries": 2,
+  "checked_at": "2026-11-14T01:40:14Z",
+  "collection_tries": 1,
   "collector_endpoint": "practice",
-  "error": "OANDA_HTTP_401_ACCOUNTS",
+  "error": "OANDA_NO_USABLE_FX_QUOTES",
   "event": "schedule",
-  "first_attempt_error": "OANDA_HTTP_401_ACCOUNTS",
+  "first_attempt_error": null,
   "last_valid_source_preserved": true,
   "recovered_on_second_try": false,
   "request_diagnostics": {
-    "failures": [
-      "OANDA_HTTP_401_ACCOUNTS"
+    "failures": [],
+    "pricing_batches": [
+      {
+        "missing_bid_ask": 0,
+        "returned_prices": 35,
+        "tradeable_false": 35,
+        "tradeable_missing": 0,
+        "tradeable_true": 0
+      },
+      {
+        "missing_bid_ask": 0,
+        "returned_prices": 33,
+        "tradeable_false": 33,
+        "tradeable_missing": 0,
+        "tradeable_true": 0
+      }
     ],
-    "pricing_batches": [],
-    "successful_requests": {}
+    "successful_requests": {
+      "ACCOUNTS": 1,
+      "INSTRUMENTS": 1,
+      "PRICING": 2
+    }
   },
-  "run_id": "43520375590",
-  "started_at": "2026-11-13T22:34:40Z",
+  "run_id": "43541939738",
+  "started_at": "2026-11-14T01:40:12Z",
   "status": "DATA_UNAVAILABLE"
 }
